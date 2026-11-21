@@ -38,6 +38,9 @@ jobs:
 
   static-checks:
     name: static-checks
+    permissions:
+      contents: read
+      actions: read
     outputs:
       run_browser: ${{ steps.scope.outputs.run_browser }}
       run_offline: ${{ steps.scope.outputs.run_offline }}
@@ -57,6 +60,24 @@ jobs:
       - name: Determine whether browser regression is relevant
         id: scope
         run: node scripts/required-browser-checks.mjs scope
+
+      - name: Select the new isolated shared-integration Node contract
+        id: issue341_scope
+        run: |
+          node --input-type=module - <<'NODE'
+          import {appendFileSync} from 'node:fs';
+          import {currentPlan} from './scripts/ci-targeted-checks.mjs';
+          const selected=currentPlan().scripts.includes('tests/issue341-isolated-integration-browser.cjs');
+          appendFileSync(process.env.GITHUB_OUTPUT,'selected='+selected+'\n');
+          NODE
+      - name: Read original archived Checks for the new integration only
+        if: steps.issue341_scope.outputs.selected == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/issue341-prepare-archived-inputs.py
+      - name: Verify shared routing and proposed audit with preserved original Checks
+        if: steps.issue341_scope.outputs.selected == 'true'
+        run: node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-isolated-integration.test.mjs tests/issue341-audit-fixture-integration.test.mjs tests/issue341-learning-audit-injection.test.mjs
 
       - name: Plan safe Node test scope from actual changed files
         id: node_scope
@@ -297,6 +318,8 @@ jobs:
             tests/p7-d6-learning-contract.test.mjs
             tests/p7-d7-task-adapters.test.mjs
             tests/thinking-feedback.test.mjs
+            tests/issue341-inactive-shared-feedback.test.mjs
+            tests/issue341-formal-source-routing.test.mjs
             tests/p9-sequence-evidence-adapter.test.mjs
             tests/p9-counterexample-evidence-adapter.test.mjs
             tests/p9-fraction-evidence-adapter.test.mjs
@@ -531,6 +554,9 @@ jobs:
 
   targeted:
     name: targeted (${{ matrix.script }})
+    permissions:
+      contents: read
+      actions: read
     needs: plan-checks
     if: ${{ needs.plan-checks.outputs.run_targeted == 'true' }}
     runs-on: ubuntu-24.04
@@ -559,6 +585,11 @@ jobs:
             fc-cache -f
           fi
           fc-list :lang=zh-cn family | grep -q .
+      - name: Read original Check inputs for isolated shared integration
+        if: matrix.script == 'tests/issue341-isolated-integration-browser.cjs'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/issue341-prepare-archived-inputs.py
       - name: Run impacted math family in Chromium
         shell: bash
         run: |
@@ -604,6 +635,14 @@ jobs:
             verification/p9-signed-order-preaudit/*-corrected-1920x1080.png
           if-no-files-found: error
           retention-days: 7
+      - name: Preserve new all365 shared-integration evidence and original-input provenance
+        if: ${{ success() && matrix.script == 'tests/issue341-isolated-integration-browser.cjs' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue341-isolated-integration-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: verification/issue341-isolated-integration/
+          if-no-files-found: error
+          retention-days: 90
       - name: Save full family evidence only for investigation on failure
         if: failure()
         uses: actions/upload-artifact@v4
@@ -611,6 +650,7 @@ jobs:
           name: targeted-failure-${{ matrix.id }}-attempt-${{ github.run_attempt }}
           path: |
             verification/
+            !verification/issue341-inputs/**
             /tmp/math-targeted-http.log
           if-no-files-found: warn
 

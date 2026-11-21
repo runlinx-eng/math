@@ -43,12 +43,19 @@ const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const named=value=>typeof value==='string'&&value.length>0;
 const fixtureFor=(task,context)=>task.type==='x-wideboard'&&signedOrderBinding(task,context)?signedOrderEvidenceExample(task,context):task.type==='x-wideboard'&&positiveOrderBinding(task,context)?positiveOrderEvidenceExample(task,context):task.type==='x-pvbench'&&pvSavedBinding(task,context)?pvSavedEvidenceExample(task,context):task.type==='x-pvbench'?pvbenchEvidenceExample(task):task.type==='x-fracrename'?fractionEvidenceExample(task):task.type==='x-joinstory'?joinStoryEvidenceExample(task):task.type==='x-scalechain'?scaleChainEvidenceExample(task):task.type==='x-fracshare'?fracShareEvidenceExample(task):task.type==='x-mixedtrade'?mixedTradeEvidenceExample(task):task.type==='x-paperlab'?paperLabEvidenceExample(task):task.type==='x-wideshift'&&task.mode!=='add'?wideShiftEvidenceExample(task):task.type==='x-t32-units'&&timeUnitPartsBinding(task,context)?timeUnitPartsEvidenceExample(task):task.type==='x-t32-units'&&timeIdentityCardsBinding(task,context)?timeIdentityCardsEvidenceExample(task):task.type==='x-t32-units'&&weekDayCardsBinding(task,context)?weekDayCardsEvidenceExample(task):task.type.startsWith('x-t32-')?timeEvidenceExample(task):task.type==='x-a30-grid'&&task.mode==='edge'?exampleModel(task):task.type.startsWith('x-a30-')?areaEvidenceExample(task):task.type==='x-orderlab'?orderEvidenceExample(task):exampleModel(task);
+const oneCheckFor=(task,example,context)=>({attempts:[{value:structuredClone(example)}]});
+const acceptsType=(adapter,type)=>Array.isArray(adapter.types)?adapter.types.includes(type):adapter.type===type;
 export const taskFingerprint=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 await ensureB39Ready();
 
 export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
  manifest=read('docs/spatial-learning/evidence-review-manifest.json'),
- feedbackFor=thinkingFeedback,guideFor=thinkingGuide}={}){
+ feedbackFor=thinkingFeedback,guideFor=thinkingGuide,
+ exampleFor=fixtureFor,recordFor=oneCheckFor}={}){
+ // Explicit fixture providers allow preserved original multi-Check records.
+ // They do not authorize sources or replace any binding, grader or UI gate.
+ if(typeof exampleFor!=='function'||typeof recordFor!=='function')
+  throw new TypeError('Evidence audit requires example and record providers');
  const thinking=read('docs/spatial-learning/thinking-source-map.json');
  const practice=new Map(thinking.groups.flatMap(group=>group.nodes.map(node=>[node.id,{code:group.code,label:node.displayName}])));
  const defects=[],rows=[],bridges=[],byId=new Map(),seenManifest=new Set();
@@ -77,15 +84,15 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
   sessionTasks(sessionId).forEach((task,index)=>{
    const context={sessionId,index},key=sessionId+':'+index,nodeId=LESSONS[sessionId].topicId;
    const expected=byId.get(key),fingerprint=taskFingerprint(task);
-   const candidates=adapters.filter(adapter=>adapter.type===task.type),matches=[];
+   const candidates=adapters.filter(adapter=>acceptsType(adapter,task.type)),matches=[];
    let example=null,exampleError=null;
    if(candidates.length||expected){
-    try{example=fixtureFor(task,context);}
+    try{example=exampleFor(task,context);}
     catch(error){exampleError=String(error.message||error);}
    }
    // A registry declaration must not conceal an accidentally broad binding.
    // Checking only same-widget adapters would miss this otherwise real scope bug.
-   for(const adapter of adapters.filter(adapter=>adapter.type!==task.type)){
+   for(const adapter of adapters.filter(adapter=>!acceptsType(adapter,task.type))){
     try{if(adapter.binding(task,context))report('native-binding-wrong-widget',key,adapter.id);}
     catch(error){report('native-binding-error',key,adapter.id+': '+String(error.message||error));}
    }
@@ -119,7 +126,7 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
     let feedback=null,guide=null;
     try{
      guide=guideFor(task,context);
-     feedback=example?feedbackFor(task,example,{attempts:[{value:structuredClone(example)}]},context):null;
+     feedback=example?feedbackFor(task,example,recordFor(task,example,context),context):null;
     }catch(error){report('feedback-error',key,String(error.message||error));}
     if((matches.length||expected)&&(!guide||!feedback))
      report('reviewed-ui-binding-missing',key,'Positive fixture has no matching guide/feedback');
@@ -151,10 +158,10 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
   }
   // The actual UI has its own code path. A by-type feedback fallback must not
   // leak reviewed native observations even while every adapter still says null.
-  if(adapters.some(adapter=>adapter.type===task.type)){
+  if(adapters.some(adapter=>acceptsType(adapter,task.type))){
    try{
-    const guide=guideFor(task,context),example=fixtureFor(task,context);
-    const feedback=feedbackFor(task,example,{attempts:[{value:structuredClone(example)}]},context);
+    const guide=guideFor(task,context),example=exampleFor(task,context);
+    const feedback=feedbackFor(task,example,recordFor(task,example,context),context);
     if(guide)report('bridge-inherits-native-guide',key,'Associated work received a native evidence guide');
     if(feedback)report('bridge-inherits-native-feedback',key,'Associated work received native strict factual feedback');
    }catch(error){report('bridge-ui-error',key,String(error.message||error));}
@@ -162,7 +169,8 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
  });
  const families=adapters.map(adapter=>{
   const candidates=familyRows.get(adapter.id),bound=candidates.filter(row=>row.bound);
-  return {id:adapter.id,type:adapter.type,nativeTasks:candidates.length,
+  return {id:adapter.id,type:adapter.type,
+   ...(Array.isArray(adapter.types)?{types:[...adapter.types]}:{}),nativeTasks:candidates.length,
    boundTasks:bound.length,boundNodes:new Set(bound.map(row=>row.nodeId)).size,
    unboundTasks:candidates.length-bound.length,
    exampleReplayableUnbound:candidates.filter(row=>!row.bound&&row.exampleReplayPassed).length,
@@ -178,11 +186,21 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const result=auditEvidenceExpansion(),out=resolve(root,'verification/learning-evidence-audit');
+ const {loadIssue341FormalAuditInputs}=await import('./issue341-formal-audit-inputs.mjs');
+ const inputs=loadIssue341FormalAuditInputs({
+  legacyExampleFor:fixtureFor,legacyRecordFor:oneCheckFor
+ });
+ const result=auditEvidenceExpansion(inputs),out=resolve(root,'verification/learning-evidence-audit');
+ if(result.summary.reviewedTasks!==1178||result.summary.boundTasks!==1178||
+    result.summary.families!==EVIDENCE_ADAPTERS.length+113||
+    result.defects.length||result.summary.bridgeBindings)
+  throw Error('Formal source/Check expansion failed: '+JSON.stringify({
+   summary:result.summary,firstDefects:result.defects.slice(0,10)
+  }));
  mkdirSync(out,{recursive:true});
  writeFileSync(resolve(out,'expansion-candidates.json'),JSON.stringify(result,null,2)+'\n');
  const lines=['# 数学证据扩展与来源核对','',
-  '候选样例通过只表示值得审查，不能自动接入、升级为A类、传播MP标签或认定儿童掌握；全量A–E分类仍由audit-learning-evidence.mjs独立审计。','',
+  '本批365道只使用冻结来源和原始完整 Check/submitted 证据，不推断儿童掌握或新增方法标签。','',
   '| 家族 | 同类型原生题 | 已绑定 | 未绑定 | 未绑定但样例可回放 | 未验证/不同契约 |',
   '| --- | ---: | ---: | ---: | ---: | ---: |',
   ...result.families.map(f=>`| ${f.id} | ${f.nativeTasks} | ${f.boundTasks} | ${f.unboundTasks} | ${f.exampleReplayableUnbound} | ${f.unverifiedUnbound} |`),'',

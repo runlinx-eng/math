@@ -168,3 +168,38 @@ export const EVIDENCE_ADAPTERS=Object.freeze([
  {id:'mixedaxis',type:'x-mixedaxis',binding:mixedAxisBinding,replay:replayMixedAxisEvidence},
  {id:'scalechain',type:'x-scalechain',binding:scaleChainBinding,replay:replayScaleChainEvidence},
 ].map(Object.freeze));
+
+// Explicit composition for isolated integration and future reviewed registries.
+// This factory never changes EVIDENCE_ADAPTERS or admits a source to the manifest.
+// A widget can have several source-exclusive contracts; first-match routing is
+// unsafe because a newly overlapping binding must fail closed.
+export function createEvidenceAdapterRegistry(adapters){
+ if(!Array.isArray(adapters))throw new TypeError('Expected an explicit adapter list');
+ const ids=new Set(),byType=new Map();
+ const entries=adapters.map(adapter=>{
+  const types=adapter?.types??[adapter?.type];
+  if(!adapter||typeof adapter.id!=='string'||!adapter.id||ids.has(adapter.id)||
+     !Array.isArray(types)||!types.length||types.some(type=>typeof type!=='string'||!type)||
+     new Set(types).size!==types.length||typeof adapter.binding!=='function'||
+     typeof adapter.replay!=='function')throw new TypeError('Invalid or duplicate evidence adapter');
+  ids.add(adapter.id);
+  const entry=Object.freeze({...adapter,types:Object.freeze([...types])});
+  for(const type of types){
+   if(!byType.has(type))byType.set(type,[]);
+   byType.get(type).push(entry);
+  }
+  return entry;
+ });
+ const resolve=(task,context)=>{
+  const matches=[];
+  for(const adapter of byType.get(task?.type)||[]){
+   try{
+    const binding=adapter.binding(task,context);
+    if(binding)matches.push({adapter,binding});
+   }catch{return Object.freeze({status:'invalid',match:null});}
+  }
+  return Object.freeze({status:matches.length===1?'matched':matches.length?'ambiguous':'unbound',
+   match:matches.length===1?Object.freeze(matches[0]):null});
+ };
+ return Object.freeze({adapters:Object.freeze(entries),resolve});
+}

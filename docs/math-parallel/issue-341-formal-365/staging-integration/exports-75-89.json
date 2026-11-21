@@ -1,0 +1,357 @@
+{
+  "schema": "issue-341-frozen-source-export-map/1",
+  "begin": 75,
+  "end": 90,
+  "records": [
+    {
+      "packet": "P062",
+      "path": "dist/learning/p062-zero-place-product-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p062ZeroPlaceProductBinding"
+      ],
+      "replays": [
+        "replayP062ZeroPlaceProductEvidence"
+      ],
+      "submitted": [
+        "submittedP062ZeroPlaceProductEvidence"
+      ],
+      "sourceExports": [
+        "P062_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4339
+    },
+    {
+      "packet": "P059",
+      "path": "dist/learning/p059-whole-unit-walk-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p059WholeUnitWalkBinding"
+      ],
+      "replays": [
+        "replayP059WholeUnitWalkEvidence"
+      ],
+      "submitted": [
+        "submittedP059WholeUnitWalkEvidence"
+      ],
+      "sourceExports": [
+        "P059_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-unitwalk"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 1809
+    },
+    {
+      "packet": "P058",
+      "path": "dist/learning/p058-leaf-grid-approximation-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p058LeafGridApproximationBinding"
+      ],
+      "replays": [
+        "replayP058LeafGridApproximationEvidence"
+      ],
+      "submitted": [
+        "submittedP058LeafGridApproximationEvidence"
+      ],
+      "sourceExports": [
+        "P058_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-s23-pixels"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2637
+    },
+    {
+      "packet": "P057",
+      "path": "dist/learning/p057-chance-condition-sort-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p057ChanceConditionSortBinding"
+      ],
+      "replays": [
+        "replayP057ChanceConditionSortEvidence"
+      ],
+      "submitted": [
+        "submittedP057ChanceConditionSortEvidence"
+      ],
+      "sourceExports": [
+        "P057_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-p22-sort"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2542
+    },
+    {
+      "packet": "P055",
+      "path": "dist/learning/p055-right-triangle-condition-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p055RightTriangleConditionBinding"
+      ],
+      "replays": [
+        "replayP055RightTriangleConditionEvidence"
+      ],
+      "submitted": [
+        "submittedP055RightTriangleConditionEvidence"
+      ],
+      "sourceExports": [
+        "P055_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-g26-check"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2657
+    },
+    {
+      "packet": "P054",
+      "path": "dist/learning/p054-opposite-side-marks-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p054OppositeSideMarksBinding"
+      ],
+      "replays": [
+        "replayP054OppositeSideMarksEvidence"
+      ],
+      "submitted": [
+        "submittedP054OppositeSideMarksEvidence"
+      ],
+      "sourceExports": [
+        "P054_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-g25-ticks"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2246
+    },
+    {
+      "packet": "P053",
+      "path": "dist/learning/p053-data-kind-order-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p053DataKindOrderBinding"
+      ],
+      "replays": [
+        "replayP053DataKindOrderEvidence"
+      ],
+      "submitted": [
+        "submittedP053DataKindOrderEvidence"
+      ],
+      "sourceExports": [
+        "P053_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-datakind"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2621
+    },
+    {
+      "packet": "P051",
+      "path": "dist/learning/p051-compound-unit-meaning-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p051CompoundUnitMeaningBinding"
+      ],
+      "replays": [
+        "replayP051CompoundUnitMeaningEvidence"
+      ],
+      "submitted": [
+        "submittedP051CompoundUnitMeaningEvidence"
+      ],
+      "sourceExports": [
+        "P051_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3297
+    },
+    {
+      "packet": "P050",
+      "path": "dist/learning/p050-drawing-area-scale-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p050DrawingAreaScaleBinding"
+      ],
+      "replays": [
+        "replayP050DrawingAreaScaleEvidence"
+      ],
+      "submitted": [
+        "submittedP050DrawingAreaScaleEvidence"
+      ],
+      "sourceExports": [
+        "P050_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2874
+    },
+    {
+      "packet": "P049",
+      "path": "dist/learning/p049-ratio-smallest-basket-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p049RatioSmallestBasketBinding"
+      ],
+      "replays": [
+        "replayP049RatioSmallestBasketEvidence"
+      ],
+      "submitted": [
+        "submittedP049RatioSmallestBasketEvidence"
+      ],
+      "sourceExports": [
+        "P049_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3024
+    },
+    {
+      "packet": "P048",
+      "path": "dist/learning/p048-rope-cut-chain-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p048RopeCutChainBinding"
+      ],
+      "replays": [
+        "replayP048RopeCutChainEvidence"
+      ],
+      "submitted": [
+        "submittedP048RopeCutChainEvidence"
+      ],
+      "sourceExports": [
+        "P048_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3593
+    },
+    {
+      "packet": "P047",
+      "path": "dist/learning/p047-subtraction-first-error-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p047SubtractionFirstErrorBinding"
+      ],
+      "replays": [
+        "replayP047SubtractionFirstErrorEvidence"
+      ],
+      "submitted": [
+        "submittedP047SubtractionFirstErrorEvidence"
+      ],
+      "sourceExports": [
+        "P047_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3858
+    },
+    {
+      "packet": "P046",
+      "path": "dist/learning/p046-three-fourths-chain-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p046ThreeFourthsChainBinding"
+      ],
+      "replays": [
+        "replayP046ThreeFourthsChainEvidence"
+      ],
+      "submitted": [
+        "submittedP046ThreeFourthsChainEvidence"
+      ],
+      "sourceExports": [
+        "P046_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3594
+    },
+    {
+      "packet": "P045",
+      "path": "dist/learning/p045-three-fifths-vs-half-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p045ThreeFifthsVsHalfBinding"
+      ],
+      "replays": [
+        "replayP045ThreeFifthsVsHalfEvidence"
+      ],
+      "submitted": [
+        "submittedP045ThreeFifthsVsHalfEvidence"
+      ],
+      "sourceExports": [
+        "P045_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3723
+    },
+    {
+      "packet": "P044",
+      "path": "dist/learning/p044-straight-angle-gap-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p044StraightAngleGapBinding"
+      ],
+      "replays": [
+        "replayP044StraightAngleGapEvidence"
+      ],
+      "submitted": [
+        "submittedP044StraightAngleGapEvidence"
+      ],
+      "sourceExports": [
+        "P044_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3152
+    }
+  ]
+}

@@ -14,13 +14,13 @@ import {paperLabEvidenceExample} from './paperlab-evidence-fixture.mjs';
 // Capability is not verified learner mastery or individual browser validation.
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath,pathToFileURL} from 'node:url';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {TASKS,defaultModel,validModel,inspect,exampleModel} from '../dist/learning/tasks.js';
 import {BRIDGES,sessionTasks,sourceBridge} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
-import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
+import {EVIDENCE_ADAPTERS,createEvidenceAdapterRegistry} from '../dist/learning/evidence-adapters.js';
 import {fractionEvidenceExample} from './fraction-evidence-fixture.mjs';
 import {joinStoryEvidenceExample} from './joinstory-evidence-fixture.mjs';
 import {fracShareEvidenceExample} from './fracshare-evidence-fixture.mjs';
@@ -34,6 +34,20 @@ const assert=(ok,reason)=>{if(!ok)throw Error(reason);};
 const sort=(a,b)=>String(a).localeCompare(String(b),'en');
 const sorted=o=>Object.fromEntries(Object.entries(o).sort(([a],[b])=>sort(a,b)));
 const write=(name,data)=>writeFileSync(resolve(out,name),JSON.stringify(data,null,2)+'\n');
+const registeredExampleFor=(task,context,adapter)=>adapter.id==='signed-order'?signedOrderEvidenceExample(task,context):adapter.id==='positive-order'?positiveOrderEvidenceExample(task,context):adapter.id==='pv-saved'?pvSavedEvidenceExample(task,context):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id==='week-day-cards'?weekDayCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
+
+// The imported API returns an in-memory report. Only the unchanged CLI path
+// below writes the production audit files. Explicitly injected registries are
+// simulations, never formal approval or evidence-review-manifest mutations.
+export async function auditLearningEvidence({adapters=EVIDENCE_ADAPTERS,
+ guideFor=thinkingGuide,exampleFor=registeredExampleFor,recordFor=null}={}){
+ if(typeof guideFor!=='function'||typeof exampleFor!=='function'||
+    (recordFor!==null&&typeof recordFor!=='function'))throw new TypeError('Invalid audit fixture providers');
+ const registry=createEvidenceAdapterRegistry(adapters);
+ if(registry.adapters.some(adapter=>'submitted' in adapter&&typeof adapter.submitted!=='function'))
+  throw new TypeError('Invalid submitted contract');
+ const explicit=adapters!==EVIDENCE_ADAPTERS||guideFor!==thinkingGuide||
+  exampleFor!==registeredExampleFor||recordFor!==null;
 const atlas=json('dist/data/atlas.json');
 const source=json('dist/data/math.json');
 const thinking=json('docs/spatial-learning/thinking-source-map.json');
@@ -76,14 +90,24 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  const board=model?.board&&typeof model.board==='object';
  const fields=model&&typeof model==='object'?Object.keys(model).sort(sort):[];
  const freeText=fields.filter(k=>/^(prose|explanation|reflection|reason|justification|argument|why|note|notes)$/i.test(k) && typeof model[k]==='string');
- const guide=kind==='native'?thinkingGuide(task,{sessionId,index}):null;
+ const guide=kind==='native'?guideFor(task,{sessionId,index}):null;
  // Each registered family retains its own exact native binding and replay.
  // Fixtures exercise real actions; the existing grader/solver remains unchanged.
  // Some original workpieces store counts/remaining at the top level. Only a
  // reviewed binding and successful independent replay establish A, not a board key.
- const verifiedAdapter=kind==='native'?EVIDENCE_ADAPTERS.find(adapter=>
-   adapter.type===task.type&&adapter.binding(task,{sessionId,index})&&
-   adapter.replay(task,adapter.id==='signed-order'?signedOrderEvidenceExample(task,{sessionId,index}):adapter.id==='positive-order'?positiveOrderEvidenceExample(task,{sessionId,index}):adapter.id==='pv-saved'?pvSavedEvidenceExample(task,{sessionId,index}):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id==='week-day-cards'?weekDayCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task),{sessionId,index})):null;
+ const context={sessionId,index};
+ const selected=kind==='native'?registry.resolve(task,context).match?.adapter:null;
+ let verifiedAdapter=null;
+ if(selected){
+  const example=exampleFor(task,context,selected);
+  // A full-record contract must never silently fall back to plain replay.
+  // Existing registered adapters have no submitted export and keep their
+  // original replay-only fixture path. Candidate contracts retain submitted.
+  const proof=typeof selected.submitted==='function'
+   ?recordFor&&selected.submitted(task,example,recordFor(task,example,context,selected),context)
+   :selected.replay(task,example,context);
+  if(proof)verifiedAdapter=selected;
+ }
  const verifiedReplay=!!verifiedAdapter;
  let level,reason;
  if(!owner||!valid||!checked||error){level='E';reason='Unknown validator, invalid default model, or grader not inspectable';}
@@ -176,13 +200,11 @@ const summary={schema:'math-learning-interaction-evidence/1',basis:'Live source 
  replayVerifiedTasksNative:native.filter(r=>r.replayVerified).length,
  guideBindingsNative:native.filter(r=>r.optionalThinkingGuide).length,
  caution:'A is a source-bound strict mathematical replay capability of the individually reviewed registered adapters at exact native positions, not learner mastery. B/C/D remain conservative model-shape proxies; grader ownership is not a teaching adapter family.'};
-mkdirSync(out,{recursive:true});
-write('tasks.json',{schema:summary.schema,rows});
-write('types.json',{rows:byType});
-write('validator-families.json',{rows:byFamily});
-write('uncertain.json',{rows:unknown});
-write('cross-course-risks.json',{rows:risk});
-write('summary.json',summary);
+if(explicit){
+ summary.classificationScope='PROPOSED_SIMULATION_NOT_FORMAL_APPROVAL';
+ summary.formalStrictAGranted=0;
+ summary.caution='Explicit injected-registry simulation only; no formal A grant. '+summary.caution;
+}
 const report=[
  '# 587 节点：交互类型与数学证据只读审计','',
  '复现：node scripts/audit-learning-evidence.mjs；Node 22；先动态装载 B39。不是 587 节点 Chromium 逐项点击。','',
@@ -208,5 +230,36 @@ const report=[
  '4. D/E 逐题核查已有事件能否支持独立数学回放；自由解释、缺少过程或契约未验证的题目保留原分类，不通过答案或样例补造过程。',
  '5. 每个 PR 的最终提交分别通过 Node、真实 Chromium 双桌面视口及相关 P10 数据安全回归；合并后的 main 再独立验收，等待 CI 时继续准备其他独立家族。'
 ];
+if(explicit)report.splice(0,3,'# 显式候选审计模拟（未授 A）','',
+ '本报告来自显式传入的适配器与原始证据；默认 CLI 不启用此列表，不写正式 manifest。');
+return {summary,rows,byType,byFamily,unknown,risk,report};
+}
+
+if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
+const {loadIssue341FormalAuditInputs}=await import('./issue341-formal-audit-inputs.mjs');
+const inputs=loadIssue341FormalAuditInputs({
+ legacyExampleFor:registeredExampleFor,legacyRecordFor:()=>null
+});
+const {summary,rows,byType,byFamily,unknown,risk,report}=await auditLearningEvidence(inputs);
+const nativeA=rows.filter(row=>row.kind==='native'&&row.evidenceLevel==='A');
+const added=nativeA.filter(row=>row.evidenceAdapter?.startsWith('issue341-'));
+if(nativeA.length!==1178||added.length!==365||
+ new Set(added.map(row=>row.sessionId+':'+row.index)).size!==365)
+ throw Error('Formal #341 A-E classification did not verify 365 exact original Checks');
+delete summary.classificationScope;
+delete summary.formalStrictAGranted;
+summary.caution=summary.caution.replace(
+ /^Explicit injected-registry simulation only; no formal A grant\. /,
+ 'Formal #341 sources use restored original Check/submitted contracts. ');
+report.splice(0,3,'# 正式数学证据分类：原813 + 新增365（仅原生）','',
+ '复用原始完整 Check 记录与准确来源，不代表学生掌握或新增方法标签。');
+mkdirSync(out,{recursive:true});
+write('tasks.json',{schema:summary.schema,rows});
+write('types.json',{rows:byType});
+write('validator-families.json',{rows:byFamily});
+write('uncertain.json',{rows:unknown});
+write('cross-course-risks.json',{rows:risk});
+write('summary.json',summary);
 writeFileSync(resolve(out,'REPORT.md'),report.join('\n')+'\n');
 console.log('LEARNING_EVIDENCE_AUDIT '+JSON.stringify(summary));
+}

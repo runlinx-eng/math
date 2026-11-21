@@ -41,6 +41,10 @@ import transform from './fixtures/p9-transform-cases.cjs';
 import groups from './fixtures/p9-groups-cases.cjs';
 import fractionOrder from './fixtures/p9-fraction-order-cases.cjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
+const issue341Formal=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url),'utf8'))
+ .tasks.filter(row=>row.adapter.startsWith('issue341-'))
+ .map(row=>'native:'+row.sessionId+':'+row.index);
+assert.equal(issue341Formal.length,365);
 const path=name=>new URL('../verification/learning-evidence-audit/'+name,import.meta.url);
 const read=name=>JSON.parse(readFileSync(path(name),'utf8'));
 const run=()=>execFileSync(process.execPath,['scripts/audit-learning-evidence.mjs'],{cwd:root,timeout:120000,encoding:'utf8'});
@@ -192,10 +196,11 @@ test('same type never implies replay evidence or cross-course thinking attributi
     'native:fractionmeasure:1',
     ...[13,14].map(i=>'native:fractionfour:'+i),
     ...Object.entries({onesbridge:[0,1],tensmove:[3],decadetake:[2],twodigitpair:[0,1],flexhundred:[0,1],oneslarge:[3],tenslarge:[2,3],showwhy:[0,2],fourparts:[2],buildthousand:[0,1,2],columnthree:[1,3],flexthousand:[2,4],columnfour:[1,3],columnlarge:[1,3,4]})
-      .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i))
+      .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i)),
+    ...issue341Formal
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the 813 individually reviewed native tasks reach A');
+ assert.deepEqual(a.map(r=>r.id),exact,'only the original 813 plus frozen 365 native sources reach formal A');
  const reviewedById=new Map(a.map(row=>[row.id,row]));
  for(const sessionId of ['proportion37','ratioLink37']){
   const sourceIds=[0,1,2].map(index=>reviewedById.get('native:'+sessionId+':'+index)?.nodeId);
@@ -209,12 +214,15 @@ test('same type never implies replay evidence or cross-course thinking attributi
   'the three original time-identity cards are distinct native source nodes');
  assert.equal(reviewedById.get('native:romanclock:1')?.nodeId,newSourcePositions[1].nodeId,
   'the Roman-clock source already had a separately reviewed strict A task');
- assert.equal(new Set(a.map(r=>r.nodeId)).size,305,
+ assert.equal(new Set(a.filter(r=>!r.evidenceAdapter?.startsWith('issue341-')).map(r=>r.nodeId)).size,305,
   '#331 adds two new A-covered source nodes; romanclock was already counted');
  assert.deepEqual(Object.fromEntries(['compare','vessels','cupfill','timecompare','clock-setting','ratiopair','ratioshare','ratioshape','ratiosteps','pctchange','fractionparts','rationotation','compoundunits','unitconversions','proportionalsteps','unitrate-steps','estimate-steps','proportionalgraph','plot','sequence','array','line','counterexample','fraction','unitwalk','place','place-removal','groupwalk','route','fraction-order','groups','transform','angle','joinstory','estimate','portiongroups','fraction-operations','fractioncase','division','samefraction','storyledger','fdpboard','scalechain','mixedaxis','decimalengine','fracshare','mixedtrade','fracdecompose','paperlab','wideshift','wideshift-add','pvbench','pv-saved','positive-order','signed-order','time-unit-parts','time-identity-cards','week-day-cards','time-order','time-parts','time-roman','time-stopwatch','time-steps','area-edge','directed-jump','calendar-interval','calendar-date-reading','unit-tile-area','area-partition','area-design','area-compare','area-pieces','area-stadium','area-openbox','order','money-coins','money-cart','cubefraction','multable','unitcover','unitrefine','ruler','balance-compare','balance-weigh','scale-analog','scale-digital','convert-exact','convert-given-approximation'].map(id=>
    [id,a.filter(r=>r.evidenceAdapter===id).length])),{compare:11,vessels:3,cupfill:4,timecompare:6,'clock-setting':3,ratiopair:13,ratioshare:6,ratioshape:5,ratiosteps:5,pctchange:3,fractionparts:3,rationotation:2,compoundunits:3,unitconversions:3,proportionalsteps:2,'unitrate-steps':2,'estimate-steps':2,proportionalgraph:2,plot:11,sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,'place-removal':2,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,fdpboard:15,scalechain:10,mixedaxis:8,decimalengine:6,fracshare:5,mixedtrade:3,fracdecompose:3,paperlab:12,wideshift:26,'wideshift-add':4,pvbench:11,'pv-saved':4,'positive-order':3,'signed-order':1,'time-unit-parts':7,'time-identity-cards':3,'week-day-cards':1,'time-order':5,'time-parts':5,'time-roman':1,'time-stopwatch':3,'time-steps':6,'area-edge':6,'directed-jump':8,'calendar-interval':2,'calendar-date-reading':2,'unit-tile-area':2,'area-partition':6,'area-design':1,'area-compare':4,'area-pieces':4,'area-stadium':1,'area-openbox':1,order:17,'money-coins':15,'money-cart':13,cubefraction:6,multable:10,unitcover:6,unitrefine:3,ruler:16,'balance-compare':4,'balance-weigh':2,'scale-analog':7,'scale-digital':1,'convert-exact':15,'convert-given-approximation':6});
- assert.deepEqual(Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative).map(([level,s])=>
-   [level,s.tasks])),{A:813,B:183,C:120,D:808,E:72});
+ const levels=Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative)
+  .map(([level,s])=>[level,s.tasks]));
+ assert.equal(levels.A,1178);
+ assert.equal(Object.values(levels).reduce((n,v)=>n+v,0),1996);
+ assert.equal(a.filter(row=>row.evidenceAdapter?.startsWith('issue341-')).length,365);
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,

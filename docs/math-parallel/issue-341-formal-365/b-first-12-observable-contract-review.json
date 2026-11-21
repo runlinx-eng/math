@@ -1,0 +1,197 @@
+{
+  "schema": "issue-341-b-focused-existing-contract-boundary/1",
+  "reviewedAsOf": "2026-11-21",
+  "method": "READ_ONLY_PREEXISTING_CANDIDATE_CODE_AND_NODE/CHROMIUM_EVIDENCE; NO_TEST_RERUN",
+  "evidenceHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceLockRun": 44920634904,
+  "status": "BOUNDED_MATH_CONTRACT_SCOPE_DOCUMENTED; NOT_FORMAL_STRICT_A",
+  "reviewedFamilies": 5,
+  "reviewedBPositions": 12,
+  "independentlyNumericallyCrosscheckedPreviously": 10,
+  "knownHistoricalGraphLimitPositions": 2,
+  "families": {
+    "P105": {
+      "claim": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
+      "exclusion": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
+      "why": "Test source includes out-of-range, remainder error, duplicate trials, missing divisor, forged event and stale Check fail-closed."
+    },
+    "P107": {
+      "claim": "For frozen 24 and 36, original row/column placements enumerate distinct unordered positive factor pairs, deduplicate rotation and retain the square 6x6 once, latest original Check.",
+      "exclusion": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks.",
+      "why": "Existing Node checks missing factor pairs, reversed duplicates, incorrect totals, forged saved snapshots and stale Check."
+    },
+    "P109": {
+      "claim": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
+      "exclusion": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
+      "why": "Existing Node checks non-maximal factor, signed and variable-power boundary, forged history, stale expansion and wrong-source exclusion."
+    },
+    "P116": {
+      "claim": "Original dotrecords:0 and dotrecords:2: actual recorded dot/revision events, exact integer frequency and zero-tick reconstruction, total-count/mode answers, latest original Check and offline persistence.",
+      "exclusion": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI.",
+      "why": "Existing Node checks wrong->correct revision, unsupported/forged history, approximate numeric representations, original task hashes and stale Check; native Next proof 28/28 is separately archived."
+    },
+    "P091": {
+      "claim": "Original allowedrange:0/1: final endpoint and direction, inclusive/exclusive relation, three actual probe outcomes compared as exact rational values, latest original Check.",
+      "exclusion": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements.",
+      "why": "Existing Node tests current endpoint state, rational samples below/on/above, forged verdicts, reversed inequality and stale Check; explicitly bounded in original replay comments."
+    }
+  },
+  "positions": [
+    {
+      "packet": "P091",
+      "position": "allowedrange:0",
+      "nodeId": "mt_i2F1nWxJjv",
+      "taskSha256": "6a24b358799b89eb9025160a1354eef7ada2762f2383937f6db4a55a357933fb",
+      "claimScope": "Original allowedrange:0/1: final endpoint and direction, inclusive/exclusive relation, three actual probe outcomes compared as exact rational values, latest original Check.",
+      "excludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P091",
+      "position": "allowedrange:1",
+      "nodeId": "mt_i2F1nWxJjv",
+      "taskSha256": "0fe9148d7f7be7a36807e72749a2649a52cb34dadad9b99ad35d3bd1d9387df4",
+      "claimScope": "Original allowedrange:0/1: final endpoint and direction, inclusive/exclusive relation, three actual probe outcomes compared as exact rational values, latest original Check.",
+      "excludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P105",
+      "position": "primetest:0",
+      "nodeId": "mt_y1XCVsIelg",
+      "taskSha256": "0ef3cabc2ab08b88c366890dee7cd0ca50656f97b7b588e16980d0cf305efb01",
+      "claimScope": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
+      "excludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P105",
+      "position": "primetest:1",
+      "nodeId": "mt_y1XCVsIelg",
+      "taskSha256": "019704b5ccd5cc445c9ef8c99e3299237c38566ef9047f7b528cf16cad9b1c0f",
+      "claimScope": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
+      "excludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P105",
+      "position": "primetest:2",
+      "nodeId": "mt_y1XCVsIelg",
+      "taskSha256": "6c8ce662b07bd596b4cd3507748253afbbdb8077576cfab1320df951597db761",
+      "claimScope": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
+      "excludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P107",
+      "position": "factorpairs:0",
+      "nodeId": "mt_nZkL5-XjRX",
+      "taskSha256": "3565ef221b2242c95b06538b5bb4337ed2408bffbe99bc8e115f49b87ab808b0",
+      "claimScope": "For frozen 24 and 36, original row/column placements enumerate distinct unordered positive factor pairs, deduplicate rotation and retain the square 6x6 once, latest original Check.",
+      "excludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P107",
+      "position": "factorpairs:1",
+      "nodeId": "mt_nZkL5-XjRX",
+      "taskSha256": "ff89024af2052faa14649d37531ef1de7a1f3d64d2c1b0ca2284a39df21e91d9",
+      "claimScope": "For frozen 24 and 36, original row/column placements enumerate distinct unordered positive factor pairs, deduplicate rotation and retain the square 6x6 once, latest original Check.",
+      "excludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P109",
+      "position": "factor35:0",
+      "nodeId": "mt_uESbzWCZIq",
+      "taskSha256": "1eef43242755c45b490f5c23af883e66af937bbaca5ded0304dc4293a2c3b50b",
+      "claimScope": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
+      "excludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P109",
+      "position": "factor35:1",
+      "nodeId": "mt_uESbzWCZIq",
+      "taskSha256": "f80339a8fcebaa6a454476eb91d5c0e3627c11d93f45d2648bb4cd8363d17408",
+      "claimScope": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
+      "excludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P109",
+      "position": "factor35:2",
+      "nodeId": "mt_uESbzWCZIq",
+      "taskSha256": "d51203982e18f2c0e6f2a8a3dd9a51d5dcfacd5aba4533fa6324edaa695cd5d6",
+      "claimScope": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
+      "excludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P116",
+      "position": "dotrecords:0",
+      "nodeId": "mt_JRzXQl9M7c",
+      "taskSha256": "83b39dbc6097e844eae70a5c3540e4796e8b2adc77af4b0b30e86a7c2e74f797",
+      "claimScope": "Original dotrecords:0 and dotrecords:2: actual recorded dot/revision events, exact integer frequency and zero-tick reconstruction, total-count/mode answers, latest original Check and offline persistence.",
+      "excludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_P116_NUMERIC_CHECK_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    },
+    {
+      "packet": "P116",
+      "position": "dotrecords:2",
+      "nodeId": "mt_JRzXQl9M7c",
+      "taskSha256": "d97c93f555545c8e11931bb88872b2a5980be361758ab47a3b6413ef661e890f",
+      "claimScope": "Original dotrecords:0 and dotrecords:2: actual recorded dot/revision events, exact integer frequency and zero-tick reconstruction, total-count/mode answers, latest original Check and offline persistence.",
+      "excludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI.",
+      "currentOriginalEvidence": "PASS_0cafdaed",
+      "sourceBinding": "PASS_new_source_lock_CI",
+      "previousIndependentNumericSpotcheck": "BOUNDED_P116_NUMERIC_CHECK_PASS",
+      "formalStrictA": "NOT_GRANTED",
+      "nextGate": "Human-approved mathematical claim boundaries and feedback label; staged shared integration; changed exact-HEAD CI/Artifact; post-merge new main Required/Fallback"
+    }
+  ]
+}

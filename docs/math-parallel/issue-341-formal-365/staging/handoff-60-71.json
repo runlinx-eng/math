@@ -1,0 +1,178 @@
+[
+  {
+    "group": "B",
+    "packet": "P053",
+    "family": "work/b/p053-data-kind-order",
+    "position": "checkrecords:1",
+    "nodeId": "mt_QHT16CrFO-",
+    "taskSha256": "278ca8beb1bb93f7d27e4a493d1b15a782c5d3b0d09de66a0cbeb0bfea530584",
+    "candidateCommit": "d4ba345634ba75213dc56720a9dbe3190610c8f9",
+    "patchSha256": "4885907237a8d7f71670bdb830b01dc1119d600a9274b64daad09a5858928882",
+    "receiptSha256": "1c7c3623aba33f97bc2ff9bd49624e9b54567edf3d85384005a831cac7ef711c"
+  },
+  {
+    "group": "B",
+    "packet": "P051",
+    "family": "work/b/p051-compound-unit-meaning",
+    "position": "rateWords37:3",
+    "nodeId": "mt_ATYLKt0je-",
+    "taskSha256": "2380528b4a76c0350550f79d39e6ce6d99f7a97a2234df27dac438a025da3828",
+    "candidateCommit": "a968df723037304b9a888ab4bd6bda662ac72759",
+    "patchSha256": "c14242a7f9f06f64c94b6d94ab57932aee9fb9503824469a3dc54ec2a3d2d05f",
+    "receiptSha256": "dbae79a658cda2509837073568a36e3acb201a6244c1f79b6b40492fccc93a52"
+  },
+  {
+    "group": "B",
+    "packet": "P050",
+    "family": "work/b/p050-drawing-area-scale",
+    "position": "model38:1",
+    "nodeId": "mt_8xVHooT4aI",
+    "taskSha256": "3dce8b0f18028dd0e9a1e0da065693f094ac01c7ae1ce603f8dbd3a932a7ac6a",
+    "candidateCommit": "bffba7988fb155f1b697abd83d863684fb81914d",
+    "patchSha256": "79d14c365d7f2e04a4b08ce32509b016ea73ef703a2b3f42e9273612ddd5100e",
+    "receiptSha256": "d88e9f090fbec37eb9d8ddb74d0ff5d87821c71e124ebaca46f42ba10f767ef6"
+  },
+  {
+    "group": "B",
+    "packet": "P049",
+    "family": "work/b/p049-ratio-smallest-basket",
+    "position": "advancedPlan38:1",
+    "nodeId": "mt_FieL-vVTI_",
+    "taskSha256": "fa0d999ca4035e429f02a11c1509d839b83aa3c2d90f8a7a4e94fbaab7c1bb58",
+    "candidateCommit": "64f7a69adce8fc3bd6cf8a6df133b8f5b78eece4",
+    "patchSha256": "dd341c77ecf9c34c30e9b4dc8a71f2b1a827f5fbf8969b9e360672f5d0b80c2b",
+    "receiptSha256": "39babceb2480f5f6f394efe11f29c4d1896927d89a399a9376a7fe1e2ce535cf"
+  },
+  {
+    "group": "B",
+    "packet": "P048",
+    "family": "work/b/p048-rope-cut-chain",
+    "position": "tools38:2",
+    "nodeId": "mt_20WfHhnL39",
+    "taskSha256": "1d134ac2b87eadd270a73c3a80ba64cac39b62dc353a12c81eaaeb40de868421",
+    "candidateCommit": "7618d76faa648fa350a2f98d626b2070e9346479",
+    "patchSha256": "2814b1249754cf551e558e102b2ba52bbe78bad74b83ae5bbd8606b91dae23f1",
+    "receiptSha256": "1cb05a186a23f5bd61c14497d040c0a11f6fe8c810ab560822cc809131eedb49"
+  },
+  {
+    "group": "B",
+    "packet": "P047",
+    "family": "work/b/p047-subtraction-first-error",
+    "position": "show38:2",
+    "nodeId": "mt_nyK25mNOeR",
+    "taskSha256": "73d9d9422d8c3d37827a2a60cee7fe1569918cef3caf367436433db30d095677",
+    "candidateCommit": "997460a2ed89a1af6631d3ed21a96fdc8efbb240",
+    "patchSha256": "eaf337a01ed62fe022f05b1f6f5e7225b591d729aafdc7ac060b62c3dfb314fa",
+    "receiptSha256": "68771a2299dd78ca2415ffad9cc232a1f78cb7602a81bb78ea129d751d326ad3"
+  },
+  {
+    "group": "B",
+    "packet": "P046",
+    "family": "work/b/p046-three-fourths-chain",
+    "position": "precise38:1",
+    "nodeId": "mt_mywsN77hGZ",
+    "taskSha256": "cefaa3569cd7ba1e23226ddafa13144f59d85507c64ec4b7329ed084815f4daa",
+    "candidateCommit": "fa972391046bcfcfd862c0cb1f00b502aa9db74f",
+    "patchSha256": "3e5c5faf289d235bb95acb25afa5944acbff7d13da40a4332aefab49b3b44482",
+    "receiptSha256": "da6910a247f09d016a837dd3cb8c8916d4985a6aef697cee6b825647b5edc01d"
+  },
+  {
+    "group": "B",
+    "packet": "P045",
+    "family": "work/b/p045-three-fifths-vs-half",
+    "position": "multiShape38:3",
+    "nodeId": "mt_SmghasIvbT",
+    "taskSha256": "41a3553b292ceb8f90e59f8d88a31c551e82e840f8dc0731e98fa9ed5cef0df9",
+    "candidateCommit": "7d819a4c21be3aad123b67d41236aad9885018ee",
+    "patchSha256": "a8eb11dd2e73159887b6ace7823726c43a292be35f2eda596a586e47a92d27e5",
+    "receiptSha256": "2c3483bca792d6abfd6fa25ff813a108f62881ccb5f1aff6dc954f17fc402211"
+  },
+  {
+    "group": "B",
+    "packet": "P044",
+    "family": "work/b/p044-straight-angle-gap",
+    "position": "structurechoices:4",
+    "nodeId": "mt_hlGKg5M7qJ",
+    "taskSha256": "112f7ddc8906f1877959c06fd93f9ba45c4b7692fbe931bcbed05d25228d47ec",
+    "candidateCommit": "6b100945609d07d6c96a4e0d42edeccc6b16d79a",
+    "patchSha256": "f4ddefb5c080c5cc9d258197b719cee87cfad7980ed1c1a923c12643ef538bb6",
+    "receiptSha256": "f2e988883479c2fc66daee86f5f2966daf0a8427a476e9f69ebf5180769e0e0e"
+  },
+  {
+    "group": "B",
+    "packet": "P044",
+    "family": "work/b/p044-straight-angle-gap",
+    "position": "structurechoices:5",
+    "nodeId": "mt_hlGKg5M7qJ",
+    "taskSha256": "49fbc21b0cede2f87329026e7a850ed0c83bf63d238f15240457a798509ec131",
+    "candidateCommit": "6b100945609d07d6c96a4e0d42edeccc6b16d79a",
+    "patchSha256": "f4ddefb5c080c5cc9d258197b719cee87cfad7980ed1c1a923c12643ef538bb6",
+    "receiptSha256": "f2e988883479c2fc66daee86f5f2966daf0a8427a476e9f69ebf5180769e0e0e"
+  },
+  {
+    "group": "B",
+    "packet": "P043",
+    "family": "work/b/p043-multiple-sheet",
+    "position": "factorcode:0",
+    "nodeId": "mt_bZC-wqWX7Y",
+    "taskSha256": "c64e95f3e9dcb84338bf5f6bd6ac7f9b765ccc79bd76630253f886cd1a4f06d8",
+    "candidateCommit": "28924333cd78b1005605c047ce4e7c73b6e05a43",
+    "patchSha256": "8857ceadf301a06d14927ff6c2bf86bb3deb3cc94e8b45df5c2b78435a90db9d",
+    "receiptSha256": "b094383ce8adcd615d862c340564de0fd11299910e847eb15c5ebf823142aebd"
+  },
+  {
+    "group": "B",
+    "packet": "P043",
+    "family": "work/b/p043-multiple-sheet",
+    "position": "factorcode:2",
+    "nodeId": "mt_bZC-wqWX7Y",
+    "taskSha256": "02cc487f0162817217469b0c4febffd4f77fa750a99d163ce6dbb934633fb987",
+    "candidateCommit": "28924333cd78b1005605c047ce4e7c73b6e05a43",
+    "patchSha256": "8857ceadf301a06d14927ff6c2bf86bb3deb3cc94e8b45df5c2b78435a90db9d",
+    "receiptSha256": "b094383ce8adcd615d862c340564de0fd11299910e847eb15c5ebf823142aebd"
+  },
+  {
+    "group": "B",
+    "packet": "P042",
+    "family": "work/b/p042-perimeter-area-trials",
+    "position": "formula36:0",
+    "nodeId": "mt_Jvg8X0N5u0",
+    "taskSha256": "74cc4ecfe01c8f0a94be73e0adce0f1551253436229a1cddcff340110cb17ac2",
+    "candidateCommit": "1e21ce38e1ec4bf0a5a092bdcc12a41539368ddd",
+    "patchSha256": "4530a93e54c1a107cc3501f7a1092b2d585279a63e69e9d957bd9179e223839c",
+    "receiptSha256": "b8deff27557f64ddd9f14b15d6b29086047252a2a8d8a9978e567dcc71333bee"
+  },
+  {
+    "group": "B",
+    "packet": "P042",
+    "family": "work/b/p042-perimeter-area-trials",
+    "position": "formula36:1",
+    "nodeId": "mt_Jvg8X0N5u0",
+    "taskSha256": "8be58c500d6013fde82e0564bedcd945ff51480699696eb155a7a11431bc01ab",
+    "candidateCommit": "1e21ce38e1ec4bf0a5a092bdcc12a41539368ddd",
+    "patchSha256": "4530a93e54c1a107cc3501f7a1092b2d585279a63e69e9d957bd9179e223839c",
+    "receiptSha256": "b8deff27557f64ddd9f14b15d6b29086047252a2a8d8a9978e567dcc71333bee"
+  },
+  {
+    "group": "B",
+    "packet": "P040",
+    "family": "work/b/p040-prism-face-volume",
+    "position": "prismFormulas:1",
+    "nodeId": "mt_tAJH5BrpOx",
+    "taskSha256": "b45dd74041a96817e559de29fb8f90db76a62cf9f1df86a0c2174b98b983bf44",
+    "candidateCommit": "506189de6dfd172da09b467375f2c0cbf98e6529",
+    "patchSha256": "eea7a7c299eddd23493bbd1f2c06762fd16157e720eed3c6d13f5f9ff6b938b5",
+    "receiptSha256": "5ff88309bb13c217690ea085cc24f146916abf14f5bde82f1ef4f4b8acc5bc53"
+  },
+  {
+    "group": "B",
+    "packet": "P040",
+    "family": "work/b/p040-prism-face-volume",
+    "position": "prismFormulas:2",
+    "nodeId": "mt_tAJH5BrpOx",
+    "taskSha256": "8e254d6e19b42c3b5f83d51e2d0efe858589bcec2bb74cc26945236f63c6c427",
+    "candidateCommit": "506189de6dfd172da09b467375f2c0cbf98e6529",
+    "patchSha256": "eea7a7c299eddd23493bbd1f2c06762fd16157e720eed3c6d13f5f9ff6b938b5",
+    "receiptSha256": "5ff88309bb13c217690ea085cc24f146916abf14f5bde82f1ef4f4b8acc5bc53"
+  }
+]

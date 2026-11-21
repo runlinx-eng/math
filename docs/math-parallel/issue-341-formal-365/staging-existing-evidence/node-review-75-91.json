@@ -1,0 +1,805 @@
+{
+  "schema": "issue-341-node-test-contract-inventory/1",
+  "sourceHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceHandoff": "3c4801f969f09a98c9f2bc4ed2f1cb953adbd530",
+  "start": 75,
+  "end": 92,
+  "records": [
+    {
+      "packet": "P035",
+      "positions": [
+        "chancetree:0",
+        "chancetree:2",
+        "chancesets:1"
+      ],
+      "commit": "e86b2d18bb45f2528c20965616995da5fdafefee",
+      "testPath": "tests/p9-p035-ordered-pair-grid.test.mjs",
+      "browserPath": "tests/p9-p035-ordered-pair-grid-browser.cjs",
+      "evidencePath": "dist/learning/p035-ordered-pair-grid-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P035 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P035",
+        "sourceCodeBytes": 5414,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P033",
+      "positions": [
+        "digitalcharts:0",
+        "digitalcharts:1",
+        "digitalcharts:2"
+      ],
+      "commit": "7c42279e00e2cc66320671004de1893d3bb40ce2",
+      "testPath": "tests/p9-p033-observation-tally.test.mjs",
+      "browserPath": "tests/p9-p033-observation-tally-browser.cjs",
+      "evidencePath": "dist/learning/p033-observation-tally-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P033 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P033",
+        "sourceCodeBytes": 5182,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P031",
+      "positions": [
+        "pattern39:0",
+        "pattern39:1",
+        "pattern39:2",
+        "pattern39:3"
+      ],
+      "commit": "2b5079688e32d5c463f062e66ae8354b80d87b2a",
+      "testPath": "tests/p9-p031-hundred-chart.test.mjs",
+      "browserPath": "tests/p9-p031-hundred-chart-browser.cjs",
+      "evidencePath": "dist/learning/p031-hundred-chart-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P031 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P031",
+        "sourceCodeBytes": 3784,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P028",
+      "positions": [
+        "trigbasics:0",
+        "trigbasics:1",
+        "trigbasics:2",
+        "trigbasics:3",
+        "trigbasics:4"
+      ],
+      "commit": "799feec04cebede616f72c156e390742e10122d1",
+      "testPath": "tests/p9-p028-trig-roles-and-ratios.test.mjs",
+      "browserPath": "tests/p9-p028-trig-roles-and-ratios-browser.cjs",
+      "evidencePath": "dist/learning/p028-trig-roles-and-ratios-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P028 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P028",
+        "sourceCodeBytes": 10525,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P027",
+      "positions": [
+        "modelChoice38:0",
+        "advancedPlan38:0"
+      ],
+      "commit": "6b30e4bb7884b6d6d2eab902d16acb01995649b3",
+      "testPath": "tests/p9-p027-equal-ratio-shares.test.mjs",
+      "browserPath": "tests/p9-p027-equal-ratio-shares-browser.cjs",
+      "evidencePath": "dist/learning/p027-equal-ratio-shares-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P027 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P027",
+        "sourceCodeBytes": 3986,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P025",
+      "positions": [
+        "numberworld:0",
+        "numberworld:1",
+        "numberworld:2",
+        "decimalorder2:1",
+        "raggeddecimals:0",
+        "raggeddecimals:2"
+      ],
+      "commit": "33300dd67a7361a3aac2940fbd4e5aeedac87d30",
+      "testPath": "tests/p9-p025-decimal-remainders-and-place-values.test.mjs",
+      "browserPath": "tests/p9-p025-decimal-remainders-and-place-values-browser.cjs",
+      "evidencePath": "dist/learning/p025-decimal-remainders-and-place-values-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P025 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P025",
+        "sourceCodeBytes": 7798,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P023",
+      "positions": [
+        "displaychoices:0",
+        "displaychoices:2",
+        "scattercraft:0",
+        "scattercraft:1",
+        "scattercraft:2",
+        "scattermeaning:0",
+        "scattermeaning:1",
+        "scattermeaning:2",
+        "scattermeaning:3",
+        "statwords:2"
+      ],
+      "commit": "e6086a47c19442942f4219ff759e589660f1dcf0",
+      "testPath": "tests/p9-p023-graph-interpretation.test.mjs",
+      "browserPath": "tests/p9-p023-graph-interpretation-browser.cjs",
+      "evidencePath": "dist/learning/p023-graph-interpretation-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P023 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P023",
+        "sourceCodeBytes": 16641,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P020",
+      "positions": [
+        "polyperim:1",
+        "triArea:0",
+        "triArea:1",
+        "triArea:2",
+        "triArea:3",
+        "circleArea:0",
+        "circleArea:1"
+      ],
+      "commit": "446ab74ffad4c383432d6e889ca551d1cf371947",
+      "testPath": "tests/p9-p020-boundary-and-area-construction.test.mjs",
+      "browserPath": "tests/p9-p020-boundary-and-area-construction-browser.cjs",
+      "evidencePath": "dist/learning/p020-boundary-and-area-construction-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P020 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P020",
+        "sourceCodeBytes": 12976,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P019",
+      "positions": [
+        "structurebridge:2",
+        "percentpatterns:2",
+        "percentpatterns:3",
+        "thousandparts:0",
+        "thousandparts:2",
+        "thousandparts:3",
+        "fdpswitch:1",
+        "pctCalculate37:0",
+        "pctCalculate37:2"
+      ],
+      "commit": "39e073968d8da70770e7b4b9bcbd6298edc66c5f",
+      "testPath": "tests/p9-p019-equivalent-names-and-percent.test.mjs",
+      "browserPath": "tests/p9-p019-equivalent-names-and-percent-browser.cjs",
+      "evidencePath": "dist/learning/p019-equivalent-names-and-percent-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P019 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P019",
+        "sourceCodeBytes": 9568,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P018",
+      "positions": [
+        "trialcompare:0",
+        "trialcompare:1",
+        "trialestimate:0",
+        "trialestimate:1",
+        "trialestimate:2",
+        "chanceindependent:0",
+        "chanceindependent:1",
+        "chancetree:1"
+      ],
+      "commit": "05639387b353a80e9d71b1dfffbef29582f0bfe6",
+      "testPath": "tests/p9-p018-probability-observations.test.mjs",
+      "browserPath": "tests/p9-p018-probability-observations-browser.cjs",
+      "evidencePath": "dist/learning/p018-probability-observations-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P018 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P018",
+        "sourceCodeBytes": 12909,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P017",
+      "positions": [
+        "negativefirst:0",
+        "negativecontext:2",
+        "numberworld:4",
+        "numberworld:5"
+      ],
+      "commit": "015a3323d00708756de6a1213bc83476a6f78d4e",
+      "testPath": "tests/p9-p017-signed-walk-and-between.test.mjs",
+      "browserPath": "tests/p9-p017-signed-walk-and-between-browser.cjs",
+      "evidencePath": "dist/learning/p017-signed-walk-and-between-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P017 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P017",
+        "sourceCodeBytes": 4959,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P016",
+      "positions": [
+        "productways:3",
+        "chanceline:1",
+        "linemark:0",
+        "measurecalc:5",
+        "temperaturechange:4",
+        "rules34:3",
+        "bigmissing35:1",
+        "systems35:2",
+        "systems35:3",
+        "linear36:3",
+        "proportionGraph37:1"
+      ],
+      "commit": "acb26e3c012f2726b422474da88d677908184f2f",
+      "testPath": "tests/p9-p016-model-and-rule-checks.test.mjs",
+      "browserPath": "tests/p9-p016-model-and-rule-checks-browser.cjs",
+      "evidencePath": "dist/learning/p016-model-and-rule-checks-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P016 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P016",
+        "sourceCodeBytes": 18345,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P014",
+      "positions": [
+        "scaleandpair:0",
+        "scaleandpair:2",
+        "combineproducts:1",
+        "timesmeaning:0",
+        "timesmeaning:1",
+        "timesmeaning:2",
+        "timesproblems:0",
+        "timesproblems:1",
+        "timesproblems:2",
+        "timesproblems:3",
+        "modelrecipe:1",
+        "modelrecipe:2",
+        "viewlinks:0",
+        "storyfraction:1",
+        "fractionmeasure:0",
+        "fractionmeasure:2",
+        "structurechoices:2",
+        "structurechoices:3"
+      ],
+      "commit": "c4a58c348b6341d1ac1af2eaa232c50a6626a3ab",
+      "testPath": "tests/p9-p014-multiplicative-bars.test.mjs",
+      "browserPath": "tests/p9-p014-multiplicative-bars-browser.cjs",
+      "evidencePath": "dist/learning/p014-multiplicative-bars-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P014 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P014",
+        "sourceCodeBytes": 13202,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P013",
+      "positions": [
+        "factsfive:1",
+        "bonds20:2",
+        "factsten:1",
+        "factstwenty:2",
+        "scaleadd:0",
+        "calculatormeaning:0",
+        "calculatormeaning:1",
+        "calculatormeaning:2",
+        "calculatormeaning:3",
+        "calculatormeaning:4",
+        "calculatormeaning:5",
+        "estimatecheck:0",
+        "estimatecheck:1",
+        "estimatecheck:2",
+        "decimalestimate:0",
+        "decimalestimate:1",
+        "decimalestimate:2",
+        "estimatepeople:0",
+        "estimatepeople:1",
+        "estimatepeople:2"
+      ],
+      "commit": "adcf8e19b4b636c410f710cc1cf680ad12ba02a9",
+      "testPath": "tests/p9-p013-recall-and-estimation.test.mjs",
+      "browserPath": "tests/p9-p013-recall-and-estimation-browser.cjs",
+      "evidencePath": "dist/learning/p013-recall-and-estimation-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P013 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P013",
+        "sourceCodeBytes": 16445,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P012",
+      "positions": [
+        "timetable:0",
+        "timetable:2",
+        "timetable:3",
+        "practicalmeasure:2",
+        "eventorder:0",
+        "weekmonth:2",
+        "calendarfacts:1",
+        "calendarfacts:2"
+      ],
+      "commit": "f1238d9ddd14f2aa3d2610452a5b6b04ce48425e",
+      "testPath": "tests/p9-p012-time-calendar-and-timetables.test.mjs",
+      "browserPath": "tests/p9-p012-time-calendar-and-timetables-browser.cjs",
+      "evidencePath": "dist/learning/p012-time-calendar-and-timetables-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P012 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P012",
+        "sourceCodeBytes": 12581,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P011",
+      "positions": [
+        "coinvalues:0",
+        "coinvalues:1",
+        "coinvalues:2",
+        "modmoney:0",
+        "auscoins:0",
+        "moneycalc:0",
+        "moneycalc:1",
+        "moneycalc:2",
+        "measuremoney:1",
+        "roughmoney:0",
+        "roughmoney:1",
+        "roughmoney:2",
+        "budgetchoices:1",
+        "budgetchoices:2",
+        "budgetchoices:3",
+        "discounts:0",
+        "discounts:1",
+        "moneysheet:0",
+        "moneysheet:1",
+        "moneysheet:2",
+        "pctCalculate37:1",
+        "rateUnit37:1",
+        "tools38:1",
+        "lifemath38:0",
+        "plan38:1"
+      ],
+      "commit": "c30476bf09697de618674c75dd7c9bae930b0e4e",
+      "testPath": "tests/p9-p011-measurement-models.test.mjs",
+      "browserPath": "tests/p9-p011-measurement-models-browser.cjs",
+      "evidencePath": "dist/learning/p011-measurement-models-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P011 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P011",
+        "sourceCodeBytes": 27112,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    },
+    {
+      "packet": "P010",
+      "positions": [
+        "threepiles:0",
+        "threepiles:1",
+        "threepiles:2",
+        "storytwo:0",
+        "storytwo:1",
+        "storytwo:2",
+        "storytwo:3",
+        "storytwo:4",
+        "storytwo:5",
+        "plansteps:1",
+        "plansteps:2",
+        "plansteps:3",
+        "plansteps:4",
+        "combineproducts:3",
+        "storyoperations:0",
+        "storyoperations:1",
+        "storyoperations:2",
+        "fractionchoices:0",
+        "fractionchoices:2",
+        "bigmissing35:2",
+        "objects38:2",
+        "lifemath38:1",
+        "multi38:0",
+        "multiShape38:0"
+      ],
+      "commit": "2dccf637274fb9c84ad0c047160af42a366bc92e",
+      "testPath": "tests/p9-p010-story-operation-plans.test.mjs",
+      "browserPath": "tests/p9-p010-story-operation-plans-browser.cjs",
+      "evidencePath": "dist/learning/p010-story-operation-plans-evidence.js",
+      "nodeTests": 1,
+      "nodeTestTitles": [
+        "P010 locks ${sessionId}:${index} and rejects stale or modified work"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": false,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P010",
+        "sourceCodeBytes": 23407,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": true
+      }
+    }
+  ]
+}

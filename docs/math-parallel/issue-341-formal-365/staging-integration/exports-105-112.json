@@ -1,0 +1,214 @@
+{
+  "schema": "issue-341-frozen-source-export-map/1",
+  "begin": 105,
+  "end": 113,
+  "records": [
+    {
+      "packet": "P018",
+      "path": "dist/learning/p018-probability-observations-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p018ProbabilityObservationsBinding"
+      ],
+      "replays": [
+        "replayP018ProbabilityObservationsEvidence"
+      ],
+      "submitted": [
+        "submittedP018ProbabilityObservationsEvidence"
+      ],
+      "sourceExports": [
+        "P018_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-p22-experiment",
+        "x-p22-draw"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 12909
+    },
+    {
+      "packet": "P017",
+      "path": "dist/learning/p017-signed-walk-and-between-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p017SignedWalkAndBetweenBinding"
+      ],
+      "replays": [
+        "replayP017SignedWalkAndBetweenEvidence"
+      ],
+      "submitted": [
+        "submittedP017SignedWalkAndBetweenEvidence"
+      ],
+      "sourceExports": [
+        "P017_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-signedline"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4959
+    },
+    {
+      "packet": "P016",
+      "path": "dist/learning/p016-model-and-rule-checks-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p016ModelAndRuleChecksBinding"
+      ],
+      "replays": [
+        "replayP016ModelAndRuleChecksEvidence"
+      ],
+      "submitted": [
+        "submittedP016ModelAndRuleChecksEvidence"
+      ],
+      "sourceExports": [
+        "P016_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-divreverse",
+        "x-p22-pick",
+        "x-s23-notation",
+        "x-m29-interval",
+        "x-p34-ambiguity",
+        "x-a35-try",
+        "x-a35-plot"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 18345
+    },
+    {
+      "packet": "P014",
+      "path": "dist/learning/p014-multiplicative-bars-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p014MultiplicativeBarsBinding"
+      ],
+      "replays": [
+        "replayP014MultiplicativeBarsEvidence"
+      ],
+      "submitted": [
+        "submittedP014MultiplicativeBarsEvidence"
+      ],
+      "sourceExports": [
+        "P014_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-comparebars"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 13202
+    },
+    {
+      "packet": "P013",
+      "path": "dist/learning/p013-recall-and-estimation-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p013RecallAndEstimationBinding"
+      ],
+      "replays": [
+        "replayP013RecallAndEstimationEvidence"
+      ],
+      "submitted": [
+        "submittedP013RecallAndEstimationEvidence"
+      ],
+      "sourceExports": [
+        "P013_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-recallbench",
+        "x-estimate"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 16445
+    },
+    {
+      "packet": "P012",
+      "path": "dist/learning/p012-time-calendar-and-timetables-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p012TimeCalendarAndTimetablesBinding"
+      ],
+      "replays": [
+        "replayP012TimeCalendarAndTimetablesEvidence"
+      ],
+      "submitted": [
+        "submittedP012TimeCalendarAndTimetablesEvidence"
+      ],
+      "sourceExports": [
+        "P012_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-timetable",
+        "x-m29-clock",
+        "x-t32-order",
+        "x-t32-units",
+        "x-t32-calendar"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 12581
+    },
+    {
+      "packet": "P011",
+      "path": "dist/learning/p011-measurement-models-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p011MeasurementModelsBinding"
+      ],
+      "replays": [
+        "replayP011MeasurementModelsEvidence"
+      ],
+      "submitted": [
+        "submittedP011MeasurementModelsEvidence"
+      ],
+      "sourceExports": [
+        "P011_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-m33-sort",
+        "x-m33-compare",
+        "x-m33-model"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 27112
+    },
+    {
+      "packet": "P010",
+      "path": "dist/learning/p010-story-operation-plans-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p010StoryOperationPlansBinding"
+      ],
+      "replays": [
+        "replayP010StoryOperationPlansEvidence"
+      ],
+      "submitted": [
+        "submittedP010StoryOperationPlansEvidence"
+      ],
+      "sourceExports": [
+        "P010_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-storyparts",
+        "x-storyplan"
+      ],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 23407
+    }
+  ]
+}

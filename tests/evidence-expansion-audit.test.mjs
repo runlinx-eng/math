@@ -1,13 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {auditEvidenceExpansion,taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
+import {auditEvidenceExpansion as runExpansion,taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {LESSONS} from '../dist/learning/catalog.js';
 import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback.js';
 
-const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
+const fullManifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
+const manifest={...fullManifest,tasks:fullManifest.tasks.filter(row=>!row.adapter.startsWith('issue341-'))};
+// Original 813 negative mutation cases remain unchanged; the default CLI
+// checks all 1178 with preserved original full Check records.
+const auditEvidenceExpansion=(options={})=>runExpansion({manifest,...options});
 const clone=()=>structuredClone(manifest);
 const has=(report,kind)=>report.defects.some(defect=>defect.kind===kind);
 const first=manifest.tasks[0],key=first.sessionId+':'+first.index;
@@ -39,7 +43,7 @@ test('reviewed task disappearance, content drift and missing binding fail withou
  const result=auditEvidenceExpansion({adapters:changed(adapter=>({...adapter,
   binding:(task,context)=>targeted(context)?null:adapter.binding(task,context)}))});
  assert.ok(result.defects.some(defect=>defect.id===key&&defect.kind==='reviewed-binding-missing-or-changed'));
- assert.deepEqual(JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url))),manifest);
+ assert.deepEqual(JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url))),fullManifest);
 });
 
 test('new or overlapping bindings cannot authorize themselves through the registry',()=>{

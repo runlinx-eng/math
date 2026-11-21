@@ -1,0 +1,353 @@
+{
+  "schema": "issue-341-frozen-source-export-map/1",
+  "begin": 15,
+  "end": 30,
+  "records": [
+    {
+      "packet": "P007P",
+      "path": "dist/learning/p007p-circle-terminology-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeCircleBinding"
+      ],
+      "replays": [
+        "replayNativeCircleEvidence"
+      ],
+      "submitted": [
+        "submittedNativeCircleEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-circle"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6715
+    },
+    {
+      "packet": "P009A",
+      "path": "dist/learning/p009a-ten-landmark-evidence.js",
+      "group": "P009",
+      "bindings": [
+        "p009aTenLandmarkBinding"
+      ],
+      "replays": [
+        "replayP009ATenLandmarkEvidence"
+      ],
+      "submitted": [
+        "submittedP009ATenLandmarkEvidence"
+      ],
+      "sourceExports": [
+        "P009A_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5612
+    },
+    {
+      "packet": "P009B",
+      "path": "dist/learning/p009b-add-subtract-family-evidence.js",
+      "group": "P009",
+      "bindings": [
+        "p009bAddSubtractFamilyBinding"
+      ],
+      "replays": [
+        "replayP009BAddSubtractFamilyEvidence"
+      ],
+      "submitted": [
+        "submittedP009BAddSubtractFamilyEvidence"
+      ],
+      "sourceExports": [
+        "P009B_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5021
+    },
+    {
+      "packet": "P009C",
+      "path": "dist/learning/p009c-three-group-pairings-evidence.js",
+      "group": "P009",
+      "bindings": [
+        "p009cThreeGroupPairingsBinding"
+      ],
+      "replays": [
+        "replayP009CThreeGroupPairingsEvidence"
+      ],
+      "submitted": [
+        "submittedP009CThreeGroupPairingsEvidence"
+      ],
+      "sourceExports": [
+        "P009C_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4917
+    },
+    {
+      "packet": "P009D",
+      "path": "dist/learning/p009d-inverse-calculation-evidence.js",
+      "group": "P009",
+      "bindings": [
+        "p009dInverseCalculationBinding"
+      ],
+      "replays": [
+        "replayP009DInverseCalculationEvidence"
+      ],
+      "submitted": [
+        "submittedP009DInverseCalculationEvidence"
+      ],
+      "sourceExports": [
+        "P009D_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5311
+    },
+    {
+      "packet": "P009E",
+      "path": "dist/learning/p009e-decimal-complements-evidence.js",
+      "group": "P009",
+      "bindings": [
+        "p009eDecimalComplementsBinding"
+      ],
+      "replays": [
+        "replayP009EDecimalComplementsEvidence"
+      ],
+      "submitted": [
+        "submittedP009EDecimalComplementsEvidence"
+      ],
+      "sourceExports": [
+        "P009E_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3076
+    },
+    {
+      "packet": "P117",
+      "path": "dist/learning/p117-fractionfour-directed-jump-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p117DirectedJumpBinding"
+      ],
+      "replays": [
+        "replayP117DirectedJumpEvidence"
+      ],
+      "submitted": [
+        "submittedP117DirectedJumpEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-directedjump"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3500
+    },
+    {
+      "packet": "P116",
+      "path": "dist/learning/p116-integer-dotplot-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p116IntegerDotplotBinding"
+      ],
+      "replays": [
+        "replayP116IntegerDotplotEvidence"
+      ],
+      "submitted": [
+        "submittedP116IntegerDotplotEvidence"
+      ],
+      "sourceExports": [
+        "P116_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-dotdraw"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6944
+    },
+    {
+      "packet": "P115",
+      "path": "dist/learning/p115-signedpoints-quadrants-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p115QuadrantBinding"
+      ],
+      "replays": [
+        "replayP115QuadrantEvidence"
+      ],
+      "submitted": [
+        "submittedP115QuadrantEvidence"
+      ],
+      "sourceExports": [
+        "P115_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-p24-grid"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6619
+    },
+    {
+      "packet": "P114",
+      "path": "dist/learning/p114-solidstack-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p114SolidStackBinding"
+      ],
+      "replays": [
+        "replayP114SolidStackEvidence"
+      ],
+      "submitted": [
+        "submittedP114SolidStackEvidence"
+      ],
+      "sourceExports": [
+        "P114_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-g27-build"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3895
+    },
+    {
+      "packet": "P113",
+      "path": "dist/learning/p113-tens-removal-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p113TensRemovalBinding"
+      ],
+      "replays": [
+        "replayP113TensRemovalEvidence"
+      ],
+      "submitted": [
+        "submittedP113TensRemovalEvidence"
+      ],
+      "sourceExports": [
+        "P113_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-placecalc"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6029
+    },
+    {
+      "packet": "P112",
+      "path": "dist/learning/p112-fair-die-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p112FairDieBinding"
+      ],
+      "replays": [
+        "replayP112FairDieEvidence"
+      ],
+      "submitted": [
+        "submittedP112FairDieEvidence"
+      ],
+      "sourceExports": [
+        "P112_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-p22-pick"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6455
+    },
+    {
+      "packet": "P111",
+      "path": "dist/learning/p111-bilateral-equations-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p111BilateralEquationsBinding"
+      ],
+      "replays": [
+        "replayP111BilateralEquationsEvidence"
+      ],
+      "submitted": [
+        "submittedP111BilateralEquationsEvidence"
+      ],
+      "sourceExports": [
+        "P111_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-a35-balance"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 7436
+    },
+    {
+      "packet": "P110",
+      "path": "dist/learning/p110-mean-distance-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p110MeanDistanceBinding"
+      ],
+      "replays": [
+        "replayP110MeanDistanceEvidence"
+      ],
+      "submitted": [
+        "submittedP110MeanDistanceEvidence"
+      ],
+      "sourceExports": [
+        "P110_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-meandistance"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5137
+    },
+    {
+      "packet": "P109",
+      "path": "dist/learning/p109-common-factor-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p109CommonFactorBinding"
+      ],
+      "replays": [
+        "replayP109CommonFactorEvidence"
+      ],
+      "submitted": [
+        "submittedP109CommonFactorEvidence"
+      ],
+      "sourceExports": [
+        "P109_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-a35-factor"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4527
+    }
+  ]
+}

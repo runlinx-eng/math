@@ -1,0 +1,24 @@
+[
+  {
+    "group": "P009",
+    "packet": "P009E",
+    "family": "work/a/p009e-decimal-complements",
+    "position": "decimalmeasure3:3",
+    "nodeId": "mt_sA2OvTiech",
+    "taskSha256": "3163da45832ea57c20e567390b5c7da7838be4725c5ad1be335f45d2af50612b",
+    "candidateCommit": "685681b9779a871a6ebd849fa3676c23df60ce26",
+    "patchSha256": "c7d5744f1cc9869bdcfe26c846820c5c459c35e0479c340d3d33f13e9ab086fe",
+    "receiptSha256": "03e9c8c7774c1be4f196c8c54116389788c0788f9b43eaf6d8669a398e901af0"
+  },
+  {
+    "group": "P009",
+    "packet": "P009E",
+    "family": "work/a/p009e-decimal-complements",
+    "position": "decimalmeasure3:4",
+    "nodeId": "mt_sA2OvTiech",
+    "taskSha256": "b2729bf3190891d1f7010199cb36e22cec91cd86244ee0d161b86785101a8efb",
+    "candidateCommit": "685681b9779a871a6ebd849fa3676c23df60ce26",
+    "patchSha256": "c7d5744f1cc9869bdcfe26c846820c5c459c35e0479c340d3d33f13e9ab086fe",
+    "receiptSha256": "03e9c8c7774c1be4f196c8c54116389788c0788f9b43eaf6d8669a398e901af0"
+  }
+]

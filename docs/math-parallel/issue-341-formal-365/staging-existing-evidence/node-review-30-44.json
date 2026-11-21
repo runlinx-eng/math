@@ -1,0 +1,645 @@
+{
+  "schema": "issue-341-node-test-contract-inventory/1",
+  "sourceHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceHandoff": "3c4801f969f09a98c9f2bc4ed2f1cb953adbd530",
+  "start": 30,
+  "end": 45,
+  "records": [
+    {
+      "packet": "P087",
+      "positions": [
+        "splitpairs:0",
+        "splitpairs:1"
+      ],
+      "commit": "9a186c4d9fd6541069b970e7088af31cc7bfc08f",
+      "testPath": "tests/p9-p087-unordered-split-pairs.test.mjs",
+      "browserPath": "tests/p9-p087-unordered-split-pairs-browser.cjs",
+      "evidencePath": "dist/learning/p087-unordered-split-pairs-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P087 locks the two native source positions and mathematical prompts",
+        "P087 enumerates the 5 partitions including zero and accepts any 3 distinct ones for 8",
+        "P087 rejects a correct-looking equation for the wrong piles and repeated reversed placement",
+        "P087 permits more genuinely distinct pairs than requested for the larger whole",
+        "P087 rejects inconsistent token sets, equations, counts and order of saved snapshots",
+        "P087 excludes directed splits, ten partners, a practice slot and generated bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P087",
+        "sourceCodeBytes": 3460,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P086",
+      "positions": [
+        "solidSurface:1"
+      ],
+      "commit": "5d57c622b0cf8757150c5dc1842a848701d60253",
+      "testPath": "tests/p9-p086-joined-solid-surfaces.test.mjs",
+      "browserPath": "tests/p9-p086-joined-solid-surfaces-browser.cjs",
+      "evidencePath": "dist/learning/p086-joined-solid-surfaces-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P086 locks the original joined-solid prompt, faces, and fingerprint",
+        "P086 computes the exposed faces, both hidden faces and unchanged volume",
+        "P086 requires a real separation, rejoin, rotation and all five exterior groups",
+        "P086 checks boundary versus volume calculations and requires a fresh Check",
+        "P086 excludes inconsistent snapshots and unrelated hidden actions",
+        "P086 excludes the precursor prism, L-shaped volume, practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P086",
+        "sourceCodeBytes": 4390,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P085",
+      "positions": [
+        "pythagoras:2",
+        "pythagoras:3",
+        "pythagoras:4"
+      ],
+      "commit": "300332361f48c9636cd4b349e80c4c332f988c00",
+      "testPath": "tests/p9-p085-pythagoras-length.test.mjs",
+      "browserPath": "tests/p9-p085-pythagoras-length-browser.cjs",
+      "evidencePath": "dist/learning/p085-pythagoras-length-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P085 locks all three original pythagoras length prompts and SHA-256 fingerprints",
+        "P085 independently verifies hypotenuse addition, leg subtraction and coordinate distance",
+        "P085 rejects approximate inputs accepted by original tolerance and requires exact integer values",
+        "P085 requires a fresh Check after editing and preserves failed prior attempts",
+        "P085 rejects tampered history, forged board state, malformed indices and non-coord corner actions",
+        "P085 excludes pythagoras precursors, practice index and bridge tasks"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P085",
+        "sourceCodeBytes": 7773,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P084",
+      "positions": [
+        "expressions:0",
+        "expressions:1",
+        "expressions:2"
+      ],
+      "commit": "5363f7c82a152e275a6e004ac36cf425e8163b9f",
+      "testPath": "tests/p9-p084-expression-build.test.mjs",
+      "browserPath": "tests/p9-p084-expression-build-browser.cjs",
+      "evidencePath": "dist/learning/p084-expression-build-evidence.js",
+      "nodeTests": 4,
+      "nodeTestTitles": [
+        "P084 locks fingerprints and replays AST build including syntax error recovery",
+        "P084 rejects missing parentheses and requires fresh Check",
+        "P084 requires a new build and Check after the original reset",
+        "P084 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P084",
+        "sourceCodeBytes": 4253,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P083",
+      "positions": [
+        "chancesim:0",
+        "chancesim:1",
+        "chancesim:2"
+      ],
+      "commit": "177f7e428941439c3a99c12855116e2e21d677c5",
+      "testPath": "tests/p9-p083-chance-mapping.test.mjs",
+      "browserPath": "tests/p9-p083-chance-mapping-browser.cjs",
+      "evidencePath": "dist/learning/p083-chance-mapping-evidence.js",
+      "nodeTests": 3,
+      "nodeTestTitles": [
+        "P083 locks all 3 chancesim fingerprints and replays deterministic PRNG runs",
+        "P083 rejects wrong rate and requires fresh Check",
+        "P083 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P083",
+        "sourceCodeBytes": 5889,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P082",
+      "positions": [
+        "shapeuses:0",
+        "shapeuses:1",
+        "shapeuses:2"
+      ],
+      "commit": "54d3344b387262a66b543eaf79a4fcc0c867ef7e",
+      "testPath": "tests/p9-p082-shape-uses.test.mjs",
+      "browserPath": "tests/p9-p082-shape-uses-browser.cjs",
+      "evidencePath": "dist/learning/p082-shape-uses-evidence.js",
+      "nodeTests": 3,
+      "nodeTestTitles": [
+        "P082 locks all 3 shapeuses fingerprints and replays roll/stack/pack",
+        "P082 requires fresh Check and rejects wrong answer",
+        "P082 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P082",
+        "sourceCodeBytes": 5940,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P081",
+      "positions": [
+        "datasummary:0",
+        "datasummary:1",
+        "datasummary:2"
+      ],
+      "commit": "c2de9782a29a327eea17a7c19f01c1d62f9c8ab1",
+      "testPath": "tests/p9-p081-stat-brief.test.mjs",
+      "browserPath": "tests/p9-p081-stat-brief-browser.cjs",
+      "evidencePath": "dist/learning/p081-stat-brief-evidence.js",
+      "nodeTests": 3,
+      "nodeTestTitles": [
+        "P081 locks all 3 datasummary fingerprints and replays statbrief reports",
+        "P081 rejects mismatched n and requires fresh Check",
+        "P081 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P081",
+        "sourceCodeBytes": 5766,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P080",
+      "positions": [
+        "argument38:0",
+        "argument38:2"
+      ],
+      "commit": "7f3be4257d25cab5c09a4255afa840caaafaac06",
+      "testPath": "tests/p9-p080-argument-chain.test.mjs",
+      "browserPath": "tests/p9-p080-argument-chain-browser.cjs",
+      "evidencePath": "dist/learning/p080-argument-chain-evidence.js",
+      "nodeTests": 5,
+      "nodeTestTitles": [
+        "P080 locks exact source tasks and SHA-256 fingerprints",
+        "P080 verifies all valid argument chains and undo recovery",
+        "P080 rejects decoy cards, missing error mark and stale Check",
+        "P080 rejects tampered history and disallowed actions",
+        "P080 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P080",
+        "sourceCodeBytes": 4905,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P079",
+      "positions": [
+        "netSurface:0",
+        "netSurface:1"
+      ],
+      "commit": "96ab1fb4c3aae65285e108d83526e5b7b6a299f1",
+      "testPath": "tests/p9-p079-net-surface.test.mjs",
+      "browserPath": "tests/p9-p079-net-surface-browser.cjs",
+      "evidencePath": "dist/learning/p079-net-surface-evidence.js",
+      "nodeTests": 4,
+      "nodeTestTitles": [
+        "P079 locks fingerprints",
+        "P079 verifies box 94 and pyramid 96",
+        "P079 requires fresh Check and rejects wrong area/unit",
+        "P079 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P079",
+        "sourceCodeBytes": 8380,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P077",
+      "positions": [
+        "digitalsets:0",
+        "digitalsets:1"
+      ],
+      "commit": "92da3b7319d4aa02f1172077c92b0f3263459ae6",
+      "testPath": "tests/p9-p077-digital-sets.test.mjs",
+      "browserPath": "tests/p9-p077-digital-sets-browser.cjs",
+      "evidencePath": "dist/learning/p077-digital-sets-evidence.js",
+      "nodeTests": 3,
+      "nodeTestTitles": [
+        "P077 locks both digitalsets fingerprints and verifies exact bar heights",
+        "P077 rejects wrong bar height and requires fresh Check",
+        "P077 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P077",
+        "sourceCodeBytes": 5075,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P076",
+      "positions": [
+        "measurestory:1",
+        "measurestory:2"
+      ],
+      "commit": "01f10aaeab9b88736b1e089dbf666a9572b97afb",
+      "testPath": "tests/p9-p076-measure-story.test.mjs",
+      "browserPath": "tests/p9-p076-measure-story-browser.cjs",
+      "evidencePath": "dist/learning/p076-measure-story-evidence.js",
+      "nodeTests": 3,
+      "nodeTestTitles": [
+        "P076 locks measurestory:1,2 fingerprints and replays context and half-hour rounding",
+        "P076 requires fresh Check and rejects wrong choices or conclusion",
+        "P076 excludes measurestory:0, practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P076",
+        "sourceCodeBytes": 6690,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P075",
+      "positions": [
+        "scaleandpair:1",
+        "combineproducts:2"
+      ],
+      "commit": "473214feace17c3669fde1b895c7ca749b76797c",
+      "testPath": "tests/p9-p075-pair-table.test.mjs",
+      "browserPath": "tests/p9-p075-pair-table-browser.cjs",
+      "evidencePath": "dist/learning/p075-pair-table-evidence.js",
+      "nodeTests": 4,
+      "nodeTestTitles": [
+        "P075 locks both pairtable fingerprints and verifies 12 distinct pairs",
+        "P075 requires fresh Check and rejects wrong count or incomplete pairs",
+        "P075 counts only pairs made since the original reset and requires a fresh Check",
+        "P075 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": false,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P075",
+        "sourceCodeBytes": 3584,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P074",
+      "positions": [
+        "complex38:2"
+      ],
+      "commit": "d8771fc9c7d18379bb7ed8728d60b3ed9be15758",
+      "testPath": "tests/p9-p074-complex-chain.test.mjs",
+      "browserPath": "tests/p9-p074-complex-chain-browser.cjs",
+      "evidencePath": "dist/learning/p074-complex-chain-evidence.js",
+      "nodeTests": 5,
+      "nodeTestTitles": [
+        "P074 locks exact source tasks and SHA-256 fingerprints",
+        "P074 verifies all valid argument chains and undo recovery",
+        "P074 rejects decoy cards, missing error mark and stale Check",
+        "P074 rejects tampered history and disallowed actions",
+        "P074 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P074",
+        "sourceCodeBytes": 3733,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P073",
+      "positions": [
+        "plan38:0"
+      ],
+      "commit": "b691f138cce2f61f22528b69565da8d2506e7ef9",
+      "testPath": "tests/p9-p073-plan-chain.test.mjs",
+      "browserPath": "tests/p9-p073-plan-chain-browser.cjs",
+      "evidencePath": "dist/learning/p073-plan-chain-evidence.js",
+      "nodeTests": 5,
+      "nodeTestTitles": [
+        "P073 locks exact source tasks and SHA-256 fingerprints",
+        "P073 verifies all valid argument chains and undo recovery",
+        "P073 rejects decoy cards, missing error mark and stale Check",
+        "P073 rejects tampered history and disallowed actions",
+        "P073 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P073",
+        "sourceCodeBytes": 3543,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    },
+    {
+      "packet": "P072",
+      "positions": [
+        "sense38:0"
+      ],
+      "commit": "76e49e18b1d77737f285d466156c9f2557beb0fb",
+      "testPath": "tests/p9-p072-sense-chain.test.mjs",
+      "browserPath": "tests/p9-p072-sense-chain-browser.cjs",
+      "evidencePath": "dist/learning/p072-sense-chain-evidence.js",
+      "nodeTests": 5,
+      "nodeTestTitles": [
+        "P072 locks exact source tasks and SHA-256 fingerprints",
+        "P072 verifies all valid argument chains and undo recovery",
+        "P072 rejects decoy cards, missing error mark and stale Check",
+        "P072 rejects tampered history and disallowed actions",
+        "P072 excludes practice and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true,
+      "sourceReview": {
+        "packet": "P072",
+        "sourceCodeBytes": 3535,
+        "sourceGate": {
+          "nativeTaskExact": true,
+          "taskImmutable": true,
+          "latestCheck": true,
+          "replay": true,
+          "history": true
+        },
+        "submittedEntryPoint": true,
+        "bindEntryPoint": true,
+        "negativeRejection": true,
+        "hasNodeTestLoop": false
+      }
+    }
+  ]
+}

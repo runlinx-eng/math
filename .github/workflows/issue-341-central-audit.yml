@@ -1,0 +1,140 @@
+name: Issue 341 central candidate audit
+on:
+  pull_request:
+    paths:
+      - 'dist/learning/p[0-9]*-evidence.js'
+      - 'tests/p9-p[0-9]*'
+      - '.github/workflows/issue-341-central-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  handoff-integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify immutable manifest, SHA-256, native dedup and all 97 exact-base git apply patches
+        run: python3 scripts/issue-341-handoff-audit.py
+      - name: Preserve per-packet replay and failure receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-patch-worktree-audit
+          path: verification/issue-341-handoff-audit/
+          if-no-files-found: warn
+          retention-days: 7
+  candidate-node:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Node syntax and native mathematical evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t source_files < <(git diff --name-only origin/main...HEAD | grep -E '^dist/learning/p[0-9]{3}[a-z]?-.*-evidence\.js$' | sort)
+          mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+\.test\.mjs$' | sort)
+          printf 'Source modules: %s, Node tests: %s\n' "${#source_files[@]}" "${#test_files[@]}"
+          test "${#test_files[@]}" -eq 113
+          for f in "${source_files[@]}" "${test_files[@]}"; do node --check "$f"; done
+          node --test --test-concurrency=4 "${test_files[@]}"
+  candidate-chromium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Replay original controls, Checks, backups and stopped-origin offline
+        env:
+          SHARD: ${{ matrix.shard }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+-browser\.cjs$' | sort)
+          test "${#test_files[@]}" -eq 113
+          count=0
+          for i in "${!test_files[@]}"; do
+            if (( i % 12 == SHARD )); then
+              echo "::group::${test_files[$i]}"
+              node --check "${test_files[$i]}"
+              node "${test_files[$i]}"
+              echo "::endgroup::"
+              count=$((count+1))
+            fi
+          done
+          test "$count" -ge 9
+      - name: Archive original browser receipts and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-browser-shard-${{ matrix.shard }}
+          path: verification/p9-p*/
+          if-no-files-found: warn
+          retention-days: 7
+  p10-integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: P10 safety syntax and Node cases
+        run: |
+          node --check tests/p10-backup-safety-browser.cjs
+          node --check tests/p10-longterm-offline-browser.cjs
+          node --test tests/p10-numeric-save-races.test.mjs
+      - name: Install browser
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: P10 backup and extended offline regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 43827 --bind 127.0.0.1 --directory dist >/tmp/issue-341-p10-origin.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          for i in $(seq 1 30); do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:43827/learn.html; then break; fi
+            sleep 1
+          done
+          curl --fail --silent --output /dev/null http://127.0.0.1:43827/learn.html
+          node tests/p10-backup-safety-browser.cjs
+          node tests/p10-longterm-offline-browser.cjs
+      - name: Archive P10 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-p10-evidence
+          path: verification/p10-*/
+          if-no-files-found: warn
+          retention-days: 7

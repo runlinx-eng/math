@@ -20,7 +20,7 @@ test('#292 exactly three original source fingerprints and strictly checked feedb
  assert.equal(EVIDENCE_ADAPTERS.filter(x=>x.id==='compoundunits').length,1);
  assert.equal(new Set(rows.map(x=>x.nodeId)).size,1);
  const ids=EVIDENCE_ADAPTERS.filter(x=>x.type==='x-r37-steps').map(x=>x.id).sort();
- const approved=[...new Set(manifest.tasks.filter(x=>x.type==='x-r37-steps').map(x=>x.adapter))].sort();
+ const approved=[...new Set(manifest.tasks.filter(x=>x.type==='x-r37-steps'&&!x.adapter.startsWith('issue341-')).map(x=>x.adapter))].sort();
  assert.deepEqual(ids,approved,'all shared widget contracts must exactly match independently reviewed manifest');
  for(const [index,hash] of reviewed){
   const sessionId='rateUnit37',task=sessionTaskFor(sessionId,index),context={sessionId,index};

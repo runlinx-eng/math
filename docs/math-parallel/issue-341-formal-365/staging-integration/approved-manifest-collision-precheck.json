@@ -1,0 +1,31 @@
+{
+  "schema": "issue-341-source-vs-approved-manifest-precheck/1",
+  "asOf": "2026-11-21",
+  "baseManifest": {
+    "frozenRef": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+    "schema": "math-evidence-reviewed-sources/1",
+    "approvedA": 813
+  },
+  "candidates": {
+    "total": 365,
+    "distinct": 365,
+    "families": 113,
+    "counts": {
+      "P007": 30,
+      "P009": 27,
+      "B": 308
+    }
+  },
+  "checks": {
+    "duplicateApproved": 0,
+    "duplicateCandidates": 0,
+    "positionOverlapWithOfficialManifest": [],
+    "missingModuleExports": [],
+    "missingCandidateFamilies": [],
+    "exportFunctionCoverage": true,
+    "runtimeTypeCheck": "PENDING_exact_HEAD_pr348",
+    "runtimeBindingCollisionCheck": "PENDING_exact_HEAD_pr348",
+    "formalGrantIncrement": 0
+  },
+  "policy": "Do not write proposed candidate rows into docs/spatial-learning/evidence-review-manifest.json; no strict A without independent review of source, type, contract and feedback."
+}

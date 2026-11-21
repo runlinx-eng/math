@@ -1,0 +1,331 @@
+{
+  "schema": "issue-341-frozen-source-export-map/1",
+  "begin": 0,
+  "end": 15,
+  "records": [
+    {
+      "packet": "P007A",
+      "path": "dist/learning/p007a-cube-frame-edge-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "cubeFrameEdgeBinding"
+      ],
+      "replays": [
+        "replayCubeFrameEdgeEvidence"
+      ],
+      "submitted": [
+        "submittedCubeFrameEdgeEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-frame"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6561
+    },
+    {
+      "packet": "P007B",
+      "path": "dist/learning/p007b-pyramid-view-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "pyramidViewBinding"
+      ],
+      "replays": [
+        "replayPyramidViewEvidence"
+      ],
+      "submitted": [
+        "submittedPyramidViewEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-frame"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5525
+    },
+    {
+      "packet": "P007C",
+      "path": "dist/learning/p007c-triangle-sas-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "triangleSasBinding"
+      ],
+      "replays": [
+        "replayTriangleSasEvidence"
+      ],
+      "submitted": [
+        "submittedTriangleSasEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-ruler"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6793
+    },
+    {
+      "packet": "P007D",
+      "path": "dist/learning/p007d-rectangle-dimensions-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "rectangleDimensionsBinding"
+      ],
+      "replays": [
+        "replayRectangleDimensionsEvidence"
+      ],
+      "submitted": [
+        "submittedRectangleDimensionsEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-ruler"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6701
+    },
+    {
+      "packet": "P007E",
+      "path": "dist/learning/p007e-regular-pentagon-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "regularPentagonBinding"
+      ],
+      "replays": [
+        "replayRegularPentagonEvidence"
+      ],
+      "submitted": [
+        "submittedRegularPentagonEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-ruler"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 7171
+    },
+    {
+      "packet": "P007F",
+      "path": "dist/learning/p007f-circle-radius-diameter-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeCircleBinding"
+      ],
+      "replays": [
+        "replayNativeCircleEvidence"
+      ],
+      "submitted": [
+        "submittedNativeCircleEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-circle"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 7197
+    },
+    {
+      "packet": "P007G",
+      "path": "dist/learning/p007g-compass-bisector-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeCompassBisectorBinding"
+      ],
+      "replays": [
+        "replayNativeCompassBisectorEvidence"
+      ],
+      "submitted": [
+        "submittedNativeCompassBisectorEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-compass"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6601
+    },
+    {
+      "packet": "P007H",
+      "path": "dist/learning/p007h-compass-angle-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeCompassBinding"
+      ],
+      "replays": [
+        "replayNativeCompassEvidence"
+      ],
+      "submitted": [
+        "submittedNativeCompassEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4742
+    },
+    {
+      "packet": "P007I",
+      "path": "dist/learning/p007i-compass-perpendicular-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeCompassBinding"
+      ],
+      "replays": [
+        "replayNativeCompassEvidence"
+      ],
+      "submitted": [
+        "submittedNativeCompassEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 4748
+    },
+    {
+      "packet": "P007J",
+      "path": "dist/learning/p007j-rectangle-invariants-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeRectangleBinding"
+      ],
+      "replays": [
+        "replayNativeRectangleEvidence"
+      ],
+      "submitted": [
+        "submittedNativeRectangleEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-s23-ruler"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5639
+    },
+    {
+      "packet": "P007K",
+      "path": "dist/learning/p007k-circle-pi-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeCirclePiBinding"
+      ],
+      "replays": [
+        "replayNativeCirclePiEvidence"
+      ],
+      "submitted": [
+        "submittedNativeCirclePiEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3979
+    },
+    {
+      "packet": "P007L",
+      "path": "dist/learning/p007l-triangle-sas-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeTriangleBinding"
+      ],
+      "replays": [
+        "replayNativeTriangleEvidence"
+      ],
+      "submitted": [
+        "submittedNativeTriangleEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-g25-triangle"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 9642
+    },
+    {
+      "packet": "P007M",
+      "path": "dist/learning/p007m-triangle-sss-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeTriangleBinding"
+      ],
+      "replays": [
+        "replayNativeTriangleEvidence"
+      ],
+      "submitted": [
+        "submittedNativeTriangleEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-g25-triangle"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 9965
+    },
+    {
+      "packet": "P007N",
+      "path": "dist/learning/p007n-triangle-asa-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeTriangleBinding"
+      ],
+      "replays": [
+        "replayNativeTriangleEvidence"
+      ],
+      "submitted": [
+        "submittedNativeTriangleEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-g25-triangle"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 9049
+    },
+    {
+      "packet": "P007O",
+      "path": "dist/learning/p007o-triangle-ssa-evidence.js",
+      "group": "P007",
+      "bindings": [
+        "nativeTriangleBinding"
+      ],
+      "replays": [
+        "replayNativeTriangleEvidence"
+      ],
+      "submitted": [
+        "submittedNativeTriangleEvidence"
+      ],
+      "sourceExports": [],
+      "typeLiterals": [
+        "x-g25-triangle"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 9017
+    }
+  ]
+}

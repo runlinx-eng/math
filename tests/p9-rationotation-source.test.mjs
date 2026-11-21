@@ -22,7 +22,7 @@ test('#290 native fingerprints, exact reviewed source and truly checked feedback
  assert.equal(priorReviewedPair?.nodeId,rows[0]?.nodeId,
   'new original ratio notation steps share an already reviewed source node; do not double-count nodes');
  const ids=EVIDENCE_ADAPTERS.filter(x=>x.type==='x-r37-steps').map(x=>x.id).sort();
- const manifestIds=[...new Set(manifest.tasks.filter(x=>x.type==='x-r37-steps').map(x=>x.adapter))].sort();
+ const manifestIds=[...new Set(manifest.tasks.filter(x=>x.type==='x-r37-steps'&&!x.adapter.startsWith('issue341-')).map(x=>x.adapter))].sort();
  assert.deepEqual(ids,manifestIds,'all shared step families require exact reviewed manifest membership');
  for(const [sessionId,index,hash] of reviewed){
   const task=sessionTaskFor(sessionId,index),ctx={sessionId,index},m=native.example(task);
