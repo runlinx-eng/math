@@ -45,7 +45,14 @@
       "range": "P117..P060",
       "packets": 58,
       "remainingNonATasks": 575,
-      "firstPilot": "P117"
+      "firstPilot": "P117",
+      "executionMode": "local-codex-mac-worktree-local-tests",
+      "integratorIssue": 341,
+      "localDevIssue": 343,
+      "handoffDoc": "docs/math-parallel/B-CODEX-LOCAL.md",
+      "githubIdentity": "No separate GitHub identity or fork required",
+      "localTestsRequiredBeforeHandoff": "Relevant Node math/negative tests, real Chromium where installed, local artifact logs/screenshots, preflight; mark unrun clearly",
+      "integration": "Local commit/diff + evidence to #341; central PR exact-head and independent new-main checks remain mandatory"
     },
     "activeClaimRule": "One active family sub-contract per lane by default; reserve source, files, full task fingerprints and working branch in Issue before any write.",
     "crossing": "If one lane reaches an already claimed packet or conflicts on exact source/write paths, mark BLOCKED and take the next unclaimed packet in its direction; do not renumber."
@@ -64,9 +71,18 @@
     ],
     "sourceLock": "No simultaneous changes to same original source node/task; historical cross-lane source collision list is advisory only.",
     "acceptance": "Source-locked original, authentic events, mathematical invariant/negative tests, latest Check, unchanged grader and State-v2, PR exact-head Chromium/P10/offline/artifacts then independent main Required/Fallback; no fake A from final answer.",
-    "integration": "Only central integrator modifies shared registries, release/hash files, merge order and main acceptance; per-lane PRs remain Draft until integrated.",
-    "actions": "GitHub identity alone does not create independent Actions quotas on one repository; fork Actions need explicit account/repository setup and cannot bypass central gates.",
-    "nonGoals": "No CI weakening, no VPS deployment, no forced conversion of all 1183 non-A tasks, no manual multiwave in planning phase."
+    "integration": "Only central integrator modifies shared registries, release/hash files, merge order and main acceptance; B local Codex sends branch commit/diff and local logs; formal PR/head Chromium/Artifact and new-main Required/Fallback remain central.",
+    "actions": "B uses local Codex in a separate Mac Git worktree and runs local tests; no fork, second GitHub account, or independent GitHub Actions is required. Central CI remains required on integrated PR and new main.",
+    "nonGoals": "No CI weakening, no VPS deployment, no forced conversion of all 1183 non-A tasks, no manual multiwave in planning phase.",
+    "localCodexB": {
+      "execution": "local-mac-codex",
+      "requiresUserLocalExecution": true,
+      "currentExecutionStatus": "not-executed",
+      "noMainPush": true,
+      "worktreeExample": "work/b/p117-preaudit",
+      "instructionPath": "docs/math-parallel/B-CODEX-LOCAL.md",
+      "noRemoteFork": true
+    }
   },
   "packets": [
     {
@@ -2595,7 +2611,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P061",
@@ -2622,7 +2639,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P062",
@@ -2649,7 +2667,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P063",
@@ -2676,7 +2695,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P064",
@@ -2703,7 +2723,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P065",
@@ -2730,7 +2751,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P066",
@@ -2757,7 +2779,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P067",
@@ -2784,7 +2807,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P068",
@@ -2811,7 +2835,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P069",
@@ -2840,7 +2865,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P070",
@@ -2877,7 +2903,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P071",
@@ -2904,7 +2931,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P072",
@@ -2931,7 +2959,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P073",
@@ -2958,7 +2987,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P074",
@@ -2985,7 +3015,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P075",
@@ -3014,7 +3045,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P076",
@@ -3042,7 +3074,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P077",
@@ -3070,7 +3103,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P078",
@@ -3098,7 +3132,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P079",
@@ -3126,7 +3161,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P080",
@@ -3154,7 +3190,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P081",
@@ -3183,7 +3220,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P082",
@@ -3212,7 +3250,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P083",
@@ -3241,7 +3280,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P084",
@@ -3270,7 +3310,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P085",
@@ -3299,7 +3340,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P086",
@@ -3328,7 +3370,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P087",
@@ -3360,7 +3403,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P088",
@@ -3390,7 +3434,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P089",
@@ -3420,7 +3465,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P090",
@@ -3452,7 +3498,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P091",
@@ -3483,7 +3530,8 @@
       "researchComplexity": "S",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P092",
@@ -3516,7 +3564,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P093",
@@ -3551,7 +3600,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P094",
@@ -3589,7 +3639,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P095",
@@ -3630,7 +3681,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P096",
@@ -3678,7 +3730,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P097",
@@ -3723,7 +3776,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P098",
@@ -3777,7 +3831,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P099",
@@ -3828,7 +3883,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P100",
@@ -3881,7 +3937,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P101",
@@ -3931,7 +3988,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P102",
@@ -3988,7 +4046,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P103",
@@ -4044,7 +4103,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P104",
@@ -4094,7 +4154,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P105",
@@ -4148,7 +4209,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P106",
@@ -4208,7 +4270,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P107",
@@ -4279,7 +4342,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P108",
@@ -4347,7 +4411,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P109",
@@ -4416,7 +4481,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P110",
@@ -4484,7 +4550,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P111",
@@ -4559,7 +4626,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P112",
@@ -4630,7 +4698,8 @@
       "researchComplexity": "L",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P113",
@@ -4714,7 +4783,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P114",
@@ -4788,7 +4858,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P115",
@@ -4866,7 +4937,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P116",
@@ -4949,7 +5021,8 @@
       "researchComplexity": "XL",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": true,
-      "notes": null
+      "notes": null,
+      "executorMode": "local-codex-mac"
     },
     {
       "id": "P117",
@@ -4991,7 +5064,8 @@
       "researchComplexity": "M",
       "sourceLevelBoundary": "union-of-historical-pool-not-verified-per-position",
       "splitRequiredBeforeFormalContract": false,
-      "notes": "B pilot: preaudit only, signed and fractional jumps may require distinct contracts"
+      "notes": "B pilot: preaudit only, signed and fractional jumps may require distinct contracts",
+      "executorMode": "local-codex-mac"
     }
   ]
 }
