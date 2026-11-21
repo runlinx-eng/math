@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P006o-native-club-vs-all-repeats",
-      "sha": "d89c1acc2924273c98c303399e2c46c04bdc80d1",
+      "sha": "8f2b85b5c5fe979159905fddc013fbfb873d4be8",
       "node_test": "tests/p9-p006o-native-club-vs-all-repeats-evidence.test.mjs",
       "browser_test": "tests/p9-p006o-native-club-vs-all-repeats-browser.cjs",
       "native": [
@@ -11,7 +11,7 @@
           "sessionId": "samplevary",
           "index": 1,
           "nodeId": "mt_x7V1qrkiqH",
-          "taskSha256": "89c72b9bbd6503b5c39ce9ee0393ed631f0595f91cd2015a5a95290978deaa04",
+          "taskSha256": "0a01bd8e8dd95df5a801bc216e7d0d60d3f19c5dcbe5d94c135b958604e6896a",
           "type": "x-samplelab",
           "view": "b21",
           "controls": [
