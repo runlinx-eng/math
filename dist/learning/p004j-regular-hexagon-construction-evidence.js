@@ -40,7 +40,7 @@ function geometry(indices){
     between(a,b,c)||between(a,b,d)||between(c,d,a)||between(c,d,b);}
  if(lengths.some(v=>v<EPS||!nearly(v,lengths[0]))||
  turns.some(v=>v<=EPS)||area2<=EPS||
- angleCos.some(v=>!nearly(v,0.5)))return null;
+ angleCos.some(v=>!nearly(v,-0.5)))return null;
  for(let i=0;i<6;i++)for(let j=i+1;j<6;j++){
   if(j===i+1||(i===0&&j===5))continue;
   if(crossing(ps[i],ps[(i+1)%6],ps[j],ps[(j+1)%6]))return null;
