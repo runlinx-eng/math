@@ -1,3 +1,11 @@
+## 2026-11-22 本窗口后续：准入边界定向加固（不授 A）
+
+- 在审计分支提交 [`90fafe6506a3`](https://github.com/runlinx-eng/math/commit/90fafe6506a3fb83f6d6bf876be3425ac8a5d787)，只更新旧的 `formal-activation/approval-scope-preflight.mjs`，新增对应元数据负例回归与限定审计分支 push 的工作流，没有改动 PR #351、正式 manifest、生产运行时、原数学/浏览器测试。
+- **实际发现并修补**：旧去重键含 packet，跨家族复用相同 `(sessionId,index)` 可能未触发拒绝；现在全局原生位置去重。旧 source HEAD 只查格式与行内一致，现在绑定已审阅 PR #351 的准确 HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`；任何新代码 HEAD 要由新的独立审阅申请更新固定绑定，不准静默继承。
+- 用原申请结构构造的跨家族别名会保留 365 个包内去重键，却只有 364 个原生位置；定向负例已写入 `approval-scope-preflight.test.mjs`。已验证原提交的 365 条 request / 365 条台账在完整原生来源、nodeId、taskHash 与 adapter 上一一对应；这是结构审计而不是复验数学。
+- 此次仅提交回归测试，不把尚未返回的 GitHub Actions 结果记为 PASS。真实人工批准、生产题位注册、`authorized-durable-ci-input-source`、SW/release 与新激活 HEAD CI 仍是单独门槛。原 PR #351 的 Required/P8/Overview 旧成功保留，B308 原合同、负例与 Node/Chromium 完整复用，不重跑 298 Python。
+- 正式 A813/1996，新增 A0；#351 继续 Draft，main 合并/部署均未获授权。新逐题字段 `approvalScopePreflightStatus` 仅报告防误授结构状态，不是数学正式批准。
+
 # #341 审计扩展材料公开授权与增量交接（2026-11-22）
 
 ## #341 当前新增：逐题精确范围预检（2026-11-22）
