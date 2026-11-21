@@ -2,27 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006l-native-random-sample-record",
-      "sha": "6f25ed7bb4902fec9e15f3eb8b10aaf034698728",
-      "node_test": "tests/p9-p006l-native-random-sample-record-evidence.test.mjs",
-      "browser_test": "tests/p9-p006l-native-random-sample-record-browser.cjs",
+      "case": "P006m-native-sampling-frame-contrast",
+      "sha": "bc2c99deec41bcc32adbca98648e27ee057a05be",
+      "node_test": "tests/p9-p006m-native-sampling-frame-contrast-evidence.test.mjs",
+      "browser_test": "tests/p9-p006m-native-sampling-frame-contrast-browser.cjs",
       "native": [
         {
           "sessionId": "fairdraw",
-          "index": 0,
+          "index": 1,
           "nodeId": "mt_4zgPzc6yu5",
-          "taskSha256": "8fe9d888f53692c0c592ffe2b36e2f9d74ecc152349581edb5bb2948286f8da3",
-          "type": "x-samplelab",
-          "view": "b21",
-          "controls": [
-            "b21-draw"
-          ]
-        },
-        {
-          "sessionId": "fairdraw",
-          "index": 2,
-          "nodeId": "mt_4zgPzc6yu5",
-          "taskSha256": "e8ce0a04fca7daf066aebf3c2fd0e35cbca1c7299b8b494f96d0fe724087b38b",
+          "taskSha256": "852bacf9fa85cb2853d9bcbb39f3c83135bbb5b8cc431e297dd55bd05143e321",
           "type": "x-samplelab",
           "view": "b21",
           "controls": [
