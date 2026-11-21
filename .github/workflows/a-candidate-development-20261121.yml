@@ -24,10 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P004b-quadrilateral-nesting
-            sha: 4b1d888921330bbdb06654654787a30c70745bc6
-            node_test: tests/p9-p004b-quadrilateral-nesting-evidence.test.mjs
-            browser_test: tests/p9-p004b-quadrilateral-nesting-browser.cjs
+          - case: P004c-closed-polygon-pick
+            sha: a932d4b68f2960a628fd43caec50c1316d5f2473
+            node_test: tests/p9-p004c-closed-polygon-pick-evidence.test.mjs
+            browser_test: tests/p9-p004c-closed-polygon-pick-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
