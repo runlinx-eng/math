@@ -178,6 +178,18 @@ async function main(){
    ok(proof.events.some(e=>e.kind==='remove'),label+' correction preserves removals');
    ok(proof.sliderMotionHistoryObserved===false,label+' no invented slider motion trace');
    ok(proof.finalAxisPositions.every(p=>p.finalPositionError<=6),label+' mathematically correct final axis');
+   // Check rendered SVG text geometry, not just correctness of the underlying values.
+   // The original 6/7-digit cards can be only a few pixels apart on the full axis.
+   const axisLabels=await page.locator('.b8-axis .b8-mark-label').evaluateAll(nodes=>nodes.map(node=>{
+    const rect=node.getBoundingClientRect();
+    return {text:node.textContent,left:rect.left,right:rect.right,top:rect.top,bottom:rect.bottom};
+   }));
+   ok(axisLabels.length===t.values.length,label+' number-axis shows all distinct value labels');
+   for(let i=0;i<axisLabels.length;i++)for(let j=i+1;j<axisLabels.length;j++){
+    const a=axisLabels[i],b=axisLabels[j];
+    const collide=a.left<b.right-1&&b.left<a.right-1&&a.top<b.bottom-1&&b.top<a.bottom-1;
+    ok(!collide,label+' number-axis value labels do not overlap '+i+'/'+j);
+   }
    assert.equal(await page.locator('#thinking-feedback').count(),0,'preaudit may not show strict A feedback');
    await page.screenshot({path:path.join(out,label+'-corrected-1920x1080.png'),fullPage:true});
    const beforeReload=await saved(s.id);
