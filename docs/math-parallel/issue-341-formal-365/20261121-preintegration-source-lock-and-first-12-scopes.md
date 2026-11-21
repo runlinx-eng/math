@@ -11,6 +11,7 @@
   - **113/113** 家族导出已实际 import，**365/365** 题位仅有匹配的那个候选家族 binding；
   - 与既有 **813** 个获批 manifest 题位 **0 重叠**，与原已注册 `EVIDENCE_ADAPTERS` 的有效绑定 **0 重叠**；
   - 候选没有擅自声明新的数学思维方法标签；`errors:[]`、`additionalMathTestsRun:0`、`approvedManifestChanges:0`。
+- 同一 exact HEAD 的 [Required run #44920634864](https://github.com/runlinx-eng/math/actions/runs/44920634864) 实际已 completed/success，plan/static/smoke/required-checks 均 success，非定向 browser job 按原增量策略 skipped；这不等于重新执行已通过的 365 道浏览器数学测试。
 - GitHub Actions **首次 run #44920568201 FAIL** 是新增源码锁定脚本中一个结果字段拼写造成的 JavaScript 语法错误；已只修该审计脚本，不改数学原题、候选 replay/现有通过测试。失败记录保留，修复后的上述 exact HEAD success 不抹除旧 FAIL。
 - 预检产出 `issue-341-source-lock-only` Artifact **14713850524**，官方 SHA-256 `998b5f56628efa20ccec746b9d60748bcfb513185f9289b8b2717b28419c10c1`，过期时间 **2026-11-28 15:42:55 UTC**。其中 `UNAPPROVED-proposed-manifest.json` **只是审计提案**，不是正式 `evidence-review-manifest.json` 的增量，也不能据此称严格 A。
 
