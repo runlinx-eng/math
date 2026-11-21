@@ -20,7 +20,7 @@ const index=e=>e&&keys(e.d,['index'])&&typeof e.d.index==='string'&&/^[0-3]$/.te
 const magnitude=degrees=>{
  const x=Math.cos(degrees*Math.PI/180);
  return Number.isFinite(x)&&degrees>0&&degrees<180?
-  (x>0?'acute':Math.abs(x)<1e-12?'right':'obtuse'):null;
+  (Math.abs(x)<1e-12?'right':x>0?'acute':'obtuse'):null;
 };
 export function acuteAngleComparisonBinding(task,context={}){
  const s=source(task,context);
