@@ -13,11 +13,12 @@
       "P003",
       "P004",
       "P005",
-      "P006"
+      "P006",
+      "P007"
     ],
-    "historicalResearchPositions": 192,
-    "developmentTestedPositions": 97,
-    "developmentTestedCandidateCases": 50,
+    "historicalResearchPositions": 222,
+    "developmentTestedPositions": 99,
+    "developmentTestedCandidateCases": 51,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -76,6 +77,14 @@
       "developmentTested": 31,
       "blockedRuntime": 0,
       "pendingOrOtherNotAccepted": 0
+    },
+    {
+      "id": "P007",
+      "topic": "shape-draw",
+      "historicalResearchPositions": 30,
+      "developmentTested": 2,
+      "blockedRuntime": 0,
+      "pendingOrOtherNotAccepted": 28
     }
   ],
   "cases": [
@@ -1072,6 +1081,26 @@
       },
       "artifact": {
         "id": 14705200501,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007a-cube-frame-edge-build",
+      "branch": "work/a/p007a-cube-frame-edge-build",
+      "candidateSha": "6666ad4f5d09d124c11dc8309c9ea39bbae6efb0",
+      "positions": [
+        "shapeframe:2",
+        "shapedraw:4"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44899719114,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14705511317,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
