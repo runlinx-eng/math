@@ -3,6 +3,7 @@
 // Run against actual checkout; raw results / PNG and recorded failure are retained.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
+const {pathToFileURL}=require('node:url');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('./helpers/standard-desktop-viewport.cjs');
@@ -28,6 +29,7 @@ function persist(){
  },null,2)+'\n');
 }
 async function main(){
+ const candidate=await import(pathToFileURL(path.join(root,'dist/learning/p002-wide-order-gap-evidence.js')).href);
  fs.mkdirSync(out,{recursive:true});
  let origin,browser,ctx,page;
  try{
@@ -88,7 +90,7 @@ async function main(){
    const task=await page.evaluate(async({id,index})=>{
     const {sessionTaskFor}=await import('./learning/bridges.js');
     const t=sessionTaskFor(id,index);
-    return {values:t.values,min:t.min,max:t.max,mode:t.mode,gap:t.gap};
+    return {values:t.values,min:t.min,max:t.max,mode:t.mode,gap:t.gap,nativeTask:t};
    },c);
    ok(task.mode==='order'&&task.gap===true,'original order and exact gap task');
    ok(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),'original desktop viewport');
@@ -124,11 +126,10 @@ async function main(){
    await page.locator('#actions [data-do="check"]').click();
    const second=await snap(c,'correct');
    ok(second.attempts.length===2,'wrong -> correct preserved');
-   const result=await page.evaluate(async({id,index,model,record})=>{
-    const {sessionTaskFor}=await import('./learning/bridges.js');
-    const {submittedWideOrderGapEvidence}=await import('./learning/p002-wide-order-gap-evidence.js');
-    return submittedWideOrderGapEvidence(sessionTaskFor(id,index),model,record,{sessionId:id,index});
-   },{...c,model:second.model,record:second.record});
+   // Validate the original Chromium-captured task/attempt bytes in Node; the
+   // candidate module is intentionally NOT in the released offline SW cache.
+   const result=candidate.submittedWideOrderGapEvidence(
+    task.nativeTask,second.model,second.record,{sessionId:c.id,index:c.index});
    ok(result?.exactRange===String(c.gap)&&
      JSON.stringify(result.selectedSourceIndices)===JSON.stringify(correct),
      'source-bound independent range + trace candidate');
