@@ -1,0 +1,87 @@
+# Central-owned, isolated A-line *development* test runner.
+# Exact immutable candidate SHAs only; no PR, merge, main mutation, strict-A registration, or release.
+# Deliberately push-triggered on this isolated infrastructure branch, not on work/a/*.
+name: A candidate development tests (not formal CI)
+
+on:
+  push:
+    branches:
+      - infra/a-dev-only-tests-20261121
+
+permissions:
+  contents: read
+
+concurrency:
+  group: a-candidate-dev-20261121
+  cancel-in-progress: false
+
+jobs:
+  candidate-development:
+    name: ${{ matrix.case }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - case: P001-gridarea-perimeter
+            sha: 8fd1dcd9e6d1b3d4af403157e4f6556003851ff4
+            node_test: tests/p9-gridarea-perimeter-contrast-evidence.test.mjs
+            browser_test: tests/p9-gridarea-perimeter-contrast-browser.cjs
+          - case: P002-wide-order-gap
+            sha: 6f46e69ff98876e590b1da05c397e67ba404c0f1
+            node_test: tests/p9-p002-wide-order-gap-evidence.test.mjs
+            browser_test: tests/p9-p002-wide-order-gap-browser.cjs
+          - case: P003-rulejump-equivalence
+            sha: b0765f3fc6ff65fcb5e55ba4ea19856bdb7f25b4
+            node_test: tests/p9-p003-rulejump-equivalent-evidence.test.mjs
+            browser_test: tests/p9-p003-rulejump-equivalent-browser.cjs
+
+    steps:
+      - name: Sparse checkout of the exact isolated A candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.sha }}
+          fetch-depth: 1
+          sparse-checkout: |
+            dist
+            tests
+            ci
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify candidate identity and syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ matrix.sha }}"
+          node --version
+          node --check "${{ matrix.node_test }}"
+          node --check "${{ matrix.browser_test }}"
+      - name: Execute native Node math, negative cases and source fingerprint
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dev-results
+          node --test "${{ matrix.node_test }}" 2>&1 | tee dev-results/native-node.log
+      - name: Install browser test dependency (only after native Node PASS)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Execute real Chromium, original Check, wrong-to-correct, State-v2 and offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          node "${{ matrix.browser_test }}" 2>&1 | tee dev-results/native-chromium.log
+      - name: Preserve raw candidate evidence even on FAIL
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a-development-${{ matrix.case }}-${{ github.run_id }}
+          path: |
+            dev-results/
+            verification/p9-*/
+          if-no-files-found: warn
+          retention-days: 7
