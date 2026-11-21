@@ -64,7 +64,7 @@ export function submittedNativeCompassEvidence(t,m,record,ctx={}){
  try{
  const p=replayNativeCompassEvidence(t,m,ctx),bad=raw(t,record?.attempts?.[0]?.value,ctx,true);
  if(!p||!bad||!latestSubmissionMatches(m,record)||record.attempts.length!==2||
-  bad.seed!==m.seed||!same(bad.events,m.history.slice(0,3))||
+  record.attempts[0].value.seed!==m.seed||!same(bad.events,m.history.slice(0,3))||
   native.inspect(t,record.attempts[0].value).correct!==false)return null;
  return {...p,originalCheckSnapshotsObserved:2,wrongToCorrectArcConstructionObserved:true};
  }catch{return null;}
