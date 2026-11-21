@@ -35,8 +35,13 @@
     "sourceLockCIExclusiveBindings": 365,
     "sourceLockOfficialManifestOverlap": 0,
     "preExistingOfficialStrictA": 813,
-    "BboundedContractScopeExplicitReview": 12,
-    "BpreexistingReplayUnchanged": 308
+    "BboundedContractScopeExplicitReview": 18,
+    "BpreexistingReplayUnchanged": 308,
+    "BboundedContractScopeExplicitReviewFamilies": 9,
+    "BboundedContractScopeSecondBatchPositions": 6,
+    "BboundedContractScopeSecondBatchFamilies": 4,
+    "BadditionalMathRerunsForSecondBatch": 0,
+    "P110StrictReplayVsApproximateNativeGradeScopeFlagged": 2
   },
   "policy": "All rows NEEDS_EVIDENCE at formal intake, not a mathematical rejection nor an A grant; prior passing CI and archival checks preserved, no main merge, no change to candidates or grader.",
   "rows": [
@@ -7710,7 +7715,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements."
+      "boundedContractExcludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements.",
+      "boundedContractClaim": "Original allowedrange:0/1: final endpoint and direction, inclusive/exclusive relation, three actual probe outcomes compared as exact rational values, latest original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -7738,7 +7745,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements."
+      "boundedContractExcludedClaims": "Historical graph-point position and open/closed appearance during each probe are not stored; no statement that replay reconstructs those unrecorded movements.",
+      "boundedContractClaim": "Original allowedrange:0/1: final endpoint and direction, inclusive/exclusive relation, three actual probe outcomes compared as exact rational values, latest original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8353,7 +8362,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "Existing bounded contract scope documented, not approved. Human scope/feedback decision, inactive-to-reviewed shared integration, changed exact-HEAD CI/Artifact and eventual new main Required/Fallback remain; no blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8362,7 +8371,10 @@
       "sourceLockRun": 44920634904,
       "sourceLockOfficialManifestOverlap": false,
       "exactHeadSourceReadyForReview": true,
-      "boundedContractScopeReview": "PREEXISTING_REPLAY_PRESENT_SCOPE_NOTE_PENDING"
+      "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
+      "boundedContractClaim": "Two frozen originals 34+28=62 and 72-36=36: logged +/-10 and +/-1 moves from the given start on the line/hundred tools, active path reaches the exact end, exact answer and latest original Check.",
+      "boundedContractExcludedClaims": "Tool-selection timing and unrecorded tool strategy are not assessed; no general mastery or free reasoning is inferred.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-second-6-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8379,7 +8391,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "Existing bounded contract scope documented, not approved. Human scope/feedback decision, inactive-to-reviewed shared integration, changed exact-HEAD CI/Artifact and eventual new main Required/Fallback remain; no blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8388,7 +8400,10 @@
       "sourceLockRun": 44920634904,
       "sourceLockOfficialManifestOverlap": false,
       "exactHeadSourceReadyForReview": true,
-      "boundedContractScopeReview": "PREEXISTING_REPLAY_PRESENT_SCOPE_NOTE_PENDING"
+      "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
+      "boundedContractClaim": "Two frozen originals 34+28=62 and 72-36=36: logged +/-10 and +/-1 moves from the given start on the line/hundred tools, active path reaches the exact end, exact answer and latest original Check.",
+      "boundedContractExcludedClaims": "Tool-selection timing and unrecorded tool strategy are not assessed; no general mastery or free reasoning is inferred.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-second-6-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8419,7 +8434,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery."
+      "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
+      "boundedContractClaim": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8450,7 +8467,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery."
+      "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
+      "boundedContractClaim": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8481,7 +8500,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery."
+      "boundedContractExcludedClaims": "No unrecorded choice of mathematical strategy, proof for arbitrary integer, or learner mastery.",
+      "boundedContractClaim": "Original 1,2,51 trials: recorded division by candidates through floor(sqrt(n)), exact remainders, complete factor pairs and neither/prime/composite classification, latest original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8498,7 +8519,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "Existing bounded contract scope documented, not approved. Human scope/feedback decision, inactive-to-reviewed shared integration, changed exact-HEAD CI/Artifact and eventual new main Required/Fallback remain; no blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8507,7 +8528,10 @@
       "sourceLockRun": 44920634904,
       "sourceLockOfficialManifestOverlap": false,
       "exactHeadSourceReadyForReview": true,
-      "boundedContractScopeReview": "PREEXISTING_REPLAY_PRESENT_SCOPE_NOTE_PENDING"
+      "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
+      "boundedContractClaim": "Frozen folds:0: three recorded stages double 1->2->4->8, exact original stage labels and latest correct Check.",
+      "boundedContractExcludedClaims": "Physical paper folding and label-entry timing were not observed; no general doubling mastery is inferred.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-second-6-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8538,7 +8562,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks."
+      "boundedContractExcludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks.",
+      "boundedContractClaim": "For frozen 24 and 36, original row/column placements enumerate distinct unordered positive factor pairs, deduplicate rotation and retain the square 6x6 once, latest original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8569,7 +8595,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks."
+      "boundedContractExcludedClaims": "No general proof of a factorization algorithm for numbers outside these two frozen native tasks.",
+      "boundedContractClaim": "For frozen 24 and 36, original row/column placements enumerate distinct unordered positive factor pairs, deduplicate rotation and retain the square 6x6 once, latest original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8586,7 +8614,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "Existing bounded contract scope documented, not approved. Human scope/feedback decision, inactive-to-reviewed shared integration, changed exact-HEAD CI/Artifact and eventual new main Required/Fallback remain; no blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8595,7 +8623,10 @@
       "sourceLockRun": 44920634904,
       "sourceLockOfficialManifestOverlap": false,
       "exactHeadSourceReadyForReview": true,
-      "boundedContractScopeReview": "PREEXISTING_REPLAY_PRESENT_SCOPE_NOTE_PENDING"
+      "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
+      "boundedContractClaim": "Frozen mixedpoints:0: four highlighted place values 7000000000, 6/1000000, 0 and 8/10000, native card selection/saves, corrections and latest correct Check.",
+      "boundedContractExcludedClaims": "Do not infer hidden edits, free-form place-value explanations, transfer to other cards or long-term understanding.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-second-6-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8626,7 +8657,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals."
+      "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
+      "boundedContractClaim": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8657,7 +8690,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals."
+      "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
+      "boundedContractClaim": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8688,7 +8723,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals."
+      "boundedContractExcludedClaims": "No claim of independently generated algebraic strategy or symbolic factorization outside the three reviewed originals.",
+      "boundedContractClaim": "Original 6x+9, 12x-18 and 8x^2+12x factor attempts: exact integer coefficient GCD, minimum shared variable degree, native expansion event and final original Check.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8705,7 +8742,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "Existing bounded contract scope documented, not approved. Human scope/feedback decision, inactive-to-reviewed shared integration, changed exact-HEAD CI/Artifact and eventual new main Required/Fallback remain; no blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8714,7 +8751,10 @@
       "sourceLockRun": 44920634904,
       "sourceLockOfficialManifestOverlap": false,
       "exactHeadSourceReadyForReview": true,
-      "boundedContractScopeReview": "PREEXISTING_REPLAY_PRESENT_SCOPE_NOTE_PENDING"
+      "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
+      "boundedContractClaim": "Two frozen originals: center 8, distances [4,2,0,1,5], mean absolute distance 12/5; center 10, distances [6,0,3,3], mean 3. Native anchor, row, distance edits and exact latest Check are replayed.",
+      "boundedContractExcludedClaims": "Original Check's near-value numerical tolerance is wider than the evidence replay's exact requirement; rounded inputs must not be claimed as exact proof. No general learner statistics strategy/mastery.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-second-6-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -8731,7 +8771,7 @@
       "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "EXISTING_EVIDENCE_REUSE_ACCEPTED_PENDING_FORMAL_INTEGRATION",
-      "missingEvidence": "Bounded mathematical claim and exclusions must be adjudicated against existing proof; shared evidence-adapters/thinking-feedback/manifest integration; changed exact-HEAD CI and Artifact; post-merge new main Required/Fallback. No blanket independent 298-item retest.",
+      "missingEvidence": "Existing bounded contract scope documented, not approved. Human scope/feedback decision, inactive-to-reviewed shared integration, changed exact-HEAD CI/Artifact and eventual new main Required/Fallback remain; no blanket 298-item retest.",
       "existingEvidenceReuse": "ACCEPTED_CANDIDATE_ENGINEERING_ONLY",
       "additionalPerItemRetest": "NOT_REQUIRED_UNLESS_SPECIFIC_GAP",
       "evidenceReuseReport": "docs/math-parallel/issue-341-formal-365/b-existing-evidence-reuse-308.md",
@@ -8740,7 +8780,10 @@
       "sourceLockRun": 44920634904,
       "sourceLockOfficialManifestOverlap": false,
       "exactHeadSourceReadyForReview": true,
-      "boundedContractScopeReview": "PREEXISTING_REPLAY_PRESENT_SCOPE_NOTE_PENDING"
+      "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
+      "boundedContractClaim": "Two frozen originals: center 8, distances [4,2,0,1,5], mean absolute distance 12/5; center 10, distances [6,0,3,3], mean 3. Native anchor, row, distance edits and exact latest Check are replayed.",
+      "boundedContractExcludedClaims": "Original Check's near-value numerical tolerance is wider than the evidence replay's exact requirement; rounded inputs must not be claimed as exact proof. No general learner statistics strategy/mastery.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-second-6-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -9295,7 +9338,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI."
+      "boundedContractExcludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI.",
+      "boundedContractClaim": "Original dotrecords:0 and dotrecords:2: actual recorded dot/revision events, exact integer frequency and zero-tick reconstruction, total-count/mode answers, latest original Check and offline persistence.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",
@@ -9323,7 +9368,9 @@
       "exactHeadSourceReadyForReview": true,
       "boundedContractScopeReview": "REVIEWED_EXISTING_OBSERVABLE_BOUNDARY",
       "boundedContractScopeReport": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json",
-      "boundedContractExcludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI."
+      "boundedContractExcludedClaims": "Unassessed prose, strategy selection, long-term understanding, and any fabricated history of points not recorded in the native UI.",
+      "boundedContractClaim": "Original dotrecords:0 and dotrecords:2: actual recorded dot/revision events, exact integer frequency and zero-tick reconstruction, total-count/mode answers, latest original Check and offline persistence.",
+      "boundedContractScopeFile": "docs/math-parallel/issue-341-formal-365/b-first-12-observable-contract-review.json"
     },
     {
       "group": "B",

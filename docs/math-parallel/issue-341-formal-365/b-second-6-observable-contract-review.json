@@ -1,0 +1,142 @@
+{
+  "schema": "issue-341-b-second-6-existing-evidence-scope/1",
+  "reviewedAsOf": "2026-11-21",
+  "method": "READ_ONLY_FROZEN_CANDIDATE_REPLAY_AND_PASSED_EXISTING_NODE_TESTS; NO_TEST_RERUN",
+  "status": "BOUNDED_OBSERVABLE_SCOPE_DOCUMENTED_NOT_FORMAL_MATH_APPROVAL",
+  "candidateHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceLockHead": "d0b9bf929d0ddf7fcce23601cff27ff9dc0e320e",
+  "sourceLockRun": 44920634904,
+  "reviewedFamilies": 4,
+  "reviewedPositions": 6,
+  "cumulativeBScopedFamilies": 9,
+  "cumulativeBScopedPositions": 18,
+  "BexistingEvidenceReuseAccepted": 308,
+  "additionalMathTestsRun": 0,
+  "issue": "P110 original Check accepts some close numeric values; strict candidate replay intentionally refuses rounded anchors/totals. Preserve this claim limit.",
+  "families": {
+    "P104": {
+      "type": "x-toolwork",
+      "source": "dist/learning/p104-step-tools-evidence.js",
+      "test": "tests/p9-p104-step-tools.test.mjs",
+      "claim": "Two frozen originals 34+28=62 and 72-36=36: logged +/-10 and +/-1 moves from the given start on the line/hundred tools, active path reaches the exact end, exact answer and latest original Check.",
+      "exclusion": "Tool-selection timing and unrecorded tool strategy are not assessed; no general mastery or free reasoning is inferred.",
+      "caveat": "toolSelectionTimingAssessed:false; only saved step paths and current selected tool."
+    },
+    "P106": {
+      "type": "x-foldpaper",
+      "source": "dist/learning/p106-paper-fold-counts-evidence.js",
+      "test": "tests/p9-p106-paper-fold-counts.test.mjs",
+      "claim": "Frozen folds:0: three recorded stages double 1->2->4->8, exact original stage labels and latest correct Check.",
+      "exclusion": "Physical paper folding and label-entry timing were not observed; no general doubling mastery is inferred.",
+      "caveat": "physicalFoldingAssessed:false; labelEntryTimingAssessed:false."
+    },
+    "P108": {
+      "type": "x-digitlens",
+      "source": "dist/learning/p108-digit-value-evidence.js",
+      "test": "tests/p9-p108-digit-value.test.mjs",
+      "claim": "Frozen mixedpoints:0: four highlighted place values 7000000000, 6/1000000, 0 and 8/10000, native card selection/saves, corrections and latest correct Check.",
+      "exclusion": "Do not infer hidden edits, free-form place-value explanations, transfer to other cards or long-term understanding.",
+      "caveat": "Only recorded card saves and final valid snapshot; unsaved edits excluded."
+    },
+    "P110": {
+      "type": "x-meandistance",
+      "source": "dist/learning/p110-mean-distance-evidence.js",
+      "test": "tests/p9-p110-mean-distance.test.mjs",
+      "claim": "Two frozen originals: center 8, distances [4,2,0,1,5], mean absolute distance 12/5; center 10, distances [6,0,3,3], mean 3. Native anchor, row, distance edits and exact latest Check are replayed.",
+      "exclusion": "Original Check's near-value numerical tolerance is wider than the evidence replay's exact requirement; rounded inputs must not be claimed as exact proof. No general learner statistics strategy/mastery.",
+      "caveat": "EXISTING_NEGATIVE_TEST: original inspect can accept rounded anchors/means that strict replay rejects; no blanket rerun needed."
+    }
+  },
+  "positions": [
+    {
+      "packet": "P104",
+      "position": "toolchoice:0",
+      "nodeId": "mt_zMEvtigoM3",
+      "taskSha256": "f737425d54111adc53d3a5b1525b5cfa9ade58ff320f70ef0075cf48167f808b",
+      "sourceModule": "dist/learning/p104-step-tools-evidence.js",
+      "existingNodeTest": "tests/p9-p104-step-tools.test.mjs",
+      "claimScope": "Two frozen originals 34+28=62 and 72-36=36: logged +/-10 and +/-1 moves from the given start on the line/hundred tools, active path reaches the exact end, exact answer and latest original Check.",
+      "excludedClaims": "Tool-selection timing and unrecorded tool strategy are not assessed; no general mastery or free reasoning is inferred.",
+      "boundary": "toolSelectionTimingAssessed:false; only saved step paths and current selected tool.",
+      "existingEngineeringEvidence": "PASS_0cafdaed",
+      "sourceLockRun": 44920634904,
+      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED"
+    },
+    {
+      "packet": "P104",
+      "position": "toolchoice:1",
+      "nodeId": "mt_zMEvtigoM3",
+      "taskSha256": "b370a5b450a6c320a6a883e3c0ce8f1c96646b7c3c54f1cd9b6355f1bbf7eaf6",
+      "sourceModule": "dist/learning/p104-step-tools-evidence.js",
+      "existingNodeTest": "tests/p9-p104-step-tools.test.mjs",
+      "claimScope": "Two frozen originals 34+28=62 and 72-36=36: logged +/-10 and +/-1 moves from the given start on the line/hundred tools, active path reaches the exact end, exact answer and latest original Check.",
+      "excludedClaims": "Tool-selection timing and unrecorded tool strategy are not assessed; no general mastery or free reasoning is inferred.",
+      "boundary": "toolSelectionTimingAssessed:false; only saved step paths and current selected tool.",
+      "existingEngineeringEvidence": "PASS_0cafdaed",
+      "sourceLockRun": 44920634904,
+      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED"
+    },
+    {
+      "packet": "P106",
+      "position": "folds:0",
+      "nodeId": "mt_gC-6JXAG5S",
+      "taskSha256": "08c6c65183ab9198e858162af4a445107f9e2b791852044bfa2a9514257006b3",
+      "sourceModule": "dist/learning/p106-paper-fold-counts-evidence.js",
+      "existingNodeTest": "tests/p9-p106-paper-fold-counts.test.mjs",
+      "claimScope": "Frozen folds:0: three recorded stages double 1->2->4->8, exact original stage labels and latest correct Check.",
+      "excludedClaims": "Physical paper folding and label-entry timing were not observed; no general doubling mastery is inferred.",
+      "boundary": "physicalFoldingAssessed:false; labelEntryTimingAssessed:false.",
+      "existingEngineeringEvidence": "PASS_0cafdaed",
+      "sourceLockRun": 44920634904,
+      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED"
+    },
+    {
+      "packet": "P108",
+      "position": "mixedpoints:0",
+      "nodeId": "mt_PsylzZ9lHW",
+      "taskSha256": "382deaf14fd4d81d11481dea6430a0d07aa2659346c840c86ebef62eb3d18b67",
+      "sourceModule": "dist/learning/p108-digit-value-evidence.js",
+      "existingNodeTest": "tests/p9-p108-digit-value.test.mjs",
+      "claimScope": "Frozen mixedpoints:0: four highlighted place values 7000000000, 6/1000000, 0 and 8/10000, native card selection/saves, corrections and latest correct Check.",
+      "excludedClaims": "Do not infer hidden edits, free-form place-value explanations, transfer to other cards or long-term understanding.",
+      "boundary": "Only recorded card saves and final valid snapshot; unsaved edits excluded.",
+      "existingEngineeringEvidence": "PASS_0cafdaed",
+      "sourceLockRun": 44920634904,
+      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED"
+    },
+    {
+      "packet": "P110",
+      "position": "meandistance:0",
+      "nodeId": "mt_ZfpeI1CFyP",
+      "taskSha256": "37f2f65d088bc3ec57745d4844a59913905e0ead04b18aba492716f238147ea3",
+      "sourceModule": "dist/learning/p110-mean-distance-evidence.js",
+      "existingNodeTest": "tests/p9-p110-mean-distance.test.mjs",
+      "claimScope": "Two frozen originals: center 8, distances [4,2,0,1,5], mean absolute distance 12/5; center 10, distances [6,0,3,3], mean 3. Native anchor, row, distance edits and exact latest Check are replayed.",
+      "excludedClaims": "Original Check's near-value numerical tolerance is wider than the evidence replay's exact requirement; rounded inputs must not be claimed as exact proof. No general learner statistics strategy/mastery.",
+      "boundary": "EXISTING_NEGATIVE_TEST: original inspect can accept rounded anchors/means that strict replay rejects; no blanket rerun needed.",
+      "existingEngineeringEvidence": "PASS_0cafdaed",
+      "sourceLockRun": 44920634904,
+      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED"
+    },
+    {
+      "packet": "P110",
+      "position": "meandistance:1",
+      "nodeId": "mt_ZfpeI1CFyP",
+      "taskSha256": "fc82754258b970d35d67162f853dead36e307801ad7ded0922fa92a86ea9cf98",
+      "sourceModule": "dist/learning/p110-mean-distance-evidence.js",
+      "existingNodeTest": "tests/p9-p110-mean-distance.test.mjs",
+      "claimScope": "Two frozen originals: center 8, distances [4,2,0,1,5], mean absolute distance 12/5; center 10, distances [6,0,3,3], mean 3. Native anchor, row, distance edits and exact latest Check are replayed.",
+      "excludedClaims": "Original Check's near-value numerical tolerance is wider than the evidence replay's exact requirement; rounded inputs must not be claimed as exact proof. No general learner statistics strategy/mastery.",
+      "boundary": "EXISTING_NEGATIVE_TEST: original inspect can accept rounded anchors/means that strict replay rejects; no blanket rerun needed.",
+      "existingEngineeringEvidence": "PASS_0cafdaed",
+      "sourceLockRun": 44920634904,
+      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "formalStrictA": "NOT_GRANTED"
+    }
+  ]
+}
