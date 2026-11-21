@@ -190,6 +190,18 @@ async function main(){
     const collide=a.left<b.right-1&&b.left<a.right-1&&a.top<b.bottom-1&&b.top<a.bottom-1;
     ok(!collide,label+' number-axis value labels do not overlap '+i+'/'+j);
    }
+   // The zoom is visual only; it neither changes sliders nor adds evidence.
+   const closeZoom=page.locator('.b8-axis .b8-axis-zoom');
+   if(s.id==='millionwords'){
+    ok(await closeZoom.count()===1,label+' close-order points have a local axis zoom');
+    assert.deepEqual(await closeZoom.locator('.b8-zoom-value').allTextContents(),
+     ['7042500','7045200'],'local zoom identifies both original close values');
+    const centers=await closeZoom.locator('circle').evaluateAll(nodes=>nodes.map(n=>{
+     const r=n.getBoundingClientRect();return r.left+r.width/2;
+    }));
+    ok(centers.length===2&&centers[1]-centers[0]>80,
+     label+' nearby point markers are separated in the visible inset');
+   }else ok(await closeZoom.count()===0,label+' ordinary number line unchanged');
    assert.equal(await page.locator('#thinking-feedback').count(),0,'preaudit may not show strict A feedback');
    await page.screenshot({path:path.join(out,label+'-corrected-1920x1080.png'),fullPage:true});
    const beforeReload=await saved(s.id);
