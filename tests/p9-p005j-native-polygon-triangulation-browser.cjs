@@ -39,7 +39,7 @@ function persist(){
 async function run(){
  fs.mkdirSync(out,{recursive:true});
  const candidate=await import(pathToFileURL(path.join(root,
-  'dist/learning/p005i-native-polygon-triangulation-evidence.js')).href);
+  'dist/learning/p005j-native-polygon-triangulation-evidence.js')).href);
  let origin,browser,ctx,page;
  try{
   origin=await createOrigin(root);
