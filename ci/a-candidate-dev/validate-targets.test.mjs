@@ -27,3 +27,15 @@ for(const [label,fn] of [
 ]){
  test('fail closed: '+label,()=>assert.throws(()=>validateTargets(changed(fn)),/A_DEV_TARGET_INVALID/));
 }
+
+test('original B15 native geometry controls are admitted, unknown B15 action is rejected',()=>{
+ const valid=changed(x=>{
+  x.targets[0].native[0]={...x.targets[0].native[0],
+   sessionId:'structurebridge',index:0,nodeId:'mt_hImiKNiaNh',type:'x-shapeangle',
+   taskSha256:'5574b42f8ac8c33a3c07232a2784d22dfc88e25b0df58091122628b648517dc6',
+   view:'b15',controls:['b15-parallel','b15-shape']};
+ });
+ assert.equal(validateTargets(valid).include[0].native[0].view,'b15');
+ valid.targets[0].native[0].controls.push('b15_make_up');
+ assert.throws(()=>validateTargets(valid),/A_DEV_TARGET_INVALID/);
+});
