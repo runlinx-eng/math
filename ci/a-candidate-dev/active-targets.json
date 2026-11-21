@@ -1,0 +1,26 @@
+{
+  "schema": "math-a-candidate-targets/2",
+  "targets": [
+    {
+      "case": "P005b-angle-ordering",
+      "sha": "8e595357d081d62c444861550d259996e15105dc",
+      "node_test": "tests/p9-p005b-angle-ordering-evidence.test.mjs",
+      "browser_test": "tests/p9-p005b-angle-ordering-browser.cjs",
+      "native": [
+        {
+          "sessionId": "angletypes",
+          "index": 1,
+          "nodeId": "mt_h0CVtqI2xo",
+          "taskSha256": "126024ce38ae4972a7a8fe4b3a93dfdbbf7e25d72267b6d07c718425dc371324",
+          "type": "x-g25-compare",
+          "view": "b25",
+          "controls": [
+            "g25-test",
+            "g25-choose",
+            "g25-undo"
+          ]
+        }
+      ]
+    }
+  ]
+}

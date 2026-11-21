@@ -1,0 +1,452 @@
+{
+  "schema": "math-a-development-ledger/1",
+  "asOf": "2026-11-21",
+  "source": "https://github.com/runlinx-eng/math/issues/342",
+  "formalCoverage": {
+    "strictA": 813,
+    "total": 1996
+  },
+  "scope": {
+    "packets": [
+      "P001",
+      "P002",
+      "P003",
+      "P004",
+      "P005"
+    ],
+    "historicalResearchPositions": 161,
+    "developmentTestedPositions": 38,
+    "developmentTestedCandidateCases": 19,
+    "blockedRuntime": [
+      "structure39:2",
+      "structure39:3"
+    ],
+    "sourcePoolNotEqualNativeRuntime": true
+  },
+  "artifactRetentionDays": 7,
+  "recordingRule": "Historical PASS is backed by listed runs, not by current preflight; independent ZIP audit is NOT_RUN until separately inspected. New runs write a per-run machine receipt; this history is edited only after verification, never automatically approves A.",
+  "packets": [
+    {
+      "id": "P001",
+      "topic": "area-grid",
+      "historicalResearchPositions": 3,
+      "developmentTested": 1,
+      "blockedRuntime": 0,
+      "pendingOrOtherNotAccepted": 2
+    },
+    {
+      "id": "P002",
+      "topic": "place-compose",
+      "historicalResearchPositions": 56,
+      "developmentTested": 2,
+      "blockedRuntime": 0,
+      "pendingOrOtherNotAccepted": 54
+    },
+    {
+      "id": "P003",
+      "topic": "count-walk",
+      "historicalResearchPositions": 36,
+      "developmentTested": 1,
+      "blockedRuntime": 0,
+      "pendingOrOtherNotAccepted": 35
+    },
+    {
+      "id": "P004",
+      "topic": "shape-classify",
+      "historicalResearchPositions": 34,
+      "developmentTested": 32,
+      "blockedRuntime": 2,
+      "pendingOrOtherNotAccepted": 0
+    },
+    {
+      "id": "P005",
+      "topic": "angles",
+      "historicalResearchPositions": 32,
+      "developmentTested": 2,
+      "blockedRuntime": 0,
+      "pendingOrOtherNotAccepted": 30
+    }
+  ],
+  "cases": [
+    {
+      "packet": "P001",
+      "case": "P001-gridarea-perimeter",
+      "branch": "work/a/p001-gridarea-contrast",
+      "candidateSha": "a373ada1be486b5d71d731f17e6317b6f7841d3d",
+      "positions": [
+        "gridarea:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44868390707,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14692469354,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P002",
+      "case": "P002-wide-order-gap",
+      "branch": "work/a/p002-wide-order-gap",
+      "candidateSha": "82f07469947cb9861aced40eddd5a1f480ab8346",
+      "positions": [
+        "placeproblems:1",
+        "bigproblems:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44868390707,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14692524207,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P003",
+      "case": "P003-rulejump-equivalence",
+      "branch": "work/a/p003-rulejump-equivalence",
+      "candidateSha": "dbc7e3560384737f8e491d33aaa9f5547fd494f1",
+      "positions": [
+        "percentpatterns:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44868390707,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14692966068,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004a-quadrilateral-inclusion",
+      "branch": "work/a/p004-quadrilateral-inclusion",
+      "candidateSha": "3662ff0e7faa71a1c6830909ef064b141a8d5d4c",
+      "positions": [
+        "quadsort:0",
+        "quadsort:1",
+        "quadhierarchy:0",
+        "quadhierarchy:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44868940955,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14693420369,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004b-quadrilateral-nesting",
+      "branch": "work/a/p004b-quadrilateral-nesting",
+      "candidateSha": "4b1d888921330bbdb06654654787a30c70745bc6",
+      "positions": [
+        "quadsort:3"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44869743089,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14694020311,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004c-closed-polygon-pick",
+      "branch": "work/a/p004c-closed-polygon-pick",
+      "candidateSha": "499bf5d343ce1e8af144e0a227e2400f9c2932e3",
+      "positions": [
+        "shapehello:0",
+        "shapehello:1",
+        "shapeidentity:1",
+        "shapeidentity:2",
+        "sidesfold:2",
+        "shapesides:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44870586258,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14693861446,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004d-triangle-drawing",
+      "branch": "work/a/p004d-triangle-drawing",
+      "candidateSha": "abd7f41bf763b6d84c567670a8069cbc82bf55c6",
+      "positions": [
+        "shapehello:2",
+        "shapeframe:0",
+        "shapeidentity:0",
+        "shapedraw:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44871354817,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14694177424,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004e-regular-polygon-conditions",
+      "branch": "work/a/p004e-regular-polygon-conditions",
+      "candidateSha": "99e07c4e2c9410125176b4a9f4a31105e0a53ac1",
+      "positions": [
+        "regularity:0",
+        "regularity:1",
+        "regularity:2",
+        "regularity:3"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44872077125,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14693803637,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004f-four-point-quadrilateral",
+      "branch": "work/a/p004f-four-point-quadrilateral",
+      "candidateSha": "9b7f06d17268b208c332b23637988b5455e8b0c4",
+      "positions": [
+        "shapeframe:1",
+        "shapedraw:1",
+        "quadsort:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44872383902,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14694228219,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004g-polygon-vertex-count",
+      "branch": "work/a/p004g-polygon-vertex-count",
+      "candidateSha": "d25a44e1c2a8fc8759bfb7e820eee97254f6904e",
+      "positions": [
+        "shapedraw:2",
+        "shapedraw:3",
+        "shapesides:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44872942169,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14694422969,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004h-pentagon-side-trace",
+      "branch": "work/a/p004h-pentagon-side-trace",
+      "candidateSha": "2e4c7e119ab423ea956b365f4caf4c7e8e8d153c",
+      "positions": [
+        "sidesfold:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44873515775,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14694678252,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004i-rotated-parallelogram-family",
+      "branch": "work/a/p004i-rotated-parallelogram-family",
+      "candidateSha": "f51b43b8c55ee99e7cc01da1b65d78c70a7883dd",
+      "positions": [
+        "quadhierarchy:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44873901796,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14695505706,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004j-regular-hexagon-construction",
+      "branch": "work/a/p004j-regular-hexagon-construction",
+      "candidateSha": "4ce45a5e652125a28f97016d32f35b7489df9aa8",
+      "positions": [
+        "shapesides:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44874445276,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14694904061,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004k-shapefacts-parallelogram",
+      "branch": "work/a/p004k-shapefacts-parallelogram",
+      "candidateSha": "d5a87dbcee564406cec432487fc64d958097651b",
+      "positions": [
+        "shapefacts:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44875261210,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14695212983,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004l-words38-pentagon-side-trace",
+      "branch": "work/a/p004l-words38-pentagon-side-trace",
+      "candidateSha": "22c063ea8de2bbc94f592ad9c36c523251b37840",
+      "positions": [
+        "words38:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44875415600,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14695314453,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004m-cross-source-square-inclusion",
+      "branch": "work/a/p004m-cross-source-square-inclusion",
+      "candidateSha": "d9c6f01ce19d6b93e698f5563c6ff48c029e9fb0",
+      "positions": [
+        "shapefacts:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44875995616,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14695957387,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P004",
+      "case": "P004n-geometrynotation-hexagon",
+      "branch": "work/a/p004n-geometrynotation-hexagon",
+      "candidateSha": "d0dd8b440e91cc2d7015dc8c7a856b6bc4c23e06",
+      "positions": [
+        "geometrynotation:3"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44876148483,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14695574332,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005a-acute-angle-comparison",
+      "branch": "work/a/p005a-acute-angle-comparison",
+      "candidateSha": "2f8bf2d715fabbc5c15e664de9c62780b70f71a3",
+      "positions": [
+        "angletypes:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44876766844,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14695998408,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005b-angle-ordering",
+      "branch": "work/a/p005b-angle-ordering",
+      "candidateSha": "8e595357d081d62c444861550d259996e15105dc",
+      "positions": [
+        "angletypes:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44877141497,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14696331391,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    }
+  ]
+}

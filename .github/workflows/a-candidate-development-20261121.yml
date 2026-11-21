@@ -1,6 +1,5 @@
-# Central-owned, isolated A-line *development* test runner.
-# Exact immutable candidate SHAs only; no PR, merge, main mutation, strict-A registration, or release.
-# Deliberately push-triggered on this isolated infrastructure branch, not on work/a/*.
+# A-line development-only CI. Public/shared integration remains deferred to #341 near P060.
+# Changing the target requires editing ONLY ci/a-candidate-dev/active-targets.json.
 name: A candidate development tests (not formal CI)
 
 on:
@@ -16,25 +15,55 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  prepare:
+    name: Validate immutable target manifest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.targets.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            ci/a-candidate-dev
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run fail-closed manifest contract tests
+        run: node --test ci/a-candidate-dev/validate-targets.test.mjs
+      - name: Parse and validate exact candidate SHAs, paths and source locks
+        id: targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          matrix="$(node ci/a-candidate-dev/validate-targets.mjs ci/a-candidate-dev/active-targets.json)"
+          printf 'matrix=%s\n' "$matrix" >> "$GITHUB_OUTPUT"
+
   candidate-development:
     name: ${{ matrix.case }}
+    needs: prepare
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - case: P005b-angle-ordering
-            sha: 8e595357d081d62c444861550d259996e15105dc
-            node_test: tests/p9-p005b-angle-ordering-evidence.test.mjs
-            browser_test: tests/p9-p005b-angle-ordering-browser.cjs
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
 
     steps:
+      - name: Checkout isolated central test tools at exact infra HEAD
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          path: infra-tools
+          sparse-checkout: |
+            ci/a-candidate-dev
       - name: Sparse checkout of the exact isolated A candidate
         uses: actions/checkout@v4
         with:
           ref: ${{ matrix.sha }}
           fetch-depth: 1
+          path: candidate
           sparse-checkout: |
             dist
             tests
@@ -43,37 +72,67 @@ jobs:
         with:
           node-version: '22'
       - name: Verify candidate identity and syntax
+        id: identity
         shell: bash
+        working-directory: candidate
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "${{ matrix.sha }}"
           node --version
           node --check "${{ matrix.node_test }}"
           node --check "${{ matrix.browser_test }}"
-      - name: Execute native Node math, negative cases and source fingerprint
+      - name: Native runtime, source, full SHA256 and original control preflight
+        id: preflight
         shell: bash
+        working-directory: candidate
+        env:
+          A_DEV_CASE: ${{ matrix.case }}
+          A_DEV_HEAD: ${{ matrix.sha }}
+          A_DEV_NATIVE_JSON: ${{ toJSON(matrix.native) }}
         run: |
           set -euo pipefail
           mkdir -p dev-results
-          node --test "${{ matrix.node_test }}" 2>&1 | tee dev-results/native-node.log
-      - name: Install browser test dependency (only after native Node PASS)
+          node ../infra-tools/ci/a-candidate-dev/native-preflight.mjs 2>&1 | tee dev-results/native-preflight.log
+      - name: Execute native Node math, negative cases and source fingerprint
+        id: node
         shell: bash
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          node --test "${{ matrix.node_test }}" 2>&1 | tee dev-results/native-node.log
+      - name: Install browser only after preflight and Node PASS
+        shell: bash
+        working-directory: candidate
         run: |
           set -euo pipefail
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install chromium
       - name: Execute real Chromium, original Check, wrong-to-correct, State-v2 and offline
+        id: browser
         shell: bash
+        working-directory: candidate
         run: |
           set -euo pipefail
           node "${{ matrix.browser_test }}" 2>&1 | tee dev-results/native-chromium.log
+      - name: Record exact-head development result (not formal A)
+        if: always()
+        shell: bash
+        working-directory: candidate
+        env:
+          A_DEV_CASE: ${{ matrix.case }}
+          A_DEV_HEAD: ${{ matrix.sha }}
+          A_STEP_IDENTITY: ${{ steps.identity.outcome }}
+          A_STEP_PREFLIGHT: ${{ steps.preflight.outcome }}
+          A_STEP_NODE: ${{ steps.node.outcome }}
+          A_STEP_BROWSER: ${{ steps.browser.outcome }}
+        run: node ../infra-tools/ci/a-candidate-dev/development-receipt.mjs
       - name: Preserve raw candidate evidence even on FAIL
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: a-development-${{ matrix.case }}-${{ github.run_id }}
           path: |
-            dev-results/
-            verification/p9-*/
-          if-no-files-found: warn
+            candidate/dev-results/
+            candidate/verification/p9-*/
+          if-no-files-found: error
           retention-days: 7
