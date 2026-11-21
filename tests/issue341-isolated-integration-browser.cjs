@@ -18,7 +18,7 @@ const result={schema:'issue-341-isolated-shared-integration/1',errors:[],checks:
   runId:process.env.GITHUB_RUN_ID||'local',runAttempt:Number(process.env.GITHUB_RUN_ATTEMPT||1),
   reusedOriginalRun:44909628782,reusedOriginalHead:'0cafdaed5aad3d32bf09ab1d9abf6e77130a069d',
   fixtureSha256:createHash('sha256').update(fs.readFileSync(fixturePath)).digest('hex')},
- scope:{candidateFamilies:113,candidatePositions:365,formalA:813,newFormalA:0,
+ scope:{candidateFamilies:113,candidatePositions:365,formalA:1178,newFormalA:365,
   originalFamilySuitesRerun:0,originalNavigationRerun:0,oldMathProofsRewritten:0,
   nativeUIControlsReperformed:false,offlineCandidateActivation:false},viewport:STANDARD_DESKTOP_VIEWPORT};
 const html=`<!doctype html><html lang="zh-CN"><meta charset="utf-8">
@@ -32,7 +32,7 @@ article h2{font-size:15px;color:#5e6f85;margin:0 0 10px}article p{margin:7px 0}
 small{display:block;color:#5e6f85}details{margin-top:10px}summary{cursor:pointer}
 </style><header><h1>365 道候选 · 隔离共享集成审阅</h1>
 <div id="status">正在载入原始证据与共享组合…</div>
-<p class="scope">使用原 Artifact 的已保存 Check，审阅新增共享接线与反馈。正式 A 仍为 813；此页不授 A、不改变生产入口。</p>
+<p class="scope">使用原 Artifact 的已保存 Check，审阅新增共享接线与反馈。正式名单新增365道（总1178）；本页只验证原隔离组合，不替代正式学习入口。</p>
 <label>家族 <select id="family"><option value="">全部家族</option></select></label></header>
 <main id="cards"></main></html>`;
 
@@ -64,14 +64,18 @@ small{display:block;color:#5e6f85}details{margin-top:10px}summary{cursor:pointer
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{})});
   result.browserVersion=browser.version();
-  // A clean normal application context must not request any candidate modules.
+  // The real production page now loads formal adapters on exact admitted sources.
   const normal=await newDesktopContext(browser,{serviceWorkers:'block'});
   const live=await normal.newPage(),candidateRequests=[];
   live.on('request',req=>{if(new URL(req.url()).pathname.includes('issue341-'))candidateRequests.push(req.url());});
   await live.goto(base+'/learn.html#allowedrange');
   await live.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='allowedrange');
-  assert.deepEqual(candidateRequests,[]);
-  result.checks.push('normal learn.html loads no candidate module or isolated entry');
+  await live.locator('#thinking-guide').waitFor({state:'visible',timeout:15000});
+  assert.ok(candidateRequests.some(url=>url.endsWith('/learning/issue341-formal-admissions.js')),
+    'normal entry must load the versioned exact formal source list');
+  assert.ok(candidateRequests.some(url=>url.endsWith('/learning/issue341-formal-source-routing.js')),
+    'normal entry must load source-gated feedback for a formally admitted native task');
+  result.checks.push('normal learning entry loads exact formal routing and bounded guide');
   await normal.close();
   const context=await newDesktopContext(browser,{serviceWorkers:'block'});
   const page=await context.newPage();
@@ -152,6 +156,6 @@ small{display:block;color:#5e6f85}details{margin-top:10px}summary{cursor:pointer
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(result,null,2)+'\n');
   console.log('ISSUE341_SHARED_INTEGRATION '+JSON.stringify({positions:result.rows.length,
    families:new Set(result.rows.map(row=>row.family)).size,checks:result.checks.length,
-   errors:result.errors,formalA:813,newFormalA:0,originalFamilySuitesRerun:0}));
+   errors:result.errors,formalA:1178,newFormalA:365,originalFamilySuitesRerun:0}));
  }
 })();
