@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p050-drawing-area-scale",
+  "commit": "bffba7988fb155f1b697abd83d863684fb81914d",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "model38",
+      "index": 1,
+      "nodeId": "mt_8xVHooT4aI",
+      "type": "x-r37-steps",
+      "taskHash": "3dce8b0f18028dd0e9a1e0da065693f094ac01c7ae1ce603f8dbd3a932a7ac6a"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "36 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "model38-1-correct-check-decoded.json": "1045a8cb53588b91ff690b2ad5dee8c7b0cf190afc4ac10f933ebb96f7138d27",
+    "model38-1-correct-check-storage.txt": "1045a8cb53588b91ff690b2ad5dee8c7b0cf190afc4ac10f933ebb96f7138d27",
+    "model38-1-correct.png": "e6bbc5692a47e6419570bd86f852e2542094152c04b65582365c94f57928ab84",
+    "model38-1-corrected-draft-decoded.json": "b8c1413c796941f1ac3dbfb5276dd2461166c352a380d5e0f7c2a564838cefa2",
+    "model38-1-corrected-draft-storage.txt": "b8c1413c796941f1ac3dbfb5276dd2461166c352a380d5e0f7c2a564838cefa2",
+    "model38-1-offline-reload-decoded.json": "1aedee7b41cba95cde9293e52447e1a7d1d2e137ecb8789dfa25bcecfae9d28a",
+    "model38-1-offline-reload-storage.txt": "1aedee7b41cba95cde9293e52447e1a7d1d2e137ecb8789dfa25bcecfae9d28a",
+    "model38-1-restored-backup-decoded.json": "713bda59a121e02aef993f42826814e027afeecd3c2720aeea7ef68796bec155",
+    "model38-1-restored-backup-storage.txt": "713bda59a121e02aef993f42826814e027afeecd3c2720aeea7ef68796bec155",
+    "model38-1-retry-decoded.json": "b61c7b41aedcf9ac00a393ca6224d1ad17fb4ba9ddad83b62dd4af96a8668028",
+    "model38-1-retry-storage.txt": "b61c7b41aedcf9ac00a393ca6224d1ad17fb4ba9ddad83b62dd4af96a8668028",
+    "model38-1-wrong-check-decoded.json": "7c3012f67dc672649710f048681aa8ab0e40b380d8c7bd7ab7b56e68b8148701",
+    "model38-1-wrong-check-storage.txt": "7c3012f67dc672649710f048681aa8ab0e40b380d8c7bd7ab7b56e68b8148701",
+    "model38-1-wrong.png": "a0489d4768b52b708c1be8b65ed8c4ecff6871c677207f03a87e9c51b3756de3",
+    "native-state-v2.json": "3e0053357e0da7d0307d1f2851641f036c23f2c94a714a9b101f4ecf05c3c55e",
+    "results.json": "fef072b617b152b276f606856aea07301e8dfcb18e1d058683b13d14cb4cba98"
+  }
+}

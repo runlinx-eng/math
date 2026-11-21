@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p047-subtraction-first-error",
+  "commit": "997460a2ed89a1af6631d3ed21a96fdc8efbb240",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "show38",
+      "index": 2,
+      "nodeId": "mt_nyK25mNOeR",
+      "type": "x-r38-chain",
+      "taskHash": "73d9d9422d8c3d37827a2a60cee7fe1569918cef3caf367436433db30d095677"
+    }
+  ],
+  "node22": "5 PASS",
+  "referenceNode": "20 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "b89d12e14db8ea6eb5363aaca8ff1c966082f2f97bce191c9406b85dfd020ed9",
+    "results.json": "bb4229514934bc185f1cc73f1b4d077e12621c4ca462331155912b0a2e3cadc0",
+    "show38-2-correct-check-decoded.json": "9a520d73b45b09648471830ba03e72a774ef74ac8761cc97859bc87daae1e29e",
+    "show38-2-correct-check-storage.txt": "9a520d73b45b09648471830ba03e72a774ef74ac8761cc97859bc87daae1e29e",
+    "show38-2-correct.png": "a27c1261c71e449404a6057cab003dd34cee90ec3395a3110029a20b77762a35",
+    "show38-2-corrected-draft-decoded.json": "4caf47a63413f5869b55f56806b3844f2ef1ad32dfc2b3c387bd9c6ac3b06d59",
+    "show38-2-corrected-draft-storage.txt": "4caf47a63413f5869b55f56806b3844f2ef1ad32dfc2b3c387bd9c6ac3b06d59",
+    "show38-2-offline-reload-decoded.json": "467bd73a827d280aff87f438a7950e52a46b00fd78a25601670813b88c3c1dda",
+    "show38-2-offline-reload-storage.txt": "467bd73a827d280aff87f438a7950e52a46b00fd78a25601670813b88c3c1dda",
+    "show38-2-restored-backup-decoded.json": "0d90e7c5a6de3c34dfc1fd08bfabf4986d3500d392ed4a3624bb400e21e6d79d",
+    "show38-2-restored-backup-storage.txt": "0d90e7c5a6de3c34dfc1fd08bfabf4986d3500d392ed4a3624bb400e21e6d79d",
+    "show38-2-retry-decoded.json": "853ce2f1cfed2ed7340f42b13039ba8928b0e15e4159fdd4f0cdb17ce8196593",
+    "show38-2-retry-storage.txt": "853ce2f1cfed2ed7340f42b13039ba8928b0e15e4159fdd4f0cdb17ce8196593",
+    "show38-2-wrong-check-decoded.json": "de34100039d7bf9d59321b48413d5c31e24e42b67fec8a35ca1a415cf5155794",
+    "show38-2-wrong-check-storage.txt": "de34100039d7bf9d59321b48413d5c31e24e42b67fec8a35ca1a415cf5155794",
+    "show38-2-wrong.png": "b10bcfe05fc386de486bea8d7fad2e24b1912cfd264a103b8d1e0911be0a7a22"
+  }
+}

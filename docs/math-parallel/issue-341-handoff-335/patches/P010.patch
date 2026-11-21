@@ -1,0 +1,1206 @@
+diff --git a/dist/learning/p010-story-operation-plans-evidence.js b/dist/learning/p010-story-operation-plans-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..5bdb6a145927ea47a6dcbc66c95b8a7e7cc166ad
+--- /dev/null
++++ b/dist/learning/p010-story-operation-plans-evidence.js
+@@ -0,0 +1,918 @@
++import {rational} from './phase5/b16-model.js';
++import * as b12 from './phase5/b12-model.js';
++import * as b15 from './phase5/b15-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++const reviewed = [
++  {
++    "sessionId": "threepiles",
++    "index": 0,
++    "nodeId": "mt_Eqk6oSbySH",
++    "type": "x-storyparts",
++    "taskHash": "159b028febc168bf57dba8318f4213c29ae9fc215b5da6e9690bfdaa253c3d0c",
++    "task": {
++      "type": "x-storyparts",
++      "values": [
++        4,
++        7,
++        6
++      ],
++      "labels": [
++        "红铅笔",
++        "蓝铅笔",
++        "绿铅笔"
++      ],
++      "unit": "支",
++      "prompt": "4支红铅笔、7支蓝铅笔、6支绿铅笔。搭出三段，再找一共有多少支。"
++    }
++  },
++  {
++    "sessionId": "threepiles",
++    "index": 1,
++    "nodeId": "mt_Eqk6oSbySH",
++    "type": "x-storyparts",
++    "taskHash": "d0766b07a772c146da8549b46b240c2a47d3e9a6ef2a79cc14cb17d3a8f6a632",
++    "task": {
++      "type": "x-storyparts",
++      "values": [
++        3,
++        9,
++        7
++      ],
++      "labels": [
++        "第一天",
++        "第二天",
++        "第三天"
++      ],
++      "unit": "个",
++      "prompt": "三天分别摘了3、9、7个苹果。先让能凑十的两份结伴，再带上剩下的一份。",
++      "pairTotal": 10
++    }
++  },
++  {
++    "sessionId": "threepiles",
++    "index": 2,
++    "nodeId": "mt_Eqk6oSbySH",
++    "type": "x-storyparts",
++    "taskHash": "3d69f6161f79f8114e535585fea3e289be9d7442f2c5dc9e21fe665cfdfb70bc",
++    "task": {
++      "type": "x-storyparts",
++      "values": [
++        5,
++        8,
++        2
++      ],
++      "labels": [
++        "汽车",
++        "自行车",
++        "公交车"
++      ],
++      "unit": "辆交通工具",
++      "prompt": "停车场有5辆汽车、8辆自行车、2辆公交车。让三段各代表一类，再看总共有多少辆交通工具。"
++    }
++  },
++  {
++    "sessionId": "storytwo",
++    "index": 0,
++    "nodeId": "mt_yTWxkzzoOZ",
++    "type": "x-storyplan",
++    "taskHash": "b21a23bc52262816be287eb79f98e8c284c252684da3221773638edaa5b4fec3",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        35,
++        12,
++        5
++      ],
++      "labels": [
++        "原来有",
++        "花掉",
++        "后来找到"
++      ],
++      "signs": [
++        1,
++        -1,
++        1
++      ],
++      "unit": "元",
++      "prompt": "原来有35元，花掉12元，后来又找到5元。现在有多少？自己选先算哪两份。"
++    }
++  },
++  {
++    "sessionId": "storytwo",
++    "index": 1,
++    "nodeId": "mt_yTWxkzzoOZ",
++    "type": "x-storyplan",
++    "taskHash": "88187c99b38f06c257878be651dbb20c099a45d2b9b9c316d1a59922e0756f72",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        35,
++        12,
++        40
++      ],
++      "labels": [
++        "原来有",
++        "后来收到",
++        "最后剩下"
++      ],
++      "signs": [
++        1,
++        1,
++        -1
++      ],
++      "unit": "枚",
++      "prompt": "原来有35枚贴纸，又收到12枚，送出一些以后剩40枚。送出了多少枚？"
++    }
++  },
++  {
++    "sessionId": "storytwo",
++    "index": 2,
++    "nodeId": "mt_yTWxkzzoOZ",
++    "type": "x-storyplan",
++    "taskHash": "fa1c9e0007b00f0f89d148a11187aa431e3af10be747b2c02515ac1086ee136e",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        38,
++        12,
++        5
++      ],
++      "labels": [
++        "现在有",
++        "花掉",
++        "后来找到"
++      ],
++      "signs": [
++        1,
++        1,
++        -1
++      ],
++      "unit": "元",
++      "prompt": "花掉12元，后来找到5元，现在有38元。最开始有多少？可以倒着把故事接回来。"
++    }
++  },
++  {
++    "sessionId": "storytwo",
++    "index": 3,
++    "nodeId": "mt_yTWxkzzoOZ",
++    "type": "x-storyplan",
++    "taskHash": "f0cbe85b4904989e5bb5ca2ff5ef0162304bff2d48e56b130d4a71477207b95f",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        46,
++        8,
++        29
++      ],
++      "labels": [
++        "红票原有",
++        "红票用掉",
++        "蓝票现有"
++      ],
++      "signs": [
++        1,
++        -1,
++        -1
++      ],
++      "unit": "张",
++      "prompt": "红票原有46张，用掉8张；蓝票有29张。剩下的红票比蓝票多多少？"
++    }
++  },
++  {
++    "sessionId": "storytwo",
++    "index": 4,
++    "nodeId": "mt_yTWxkzzoOZ",
++    "type": "x-storyplan",
++    "taskHash": "bbe0c5631b2110d52cdadc2de01fab4bf8b02ceabdf0be432a10c7773c9518ac",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        28,
++        9,
++        4
++      ],
++      "labels": [
++        "小林现有",
++        "小安多的",
++        "小安送出的"
++      ],
++      "signs": [
++        1,
++        1,
++        -1
++      ],
++      "unit": "颗",
++      "prompt": "小林有28颗珠子，小安比他多9颗。小安送出4颗后，还剩多少？"
++    }
++  },
++  {
++    "sessionId": "storytwo",
++    "index": 5,
++    "nodeId": "mt_yTWxkzzoOZ",
++    "type": "x-storyplan",
++    "taskHash": "1ee0d4b2e4e9d386c8e406ce2c7198a2461c589ad6ee0a8c4f7c55ca81495c48",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        46,
++        8,
++        9
++      ],
++      "labels": [
++        "小安现有",
++        "小林少的",
++        "小林用掉的"
++      ],
++      "signs": [
++        1,
++        -1,
++        -1
++      ],
++      "unit": "张",
++      "prompt": "小安有46张卡片，小林比他少8张。小林又用掉9张，现在还有多少？"
++    }
++  },
++  {
++    "sessionId": "plansteps",
++    "index": 1,
++    "nodeId": "mt_CDa5AVakLE",
++    "type": "x-storyplan",
++    "taskHash": "57a002a0aa095f85f34cb8b2c96f548ee4729761367f7d36399a6f4f18e06915",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        2450,
++        1375,
++        680
++      ],
++      "labels": [
++        "仓库原有",
++        "今天收到",
++        "今天送出"
++      ],
++      "signs": [
++        1,
++        1,
++        -1
++      ],
++      "unit": "箱",
++      "prompt": "模拟仓库原有2450箱物品，收到1375箱，送出680箱。现在有多少箱？决定先算哪一步，再选你用的办法。"
++    }
++  },
++  {
++    "sessionId": "plansteps",
++    "index": 2,
++    "nodeId": "mt_CDa5AVakLE",
++    "type": "x-storyplan",
++    "taskHash": "9185962ebfb51edd0f824ecd58a944b6f9757382e7b7df5cc5f162d76a556ce1",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        4300,
++        1285,
++        975
++      ],
++      "labels": [
++        "原有纸张",
++        "上午用掉",
++        "下午用掉"
++      ],
++      "signs": [
++        1,
++        -1,
++        -1
++      ],
++      "unit": "张",
++      "prompt": "原有4300张纸，上午用掉1285张，下午用掉975张。还剩多少？可以先合并两次用量，也可以逐次算。"
++    }
++  },
++  {
++    "sessionId": "plansteps",
++    "index": 3,
++    "nodeId": "mt_CDa5AVakLE",
++    "type": "x-storyplan",
++    "taskHash": "57d8bd4a7b4aa06eb2657443d5697396cfacf86e91658b11b637c0f83f11bba2",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        6000,
++        1985,
++        2015
++      ],
++      "labels": [
++        "原有物品",
++        "第一批送出",
++        "第二批送出"
++      ],
++      "signs": [
++        1,
++        -1,
++        -1
++      ],
++      "unit": "件",
++      "prompt": "模拟仓库有6000件物品，先后送出1985件和2015件。选一条顺手的路，找剩余。"
++    }
++  },
++  {
++    "sessionId": "plansteps",
++    "index": 4,
++    "nodeId": "mt_CDa5AVakLE",
++    "type": "x-storyplan",
++    "taskHash": "9be328479b008e9111aaf56c3d0edced86727b9b8979e4c44d9976b354d66d99",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        415,
++        168,
++        230
++      ],
++      "labels": [
++        "开始有",
++        "卖出",
++        "后来运来"
++      ],
++      "signs": [
++        1,
++        -1,
++        1
++      ],
++      "unit": "个",
++      "prompt": "开始有415个苹果，卖出168个，又运来230个。最后比开始多就一定算错了吗？自己把变化接起来。"
++    }
++  },
++  {
++    "sessionId": "combineproducts",
++    "index": 3,
++    "nodeId": "mt_AR-K72OIIO",
++    "type": "x-storychain",
++    "taskHash": "4d5a557e9b30400ea907d35871f7fe5a72a83b67caf05fe6ef59ed5a68c6844b",
++    "task": {
++      "type": "x-storychain",
++      "values": [
++        3,
++        8,
++        5
++      ],
++      "labels": [
++        "3盒",
++        "每盒8颗",
++        "另外5颗"
++      ],
++      "plans": [
++        "0*1+2"
++      ],
++      "meanings": [
++        {
++          "id": "boxes",
++          "label": "盒子里的总颗数",
++          "exprs": [
++            "0*1"
++          ]
++        },
++        {
++          "id": "all",
++          "label": "全部颗数",
++          "exprs": [
++            "0*1+2"
++          ]
++        }
++      ],
++      "prompt": "3盒每盒8颗，另外还有5颗。先找这一步在数什么，再把故事接完整。",
++      "equations": [
++        "3*8+5=n"
++      ]
++    }
++  },
++  {
++    "sessionId": "storyoperations",
++    "index": 0,
++    "nodeId": "mt_RXnyhCRYXA",
++    "type": "x-storychain",
++    "taskHash": "d36e6a232ff53025973a15ad70eafacb19cfe9d2fc444ea26d869b6d92f6d7d5",
++    "task": {
++      "type": "x-storychain",
++      "values": [
++        6,
++        24,
++        8,
++        5
++      ],
++      "labels": [
++        "6盒",
++        "每盒24颗",
++        "8组",
++        "每组用去5颗"
++      ],
++      "plans": [
++        "0*1/2-3",
++        "0*(1/2)-3"
++      ],
++      "meanings": [
++        {
++          "id": "total",
++          "label": "原来的总颗数",
++          "exprs": [
++            "0*1"
++          ]
++        },
++        {
++          "id": "perBox",
++          "label": "每盒平均分给一组的颗数",
++          "exprs": [
++            "1/2"
++          ]
++        },
++        {
++          "id": "per",
++          "label": "每组分到的颗数",
++          "exprs": [
++            "0*1/2",
++            "0*(1/2)"
++          ]
++        },
++        {
++          "id": "left",
++          "label": "每组用过后剩下的颗数",
++          "exprs": [
++            "0*1/2-3",
++            "0*(1/2)-3"
++          ]
++        }
++      ],
++      "prompt": "6盒，每盒24颗，平均给8组，每组再用去5颗。自己选搭档和运算，接出每组剩多少。",
++      "equations": [
++        "(6*24/8)-5=n",
++        "6*(24/8)-5=n"
++      ]
++    }
++  },
++  {
++    "sessionId": "storyoperations",
++    "index": 1,
++    "nodeId": "mt_RXnyhCRYXA",
++    "type": "x-storychain",
++    "taskHash": "2245f7e2412098e350263689070865b721506d0b09913f85a87576df3304058b",
++    "task": {
++      "type": "x-storychain",
++      "values": [
++        20,
++        4,
++        3,
++        2
++      ],
++      "labels": [
++        "原有20元",
++        "再收到4元",
++        "买3本",
++        "每本2元"
++      ],
++      "plans": [
++        "0+1-2*3"
++      ],
++      "meanings": [
++        {
++          "id": "money",
++          "label": "现在共有的钱",
++          "exprs": [
++            "0+1"
++          ]
++        },
++        {
++          "id": "cost",
++          "label": "买本子的总价",
++          "exprs": [
++            "2*3"
++          ]
++        },
++        {
++          "id": "left",
++          "label": "最后剩下的钱",
++          "exprs": [
++            "0+1-2*3"
++          ]
++        }
++      ],
++      "prompt": "模拟钱包：原有20元，再收4元，买3本每本2元的本子。两边可独立先算，最后接在一起。",
++      "equations": [
++        "20+4-3*2=n"
++      ]
++    }
++  },
++  {
++    "sessionId": "storyoperations",
++    "index": 2,
++    "nodeId": "mt_RXnyhCRYXA",
++    "type": "x-storychain",
++    "taskHash": "d7d0ecac7c331a3c07043ece26efc6a43501141c7906dc7cb0978fd2635a1ed0",
++    "task": {
++      "type": "x-storychain",
++      "values": [
++        2,
++        2,
++        3
++      ],
++      "labels": [
++        "2盒",
++        "每盒2颗",
++        "另外3颗"
++      ],
++      "plans": [
++        "0*1+2"
++      ],
++      "meanings": [
++        {
++          "id": "boxes",
++          "label": "两盒里的总颗数",
++          "exprs": [
++            "0*1"
++          ]
++        },
++        {
++          "id": "all",
++          "label": "全部颗数",
++          "exprs": [
++            "0*1+2"
++          ]
++        }
++      ],
++      "prompt": "有人先做2+2也得到4。两盒各2颗应该是什么关系？亲自重建，再加旁边3颗。",
++      "equations": [
++        "2*2+3=n"
++      ]
++    }
++  },
++  {
++    "sessionId": "fractionchoices",
++    "index": 0,
++    "nodeId": "mt_SsLWS_APM7",
++    "type": "x-storychain",
++    "taskHash": "2d404e63b498cbcb48d79dc013adb5beff8a3ee8cb83b04ca841ff29d06b4cca",
++    "task": {
++      "type": "x-storychain",
++      "values": [
++        20,
++        4,
++        3
++      ],
++      "labels": [
++        "总共20颗",
++        "平均分4份",
++        "取3份"
++      ],
++      "plans": [
++        "0/1*2"
++      ],
++      "meanings": [
++        {
++          "id": "one",
++          "label": "一份有几颗",
++          "exprs": [
++            "0/1"
++          ]
++        },
++        {
++          "id": "take",
++          "label": "取出的总颗数",
++          "exprs": [
++            "0/1*2"
++          ]
++        }
++      ],
++      "prompt": "总共20颗，取它的3/4。先想哪一步数什么，自己把计划接出来。",
++      "equations": [
++        "20/4*3=n"
++      ]
++    }
++  },
++  {
++    "sessionId": "fractionchoices",
++    "index": 2,
++    "nodeId": "mt_SsLWS_APM7",
++    "type": "x-storychain",
++    "taskHash": "690b6da2d607a15b7968344f6dedf331c0862f24270bdb1fbd4f9aec8f273109",
++    "task": {
++      "type": "x-storychain",
++      "values": [
++        24,
++        4,
++        3,
++        5
++      ],
++      "labels": [
++        "总共24颗",
++        "分4份",
++        "取3份",
++        "送出5颗"
++      ],
++      "plans": [
++        "0/1*2-3"
++      ],
++      "meanings": [
++        {
++          "id": "one",
++          "label": "一份几颗",
++          "exprs": [
++            "0/1"
++          ]
++        },
++        {
++          "id": "take",
++          "label": "先取出的颗数",
++          "exprs": [
++            "0/1*2"
++          ]
++        },
++        {
++          "id": "remain",
++          "label": "送出后留下的颗数",
++          "exprs": [
++            "0/1*2-3"
++          ]
++        }
++      ],
++      "prompt": "24颗先取3/4，再送出5颗，剩多少？每一步先选自己在找的量。",
++      "equations": [
++        "24/4*3-5=n"
++      ]
++    }
++  },
++  {
++    "sessionId": "bigmissing35",
++    "index": 2,
++    "nodeId": "mt_XuHmIn2xje",
++    "type": "x-storyplan",
++    "taskHash": "9be328479b008e9111aaf56c3d0edced86727b9b8979e4c44d9976b354d66d99",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        415,
++        168,
++        230
++      ],
++      "labels": [
++        "开始有",
++        "卖出",
++        "后来运来"
++      ],
++      "signs": [
++        1,
++        -1,
++        1
++      ],
++      "unit": "个",
++      "prompt": "开始有415个苹果，卖出168个，又运来230个。最后比开始多就一定算错了吗？自己把变化接起来。"
++    }
++  },
++  {
++    "sessionId": "objects38",
++    "index": 2,
++    "nodeId": "mt_fLOkq-HfPB",
++    "type": "x-storyplan",
++    "taskHash": "b21a23bc52262816be287eb79f98e8c284c252684da3221773638edaa5b4fec3",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        35,
++        12,
++        5
++      ],
++      "labels": [
++        "原来有",
++        "花掉",
++        "后来找到"
++      ],
++      "signs": [
++        1,
++        -1,
++        1
++      ],
++      "unit": "元",
++      "prompt": "原来有35元，花掉12元，后来又找到5元。现在有多少？自己选先算哪两份。"
++    }
++  },
++  {
++    "sessionId": "lifemath38",
++    "index": 1,
++    "nodeId": "mt_f67qGDhyfi",
++    "type": "x-storyplan",
++    "taskHash": "f0cbe85b4904989e5bb5ca2ff5ef0162304bff2d48e56b130d4a71477207b95f",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        46,
++        8,
++        29
++      ],
++      "labels": [
++        "红票原有",
++        "红票用掉",
++        "蓝票现有"
++      ],
++      "signs": [
++        1,
++        -1,
++        -1
++      ],
++      "unit": "张",
++      "prompt": "红票原有46张，用掉8张；蓝票有29张。剩下的红票比蓝票多多少？"
++    }
++  },
++  {
++    "sessionId": "multi38",
++    "index": 0,
++    "nodeId": "mt_RKeheOL9uo",
++    "type": "x-storyplan",
++    "taskHash": "b21a23bc52262816be287eb79f98e8c284c252684da3221773638edaa5b4fec3",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        35,
++        12,
++        5
++      ],
++      "labels": [
++        "原来有",
++        "花掉",
++        "后来找到"
++      ],
++      "signs": [
++        1,
++        -1,
++        1
++      ],
++      "unit": "元",
++      "prompt": "原来有35元，花掉12元，后来又找到5元。现在有多少？自己选先算哪两份。"
++    }
++  },
++  {
++    "sessionId": "multiShape38",
++    "index": 0,
++    "nodeId": "mt_SmghasIvbT",
++    "type": "x-storyplan",
++    "taskHash": "bbe0c5631b2110d52cdadc2de01fab4bf8b02ceabdf0be432a10c7773c9518ac",
++    "task": {
++      "type": "x-storyplan",
++      "values": [
++        28,
++        9,
++        4
++      ],
++      "labels": [
++        "小林现有",
++        "小安多的",
++        "小安送出的"
++      ],
++      "signs": [
++        1,
++        1,
++        -1
++      ],
++      "unit": "颗",
++      "prompt": "小林有28颗珠子，小安比他多9颗。小安送出4颗后，还剩多少？"
++    }
++  }
++];
++export const P010_SOURCES = Object.freeze(reviewed.map(({task, ...source}) => Object.freeze(source)));
++export function p010StoryOperationPlansBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = reviewed.find(source => source.sessionId === context.sessionId && source.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, entry)) return null;
++  return {nodeId:entry.nodeId, kind:'p010-story-operation-plans', method:null, question:"每步算出的数表示什么？按故事决定要加、减、乘还是除。"};
++}
++export function replayP010StoryOperationPlansEvidence(task, model, context) {
++  try {
++    const binding = p010StoryOperationPlansBinding(task, context);
++    const modelForTask = [b12, b15].find(owner => owner.TYPES.has(task?.type));
++    if (!modelForTask) return null;
++    const {initial,inspect,valid} = modelForTask;
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const answer = model.answer.trim().replace(/[−–－]/g,'-').replace(/＋/g,'+');
++    const value = raw => /^[+-]?\d{1,10}$/.test(raw) ? Number(raw) : null;
++    if (task.type==='x-storyparts') {
++      let built=false, merged=null, firstBuild=null, firstMerge=null, issue=false;
++      for (const event of model.history) {
++        issue=false;
++        if (event.action==='b12-parts-lock'&&hasExactKeys(event,['action','lengths'])&&!built) {
++          firstBuild??=event.lengths;
++          built=sameEvidence(event.lengths,task.values);
++          issue=!built;
++        } else if (event.action==='b12-parts-merge'&&hasExactKeys(event,['action','ids','subtotal'])&&built&&!merged) {
++          const {ids,subtotal}=event;
++          if (ids.length!==2 || ids[0]===ids[1]||ids.some(index=>!Number.isInteger(index)||index<0||index>2)) return null;
++          const pair=ids.reduce((sum,index)=>sum+task.values[index],0);
++          firstMerge??={ids,subtotal};
++          if (value(subtotal.trim())===pair && (task.pairTotal===undefined||pair===task.pairTotal)) merged={ids,subtotal};
++          else issue=true;
++        } else if (event.action==='b12-parts-undo'&&hasExactKeys(event,['action'])&&merged) merged=null;
++        else if (event.action==='b12-parts-reset'&&hasExactKeys(event,['action'])) {built=false;merged=null;}
++        else return null;
++      }
++      const total=task.values.reduce((sum,part)=>sum+part,0);
++      if (issue || !built || !merged || value(answer)!==total || !sameEvidence(model.lengths,task.values) ||
++          !sameEvidence({built,merged,firstBuild,firstMerge},
++            {built:model.built,merged:model.merged,firstBuild:model.firstBuild,firstMerge:model.firstMerge}) ||
++          !b12.equationMatches(task,model.equation) || !inspect(task,model).correct) return null;
++      return {binding,total,merged};
++    }
++
++    if (task.type==='x-storyplan') {
++      const base=task.values.map((value,id)=>({ids:[id],value,coeffs:task.values.map((_,index)=>Number(id===index)),tree:{id}}));
++      let groups=[...base], merges=[], issue=false;
++      const first=[];
++      const prior=[];
++      for (const event of model.history) {
++        issue=false;
++        if (event.action==='b12-plan-reset'&&hasExactKeys(event,['action'])) {
++          groups=[...base];
++          merges=[];
++          prior.length=0;
++        } else if (event.action==='b12-plan-undo'&&hasExactKeys(event,['action'])&&merges.length) {
++          merges.pop();
++          groups=prior.pop();
++        } else if (event.action==='b12-plan-merge'&&hasExactKeys(event,['action','depth','draft'])&&event.depth===merges.length) {
++          const {draft}=event;
++          if (!hasExactKeys(draft,['leftIds','rightIds','op','result','method'])) return null;
++          const {leftIds,rightIds,op,result,method}=draft;
++          const left=groups.findIndex(group=>sameEvidence(group.ids,leftIds));
++          const right=groups.findIndex(group=>sameEvidence(group.ids,rightIds));
++          if (left<0||right<0||left===right) return null;
++          first[event.depth]??=draft;
++          const a=groups[left], b=groups[right];
++          const sign=op==='+'?1:op==='-'?-1:0;
++          const numeric=a.value+sign*b.value;
++          const raw=result.trim().replace(/[−–－]/g,'-').replace(/＋/g,'+');
++          if (!sign||!['mental','written','tool'].includes(method)||value(raw)!==numeric) {
++            issue=true;
++            continue;
++          }
++          prior.push(groups);
++          merges.push(draft);
++          groups=groups.filter((_,index)=>index!==left&&index!==right);
++          groups.push({ids:[...a.ids,...b.ids],value:numeric,
++            coeffs:a.coeffs.map((coefficient,index)=>coefficient+sign*b.coeffs[index]),tree:{op,left:a.tree,right:b.tree}});
++        } else return null;
++      }
++      const total=task.values.reduce((sum,part,index)=>sum+task.signs[index]*part,0);
++      if (issue || groups.length!==1 || groups[0].value!==total || value(answer)!==total ||
++          !sameEvidence(groups[0].coeffs,task.signs) || !sameEvidence(groups,model.groups) ||
++          !sameEvidence(merges,model.merges) || !sameEvidence(first,model.first) ||
++          !b12.equationMatches(task,model.equation) || !inspect(task,model).correct) return null;
++      return {binding,total,merges};
++    }
++
++    const fields=Object.keys(initial(task)).filter(key=>!['board','history','issue'].includes(key));
++    const base=()=>task.values.map((value,id)=>({value,expr:String(id),ids:[id]}));
++    let groups=base(), selected=[], steps=[];
++    let issue=false;
++    for (const event of model.history) {
++      issue=false;
++      if (!hasExactKeys(event,['action','data']) || !hasExactKeys(event.data,['fields','index','value']) ||
++          !hasExactKeys(event.data.fields,fields) || event.data.value!==null) return null;
++      const {action,data}=event;
++      if (action==='b15-reset'&&data.index===null) {
++        groups=base();
++        selected=[];
++        steps=[];
++      } else if (action==='b15-pick'&&Number.isInteger(data.index)&&data.index>=0&&data.index<groups.length) {
++        const index=selected.indexOf(data.index);
++        if (index>=0) selected.splice(index,1);
++        else if (selected.length<2) selected.push(data.index);
++      } else if (action==='b15-back'&&data.index===null) {
++        if (steps.length) {groups=steps.pop().before;selected=[];}
++      } else if (action==='b15-merge'&&data.index===null&&selected.length===2) {
++        const [left,right]=selected, a=groups[left], b=groups[right];
++        const {operator,result,meaning}=data.fields;
++        const calculated={'+':a.value+b.value,'-':a.value-b.value,'*':a.value*b.value,'/':a.value/b.value}[operator];
++        const exact=rational(result.trim());
++        if (!['+','-','*','/'].includes(operator)||!Number.isFinite(calculated)||!exact||
++            exact[0]/exact[1]!==calculated) {
++          issue=true;
++          continue;
++        }
++        const expr=`(${a.expr}${operator}${b.expr})`;
++        steps.push({before:groups,left:a.value,right:b.value,op:operator,value:calculated,expr,meaning});
++        groups=groups.filter((_,index)=>index!==left&&index!==right);
++        groups.push({value:calculated,expr,ids:[...a.ids,...b.ids]});
++        selected=[];
++      } else return null;
++    }
++    const final=groups[0];
++    const totals={combineproducts:{3:3*8+5},storyoperations:{0:6*24/8-5,1:20+4-3*2,2:2*2+3},
++      fractionchoices:{0:20/4*3,2:24/4*3-5}};
++    const total=totals[context.sessionId]?.[context.index];
++    if (issue || groups.length!==1 || final.value!==total || value(answer)!==total ||
++        final.ids.length!==task.values.length || new Set(final.ids).size!==task.values.length ||
++        !task.plans.some(plan=>b15.equivalent(final.expr,plan)) ||
++        !steps.every(step=>task.meanings.some(tag=>tag.id===step.meaning&&tag.exprs.some(expr=>b15.equivalent(step.expr,expr)))) ||
++        !sameEvidence({groups,selected,steps},model.board) || !inspect(task,model).correct) return null;
++    return {binding,total,steps:steps.map(({op,value,meaning})=>({op,value,meaning}))};
++
++  } catch {
++    return null;
++  }
++}
++export function submittedP010StoryOperationPlansEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replayP010StoryOperationPlansEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-p010-story-operation-plans-browser.cjs b/tests/p9-p010-story-operation-plans-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..636bd89ae8dd6e8d3ac63a5eb459334650ff808e
+--- /dev/null
++++ b/tests/p9-p010-story-operation-plans-browser.cjs
+@@ -0,0 +1,214 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P010_ARTIFACTS || path.join(root, 'verification/p9-p010-story-operation-plans'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function placeRange(input, target) {
++  const start = Number(await input.inputValue());
++  const step = Number(await input.getAttribute('step'));
++  const min = Number(await input.getAttribute('min'));
++  const max = Number(await input.getAttribute('max'));
++  assert.ok(target >= min && target <= max && (target-min)%step === 0);
++  let current = start;
++  if (target === current) {
++    await input.press(target === max ? 'ArrowLeft' : 'ArrowRight');
++    current = Number(await input.inputValue());
++  }
++  while (Math.abs(target-current) > Math.max(2*step,(max-min)/10)) {
++    await input.press(target > current ? 'PageUp' : 'PageDown');
++    const next = Number(await input.inputValue());
++    if (next === current || Math.abs(target-next) >= Math.abs(target-current)) {
++      current = next;
++      break;
++    }
++    current = next;
++  }
++  while (current !== target) {
++    const key = target > current ? 'ArrowRight' : 'ArrowLeft';
++    await input.press(key);
++    const next = Number(await input.inputValue());
++    assert.equal(next,current+(key==='ArrowRight'?step:-step));
++    current = next;
++  }
++}
++
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.getAttribute('type') === 'range') await placeRange(inp,Number(s.value));
++      else if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P010_SOURCES, replayP010StoryOperationPlansEvidence, submittedP010StoryOperationPlansEvidence} = await entry('dist/learning/p010-story-operation-plans-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b12 = await entry('dist/learning/phase5/b12-model.js');
++  const b15 = await entry('dist/learning/phase5/b15-model.js');
++  const b14 = await entry('dist/learning/phase5/b14-model.js');
++  const b35 = await entry('dist/learning/phase5/b35-model.js');
++  const b33 = await entry('dist/learning/phase5/b33-model.js');
++  const b17 = await entry('dist/learning/phase5/b17-model.js');
++  const modelFor = task => [b12, b15, b14, b35, b33, b17].find(model => model.TYPES.has(task.type));
++const equalNumbers = task => task.type==='x-storychain' && task.values.join(',')==='2,2,3';
++const wrongSteps=(task,model)=>model.solveSteps(task).map(step=>{
++  if (equalNumbers(task)) return step.field==='operator' && step.value==='*' ? {...step,value:'+'} : step;
++  return step.field==='answer' ? {...step,value:'0'} : step;
++});
++const correctSteps=(task,model)=>equalNumbers(task)
++  ? [{action:'b15-back'},{action:'b15-back'},...model.solveSteps(task)]
++  : model.solveSteps(task).filter(step=>step.field==='answer');
++
++const joinStory = task => {
++  const answer = task.a + (task.op==='+' ? task.b : -task.b);
++  const counter = group => ({action:'story-counter',data:{group,delta:1}});
++  return [
++    ...Array.from({length:task.a},()=>counter('left')),
++    ...Array.from({length:task.b},()=>counter('right')),
++    {field:'op',value:task.op}, {field:'guess',value:answer}, {action:'story-do'},
++    {field:'equation',value:task.balance ? `${task.a}+${task.b}=${task.balance[0]}+${task.balance[1]}` : `${task.a}${task.op}${task.b}=${answer}`},
++    ...(task.swap ? [{action:'story-swap'},{field:'otherEquation',value:`${task.b}+${task.a}=${answer}`},{field:'shortage',value:'not-enough'}] : []),
++  ];
++};
++
++  const cases = P010_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP010StoryOperationPlansEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: modelFor(row.task).inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P010');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,prior.type==='x-joinstory' ? joinStory(prior) : modelFor(prior).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task,modelFor(row.task)));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !modelFor(row.task).inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task,modelFor(row.task)));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP010StoryOperationPlansEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && (Boolean(accepted)),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p010.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p010r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P010_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p010-story-operation-plans-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P010_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p010-story-operation-plans.test.mjs b/tests/p9-p010-story-operation-plans.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..7dd3fd02be9b480378c9cc564ceb611491b02006
+--- /dev/null
++++ b/tests/p9-p010-story-operation-plans.test.mjs
+@@ -0,0 +1,56 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as b12 from '../dist/learning/phase5/b12-model.js';
++import * as b15 from '../dist/learning/phase5/b15-model.js';
++import {P010_SOURCES, p010StoryOperationPlansBinding, replayP010StoryOperationPlansEvidence, submittedP010StoryOperationPlansEvidence} from '../dist/learning/p010-story-operation-plans-evidence.js';
++
++const equalNumbers = task => task.type==='x-storychain' && task.values.join(',')==='2,2,3';
++const wrongSteps=(task,model)=>model.solveSteps(task).map(step=>{
++  if (equalNumbers(task)) return step.field==='operator' && step.value==='*' ? {...step,value:'+'} : step;
++  return step.field==='answer' ? {...step,value:'0'} : step;
++});
++const correctSteps=(task,model)=>equalNumbers(task)
++  ? [{action:'b15-back'},{action:'b15-back'},...model.solveSteps(task)]
++  : model.solveSteps(task).filter(step=>step.field==='answer');
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) : value && typeof value === 'object'
++  ? Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en')).map(key => [key, ordered(value[key])]))
++  : value;
++
++for (const source of P010_SOURCES) {
++  const {sessionId, index} = source;
++  const context = {sessionId, index};
++  const task = sessionTaskFor(sessionId, index);
++  const modelForTask = [b12, b15].find(owner => owner.TYPES.has(task.type));
++  const {act, initial} = modelForTask;
++  const replay = model => replayP010StoryOperationPlansEvidence(task, model, context);
++  const submit = (model, saved) => submittedP010StoryOperationPlansEvidence(task, model, {attempts:[{value:saved}]}, context);
++  const play = (model, steps) => {
++    for (const step of steps) {
++      if (step.field) {
++        if (step.field.startsWith('lengths.')) model.lengths[Number(step.field.split('.')[1])] = Number(step.value);
++        else if (step.field.startsWith('answers.')) model.answers[Number(step.field.split('.')[1])] = step.value;
++        else model[step.field] = step.value;
++      } else act(task, model, step.action === 'turn-extra' ? 'a30-turn' : step.action, step.data);
++    }
++  };
++  test(`P010 locks ${sessionId}:${index} and rejects stale or modified work`, () => {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.ok(p010StoryOperationPlansBinding(task, context));
++    assert.equal(p010StoryOperationPlansBinding(task, {sessionId,index:-1}), null);
++    const model = initial(task);
++    play(model, wrongSteps(task,modelForTask));
++    const failed = structuredClone(model);
++    assert.equal(replay(model), null);
++    play(model, correctSteps(task,modelForTask));
++    const accepted = replay(model);
++    assert.ok(accepted);
++    assert.equal(submit(model, failed), null);
++    assert.deepEqual(submit(model, structuredClone(model)), accepted);
++    const forged = structuredClone(model);
++    forged.history = [];
++    assert.equal(replay(forged), null);
++  });
++}

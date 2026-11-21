@@ -1,0 +1,548 @@
+diff --git a/dist/learning/p092-triangle-tiling-evidence.js b/dist/learning/p092-triangle-tiling-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..40e1080fe978abe670c4168da42ec35cf3491758
+--- /dev/null
++++ b/dist/learning/p092-triangle-tiling-evidence.js
+@@ -0,0 +1,112 @@
++import {initial, inspect, number, valid} from './phase5/b23-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'shapepieces';
++const nodeId = 'mt_XjwUlmxdCT';
++const type = 'x-s23-tile';
++const reviewed = [
++  {
++    taskHash:'b12e3327abcb31e228519271d2d5bdbf9ec76cd1574608f71a575347fb4a2fab',
++    task:{type,prompt:'把两块相同的直角三角形转一转，铺满长方形轮廓。',pattern:'rect',
++      slots:2,questions:[{label:'用了几块三角形',value:2}]},
++    question:'两块小三角形怎样沿着同一条对角线接起来？'
++  },
++  {
++    taskHash:'bbf4e6c129b8e76d1382d4371158628879659769933d587e85b7fa9de553a766',
++    task:{type,prompt:'六块相同的三角形围在一起，铺满一个六边形。',pattern:'hex',
++      slots:6,questions:[{label:'六边形的外边有几条',value:6}]},
++    question:'每块三角形哪一条边露在外面？围一圈共有几条这样的边？'
++  }
++];
++
++export const P092_SOURCES = Object.freeze(reviewed.map(({taskHash},index) =>
++  Object.freeze({sessionId,index,nodeId,type,taskHash})
++));
++
++export function p092TriangleTilingBinding(task,context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId ||
++      !sameEvidence(task,reviewed[context.index]?.task) ||
++      !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind:'p092-triangle-tiling',method:null,question:reviewed[context.index].question};
++}
++
++// A half-turn takes the first right triangle across the shared diagonal.
++// For the regular hexagon, consecutive center-to-vertex rays are 60° apart.
++// Each triangular sector contributes one outer edge; the radial seams are inside.
++const patterns = {
++  rect:{step:90,regions:[0,180],outerEdges:4,internalSeams:1},
++  hex:{step:60,regions:[0,60,120,180,240,300],outerEdges:6,internalSeams:6}
++};
++
++function partition(regions, inOutline, rotations) {
++  const pieces = [];
++  const outside = [];
++  const uses = new Map(regions.map(angle => [angle,0]));
++  for (const [piece, placed] of inOutline.entries()) {
++    if (!placed) continue;
++    const degrees = rotations[piece];
++    pieces.push({piece,degrees});
++    if (uses.has(degrees)) uses.set(degrees,uses.get(degrees)+1);
++    else outside.push(piece);
++  }
++  const gaps = regions.filter(angle => uses.get(angle) === 0);
++  const overlaps = regions.filter(angle => uses.get(angle) > 1);
++  return {pieces,outside,gaps,overlaps,complete:!outside.length && !gaps.length && !overlaps.length};
++}
++
++export function replayP092TriangleTilingEvidence(task,model,context) {
++  try {
++    const binding = p092TriangleTilingBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task,1))) || !valid(task,model) ||
++        model.issue !== '' || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length) return null;
++
++    const {step,regions,outerEdges,internalSeams} = patterns[task.pattern];
++    const rotations = Array(task.slots).fill(0);
++    const inOutline = Array(task.slots).fill(false);
++    const actions = [];
++    let shape = partition(regions,inOutline,rotations);
++    let assembledOnce = false;
++
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','f','d']) || !['rotate','place'].includes(event.a) ||
++          !hasExactKeys(event.f,['piece']) || !hasExactKeys(event.d,[])) return null;
++      const {a, f:{piece:raw}} = event;
++      if (raw === '') {
++        actions.push({action:a,piece:null,accepted:false});
++        continue;
++      }
++      if (!/^[0-5]$/.test(raw)) return null;
++      const piece = Number(raw);
++      if (piece >= task.slots) return null;
++
++      if (a === 'rotate') rotations[piece] = (rotations[piece]+step)%360;
++      else inOutline[piece] = true;
++      shape = partition(regions,inOutline,rotations);
++      assembledOnce ||= shape.complete;
++      actions.push({action:a,piece,accepted:true,degrees:rotations[piece],onBoard:inOutline[piece],
++        gaps:shape.gaps,overlaps:shape.overlaps,outside:shape.outside});
++    }
++
++    const board = model.board;
++    const slots = inOutline.map((placed,piece) => placed ? piece : null);
++    const answer = task.pattern === 'rect' ? shape.pieces.length : outerEdges;
++    if (!shape.complete || !sameEvidence(rotations,board.rotations) || !sameEvidence(slots,board.slots) ||
++        assembledOnce !== board.assembledOnce || board.separated ||
++        number(model.answers[0]) !== answer || !inspect(task,model).correct) return null;
++    return {binding,pattern:task.pattern,pieces:shape.pieces,outerEdges,internalSeams,answer,actions};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP092TriangleTilingEvidence(task,model,record,context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP092TriangleTilingEvidence(task,model,context);
++}
+diff --git a/tests/p9-p092-triangle-tiling-browser.cjs b/tests/p9-p092-triangle-tiling-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..5355a48c34b7fbd64683b508cd1a867402ceb2a6
+--- /dev/null
++++ b/tests/p9-p092-triangle-tiling-browser.cjs
+@@ -0,0 +1,276 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P092_ARTIFACTS || path.join(root, 'verification/p9-p092-triangle-tiling'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (row.index === 0) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++    const start = page.locator('[data-do="start"]');
++    if (await start.isVisible()) await start.click();
++  } else {
++    await page.locator('#actions [data-do="next"]').click();
++    checks.push('native Next reaches the second position');
++  }
++  await page.waitForFunction(({id,index}) => {
++    const snap = window.mathLesson?.snapshot();
++    return snap?.id === id && snap.index === index;
++  },row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P092_SOURCES, replayP092TriangleTilingEvidence, submittedP092TriangleTilingEvidence} =
++    await entry('dist/learning/p092-triangle-tiling-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b23-model.js');
++  const expected = [
++    {step:90,angles:[0,180],answer:2,outerEdges:4},
++    {step:60,angles:[0,60,120,180,240,300],answer:6,outerEdges:6}
++  ];
++  const cases = P092_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), ...expected[i]};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP092TriangleTilingEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      board: result.model.board, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  const field = name => '#extra-controls [data-xfield="' + name + '"]';
++  async function orientations(p) {
++    return p.locator('#extra-visual svg g[transform] > path').evaluateAll(elements =>
++      elements.map(path => Number(path.parentElement.getAttribute('transform').match(/rotate\((\d+)\)/)[1])));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P092');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const choose = async piece => {
++        await (await openControl(page,field('piece'))).selectOption(String(piece));
++      };
++      const action = name => click(page,'#extra-controls [data-x="g23-' + name + '"]');
++      const answer = async value => {
++        await (await openControl(page,field('answers.0'))).fill(String(value));
++      };
++      const check = () => click(page,'#actions [data-do="check"]');
++      await action('rotate');
++      const noPiece = await observe(page,row,'no-selection');
++      ok(noPiece.model.issue.includes('先选') && noPiece.model.board.slots.every(piece => piece === null),
++        tag + ' rotation without selecting a piece is blocked');
++
++      for (const piece of row.angles.keys()) {
++        await choose(piece);
++        await action('place');
++      }
++      await answer(row.answer);
++      assert.deepEqual(await orientations(page),row.angles.map(() => 0));
++      await check();
++      const wrong = await observe(page,row,'overlap-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task,wrong.attempts[0].value).correct &&
++        !proof(row,wrong), tag + ' full piece count with actual visible overlap cannot pass');
++      await picture(page,tag + '-overlap-check.png');
++
++      for (const [piece, angle] of row.angles.entries()) {
++        if (angle === 0) continue;
++        await choose(piece);
++        for (let step = 0; step < angle; step += row.step) {
++          await action('rotate');
++          if (row.index === 0 && step === 0) {
++            const outside = await observe(page,row,'quarter-turn-outside');
++            assert.deepEqual(await orientations(page),[0,90]);
++            ok(!replayP092TriangleTilingEvidence(row.task,outside.model,row.context),
++              'actual 90-degree orientation protrudes from the rectangle');
++            await picture(page,tag + '-quarter-turn-outside.png');
++          }
++        }
++      }
++
++      assert.deepEqual(await orientations(page),row.angles);
++      const draft = await observe(page,row,'complete-draft');
++      const complete = replayP092TriangleTilingEvidence(row.task,draft.model,row.context);
++      assert.deepEqual(complete?.pieces.map(piece => piece.degrees),row.angles);
++      ok(!proof(row,draft), tag + ' complete arrangement requires a new Check');
++      await check();
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.outerEdges === row.outerEdges && accepted.answer === row.answer,
++      tag + ' actual latest Check verifies the visible partition and answer');
++      ok(accepted.actions.some(a => a.overlaps?.includes(0) && a.gaps?.length),
++        tag + ' proof preserves the former overlap and gap');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p092-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p092-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p092-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P092_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p092-triangle-tiling-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P092_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p092-triangle-tiling.test.mjs b/tests/p9-p092-triangle-tiling.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..631514b320dbb576bb275c06de054296e6179a73
+--- /dev/null
++++ b/tests/p9-p092-triangle-tiling.test.mjs
+@@ -0,0 +1,142 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b23-model.js';
++import {
++  P092_SOURCES,
++  p092TriangleTilingBinding,
++  replayP092TriangleTilingEvidence,
++  submittedP092TriangleTilingEvidence
++} from '../dist/learning/p092-triangle-tiling-evidence.js';
++
++const cases = P092_SOURCES.map((source,i) => {
++  const {sessionId,index} = source;
++  return {source,context:{sessionId,index},task:sessionTaskFor(sessionId,index),
++    step:[90,60][i],orientations:[[0,180],[0,60,120,180,240,300]][i],
++    outerEdges:[4,6][i],internalSeams:[1,6][i],answer:[2,6][i]};
++});
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en'))
++      .map(key => [key,ordered(value[key])]));
++  }
++  return value;
++}
++
++const replay = (row,m) => replayP092TriangleTilingEvidence(row.task,m,row.context);
++const submit = (row,m,...versions) => submittedP092TriangleTilingEvidence(row.task,m,
++  {attempts:versions.map(value => ({value:structuredClone(value)}))},row.context);
++const act = (row,m,action,piece) => {
++  m.piece = piece === null ? '' : String(piece);
++  original.act(row.task,m,'g23-'+action);
++};
++
++function blank(row) {
++  const model = original.initial(row.task,7);
++  model.answers[0] = String(row.answer);
++  return model;
++}
++
++function placeAll(row,model = blank(row)) {
++  for (const piece of row.orientations.keys()) act(row,model,'place',piece);
++  return model;
++}
++
++function rotateToPartition(row,model) {
++  for (const [piece,angle] of row.orientations.entries()) {
++    for (let rotation = 0; rotation < angle; rotation += row.step) act(row,model,'rotate',piece);
++  }
++  return model;
++}
++
++test('P092 locks both exact original geometry tasks', () => {
++  for (const {source,task,context} of cases) {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),source.taskHash);
++    assert.equal(p092TriangleTilingBinding(task,context)?.nodeId,source.nodeId);
++    assert.equal(p092TriangleTilingBinding({...task,slots:task.slots+1},context),null);
++    assert.equal(p092TriangleTilingBinding({...task,questions:[]},context),null);
++    assert.equal(p092TriangleTilingBinding(task,{...context,index:String(context.index)}),null);
++  }
++});
++
++test('P092 needs complementary orientations even when every piece has been placed', () => {
++  for (const row of cases) {
++    const model = placeAll(row);
++    assert.equal(model.board.slots.filter(p => p !== null).length,row.task.slots);
++    assert.equal(replay(row,model),null);
++    rotateToPartition(row,model);
++    const before = structuredClone(model);
++    const proof = replay(row,model);
++    assert.deepEqual(proof?.pieces.map(p => p.degrees),row.orientations);
++    assert.equal(proof?.outerEdges,row.outerEdges);
++    assert.equal(proof?.internalSeams,row.internalSeams);
++    assert.equal(proof?.answer,row.answer);
++    assert.ok(proof.actions.find(a => a.overlaps?.includes(0) && a.gaps?.length));
++    assert.deepEqual(model,before);
++  }
++});
++
++test('P092 records the protruding quarter-turn of a right triangle', () => {
++  const [row] = cases;
++  const model = placeAll(row);
++  act(row,model,'rotate',1);
++  assert.equal(replay(row,model),null);
++  act(row,model,'rotate',1);
++  const proof = replay(row,model);
++  assert.deepEqual(proof?.actions.at(-2).outside,[1]);
++  assert.deepEqual(proof?.actions.at(-2).gaps,[180]);
++  assert.deepEqual(proof?.actions.at(-1).outside,[]);
++});
++
++test('P092 checks the numeric answer and requires a fresh Check after fixing the layout', () => {
++  for (const row of cases) {
++    const model = placeAll(row), wrong = structuredClone(model);
++    rotateToPartition(row,model);
++    assert.equal(submit(row,model,wrong),null);
++    assert.equal(submit(row,model,wrong,model)?.answer,row.answer);
++    const checked = structuredClone(model);
++    model.answers[0] = String(row.answer+1);
++    assert.equal(submit(row,model,wrong,model),null);
++    model.answers[0] = row.answer.toFixed(1);
++    assert.equal(replay(row,model)?.answer,row.answer);
++    assert.equal(submit(row,model,wrong,checked),null);
++  }
++});
++
++test('P092 recognizes allowed exploration and fails closed on tampered geometry', () => {
++  const [row] = cases;
++  const model = blank(row);
++  act(row,model,'rotate',null);
++  rotateToPartition(row,placeAll(row,model));
++  act(row,model,'place',0);
++  assert.equal(replay(row,model)?.actions[0].accepted,false);
++  for (const change of [
++    m => { m.board.rotations[1] = 0; },
++    m => { m.board.slots[1] = 0; },
++    m => { m.history[1].d.index = '1'; },
++    m => original.act(row.task,m,'g23-unplace'),
++    m => original.act(row.task,m,'g23-reset')
++  ]) {
++    const copy = structuredClone(model);
++    change(copy);
++    assert.equal(replay(row,copy),null,change.toString());
++  }
++});
++
++test('P092 excludes practice, bridge and separately scoped shape-merger material', async () => {
++  await ensureB39Ready();
++  for (const {task,context} of cases) {
++    assert.equal(p092TriangleTilingBinding(task,{...context,index:-1}),null);
++    assert.equal(p092TriangleTilingBinding(task,{...context,sessionId:'shapemerge'}),null);
++    assert.equal(p092TriangleTilingBinding(sessionTaskFor('shapemerge',0),context),null);
++    for (const [id,bridge] of Object.entries(BRIDGES)) {
++      for (const [index,related] of bridge.tasks.entries()) {
++        if (related?.type === task.type) assert.equal(p092TriangleTilingBinding(related,{sessionId:id,index}),null);
++      }
++    }
++  }
++});

@@ -1,0 +1,694 @@
+diff --git a/dist/learning/p116-integer-dotplot-evidence.js b/dist/learning/p116-integer-dotplot-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..8c04701273177ddd6ab6d3f29327245e96d58213
+--- /dev/null
++++ b/dist/learning/p116-integer-dotplot-evidence.js
+@@ -0,0 +1,242 @@
++import {fields, initial, inspect, number, valid} from './phase5/b20-model.js';
++import {
++  hasExactKeys,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'dotrecords';
++const nodeId = 'mt_JRzXQl9M7c';
++const type = 'x-dotdraw';
++
++const reviewed = new Map([
++  [0, {
++    taskHash: '83b39dbc6097e844eae70a5c3540e4796e8b2adc77af4b0b30e86a7c2e74f797',
++    task: {
++      "type": "x-dotdraw",
++      "prompt": "20人各有一个月读书记录。逐条放点：四个3要叠在3上，没人读7本也要保留7的位置。",
++      "values": [
++        0,
++        1,
++        2,
++        3,
++        3,
++        3,
++        3,
++        4,
++        5,
++        5,
++        5,
++        5,
++        5,
++        5,
++        6,
++        8,
++        9,
++        10,
++        11,
++        12
++      ],
++      "questions": [
++        {
++          "label": "总共记录几人",
++          "value": 20
++        },
++        {
++          "label": "读3本的有几人",
++          "value": 4
++        },
++        {
++          "label": "7这个位置为什么空",
++          "value": [
++            "gap"
++          ],
++          "options": [
++            [
++              "gap",
++              "没有人记录7本，刻度仍在"
++            ],
++            [
++              "remove",
++              "7这个数不存在"
++            ]
++          ]
++        }
++      ],
++      "d": 1,
++      "min": 0,
++      "max": 12,
++      "unit": "本"
++    }
++  }],
++  [2, {
++    taskHash: 'd97c93f555545c8e11931bb88872b2a5980be361758ab47a3b6413ef661e890f',
++    task: {
++      "type": "x-dotdraw",
++      "prompt": "换一组记录，数值6没有出现，3只出现两次。不要沿用上一张图的形状。",
++      "values": [
++        1,
++        2,
++        2,
++        3,
++        3,
++        5,
++        5,
++        5,
++        7,
++        8
++      ],
++      "questions": [
++        {
++          "label": "总共几人",
++          "value": 10
++        },
++        {
++          "label": "最常见的本数",
++          "value": 5
++        }
++      ],
++      "d": 1,
++      "min": 0,
++      "max": 8,
++      "unit": "本"
++    }
++  }]
++]);
++
++export const P116_SOURCES = Object.freeze([...reviewed].map(([index, {taskHash}]) =>
++  Object.freeze({sessionId, index, nodeId, type, taskHash})
++));
++
++export function p116IntegerDotplotBinding(task, context) {
++  const source = reviewed.get(context?.index);
++  if (context?.sessionId !== sessionId || !source ||
++      !sameEvidence(task, source.task) || !matchesNativeEvidenceTask(task, context, {nodeId, type})) {
++    return null;
++  }
++  return {
++    nodeId,
++    kind: 'p116-integer-dotplot',
++    method: null,
++    question: '横轴的数值和这个位置上叠了几个点，各表示什么？'
++  };
++}
++
++function exactInteger(raw) {
++  const value = raw.trim();
++  const integer = value.match(/^(-?\d+)(?:\.0+)?$/);
++  if (integer) return BigInt(integer[1]);
++
++  const fraction = value.match(/^(-?\d+)\s*\/\s*(\d+)$/);
++  if (fraction) {
++    const numerator = BigInt(fraction[1]);
++    const denominator = BigInt(fraction[2]);
++    return denominator > 0n && numerator % denominator === 0n ? numerator / denominator : null;
++  }
++
++  const mixed = value.match(/^(-?\d+)\s+(\d+)\/(\d+)$/);
++  if (!mixed) return null;
++  const numerator = BigInt(mixed[2]);
++  const denominator = BigInt(mixed[3]);
++  if (denominator === 0n || numerator % denominator !== 0n) return null;
++  const sign = mixed[1].startsWith('-') ? -1n : 1n;
++  return BigInt(mixed[1]) + sign * (numerator / denominator);
++}
++
++export function replayP116IntegerDotplotEvidence(task, model, context) {
++  try {
++    const binding = p116IntegerDotplotBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length) {
++      return null;
++    }
++
++    const fieldNames = Object.keys(fields(task));
++    const placed = Array(task.values.length).fill(null);
++    const placements = [];
++    let cursor = 0;
++
++    for (const [eventIndex, event] of model.history.entries()) {
++      if (!hasExactKeys(event, ['a', 'd', 'f']) || !hasExactKeys(event.f, fieldNames)) return null;
++      if (event.a === 'row') {
++        if (!hasExactKeys(event.d, ['index']) || !/^(0|[1-9]\d*)$/.test(event.d.index)) return null;
++        cursor = Number(event.d.index);
++        if (!Number.isSafeInteger(cursor) || cursor >= placed.length) return null;
++        continue;
++      }
++      if (event.a !== 'dot' || !hasExactKeys(event.d, [])) return null;
++
++      const approximate = number(event.f.value);
++      const rounded = Math.round(approximate);
++      const originalPlaced = rounded >= task.min && rounded <= task.max && Math.abs(approximate - rounded) < 1e-8;
++      if (!originalPlaced) {
++        placements.push({eventIndex, recordIndex: cursor, accepted: false});
++        continue;
++      }
++
++      // The original may round a near-integer onto a tick. Only an exact
++      // recorded value establishes mathematical placement.
++      if (exactInteger(event.f.value) !== BigInt(rounded)) return null;
++      const value = rounded;
++      placements.push({
++        eventIndex,
++        recordIndex: cursor,
++        accepted: true,
++        from: placed[cursor],
++        to: value
++      });
++      placed[cursor] = value;
++      const empty = placed.indexOf(null);
++      if (empty !== -1) cursor = empty;
++    }
++
++    if (!sameEvidence(placed, task.values) || !sameEvidence(placed, model.board.placed) ||
++        cursor !== model.board.cursor || !inspect(task, model).correct) {
++      return null;
++    }
++
++    const frequencies = Array.from({length: task.max - task.min + 1}, (_, i) => ({
++      value: task.min + i,
++      count: 0
++    }));
++    for (const value of placed) frequencies[value - task.min].count++;
++    const highestCount = Math.max(...frequencies.map(row => row.count));
++    const modes = frequencies.filter(row => row.count === highestCount);
++    const zeros = frequencies.filter(row => row.count === 0).map(row => row.value);
++    const countOfThree = frequencies[3 - task.min].count;
++
++    // The reported frequencies are calculated from the reconstructed plot.
++    const [countAnswer, secondAnswer, gapAnswer] = model.answers;
++    if (exactInteger(countAnswer) !== BigInt(placed.length)) return null;
++    if (context.index === 0) {
++      if (exactInteger(secondAnswer) !== BigInt(countOfThree) || !zeros.includes(7) || gapAnswer !== 'gap') {
++        return null;
++      }
++    } else if (modes.length !== 1 || exactInteger(secondAnswer) !== BigInt(modes[0].value) || !zeros.includes(6)) {
++      return null;
++    }
++
++    return {
++      kind: binding.kind,
++      nodeId: binding.nodeId,
++      sessionId,
++      index: context.index,
++      recordCount: placed.length,
++      frequencies,
++      zeroFrequencyTicks: zeros,
++      modes: modes.map(row => row.value),
++      observablePlacements: placements,
++      freeExplanationAssessed: false,
++      learnerMasteryAssessed: false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP116IntegerDotplotEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP116IntegerDotplotEvidence(task, model, context);
++}
+diff --git a/tests/p9-p116-integer-dotplot-browser.cjs b/tests/p9-p116-integer-dotplot-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..eeb4415b46b4f482363e08d5fb7b4b6cb120bd6c
+--- /dev/null
++++ b/tests/p9-p116-integer-dotplot-browser.cjs
+@@ -0,0 +1,264 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P116_ARTIFACTS || path.join(root, 'verification/p9-p116-integer-dotplot'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function field(page, name, value, select = false) {
++  const loc = await openControl(page, '#extra-controls [data-xfield="' + name + '"]');
++  if (select) await loc.selectOption(value);
++  else await loc.fill(String(value));
++  assert.equal(await loc.inputValue(), String(value));
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (page.url() !== url) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, row.index + ' original lesson with origin stopped');
++  }
++  await page.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, row.id);
++  // Select only a position in a fresh record. All mathematics is done through
++  // the original place, revise and Check controls.
++  await page.evaluate(async ({id,index}) => {
++    const {packText, unpackText} = await import('./storage.js');
++    const key = 'math-explorer-v2';
++    const state = JSON.parse(unpackText(localStorage.getItem(key)));
++    const lesson = state.lessons[id];
++    if (!lesson || lesson.cases[index]?.attempts?.length) throw Error('Expected empty native case');
++    lesson.index = index;
++    lesson.view = 'task';
++    localStorage.setItem(key, packText(JSON.stringify(state)));
++  }, row);
++  ok((await page.reload())?.fromServiceWorker() === true, row.index + ' original position loads from SW');
++  await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P116_SOURCES, replayP116IntegerDotplotEvidence, submittedP116IntegerDotplotEvidence} =
++    await entry('dist/learning/p116-integer-dotplot-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b20-model.js');
++  const cases = P116_SOURCES.map(source => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index}, task:sessionTaskFor(sessionId,index)};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP116IntegerDotplotEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, 'dotrecords-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length, cursor: result.model.board.cursor,
++      placed: result.model.board.placed, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function place(value) {
++    await field(page, 'value', value);
++    await click(page, '#extra-controls [data-x="b20-dot"]');
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P116');
++
++    for (const row of cases) {
++      phase = 'dotrecords:' + row.index;
++      const tag = 'dotrecords-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      await place('1/2');
++      const rejected = await observe(page, row, 'invalid-placement');
++      ok(rejected.model.board.cursor === 0 && rejected.model.board.placed[0] === null &&
++        rejected.model.history[0].f.value === '1/2', tag + ' original off-tick attempt is retained without moving');
++      for (const [index, value] of row.task.values.entries()) await place(index === 0 ? value + 1 : value);
++      await field(page, 'answers.0', row.task.values.length);
++      await field(page, 'answers.1', row.index === 0 ? 4 : 5);
++      if (row.index === 0) await field(page, 'answers.2', 'gap', true);
++      await click(page, '#actions [data-do="check"]');
++
++      const wrong = await observe(page, row, 'wrong-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task, wrong.attempts[0].value).correct &&
++        proof(row,wrong) === null, tag + ' wrong placement persists in original attempt');
++      await picture(page, tag + '-wrong-check.png');
++
++      await click(page, '#extra-controls [data-x="b20-row"][data-index="0"]');
++      await place(row.task.values[0]);
++      const draft = await observe(page, row, 'corrected-draft');
++      ok(replayP116IntegerDotplotEvidence(row.task, draft.model, row.context) &&
++        !proof(row,draft), tag + ' corrected record is ineligible before Check');
++      await click(page, '#actions [data-do="check"]');
++
++      const good = await observe(page, row, 'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task, good.attempts.at(-1).value).correct &&
++        accepted?.recordCount === row.task.values.length, tag + ' latest correct Check proves the filled plot');
++      assert.deepEqual(accepted.observablePlacements.at(-1), {
++        eventIndex: good.model.history.length - 1, recordIndex: 0, accepted: true,
++        from: row.task.values[0] + 1, to: row.task.values[0]
++      });
++      assert.deepEqual(accepted.modes,[5]);
++      assert.deepEqual(accepted.zeroFrequencyTicks, row.index === 0 ? [7] : [0,4,6]);
++      ok(accepted.frequencies.find(x => x.value === 3)?.count === (row.index===0 ? 4 : 2),
++        tag + ' independently counted repeated dots and empty ticks');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p116-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p116-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p116-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#dotrecords');
++    await restorePage.waitForFunction(() => window.mathLesson?.snapshot()?.id === 'dotrecords');
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#dotrecords');
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P116_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p116-integer-dotplot-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:true, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P116_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p116-integer-dotplot.test.mjs b/tests/p9-p116-integer-dotplot.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e545687117e505ecdcb8928b9b66176c215d6d9e
+--- /dev/null
++++ b/tests/p9-p116-integer-dotplot.test.mjs
+@@ -0,0 +1,170 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {LESSONS} from '../dist/learning/catalog.js';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as b20 from '../dist/learning/phase5/b20-model.js';
++import {
++  P116_SOURCES,
++  p116IntegerDotplotBinding,
++  replayP116IntegerDotplotEvidence,
++  submittedP116IntegerDotplotEvidence
++} from '../dist/learning/p116-integer-dotplot-evidence.js';
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++const cases = P116_SOURCES.map(source => {
++  const {sessionId, index} = source;
++  return {source, context: {sessionId, index}, task: sessionTaskFor(sessionId, index)};
++});
++const answersFor = index => index === 0 ? ['20','4','gap'] : ['10','5'];
++
++function place(task, model, value) {
++  model.value = String(value);
++  b20.act(task, model, 'b20-dot');
++}
++
++function reviseFirst(task, model) {
++  b20.act(task, model, 'b20-row', {index: '0'});
++  place(task, model, task.values[0]);
++}
++
++function work({task,context}, firstValue = task.values[0]) {
++  const model = b20.initial(task);
++  for (const [index, value] of task.values.entries()) place(task, model, index === 0 ? firstValue : value);
++  model.answers = answersFor(context.index);
++  return model;
++}
++const replay = ({task, context}, model) => replayP116IntegerDotplotEvidence(task, model, context);
++
++test('P116 locks both original task fingerprints, sources and complete shapes', () => {
++  for (const {source, context, task} of cases) {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.equal(LESSONS[context.sessionId].topicId, source.nodeId);
++    assert.equal(p116IntegerDotplotBinding(task, context)?.nodeId, source.nodeId);
++    assert.equal(p116IntegerDotplotBinding({...task, given: true}, context), null);
++    assert.equal(p116IntegerDotplotBinding({...task, values: [...task.values].reverse()}, context), null);
++    assert.equal(p116IntegerDotplotBinding(task, {...context, index: String(context.index)}), null);
++  }
++});
++
++test('P116 reconstructs revision by record and keeps exact frequency, gaps and mode', () => {
++  for (const row of cases) {
++    const {task,context} = row;
++    const model = work(row, task.values[0]+1);
++    assert.equal(b20.inspect(task, model).correct, false);
++    assert.equal(replay(row, model), null);
++    reviseFirst(task, model);
++    assert.equal(b20.valid(task, model), true);
++    assert.equal(b20.inspect(task, model).correct, true);
++    model.prose = 'Learner text remains outside the mathematical evidence.';
++    const before = structuredClone(model);
++    const proof = replay(row, model);
++    assert.equal(proof.recordCount, context.index === 0 ? 20 : 10);
++    assert.deepEqual(proof.observablePlacements.at(-1), {
++      eventIndex: model.history.length-1,
++      recordIndex: 0,
++      accepted: true,
++      from: task.values[0]+1,
++      to: task.values[0]
++    });
++    assert.equal(proof.frequencies.find(x=>x.value===3).count, context.index === 0 ? 4 : 2);
++    assert.deepEqual(proof.zeroFrequencyTicks, context.index === 0 ? [7] : [0,4,6]);
++    assert.deepEqual(proof.modes, [5]);
++    assert.equal(proof.freeExplanationAssessed, false);
++    assert.equal(Object.hasOwn(proof,'prose'), false);
++    assert.deepEqual(model, before);
++  }
++});
++
++test('P116 distinguishes invalid input with no effect from approximate rounding', () => {
++  const row = cases[0];
++  const {task} = row;
++  const model = b20.initial(task);
++  place(task, model, '1/2');
++  assert.match(model.issue, /落点/);
++  assert.equal(model.board.cursor, 0);
++  for (const value of task.values) place(task, model, value);
++  model.answers = answersFor(0);
++  assert.equal(b20.inspect(task, model).correct, true);
++  const proof = replay(row, model);
++  assert.deepEqual(proof.observablePlacements[0], {eventIndex:0,recordIndex:0,accepted:false});
++
++  const nearlyZero = work(row, '0.000000001');
++  assert.equal(b20.inspect(task, nearlyZero).correct, true);
++  assert.equal(replay(row, nearlyZero), null);
++  const nearlyTwenty = work(row);
++  nearlyTwenty.answers[0] = '20.000000001';
++  assert.equal(b20.inspect(task, nearlyTwenty).correct, true);
++  assert.equal(replay(row, nearlyTwenty), null);
++});
++
++test('P116 accepts exact alternative numeric spellings used by original controls', () => {
++  const row = cases[1], model = work(row,'0 2/2');
++  model.answers = ['20/2','5.0'];
++  assert.equal(b20.inspect(row.task,model).correct, true);
++  assert.equal(replay(row,model)?.recordCount,10);
++});
++
++test('P116 rejects missing, forged, oversized or unobservable histories', () => {
++  const row = cases[0];
++  const changes = [
++    model=>{model.history=[];},
++    model=>{model.history=new Array(20);},
++    model=>{model.history[0].f.value='12';},
++    model=>{model.history[0].d.index='0';},
++    model=>{model.history[0].a='reset';},
++    model=>{model.history[0].f.hidden=true;},
++    model=>{model.history[0].other=true;},
++    model=>{model.history=Array.from({length:501},()=>model.history[0]);},
++    model=>{model.board.cursor=0;},
++    model=>{model.board.placed[3]=7;},
++    model=>{model.issue='not the settled original';},
++    model=>{model.answers[1]='5';},
++    model=>{model.answers[2]='remove';}
++  ];
++  for (const change of changes) {
++    const model=work(row);
++    change(model);
++    assert.equal(replay(row,model),null,change.toString());
++  }
++});
++
++test('P116 admits only evidence bound to the latest original Check', () => {
++  for (const row of cases) {
++    const wrong = work(row,row.task.values[0]+1);
++    const good = structuredClone(wrong);
++    reviseFirst(row.task,good);
++    const attempt = model => ({value: structuredClone(model)});
++    const check = (model, array) => submittedP116IntegerDotplotEvidence(row.task,model,{attempts:array},row.context);
++    assert.equal(check(good,[attempt(wrong)]),null);
++    assert.equal(check(good,[attempt(wrong),attempt(good)])?.recordCount,good.board.placed.length);
++    assert.equal(check(good,[attempt(good),attempt(wrong)]),null);
++    assert.equal(check(wrong,[attempt(wrong)]),null);
++    assert.equal(check(good,[]),null);
++  }
++});
++
++test('P116 source isolation excludes prefilled, fraction, practice and bridge versions', async () => {
++  await ensureB39Ready();
++  for(const {context,task} of cases) {
++    assert.equal(p116IntegerDotplotBinding(sessionTaskFor('dotrecords',1), {sessionId:'dotrecords',index:1}),null);
++    assert.equal(p116IntegerDotplotBinding(sessionTaskFor('fractiondots',0), {sessionId:'fractiondots',index:0}),null);
++    assert.equal(p116IntegerDotplotBinding(task,{...context,index:-1}),null);
++    assert.equal(p116IntegerDotplotBinding(sessionTaskFor('dotrecords',-1),{...context,index:-1}),null);
++    for(const [sessionId, bridge] of Object.entries(BRIDGES)) {
++      for(const [index, original] of bridge.tasks.entries()) {
++        if(original?.type!==task.type) continue;
++        assert.equal(p116IntegerDotplotBinding(original,{sessionId,index}),null);
++        assert.equal(p116IntegerDotplotBinding(task,{sessionId,index}),null);
++      }
++    }
++  }
++});

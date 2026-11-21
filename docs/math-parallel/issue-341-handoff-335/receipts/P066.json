@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p066-data-clean",
+  "commit": "f9789b278277618cc92003c5ae95036382e3f161",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "checkrecords",
+      "index": 0,
+      "nodeId": "mt_QHT16CrFO-",
+      "type": "x-dataclean",
+      "taskHash": "a901b8238ae22b1efcf8d6373d8cfb7b0f73ab4e587f4e6b24d32e262a325718"
+    }
+  ],
+  "node22": "3 PASS",
+  "referenceNode": "28 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "checkrecords-0-correct-check-decoded.json": "91feb360aa60cff13fe89a3cef54564228150d94414352c6a7fa9bd6a03293ce",
+    "checkrecords-0-correct-check-storage.txt": "91feb360aa60cff13fe89a3cef54564228150d94414352c6a7fa9bd6a03293ce",
+    "checkrecords-0-correct.png": "187e110d27573b4af22cb8d179a09f76b28805e3925835baab7066cd601f02e6",
+    "checkrecords-0-corrected-draft-decoded.json": "f4f84ce9e65e46ab7a4f4410411b8e5ebadf6c0ebf97e075b60e7a2452e3f0fd",
+    "checkrecords-0-corrected-draft-storage.txt": "f4f84ce9e65e46ab7a4f4410411b8e5ebadf6c0ebf97e075b60e7a2452e3f0fd",
+    "checkrecords-0-offline-reload-decoded.json": "fbec0d3ea9f44c42b5b00f921058979a359b87b3cbd8b4f7fae6b9d1aea0e70e",
+    "checkrecords-0-offline-reload-storage.txt": "fbec0d3ea9f44c42b5b00f921058979a359b87b3cbd8b4f7fae6b9d1aea0e70e",
+    "checkrecords-0-restored-backup-decoded.json": "676194d2cb0a0e929127ebb52faab9c9284752281a97e67e2576c252cae3da59",
+    "checkrecords-0-restored-backup-storage.txt": "676194d2cb0a0e929127ebb52faab9c9284752281a97e67e2576c252cae3da59",
+    "checkrecords-0-retry-decoded.json": "26d49ac6f1cdbd81abddc944252e49792fd8940281c7ef6bb66ab7f9d713a871",
+    "checkrecords-0-retry-storage.txt": "26d49ac6f1cdbd81abddc944252e49792fd8940281c7ef6bb66ab7f9d713a871",
+    "checkrecords-0-wrong-check-decoded.json": "806df5518408f8d661b4f6c85f1b67cc19feced4130d31827212198b0be9f614",
+    "checkrecords-0-wrong-check-storage.txt": "806df5518408f8d661b4f6c85f1b67cc19feced4130d31827212198b0be9f614",
+    "checkrecords-0-wrong.png": "52e9df5d1e3d83d04d01d320233d3dc7a1ba318df43aa0949ff58ce249efc5ae",
+    "native-state-v2.json": "b99d02ed8a90bb7a38841e20e45c1d060b6840ea6ba8774f1e206a7cae39e7e8",
+    "results.json": "c1d65328d6c21e1dfb36ef189c497942efd2da9f575dcb5c699e9b1a40cbcfb7"
+  }
+}

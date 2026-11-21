@@ -1,0 +1,44 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p100-boxplot-marks",
+  "commit": "155421e3d526eb5192ee68113c1f8c5afd3c299c",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "boxsummary",
+      "index": 0,
+      "nodeId": "mt_8VjmxR1yfw",
+      "type": "x-boxsummary",
+      "taskHash": "5b2698fd0135df607a4879a15747f7624af14086e3d658b567522a0440fc0057"
+    }
+  ],
+  "node22": "6 PASS",
+  "referenceNode": "29 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 21,
+  "captures": 7,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "boxsummary-0-correct-check-decoded.json": "316493f3e42c65da96848f8d147325da5eaf00120a6985815f2500409e30112f",
+    "boxsummary-0-correct-check-storage.txt": "316493f3e42c65da96848f8d147325da5eaf00120a6985815f2500409e30112f",
+    "boxsummary-0-correct-check.png": "91ccc51a00aada3b3fa94613c4eba2697b8e3a95e6095725879ee93adb6b90b8",
+    "boxsummary-0-offline-reload-decoded.json": "f3c82553cc000c7c35401b5f1c8915a9d91806833e679d2507cc7576ee35a4c7",
+    "boxsummary-0-offline-reload-storage.txt": "f3c82553cc000c7c35401b5f1c8915a9d91806833e679d2507cc7576ee35a4c7",
+    "boxsummary-0-out-of-range-decoded.json": "7c26849bd54e9af76307d763e483e57971792c22f98d2f7e2377d54f9fd226ac",
+    "boxsummary-0-out-of-range-storage.txt": "7c26849bd54e9af76307d763e483e57971792c22f98d2f7e2377d54f9fd226ac",
+    "boxsummary-0-replotted-quartile-decoded.json": "8893f76717aaaeb9eff4b615cfde7510cafc6f825c5fcb891cca595286009174",
+    "boxsummary-0-replotted-quartile-storage.txt": "8893f76717aaaeb9eff4b615cfde7510cafc6f825c5fcb891cca595286009174",
+    "boxsummary-0-restored-backup-decoded.json": "0a04432485993103ab02a84b4dbfe5eae382e641d0ecaf4122b5b7a520dba80b",
+    "boxsummary-0-restored-backup-storage.txt": "0a04432485993103ab02a84b4dbfe5eae382e641d0ecaf4122b5b7a520dba80b",
+    "boxsummary-0-retry-decoded.json": "b3951a39adcf84483d605cef368b1e84db65a82b0d931e50e6a9624e217a1cf0",
+    "boxsummary-0-retry-storage.txt": "b3951a39adcf84483d605cef368b1e84db65a82b0d931e50e6a9624e217a1cf0",
+    "boxsummary-0-wrong-quartile-check-decoded.json": "729704daa9e5e78a141f109c62113d77a3309d98b00ba9fe3e3c63b72ab33e6b",
+    "boxsummary-0-wrong-quartile-check-storage.txt": "729704daa9e5e78a141f109c62113d77a3309d98b00ba9fe3e3c63b72ab33e6b",
+    "boxsummary-0-wrong-quartile.png": "31cb5e42b1b9fe09df9f82791cb718772357a95a8571eda92f32f1d2856810b9",
+    "native-state-v2.json": "ff04373951d4cd995c52f6b6666d5ba6dd17f598ef8d48e066374889006623d8",
+    "results.json": "78822b1ebea5cee727484e3fe50d1de9d9ee6dcde22517cad3565e443d93f6c6"
+  }
+}

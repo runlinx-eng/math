@@ -1,0 +1,61 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p042-perimeter-area-trials",
+  "commit": "1e21ce38e1ec4bf0a5a092bdcc12a41539368ddd",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "formula36",
+      "index": 0,
+      "nodeId": "mt_Jvg8X0N5u0",
+      "type": "x-f36-shape",
+      "taskHash": "74cc4ecfe01c8f0a94be73e0adce0f1551253436229a1cddcff340110cb17ac2"
+    },
+    {
+      "sessionId": "formula36",
+      "index": 1,
+      "nodeId": "mt_Jvg8X0N5u0",
+      "type": "x-f36-shape",
+      "taskHash": "8be58c500d6013fde82e0564bedcd945ff51480699696eb155a7a11431bc01ab"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "30 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 22,
+  "captures": 11,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "formula36-0-correct-check-decoded.json": "07382d20f8c38ccf5bebce512fc7dcd2a101ced9478cb6d9e59acdada2c672da",
+    "formula36-0-correct-check-storage.txt": "07382d20f8c38ccf5bebce512fc7dcd2a101ced9478cb6d9e59acdada2c672da",
+    "formula36-0-correct.png": "53a25201eb2e99e6d504f9c20135f227ab0cb60563ad8e0e5690fff4abeb4afe",
+    "formula36-0-corrected-draft-decoded.json": "af82a31209e18b77dd34f0e0600276ae650d53d68c1c89079edd8dece8107fce",
+    "formula36-0-corrected-draft-storage.txt": "af82a31209e18b77dd34f0e0600276ae650d53d68c1c89079edd8dece8107fce",
+    "formula36-0-offline-reload-decoded.json": "b3d00144a88a45b94bef9a25d2758db70a3e2bac0ba56cf2d117ea8603186020",
+    "formula36-0-offline-reload-storage.txt": "b3d00144a88a45b94bef9a25d2758db70a3e2bac0ba56cf2d117ea8603186020",
+    "formula36-0-restored-storage-decoded.json": "cc758ba4754bcbfa041e2dbdc908802279236d507aaea1d3c27635dd25c3dfb1",
+    "formula36-0-restored-storage-storage.txt": "cc758ba4754bcbfa041e2dbdc908802279236d507aaea1d3c27635dd25c3dfb1",
+    "formula36-0-wrong-check-decoded.json": "6ff2fb3b1044e8c3a884dfd4bdd596ca2a06c7ba6be61f480e043bed02301169",
+    "formula36-0-wrong-check-storage.txt": "6ff2fb3b1044e8c3a884dfd4bdd596ca2a06c7ba6be61f480e043bed02301169",
+    "formula36-0-wrong.png": "329cdfadc26e2e6c95951f490395cc9f652576037ca327593caa7bc116e4b9c2",
+    "formula36-1-correct-check-decoded.json": "8d47695f2fb2788933cb39bc7c4c9de78d39ba0388728aca1c59b3cec3bccc0a",
+    "formula36-1-correct-check-storage.txt": "8d47695f2fb2788933cb39bc7c4c9de78d39ba0388728aca1c59b3cec3bccc0a",
+    "formula36-1-correct.png": "f19c0ffd6f5d0eb5a73d148e9a74f01c8a05271711e256fe26c70c6ef53e84ce",
+    "formula36-1-corrected-draft-decoded.json": "873be8b343f6baeb4bf58ab7792c987574f5a76c6649a560993bdb7e415bb240",
+    "formula36-1-corrected-draft-storage.txt": "873be8b343f6baeb4bf58ab7792c987574f5a76c6649a560993bdb7e415bb240",
+    "formula36-1-offline-reload-decoded.json": "b5da50c88131477a73c8950aa546d4a6e2e4cf177d889aef058e23ae224229fa",
+    "formula36-1-offline-reload-storage.txt": "b5da50c88131477a73c8950aa546d4a6e2e4cf177d889aef058e23ae224229fa",
+    "formula36-1-restored-backup-decoded.json": "cc758ba4754bcbfa041e2dbdc908802279236d507aaea1d3c27635dd25c3dfb1",
+    "formula36-1-restored-backup-storage.txt": "cc758ba4754bcbfa041e2dbdc908802279236d507aaea1d3c27635dd25c3dfb1",
+    "formula36-1-retry-decoded.json": "25abca50f20fad4c769a6e5928ef776a5cf9e2826af29a9f51ea9cacb5768a2a",
+    "formula36-1-retry-storage.txt": "25abca50f20fad4c769a6e5928ef776a5cf9e2826af29a9f51ea9cacb5768a2a",
+    "formula36-1-wrong-check-decoded.json": "57c1d31ef5595a37a68597b0263de9157159607f3cc649ee888a5a6c8034be11",
+    "formula36-1-wrong-check-storage.txt": "57c1d31ef5595a37a68597b0263de9157159607f3cc649ee888a5a6c8034be11",
+    "formula36-1-wrong.png": "33aa9e0118d7bf735719ae5aeb2890cc87b681b212751b7c8cfda3720bed5ef7",
+    "native-state-v2.json": "76ec64f7437549e83e83f137cd48ff0c164b5fbf4903413dcff9093232f54295",
+    "results.json": "849f1bba7f69c8a2bd916d677cfb5960cb0dc3bec957952d105788b94236b716"
+  }
+}

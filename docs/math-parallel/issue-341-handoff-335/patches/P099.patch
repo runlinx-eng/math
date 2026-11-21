@@ -1,0 +1,522 @@
+diff --git a/dist/learning/p099-length-tape-evidence.js b/dist/learning/p099-length-tape-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..a5bada94138e3df1b9f095b7fc7df1c84ff136f7
+--- /dev/null
++++ b/dist/learning/p099-length-tape-evidence.js
+@@ -0,0 +1,108 @@
++import {equationMatches, initial, inspect, valid} from './phase5/b29-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'lengthstory';
++const nodeId = 'mt_DLcEzmmj2r';
++const type = 'x-m29-tape';
++const kind = 'p099-length-tape';
++const wholeLabel = '原来的整段';
++const unit = 'cm';
++const reviewed = [
++  {
++    taskHash:'f28e64d2c7c2f038af9a8c894a991ed6cbd71b112253180d6ad4cfaabc111d77',
++    task:{
++      type,prompt:'一根绳原来 45 cm，剪掉 18 cm。把已知的一段摆出来，剩下多长？',
++      whole:45,known:18,knownSide:'left',leftLabel:'剪掉',rightLabel:'剩下 ?',wholeLabel,unit
++    }
++  },
++  {
++    taskHash:'08098cb6d81b27692ed9e0e6461377e89191ca7a1814756dc0ada9e693ce07c5',
++    task:{
++      type,prompt:'一根绳原来 45 cm，现在剩 27 cm。把剩下的一段摆出来，剪掉了多少？',
++      whole:45,known:27,knownSide:'left',leftLabel:'剩下',rightLabel:'剪掉 ?',wholeLabel,unit
++    }
++  },
++  {
++    taskHash:'6a4cd4ef5918b8442d2e0481b1f8efaa2c61047d5cbfc76518571fa64f8aa012',
++    task:{
++      type,prompt:'小米的带子长 42 cm，比小安的长 12 cm。摆出多出的那段，小安的带子多长？',
++      whole:42,known:12,knownSide:'right',leftLabel:'小安 ?',rightLabel:'多出 12',wholeLabel,unit
++    }
++  }
++];
++
++export const P099_SOURCES = Object.freeze(reviewed.map(({taskHash},index) =>
++  Object.freeze({sessionId,index,nodeId,type,taskHash})
++));
++
++export function p099LengthTapeBinding(task,context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId ||
++      !sameEvidence(task,reviewed[context.index]?.task) ||
++      !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind,method:null,question:'哪一段已经知道？两段怎样合成原来的整段？'};
++}
++
++function isExactInteger(raw,value) {
++  const text = raw.trim();
++  const integer = /^(-?\d+)(?:\.0+)?$/.exec(text);
++  if (integer) return BigInt(integer[1]) === BigInt(value);
++  const fraction = /^(-?\d+)(?:\s+(\d+))?\/(\d+)$/.exec(text);
++  if (!fraction) return false;
++  const [, leading, part, divisor] = fraction;
++  const bottom = BigInt(divisor);
++  const top = part === undefined ? BigInt(leading) :
++    BigInt(leading) * bottom + (leading.startsWith('-') ? -1n : 1n) * BigInt(part);
++  return bottom > 0n && top === BigInt(value) * bottom;
++}
++
++export function replayP099LengthTapeEvidence(task,model,context) {
++  try {
++    const binding = p099LengthTapeBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue !== '' || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length) return null;
++
++    const {whole,known,knownSide} = task;
++    const attempts = [];
++    for (const [index,event] of model.history.entries()) {
++      if (!hasExactKeys(event,['a','i','v']) || event.a !== 'cut' || event.i !== '') return null;
++      // The untouched slider is shown at 0 while its original model field is empty.
++      if (event.v === '') {
++        attempts.push({index,raw:'',recorded:false});
++        continue;
++      }
++      if (!/^(0|[1-9]\d*)$/.test(event.v)) return null;
++      const left = Number(event.v);
++      if (!Number.isSafeInteger(left) || left > whole) return null;
++      const right = whole-left;
++      attempts.push({index,raw:event.v,recorded:true,left,right,matchesKnown:(knownSide === 'left' ? left : right) === known});
++    }
++
++    const saved = attempts.at(-1), unknown = whole-known;
++    if (!saved?.matchesKnown || saved.raw !== model.cut || saved.left !== model.board.cut ||
++        model.board.first.cut !== attempts[0].raw ||
++        (knownSide === 'left' ? saved.right : saved.left) !== unknown ||
++        model.unit !== task.unit || !equationMatches(task,model.equation) ||
++        !isExactInteger(model.answer,unknown) || !inspect(task,model).correct) return null;
++
++    return {
++      kind,nodeId,sessionId,index:context.index,
++      whole,known,knownSide,unknown,left:saved.left,right:saved.right,
++      unit:task.unit,equation:model.equation,attempts,
++      learnerMasteryAssessed:false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP099LengthTapeEvidence(task,model,record,context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP099LengthTapeEvidence(task,model,context);
++}
+diff --git a/tests/p9-p099-length-tape-browser.cjs b/tests/p9-p099-length-tape-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e8c9bd518557e038f2b7f46f5fd0ac7290dc4afc
+--- /dev/null
++++ b/tests/p9-p099-length-tape-browser.cjs
+@@ -0,0 +1,264 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P099_ARTIFACTS || path.join(root, 'verification/p9-p099-length-tape'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (row.index === 0) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++    const start = page.locator('[data-do="start"]');
++    if (await start.isVisible()) await start.click();
++  } else {
++    await page.locator('#actions [data-do="next"]').click();
++    checks.push('native Next reaches position ' + row.index);
++  }
++  await page.waitForFunction(({id,index}) => {
++    const snap = window.mathLesson?.snapshot();
++    return snap?.id === id && snap.index === index;
++  },row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P099_SOURCES, replayP099LengthTapeEvidence, submittedP099LengthTapeEvidence} =
++    await entry('dist/learning/p099-length-tape-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b29-model.js');
++  const facts = [[18,27,27],[27,18,18],[30,12,30]];
++  const cases = P099_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), facts:facts[i]};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP099LengthTapeEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      cut: result.model.board.cut, answer: result.model.answer, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value, select = false) {
++    const loc = await openControl(p, '#extra-controls [data-xfield="' + name + '"]');
++    if (await loc.getAttribute('type') === 'range') {
++      const min = Number(await loc.getAttribute('min'));
++      const max = Number(await loc.getAttribute('max'));
++      const fromEnd = max-value < value-min;
++      await loc.press(fromEnd ? 'End' : 'Home');
++      for (let remaining = fromEnd ? max-value : value-min; remaining > 0; remaining--) {
++        await loc.press(fromEnd ? 'ArrowLeft' : 'ArrowRight');
++      }
++    } else if (select) {
++      await loc.selectOption(String(value));
++    } else {
++      await loc.fill(String(value));
++    }
++    assert.equal(await loc.inputValue(), String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P099');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const [left,right,unknown] = row.facts;
++      const setCut = () => click(page,'#extra-controls [data-x="m29-cut"]');
++      const wrongCut = row.index === 2 ? row.task.known : left+1;
++      await field(page,'cut',wrongCut);
++      await setCut();
++      await field(page,'equation',row.task.whole+'−'+row.task.known+'=□');
++      await field(page,'answer',unknown);
++      await field(page,'unit','cm',true);
++      await click(page,'#actions [data-do="check"]');
++      const wrong = await observe(page,row,'wrong-cut-check');
++      ok(wrong.attempts.length === 1 && wrong.model.board.cut === wrongCut &&
++        !inspect(row.task,wrong.attempts[0].value).correct && !proof(row,wrong),
++        tag + ' numeric answer cannot replace the actual mispositioned cut');
++      await picture(page,tag + '-wrong-cut.png');
++
++      await field(page,'cut',left);
++      const unsaved = await observe(page,row,'unsaved-cut');
++      ok(unsaved.model.board.cut === wrongCut &&
++        !replayP099LengthTapeEvidence(row.task,unsaved.model,row.context),
++        tag + ' actual slider motion alone does not save the corrected cut');
++      await setCut();
++      const draft = await observe(page,row,'saved-cut');
++      ok(replayP099LengthTapeEvidence(row.task,draft.model,row.context)?.unknown === unknown &&
++        !proof(row,draft),tag + ' saved cut requires a fresh Check');
++      await click(page,'#actions [data-do="check"]');
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.unit === 'cm',tag + ' latest Check includes correct cut, equation and centimeters');
++      assert.deepEqual([accepted.left,accepted.right,accepted.unknown],[left,right,unknown]);
++      ok(accepted.left + accepted.right === accepted.whole &&
++        accepted[accepted.knownSide] === accepted.known,tag + ' marked left and right conserve the whole');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p099-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p099-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p099-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P099_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p099-length-tape-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P099_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p099-length-tape.test.mjs b/tests/p9-p099-length-tape.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..210cdc3a43886e46c3e1170c86c13d9014d62d2a
+--- /dev/null
++++ b/tests/p9-p099-length-tape.test.mjs
+@@ -0,0 +1,132 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b29-model.js';
++import {
++  P099_SOURCES,p099LengthTapeBinding,
++  replayP099LengthTapeEvidence,submittedP099LengthTapeEvidence
++} from '../dist/learning/p099-length-tape-evidence.js';
++
++const facts = [[18,27,27],[27,18,18],[30,12,30]];
++const rows = P099_SOURCES.map((source,i) => {
++  const {sessionId,index} = source;
++  const [left,right,unknown] = facts[i];
++  return {source,context:{sessionId,index},task:sessionTaskFor(sessionId,index),left,right,unknown};
++});
++
++const replay = (row,model) => replayP099LengthTapeEvidence(row.task,model,row.context);
++const submit = (row,model,...versions) => submittedP099LengthTapeEvidence(row.task,model,
++  {attempts:versions.map(value => ({value:structuredClone(value)}))},row.context);
++
++function cut(row,model,value) {
++  model.cut = String(value);
++  original.act(row.task,model,'m29-cut');
++}
++
++function wrong(row) {
++  const model = original.initial(row.task);
++  cut(row,model,'');
++  cut(row,model,row.left+1);
++  model.equation = row.task.whole+'−'+row.task.known+'=□';
++  model.answer = String(row.unknown);
++  model.unit = 'cm';
++  return model;
++}
++
++function work(row) {
++  const model = wrong(row);
++  cut(row,model,row.left);
++  return model;
++}
++
++test('P099 binds the exact source at all three original positions', () => {
++  assert.equal(rows.length,3);
++  for (const {source,task,context} of rows) {
++    const ordered = Object.fromEntries(Object.entries(task).sort(([a],[b]) => a.localeCompare(b,'en')));
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),source.taskHash);
++    assert.equal(p099LengthTapeBinding(task,context)?.nodeId,source.nodeId);
++    assert.equal(p099LengthTapeBinding({...task,knownSide:'changed'},context),null);
++    assert.equal(p099LengthTapeBinding({...task,unit:'m'},context),null);
++    assert.equal(p099LengthTapeBinding(task,{...context,index:String(context.index)}),null);
++  }
++});
++
++test('P099 replays correction on each side and verifies conservation of length', () => {
++  for (const row of rows) {
++    const model = wrong(row);
++    assert.equal(original.inspect(row.task,model).correct,false);
++    assert.equal(replay(row,model),null);
++    cut(row,model,row.left);
++    const before = structuredClone(model), proof = replay(row,model);
++    assert.deepEqual([proof.left,proof.right,proof.unknown],[row.left,row.right,row.unknown]);
++    assert.equal(proof.left+proof.right,proof.whole);
++    assert.equal(proof[proof.knownSide],proof.known);
++    assert.equal(proof.attempts[0].recorded,false);
++    assert.equal(proof.attempts[1].matchesKnown,false);
++    assert.equal(proof.attempts.at(-1).matchesKnown,true);
++    assert.equal(proof.unit,'cm');
++    assert.deepEqual(model,before);
++  }
++});
++
++test('P099 preserves the role of the unit and supports exact related equations', () => {
++  const row = rows[0], model = work(row);
++  model.equation = '45＝□＋18';
++  model.answer = '54/2';
++  assert.equal(replay(row,model)?.unknown,27);
++  model.equation = '45−□=18';
++  assert.equal(replay(row,model)?.unknown,27);
++  model.equation = '45+18=□';
++  assert.equal(replay(row,model),null);
++  model.equation = '45−18=□';
++  model.answer = '26.999999999';
++  assert.ok(original.inspect(row.task,model).correct);
++  assert.equal(replay(row,model),null);
++  model.answer = '27';
++  model.unit = 'm';
++  assert.equal(replay(row,model),null);
++});
++
++test('P099 requires the saved cut and a new original Check on that model', () => {
++  const row = rows[2], model = wrong(row), savedWrong = structuredClone(model);
++  model.cut = '30';
++  assert.equal(replay(row,model),null);
++  cut(row,model,30);
++  assert.equal(replay(row,model)?.knownSide,'right');
++  assert.equal(submit(row,model,savedWrong),null);
++  assert.equal(submit(row,model,savedWrong,model)?.unknown,30);
++  cut(row,model,12);
++  assert.equal(replay(row,model),null);
++});
++
++test('P099 declines forged cuts, unsupported actions and hidden action targets', () => {
++  const row = rows[1];
++  for (const change of [
++    m => { m.history.length=0; },
++    m => { m.history.at(-1).v='027'; },
++    m => { m.history.at(-1).i='0'; },
++    m => { m.board.first.cut='27'; },
++    m => { m.board.cut=18; },
++    m => original.act(row.task,m,'m29-undo')
++  ]) {
++    const model = work(row);
++    change(model);
++    assert.equal(replay(row,model),null,change.toString());
++  }
++});
++
++test('P099 excludes other measuring models, practice and related bridges', async () => {
++  await ensureB39Ready();
++  for (const {task,context} of rows) {
++    assert.equal(p099LengthTapeBinding(task,{...context,index:-1}),null);
++    assert.equal(p099LengthTapeBinding(task,{sessionId:'measurecalc',index:4}),null);
++    assert.equal(p099LengthTapeBinding(sessionTaskFor('measurecalc',4),context),null);
++    for (const [sessionId,bridge] of Object.entries(BRIDGES)) {
++      for (const [index,related] of bridge.tasks.entries()) {
++        if (related?.type === task.type) assert.equal(p099LengthTapeBinding(related,{sessionId,index}),null);
++      }
++    }
++  }
++});

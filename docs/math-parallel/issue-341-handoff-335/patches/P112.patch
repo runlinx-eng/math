@@ -1,0 +1,612 @@
+diff --git a/dist/learning/p112-fair-die-evidence.js b/dist/learning/p112-fair-die-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..95af33231b27e0c776e13389832db1a7b9b48c53
+--- /dev/null
++++ b/dist/learning/p112-fair-die-evidence.js
+@@ -0,0 +1,169 @@
++import {initial, inspect, valid} from './phase5/b22-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const type = 'x-p22-pick';
++const faces = [1, 2, 3, 4, 5, 6];
++const items = faces.map(face => ({label:String(face), group:'面'}));
++const isEven = face => face % 2 === 0;
++const isPrime = face => [2, 3, 5].includes(face);
++
++const reviewed = [
++  {
++    sessionId:'chancefraction', index:0, nodeId:'mt_-c4Ca_nBzX',
++    taskHash:'0120ea2b348f164863df0ddcc00a953b1428af844ff3f38f957e7f351a19f7bc',
++    prompt:'公平骰子有六个面。圈出“掷到6”的结果，再写占全部的几分之几。',
++    includes:face => face === 6,
++    questions:[{label:'一共几个等可能的面', value:6}]
++  },
++  {
++    sessionId:'chancecalc', index:1, nodeId:'mt_Zt30Gxi-qp',
++    taskHash:'7b249cfe540f1bf9ced161bb3832e32178bfc8392f566ccdce76b1aae201910e',
++    prompt:'公平骰子只掷一次。圈出偶数结果，再写它占全部的几分之几。',
++    includes:isEven,
++    questions:[{label:'有几个偶数面', value:3}]
++  },
++  {
++    sessionId:'chancescale', index:1, nodeId:'mt_vmQJAtAFuy',
++    taskHash:'4f89d62e283c67ff87637842c2a2fd8534c21ab00579eb083d4f723143fbe201',
++    prompt:'公平六面骰掷到3：每个面等可能，圈出这一面并写概率。',
++    includes:face => face === 3,
++    questions:[{label:'每个面机会', value:'equal', options:[['equal','公平骰各面机会一样'],['any','每个数字都可随意指定']]}]
++  },
++  {
++    sessionId:'chancenone', index:1, nodeId:'mt_3fwYu7imd4',
++    taskHash:'ec71f5ae7a820f2558b9915173d54b7162f8e1b0ef200716d20cc7a7a1d73d6c',
++    prompt:'公平骰子“不是3”：圈出所有符合的面，再写它们占全部的几分之几。',
++    includes:face => face !== 3,
++    questions:[{label:'3的机会', value:'1/6'}, {label:'1减去1/6', value:'5/6'}]
++  },
++  {
++    sessionId:'chancecomplement', index:1, nodeId:'mt_XfyqXLqzpx',
++    taskHash:'e101c5dbcbe32abeb832d41ed87132396e27fed47c1dfbdffe98b12ca1b27ea9',
++    prompt:'公平骰子“不是6”。圈出符合的面，再用1减1/6核对。',
++    includes:face => face !== 6,
++    questions:[{label:'1减1/6', value:'5/6'}]
++  },
++  {
++    sessionId:'chancecomplement', index:2, nodeId:'mt_XfyqXLqzpx',
++    taskHash:'62f3a37782b3d5a65171d8d79f3f8dc71d98f8a4e42bb2c1a954540f260d0385',
++    prompt:'骰子上的偶数是2、4、6，质数是2、3、5。“偶数或质数”圈出哪些面？',
++    includes:face => isEven(face) || isPrime(face),
++    questions:[
++      {label:'两个条件共有的数', value:2},
++      {label:'符合至少一个条件的机会', value:'5/6'},
++      {label:'两个“都会发生”的说法怎样数重叠', value:'once', options:[['once','重叠结果只算一次'],['twice','属于两边就算两次']]}
++    ]
++  }
++];
++
++const sources = new Map(reviewed.map(source => {
++  const {sessionId, index, prompt, includes, questions} = source;
++  const winners = faces.flatMap((face, i) => includes(face) ? [i] : []);
++  return [sessionId + ':' + index, {...source, task:{type, prompt, items, winners, questions}}];
++}));
++
++export const P112_SOURCES = Object.freeze(reviewed.map(({sessionId, index, nodeId, taskHash}) =>
++  Object.freeze({sessionId, index, nodeId, type, taskHash})
++));
++
++function reviewedSource(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const source = sources.get(context.sessionId + ':' + context.index);
++  return source && sameEvidence(task, source.task) &&
++    matchesNativeEvidenceTask(task, context, {type, nodeId:source.nodeId}) ? source : null;
++}
++
++export function p112FairDieBinding(task, context) {
++  const source = reviewedSource(task, context);
++  return source && {
++    nodeId:source.nodeId,
++    kind:'p112-fair-die',
++    method:null,
++    question:'哪些面符合条件？它们占六个等可能结果的几分之几？'
++  };
++}
++
++// Use the original input forms but verify equality of numbers exactly.
++// A rounded decimal accepted by the lesson tolerance is insufficient here.
++function matchesNumber(raw, numerator, denominator = 1) {
++  const text = raw.trim();
++  const fraction = /^(-?\d+)(?:\s+(\d+))?\/(\d+)$/.exec(text);
++  let top, bottom;
++  if (fraction) {
++    const [, leading, part, divisor] = fraction;
++    top = BigInt(leading);
++    bottom = BigInt(divisor);
++    if (part !== undefined) {
++      top = top * bottom + (leading.startsWith('-') ? -1n : 1n) * BigInt(part);
++    }
++  } else {
++    const decimal = /^(-?)(\d+)(?:\.(\d+))?$/.exec(text);
++    if (!decimal) return false;
++    const [, sign, integer, digits = ''] = decimal;
++    top = BigInt(sign + integer + digits);
++    bottom = 10n ** BigInt(digits.length);
++  }
++  return bottom > 0n && top * BigInt(denominator) === bottom * BigInt(numerator);
++}
++
++function matchesAnswer(raw, question) {
++  if (question.options) return raw === question.value;
++  const [top, bottom] = String(question.value).split('/');
++  return matchesNumber(raw, top, bottom);
++}
++
++export function replayP112FairDieEvidence(task, model, context) {
++  try {
++    const source = reviewedSource(task, context);
++    if (!source || !hasExactKeys(model, Object.keys(initial(task, 1))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length) return null;
++
++    const selected = new Set();
++    const toggles = [];
++    for (const event of model.history) {
++      // These six original boards have only individual face buttons.
++      if (!hasExactKeys(event, ['a','d','f']) || event.a !== 'toggle' ||
++          !hasExactKeys(event.d, ['index']) || !hasExactKeys(event.f, []) ||
++          typeof event.d.index !== 'string' || !/^[0-5]$/.test(event.d.index)) return null;
++      const face = faces[Number(event.d.index)];
++      const added = !selected.delete(face);
++      if (added) selected.add(face);
++      toggles.push({face, selected:added});
++    }
++    const favorable = faces.filter(source.includes);
++    const chosen = faces.filter(face => selected.has(face));
++    if (!sameEvidence(chosen, favorable) ||
++        !sameEvidence(model.board.selected, [...selected].map(face => face - 1)) ||
++        model.kind !== 'equal' || !matchesNumber(model.prob, favorable.length, faces.length) ||
++        !source.questions.every((question, i) => matchesAnswer(model.answers[i], question)) ||
++        !inspect(task, model).correct) return null;
++
++    return {
++      kind:'p112-fair-die',
++      nodeId:source.nodeId,
++      sessionId:context.sessionId,
++      index:context.index,
++      sampleSpace:[...faces],
++      selectedFaces:chosen,
++      favorableCount:favorable.length,
++      sampleCount:faces.length,
++      toggles,
++      actualRollAssessed:false,
++      learnerMasteryAssessed:false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP112FairDieEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP112FairDieEvidence(task, model, context);
++}
+diff --git a/tests/p9-p112-fair-die-browser.cjs b/tests/p9-p112-fair-die-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..f81bbecc78d6eef757e267fe77d84f3d9d249aad
+--- /dev/null
++++ b/tests/p9-p112-fair-die-browser.cjs
+@@ -0,0 +1,271 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P112_ARTIFACTS || path.join(root, 'verification/p9-p112-fair-die'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (page.url() !== url) {
++    await page.goto(url);
++  }
++  await page.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, row.id);
++  // Select only a position in a fresh record. All mathematics is done through
++  // the original face, input and Check controls.
++  await page.evaluate(async ({id,index}) => {
++    const {packText, unpackText} = await import('./storage.js');
++    const key = 'math-explorer-v2';
++    const state = JSON.parse(unpackText(localStorage.getItem(key)));
++    const lesson = state.lessons[id];
++    if (!lesson || lesson.cases[index]?.attempts?.length) throw Error('Expected empty native case');
++    lesson.index = index;
++    lesson.view = 'task';
++    localStorage.setItem(key, packText(JSON.stringify(state)));
++  }, row);
++  ok((await page.reload())?.fromServiceWorker() === true,
++    row.id + ':' + row.index + ' original position loads from SW');
++  await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P112_SOURCES, replayP112FairDieEvidence, submittedP112FairDieEvidence} =
++    await entry('dist/learning/p112-fair-die-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b22-model.js');
++  const expectedFaces = [[6], [2,4,6], [3], [1,2,4,5,6], [1,2,3,4,5], [2,3,4,5,6]];
++  const cases = P112_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), faces:expectedFaces[i]};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP112FairDieEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      sessionId: row.id, index: row.index, stage, attempts: result.attempts.length,
++      selected: result.model.board.selected, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value, select = false) {
++    const loc = await openControl(p, '#extra-controls [data-xfield="' + name + '"]');
++    if (select) await loc.selectOption(value);
++    else await loc.fill(String(value));
++    assert.equal(await loc.inputValue(), String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P112');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const toggle = async face => {
++        const selector = '#extra-visual [data-x="p22-toggle"][data-index="' + (face - 1) + '"]';
++        const button = await openControl(page, selector);
++        assert.equal(await button.innerText(), String(face));
++        await button.click();
++        return button.getAttribute('aria-pressed');
++      };
++      const misses = [1,2,3,4,5,6].filter(face => !row.faces.includes(face));
++      ok(await toggle(misses[0]) === 'true', tag + ' actual wrong face is selected');
++      for (const face of [...row.faces].reverse()) await toggle(face);
++      await field(page, 'kind', 'equal', true);
++      await field(page, 'prob', row.faces.length + '/6');
++      for (const [i, question] of row.task.questions.entries()) {
++        await field(page, 'answers.' + i, String(question.value), Boolean(question.options));
++      }
++      await click(page, '#actions [data-do="check"]');
++      const wrong = await observe(page, row, 'wrong-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task, wrong.attempts[0].value).correct &&
++        proof(row, wrong) === null, tag + ' actual wrong Check preserves the extra face');
++      await picture(page, tag + '-wrong-check.png');
++
++      ok(await toggle(misses[0]) === 'false', tag + ' actual wrong face is removed');
++      const draft = await observe(page, row, 'corrected-draft');
++      const candidate = replayP112FairDieEvidence(row.task, draft.model, row.context);
++      assert.deepEqual(candidate?.selectedFaces, row.faces);
++      ok(candidate.favorableCount === row.faces.length && candidate.sampleCount === 6 &&
++        !proof(row, draft), tag + ' correct face set stays ineligible before Check');
++      await click(page, '#actions [data-do="check"]');
++
++      const good = await observe(page, row, 'correct-check');
++      const accepted = proof(row, good);
++      ok(good.attempts.length === 2 && inspect(row.task, good.attempts.at(-1).value).correct &&
++        accepted?.sampleCount === 6, tag + ' latest original Check with exact probability');
++      assert.deepEqual(accepted.selectedFaces, row.faces);
++      assert.deepEqual(accepted.toggles, [
++        {face:misses[0], selected:true},
++        ...[...row.faces].reverse().map(face => ({face, selected:true})),
++        {face:misses[0], selected:false}
++      ]);
++      if (row.id === 'chancecomplement' && row.index === 2) {
++        ok(accepted.favorableCount === 5 && good.model.answers[2] === 'once',
++          tag + ' shared face 2 contributes a single outcome');
++      }
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p112-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p112-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p112-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.id + ':' + row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P112_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p112-fair-die-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:true, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P112_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p112-fair-die.test.mjs b/tests/p9-p112-fair-die.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..bdf06918bed1ea2ef6e18dffc9b9b812372ce9df
+--- /dev/null
++++ b/tests/p9-p112-fair-die.test.mjs
+@@ -0,0 +1,154 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b22-model.js';
++import {
++  P112_SOURCES, p112FairDieBinding,
++  replayP112FairDieEvidence, submittedP112FairDieEvidence
++} from '../dist/learning/p112-fair-die-evidence.js';
++
++const expectedFaces = [[6], [2,4,6], [3], [1,2,4,5,6], [1,2,3,4,5], [2,3,4,5,6]];
++const rows = P112_SOURCES.map((source, i) => {
++  const {sessionId, index} = source;
++  return {
++    source,
++    context:{sessionId,index},
++    task:sessionTaskFor(sessionId,index),
++    faces:expectedFaces[i]
++  };
++});
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en'))
++      .map(key => [key, ordered(value[key])]));
++  }
++  return value;
++}
++
++const replay = (row, model) => replayP112FairDieEvidence(row.task, model, row.context);
++const submitted = (row, model, ...attempts) => submittedP112FairDieEvidence(row.task, model,
++  {attempts:attempts.map(value => ({value:structuredClone(value)}))}, row.context);
++const toggle = (row, model, face) => original.act(row.task, model, 'p22-toggle', {index:face - 1});
++
++function work(row, wrongFace = null) {
++  const model = original.initial(row.task, 58);
++  if (wrongFace !== null) toggle(row, model, wrongFace);
++  for (const face of [...row.faces].reverse()) toggle(row, model, face);
++  model.kind = 'equal';
++  model.prob = row.faces.length + '/6';
++  model.answers = row.task.questions.map(q => String(q.value));
++  return model;
++}
++
++test('P112 binds the six reviewed original dice positions and complete hashes', () => {
++  assert.equal(rows.length, 6);
++  for (const {source, task, context} of rows) {
++    const hash = createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex');
++    assert.equal(hash, source.taskHash);
++    assert.equal(p112FairDieBinding(task, context)?.nodeId, source.nodeId);
++    assert.equal(p112FairDieBinding({...task, prompt:'changed source'}, context), null);
++    assert.equal(p112FairDieBinding({ ...task, winners:[0] }, context), null);
++    assert.equal(p112FairDieBinding(task, {...context, index:String(context.index)}), null);
++  }
++});
++
++test('P112 replays actual individual face toggles and the exact sample space', () => {
++  for (const row of rows) {
++    const wrongFace = [1,2,3,4,5,6].find(face => !row.faces.includes(face));
++    const model = work(row, wrongFace);
++    assert.equal(original.inspect(row.task, model).correct, false);
++    assert.equal(replay(row, model), null);
++    toggle(row, model, wrongFace);
++    const before = structuredClone(model);
++    assert.equal(original.inspect(row.task, model).correct, true);
++    const proof = replay(row, model);
++    assert.deepEqual(proof.sampleSpace, [1,2,3,4,5,6]);
++    assert.deepEqual(proof.selectedFaces, row.faces);
++    assert.equal(proof.favorableCount, row.faces.length);
++    assert.equal(proof.sampleCount, 6);
++    assert.equal(proof.actualRollAssessed, false);
++    assert.deepEqual(proof.toggles, [
++      {face:wrongFace, selected:true},
++      ...[...row.faces].reverse().map(face => ({face, selected:true})),
++      {face:wrongFace, selected:false}
++    ]);
++    assert.deepEqual(model, before);
++  }
++});
++
++test('P112 requires the newest matching original Check after editing the selected faces', () => {
++  const row = rows.at(-1);
++  const wrong = work(row, 1);
++  const done = structuredClone(wrong);
++  toggle(row, done, 1);
++  assert.equal(submitted(row, done), null);
++  assert.equal(submitted(row, done, wrong), null);
++  assert.equal(submitted(row, done, wrong, done)?.favorableCount, 5);
++  assert.equal(submitted(row, done, done, wrong), null);
++  assert.equal(submitted(row, wrong, wrong), null);
++  const edited = structuredClone(done);
++  toggle(row, edited, 1);
++  toggle(row, edited, 1);
++  assert.equal(original.inspect(row.task, edited).correct, true);
++  assert.equal(submitted(row, edited, done), null);
++});
++
++test('P112 accepts equivalent exact forms and declines rounded primary or follow-up answers', () => {
++  const single = rows[0], opportunity = work(single);
++  for (const value of ['2/12', '0 1/6', ' 01/06 ']) {
++    opportunity.prob = value;
++    assert.equal(replay(single, opportunity)?.favorableCount, 1);
++  }
++  opportunity.prob = '0.16666667';
++  assert.equal(original.inspect(single.task, opportunity).correct, true);
++  assert.equal(replay(single, opportunity), null);
++
++  const even = rows[1], parity = work(even);
++  parity.prob = '0.5000000';
++  assert.equal(replay(even, parity)?.favorableCount, 3);
++  parity.prob = '1/3';
++  assert.equal(replay(even, parity), null);
++
++  const complement = rows[3], belowOne = work(complement);
++  belowOne.answers[0] = '0.16666667';
++  assert.equal(original.inspect(complement.task, belowOne).correct, true);
++  assert.equal(replay(complement, belowOne), null);
++  belowOne.answers[0] = '2/12';
++  assert.equal(replay(complement, belowOne)?.favorableCount, 5);
++});
++
++test('P112 excludes overlap counted twice and unsupported or forged selection events', () => {
++  const row = rows.at(-1), correct = work(row);
++  const changes = [
++    m => { m.answers[2] = 'twice'; },
++    m => { m.board.selected.push(1); },
++    m => { m.history.length = 0; },
++    m => { m.history[0].d.index = '10/2'; },
++    m => { m.history[0].unverified = true; },
++    m => original.act(row.task, m, 'p22-group')
++  ];
++  for (const change of changes) {
++    const model = structuredClone(correct);
++    change(model);
++    assert.equal(replay(row, model), null, change.toString());
++  }
++});
++
++test('P112 declines other likelihood tasks, original practice and same-type bridges', async () => {
++  await ensureB39Ready();
++  for (const {task, context} of rows) {
++    assert.equal(p112FairDieBinding(task, {...context,index:-1}), null);
++    assert.equal(p112FairDieBinding(task, {sessionId:'trialcompare',index:2}), null);
++    assert.equal(p112FairDieBinding(sessionTaskFor('trialcompare',2), context), null);
++    for (const [sessionId, bridge] of Object.entries(BRIDGES)) {
++      for (const [index, related] of bridge.tasks.entries()) {
++        if (related?.type === task.type) assert.equal(p112FairDieBinding(related,{sessionId,index}), null);
++      }
++      assert.equal(p112FairDieBinding(task,{sessionId,index:0}), null);
++    }
++  }
++});

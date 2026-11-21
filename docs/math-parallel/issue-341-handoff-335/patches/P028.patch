@@ -1,0 +1,526 @@
+diff --git a/dist/learning/p028-trig-roles-and-ratios-evidence.js b/dist/learning/p028-trig-roles-and-ratios-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..79c2421a4be5ce86fb8615f9b9c935bbc03d33ef
+--- /dev/null
++++ b/dist/learning/p028-trig-roles-and-ratios-evidence.js
+@@ -0,0 +1,304 @@
++import {initial, inspect, valid} from './phase5/b26-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++import {rational} from './phase5/b16-model.js';
++
++const reviewed = [
++  {
++    "sessionId": "trigbasics",
++    "index": 0,
++    "nodeId": "mt_KB_Czd7RQH",
++    "type": "x-g26-trig",
++    "taskHash": "df871c3519540248c268a5d2172bd4d1a17651a9873fcfaa3d54d98f0b3ffda2",
++    "task": {
++      "type": "x-g26-trig",
++      "prompt": "先从B角看，给三条边取名字；再从C角看，重新取名字。",
++      "mode": "roles",
++      "questions": [
++        {
++          "label": "换一个锐角看",
++          "value": "swap",
++          "options": [
++            [
++              "swap",
++              "对边和邻边交换，斜边不变"
++            ],
++            [
++              "same",
++              "三条边的名字都不变"
++            ]
++          ]
++        }
++      ],
++      "a": 4,
++      "b": 3
++    }
++  },
++  {
++    "sessionId": "trigbasics",
++    "index": 1,
++    "nodeId": "mt_KB_Czd7RQH",
++    "type": "x-g26-trig",
++    "taskHash": "59c8d80070ebbc7a99fd17371d3d319ef784175391595761841d65a69539938d",
++    "task": {
++      "type": "x-g26-trig",
++      "prompt": "从B角看，记下对边÷斜边；再把三角形放大两倍，比较比例。",
++      "mode": "compare",
++      "questions": [
++        {
++          "label": "原大小时对边÷斜边",
++          "value": 0.6
++        },
++        {
++          "label": "放大两倍之后",
++          "value": "same",
++          "options": [
++            [
++              "same",
++              "比例仍然是0.6"
++            ],
++            [
++              "double",
++              "比例变成1.2"
++            ]
++          ]
++        }
++      ],
++      "a": 4,
++      "b": 3
++    }
++  },
++  {
++    "sessionId": "trigbasics",
++    "index": 2,
++    "nodeId": "mt_KB_Czd7RQH",
++    "type": "x-g26-trig",
++    "taskHash": "7ff827920ad23f4d46b0aca6fe3ce8e4d6c765a1b30a9ad3e4013e62bef5a2b7",
++    "task": {
++      "type": "x-g26-trig",
++      "prompt": "从B角看：角是35°，斜边长10。选择关系，求对边；结果保留两位小数。",
++      "mode": "solve",
++      "questions": [
++        {
++          "label": "求出的对边",
++          "value": "shorter",
++          "options": [
++            [
++              "shorter",
++              "比斜边10短"
++            ],
++            [
++              "longer",
++              "比斜边10长"
++            ]
++          ]
++        }
++      ],
++      "angle": 35,
++      "hyp": 10,
++      "unknown": "opp",
++      "ratio": "sin",
++      "tolerance": 0.02
++    }
++  },
++  {
++    "sessionId": "trigbasics",
++    "index": 3,
++    "nodeId": "mt_KB_Czd7RQH",
++    "type": "x-g26-trig",
++    "taskHash": "3fd921600bf05be8aa5a909bfc29e6ea8efcec829a1e13b3d5640a7f823b1513",
++    "task": {
++      "type": "x-g26-trig",
++      "prompt": "从B角看：角是60°，斜边长10。选择关系，求邻边。",
++      "mode": "solve",
++      "questions": [
++        {
++          "label": "选用的两条边",
++          "value": "adj-hyp",
++          "options": [
++            [
++              "adj-hyp",
++              "邻边和斜边"
++            ],
++            [
++              "opp-adj",
++              "对边和邻边"
++            ]
++          ]
++        }
++      ],
++      "angle": 60,
++      "hyp": 10,
++      "unknown": "adj",
++      "ratio": "cos",
++      "tolerance": 0.02,
++      "rotation": 30
++    }
++  },
++  {
++    "sessionId": "trigbasics",
++    "index": 4,
++    "nodeId": "mt_KB_Czd7RQH",
++    "type": "x-g26-trig",
++    "taskHash": "3ad3bc42da91ea44046419f9810256a6871011f98dbc97556965626361548180",
++    "task": {
++      "type": "x-g26-trig",
++      "prompt": "从B角看：对边长3、邻边长4。先找比例，再反过来求这个角，保留一位小数。",
++      "mode": "inverse",
++      "questions": [
++        {
++          "label": "求出的角",
++          "value": "acute",
++          "options": [
++            [
++              "acute",
++              "在0°和90°之间"
++            ],
++            [
++              "obtuse",
++              "大于180°"
++            ]
++          ]
++        }
++      ],
++      "a": 4,
++      "b": 3,
++      "ratio": "tan",
++      "tolerance": 0.1,
++      "rotation": 150
++    }
++  }
++];
++export const P028_SOURCES = Object.freeze(reviewed.map(({task, ...source}) => Object.freeze(source)));
++export function p028TrigRolesAndRatiosBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = reviewed.find(source => source.sessionId === context.sessionId && source.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, entry)) return null;
++  return {nodeId:entry.nodeId, kind:'p028-trig-roles-and-ratios', method:null, question:"换观察角后哪些边的角色会交换？选择的比例怎样连接已知和未知？"};
++}
++export function replayP028TrigRolesAndRatiosEvidence(task, model, context) {
++  try {
++    const binding = p028TrigRolesAndRatiosBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const labels = ['hyp','opp','adj'];
++    const expectedRoles = {1:{hyp:1,opp:2,adj:0},2:{hyp:1,opp:0,adj:2}};
++    const toRadians = degrees => degrees * Math.PI / 180;
++    const toDegrees = radians => radians * 180 / Math.PI;
++    const exactNumber = raw => {
++      const value = rational(raw.trim());
++      return value ? value[0] / value[1] : NaN;
++    };
++    const choice = task.mode === 'inverse' ? 'tan' : task.unknown === 'opp' ? 'sin' : 'cos';
++    let board = initial(task).board;
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','d','f'])) return null;
++      const {a,d,f} = event;
++      const fields = a === 'scale' ? ['scale'] : a === 'answer' ? ['result'] : a === 'calc' ? ['calcKind','calcInput'] : [];
++      const takesIndex = ['ref','edge','assign','ratio'].includes(a);
++      if (!hasExactKeys(d,takesIndex?['index']:[]) || !hasExactKeys(f,fields)) return null;
++      board.first[a] ??= f;
++      const index = Number(d.index);
++      const {ref} = board;
++      const roles = board.roles[ref];
++      const confirmedB = ref === 1 && board.confirmed.includes(1) && sameEvidence(roles,expectedRoles[1]);
++      switch (a) {
++        case 'reset':
++          board = {...initial(task).board,first:board.first};
++          break;
++        case 'help':
++          board.help = true;
++          break;
++        case 'edit':
++          if (ref) board.editing = true;
++          break;
++        case 'ref':
++          if (![1,2].includes(index)) return null;
++          Object.assign(board,{ref:index,selected:null,editing:!board.confirmed.includes(index),ratio:null,saved:null,calculator:null});
++          break;
++        case 'edge':
++          if (![0,1,2].includes(index)) return null;
++          if (ref) Object.assign(board,{selected:index,editing:true});
++          break;
++        case 'assign':
++          if (!labels.includes(d.index)) return null;
++          if (roles && board.selected !== null) {
++            for (const key of labels) if (roles[key] === board.selected) roles[key] = null;
++            roles[d.index] = board.selected;
++            Object.assign(board,{editing:true,confirmed:board.confirmed.filter(value => value !== ref),observations:[],ratio:null,saved:null});
++          }
++          break;
++        case 'confirm':
++          if (!ref || !sameEvidence(roles,expectedRoles[ref])) board.first.badRoles = true;
++          else {
++            if (!board.confirmed.includes(ref)) board.confirmed.push(ref);
++            Object.assign(board,{editing:false,selected:null});
++          }
++          break;
++        case 'scale': {
++          const scale = exactNumber(f.scale);
++          if ([1,2].includes(scale)) board.scale = scale;
++          break;
++        }
++        case 'observe': {
++          if (!confirmedB || board.observations.some(row => row.scale === board.scale)) break;
++          const [adj,opp,hyp] = task.hyp === undefined
++            ? [task.a,task.b,Math.hypot(task.a,task.b)]
++            : [task.hyp*Math.cos(toRadians(task.angle)),task.hyp*Math.sin(toRadians(task.angle)),task.hyp];
++          const {scale} = board;
++          board.observations.push({scale,opposite:opp*scale,adjacent:adj*scale,hypotenuse:hyp*scale,ratio:opp/hyp});
++          break;
++        }
++        case 'ratio':
++          if (!['sin','cos','tan'].includes(d.index)) return null;
++          if (confirmedB) {
++            board.first.ratioChoice ??= d.index;
++            if (board.first.ratioChoice !== task.ratio) board.first.badRatio = true;
++            Object.assign(board,{ratio:d.index,saved:null,calculator:null});
++          }
++          break;
++        case 'calc': {
++          const x = exactNumber(f.calcInput);
++          const r = toRadians(x);
++          const output = {
++            sin:Math.sin(r),cos:Math.cos(r),tan:Math.abs(Math.cos(r))<1e-10?NaN:Math.tan(r),
++            asin:toDegrees(Math.asin(x)),acos:toDegrees(Math.acos(x)),atan:toDegrees(Math.atan(x)),sqrt:Math.sqrt(x),
++          }[f.calcKind];
++          if (board.ratio && Number.isFinite(output)) board.calculator={kind:f.calcKind,input:f.calcInput,result:output};
++          break;
++        }
++        case 'answer':
++          if (board.ratio && Number.isFinite(exactNumber(f.result))) board.saved=f;
++          break;
++        default: return null;
++      }
++    }
++    const confirmed = ref => board.confirmed.includes(ref) && sameEvidence(board.roles[ref],expectedRoles[ref]);
++    if (!confirmed(1) || !sameEvidence(board,model.board) || !inspect(task,model).correct) return null;
++    if (task.mode === 'roles') {
++      if (!confirmed(2) || model.answers[0] !== 'swap') return null;
++      return {binding, roles:board.roles};
++    }
++    if (board.ref !== 1) return null;
++    if (task.mode === 'compare') {
++      const ratio = 3 / 5;
++      if (![1,2].every(scale => board.observations.some(row => row.scale === scale && row.ratio === ratio)) ||
++          exactNumber(model.answers[0]) !== ratio || model.answers[1] !== 'same') return null;
++      return {binding, ratio, scales:board.observations.map(row => row.scale)};
++    }
++    const inverse = task.mode === 'inverse';
++    const result = inverse
++      ? toDegrees(Math.atan2(task.b,task.a))
++      : task.hyp * Math[choice](toRadians(task.angle));
++    const expected = Number(result.toFixed(inverse ? 1 : 2));
++    const explanations = {tan:'acute',cos:'adj-hyp',sin:'shorter'};
++    if (board.ratio !== choice || board.saved?.result !== model.result || exactNumber(model.result) !== expected ||
++        model.answers[0] !== explanations[choice]) return null;
++    return {binding, ratio:choice, result:expected};
++
++  } catch {
++    return null;
++  }
++}
++export function submittedP028TrigRolesAndRatiosEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replayP028TrigRolesAndRatiosEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-p028-trig-roles-and-ratios-browser.cjs b/tests/p9-p028-trig-roles-and-ratios-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..3595f055c113aeac363c7538e3330df73036d0ec
+--- /dev/null
++++ b/tests/p9-p028-trig-roles-and-ratios-browser.cjs
+@@ -0,0 +1,159 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P028_ARTIFACTS || path.join(root, 'verification/p9-p028-trig-roles-and-ratios'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P028_SOURCES, replayP028TrigRolesAndRatiosEvidence, submittedP028TrigRolesAndRatiosEvidence} = await entry('dist/learning/p028-trig-roles-and-ratios-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b26 = await entry('dist/learning/phase5/b26-model.js');
++  const {solveSteps} = b26;
++  const wrongSteps = task => solveSteps(task).map(step => step.field === 'answers.0' ? {...step,value:task.questions[0].options?.find(([id]) => id !== task.questions[0].value)?.[0] ?? '0'} : step);
++  const cases = P028_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP028TrigRolesAndRatiosEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b26.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P028');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b26].find(model => model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b26.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,b26.solveSteps(row.task).filter(step => step.field === 'answers.0'));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP028TrigRolesAndRatiosEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && (Boolean(accepted)),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p028.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p028r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P028_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p028-trig-roles-and-ratios-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P028_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p028-trig-roles-and-ratios.test.mjs b/tests/p9-p028-trig-roles-and-ratios.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..43cd79a9c8845e83445970b02b93144aab84ee39
+--- /dev/null
++++ b/tests/p9-p028-trig-roles-and-ratios.test.mjs
+@@ -0,0 +1,45 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, initial, solveSteps} from '../dist/learning/phase5/b26-model.js';
++import {P028_SOURCES, p028TrigRolesAndRatiosBinding, replayP028TrigRolesAndRatiosEvidence, submittedP028TrigRolesAndRatiosEvidence} from '../dist/learning/p028-trig-roles-and-ratios-evidence.js';
++
++const wrongSteps = task => solveSteps(task).map(step => step.field === 'answers.0' ? {...step,value:task.questions[0].options?.find(([id]) => id !== task.questions[0].value)?.[0] ?? '0'} : step);
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) : value && typeof value === 'object'
++  ? Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en')).map(key => [key, ordered(value[key])]))
++  : value;
++
++for (const source of P028_SOURCES) {
++  const {sessionId, index} = source;
++  const context = {sessionId, index};
++  const task = sessionTaskFor(sessionId, index);
++  const replay = model => replayP028TrigRolesAndRatiosEvidence(task, model, context);
++  const submit = (model, saved) => submittedP028TrigRolesAndRatiosEvidence(task, model, {attempts:[{value:saved}]}, context);
++  const play = (model, steps) => {
++    for (const step of steps) {
++      if (step.field) {
++        if (step.field.startsWith('answers.')) model.answers[Number(step.field.split('.')[1])] = step.value;
++        else model[step.field] = step.value;
++      } else act(task, model, step.action === 'turn-extra' ? 'a30-turn' : step.action, step.data);
++    }
++  };
++  test(`P028 locks ${sessionId}:${index} and rejects stale or modified work`, () => {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.ok(p028TrigRolesAndRatiosBinding(task, context));
++    assert.equal(p028TrigRolesAndRatiosBinding(task, {sessionId,index:-1}), null);
++    const model = initial(task);
++    play(model, wrongSteps(task));
++    const failed = structuredClone(model);
++    assert.equal(replay(model), null);
++    play(model, solveSteps(task).filter(step => step.field === 'answers.0'));
++    const accepted = replay(model);
++    assert.ok(accepted);
++    assert.equal(submit(model, failed), null);
++    assert.deepEqual(submit(model, structuredClone(model)), accepted);
++    const forged = structuredClone(model);
++    forged.history = [];
++    assert.equal(replay(forged), null);
++  });
++}

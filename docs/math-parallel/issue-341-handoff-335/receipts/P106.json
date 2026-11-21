@@ -1,0 +1,48 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p106-paper-fold-counts",
+  "commit": "a0ce272f8a5fe786e051c310f90455bab7463a30",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "folds",
+      "index": 0,
+      "nodeId": "mt_gC-6JXAG5S",
+      "type": "x-foldpaper",
+      "taskHash": "08c6c65183ab9198e858162af4a445107f9e2b791852044bfa2a9514257006b3"
+    }
+  ],
+  "node22": "5 PASS",
+  "referenceNode": "17 PASS / 1 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 25,
+  "captures": 9,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "folds-0-correct-check-decoded.json": "918e97221ad7a9f869867aeb220b2e7ea67d3c5e139bea79a9bae06b246fc274",
+    "folds-0-correct-check-storage.txt": "918e97221ad7a9f869867aeb220b2e7ea67d3c5e139bea79a9bae06b246fc274",
+    "folds-0-correct-check.png": "3012ce146bfc6c7c404baef123825a3122b606f0e00804324711ccb72bcb7a45",
+    "folds-0-corrected-draft-decoded.json": "5f72d17a4039f1b85ac0dbc2e8494ed7bc700deaf1c563db9937338c6896c9d8",
+    "folds-0-corrected-draft-storage.txt": "5f72d17a4039f1b85ac0dbc2e8494ed7bc700deaf1c563db9937338c6896c9d8",
+    "folds-0-fold-1-decoded.json": "ffaa547855d7e3c608b4cae98b6c1bc4a24eea0e2ef86ae95ec0e0a536699570",
+    "folds-0-fold-1-storage.txt": "ffaa547855d7e3c608b4cae98b6c1bc4a24eea0e2ef86ae95ec0e0a536699570",
+    "folds-0-fold-2-decoded.json": "2c85cb62237fad0afe9e3ca5facf537016098e4fcf61f2fa1be026f677e7fe6d",
+    "folds-0-fold-2-storage.txt": "2c85cb62237fad0afe9e3ca5facf537016098e4fcf61f2fa1be026f677e7fe6d",
+    "folds-0-fold-3-decoded.json": "e04d2b6257e824180219f90e6f2de7e51c12049e9897245f350426f8a458f3bb",
+    "folds-0-fold-3-storage.txt": "e04d2b6257e824180219f90e6f2de7e51c12049e9897245f350426f8a458f3bb",
+    "folds-0-offline-reload-decoded.json": "0293ccb92605365df8f9411e1792e5e2d7de954b4951ee990fdebc313000505b",
+    "folds-0-offline-reload-storage.txt": "0293ccb92605365df8f9411e1792e5e2d7de954b4951ee990fdebc313000505b",
+    "folds-0-restored-backup-decoded.json": "555b955202e19cc0376ee0abe83e21ee4b7439d98c8d78d8ba65d83d8c0e6a56",
+    "folds-0-restored-backup-storage.txt": "555b955202e19cc0376ee0abe83e21ee4b7439d98c8d78d8ba65d83d8c0e6a56",
+    "folds-0-retry-decoded.json": "7de9d448f64902ad47cee4b0ca04a56ec65e150f392c2420f2b1526d406485f5",
+    "folds-0-retry-storage.txt": "7de9d448f64902ad47cee4b0ca04a56ec65e150f392c2420f2b1526d406485f5",
+    "folds-0-wrong-label-check-decoded.json": "4f4b39f8ece5742e30cf39ce44cccb2b58720547c3ec72459158f5def859755d",
+    "folds-0-wrong-label-check-storage.txt": "4f4b39f8ece5742e30cf39ce44cccb2b58720547c3ec72459158f5def859755d",
+    "folds-0-wrong-label.png": "1b1314de28cbb3af1c63ddee309410edd9eb38b58c27776ae78a431a74125191",
+    "native-state-v2.json": "fb1405753934992990669a0a7c5b3cea7ad715ead88ad88f840059ed093956f7",
+    "results.json": "3b5190a59ccf1e32d4714fe5b81f8d6ba78246262863955d0c1835f43e6211c8"
+  }
+}

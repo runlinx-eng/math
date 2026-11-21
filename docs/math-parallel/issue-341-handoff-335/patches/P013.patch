@@ -1,0 +1,828 @@
+diff --git a/dist/learning/p013-recall-and-estimation-evidence.js b/dist/learning/p013-recall-and-estimation-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..88d15da93c50a8d1b44897c3733a259b39f3fea9
+--- /dev/null
++++ b/dist/learning/p013-recall-and-estimation-evidence.js
+@@ -0,0 +1,555 @@
++import {rational} from './phase5/b16-model.js';
++import * as b15 from './phase5/b15-model.js';
++import * as b10 from './phase5/b10-model.js';
++import * as b21 from './phase5/b21-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++const reviewed = [
++  {
++    "sessionId": "factsfive",
++    "index": 1,
++    "nodeId": "mt_ghF3Vv6taM",
++    "type": "x-recallbench",
++    "taskHash": "2845248a3a76f423cc4b9e541d0cef0cd314f75171d18960d43cb91d41444c09",
++    "task": {
++      "type": "x-recallbench",
++      "cases": [
++        {
++          "a": 2,
++          "b": 3,
++          "op": "+"
++        },
++        {
++          "a": 5,
++          "b": 2,
++          "op": "-"
++        },
++        {
++          "a": 3,
++          "b": 3,
++          "op": "-"
++        },
++        {
++          "a": 4,
++          "b": 0,
++          "op": "+"
++        },
++        {
++          "a": 4,
++          "b": 0,
++          "op": "-"
++        }
++      ],
++      "prompt": "试着从刚才的关系里找答案，想不起来可以看看圆片。不计时。"
++    }
++  },
++  {
++    "sessionId": "bonds20",
++    "index": 2,
++    "nodeId": "mt_s2mfRBoTal",
++    "type": "x-recallbench",
++    "taskHash": "cfccb1679fdea8bf5db7a02c4ce78896a29ea5c6099c3fc2a8b741e43d2c5e92",
++    "task": {
++      "type": "x-recallbench",
++      "cases": [
++        {
++          "a": 8,
++          "b": 5,
++          "op": "+"
++        },
++        {
++          "a": 13,
++          "b": 5,
++          "op": "-"
++        },
++        {
++          "a": 13,
++          "b": 8,
++          "op": "-"
++        },
++        {
++          "a": 7,
++          "b": 9,
++          "op": "+"
++        },
++        {
++          "a": 16,
++          "b": 9,
++          "op": "-"
++        }
++      ],
++      "prompt": "换着看加法和减法，看看能否从已知的伙伴找回来。"
++    }
++  },
++  {
++    "sessionId": "factsten",
++    "index": 1,
++    "nodeId": "mt__we2TDqnJx",
++    "type": "x-recallbench",
++    "taskHash": "d5af5fb77b9353ce65dd4b9c1311c52b02e8c529c2390958ae323728ddbe76c0",
++    "task": {
++      "type": "x-recallbench",
++      "cases": [
++        {
++          "a": 6,
++          "b": 4,
++          "op": "+"
++        },
++        {
++          "a": 10,
++          "b": 6,
++          "op": "-"
++        },
++        {
++          "a": 4,
++          "b": 4,
++          "op": "+"
++        },
++        {
++          "a": 8,
++          "b": 4,
++          "op": "-"
++        },
++        {
++          "a": 9,
++          "b": 1,
++          "op": "-"
++        },
++        {
++          "a": 7,
++          "b": 0,
++          "op": "+"
++        }
++      ],
++      "prompt": "试几种十以内的关系。不记得就看看圆片，原来的回答也会留下。"
++    }
++  },
++  {
++    "sessionId": "factstwenty",
++    "index": 2,
++    "nodeId": "mt__t4afSyZRm",
++    "type": "x-recallbench",
++    "taskHash": "3f2f755165c085df647ea34ca8a179c59118dd4d609d74df3a16d99dea3013f5",
++    "task": {
++      "type": "x-recallbench",
++      "cases": [
++        {
++          "a": 7,
++          "b": 8,
++          "op": "+"
++        },
++        {
++          "a": 15,
++          "b": 8,
++          "op": "-"
++        },
++        {
++          "a": 9,
++          "b": 6,
++          "op": "+"
++        },
++        {
++          "a": 15,
++          "b": 6,
++          "op": "-"
++        },
++        {
++          "a": 8,
++          "b": 8,
++          "op": "+"
++        },
++        {
++          "a": 16,
++          "b": 8,
++          "op": "-"
++        }
++      ],
++      "prompt": "把同一个整体里的加减穿插着试。这里不计时。"
++    }
++  },
++  {
++    "sessionId": "scaleadd",
++    "index": 0,
++    "nodeId": "mt_3e_PQxwC12",
++    "type": "x-recallbench",
++    "taskHash": "d50ed456d653a7f443f9096632837781f7bd362fba71ef823fd36f4ad8df07b5",
++    "task": {
++      "type": "x-recallbench",
++      "cases": [
++        {
++          "a": 7,
++          "b": 8,
++          "op": "+"
++        },
++        {
++          "a": 15,
++          "b": 8,
++          "op": "-"
++        }
++      ],
++      "prompt": "先试7+8和15−8，想不起来就看看圆片。"
++    }
++  },
++  {
++    "sessionId": "calculatormeaning",
++    "index": 0,
++    "nodeId": "mt_NmvuwVUFRS",
++    "type": "x-estimatepad",
++    "taskHash": "381cb4a241ce18401235cae0bd4130606c32ffc16d093f93fcb0b0f9e7d06216",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 47,
++      "b": 10,
++      "op": "*",
++      "prompt": "47×10怎样算顺手？先估个大概，再用你选的方法算，最后核对输入。",
++      "calculator": true,
++      "method": [
++        "mental",
++        "written",
++        "calculator"
++      ]
++    }
++  },
++  {
++    "sessionId": "calculatormeaning",
++    "index": 1,
++    "nodeId": "mt_NmvuwVUFRS",
++    "type": "x-estimatepad",
++    "taskHash": "43f86184373eb6060cce00798cb5307f6973a922787064618a5bac705ef0a2d5",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 2365,
++      "b": 48,
++      "op": "*",
++      "prompt": "2365×48先估个大概，再用这里的计算器算。输入错了也会留下记录。",
++      "calculator": true,
++      "method": [
++        "written",
++        "calculator"
++      ]
++    }
++  },
++  {
++    "sessionId": "calculatormeaning",
++    "index": 2,
++    "nodeId": "mt_NmvuwVUFRS",
++    "type": "x-estimatepad",
++    "taskHash": "bc469daaeb3fe04d28822725b262e38e2e7a686ddecdab27f38d8e223732a06a",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 250,
++      "b": 8,
++      "op": "/",
++      "prompt": "250人，每辆车8座。计算器的小数还要怎样变成能安排全部人的车数？",
++      "calculator": true,
++      "interpret": "up",
++      "context": "每个人都要有座位，车必须是完整的一辆。"
++    }
++  },
++  {
++    "sessionId": "calculatormeaning",
++    "index": 3,
++    "nodeId": "mt_NmvuwVUFRS",
++    "type": "x-estimatepad",
++    "taskHash": "4c19e85833e3ee6aedb85ef73a3d4fd7406e957629b1cbbe5e2e4215bebcdf3a",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 250,
++      "b": 8,
++      "op": "/",
++      "prompt": "250颗珠子，每盒8颗。只问能装满几盒，不能把没装满的也算一盒。",
++      "calculator": true,
++      "interpret": "down"
++    }
++  },
++  {
++    "sessionId": "calculatormeaning",
++    "index": 4,
++    "nodeId": "mt_NmvuwVUFRS",
++    "type": "x-estimatepad",
++    "taskHash": "70da17659d28a9c4c89a7a381638e0cb6708675a7b50156e4deacd98f5f01df0",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 250,
++      "b": 8,
++      "op": "/",
++      "prompt": "250厘米绳平均分8段，每段可以细分。结果应该怎样写？",
++      "calculator": true,
++      "interpret": "exact"
++    }
++  },
++  {
++    "sessionId": "calculatormeaning",
++    "index": 5,
++    "nodeId": "mt_NmvuwVUFRS",
++    "type": "x-estimatepad",
++    "taskHash": "68cc6c92510e68e34a54f458114311859e496c98cd0323b08d23380a083f2e31",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 3847,
++      "b": 26,
++      "op": "*",
++      "prompt": "3847×26：选择愿意采用的方法，先估再核对。实际用了怎样的心算或纸笔方法，留在自己的说明里。",
++      "calculator": true,
++      "method": [
++        "mental",
++        "written",
++        "calculator"
++      ]
++    }
++  },
++  {
++    "sessionId": "estimatecheck",
++    "index": 0,
++    "nodeId": "mt_ilPrU0cbtT",
++    "type": "x-estimatepad",
++    "taskHash": "dbba54c160909f186d58438f7845b8b609553846b2ac8e834a5d481fc9593d02",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 487,
++      "b": 23,
++      "op": "*",
++      "prompt": "先选附近好算的数估一估，再检查给出的1120有没有数量上的问题。",
++      "candidate": 1120
++    }
++  },
++  {
++    "sessionId": "estimatecheck",
++    "index": 1,
++    "nodeId": "mt_ilPrU0cbtT",
++    "type": "x-estimatepad",
++    "taskHash": "159f3237e00fd6da51b9f2cd2f39419647711ad1be6d75a318c910904f08ab8f",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 487,
++      "b": 23,
++      "op": "*",
++      "prompt": "同一道计算，这次给出11201。接近估计，是否就能证明每一位都对？",
++      "candidate": 11201
++    }
++  },
++  {
++    "sessionId": "estimatecheck",
++    "index": 2,
++    "nodeId": "mt_ilPrU0cbtT",
++    "type": "x-estimatepad",
++    "taskHash": "9ee5fd952b9be08ff85b50be9d06ab11ee3750bbe894079d6e554faf1791418f",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 198,
++      "b": 49,
++      "op": "*",
++      "prompt": "广场约有198排、每排约49人。只需要报一个大概人数，先用容易算的数估一估。"
++    }
++  },
++  {
++    "sessionId": "decimalestimate",
++    "index": 0,
++    "nodeId": "mt_3m0pA-aeat",
++    "type": "x-estimatepad",
++    "taskHash": "1cd3c984e79ac05629d0edf7148447815a81741a2161e97d275d248433b4fcfb",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 4.87,
++      "b": 30,
++      "op": "*",
++      "prompt": "4.87×30的结果被写成14.61。先估再看，小数点有没有走远？",
++      "candidate": 14.61
++    }
++  },
++  {
++    "sessionId": "decimalestimate",
++    "index": 1,
++    "nodeId": "mt_3m0pA-aeat",
++    "type": "x-estimatepad",
++    "taskHash": "953a687b7d3cf56649b99c40ddaa2bbff8822efaa5df86cb917d903820a16e64",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 63.6,
++      "b": 20,
++      "op": "/",
++      "prompt": "63.6÷20被写成31.8。用附近好算的数检查这个结果。",
++      "candidate": 31.8
++    }
++  },
++  {
++    "sessionId": "decimalestimate",
++    "index": 2,
++    "nodeId": "mt_3m0pA-aeat",
++    "type": "x-estimatepad",
++    "taskHash": "eff8e5ef1162505bfb996211d38b27dbd7764f44b624720be6fd2c586897a913",
++    "task": {
++      "type": "x-estimatepad",
++      "a": 2.46,
++      "b": 400,
++      "op": "*",
++      "prompt": "2.46×400被写成984。估个大概，说明为什么仍不能只凭估计保证全对。",
++      "candidate": 984
++    }
++  },
++  {
++    "sessionId": "estimatepeople",
++    "index": 0,
++    "nodeId": "mt_fQ9Rw10fss",
++    "type": "x-estimate",
++    "taskHash": "16d09ad421c9dd6ccecb1a5a608f36fb826ab0d2202bc4588151a7dafb22b773",
++    "task": {
++      "type": "x-estimate",
++      "prompt": "从900人的完整名单随机抽60人，18人步行。把这份比例铺到900人，估计大约几人步行？",
++      "mode": "count",
++      "N": 900,
++      "n": 60,
++      "k": 18,
++      "questions": []
++    }
++  },
++  {
++    "sessionId": "estimatepeople",
++    "index": 1,
++    "nodeId": "mt_fQ9Rw10fss",
++    "type": "x-estimate",
++    "taskHash": "9f059acc31b4f23fb0c99f46d939ebc728f642170461e924cd917bc7a00a042f",
++    "task": {
++      "type": "x-estimate",
++      "prompt": "随机抽25人的每周阅读时间，样本平均6.4小时。用它估计全体平均，再说明为什么不能叫精确清点。",
++      "mode": "mean",
++      "N": 800,
++      "n": 25,
++      "k": 18,
++      "questions": [],
++      "mean": 6.4,
++      "unit": "小时"
++    }
++  },
++  {
++    "sessionId": "estimatepeople",
++    "index": 2,
++    "nodeId": "mt_fQ9Rw10fss",
++    "type": "x-estimate",
++    "taskHash": "90a9730e36f26c5d88a9a9387c087a86d0c50a8938e0ee706c448923f9a4ca16",
++    "task": {
++      "type": "x-estimate",
++      "prompt": "若60人全来自同一小组，18人步行，算式还能算，但能放心推广到全体900人吗？",
++      "mode": "count",
++      "N": 900,
++      "n": 60,
++      "k": 18,
++      "questions": [],
++      "validSample": false
++    }
++  }
++];
++export const P013_SOURCES = Object.freeze(reviewed.map(({task, ...source}) => Object.freeze(source)));
++export function p013RecallAndEstimationBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = reviewed.find(source => source.sessionId === context.sessionId && source.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, entry)) return null;
++  return {nodeId:entry.nodeId, kind:'p013-recall-and-estimation', method:null, question:"怎样核对小算式、估计与精确计算各能说明什么？"};
++}
++export function replayP013RecallAndEstimationEvidence(task, model, context) {
++  try {
++    const binding = p013RecallAndEstimationBinding(task, context);
++    const modelForTask = [b15, b10, b21].find(owner => owner.TYPES.has(task?.type));
++    if (!modelForTask) return null;
++    const {initial,inspect,valid} = modelForTask;
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const fraction=raw=>rational(raw.trim().replace(/\s*\/\s*/g,'/'));
++    const exact=(raw,n,d=1)=>{
++      const ratio=fraction(raw);
++      return ratio && BigInt(ratio[0])*BigInt(d) === BigInt(n)*BigInt(ratio[1]);
++    };
++    if (task.type==='x-recallbench') {
++      const answers=[];
++      const help=new Set();
++      for (const event of model.history) {
++        if (!hasExactKeys(event,['index','answer','help','correct']) || event.index!==answers.length ||
++            event.index>=task.cases.length || typeof event.answer!=='string' || typeof event.help!=='boolean' ||
++            (help.has(event.index)&&!event.help)) return null;
++        const {a,b,op}=task.cases[event.index];
++        const wanted=a+(op==='+'?b:-b);
++        const right=/^-?\d{1,4}$/.test(event.answer.trim())&&Number(event.answer)===wanted;
++        if (right!==event.correct) return null;
++        if (event.help) help.add(event.index);
++        if (right) answers.push({answer:event.answer,help:event.help});
++      }
++      if (answers.length!==task.cases.length || model.cursor!==answers.length || model.answer!=='' ||
++          !sameEvidence(answers,model.saved) || !sameEvidence([...help],model.help) || !inspect(task,model).correct) return null;
++      return {binding, answers, help:[...help]};
++    }
++    if (task.type==='x-estimate') {
++      const fields=['target','population','n','rate','estimate','precision','scope'];
++      const count=task.mode==='count';
++      const full=count?task.N/task.n:0;
++      let board=initial(task).board;
++      for (const event of model.history) {
++        if (!hasExactKeys(event,['a','d','f']) || !hasExactKeys(event.d,[]) ||
++            !hasExactKeys(event.f,event.a==='estimate'?fields:[])) return null;
++        board.first[event.a+'-0'] ??= event.f;
++        if (event.a==='reset') board={...initial(task).board,first:board.first};
++        else if (event.a==='expand'&&count) {
++          if (board.parts<full) {
++            board.parts++;
++            board.total=board.parts*task.k;
++          }
++        } else if (event.a==='estimate') board.saved=Object.fromEntries(fields.map(key=>[key,event.f[key]]));
++        else return null;
++      }
++      const scope=task.validSample===false?'invalid':'random';
++      if (!board.saved || !sameEvidence(board,model.board) || board.parts!==full ||
++          model.target!=='population' || model.precision!=='approx' || model.scope!==scope ||
++          !exact(model.population,task.N) || !exact(model.n,task.n) ||
++          !(count ? exact(model.rate,task.k,task.n)&&exact(model.estimate,task.N*task.k,task.n) : exact(model.estimate,64,10)) ||
++          !inspect(task,model).correct) return null;
++      return {binding, estimate:count?task.N*task.k/task.n:6.4, scope, parts:board.parts};
++    }
++
++    const parseNumber=raw=>/^[+-]?\d{1,10}(?:\.\d{1,8})?$/.test(raw.trim())?Number(raw):null;
++    const operation=(a,b)=>task.op==='*'?a*b:a/b;
++    const finished=initial(task);
++    const fields=Object.keys(finished).filter(key=>!['history','board','issue'].includes(key));
++    let board=finished.board;
++    let latestIssue=false;
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['action','data']) || !hasExactKeys(event.data,['fields','index','value']) ||
++          !hasExactKeys(event.data.fields,fields) || event.data.index!==null || event.data.value!==null) return null;
++      latestIssue=false;
++      const input=event.data.fields;
++      if (event.action==='b15-reset') board=initial(task).board;
++      else if (event.action==='b15-estimate') {
++        board.first??={left:input.left,right:input.right,estimate:input.estimate};
++        const left=parseNumber(input.left),right=parseNumber(input.right);
++        const value=operation(left,right);
++        if (b15.estimateOK(task,left,right)&&parseNumber(input.estimate)===value) board.estimate={left,right,value};
++        else latestIssue=true;
++      } else if (event.action==='b15-calculate') {
++        if (board.estimate) {
++          try {
++            board.runs.push({entry:input.entry,value:b15.value(b15.parse(input.entry))});
++          } catch {
++            board.runs.push({entry:input.entry,value:null});
++            latestIssue=true;
++          }
++        }
++      } else return null;
++    }
++    if (latestIssue || !board.estimate || model.proof!=='not-proof' || !sameEvidence(board,model.board) ||
++        !inspect(task,model).correct) return null;
++    const accurate=operation(task.a,task.b);
++    const plausible=task.candidate>accurate/2 && task.candidate<accurate*1.5;
++    if (task.candidate && model.judgment!==(plausible?'plausible':'unreasonable')) return null;
++    if (task.calculator) {
++      const last=board.runs.at(-1);
++      const wanted=task.interpret==='up'?Math.ceil(accurate):task.interpret==='down'?Math.floor(accurate):accurate;
++      if (!last || last.value!==accurate || !b15.equivalent(last.entry,`${task.a}${task.op}${task.b}`) ||
++          parseNumber(model.answer)!==wanted || (task.interpret&&model.reason!==task.interpret)) return null;
++    }
++    return {binding, estimate:board.estimate.value, accurate:task.calculator?accurate:null};
++
++  } catch {
++    return null;
++  }
++}
++export function submittedP013RecallAndEstimationEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replayP013RecallAndEstimationEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-p013-recall-and-estimation-browser.cjs b/tests/p9-p013-recall-and-estimation-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..bea4575f4cbf452ea1ffe7d9250166a401abb1e6
+--- /dev/null
++++ b/tests/p9-p013-recall-and-estimation-browser.cjs
+@@ -0,0 +1,193 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P013_ARTIFACTS || path.join(root, 'verification/p9-p013-recall-and-estimation'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P013_SOURCES, replayP013RecallAndEstimationEvidence, submittedP013RecallAndEstimationEvidence} = await entry('dist/learning/p013-recall-and-estimation-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b15 = await entry('dist/learning/phase5/b15-model.js');
++  const b10 = await entry('dist/learning/phase5/b10-model.js');
++  const b21 = await entry('dist/learning/phase5/b21-model.js');
++  const modelFor = task => [b15, b10, b21].find(model => model.TYPES.has(task.type));
++const recallSteps=task=>task.cases.flatMap(({a,b,op})=>[
++  {field:'answer',value:String(a+(op==='+'?b:-b))},{action:'recall-save'}
++]);
++const wrongSteps=(task,model)=>{
++  if (task.type==='x-recallbench') return [{action:'recall-help'},{field:'answer',value:'999'},{action:'recall-save'}];
++  const field = task.type==='x-estimatepad' ? 'proof' : 'precision';
++  const value = task.type==='x-estimatepad' ? 'proof' : 'exact';
++  return model.solveSteps(task).map(step=>step.field===field?{...step,value}:step);
++};
++const correctSteps=(task,model)=>{
++  if (task.type==='x-recallbench') return recallSteps(task);
++  if (task.type==='x-estimatepad') return [{field:'proof',value:'not-proof'}];
++  return [{field:'precision',value:'approx'},{action:'b21-estimate'}];
++};
++
++const legacySteps = task => {
++  if (task.type==='x-factfamily') return b10.MODES.flatMap(mode=>{
++    const [a,b,op]=b10.familyNumbers(task,mode);
++    return [{action:'family-mode',data:{mode}},
++      {field:'equation',value:`${a}${op}${b}=${a+(op==='+'?b:-b)}`},{action:'family-save'}];
++  });
++  if (task.type!=='x-tenbridge') throw new Error('Unexpected prerequisite '+task.type);
++  const add=task.op==='+';
++  const first=add?10-task.a:task.a-10;
++  const answer=task.a+(add?task.b:-task.b);
++  const move=index=>({action:'ten-token',data:{index}});
++  return [{field:'guess',value:answer},{action:'ten-predict'},
++    ...Array.from({length:first},(_,i)=>move(add?i:i+10)),{action:'ten-landmark'},
++    ...Array.from({length:task.b-first},(_,i)=>move(add?i+first:i)),{action:'ten-finish'},
++    {field:'firstPart',value:first},{field:'secondPart',value:task.b-first},
++    {field:'equation',value:`${task.a}${task.op}${task.b}=${answer}`}];
++};
++
++  const cases = P013_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP013RecallAndEstimationEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: modelFor(row.task).inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P013');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b10.TYPES.has(prior.type) ? legacySteps(prior) : modelFor(prior).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task,modelFor(row.task)));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !modelFor(row.task).inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task,modelFor(row.task)));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP013RecallAndEstimationEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && (Boolean(accepted)),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p013.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p013r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P013_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p013-recall-and-estimation-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P013_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p013-recall-and-estimation.test.mjs b/tests/p9-p013-recall-and-estimation.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..934d586062c0dc3a8816c79b840a7dd9f81d4847
+--- /dev/null
++++ b/tests/p9-p013-recall-and-estimation.test.mjs
+@@ -0,0 +1,62 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as b15 from '../dist/learning/phase5/b15-model.js';
++import * as b10 from '../dist/learning/phase5/b10-model.js';
++import * as b21 from '../dist/learning/phase5/b21-model.js';
++import {P013_SOURCES, p013RecallAndEstimationBinding, replayP013RecallAndEstimationEvidence, submittedP013RecallAndEstimationEvidence} from '../dist/learning/p013-recall-and-estimation-evidence.js';
++
++const recallSteps=task=>task.cases.flatMap(({a,b,op})=>[
++  {field:'answer',value:String(a+(op==='+'?b:-b))},{action:'recall-save'}
++]);
++const wrongSteps=(task,model)=>{
++  if (task.type==='x-recallbench') return [{action:'recall-help'},{field:'answer',value:'999'},{action:'recall-save'}];
++  const field = task.type==='x-estimatepad' ? 'proof' : 'precision';
++  const value = task.type==='x-estimatepad' ? 'proof' : 'exact';
++  return model.solveSteps(task).map(step=>step.field===field?{...step,value}:step);
++};
++const correctSteps=(task,model)=>{
++  if (task.type==='x-recallbench') return recallSteps(task);
++  if (task.type==='x-estimatepad') return [{field:'proof',value:'not-proof'}];
++  return [{field:'precision',value:'approx'},{action:'b21-estimate'}];
++};
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) : value && typeof value === 'object'
++  ? Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en')).map(key => [key, ordered(value[key])]))
++  : value;
++
++for (const source of P013_SOURCES) {
++  const {sessionId, index} = source;
++  const context = {sessionId, index};
++  const task = sessionTaskFor(sessionId, index);
++  const modelForTask = [b15, b10, b21].find(owner => owner.TYPES.has(task.type));
++  const {act, initial} = modelForTask;
++  const replay = model => replayP013RecallAndEstimationEvidence(task, model, context);
++  const submit = (model, saved) => submittedP013RecallAndEstimationEvidence(task, model, {attempts:[{value:saved}]}, context);
++  const play = (model, steps) => {
++    for (const step of steps) {
++      if (step.field) {
++        if (step.field.startsWith('answers.')) model.answers[Number(step.field.split('.')[1])] = step.value;
++        else model[step.field] = step.value;
++      } else act(task, model, step.action === 'turn-extra' ? 'a30-turn' : step.action, step.data);
++    }
++  };
++  test(`P013 locks ${sessionId}:${index} and rejects stale or modified work`, () => {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.ok(p013RecallAndEstimationBinding(task, context));
++    assert.equal(p013RecallAndEstimationBinding(task, {sessionId,index:-1}), null);
++    const model = initial(task);
++    play(model, wrongSteps(task,modelForTask));
++    const failed = structuredClone(model);
++    assert.equal(replay(model), null);
++    play(model, correctSteps(task,modelForTask));
++    const accepted = replay(model);
++    assert.ok(accepted);
++    assert.equal(submit(model, failed), null);
++    assert.deepEqual(submit(model, structuredClone(model)), accepted);
++    const forged = structuredClone(model);
++    forged.history = [];
++    assert.equal(replay(forged), null);
++  });
++}

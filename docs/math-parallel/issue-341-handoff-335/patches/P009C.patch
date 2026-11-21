@@ -1,0 +1,451 @@
+diff --git a/dist/learning/p009c-three-group-pairings-evidence.js b/dist/learning/p009c-three-group-pairings-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..5228cc76bc34309da23ea1d3a4354c87c8727502
+--- /dev/null
++++ b/dist/learning/p009c-three-group-pairings-evidence.js
+@@ -0,0 +1,134 @@
++import {initial, inspect, valid} from './phase5/b10-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++const reviewed = [
++  {
++    "sessionId": "tripleadd",
++    "index": 0,
++    "nodeId": "mt_Zx1xZM-RbX",
++    "type": "x-threegroups",
++    "taskHash": "9ac50debcb0dd124d7ae79541b644d8e01e8d308bc2b88116472e711cc3f4938",
++    "task": {
++      "type": "x-threegroups",
++      "values": [
++        5,
++        7,
++        3
++      ],
++      "prompt": "先挑两堆合起来，再带上第三堆。留两种做法，其中试一次凑十。",
++      "useful": true
++    }
++  },
++  {
++    "sessionId": "tripleadd",
++    "index": 1,
++    "nodeId": "mt_Zx1xZM-RbX",
++    "type": "x-threegroups",
++    "taskHash": "db8d158f321394085115fca4d4634df0c1d493890e93cf62f617f1de6d39cba9",
++    "task": {
++      "type": "x-threegroups",
++      "values": [
++        4,
++        4,
++        3
++      ],
++      "prompt": "这次没有凑十的一对，但有一样多的两堆。留两种做法。",
++      "useful": true
++    }
++  },
++  {
++    "sessionId": "regroupadd",
++    "index": 0,
++    "nodeId": "mt_T76hKqXf0z",
++    "type": "x-threegroups",
++    "taskHash": "2b91a2fd13d5322375328b5fff12342043d01728d6c52dbdb7b9d8d0ab59a4d3",
++    "task": {
++      "type": "x-threegroups",
++      "values": [
++        2,
++        6,
++        4
++      ],
++      "prompt": "同样三堆，先合不同的两堆，留两种做法比较。",
++      "useful": false
++    }
++  },
++  {
++    "sessionId": "regroupadd",
++    "index": 1,
++    "nodeId": "mt_T76hKqXf0z",
++    "type": "x-threegroups",
++    "taskHash": "3517499a8d480b5dc93bff9de6de290c330de2d8c788eda1756129f9da815e15",
++    "task": {
++      "type": "x-threegroups",
++      "values": [
++        2,
++        8,
++        5
++      ],
++      "prompt": "改变先算哪一对，第三堆仍要带上。再试两种做法。",
++      "useful": false
++    }
++  },
++  {
++    "sessionId": "general34",
++    "index": 0,
++    "nodeId": "mt_fZTn0W_iZR",
++    "type": "x-threegroups",
++    "taskHash": "2dfc0627fc830d7e96318509c2e78fb73459e70744cf9ba5dc41ed460345ecd1",
++    "task": {
++      "type": "x-threegroups",
++      "values": [
++        6,
++        6,
++        1
++      ],
++      "prompt": "把6＋7看成6＋6＋1。先找一样多的两堆，再把1带上。",
++      "useful": true
++    }
++  }
++];
++export const P009C_SOURCES = Object.freeze(reviewed.map(({task,...source})=>Object.freeze(source)));
++export function p009cThreeGroupPairingsBinding(task,context) {
++  if (!isEvidenceContext(context)) return null;
++  const row = reviewed.find(entry=>entry.sessionId===context.sessionId && entry.index===context.index);
++  if (!row || !sameEvidence(row.task,task) || !matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p009c-three-group-pairings',method:null,question:"先合哪两组？总数怎样保持不变？"};
++}
++export function replayP009CThreeGroupPairingsEvidence(task,model,context) {
++  try {
++    const binding=p009cThreeGroupPairingsBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue!=='' || !model.history.length || Object.keys(model.history).length!==model.history.length) return null;
++    const sum=values=>values.reduce((a,b)=>a+b,0);
++    const total=sum(task.values);
++    const validPair=pair=>Array.isArray(pair)&&pair.length===2&&new Set(pair).size===2&&pair.every(i=>Number.isInteger(i)&&i>=0&&i<3);
++    const integer=raw=>typeof raw==='string'&&/^\s*-?\d{1,4}\s*$/.test(raw)?Number(raw):null;
++    const saved=new Map();
++    let merged=null, rejected=0;
++    for (const event of model.history) {
++      if (event.action==='merge'&&hasExactKeys(event,['action','pair'])&&!merged&&validPair(event.pair)) {
++        merged=event.pair;
++      } else if (event.action==='reset'&&hasExactKeys(event,['action','pair'])) {
++        if (merged&&!sameEvidence(merged,event.pair)||!Array.isArray(event.pair)||event.pair.length>2||
++            new Set(event.pair).size!==event.pair.length||!event.pair.every(i=>Number.isInteger(i)&&i>=0&&i<3)) return null;
++        merged=null;
++      } else if (hasExactKeys(event,['pair','sub','total'])&&merged&&sameEvidence(merged,event.pair)) {
++        const [a,b]=merged.map(i=>task.values[i]);
++        if (integer(event.sub)!==a+b||integer(event.total)!==total) {rejected++;continue;}
++        const key=[...merged].sort().join(':');
++        if (!saved.has(key)) saved.set(key,event);
++        merged=null;
++      } else return null;
++    }
++    const paths=[...saved.values()];
++    const useful=paths.some(({pair:[a,b]})=>task.values[a]+task.values[b]===10||task.values[a]===task.values[b]);
++    if (paths.length<2||(task.useful&&!useful)||Boolean(merged)!==model.merged||
++        (merged&&!sameEvidence(merged,model.selected))||!sameEvidence(paths,model.saved)||!inspect(task,model).correct) return null;
++    return {binding,total,paths,rejected};
++  } catch {
++    return null;
++  }
++}
++export function submittedP009CThreeGroupPairingsEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record) ? replayP009CThreeGroupPairingsEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p009c-three-group-pairings-browser.cjs b/tests/p9-p009c-three-group-pairings-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..06fb8546fdc111032be13c40f3eff8ee9b915040
+--- /dev/null
++++ b/tests/p9-p009c-three-group-pairings-browser.cjs
+@@ -0,0 +1,211 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P009C_ARTIFACTS || path.join(root, 'verification/p9-p009c-three-group-pairings'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P009C_SOURCES, replayP009CThreeGroupPairingsEvidence, submittedP009CThreeGroupPairingsEvidence} = await entry('dist/learning/p009c-three-group-pairings-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b10 = await entry('dist/learning/phase5/b10-model.js');
++
++const field=(field,value)=>({field,value:String(value)});
++const act=(action,data)=>({action,data});
++function tenSteps(task) {
++  const add=task.op==='+';
++  const head=add?10-task.a:task.a-10;
++  const answer=task.a+(add?task.b:-task.b);
++  const token=index=>act('ten-token',{index});
++  return [field('guess',answer),act('ten-predict'),
++    ...Array.from({length:head},(_,i)=>token(add?i:10+i)),act('ten-landmark'),
++    ...Array.from({length:task.b-head},(_,i)=>token(add?i+head:i)),act('ten-finish'),
++    field('firstPart',head),field('secondPart',task.b-head),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++}
++function familySteps(task) {
++  return b10.MODES.flatMap(mode=>{
++    const [a,b,op]=b10.familyNumbers(task,mode);
++    return [act('family-mode',{mode}),field('equation',`${a}${op}${b}=${a+(op==='+'?b:-b)}`),act('family-save')];
++  });
++}
++function legacySteps(task) {
++  if (task.type==='x-tenbridge') return tenSteps(task);
++  if (task.type==='x-factfamily') return familySteps(task);
++  if (task.type==='x-joinstory') {
++    const answer=task.a+(task.op==='+'?task.b:-task.b);
++    return [...Array.from({length:task.a},()=>act('story-counter',{group:'left',delta:1})),
++      ...Array.from({length:task.b},()=>act('story-counter',{group:'right',delta:1})),
++      field('op',task.op),field('guess',answer),act('story-do'),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++  }
++  if (task.type==='x-splitbench') {
++    let count=0;
++    const steps=[];
++    for (const [a,b] of task.pairs) {
++      while (count>a) steps.push(act('split-token',{index:--count}));
++      while (count<a) steps.push(act('split-token',{index:count++}));
++      steps.push(field('equation',`${a}+${b}=${task.total}`),act('split-save'));
++    }
++    return steps;
++  }
++  throw new Error('Unexpected prerequisite: '+task.type);
++}
++
++const total=task=>task.values.reduce((a,b)=>a+b,0);
++const pairSteps=(task,pair)=>[
++  ...pair.map(index=>act('triple-pick',{index})),act('triple-merge'),
++  field('sub',task.values[pair[0]]+task.values[pair[1]]),field('total',total(task)),act('triple-save'),
++];
++const wrongSteps=task=>pairSteps(task,[0,1]).map(step=>step.field==='total'?field('total','0'):step);
++const correctSteps=task=>{
++  const choices=[[1,2],[0,2]];
++  const useful=pair=>task.values[pair[0]]+task.values[pair[1]]===10||task.values[pair[0]]===task.values[pair[1]];
++  const second=task.useful&&!useful([0,1])?choices.find(useful):choices[0];
++  return [field('total',total(task)),act('triple-save'),...pairSteps(task,second)];
++};
++
++  const cases = P009C_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP009CThreeGroupPairingsEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b10.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P009C');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b10].find(model => model.TYPES.has(prior.type))=== b10 ? legacySteps(prior) : [].find(model => model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b10.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP009CThreeGroupPairingsEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009c.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p009cr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P009C_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p009c-three-group-pairings-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P009C_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p009c-three-group-pairings.test.mjs b/tests/p9-p009c-three-group-pairings.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..a972237940d4e2724a84319d97f368de1fc22f25
+--- /dev/null
++++ b/tests/p9-p009c-three-group-pairings.test.mjs
+@@ -0,0 +1,88 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as b10 from '../dist/learning/phase5/b10-model.js';
++import {P009C_SOURCES,p009cThreeGroupPairingsBinding,replayP009CThreeGroupPairingsEvidence,submittedP009CThreeGroupPairingsEvidence} from '../dist/learning/p009c-three-group-pairings-evidence.js';
++const field=(field,value)=>({field,value:String(value)});
++const act=(action,data)=>({action,data});
++function tenSteps(task) {
++  const add=task.op==='+';
++  const head=add?10-task.a:task.a-10;
++  const answer=task.a+(add?task.b:-task.b);
++  const token=index=>act('ten-token',{index});
++  return [field('guess',answer),act('ten-predict'),
++    ...Array.from({length:head},(_,i)=>token(add?i:10+i)),act('ten-landmark'),
++    ...Array.from({length:task.b-head},(_,i)=>token(add?i+head:i)),act('ten-finish'),
++    field('firstPart',head),field('secondPart',task.b-head),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++}
++function familySteps(task) {
++  return b10.MODES.flatMap(mode=>{
++    const [a,b,op]=b10.familyNumbers(task,mode);
++    return [act('family-mode',{mode}),field('equation',`${a}${op}${b}=${a+(op==='+'?b:-b)}`),act('family-save')];
++  });
++}
++function legacySteps(task) {
++  if (task.type==='x-tenbridge') return tenSteps(task);
++  if (task.type==='x-factfamily') return familySteps(task);
++  if (task.type==='x-joinstory') {
++    const answer=task.a+(task.op==='+'?task.b:-task.b);
++    return [...Array.from({length:task.a},()=>act('story-counter',{group:'left',delta:1})),
++      ...Array.from({length:task.b},()=>act('story-counter',{group:'right',delta:1})),
++      field('op',task.op),field('guess',answer),act('story-do'),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++  }
++  if (task.type==='x-splitbench') {
++    let count=0;
++    const steps=[];
++    for (const [a,b] of task.pairs) {
++      while (count>a) steps.push(act('split-token',{index:--count}));
++      while (count<a) steps.push(act('split-token',{index:count++}));
++      steps.push(field('equation',`${a}+${b}=${task.total}`),act('split-save'));
++    }
++    return steps;
++  }
++  throw new Error('Unexpected prerequisite: '+task.type);
++}
++
++const total=task=>task.values.reduce((a,b)=>a+b,0);
++const pairSteps=(task,pair)=>[
++  ...pair.map(index=>act('triple-pick',{index})),act('triple-merge'),
++  field('sub',task.values[pair[0]]+task.values[pair[1]]),field('total',total(task)),act('triple-save'),
++];
++const wrongSteps=task=>pairSteps(task,[0,1]).map(step=>step.field==='total'?field('total','0'):step);
++const correctSteps=task=>{
++  const choices=[[1,2],[0,2]];
++  const useful=pair=>task.values[pair[0]]+task.values[pair[1]]===10||task.values[pair[0]]===task.values[pair[1]];
++  const second=task.useful&&!useful([0,1])?choices.find(useful):choices[0];
++  return [field('total',total(task)),act('triple-save'),...pairSteps(task,second)];
++};
++
++const ordered = value=>Array.isArray(value)?value.map(ordered):value&&typeof value==='object'
++  ?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++for (const source of P009C_SOURCES) {
++  const {sessionId,index}=source, context={sessionId,index}, task=sessionTaskFor(sessionId,index);
++  const replay=model=>replayP009CThreeGroupPairingsEvidence(task,model,context);
++  const play=(model,steps)=>{
++    for (const step of steps) {
++      if (step.field) model[step.field]=String(step.value);
++      else b10.act(task,model,step.action,step.data);
++    }
++  };
++  test(`P009C ${sessionId}:${index} exact source, correction, stale Check and history`,()=>{
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),source.taskHash);
++    assert.ok(p009cThreeGroupPairingsBinding(task,context));
++    assert.equal(p009cThreeGroupPairingsBinding(task,{sessionId,index:-1}),null);
++    const model=b10.initial(task);
++    play(model,wrongSteps(task));
++    assert.equal(replay(model),null);
++    const wrong=structuredClone(model);
++    play(model,correctSteps(task));
++    const proof=replay(model);
++    assert.ok(proof);
++    assert.equal(submittedP009CThreeGroupPairingsEvidence(task,model,{attempts:[{value:wrong}]},context),null);
++    assert.deepEqual(submittedP009CThreeGroupPairingsEvidence(task,model,{attempts:[{value:structuredClone(model)}]},context),proof);
++    const forged=structuredClone(model);
++    forged.history=[];
++    assert.equal(replay(forged),null);
++  });
++}

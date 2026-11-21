@@ -1,0 +1,1895 @@
+{
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "candidates": 97,
+  "positions": 335,
+  "records": [
+    {
+      "packet": "P117",
+      "branch": "work/b/p117-preaudit",
+      "commit": "f6683e726374a8e601f03ff5354a553f4e0b6bba",
+      "positions": [
+        "fractionfour:8"
+      ],
+      "patch": "patches/P117.patch",
+      "patchSha256": "e6b1ba940f6c41be22f8eec5de831ce4a27193b1db7b57f8f89435a85f739f63",
+      "receipt": "receipts/P117.json",
+      "receiptSha256": "e76a1e0757e0d4f9e6812c97ad975c992910bef5789e830c909618b77a10cc70",
+      "files": [
+        "dist/learning/p117-fractionfour-directed-jump-evidence.js",
+        "docs/math-parallel/local-b/P117-PREAUDIT.md",
+        "tests/p9-p117-fractionfour-directed-jump-browser.cjs",
+        "tests/p9-p117-fractionfour-directed-jump.test.mjs"
+      ]
+    },
+    {
+      "packet": "P116",
+      "branch": "work/b/p116-integer-dotplot",
+      "commit": "659e4613a6eee911e0fb1a16a6ae1a2e1d146fb3",
+      "positions": [
+        "dotrecords:0",
+        "dotrecords:2"
+      ],
+      "patch": "patches/P116.patch",
+      "patchSha256": "b768b9be30d28040ee98dfd9dffec9d953ad964c3587e81e214fabd3ee9a4392",
+      "receipt": "receipts/P116.json",
+      "receiptSha256": "c2b46938269ce943b010a60348a93d7e1498903314f5e8ffb41c0a03bf0d3433",
+      "files": [
+        "dist/learning/p116-integer-dotplot-evidence.js",
+        "tests/p9-p116-integer-dotplot-browser.cjs",
+        "tests/p9-p116-integer-dotplot.test.mjs"
+      ]
+    },
+    {
+      "packet": "P115",
+      "branch": "work/b/p115-signedpoints-quadrants",
+      "commit": "7207f32fa58bb25cad9cd07bf0d556a1d0c01246",
+      "positions": [
+        "signedpoints:0",
+        "signedpoints:1",
+        "signedpoints:2"
+      ],
+      "patch": "patches/P115.patch",
+      "patchSha256": "2c6c0b7bf24c4e93a16233c43611e6a03e076a29e25537af9c75211e1a597b3b",
+      "receipt": "receipts/P115.json",
+      "receiptSha256": "7a5f5b5db402f8089552d71cef133b53b5fcc249d89fbee26e7b47585d675777",
+      "files": [
+        "dist/learning/p115-signedpoints-quadrants-evidence.js",
+        "tests/p9-p115-signedpoints-quadrants-browser.cjs",
+        "tests/p9-p115-signedpoints-quadrants.test.mjs"
+      ]
+    },
+    {
+      "packet": "P114",
+      "branch": "work/b/p114-solidstack",
+      "commit": "519c9da68961e44240cc966613447409af111163",
+      "positions": [
+        "solidstack:0",
+        "solidstack:1"
+      ],
+      "patch": "patches/P114.patch",
+      "patchSha256": "885227b61687fd2aecd767022d0791e8618c6f83d3d7270e7196f676de72f67e",
+      "receipt": "receipts/P114.json",
+      "receiptSha256": "cd111126c36e91d880b8737c2005490d3f43781286b5fa30b175e1393526e2e1",
+      "files": [
+        "dist/learning/p114-solidstack-evidence.js",
+        "tests/p9-p114-solidstack-browser.cjs",
+        "tests/p9-p114-solidstack.test.mjs"
+      ]
+    },
+    {
+      "packet": "P113",
+      "branch": "work/b/p113-tens-removal",
+      "commit": "af26d4693cb37393fb14a92da47e8555e2987b3f",
+      "positions": [
+        "decadetake:0",
+        "decadetake:1",
+        "tenslarge:1",
+        "general34:1"
+      ],
+      "patch": "patches/P113.patch",
+      "patchSha256": "1e9c0b6170f9a1352c694cce40cbf33fe7fb1e31ed85bdcc5c2d831f09af69d0",
+      "receipt": "receipts/P113.json",
+      "receiptSha256": "bd9b7a57734615bef9eb37a41f290ed686f64e4d754244f28d40601575690fd9",
+      "files": [
+        "dist/learning/p113-tens-removal-evidence.js",
+        "tests/p9-p113-tens-removal-browser.cjs",
+        "tests/p9-p113-tens-removal.test.mjs"
+      ]
+    },
+    {
+      "packet": "P112",
+      "branch": "work/b/p112-fair-die",
+      "commit": "6953cfb5c47261b5c839248bee4abcbe474f32bb",
+      "positions": [
+        "chancefraction:0",
+        "chancecalc:1",
+        "chancescale:1",
+        "chancenone:1",
+        "chancecomplement:1",
+        "chancecomplement:2"
+      ],
+      "patch": "patches/P112.patch",
+      "patchSha256": "a925b925028d67dfd99d208998e5441df717ae1bdc515786d9c1422d215c89ac",
+      "receipt": "receipts/P112.json",
+      "receiptSha256": "3fc1f5cc7642aa21e38c1b57fd9f808db67586bb78fa8336c612573531cb2da1",
+      "files": [
+        "dist/learning/p112-fair-die-evidence.js",
+        "tests/p9-p112-fair-die-browser.cjs",
+        "tests/p9-p112-fair-die.test.mjs"
+      ]
+    },
+    {
+      "packet": "P111",
+      "branch": "work/b/p111-bilateral-equations",
+      "commit": "2d334f3e0e99cd8af16c5db8cfc8447a335d826f",
+      "positions": [
+        "equations35:0",
+        "equations35:2",
+        "equations35:3",
+        "equations35:4",
+        "equations35:5"
+      ],
+      "patch": "patches/P111.patch",
+      "patchSha256": "554d38cee950e60ce88834173de2659730b1f4c15ab6eafe66584a280130b601",
+      "receipt": "receipts/P111.json",
+      "receiptSha256": "4a2eb9696baf04fb34ba93435ac3d9e407362fe12b10dcfb74b4c9e9904a7da5",
+      "files": [
+        "dist/learning/p111-bilateral-equations-evidence.js",
+        "tests/p9-p111-bilateral-equations-browser.cjs",
+        "tests/p9-p111-bilateral-equations.test.mjs"
+      ]
+    },
+    {
+      "packet": "P110",
+      "branch": "work/b/p110-mean-distance",
+      "commit": "80cecc012875ab5972079e0ac13af88ed4018d79",
+      "positions": [
+        "meandistance:0",
+        "meandistance:1"
+      ],
+      "patch": "patches/P110.patch",
+      "patchSha256": "fb7115bb688ed70833e71063ba3abbf3858f0e7c1ea8ad4d89e6e31635578f60",
+      "receipt": "receipts/P110.json",
+      "receiptSha256": "95ffe7ca97bd6e5902fec15892b3d7e078d98472036944c3add397aeab3bd0f3",
+      "files": [
+        "dist/learning/p110-mean-distance-evidence.js",
+        "tests/p9-p110-mean-distance-browser.cjs",
+        "tests/p9-p110-mean-distance.test.mjs"
+      ]
+    },
+    {
+      "packet": "P109",
+      "branch": "work/b/p109-common-factor",
+      "commit": "5846be80af9d8458d51f2bd7406b51a7a4d40754",
+      "positions": [
+        "factor35:0",
+        "factor35:1",
+        "factor35:2"
+      ],
+      "patch": "patches/P109.patch",
+      "patchSha256": "fca563b7bbd3c4714bc86409d21ab86263fcc145eeb75ffa6f52f913f4135953",
+      "receipt": "receipts/P109.json",
+      "receiptSha256": "a1bd5537ed501fe8c901e9c3ca798c3f561520dbd7376236c0b9e0ded57db95e",
+      "files": [
+        "dist/learning/p109-common-factor-evidence.js",
+        "tests/p9-p109-common-factor-browser.cjs",
+        "tests/p9-p109-common-factor.test.mjs"
+      ]
+    },
+    {
+      "packet": "P108",
+      "branch": "work/b/p108-digit-value",
+      "commit": "a459d62081221530468ecb8f06cbfef9252288c7",
+      "positions": [
+        "mixedpoints:0"
+      ],
+      "patch": "patches/P108.patch",
+      "patchSha256": "c15ea0c666e7fd90d9836aa0d72e76a3fbda8cf3ed6f08294dd189beca386824",
+      "receipt": "receipts/P108.json",
+      "receiptSha256": "7f66211cf25eb77fe7c0c378e9fb801cf91e2c11ebd063fd7e1af71058eadb9b",
+      "files": [
+        "dist/learning/p108-digit-value-evidence.js",
+        "tests/p9-p108-digit-value-browser.cjs",
+        "tests/p9-p108-digit-value.test.mjs"
+      ]
+    },
+    {
+      "packet": "P107",
+      "branch": "work/b/p107-factor-pairs",
+      "commit": "be708fb91f910f4adcd3d2fee0319417e591188f",
+      "positions": [
+        "factorpairs:0",
+        "factorpairs:1"
+      ],
+      "patch": "patches/P107.patch",
+      "patchSha256": "d9f2c677364668e7bd11dff0a49ada04100e11d5cbae9d69899b9ffaf1cdbadc",
+      "receipt": "receipts/P107.json",
+      "receiptSha256": "548ad19399950825a3fc6c1e15aeb4eb1d7a3fba1fd708a863415e4b3237bcba",
+      "files": [
+        "dist/learning/p107-factor-pairs-evidence.js",
+        "tests/p9-p107-factor-pairs-browser.cjs",
+        "tests/p9-p107-factor-pairs.test.mjs"
+      ]
+    },
+    {
+      "packet": "P106",
+      "branch": "work/b/p106-paper-fold-counts",
+      "commit": "a0ce272f8a5fe786e051c310f90455bab7463a30",
+      "positions": [
+        "folds:0"
+      ],
+      "patch": "patches/P106.patch",
+      "patchSha256": "7a4d0a176cc26a9c33702bd762ef6e5a2bdf89964c31b08fc5ba52fe1a8d2650",
+      "receipt": "receipts/P106.json",
+      "receiptSha256": "73755a90f5fc7d2de550e3aeb27347a6dc99e9adac1feae39b45b42cfb4f5fee",
+      "files": [
+        "dist/learning/p106-paper-fold-counts-evidence.js",
+        "tests/p9-p106-paper-fold-counts-browser.cjs",
+        "tests/p9-p106-paper-fold-counts.test.mjs"
+      ]
+    },
+    {
+      "packet": "P105",
+      "branch": "work/b/p105-prime-divisors",
+      "commit": "3beb8631a99edc0721da1e63c2294f08ce266a40",
+      "positions": [
+        "primetest:0",
+        "primetest:1",
+        "primetest:2"
+      ],
+      "patch": "patches/P105.patch",
+      "patchSha256": "59371c01ab64195682f5f8946c1fd18ab8a3b0c3000dd128d5a720509bb3f44f",
+      "receipt": "receipts/P105.json",
+      "receiptSha256": "936bfef0f011c1da616dee99ca711297a23a59b07d0fc5ee2af0c19cb64d95f2",
+      "files": [
+        "dist/learning/p105-prime-divisors-evidence.js",
+        "tests/p9-p105-prime-divisors-browser.cjs",
+        "tests/p9-p105-prime-divisors.test.mjs"
+      ]
+    },
+    {
+      "packet": "P104",
+      "branch": "work/b/p104-step-tools",
+      "commit": "b4de22f622a767b1764228116f73413c296a69df",
+      "positions": [
+        "toolchoice:0",
+        "toolchoice:1"
+      ],
+      "patch": "patches/P104.patch",
+      "patchSha256": "b8bb3fa098a7565bfb209d5eae9d88b441a01fbfa5b368cb70768b1e4b08a849",
+      "receipt": "receipts/P104.json",
+      "receiptSha256": "5e846427cf3acf1a773ba3e775de9bcf42543119249095e8200a80e7d945b4dd",
+      "files": [
+        "dist/learning/p104-step-tools-evidence.js",
+        "tests/p9-p104-step-tools-browser.cjs",
+        "tests/p9-p104-step-tools.test.mjs"
+      ]
+    },
+    {
+      "packet": "P103",
+      "branch": "work/b/p103-pair-grid",
+      "commit": "736bd73bca56544fce6b04b9a6cdea8d66f50fb9",
+      "positions": [
+        "pairs34:0",
+        "pairs34:1"
+      ],
+      "patch": "patches/P103.patch",
+      "patchSha256": "631c35c18b03a5dd081479b28406e478667b782010036e8fe642f646ea879fa6",
+      "receipt": "receipts/P103.json",
+      "receiptSha256": "c6a6570b7ab53abc7d3ca263fc1330cf1f585db01b2bc65812493a12bbe1d472",
+      "files": [
+        "dist/learning/p103-pair-grid-evidence.js",
+        "tests/p9-p103-pair-grid-browser.cjs",
+        "tests/p9-p103-pair-grid.test.mjs"
+      ]
+    },
+    {
+      "packet": "P102",
+      "branch": "work/b/p102-product-grouping",
+      "commit": "e9e0fdfa7277d54666b04a57d753a202812f5a3c",
+      "positions": [
+        "structurechoices:0",
+        "structurechoices:1"
+      ],
+      "patch": "patches/P102.patch",
+      "patchSha256": "172c98050043d9d3e115e36ad8a8d7acd24bd59272dcc8d8a81456aa2de8190f",
+      "receipt": "receipts/P102.json",
+      "receiptSha256": "01a0cd9750c5db0e8309619d798b6a816b398f06675ad819dc3ac2e9ccde48a6",
+      "files": [
+        "dist/learning/p102-product-grouping-evidence.js",
+        "tests/p9-p102-product-grouping-browser.cjs",
+        "tests/p9-p102-product-grouping.test.mjs"
+      ]
+    },
+    {
+      "packet": "P101",
+      "branch": "work/b/p101-axis-mirror",
+      "commit": "bae84808cf6ba896376359b29f77fc8360c076b9",
+      "positions": [
+        "mirrorfold:0",
+        "mirrorfold:1",
+        "mirrorfold:2"
+      ],
+      "patch": "patches/P101.patch",
+      "patchSha256": "d493a8edf17b14c59c15cbf636195476c339f8b9f9ad3769f4b2f4dcf9771e59",
+      "receipt": "receipts/P101.json",
+      "receiptSha256": "57c07a476c635d3010e6a8967640a155cef3ba05f3a9de2e9eac1a7d9b8dbfaa",
+      "files": [
+        "dist/learning/p101-axis-mirror-evidence.js",
+        "tests/p9-p101-axis-mirror-browser.cjs",
+        "tests/p9-p101-axis-mirror.test.mjs"
+      ]
+    },
+    {
+      "packet": "P100",
+      "branch": "work/b/p100-boxplot-marks",
+      "commit": "155421e3d526eb5192ee68113c1f8c5afd3c299c",
+      "positions": [
+        "boxsummary:0"
+      ],
+      "patch": "patches/P100.patch",
+      "patchSha256": "66b2de581931d9e78f82ae2fd7980682b97412798f090bcd61e038a2ff545eb8",
+      "receipt": "receipts/P100.json",
+      "receiptSha256": "98fb848e13418a44d57c9c3689ff1c5d13864e172f08e6fc9f9529cd39313b54",
+      "files": [
+        "dist/learning/p100-boxplot-marks-evidence.js",
+        "tests/p9-p100-boxplot-marks-browser.cjs",
+        "tests/p9-p100-boxplot-marks.test.mjs"
+      ]
+    },
+    {
+      "packet": "P099",
+      "branch": "work/b/p099-length-tape",
+      "commit": "fd47e359eef43d0411c8704401a516146c186b11",
+      "positions": [
+        "lengthstory:0",
+        "lengthstory:1",
+        "lengthstory:2"
+      ],
+      "patch": "patches/P099.patch",
+      "patchSha256": "8c996cd32724b1218a4e6bd426414638ce577752c1436b38725215023b69a0eb",
+      "receipt": "receipts/P099.json",
+      "receiptSha256": "5fbaf764ae158aa54ce73f451b1708fee5e30f4a80086208a1def62f34bb4a90",
+      "files": [
+        "dist/learning/p099-length-tape-evidence.js",
+        "tests/p9-p099-length-tape-browser.cjs",
+        "tests/p9-p099-length-tape.test.mjs"
+      ]
+    },
+    {
+      "packet": "P098",
+      "branch": "work/b/p098-linear-parameter",
+      "commit": "6b184a54df3b6c8d4ac8729c6e490358668a1b27",
+      "positions": [
+        "linear36:0",
+        "linear36:1"
+      ],
+      "patch": "patches/P098.patch",
+      "patchSha256": "7d6fee68b2ecac17a626bc37c273cb9bdda4395ac4bc3abaa030b14ee37294a7",
+      "receipt": "receipts/P098.json",
+      "receiptSha256": "dad6b9a6bf62517bfb3a11f54fd46e03928a837b187a24dad4af765f572819fb",
+      "files": [
+        "dist/learning/p098-linear-parameter-evidence.js",
+        "tests/p9-p098-linear-parameter-browser.cjs",
+        "tests/p9-p098-linear-parameter.test.mjs"
+      ]
+    },
+    {
+      "packet": "P097",
+      "branch": "work/b/p097-square-pair",
+      "commit": "e74a2b68465139da612c717b8c3434e25eb52f6e",
+      "positions": [
+        "factoruse:3"
+      ],
+      "patch": "patches/P097.patch",
+      "patchSha256": "21b0b3b1fee27658ecb9688a93052d55e10252d2aa59394bc39e656a2bb7cb04",
+      "receipt": "receipts/P097.json",
+      "receiptSha256": "6276f4a31421d2f307d88afa2e639795dd1ed5cde1cf121101bed610e3b3d34a",
+      "files": [
+        "dist/learning/p097-square-pair-evidence.js",
+        "tests/p9-p097-square-pair-browser.cjs",
+        "tests/p9-p097-square-pair.test.mjs"
+      ]
+    },
+    {
+      "packet": "P096",
+      "branch": "work/b/p096-four-addends",
+      "commit": "cc79c09b3fa0956e394a674ad03e28853afc5f17",
+      "positions": [
+        "fourparts:0",
+        "fourparts:1"
+      ],
+      "patch": "patches/P096.patch",
+      "patchSha256": "096afdec08fcf88bd3af4c2ea3561869879706f7a92db61371ac37802ec418ec",
+      "receipt": "receipts/P096.json",
+      "receiptSha256": "47860605909751d00e3c7ba91d90d35eb55130a21ec04c2eec110f2af41e3016",
+      "files": [
+        "dist/learning/p096-four-addends-evidence.js",
+        "tests/p9-p096-four-addends-browser.cjs",
+        "tests/p9-p096-four-addends.test.mjs"
+      ]
+    },
+    {
+      "packet": "P095",
+      "branch": "work/b/p095-zero-crossing",
+      "commit": "1067fd247cdb109787a9f9b883230fdf6de7b39b",
+      "positions": [
+        "temperaturechange:0",
+        "temperaturechange:1"
+      ],
+      "patch": "patches/P095.patch",
+      "patchSha256": "5f885cbe8617fefb7507c2b433ed32e3659d453bd278471961a0ff031c95753f",
+      "receipt": "receipts/P095.json",
+      "receiptSha256": "82f7a32a1c651514855f5a76a28bfe778fcdc23de28ab3eed09e4132e3d96b52",
+      "files": [
+        "dist/learning/p095-zero-crossing-evidence.js",
+        "tests/p9-p095-zero-crossing-browser.cjs",
+        "tests/p9-p095-zero-crossing.test.mjs"
+      ]
+    },
+    {
+      "packet": "P094",
+      "branch": "work/b/p094-small-unit-product",
+      "commit": "de7f2c5eeb19991e81447d310122fc05f5b4f067",
+      "positions": [
+        "decimalproduct:0",
+        "decimalproduct:1"
+      ],
+      "patch": "patches/P094.patch",
+      "patchSha256": "2d0a398bb39dc7423965cebf097caf6b710f7a9389935c81bc4064bcc9381414",
+      "receipt": "receipts/P094.json",
+      "receiptSha256": "e89cccd8f0c74b83aa937494ed67c80c48433e89b3944f908715735d5ca81ad5",
+      "files": [
+        "dist/learning/p094-small-unit-product-evidence.js",
+        "tests/p9-p094-small-unit-product-browser.cjs",
+        "tests/p9-p094-small-unit-product.test.mjs"
+      ]
+    },
+    {
+      "packet": "P093",
+      "branch": "work/b/p093-triangular-prism-net",
+      "commit": "8561bdfd25e1683bbe598074870bb2b921e22927",
+      "positions": [
+        "foldprism:1"
+      ],
+      "patch": "patches/P093.patch",
+      "patchSha256": "e2540f158e478573cb99b9ca30b8244ce04ae248635a0940d4372c6c7027547e",
+      "receipt": "receipts/P093.json",
+      "receiptSha256": "5d10a01f8605c3288bc2cc609d2d7489a318f065b577b70ba8348a4e06c5de77",
+      "files": [
+        "dist/learning/p093-triangular-prism-net-evidence.js",
+        "tests/p9-p093-triangular-prism-net-browser.cjs",
+        "tests/p9-p093-triangular-prism-net.test.mjs"
+      ]
+    },
+    {
+      "packet": "P092",
+      "branch": "work/b/p092-triangle-tiling",
+      "commit": "b61fe5937c2773d7644c5519608cd78f3b2f8f3e",
+      "positions": [
+        "shapepieces:0",
+        "shapepieces:1"
+      ],
+      "patch": "patches/P092.patch",
+      "patchSha256": "1a6ee80028673833a419f2952d92d16fd2a9cc73ad835d1ed75673c88bdf9a98",
+      "receipt": "receipts/P092.json",
+      "receiptSha256": "1cb3a03c233e34b0e7996e7e3659e6afc9da7af6750c4b0b2cd42796d5695d52",
+      "files": [
+        "dist/learning/p092-triangle-tiling-evidence.js",
+        "tests/p9-p092-triangle-tiling-browser.cjs",
+        "tests/p9-p092-triangle-tiling.test.mjs"
+      ]
+    },
+    {
+      "packet": "P091",
+      "branch": "work/b/p091-one-sided-range",
+      "commit": "8855f11e3a1d4932c4122882b7756a4cac5a896d",
+      "positions": [
+        "allowedrange:0",
+        "allowedrange:1"
+      ],
+      "patch": "patches/P091.patch",
+      "patchSha256": "b8a3d3e30e52f41613c6cb95818da508dab51902e3aafae8053124ffe20701f6",
+      "receipt": "receipts/P091.json",
+      "receiptSha256": "31414e00d66c5d75fc552af56f6dea3ff3c20c254b1ce342c4cfc42cd99eb146",
+      "files": [
+        "dist/learning/p091-one-sided-range-evidence.js",
+        "tests/p9-p091-one-sided-range-browser.cjs",
+        "tests/p9-p091-one-sided-range.test.mjs"
+      ]
+    },
+    {
+      "packet": "P090",
+      "branch": "work/b/p090-signed-product-rows",
+      "commit": "3c75aec6811bb9f3b4a49a5c5ae9d9655bedc7e3",
+      "positions": [
+        "signedproducts:0",
+        "signedproducts:1",
+        "signedproducts:2"
+      ],
+      "patch": "patches/P090.patch",
+      "patchSha256": "0e866ca47e223ecd4e121f066618487b1e529b5ee77c13e34cdd53332dac03c2",
+      "receipt": "receipts/P090.json",
+      "receiptSha256": "ed68c0ab774d24fe26a9a9597aa02abc94f0c8d8ed1a4a08e852dfdd630f2a40",
+      "files": [
+        "dist/learning/p090-signed-product-rows-evidence.js",
+        "tests/p9-p090-signed-product-rows-browser.cjs",
+        "tests/p9-p090-signed-product-rows.test.mjs"
+      ]
+    },
+    {
+      "packet": "P089",
+      "branch": "work/b/p089-parity-pairing",
+      "commit": "e85623a8d18d99b131f9c345c4593ecc8aed1c74",
+      "positions": [
+        "parityrules:0",
+        "parityrules:1",
+        "parityrules:2",
+        "parityrules:3"
+      ],
+      "patch": "patches/P089.patch",
+      "patchSha256": "f54619eb20603a0bd327e566c9ad6de7922b60156ca4d30a1f0d8fd4f5ebb43d",
+      "receipt": "receipts/P089.json",
+      "receiptSha256": "33c803d284ccfd65058649a0b1e1aaae2e8e0d8dd04660968258d1cfc782b28a",
+      "files": [
+        "dist/learning/p089-parity-pairing-evidence.js",
+        "tests/p9-p089-parity-pairing-browser.cjs",
+        "tests/p9-p089-parity-pairing.test.mjs"
+      ]
+    },
+    {
+      "packet": "P088",
+      "branch": "work/b/p088-graph-crossings",
+      "commit": "06ea261e15a97843935892c4ca24373d99793f74",
+      "positions": [
+        "graph39:1",
+        "graph39:2"
+      ],
+      "patch": "patches/P088.patch",
+      "patchSha256": "354ebc5ddb49c34945889e8be7a54c483ccab0f05129291101b98721982267e4",
+      "receipt": "receipts/P088.json",
+      "receiptSha256": "001c0a102e94a20e10a3aeec0905b41bd718321ce5c70eea5c7392902750df95",
+      "files": [
+        "dist/learning/p088-graph-crossings-evidence.js",
+        "tests/p9-p088-graph-crossings-browser.cjs",
+        "tests/p9-p088-graph-crossings.test.mjs"
+      ]
+    },
+    {
+      "packet": "P087",
+      "branch": "work/b/p087-unordered-split-pairs",
+      "commit": "9a186c4d9fd6541069b970e7088af31cc7bfc08f",
+      "positions": [
+        "splitpairs:0",
+        "splitpairs:1"
+      ],
+      "patch": "patches/P087.patch",
+      "patchSha256": "c80a01225133c2a8091d12dd9cd7ff0a5521d004c0e423908168e6cbdc658808",
+      "receipt": "receipts/P087.json",
+      "receiptSha256": "31dbd75c825d43d9041b8c033f8bed3dc59276d65fdbcb26f571bd3eb549204b",
+      "files": [
+        "dist/learning/p087-unordered-split-pairs-evidence.js",
+        "tests/p9-p087-unordered-split-pairs-browser.cjs",
+        "tests/p9-p087-unordered-split-pairs.test.mjs"
+      ]
+    },
+    {
+      "packet": "P086",
+      "branch": "work/b/p086-joined-solid-surfaces",
+      "commit": "5d57c622b0cf8757150c5dc1842a848701d60253",
+      "positions": [
+        "solidSurface:1"
+      ],
+      "patch": "patches/P086.patch",
+      "patchSha256": "c4b02981f4575b94b1462b9aeaf691dfab062bb7be636a04bf0d01c81192f84f",
+      "receipt": "receipts/P086.json",
+      "receiptSha256": "f4b4064551a1a6bc28a8b225bf91f602e08fdb02727d11d595289e735b062403",
+      "files": [
+        "dist/learning/p086-joined-solid-surfaces-evidence.js",
+        "tests/p9-p086-joined-solid-surfaces-browser.cjs",
+        "tests/p9-p086-joined-solid-surfaces.test.mjs"
+      ]
+    },
+    {
+      "packet": "P085",
+      "branch": "work/b/p085-pythagoras-length",
+      "commit": "300332361f48c9636cd4b349e80c4c332f988c00",
+      "positions": [
+        "pythagoras:2",
+        "pythagoras:3",
+        "pythagoras:4"
+      ],
+      "patch": "patches/P085.patch",
+      "patchSha256": "2a41ad205e839c8a1b11008131bdf6aa90886fbe45f466c193871cf306d24ea6",
+      "receipt": "receipts/P085.json",
+      "receiptSha256": "7c6e2048620c84450f65550a50dc5e323b2fdfc3ad53e97fc0974c3bba9c1afa",
+      "files": [
+        "dist/learning/p085-pythagoras-length-evidence.js",
+        "tests/p9-p085-pythagoras-length-browser.cjs",
+        "tests/p9-p085-pythagoras-length.test.mjs"
+      ]
+    },
+    {
+      "packet": "P084",
+      "branch": "work/b/p084-expression-build",
+      "commit": "5363f7c82a152e275a6e004ac36cf425e8163b9f",
+      "positions": [
+        "expressions:0",
+        "expressions:1",
+        "expressions:2"
+      ],
+      "patch": "patches/P084.patch",
+      "patchSha256": "ef3e3cd139fd2aa1d24261d42fa3cc41c80ec7e715299fb04c026ff2c142d32d",
+      "receipt": "receipts/P084.json",
+      "receiptSha256": "db1c3ae616de03e50299516dacbf91299dfc70e536ff3f4658ad56a4460d37ec",
+      "files": [
+        "dist/learning/p084-expression-build-evidence.js",
+        "tests/p9-p084-expression-build-browser.cjs",
+        "tests/p9-p084-expression-build.test.mjs"
+      ]
+    },
+    {
+      "packet": "P083",
+      "branch": "work/b/p083-chance-mapping",
+      "commit": "177f7e428941439c3a99c12855116e2e21d677c5",
+      "positions": [
+        "chancesim:0",
+        "chancesim:1",
+        "chancesim:2"
+      ],
+      "patch": "patches/P083.patch",
+      "patchSha256": "79a593b24bb341c81e70988b98d46ca91552d700af65251a6b8fe1169f2ebd18",
+      "receipt": "receipts/P083.json",
+      "receiptSha256": "537c6d047f2e5cfb76c585e539abadc371c0c86932481d1495a4a397359b4e6e",
+      "files": [
+        "dist/learning/p083-chance-mapping-evidence.js",
+        "tests/p9-p083-chance-mapping-browser.cjs",
+        "tests/p9-p083-chance-mapping.test.mjs"
+      ]
+    },
+    {
+      "packet": "P082",
+      "branch": "work/b/p082-shape-uses",
+      "commit": "54d3344b387262a66b543eaf79a4fcc0c867ef7e",
+      "positions": [
+        "shapeuses:0",
+        "shapeuses:1",
+        "shapeuses:2"
+      ],
+      "patch": "patches/P082.patch",
+      "patchSha256": "94c58ce63d4ffc85e7ef9b722d237199434efc2d4cd5bc85aaca3ef7a172d8aa",
+      "receipt": "receipts/P082.json",
+      "receiptSha256": "1a4cb47ee1e7359efa1b7779c6a695b8303bf67a5b5652f350257604e99241ee",
+      "files": [
+        "dist/learning/p082-shape-uses-evidence.js",
+        "tests/p9-p082-shape-uses-browser.cjs",
+        "tests/p9-p082-shape-uses.test.mjs"
+      ]
+    },
+    {
+      "packet": "P081",
+      "branch": "work/b/p081-stat-brief",
+      "commit": "c2de9782a29a327eea17a7c19f01c1d62f9c8ab1",
+      "positions": [
+        "datasummary:0",
+        "datasummary:1",
+        "datasummary:2"
+      ],
+      "patch": "patches/P081.patch",
+      "patchSha256": "6991fa3093e8b72eb28f0c45295fc038eee82239766fd2ed092cbd43de63d812",
+      "receipt": "receipts/P081.json",
+      "receiptSha256": "00046ee9e35198444384d48b5782df706355f2b551447619f8d349edbc93efb7",
+      "files": [
+        "dist/learning/p081-stat-brief-evidence.js",
+        "tests/p9-p081-stat-brief-browser.cjs",
+        "tests/p9-p081-stat-brief.test.mjs"
+      ]
+    },
+    {
+      "packet": "P080",
+      "branch": "work/b/p080-argument-chain",
+      "commit": "7f3be4257d25cab5c09a4255afa840caaafaac06",
+      "positions": [
+        "argument38:0",
+        "argument38:2"
+      ],
+      "patch": "patches/P080.patch",
+      "patchSha256": "e7b9de7b436e58f0b8db996e2e63cd7742b3a535abb8df96d126b4ab896c566c",
+      "receipt": "receipts/P080.json",
+      "receiptSha256": "2d50e009151d95f1bec8a12bc28ab4970da8741fdaacf26a223826808eaf0c8c",
+      "files": [
+        "dist/learning/p080-argument-chain-evidence.js",
+        "tests/p9-p080-argument-chain-browser.cjs",
+        "tests/p9-p080-argument-chain.test.mjs"
+      ]
+    },
+    {
+      "packet": "P079",
+      "branch": "work/b/p079-net-surface",
+      "commit": "96ab1fb4c3aae65285e108d83526e5b7b6a299f1",
+      "positions": [
+        "netSurface:0",
+        "netSurface:1"
+      ],
+      "patch": "patches/P079.patch",
+      "patchSha256": "1a7a7421c2406ded8936841a102847071a25525487e57435bbcda28bb0b515ea",
+      "receipt": "receipts/P079.json",
+      "receiptSha256": "87f5774be64bc878240e9eca5d11bf113f50ba4731fb8b07512eef1a34dc02ad",
+      "files": [
+        "dist/learning/p079-net-surface-evidence.js",
+        "tests/p9-p079-net-surface-browser.cjs",
+        "tests/p9-p079-net-surface.test.mjs"
+      ]
+    },
+    {
+      "packet": "P077",
+      "branch": "work/b/p077-digital-sets",
+      "commit": "92da3b7319d4aa02f1172077c92b0f3263459ae6",
+      "positions": [
+        "digitalsets:0",
+        "digitalsets:1"
+      ],
+      "patch": "patches/P077.patch",
+      "patchSha256": "189155585c2c2ab87990bdbfe30b24ada5e9ebe1927bb70897ff3ad7156ba1b9",
+      "receipt": "receipts/P077.json",
+      "receiptSha256": "1fcfcbe5cc3240231ea776c577ca23e35852d31c2628de4d8e0b4fed8310f355",
+      "files": [
+        "dist/learning/p077-digital-sets-evidence.js",
+        "tests/p9-p077-digital-sets-browser.cjs",
+        "tests/p9-p077-digital-sets.test.mjs"
+      ]
+    },
+    {
+      "packet": "P076",
+      "branch": "work/b/p076-measure-story",
+      "commit": "01f10aaeab9b88736b1e089dbf666a9572b97afb",
+      "positions": [
+        "measurestory:1",
+        "measurestory:2"
+      ],
+      "patch": "patches/P076.patch",
+      "patchSha256": "ee70be003ee620aa533d4f1c35ab5d70aadc7836086e6e0796161d2569530fc3",
+      "receipt": "receipts/P076.json",
+      "receiptSha256": "772af569d54e7bf6d156211866cc4325f988879bcc1c42e47da38b5e3d1e76f3",
+      "files": [
+        "dist/learning/p076-measure-story-evidence.js",
+        "tests/p9-p076-measure-story-browser.cjs",
+        "tests/p9-p076-measure-story.test.mjs"
+      ]
+    },
+    {
+      "packet": "P075",
+      "branch": "work/b/p075-pair-table",
+      "commit": "473214feace17c3669fde1b895c7ca749b76797c",
+      "positions": [
+        "scaleandpair:1",
+        "combineproducts:2"
+      ],
+      "patch": "patches/P075.patch",
+      "patchSha256": "7492eddc1aeb71f059f00e6c7948ea128b62af1e50f1dbaae99eae461623d0f7",
+      "receipt": "receipts/P075.json",
+      "receiptSha256": "6c4324baf6758ed2080c46939a8c385c2ede3990949b27c1b625aefc4dcb1c39",
+      "files": [
+        "dist/learning/p075-pair-table-evidence.js",
+        "tests/p9-p075-pair-table-browser.cjs",
+        "tests/p9-p075-pair-table.test.mjs"
+      ]
+    },
+    {
+      "packet": "P074",
+      "branch": "work/b/p074-complex-chain",
+      "commit": "d8771fc9c7d18379bb7ed8728d60b3ed9be15758",
+      "positions": [
+        "complex38:2"
+      ],
+      "patch": "patches/P074.patch",
+      "patchSha256": "40c9600d9ef963215f1695ffb35c4dc43b2c12d58db51ba8d0be0340635c8a12",
+      "receipt": "receipts/P074.json",
+      "receiptSha256": "a458869394530e8f7349aabcea7ee834c9143f882bbd3464974102385b4943a5",
+      "files": [
+        "dist/learning/p074-complex-chain-evidence.js",
+        "tests/p9-p074-complex-chain-browser.cjs",
+        "tests/p9-p074-complex-chain.test.mjs"
+      ]
+    },
+    {
+      "packet": "P073",
+      "branch": "work/b/p073-plan-chain",
+      "commit": "b691f138cce2f61f22528b69565da8d2506e7ef9",
+      "positions": [
+        "plan38:0"
+      ],
+      "patch": "patches/P073.patch",
+      "patchSha256": "f54e5d8c7ce6cd3e0a9a89dc36c03397a97daa6ff5379561bab25bc75225c00b",
+      "receipt": "receipts/P073.json",
+      "receiptSha256": "3b62cc56adaf1dfb5dffa19db8dd4e6e4f8cdc076fca48b94468c560f6ac5812",
+      "files": [
+        "dist/learning/p073-plan-chain-evidence.js",
+        "tests/p9-p073-plan-chain-browser.cjs",
+        "tests/p9-p073-plan-chain.test.mjs"
+      ]
+    },
+    {
+      "packet": "P072",
+      "branch": "work/b/p072-sense-chain",
+      "commit": "76e49e18b1d77737f285d466156c9f2557beb0fb",
+      "positions": [
+        "sense38:0"
+      ],
+      "patch": "patches/P072.patch",
+      "patchSha256": "6a384d96c40a42d9d50bf1192aa89ddd4d2cfd464a98cb75d770cd00f79350d7",
+      "receipt": "receipts/P072.json",
+      "receiptSha256": "ffe6cda01f42c1186c5f11dcbdf32a2afc2d18d0983a2ec9eb5ad665ac6e24c3",
+      "files": [
+        "dist/learning/p072-sense-chain-evidence.js",
+        "tests/p9-p072-sense-chain-browser.cjs",
+        "tests/p9-p072-sense-chain.test.mjs"
+      ]
+    },
+    {
+      "packet": "P071",
+      "branch": "work/b/p071-story-chain",
+      "commit": "a807de3cafb5283b2cc328c9a1c6d6717d914cc5",
+      "positions": [
+        "story38:2"
+      ],
+      "patch": "patches/P071.patch",
+      "patchSha256": "c8fb754f39135d668e02333431ed7ecb7ff71d4ebdc6e1a75ae38adbab1e32b8",
+      "receipt": "receipts/P071.json",
+      "receiptSha256": "8021b7e49be3c6243704c592c4deebcd414910d6609508b2e874f01675971cdd",
+      "files": [
+        "dist/learning/p071-story-chain-evidence.js",
+        "tests/p9-p071-story-chain-browser.cjs",
+        "tests/p9-p071-story-chain.test.mjs"
+      ]
+    },
+    {
+      "packet": "P070",
+      "branch": "work/b/p070-perimeter-walk",
+      "commit": "e7e29e431ae108c14238a43c49128365780bb486",
+      "positions": [
+        "multiShape38:1"
+      ],
+      "patch": "patches/P070.patch",
+      "patchSha256": "6137e222a92147e77e7d3124e0cb822b8dbf2645560f6a060f412fd698742333",
+      "receipt": "receipts/P070.json",
+      "receiptSha256": "7786751865e79363767c37d73ff552b17b41468deb356105b26e1300da424fcc",
+      "files": [
+        "dist/learning/p070-perimeter-walk-evidence.js",
+        "tests/p9-p070-perimeter-walk-browser.cjs",
+        "tests/p9-p070-perimeter-walk.test.mjs"
+      ]
+    },
+    {
+      "packet": "P069",
+      "branch": "work/b/p069-complex-steps",
+      "commit": "e7b040f8727b0d41850c81ccf6324b722eacdf5c",
+      "positions": [
+        "complex38:0"
+      ],
+      "patch": "patches/P069.patch",
+      "patchSha256": "a81884afcc66bb67da74d8f35278c837004f04cd48241e5cf5fc8da08adfacc1",
+      "receipt": "receipts/P069.json",
+      "receiptSha256": "bd3cb085ee17cf58fc62cf4ea1fee154cd256eed33d30213d3b23f23ce8c8b99",
+      "files": [
+        "dist/learning/p069-complex-steps-evidence.js",
+        "tests/p9-p069-complex-steps-browser.cjs",
+        "tests/p9-p069-complex-steps.test.mjs"
+      ]
+    },
+    {
+      "packet": "P068",
+      "branch": "work/b/p068-percent-steps",
+      "commit": "d2b8f8b0da44b83c72211034c40628e57c9fa5af",
+      "positions": [
+        "pctFraction37:1"
+      ],
+      "patch": "patches/P068.patch",
+      "patchSha256": "a38bd65127ef55cf38a8e5b75258f2e7d34d089dcff91852dfe00c9917d5a541",
+      "receipt": "receipts/P068.json",
+      "receiptSha256": "be6af1f14a37f538271cf9a435609cc6d3237e7875ce1f168580ddd4c10769d2",
+      "files": [
+        "dist/learning/p068-percent-steps-evidence.js",
+        "tests/p9-p068-percent-steps-browser.cjs",
+        "tests/p9-p068-percent-steps.test.mjs"
+      ]
+    },
+    {
+      "packet": "P067",
+      "branch": "work/b/p067-similar-steps",
+      "commit": "46eb7be0afe4c403a62ec4d03ab13a5418163893",
+      "positions": [
+        "similar37:3"
+      ],
+      "patch": "patches/P067.patch",
+      "patchSha256": "17d79affad06bcbef1ed3397750f3b9718823b0ebfe5904f2fca7aabb0b437ff",
+      "receipt": "receipts/P067.json",
+      "receiptSha256": "6b857a6a0759e6c50d0350b752947896231bec20c71b24f6f079f5762586626c",
+      "files": [
+        "dist/learning/p067-similar-steps-evidence.js",
+        "tests/p9-p067-similar-steps-browser.cjs",
+        "tests/p9-p067-similar-steps.test.mjs"
+      ]
+    },
+    {
+      "packet": "P066",
+      "branch": "work/b/p066-data-clean",
+      "commit": "f9789b278277618cc92003c5ae95036382e3f161",
+      "positions": [
+        "checkrecords:0"
+      ],
+      "patch": "patches/P066.patch",
+      "patchSha256": "f8d1ee77c08a8721b3ab47c43417cd01c1025b7eec11802fbc9b343b2ae8ceab",
+      "receipt": "receipts/P066.json",
+      "receiptSha256": "32decb79c09a39aca10f72e19dd20bfb93eb7e39824152e6ea8ebcb02e813f48",
+      "files": [
+        "dist/learning/p066-data-clean-evidence.js",
+        "tests/p9-p066-data-clean-browser.cjs",
+        "tests/p9-p066-data-clean.test.mjs"
+      ]
+    },
+    {
+      "packet": "P065",
+      "branch": "work/b/p065-similar-triangles",
+      "commit": "b58550e19081ae2feae6ba97ed563efb4ed0ca2a",
+      "positions": [
+        "trianglepossible:3"
+      ],
+      "patch": "patches/P065.patch",
+      "patchSha256": "283799f817b326d251568eb1c341378daef5a44ac79a3aa3f039ded3800b7f9c",
+      "receipt": "receipts/P065.json",
+      "receiptSha256": "dfd4c85a5b208119ec23fae79bca9e8c9a52bc77f3b8cae4aa6a632eb64ee3cd",
+      "files": [
+        "dist/learning/p065-similar-triangles-evidence.js",
+        "tests/p9-p065-similar-triangles-browser.cjs",
+        "tests/p9-p065-similar-triangles.test.mjs"
+      ]
+    },
+    {
+      "packet": "P064",
+      "branch": "work/b/p064-pythagoras-area",
+      "commit": "84a9acacfa7baf0cbf71a4ebb5a36c0f01eefb71",
+      "positions": [
+        "pythagoras:0"
+      ],
+      "patch": "patches/P064.patch",
+      "patchSha256": "287ac56b25bf071125ee638722d69413ef1f1376c7182946d109044011773661",
+      "receipt": "receipts/P064.json",
+      "receiptSha256": "60ff0d843c3e33a9183dccad4600b4ce6340bd468f786020be3d1d76080c3aa0",
+      "files": [
+        "dist/learning/p064-pythagoras-area-evidence.js",
+        "tests/p9-p064-pythagoras-area-browser.cjs",
+        "tests/p9-p064-pythagoras-area.test.mjs"
+      ]
+    },
+    {
+      "packet": "P063",
+      "branch": "work/b/p063-temperature-order",
+      "commit": "6e862904b5f3322ddf15c7472a4158d2224ad481",
+      "positions": [
+        "temperaturechange:2"
+      ],
+      "patch": "patches/P063.patch",
+      "patchSha256": "6bc25346c9996b0f3c3bdcd44b49383279d66c7efc6f3f437f5b46bb5546d68b",
+      "receipt": "receipts/P063.json",
+      "receiptSha256": "a23063eca1b1b9d5a9a10a04b3e0813003a29e44f6b8dd6dc4b75074d77ca54f",
+      "files": [
+        "dist/learning/p063-temperature-order-evidence.js",
+        "tests/p9-p063-temperature-order-browser.cjs",
+        "tests/p9-p063-temperature-order.test.mjs"
+      ]
+    },
+    {
+      "packet": "P062",
+      "branch": "work/b/p062-zero-place-product",
+      "commit": "08961a16e316fcab5f7dfe2a7822232d3b098dbf",
+      "positions": [
+        "bigproduct:2"
+      ],
+      "patch": "patches/P062.patch",
+      "patchSha256": "f258daa8853656d7143130926c33d3f6b2ab712ec0b44e86c1bb8371cc4512e6",
+      "receipt": "receipts/P062.json",
+      "receiptSha256": "b7677a60cf4761aa2566ba0fcf4bd9edd4e8ede12cbb3215dc9221523561af7f",
+      "files": [
+        "dist/learning/p062-zero-place-product-evidence.js",
+        "tests/p9-p062-zero-place-product-browser.cjs",
+        "tests/p9-p062-zero-place-product.test.mjs"
+      ]
+    },
+    {
+      "packet": "P059",
+      "branch": "work/b/p059-whole-unit-walk",
+      "commit": "3ca286a3e03829e53e7a1767484c17a442388dd6",
+      "positions": [
+        "wholefractions:0"
+      ],
+      "patch": "patches/P059.patch",
+      "patchSha256": "d3804406f7161645b49206c08b0726102b63c9521c32418837c440cb62c2d91b",
+      "receipt": "receipts/P059.json",
+      "receiptSha256": "1a2cf38e153adffe7266335ba6f627d6575e034e3c60771331b1cb460482ead6",
+      "files": [
+        "dist/learning/p059-whole-unit-walk-evidence.js",
+        "tests/p9-p059-whole-unit-walk-browser.cjs",
+        "tests/p9-p059-whole-unit-walk.test.mjs"
+      ]
+    },
+    {
+      "packet": "P058",
+      "branch": "work/b/p058-leaf-grid-approximation",
+      "commit": "c267dcf05ed71778e79d187a39068387cb45a249",
+      "positions": [
+        "shapeapprox:2"
+      ],
+      "patch": "patches/P058.patch",
+      "patchSha256": "052c66283a0274bbc4611127c8afd143208d22ba7bca255748b0940cc4a779b5",
+      "receipt": "receipts/P058.json",
+      "receiptSha256": "7d903ddd19178b471b1129f933fdd348fabeba468c5aec6d62b357c78f952269",
+      "files": [
+        "dist/learning/p058-leaf-grid-approximation-evidence.js",
+        "tests/p9-p058-leaf-grid-approximation-browser.cjs",
+        "tests/p9-p058-leaf-grid-approximation.test.mjs"
+      ]
+    },
+    {
+      "packet": "P057",
+      "branch": "work/b/p057-chance-condition-sort",
+      "commit": "34e4845c7648cd4d0af32522fb7ef391b360ccc7",
+      "positions": [
+        "chanceindependent:2"
+      ],
+      "patch": "patches/P057.patch",
+      "patchSha256": "b568977649ec1db07bd596d7e0f7d7a5f2ef961322c22fb0eef8ddf79bea2f11",
+      "receipt": "receipts/P057.json",
+      "receiptSha256": "a23b06f410faea8ff2f5809eb1509d4e29cb7f403db0dad5d6500e035a105c18",
+      "files": [
+        "dist/learning/p057-chance-condition-sort-evidence.js",
+        "tests/p9-p057-chance-condition-sort-browser.cjs",
+        "tests/p9-p057-chance-condition-sort.test.mjs"
+      ]
+    },
+    {
+      "packet": "P055",
+      "branch": "work/b/p055-right-triangle-condition",
+      "commit": "a11e5c0b509fdbef8f18f8db7c2e8a7310797820",
+      "positions": [
+        "pythagoras:1"
+      ],
+      "patch": "patches/P055.patch",
+      "patchSha256": "b69992e2e83ae0d213653b9b587986afe4b5f9267c707bae33ec2f14b6361afc",
+      "receipt": "receipts/P055.json",
+      "receiptSha256": "2c31899607f63d2273730169034df46ae42cafb1a1cc527813f41c690c964572",
+      "files": [
+        "dist/learning/p055-right-triangle-condition-evidence.js",
+        "tests/p9-p055-right-triangle-condition-browser.cjs",
+        "tests/p9-p055-right-triangle-condition.test.mjs"
+      ]
+    },
+    {
+      "packet": "P054",
+      "branch": "work/b/p054-opposite-side-marks",
+      "commit": "70afe009c2974d3b7ad8a6d8d56c4d4315ad84b4",
+      "positions": [
+        "linenotation:2"
+      ],
+      "patch": "patches/P054.patch",
+      "patchSha256": "de3509bf0c9d4a73de7cd0f76daec511c18a744f7df237f970bb5799b455619b",
+      "receipt": "receipts/P054.json",
+      "receiptSha256": "c525221114f0de919709e7814c8123a69098c9c5506bf76ca56b14233fd10a08",
+      "files": [
+        "dist/learning/p054-opposite-side-marks-evidence.js",
+        "tests/p9-p054-opposite-side-marks-browser.cjs",
+        "tests/p9-p054-opposite-side-marks.test.mjs"
+      ]
+    },
+    {
+      "packet": "P053",
+      "branch": "work/b/p053-data-kind-order",
+      "commit": "d4ba345634ba75213dc56720a9dbe3190610c8f9",
+      "positions": [
+        "checkrecords:1"
+      ],
+      "patch": "patches/P053.patch",
+      "patchSha256": "4885907237a8d7f71670bdb830b01dc1119d600a9274b64daad09a5858928882",
+      "receipt": "receipts/P053.json",
+      "receiptSha256": "1c7c3623aba33f97bc2ff9bd49624e9b54567edf3d85384005a831cac7ef711c",
+      "files": [
+        "dist/learning/p053-data-kind-order-evidence.js",
+        "tests/p9-p053-data-kind-order-browser.cjs",
+        "tests/p9-p053-data-kind-order.test.mjs"
+      ]
+    },
+    {
+      "packet": "P051",
+      "branch": "work/b/p051-compound-unit-meaning",
+      "commit": "a968df723037304b9a888ab4bd6bda662ac72759",
+      "positions": [
+        "rateWords37:3"
+      ],
+      "patch": "patches/P051.patch",
+      "patchSha256": "c14242a7f9f06f64c94b6d94ab57932aee9fb9503824469a3dc54ec2a3d2d05f",
+      "receipt": "receipts/P051.json",
+      "receiptSha256": "dbae79a658cda2509837073568a36e3acb201a6244c1f79b6b40492fccc93a52",
+      "files": [
+        "dist/learning/p051-compound-unit-meaning-evidence.js",
+        "tests/p9-p051-compound-unit-meaning-browser.cjs",
+        "tests/p9-p051-compound-unit-meaning.test.mjs"
+      ]
+    },
+    {
+      "packet": "P050",
+      "branch": "work/b/p050-drawing-area-scale",
+      "commit": "bffba7988fb155f1b697abd83d863684fb81914d",
+      "positions": [
+        "model38:1"
+      ],
+      "patch": "patches/P050.patch",
+      "patchSha256": "79d14c365d7f2e04a4b08ce32509b016ea73ef703a2b3f42e9273612ddd5100e",
+      "receipt": "receipts/P050.json",
+      "receiptSha256": "d88e9f090fbec37eb9d8ddb74d0ff5d87821c71e124ebaca46f42ba10f767ef6",
+      "files": [
+        "dist/learning/p050-drawing-area-scale-evidence.js",
+        "tests/p9-p050-drawing-area-scale-browser.cjs",
+        "tests/p9-p050-drawing-area-scale.test.mjs"
+      ]
+    },
+    {
+      "packet": "P049",
+      "branch": "work/b/p049-ratio-smallest-basket",
+      "commit": "64f7a69adce8fc3bd6cf8a6df133b8f5b78eece4",
+      "positions": [
+        "advancedPlan38:1"
+      ],
+      "patch": "patches/P049.patch",
+      "patchSha256": "dd341c77ecf9c34c30e9b4dc8a71f2b1a827f5fbf8969b9e360672f5d0b80c2b",
+      "receipt": "receipts/P049.json",
+      "receiptSha256": "39babceb2480f5f6f394efe11f29c4d1896927d89a399a9376a7fe1e2ce535cf",
+      "files": [
+        "dist/learning/p049-ratio-smallest-basket-evidence.js",
+        "tests/p9-p049-ratio-smallest-basket-browser.cjs",
+        "tests/p9-p049-ratio-smallest-basket.test.mjs"
+      ]
+    },
+    {
+      "packet": "P048",
+      "branch": "work/b/p048-rope-cut-chain",
+      "commit": "7618d76faa648fa350a2f98d626b2070e9346479",
+      "positions": [
+        "tools38:2"
+      ],
+      "patch": "patches/P048.patch",
+      "patchSha256": "2814b1249754cf551e558e102b2ba52bbe78bad74b83ae5bbd8606b91dae23f1",
+      "receipt": "receipts/P048.json",
+      "receiptSha256": "1cb05a186a23f5bd61c14497d040c0a11f6fe8c810ab560822cc809131eedb49",
+      "files": [
+        "dist/learning/p048-rope-cut-chain-evidence.js",
+        "tests/p9-p048-rope-cut-chain-browser.cjs",
+        "tests/p9-p048-rope-cut-chain.test.mjs"
+      ]
+    },
+    {
+      "packet": "P047",
+      "branch": "work/b/p047-subtraction-first-error",
+      "commit": "997460a2ed89a1af6631d3ed21a96fdc8efbb240",
+      "positions": [
+        "show38:2"
+      ],
+      "patch": "patches/P047.patch",
+      "patchSha256": "eaf337a01ed62fe022f05b1f6f5e7225b591d729aafdc7ac060b62c3dfb314fa",
+      "receipt": "receipts/P047.json",
+      "receiptSha256": "68771a2299dd78ca2415ffad9cc232a1f78cb7602a81bb78ea129d751d326ad3",
+      "files": [
+        "dist/learning/p047-subtraction-first-error-evidence.js",
+        "tests/p9-p047-subtraction-first-error-browser.cjs",
+        "tests/p9-p047-subtraction-first-error.test.mjs"
+      ]
+    },
+    {
+      "packet": "P046",
+      "branch": "work/b/p046-three-fourths-chain",
+      "commit": "fa972391046bcfcfd862c0cb1f00b502aa9db74f",
+      "positions": [
+        "precise38:1"
+      ],
+      "patch": "patches/P046.patch",
+      "patchSha256": "3e5c5faf289d235bb95acb25afa5944acbff7d13da40a4332aefab49b3b44482",
+      "receipt": "receipts/P046.json",
+      "receiptSha256": "da6910a247f09d016a837dd3cb8c8916d4985a6aef697cee6b825647b5edc01d",
+      "files": [
+        "dist/learning/p046-three-fourths-chain-evidence.js",
+        "tests/p9-p046-three-fourths-chain-browser.cjs",
+        "tests/p9-p046-three-fourths-chain.test.mjs"
+      ]
+    },
+    {
+      "packet": "P045",
+      "branch": "work/b/p045-three-fifths-vs-half",
+      "commit": "7d819a4c21be3aad123b67d41236aad9885018ee",
+      "positions": [
+        "multiShape38:3"
+      ],
+      "patch": "patches/P045.patch",
+      "patchSha256": "a8eb11dd2e73159887b6ace7823726c43a292be35f2eda596a586e47a92d27e5",
+      "receipt": "receipts/P045.json",
+      "receiptSha256": "2c3483bca792d6abfd6fa25ff813a108f62881ccb5f1aff6dc954f17fc402211",
+      "files": [
+        "dist/learning/p045-three-fifths-vs-half-evidence.js",
+        "tests/p9-p045-three-fifths-vs-half-browser.cjs",
+        "tests/p9-p045-three-fifths-vs-half.test.mjs"
+      ]
+    },
+    {
+      "packet": "P044",
+      "branch": "work/b/p044-straight-angle-gap",
+      "commit": "6b100945609d07d6c96a4e0d42edeccc6b16d79a",
+      "positions": [
+        "structurechoices:4",
+        "structurechoices:5"
+      ],
+      "patch": "patches/P044.patch",
+      "patchSha256": "f4ddefb5c080c5cc9d258197b719cee87cfad7980ed1c1a923c12643ef538bb6",
+      "receipt": "receipts/P044.json",
+      "receiptSha256": "f2e988883479c2fc66daee86f5f2966daf0a8427a476e9f69ebf5180769e0e0e",
+      "files": [
+        "dist/learning/p044-straight-angle-gap-evidence.js",
+        "tests/p9-p044-straight-angle-gap-browser.cjs",
+        "tests/p9-p044-straight-angle-gap.test.mjs"
+      ]
+    },
+    {
+      "packet": "P043",
+      "branch": "work/b/p043-multiple-sheet",
+      "commit": "28924333cd78b1005605c047ce4e7c73b6e05a43",
+      "positions": [
+        "factorcode:0",
+        "factorcode:2"
+      ],
+      "patch": "patches/P043.patch",
+      "patchSha256": "8857ceadf301a06d14927ff6c2bf86bb3deb3cc94e8b45df5c2b78435a90db9d",
+      "receipt": "receipts/P043.json",
+      "receiptSha256": "b094383ce8adcd615d862c340564de0fd11299910e847eb15c5ebf823142aebd",
+      "files": [
+        "dist/learning/p043-multiple-sheet-evidence.js",
+        "tests/p9-p043-multiple-sheet-browser.cjs",
+        "tests/p9-p043-multiple-sheet.test.mjs"
+      ]
+    },
+    {
+      "packet": "P042",
+      "branch": "work/b/p042-perimeter-area-trials",
+      "commit": "1e21ce38e1ec4bf0a5a092bdcc12a41539368ddd",
+      "positions": [
+        "formula36:0",
+        "formula36:1"
+      ],
+      "patch": "patches/P042.patch",
+      "patchSha256": "4530a93e54c1a107cc3501f7a1092b2d585279a63e69e9d957bd9179e223839c",
+      "receipt": "receipts/P042.json",
+      "receiptSha256": "b8deff27557f64ddd9f14b15d6b29086047252a2a8d8a9978e567dcc71333bee",
+      "files": [
+        "dist/learning/p042-perimeter-area-trials-evidence.js",
+        "tests/p9-p042-perimeter-area-trials-browser.cjs",
+        "tests/p9-p042-perimeter-area-trials.test.mjs"
+      ]
+    },
+    {
+      "packet": "P040",
+      "branch": "work/b/p040-prism-face-volume",
+      "commit": "506189de6dfd172da09b467375f2c0cbf98e6529",
+      "positions": [
+        "prismFormulas:1",
+        "prismFormulas:2"
+      ],
+      "patch": "patches/P040.patch",
+      "patchSha256": "eea7a7c299eddd23493bbd1f2c06762fd16157e720eed3c6d13f5f9ff6b938b5",
+      "receipt": "receipts/P040.json",
+      "receiptSha256": "5ff88309bb13c217690ea085cc24f146916abf14f5bde82f1ef4f4b8acc5bc53",
+      "files": [
+        "dist/learning/p040-prism-face-volume-evidence.js",
+        "tests/p9-p040-prism-face-volume-browser.cjs",
+        "tests/p9-p040-prism-face-volume.test.mjs"
+      ]
+    },
+    {
+      "packet": "P039",
+      "branch": "work/b/p039-shortchains",
+      "commit": "fb8fb2f6adf63b09cfbf2ebd9ca48f20bf4de7a7",
+      "positions": [
+        "because38:1",
+        "because38:2"
+      ],
+      "patch": "patches/P039.patch",
+      "patchSha256": "3f81f950c2a23127aa74a1c6066dc59af43e1e9238f15cdaec8fe6aa4ac48f10",
+      "receipt": "receipts/P039.json",
+      "receiptSha256": "bd56157285ecb0b1708682ecd0bdae715465c76b3691a34a672a999c70182763",
+      "files": [
+        "dist/learning/p039-shortchains-evidence.js",
+        "tests/p9-p039-shortchains-browser.cjs",
+        "tests/p9-p039-shortchains.test.mjs"
+      ]
+    },
+    {
+      "packet": "P037",
+      "branch": "work/b/p037-composite-scene",
+      "commit": "49f1f5683bd8672cdb56fe1588b399b4da2f8dd6",
+      "positions": [
+        "shapepieces:2",
+        "shapeapprox:0",
+        "shapeapprox:1"
+      ],
+      "patch": "patches/P037.patch",
+      "patchSha256": "07e6dfa41abccc50bbd21be0337514ae0b92864b372a8ebbe1f0674b41ff6544",
+      "receipt": "receipts/P037.json",
+      "receiptSha256": "e1cec0a8c2432f4a86fd6884c5be187012902223565cc45d3464ca21ddad5b38",
+      "files": [
+        "dist/learning/p037-composite-scene-evidence.js",
+        "tests/p9-p037-composite-scene-browser.cjs",
+        "tests/p9-p037-composite-scene.test.mjs"
+      ]
+    },
+    {
+      "packet": "P036",
+      "branch": "work/b/p036-geometry-notation",
+      "commit": "a6b684d63e945cb117f67fcb56e53310b87aad9c",
+      "positions": [
+        "geometrynotation:0",
+        "angleparts:1",
+        "linenotation:1"
+      ],
+      "patch": "patches/P036.patch",
+      "patchSha256": "c2ef9bf24ed713d86c94c8adaa7424607b37e3e9a1717342a4b68c4b8eb0b2fb",
+      "receipt": "receipts/P036.json",
+      "receiptSha256": "34e1911f0697900ffa252e3d2dbf83b8a9e239203879d370d1486800d27c57d4",
+      "files": [
+        "dist/learning/p036-geometry-notation-evidence.js",
+        "tests/p9-p036-geometry-notation-browser.cjs",
+        "tests/p9-p036-geometry-notation.test.mjs"
+      ]
+    },
+    {
+      "packet": "P035",
+      "branch": "work/b/p035-ordered-pair-grid",
+      "commit": "e86b2d18bb45f2528c20965616995da5fdafefee",
+      "positions": [
+        "chancetree:0",
+        "chancetree:2",
+        "chancesets:1"
+      ],
+      "patch": "patches/P035.patch",
+      "patchSha256": "cb0a0f252d52f28622fcc1ab104023de651e2d842a5b505bfc635beb40bd509f",
+      "receipt": "receipts/P035.json",
+      "receiptSha256": "3d5bb5c4d2d696f832e6f4b3dbfb36d6a182821101dea7df26726dac7321bcb8",
+      "files": [
+        "dist/learning/p035-ordered-pair-grid-evidence.js",
+        "tests/p9-p035-ordered-pair-grid-browser.cjs",
+        "tests/p9-p035-ordered-pair-grid.test.mjs"
+      ]
+    },
+    {
+      "packet": "P033",
+      "branch": "work/b/p033-observation-tally",
+      "commit": "7c42279e00e2cc66320671004de1893d3bb40ce2",
+      "positions": [
+        "digitalcharts:0",
+        "digitalcharts:1",
+        "digitalcharts:2"
+      ],
+      "patch": "patches/P033.patch",
+      "patchSha256": "b816d59a7325fea546155d33fbdf035af644aec4f3178e9fe9b7ab311dc136db",
+      "receipt": "receipts/P033.json",
+      "receiptSha256": "5ae941cbc1bb7c69c9863a2c60a216e0bc23cdcc18eed6453c949a3534426405",
+      "files": [
+        "dist/learning/p033-observation-tally-evidence.js",
+        "tests/p9-p033-observation-tally-browser.cjs",
+        "tests/p9-p033-observation-tally.test.mjs"
+      ]
+    },
+    {
+      "packet": "P031",
+      "branch": "work/b/p031-hundred-chart",
+      "commit": "2b5079688e32d5c463f062e66ae8354b80d87b2a",
+      "positions": [
+        "pattern39:0",
+        "pattern39:1",
+        "pattern39:2",
+        "pattern39:3"
+      ],
+      "patch": "patches/P031.patch",
+      "patchSha256": "055f164eb4eb9862fbf23b6fcb19ab0c4d4f35e9f32e8203ca08ef6aba44876c",
+      "receipt": "receipts/P031.json",
+      "receiptSha256": "bc46221af9621b70146e2749066c09eb48feb77204b7f6141cef23f452e48627",
+      "files": [
+        "dist/learning/p031-hundred-chart-evidence.js",
+        "tests/p9-p031-hundred-chart-browser.cjs",
+        "tests/p9-p031-hundred-chart.test.mjs"
+      ]
+    },
+    {
+      "packet": "P028",
+      "branch": "work/b/p028-trig-roles-and-ratios",
+      "commit": "799feec04cebede616f72c156e390742e10122d1",
+      "positions": [
+        "trigbasics:0",
+        "trigbasics:1",
+        "trigbasics:2",
+        "trigbasics:3",
+        "trigbasics:4"
+      ],
+      "patch": "patches/P028.patch",
+      "patchSha256": "34c72576f3b08ce1817047c6f75ada8d5c92bc225d59d66d7e0beb1102d09527",
+      "receipt": "receipts/P028.json",
+      "receiptSha256": "c5420520fd14afa6cb4f6293f67613820a3a6c0da66057e9caabc61d3b9c0088",
+      "files": [
+        "dist/learning/p028-trig-roles-and-ratios-evidence.js",
+        "tests/p9-p028-trig-roles-and-ratios-browser.cjs",
+        "tests/p9-p028-trig-roles-and-ratios.test.mjs"
+      ]
+    },
+    {
+      "packet": "P027",
+      "branch": "work/b/p027-equal-ratio-shares",
+      "commit": "6b30e4bb7884b6d6d2eab902d16acb01995649b3",
+      "positions": [
+        "modelChoice38:0",
+        "advancedPlan38:0"
+      ],
+      "patch": "patches/P027.patch",
+      "patchSha256": "f053dcd23b13a0efc9180c5df1a2be7adc14233da2eaecba70eb5e41093d83a7",
+      "receipt": "receipts/P027.json",
+      "receiptSha256": "88640b656034a600959b20e750c1d85970831779c1622a4c4eaf3f4cb1e443f1",
+      "files": [
+        "dist/learning/p027-equal-ratio-shares-evidence.js",
+        "tests/p9-p027-equal-ratio-shares-browser.cjs",
+        "tests/p9-p027-equal-ratio-shares.test.mjs"
+      ]
+    },
+    {
+      "packet": "P025",
+      "branch": "work/b/p025-decimal-remainders-and-place-values",
+      "commit": "33300dd67a7361a3aac2940fbd4e5aeedac87d30",
+      "positions": [
+        "numberworld:0",
+        "numberworld:1",
+        "numberworld:2",
+        "decimalorder2:1",
+        "raggeddecimals:0",
+        "raggeddecimals:2"
+      ],
+      "patch": "patches/P025.patch",
+      "patchSha256": "bb246c2f037b27d6d2562aad4ba1b16bcc3717a52313877ed2c5267644bba14f",
+      "receipt": "receipts/P025.json",
+      "receiptSha256": "cc4f3953ca01ed276b8798b3c3a122847a9a5e21138befe6091cca12100a4309",
+      "files": [
+        "dist/learning/p025-decimal-remainders-and-place-values-evidence.js",
+        "tests/p9-p025-decimal-remainders-and-place-values-browser.cjs",
+        "tests/p9-p025-decimal-remainders-and-place-values.test.mjs"
+      ]
+    },
+    {
+      "packet": "P023",
+      "branch": "work/b/p023-graph-interpretation",
+      "commit": "e6086a47c19442942f4219ff759e589660f1dcf0",
+      "positions": [
+        "displaychoices:0",
+        "displaychoices:2",
+        "scattercraft:0",
+        "scattercraft:1",
+        "scattercraft:2",
+        "scattermeaning:0",
+        "scattermeaning:1",
+        "scattermeaning:2",
+        "scattermeaning:3",
+        "statwords:2"
+      ],
+      "patch": "patches/P023.patch",
+      "patchSha256": "e9c8c8fc84b7a501bb597fc5b6bd2a0fa652c52aed6211f42ff6128a24ac794a",
+      "receipt": "receipts/P023.json",
+      "receiptSha256": "5782a10ff8cfccc74ffb7b63bc4f67a5a7ec56bc7ab469040bbbd1bef53b242d",
+      "files": [
+        "dist/learning/p023-graph-interpretation-evidence.js",
+        "tests/p9-p023-graph-interpretation-browser.cjs",
+        "tests/p9-p023-graph-interpretation.test.mjs"
+      ]
+    },
+    {
+      "packet": "P020",
+      "branch": "work/b/p020-boundary-and-area-construction",
+      "commit": "446ab74ffad4c383432d6e889ca551d1cf371947",
+      "positions": [
+        "polyperim:1",
+        "triArea:0",
+        "triArea:1",
+        "triArea:2",
+        "triArea:3",
+        "circleArea:0",
+        "circleArea:1"
+      ],
+      "patch": "patches/P020.patch",
+      "patchSha256": "d6a148bfcbd0a24d6c047d50daad65e3710a75ed0d0b75c1d8e912d31128829d",
+      "receipt": "receipts/P020.json",
+      "receiptSha256": "dfedab63fc778d40715bc709b2c0be5097c541216dee2b498619e9f3ff4282eb",
+      "files": [
+        "dist/learning/p020-boundary-and-area-construction-evidence.js",
+        "tests/p9-p020-boundary-and-area-construction-browser.cjs",
+        "tests/p9-p020-boundary-and-area-construction.test.mjs"
+      ]
+    },
+    {
+      "packet": "P019",
+      "branch": "work/b/p019-equivalent-names-and-percent",
+      "commit": "39e073968d8da70770e7b4b9bcbd6298edc66c5f",
+      "positions": [
+        "structurebridge:2",
+        "percentpatterns:2",
+        "percentpatterns:3",
+        "thousandparts:0",
+        "thousandparts:2",
+        "thousandparts:3",
+        "fdpswitch:1",
+        "pctCalculate37:0",
+        "pctCalculate37:2"
+      ],
+      "patch": "patches/P019.patch",
+      "patchSha256": "941d0424c9f1114e86cc145935a3e3dedd6e64bdde0e215a4bc961b5fb304f63",
+      "receipt": "receipts/P019.json",
+      "receiptSha256": "8682f9958df0c1c22c8ce3399c6e41866c996ff03c2c1f026f558fa1d5085ecc",
+      "files": [
+        "dist/learning/p019-equivalent-names-and-percent-evidence.js",
+        "tests/p9-p019-equivalent-names-and-percent-browser.cjs",
+        "tests/p9-p019-equivalent-names-and-percent.test.mjs"
+      ]
+    },
+    {
+      "packet": "P018",
+      "branch": "work/b/p018-probability-observations",
+      "commit": "05639387b353a80e9d71b1dfffbef29582f0bfe6",
+      "positions": [
+        "trialcompare:0",
+        "trialcompare:1",
+        "trialestimate:0",
+        "trialestimate:1",
+        "trialestimate:2",
+        "chanceindependent:0",
+        "chanceindependent:1",
+        "chancetree:1"
+      ],
+      "patch": "patches/P018.patch",
+      "patchSha256": "209a271e38004903f8aea322d1cb51e3a93d212130403a66912cc872305acd5d",
+      "receipt": "receipts/P018.json",
+      "receiptSha256": "253cf270f68792625e0832aa6a4d53acf9b22a360aae857b31541784d711a5ed",
+      "files": [
+        "dist/learning/p018-probability-observations-evidence.js",
+        "tests/p9-p018-probability-observations-browser.cjs",
+        "tests/p9-p018-probability-observations.test.mjs"
+      ]
+    },
+    {
+      "packet": "P017",
+      "branch": "work/b/p017-signed-walk-and-between",
+      "commit": "015a3323d00708756de6a1213bc83476a6f78d4e",
+      "positions": [
+        "negativefirst:0",
+        "negativecontext:2",
+        "numberworld:4",
+        "numberworld:5"
+      ],
+      "patch": "patches/P017.patch",
+      "patchSha256": "3532b12687370ae7d93bce3fdbaa23aefbaee7abb962b74ed55ddd69f2192d99",
+      "receipt": "receipts/P017.json",
+      "receiptSha256": "32cd4becada590ed834bd0865449e5354ffc8c5e0c5b971a2d4b6cf3eb6e58d0",
+      "files": [
+        "dist/learning/p017-signed-walk-and-between-evidence.js",
+        "tests/p9-p017-signed-walk-and-between-browser.cjs",
+        "tests/p9-p017-signed-walk-and-between.test.mjs"
+      ]
+    },
+    {
+      "packet": "P016",
+      "branch": "work/b/p016-model-and-rule-checks",
+      "commit": "acb26e3c012f2726b422474da88d677908184f2f",
+      "positions": [
+        "productways:3",
+        "chanceline:1",
+        "linemark:0",
+        "measurecalc:5",
+        "temperaturechange:4",
+        "rules34:3",
+        "bigmissing35:1",
+        "systems35:2",
+        "systems35:3",
+        "linear36:3",
+        "proportionGraph37:1"
+      ],
+      "patch": "patches/P016.patch",
+      "patchSha256": "25487ac254ac4358dfbfe3726f64936cbe07b4d2ad9f4afbebaa888bac1ec76a",
+      "receipt": "receipts/P016.json",
+      "receiptSha256": "f8096f2dbcb7bfe6b0f4469f3a97a895c109fc6d5fac93527b28a4bbfe8ca75e",
+      "files": [
+        "dist/learning/p016-model-and-rule-checks-evidence.js",
+        "tests/p9-p016-model-and-rule-checks-browser.cjs",
+        "tests/p9-p016-model-and-rule-checks.test.mjs"
+      ]
+    },
+    {
+      "packet": "P014",
+      "branch": "work/b/p014-multiplicative-bars",
+      "commit": "c4a58c348b6341d1ac1af2eaa232c50a6626a3ab",
+      "positions": [
+        "scaleandpair:0",
+        "scaleandpair:2",
+        "combineproducts:1",
+        "timesmeaning:0",
+        "timesmeaning:1",
+        "timesmeaning:2",
+        "timesproblems:0",
+        "timesproblems:1",
+        "timesproblems:2",
+        "timesproblems:3",
+        "modelrecipe:1",
+        "modelrecipe:2",
+        "viewlinks:0",
+        "storyfraction:1",
+        "fractionmeasure:0",
+        "fractionmeasure:2",
+        "structurechoices:2",
+        "structurechoices:3"
+      ],
+      "patch": "patches/P014.patch",
+      "patchSha256": "cdee85c6d7371f4b856a3a37768372027980b19fad58223ee3c2852f045ec3a5",
+      "receipt": "receipts/P014.json",
+      "receiptSha256": "4c22782f6b608c22464da6a9918a9949365868c58674b96eba6cc5ff81da9b73",
+      "files": [
+        "dist/learning/p014-multiplicative-bars-evidence.js",
+        "tests/p9-p014-multiplicative-bars-browser.cjs",
+        "tests/p9-p014-multiplicative-bars.test.mjs"
+      ]
+    },
+    {
+      "packet": "P013",
+      "branch": "work/b/p013-recall-and-estimation",
+      "commit": "adcf8e19b4b636c410f710cc1cf680ad12ba02a9",
+      "positions": [
+        "factsfive:1",
+        "bonds20:2",
+        "factsten:1",
+        "factstwenty:2",
+        "scaleadd:0",
+        "calculatormeaning:0",
+        "calculatormeaning:1",
+        "calculatormeaning:2",
+        "calculatormeaning:3",
+        "calculatormeaning:4",
+        "calculatormeaning:5",
+        "estimatecheck:0",
+        "estimatecheck:1",
+        "estimatecheck:2",
+        "decimalestimate:0",
+        "decimalestimate:1",
+        "decimalestimate:2",
+        "estimatepeople:0",
+        "estimatepeople:1",
+        "estimatepeople:2"
+      ],
+      "patch": "patches/P013.patch",
+      "patchSha256": "6f280515f5ed98b87b9a9e3991af5dd13e55dac50ab0a11244780438f4f87f3c",
+      "receipt": "receipts/P013.json",
+      "receiptSha256": "cfba083ffb5b21b23a29678b1d16cc415dfef91ab215b9bf2b1f43d025333497",
+      "files": [
+        "dist/learning/p013-recall-and-estimation-evidence.js",
+        "tests/p9-p013-recall-and-estimation-browser.cjs",
+        "tests/p9-p013-recall-and-estimation.test.mjs"
+      ]
+    },
+    {
+      "packet": "P012",
+      "branch": "work/b/p012-time-calendar-and-timetables",
+      "commit": "f1238d9ddd14f2aa3d2610452a5b6b04ce48425e",
+      "positions": [
+        "timetable:0",
+        "timetable:2",
+        "timetable:3",
+        "practicalmeasure:2",
+        "eventorder:0",
+        "weekmonth:2",
+        "calendarfacts:1",
+        "calendarfacts:2"
+      ],
+      "patch": "patches/P012.patch",
+      "patchSha256": "c4f837e11606ff34be0f04788c23520cd1b408ef38fa310d94f89eb932aae634",
+      "receipt": "receipts/P012.json",
+      "receiptSha256": "0ac4d2aea8073924e55ddc4e1987074a38423c8b63674f94d718009f07dcfdf7",
+      "files": [
+        "dist/learning/p012-time-calendar-and-timetables-evidence.js",
+        "tests/p9-p012-time-calendar-and-timetables-browser.cjs",
+        "tests/p9-p012-time-calendar-and-timetables.test.mjs"
+      ]
+    },
+    {
+      "packet": "P011",
+      "branch": "work/b/p011-measurement-models",
+      "commit": "c30476bf09697de618674c75dd7c9bae930b0e4e",
+      "positions": [
+        "coinvalues:0",
+        "coinvalues:1",
+        "coinvalues:2",
+        "modmoney:0",
+        "auscoins:0",
+        "moneycalc:0",
+        "moneycalc:1",
+        "moneycalc:2",
+        "measuremoney:1",
+        "roughmoney:0",
+        "roughmoney:1",
+        "roughmoney:2",
+        "budgetchoices:1",
+        "budgetchoices:2",
+        "budgetchoices:3",
+        "discounts:0",
+        "discounts:1",
+        "moneysheet:0",
+        "moneysheet:1",
+        "moneysheet:2",
+        "pctCalculate37:1",
+        "rateUnit37:1",
+        "tools38:1",
+        "lifemath38:0",
+        "plan38:1"
+      ],
+      "patch": "patches/P011.patch",
+      "patchSha256": "256a222e9be35586273910322253ed2c7493c6f8fda201e6ccdb824f2bec7a48",
+      "receipt": "receipts/P011.json",
+      "receiptSha256": "adf338e7e3829d1608900733abc7501a522914a479402621de06f45bb180e4f0",
+      "files": [
+        "dist/learning/p011-measurement-models-evidence.js",
+        "tests/p9-p011-measurement-models-browser.cjs",
+        "tests/p9-p011-measurement-models.test.mjs"
+      ]
+    },
+    {
+      "packet": "P010",
+      "branch": "work/b/p010-story-operation-plans",
+      "commit": "2dccf637274fb9c84ad0c047160af42a366bc92e",
+      "positions": [
+        "threepiles:0",
+        "threepiles:1",
+        "threepiles:2",
+        "storytwo:0",
+        "storytwo:1",
+        "storytwo:2",
+        "storytwo:3",
+        "storytwo:4",
+        "storytwo:5",
+        "plansteps:1",
+        "plansteps:2",
+        "plansteps:3",
+        "plansteps:4",
+        "combineproducts:3",
+        "storyoperations:0",
+        "storyoperations:1",
+        "storyoperations:2",
+        "fractionchoices:0",
+        "fractionchoices:2",
+        "bigmissing35:2",
+        "objects38:2",
+        "lifemath38:1",
+        "multi38:0",
+        "multiShape38:0"
+      ],
+      "patch": "patches/P010.patch",
+      "patchSha256": "34289fe7f35d6dd3800211857f0e9764758564f7b9b7aa32e23b63b227f24dbd",
+      "receipt": "receipts/P010.json",
+      "receiptSha256": "2d8fc205b2a81e09758726112312161009052646debbabfb1b2c9caf0a79976e",
+      "files": [
+        "dist/learning/p010-story-operation-plans-evidence.js",
+        "tests/p9-p010-story-operation-plans-browser.cjs",
+        "tests/p9-p010-story-operation-plans.test.mjs"
+      ]
+    },
+    {
+      "packet": "P009A",
+      "branch": "work/a/p009a-ten-landmark",
+      "commit": "2ba9ccdd358c18cdeb5233232c3bd80696c73044",
+      "positions": [
+        "screenadd:1",
+        "screenadd:2",
+        "bonds20:1",
+        "bridge20:0",
+        "bridge20:1",
+        "factstwenty:0",
+        "tools38:0"
+      ],
+      "patch": "patches/P009A.patch",
+      "patchSha256": "de463f106a31eac97e3b6096c0487b1c6b297cab070eb1b2242efc4d664caff3",
+      "receipt": "receipts/P009A.json",
+      "receiptSha256": "b191b834c02bc0bd84a3714031652693915c3b86160f4fe318da6f6e8adcdc08",
+      "files": [
+        "dist/learning/p009a-ten-landmark-evidence.js",
+        "tests/p9-p009a-ten-landmark-browser.cjs",
+        "tests/p9-p009a-ten-landmark.test.mjs"
+      ]
+    },
+    {
+      "packet": "P009B",
+      "branch": "work/a/p009b-add-subtract-family",
+      "commit": "978d4a6c423cb8cefcd9c84cf290ec3fe172678b",
+      "positions": [
+        "factsfive:0",
+        "bonds20:0",
+        "bridge20:2",
+        "factsten:0",
+        "factstwenty:1",
+        "undoadd:1",
+        "undoadd:2",
+        "sense38:2"
+      ],
+      "patch": "patches/P009B.patch",
+      "patchSha256": "5ffaa3351ba0953f6cc7d706b8333e299dbb2c68c46f10df0184e3b31296bee7",
+      "receipt": "receipts/P009B.json",
+      "receiptSha256": "12d1ac79a9dadbc959c51b575b08a9835bb01b3e7edc266a33fb2beb352f477d",
+      "files": [
+        "dist/learning/p009b-add-subtract-family-evidence.js",
+        "tests/p9-p009b-add-subtract-family-browser.cjs",
+        "tests/p9-p009b-add-subtract-family.test.mjs"
+      ]
+    },
+    {
+      "packet": "P009C",
+      "branch": "work/a/p009c-three-group-pairings",
+      "commit": "82cbbe858baaa3b96e0309ba5dbafd5f8c2b99b0",
+      "positions": [
+        "tripleadd:0",
+        "tripleadd:1",
+        "regroupadd:0",
+        "regroupadd:1",
+        "general34:0"
+      ],
+      "patch": "patches/P009C.patch",
+      "patchSha256": "10ba4bf046d97e4de1168b67f757f481ebe67370bb836ecab54806355f31970d",
+      "receipt": "receipts/P009C.json",
+      "receiptSha256": "cdd16493288fad43f4ed1973caefb2a3c7063f47a630b89e7e0ecabe03ea414d",
+      "files": [
+        "dist/learning/p009c-three-group-pairings-evidence.js",
+        "tests/p9-p009c-three-group-pairings-browser.cjs",
+        "tests/p9-p009c-three-group-pairings.test.mjs"
+      ]
+    },
+    {
+      "packet": "P009D",
+      "branch": "work/a/p009d-inverse-calculation",
+      "commit": "ba4c8230dcaee23ac2b1417ad584ea0149737913",
+      "positions": [
+        "undocalc:0",
+        "undocalc:1",
+        "undocalc:2",
+        "undocalc:3",
+        "undocalc:4"
+      ],
+      "patch": "patches/P009D.patch",
+      "patchSha256": "fa3e3bc2f2d7cb795cb51e1b1ae5452941e9de6c683cce013620d7d0d80e1c1e",
+      "receipt": "receipts/P009D.json",
+      "receiptSha256": "b202a19bb5edef435c8f4c04a77fd4c4a7e55d35f8436a058369e93cbd327fa5",
+      "files": [
+        "dist/learning/p009d-inverse-calculation-evidence.js",
+        "tests/p9-p009d-inverse-calculation-browser.cjs",
+        "tests/p9-p009d-inverse-calculation.test.mjs"
+      ]
+    },
+    {
+      "packet": "P009E",
+      "branch": "work/a/p009e-decimal-complements",
+      "commit": "685681b9779a871a6ebd849fa3676c23df60ce26",
+      "positions": [
+        "decimalmeasure3:3",
+        "decimalmeasure3:4"
+      ],
+      "patch": "patches/P009E.patch",
+      "patchSha256": "c7d5744f1cc9869bdcfe26c846820c5c459c35e0479c340d3d33f13e9ab086fe",
+      "receipt": "receipts/P009E.json",
+      "receiptSha256": "03e9c8c7774c1be4f196c8c54116389788c0788f9b43eaf6d8669a398e901af0",
+      "files": [
+        "dist/learning/p009e-decimal-complements-evidence.js",
+        "tests/p9-p009e-decimal-complements-browser.cjs",
+        "tests/p9-p009e-decimal-complements.test.mjs"
+      ]
+    }
+  ]
+}

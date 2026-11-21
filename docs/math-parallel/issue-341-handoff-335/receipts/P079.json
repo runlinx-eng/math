@@ -1,0 +1,59 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p079-net-surface",
+  "commit": "96ab1fb4c3aae65285e108d83526e5b7b6a299f1",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "netSurface",
+      "index": 0,
+      "nodeId": "mt_tegkuJA5gM",
+      "type": "x-a30-solid",
+      "taskHash": "615c0f44811c01763437d44c711822f7304e6d3447d5de01f9f5bfe2f98ecef4"
+    },
+    {
+      "sessionId": "netSurface",
+      "index": 1,
+      "nodeId": "mt_tegkuJA5gM",
+      "type": "x-a30-solid",
+      "taskHash": "8e8751bc6a4ffa9743447cab900d0b8282d8dd258c6d5adb9f8d13a757cf06a3"
+    }
+  ],
+  "node22": "4 PASS",
+  "referenceNode": "22 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 19,
+  "captures": 10,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "da48bb857517e1c4c29ef9ef01295ce20577ab57d18471487d893e84df6725c8",
+    "netSurface-0-correct-check-decoded.json": "bd60961724e956ef45ad0786c6aae282eb1fd570c73e181b6f4e75fe3d922b35",
+    "netSurface-0-correct-check-storage.txt": "bd60961724e956ef45ad0786c6aae282eb1fd570c73e181b6f4e75fe3d922b35",
+    "netSurface-0-correct.png": "55497676d50c2c72eef64a5d80a2d160ed480959b3036c58425cdb787750ab2f",
+    "netSurface-0-corrected-draft-decoded.json": "362e4bf72631e95cfdd9fa7aacfaa30d8d60b283520ca9ac4b8ea5da9c39c438",
+    "netSurface-0-corrected-draft-storage.txt": "362e4bf72631e95cfdd9fa7aacfaa30d8d60b283520ca9ac4b8ea5da9c39c438",
+    "netSurface-0-offline-reload-decoded.json": "d531642bfe9769b8253c7af1d75af2e425bb2a9b0e60fbf7edc652e2258de8cc",
+    "netSurface-0-offline-reload-storage.txt": "d531642bfe9769b8253c7af1d75af2e425bb2a9b0e60fbf7edc652e2258de8cc",
+    "netSurface-0-wrong-area-decoded.json": "35ee346e425b852c219ea7bd52f1b7c553bba4846d6835aaedacb8ab37824ee2",
+    "netSurface-0-wrong-area-storage.txt": "35ee346e425b852c219ea7bd52f1b7c553bba4846d6835aaedacb8ab37824ee2",
+    "netSurface-0-wrong.png": "1d45999f28ff68ddef77a64d9d99fbf44848c732f17d75893c4f56c2bb827e91",
+    "netSurface-1-correct-check-decoded.json": "930732d02858ebc454475e8a73e3e335f0e0f5b3e12d9f470814d6ee68c66828",
+    "netSurface-1-correct-check-storage.txt": "930732d02858ebc454475e8a73e3e335f0e0f5b3e12d9f470814d6ee68c66828",
+    "netSurface-1-correct.png": "aab95c6ca011b4adade109fdaaa481acaad42c5312032c0db27a611da3bd12a3",
+    "netSurface-1-corrected-draft-decoded.json": "f73656bb3c35ce856c6180a927465e67925a88e7cbabe1ba73f3971f7c15b220",
+    "netSurface-1-corrected-draft-storage.txt": "f73656bb3c35ce856c6180a927465e67925a88e7cbabe1ba73f3971f7c15b220",
+    "netSurface-1-offline-reload-decoded.json": "e7e6ff492fe328afe98ef3d55c839658676aba88a1c0999c187c02bd2f9bcf67",
+    "netSurface-1-offline-reload-storage.txt": "e7e6ff492fe328afe98ef3d55c839658676aba88a1c0999c187c02bd2f9bcf67",
+    "netSurface-1-restored-backup-decoded.json": "472b3347b1be42ba769e9dc93f5745b43a3ec3ebea21d620a946489655cf3663",
+    "netSurface-1-restored-backup-storage.txt": "472b3347b1be42ba769e9dc93f5745b43a3ec3ebea21d620a946489655cf3663",
+    "netSurface-1-retry-decoded.json": "0e8ceecbfb72a4268b434cab9c4ef7d332eec195fe08d3bf1c507ae9bcef9845",
+    "netSurface-1-retry-storage.txt": "0e8ceecbfb72a4268b434cab9c4ef7d332eec195fe08d3bf1c507ae9bcef9845",
+    "netSurface-1-wrong-area-decoded.json": "e34792d949f340ed5dc96b682d63cdc01cb9daa4c7363460fbdd91c8f4f01898",
+    "netSurface-1-wrong-area-storage.txt": "e34792d949f340ed5dc96b682d63cdc01cb9daa4c7363460fbdd91c8f4f01898",
+    "netSurface-1-wrong.png": "05bd6413fd0d01384198508bb586f59e2caf398de9f179eb8e01eebedbcb0246",
+    "results.json": "cca7d30d6dfa690a703af104fee3a33023614a4379b756e640c2602df4fa023a"
+  }
+}

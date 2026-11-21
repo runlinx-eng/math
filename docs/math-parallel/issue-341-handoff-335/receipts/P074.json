@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p074-complex-chain",
+  "commit": "d8771fc9c7d18379bb7ed8728d60b3ed9be15758",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "complex38",
+      "index": 2,
+      "nodeId": "mt_GpltXPoaoc",
+      "type": "x-r38-chain",
+      "taskHash": "dc29344b56a42563d492cdbfffe537182e4eb5b8d8fabf9cc45a2d302a909816"
+    }
+  ],
+  "node22": "5 PASS",
+  "referenceNode": "20 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "complex38-2-correct-check-decoded.json": "aae21ec7e9913e70fa9cc059c30b14e01fb422586557bbb86ae6b326adcdabec",
+    "complex38-2-correct-check-storage.txt": "aae21ec7e9913e70fa9cc059c30b14e01fb422586557bbb86ae6b326adcdabec",
+    "complex38-2-correct.png": "acde5ff0dbc5b72153be5f6ead83cecbdde4884eaa52df588d330f4caf4e4dde",
+    "complex38-2-corrected-draft-decoded.json": "3c6a04f64ea9d82fc1a900299080496654d43f70577a6b879d015506ed0a02f5",
+    "complex38-2-corrected-draft-storage.txt": "3c6a04f64ea9d82fc1a900299080496654d43f70577a6b879d015506ed0a02f5",
+    "complex38-2-offline-reload-decoded.json": "c277c5c56b6f524aedc4530f18354b3a48eb45f016f915a1572e2e54d287a1ff",
+    "complex38-2-offline-reload-storage.txt": "c277c5c56b6f524aedc4530f18354b3a48eb45f016f915a1572e2e54d287a1ff",
+    "complex38-2-restored-backup-decoded.json": "155c58717e9d894de20b20035c50439ce27bfabdf3c1970a57eabb0661a6524e",
+    "complex38-2-restored-backup-storage.txt": "155c58717e9d894de20b20035c50439ce27bfabdf3c1970a57eabb0661a6524e",
+    "complex38-2-retry-decoded.json": "b8554bfe42f625241ec608d555568bf7e42ed28d0641cbb10b6baebca2d3bc36",
+    "complex38-2-retry-storage.txt": "b8554bfe42f625241ec608d555568bf7e42ed28d0641cbb10b6baebca2d3bc36",
+    "complex38-2-wrong-check-decoded.json": "7212ed47c36db2eace91bdb2dded0936067420b59ad005c1f8c5b75defbf29ff",
+    "complex38-2-wrong-check-storage.txt": "7212ed47c36db2eace91bdb2dded0936067420b59ad005c1f8c5b75defbf29ff",
+    "complex38-2-wrong.png": "8af7f01ad5eb2a5c7ff45af2626096cd6a91c40da9d9eeb72f7338acaab851b3",
+    "native-state-v2.json": "9a674beaaa15a438e537d9c32326136a4ef658fa9d59cf6f3feed6d71781e556",
+    "results.json": "4d7c73d5cc4a9ef4be82413af545993c7e925754503379f298407789b97e491a"
+  }
+}

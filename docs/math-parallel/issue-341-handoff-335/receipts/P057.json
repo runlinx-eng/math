@@ -1,0 +1,44 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p057-chance-condition-sort",
+  "commit": "34e4845c7648cd4d0af32522fb7ef391b360ccc7",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "chanceindependent",
+      "index": 2,
+      "nodeId": "mt_dlg6i-Lw0I",
+      "type": "x-p22-sort",
+      "taskHash": "40b4314474c8ac6309f3282cff942dd91fd5b4f31b15919d511685aff9d03e0e"
+    }
+  ],
+  "node22": "3 PASS",
+  "referenceNode": "37 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "chanceindependent-0-prerequisite-run-decoded.json": "673d305dabd7cfaabc3aca165ebf8450d2477a2558391ae3ae21b01397b1729f",
+    "chanceindependent-0-prerequisite-run-storage.txt": "673d305dabd7cfaabc3aca165ebf8450d2477a2558391ae3ae21b01397b1729f",
+    "chanceindependent-2-correct-check-decoded.json": "be98e7a032fdf061ae4ddda256844702f9c169a26917e7c7ac1d2dc743ad6911",
+    "chanceindependent-2-correct-check-storage.txt": "be98e7a032fdf061ae4ddda256844702f9c169a26917e7c7ac1d2dc743ad6911",
+    "chanceindependent-2-correct.png": "c4c61270b79aca1f5dded3c216e6ba2c66d2f13aaab70fa7631de823da6c0506",
+    "chanceindependent-2-corrected-draft-decoded.json": "45bb1c4593a5013c544551eed40cefe83812f6331a920665c3bcae93474db755",
+    "chanceindependent-2-corrected-draft-storage.txt": "45bb1c4593a5013c544551eed40cefe83812f6331a920665c3bcae93474db755",
+    "chanceindependent-2-offline-reload-decoded.json": "b1f5bb6b9e395060453e6a3e0b0e6725ece3ab44f3f98656e078803ab4e2430e",
+    "chanceindependent-2-offline-reload-storage.txt": "b1f5bb6b9e395060453e6a3e0b0e6725ece3ab44f3f98656e078803ab4e2430e",
+    "chanceindependent-2-restored-backup-decoded.json": "d25acda40b87e0160b9ce4d14d4c3351266e3fbb75722ae5c0dbec886d876e9c",
+    "chanceindependent-2-restored-backup-storage.txt": "d25acda40b87e0160b9ce4d14d4c3351266e3fbb75722ae5c0dbec886d876e9c",
+    "chanceindependent-2-retry-decoded.json": "794e409f3a234c63dfb2be9c1debc936653274107a8fdeb0496bee46fc918343",
+    "chanceindependent-2-retry-storage.txt": "794e409f3a234c63dfb2be9c1debc936653274107a8fdeb0496bee46fc918343",
+    "chanceindependent-2-wrong-check-decoded.json": "06694de1df39ab2a0231e538a2b759b464df28cefbc12787529fd688339d4fcc",
+    "chanceindependent-2-wrong-check-storage.txt": "06694de1df39ab2a0231e538a2b759b464df28cefbc12787529fd688339d4fcc",
+    "chanceindependent-2-wrong.png": "e945bfd407d60779768649aefca3f973b79c89e3384ba0cfdcaa4c2ecfa5ebee",
+    "native-state-v2.json": "90c82f67eae96355e642e69dbf86cc0df623e4008ad8cd0ffdc8c1c36eaf3b6b",
+    "results.json": "b8d6fadf20bc15d94155a202a096f7a2991c70b585815c9cd01e5cbc8f0db584"
+  }
+}

@@ -1,0 +1,568 @@
+diff --git a/dist/learning/p079-net-surface-evidence.js b/dist/learning/p079-net-surface-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..fdb51994dcca422e6561c486ebf79b4b26e65ab4
+--- /dev/null
++++ b/dist/learning/p079-net-surface-evidence.js
+@@ -0,0 +1,379 @@
++import {number} from './phase5/b20-model.js';
++import {initial, inspect, valid} from './phase5/b30-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++const type = 'x-a30-solid';
++const REVIEWED = Object.freeze([
++  {
++    "sessionId": "netSurface",
++    "index": 0,
++    "nodeId": "mt_tegkuJA5gM",
++    "type": "x-a30-solid",
++    "taskHash": "615c0f44811c01763437d44c711822f7304e6d3447d5de01f9f5bfe2f98ecef4",
++    "task": {
++      "type": "x-a30-solid",
++      "kind": "box",
++      "prompt": "长 5 cm、宽 4 cm、高 3 cm。转动盒子，选出全部六面并记录各面面积。",
++      "size": [
++        5,
++        4,
++        3
++      ],
++      "unit": "cm",
++      "faces": [
++        {
++          "name": "前面",
++          "dims": "5×3",
++          "area": 15
++        },
++        {
++          "name": "后面",
++          "dims": "5×3",
++          "area": 15
++        },
++        {
++          "name": "左面",
++          "dims": "4×3",
++          "area": 12
++        },
++        {
++          "name": "右面",
++          "dims": "4×3",
++          "area": 12
++        },
++        {
++          "name": "上面",
++          "dims": "5×4",
++          "area": 20
++        },
++        {
++          "name": "底面",
++          "dims": "5×4",
++          "area": 20
++        }
++      ],
++      "net": [
++        {
++          "index": 0,
++          "points": [
++            [
++              4,
++              4
++            ],
++            [
++              9,
++              4
++            ],
++            [
++              9,
++              7
++            ],
++            [
++              4,
++              7
++            ]
++          ]
++        },
++        {
++          "index": 1,
++          "points": [
++            [
++              4,
++              11
++            ],
++            [
++              9,
++              11
++            ],
++            [
++              9,
++              14
++            ],
++            [
++              4,
++              14
++            ]
++          ]
++        },
++        {
++          "index": 2,
++          "points": [
++            [
++              0,
++              4
++            ],
++            [
++              4,
++              4
++            ],
++            [
++              4,
++              7
++            ],
++            [
++              0,
++              7
++            ]
++          ]
++        },
++        {
++          "index": 3,
++          "points": [
++            [
++              9,
++              4
++            ],
++            [
++              13,
++              4
++            ],
++            [
++              13,
++              7
++            ],
++            [
++              9,
++              7
++            ]
++          ]
++        },
++        {
++          "index": 4,
++          "points": [
++            [
++              4,
++              0
++            ],
++            [
++              9,
++              0
++            ],
++            [
++              9,
++              4
++            ],
++            [
++              4,
++              4
++            ]
++          ]
++        },
++        {
++          "index": 5,
++          "points": [
++            [
++              4,
++              7
++            ],
++            [
++              9,
++              7
++            ],
++            [
++              9,
++              11
++            ],
++            [
++              4,
++              11
++            ]
++          ]
++        }
++      ],
++      "requiredFaces": [
++        0,
++        1,
++        2,
++        3,
++        4,
++        5
++      ],
++      "surface": 94
++    },
++    "question": "为什么 5×4×3 的长方体有 3 对相对面，展开后总表面积是 94 cm²？"
++  },
++  {
++    "sessionId": "netSurface",
++    "index": 1,
++    "nodeId": "mt_tegkuJA5gM",
++    "type": "x-a30-solid",
++    "taskHash": "8e8751bc6a4ffa9743447cab900d0b8282d8dd258c6d5adb9f8d13a757cf06a3",
++    "task": {
++      "type": "x-a30-solid",
++      "kind": "pyramid",
++      "prompt": "方形底边 6 cm，每个三角面的垂直面高 5 cm。看立体和展开图，算外表。",
++      "size": [
++        6,
++        5
++      ],
++      "unit": "cm",
++      "faces": [
++        {
++          "name": "正方形底",
++          "dims": "6×6",
++          "area": 36
++        },
++        {
++          "name": "三角面一",
++          "dims": "底6，高5，除以2",
++          "area": 15
++        },
++        {
++          "name": "三角面二",
++          "dims": "底6，高5，除以2",
++          "area": 15
++        },
++        {
++          "name": "三角面三",
++          "dims": "底6，高5，除以2",
++          "area": 15
++        },
++        {
++          "name": "三角面四",
++          "dims": "底6，高5，除以2",
++          "area": 15
++        }
++      ],
++      "net": [
++        {
++          "index": 0,
++          "points": [
++            [
++              5,
++              5
++            ],
++            [
++              11,
++              5
++            ],
++            [
++              11,
++              11
++            ],
++            [
++              5,
++              11
++            ]
++          ]
++        },
++        {
++          "index": 1,
++          "points": [
++            [
++              5,
++              5
++            ],
++            [
++              11,
++              5
++            ],
++            [
++              8,
++              0
++            ]
++          ]
++        },
++        {
++          "index": 2,
++          "points": [
++            [
++              11,
++              5
++            ],
++            [
++              11,
++              11
++            ],
++            [
++              16,
++              8
++            ]
++          ]
++        },
++        {
++          "index": 3,
++          "points": [
++            [
++              11,
++              11
++            ],
++            [
++              5,
++              11
++            ],
++            [
++              8,
++              16
++            ]
++          ]
++        },
++        {
++          "index": 4,
++          "points": [
++            [
++              5,
++              11
++            ],
++            [
++              5,
++              5
++            ],
++            [
++              0,
++              8
++            ]
++          ]
++        }
++      ],
++      "requiredFaces": [
++        0,
++        1,
++        2,
++        3,
++        4
++      ],
++      "surface": 96
++    },
++    "question": "为什么方形棱锥的 4 个三角面面积都要除以 2，和底面合起来共 96 cm²？"
++  }
++]);
++export const P079_SOURCES = Object.freeze(REVIEWED.map(({sessionId, index, nodeId, type: t, taskHash}) => Object.freeze({sessionId, index, nodeId, type: t, taskHash})));
++
++export function p079NetSurfaceBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = REVIEWED.find(e => e.sessionId === context.sessionId && e.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, {type, nodeId: entry.nodeId})) return null;
++  return {nodeId: entry.nodeId, kind: 'p079-net-surface', method: null, question: entry.question};
++}
++
++function exactFaces(task) {
++  if (task.kind === 'box') { const [l, w, h] = task.size; return [l*h, l*h, w*h, w*h, l*w, l*w]; }
++  const [b, sh] = task.size; return [b*b, b*sh/2, b*sh/2, b*sh/2, b*sh/2];
++}
++
++export function replayP079NetSurfaceEvidence(task, model, context) {
++  try {
++    const binding = p079NetSurfaceBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const faceCount = task.faces.length, selected = new Set();
++    let turns = 0;
++    for (const ev of model.history) {
++      if (!hasExactKeys(ev, ['a', 'i', 'f']) || !hasExactKeys(ev.f, [])) return null;
++      if (ev.a === 'face' && /^\d+$/.test(ev.i) && Number(ev.i) < faceCount && ev.i === String(Number(ev.i))) {
++        const idx = Number(ev.i); if (!selected.delete(idx)) selected.add(idx);
++      } else if (ev.a === 'turn' && ev.i === '') turns++;
++      else return null;
++    }
++    const allIdx = Array.from({length: faceCount}, (_, i) => i);
++    if (!turns || !model.board.turned || !sameEvidence([...selected], model.board.selected) || !sameEvidence([...selected].sort((a,b)=>a-b), allIdx)) return null;
++    const areas = exactFaces(task), total = areas.reduce((s, x) => s + x, 0);
++    if (!sameEvidence(model.faceValues.map(number), areas) || number(model.area) !== total || model.unit !== task.unit + '²' || !inspect(task, model).correct) return null;
++    return {binding, kind: task.kind, faceAreas: areas, surface: total, turns};
++  } catch { return null; }
++}
++
++export function submittedP079NetSurfaceEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP079NetSurfaceEvidence(task, model, context);
++}
+diff --git a/tests/p9-p079-net-surface-browser.cjs b/tests/p9-p079-net-surface-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..f76ad9382ef6d5baf95e67f6f687ced52a9925a4
+--- /dev/null
++++ b/tests/p9-p079-net-surface-browser.cjs
+@@ -0,0 +1,125 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P079_ARTIFACTS || path.join(root, 'verification/p9-p079-net-surface'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (await c.count() === 0 && sel.startsWith('#extra-controls ')) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function field(page, key, val) {
++  const inp = await openControl(page, '#extra-controls [data-xfield="' + key + '"]');
++  if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(val)); else await inp.fill(String(val));
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P079_SOURCES, replayP079NetSurfaceEvidence, submittedP079NetSurfaceEvidence} = await entry('dist/learning/p079-net-surface-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b30-model.js');
++  const cases = P079_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP079NetSurfaceEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P079');
++    ok((await page.goto(origin.base + 'learn.html#netSurface'))?.fromServiceWorker() === true, 'opens offline');
++    await page.waitForFunction(() => window.mathLesson);
++    const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++    for (const row of cases) {
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, 'hash');
++      await (await openControl(page, '#extra-controls [data-x="turn-extra"]')).click();
++      for (let i = 0; i < row.task.faces.length; i++) {
++        await (await openControl(page, '#extra-controls [data-x="a30-face"][data-index="' + i + '"]')).click();
++        await field(page, 'faceValues.' + i, row.task.faces[i].area);
++      }
++      await field(page, 'area', row.task.surface + 10); await field(page, 'unit', row.task.unit + '²');
++      await page.locator('#actions [data-do="check"]').click();
++      ok(!proof(row, await observe(page, row, 'wrong-area')), 'wrong rejected');
++      await picture(page, row.id + '-' + row.index + '-wrong.png');
++      await field(page, 'area', row.task.surface);
++      const draft = await observe(page, row, 'corrected-draft');
++      ok(Boolean(replayP079NetSurfaceEvidence(row.task, draft.model, row.context)) && !proof(row, draft), 'needs Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good = await observe(page, row, 'correct-check');
++      const accepted = proof(row, good);
++      ok(good.attempts.length === 2 && accepted?.surface === row.task.surface, 'verified');
++      await picture(page, row.id + '-' + row.index + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, 'reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      if (row.index === 0) await page.locator('#actions [data-do="next"]').click();
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType:'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p079.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p079r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#netSurface');
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    assert.deepEqual(proof(last.row, await observe(restorePage, last.row, 'restored-backup')), last.accepted);
++    await page.goto(origin.base + 'learn.html#netSurface');
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P079_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p079-net-surface-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P079_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p079-net-surface.test.mjs b/tests/p9-p079-net-surface.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..281b638ddadc56a88238ed40c715930c853b1af2
+--- /dev/null
++++ b/tests/p9-p079-net-surface.test.mjs
+@@ -0,0 +1,46 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b30-model.js';
++import {P079_SOURCES, p079NetSurfaceBinding, replayP079NetSurfaceEvidence, submittedP079NetSurfaceEvidence} from '../dist/learning/p079-net-surface-evidence.js';
++
++const cases = P079_SOURCES.map(source => ({source, context: {sessionId: source.sessionId, index: source.index}, task: sessionTaskFor(source.sessionId, source.index)}));
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++const complete = (e, turn = true) => {
++  const m = original.initial(e.task);
++  if (turn) original.act(e.task, m, 'a30-turn');
++  for (let i = 0; i < e.task.faces.length; i++) { original.act(e.task, m, 'a30-face', {index: i}); m.faceValues[i] = String(e.task.faces[i].area); }
++  m.area = String(e.task.surface); m.unit = e.task.unit + '²'; return m;
++};
++
++test('P079 locks fingerprints', () => {
++  for (const e of cases) {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(e.task))).digest('hex'), e.source.taskHash);
++    assert.equal(p079NetSurfaceBinding(e.task, e.context)?.nodeId, e.source.nodeId);
++  }
++});
++test('P079 verifies box 94 and pyramid 96', () => {
++  const want = [94, 96];
++  for (let i = 0; i < cases.length; i++) {
++    const m = complete(cases[i], true), before = structuredClone(m);
++    assert.equal(replayP079NetSurfaceEvidence(cases[i].task, m, cases[i].context)?.surface, want[i]);
++    assert.deepEqual(m, before);
++    assert.equal(replayP079NetSurfaceEvidence(cases[i].task, complete(cases[i], false), cases[i].context), null);
++  }
++});
++test('P079 requires fresh Check and rejects wrong area/unit', () => {
++  for (const e of cases) {
++    const good = complete(e, true), bad = structuredClone(good); bad.area = '999';
++    assert.equal(submittedP079NetSurfaceEvidence(e.task, bad, {attempts:[{value:bad}]}, e.context), null);
++    assert.equal(submittedP079NetSurfaceEvidence(e.task, good, {attempts:[{value:bad}]}, e.context), null);
++    assert.equal(submittedP079NetSurfaceEvidence(e.task, good, {attempts:[{value:bad},{value:good}]}, e.context)?.surface, e.task.surface);
++    const bu = structuredClone(good); bu.unit = 'cm'; assert.equal(replayP079NetSurfaceEvidence(e.task, bu, e.context), null);
++  }
++});
++test('P079 excludes practice and bridges', async () => {
++  await ensureB39Ready();
++  assert.equal(p079NetSurfaceBinding(cases[0].task, {sessionId: 'netSurface', index: -1}), null);
++  for (const [id, b] of Object.entries(BRIDGES)) for (const [idx, rel] of b.tasks.entries()) if (rel?.type === 'x-a30-solid') assert.equal(p079NetSurfaceBinding(rel, {sessionId: id, index: idx}), null);
++});

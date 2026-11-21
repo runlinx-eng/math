@@ -1,0 +1,494 @@
+diff --git a/dist/learning/p104-step-tools-evidence.js b/dist/learning/p104-step-tools-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..259de7aca62ac112b3792c2c997ec7ae01395332
+--- /dev/null
++++ b/dist/learning/p104-step-tools-evidence.js
+@@ -0,0 +1,83 @@
++import {equal, parse} from './phase5/b09-math.js';
++import {initial, inspect, valid} from './phase5/b09-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'toolchoice';
++const nodeId = 'mt_zMEvtigoM3';
++const type = 'x-toolwork';
++const kind = 'p104-step-tools';
++const mode = 'calculate';
++const reviewed = [
++  {
++    taskHash:'f737425d54111adc53d3a5b1525b5cfa9ade58ff320f70ef0075cf48167f808b',
++    task:{type,mode,start:34,change:28,prompt:'算34+28。选数轴或百数表，用十和一走到结果；也可以换工具比较。'}
++  },
++  {
++    taskHash:'b370a5b450a6c320a6a883e3c0ce8f1c96646b7c3c54f1cd9b6355f1bbf7eaf6',
++    task:{type,mode,start:72,change:-36,prompt:'换成72−36，选一个工具实际做一遍。'}
++  }
++];
++
++export const P104_SOURCES = Object.freeze(reviewed.map(({taskHash},index) =>
++  Object.freeze({sessionId,index,nodeId,type,taskHash})
++));
++
++export function p104StepToolsBinding(task,context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId ||
++      !sameEvidence(task,reviewed[context.index]?.task) ||
++      !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind,method:null,question:'你走了多少个十和一？从原起点出发，最终在哪个数上？'};
++}
++
++export function replayP104StepToolsEvidence(task,model,context) {
++  try {
++    const binding = p104StepToolsBinding(task,context);
++    const blank = binding && initial(task);
++    if (!binding || !hasExactKeys(model,Object.keys(blank)) || !valid(task,model) ||
++        !model.history.length || Object.keys(model.history).length !== model.history.length ||
++        !['red','blue','zero','length','segments','unit'].every(key => sameEvidence(model[key],blank[key]))) return null;
++
++    const {start,change} = task;
++    const end = start+change;
++    const routes = {
++      line:{position:start, steps:[]},
++      hundred:{position:start, steps:[]}
++    };
++    if (!Object.hasOwn(routes,model.tool)) return null;
++    for (const [index,event] of model.history.entries()) {
++      if (!hasExactKeys(event,['tool','value']) || !Object.hasOwn(routes,event.tool) ||
++          ![-10,-1,1,10].includes(event.value)) return null;
++      const path = routes[event.tool];
++      const from = path.position;
++      const to = from+event.value;
++      if (to<0 || to>100) return null;
++      path.steps.push({index,from,delta:event.value,to});
++      path.position = to;
++    }
++    if (!sameEvidence(routes.line.steps.map(step => step.delta),model.line) ||
++        !sameEvidence(routes.hundred.steps.map(step => step.delta),model.grid)) return null;
++    const active = routes[model.tool];
++    if (!active.steps.length || active.position !== end || !equal(parse(model.answer),[end,1]) ||
++        !inspect(task,model).correct) return null;
++
++    return {
++      kind,nodeId,sessionId,index:context.index,
++      start,change,end,tool:model.tool,routes,
++      toolSelectionTimingAssessed:false,
++      learnerMasteryAssessed:false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP104StepToolsEvidence(task,model,record,context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP104StepToolsEvidence(task,model,context);
++}
+diff --git a/tests/p9-p104-step-tools-browser.cjs b/tests/p9-p104-step-tools-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..017e0f6a3643d73f35b2cc7f4e32bf7ca0d2b5ab
+--- /dev/null
++++ b/tests/p9-p104-step-tools-browser.cjs
+@@ -0,0 +1,256 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P104_ARTIFACTS || path.join(root, 'verification/p9-p104-step-tools'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (row.index === 0) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++    const start = page.locator('[data-do="start"]');
++    if (await start.isVisible()) await start.click();
++  } else {
++    await page.locator('#actions [data-do="next"]').click();
++    checks.push('native Next reaches the second position');
++  }
++  await page.waitForFunction(({id,index}) => {
++    const snap = window.mathLesson?.snapshot();
++    return snap?.id === id && snap.index === index;
++  },row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P104_SOURCES, replayP104StepToolsEvidence, submittedP104StepToolsEvidence} =
++    await entry('dist/learning/p104-step-tools-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b09-model.js');
++  const facts = [
++    {end:62, steps:[10,10,1,1,1,1,1,1,1,1], tool:'line', other:'hundred'},
++    {end:36, steps:[-10,-10,-10,-1,-1,-1,-1,-1,-1], tool:'hundred', other:'line'}
++  ];
++  const cases = P104_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), ...facts[i]};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP104StepToolsEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      line: result.model.line, grid: result.model.grid, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value) {
++    const loc = await openControl(p, '#extra-controls [data-xfield="' + name + '"]');
++    await loc.fill(String(value));
++    assert.equal(await loc.inputValue(),String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P104');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const select = async tool => {
++        const button = await openControl(page,'#extra-visual [data-x="tool-select"][data-value="' + tool + '"]');
++        await button.click();
++        return button.getAttribute('aria-pressed');
++      };
++      const move = delta => click(page,'#extra-controls [data-x="tool-move"][data-delta="' + delta + '"]');
++      ok(await select(row.other) === 'true', tag + ' opens the alternate original tool');
++      await move(Math.sign(row.task.change));
++      const partial = await observe(page,row,'alternate-tool');
++      assert.deepEqual(partial.model.history,[{tool:row.other,value:Math.sign(row.task.change)}]);
++      ok(await select(row.tool) === 'true', tag + ' switches to the original completing tool');
++      for (const step of row.steps) await move(step);
++
++      await field(page,'answer',row.task.change);
++      await click(page,'#actions [data-do="check"]');
++      const wrong = await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task,wrong.attempts[0].value).correct &&
++        !proof(row,wrong),tag + ' actual Check rejects the change as the destination');
++      await picture(page,tag + '-wrong-check.png');
++
++      await field(page,'answer',row.end);
++      const draft = await observe(page,row,'corrected-draft');
++      const revised = replayP104StepToolsEvidence(row.task,draft.model,row.context);
++      assert.equal(revised?.end,row.end);
++      ok(!proof(row,draft),tag + ' amended destination requires a fresh Check');
++      await click(page,'#actions [data-do="check"]');
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.tool === row.tool,tag + ' actual latest Check matches the completed route');
++      assert.deepEqual(accepted.routes[row.tool].steps.map(step => step.delta),row.steps);
++      ok(accepted.routes[row.other].position === row.task.start + Math.sign(row.task.change) &&
++        accepted.routes[row.tool].position === row.end,tag + ' independent paths retain their own final positions');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p104-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p104-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p104-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P104_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p104-step-tools-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P104_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p104-step-tools.test.mjs b/tests/p9-p104-step-tools.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..33dc935cfd5fc388214273989d1af047cbd05242
+--- /dev/null
++++ b/tests/p9-p104-step-tools.test.mjs
+@@ -0,0 +1,137 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b09-model.js';
++import {
++  P104_SOURCES,p104StepToolsBinding,
++  replayP104StepToolsEvidence,submittedP104StepToolsEvidence
++} from '../dist/learning/p104-step-tools-evidence.js';
++
++const facts = [
++  {end:62, steps:[10,10,1,1,1,1,1,1,1,1],tool:'line',other:'hundred'},
++  {end:36, steps:[-10,-10,-10,-1,-1,-1,-1,-1,-1],tool:'hundred',other:'line'}
++];
++const rows = P104_SOURCES.map((source,i) => {
++  const {sessionId,index} = source;
++  return {source,context:{sessionId,index},task:sessionTaskFor(sessionId,index),...facts[i]};
++});
++
++const action = (row,model,name,data) => original.act(row.task,model,name,data);
++const select = (row,model,tool) => action(row,model,'tool-select',{value:tool});
++const move = (row,model,delta) => action(row,model,'tool-move',{delta});
++const replay = (row,model) => replayP104StepToolsEvidence(row.task,model,row.context);
++const submit = (row,model,...versions) => submittedP104StepToolsEvidence(row.task,model,
++  {attempts:versions.map(value => ({value:structuredClone(value)}))},row.context);
++
++function work(row,both = false) {
++  const model = original.initial(row.task);
++  select(row,model,row.other);
++  for (const delta of both ? row.steps : [Math.sign(row.task.change)]) move(row,model,delta);
++  select(row,model,row.tool);
++  for (const delta of row.steps) move(row,model,delta);
++  model.answer = String(row.end);
++  return model;
++}
++
++test('P104 binds both originals and the entire task fingerprints', () => {
++  assert.equal(rows.length,2);
++  for (const {source,task,context} of rows) {
++    const ordered = Object.fromEntries(Object.entries(task).sort(([a],[b]) => a.localeCompare(b,'en')));
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),source.taskHash);
++    assert.equal(p104StepToolsBinding(task,context)?.nodeId,source.nodeId);
++    assert.equal(p104StepToolsBinding({...task,start:0},context),null);
++    assert.equal(p104StepToolsBinding({...task,change:0},context),null);
++    assert.equal(p104StepToolsBinding(task,{...context,index:String(context.index)}),null);
++  }
++});
++
++test('P104 reconstructs both independent paths from the given origin', () => {
++  for (const row of rows) {
++    const model = work(row), before = structuredClone(model);
++    assert.equal(original.inspect(row.task,model).correct,true);
++    const proof = replay(row,model);
++    assert.equal(proof.start,row.task.start);
++    assert.equal(proof.end,row.end);
++    assert.equal(proof.change,row.task.change);
++    assert.equal(proof.tool,row.tool);
++    assert.deepEqual(proof.routes[row.tool].steps.map(step => step.delta),row.steps);
++    assert.equal(proof.routes[row.other].position,row.task.start+Math.sign(row.task.change));
++    assert.equal(proof.routes[row.tool].steps[0].from,row.task.start);
++    assert.equal(proof.routes[row.tool].steps.at(-1).to,row.end);
++    assert.deepEqual(model,before);
++  }
++});
++
++test('P104 accepts either complete path, backtracking and exact equivalent answers', () => {
++  for (const row of rows) {
++    const model = work(row,true);
++    select(row,model,row.other);
++    move(row,model,1);
++    move(row,model,-1);
++    model.answer = (row.end*2)+'/2';
++    const proof = replay(row,model);
++    assert.equal(proof.tool,row.other);
++    assert.equal(proof.routes[row.other].position,row.end);
++    assert.equal(proof.toolSelectionTimingAssessed,false);
++  }
++});
++
++test('P104 requires the current tool, destination and latest matching Check', () => {
++  const row = rows[0], model = work(row);
++  model.answer = String(row.task.change);
++  const wrong = structuredClone(model);
++  assert.equal(replay(row,wrong),null);
++  model.answer = String(row.end);
++  assert.equal(submit(row,model,wrong),null);
++  assert.equal(submit(row,model,wrong,model)?.end,62);
++  assert.equal(submit(row,model,model,wrong),null);
++  select(row,model,row.other);
++  assert.equal(replay(row,model),null);
++});
++
++test('P104 excludes reconstructed arrays, non-native event types and moves beyond the saved log', () => {
++  const row = rows[0];
++  for (const change of [
++    m => { m.history.length=0; },
++    m => { m.history[0].tool='ruler'; },
++    m => { m.history[1].value=-10; },
++    m => { m.history[0].unverified=true; },
++    m => { m.segments=[{tool:'ruler',zero:0,length:2}]; },
++    m => {
++      m.line = [-10,-10,-10,-10,10,10,10,10,...m.line];
++      m.history = [
++        ...m.line.map(value => ({tool:'line',value})),
++        ...m.grid.map(value => ({tool:'hundred',value}))
++      ];
++    }
++  ]) {
++    const model = work(row);
++    change(model);
++    assert.equal(replay(row,model),null,change.toString());
++  }
++  const capped = original.initial(row.task);
++  select(row,capped,row.other);
++  for (let i=0; i<100; i++) move(row,capped,i%2 ? -1 : 1);
++  select(row,capped,row.tool);
++  for (const delta of row.steps) move(row,capped,delta);
++  capped.answer=String(row.end);
++  assert.equal(original.inspect(row.task,capped).correct,true);
++  assert.equal(capped.history.length,100);
++  assert.equal(replay(row,capped),null);
++});
++
++test('P104 excludes the same payload at a different origin, other modes and bridges', async () => {
++  await ensureB39Ready();
++  for (const {task,context} of rows) {
++    assert.equal(p104StepToolsBinding(task,{...context,index:-1}),null);
++    assert.equal(p104StepToolsBinding(task,{sessionId:'strategy39',index:4}),null);
++    assert.equal(p104StepToolsBinding(sessionTaskFor('toolchoice',2),context),null);
++    for (const [sessionId,bridge] of Object.entries(BRIDGES)) {
++      for (const [index,related] of bridge.tasks.entries()) {
++        if (related?.type === task.type) assert.equal(p104StepToolsBinding(related,{sessionId,index}),null);
++      }
++    }
++  }
++});

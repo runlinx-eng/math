@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p059-whole-unit-walk",
+  "commit": "3ca286a3e03829e53e7a1767484c17a442388dd6",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "wholefractions",
+      "index": 0,
+      "nodeId": "mt_AYzE1EAvI0",
+      "type": "x-unitwalk",
+      "taskHash": "dabf9dc0e71a31b56110233f473f9e91fefc4fe4a6625b5486e613d9388be562"
+    }
+  ],
+  "node22": "3 PASS",
+  "referenceNode": "32 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "c13ace89591af0586bfce789bc4014e04ea3c41b1798c7c5b795116a01176b28",
+    "results.json": "3b5a7d6ea92a728714ace8aa7f9c096886b2c77b14b50c02785af5c6245461ac",
+    "wholefractions-0-correct-check-decoded.json": "34e9ca1b42452b6a156cea19b53e0d2ccb4794e355b387a771bfd2d8ea86a536",
+    "wholefractions-0-correct-check-storage.txt": "34e9ca1b42452b6a156cea19b53e0d2ccb4794e355b387a771bfd2d8ea86a536",
+    "wholefractions-0-correct.png": "54338e556a08aef3172eda39d3ff4fa8dcbd476e09ac2ba708f7f5412bdd276e",
+    "wholefractions-0-corrected-draft-decoded.json": "deae19e4e9edd667fc26091799354b989173338cd9a68de4369450b4427d484e",
+    "wholefractions-0-corrected-draft-storage.txt": "deae19e4e9edd667fc26091799354b989173338cd9a68de4369450b4427d484e",
+    "wholefractions-0-offline-reload-decoded.json": "1d2a0b26c8111fc64295d6a53a8a62c3004dc29f4917446c73acf9f6985cbc7a",
+    "wholefractions-0-offline-reload-storage.txt": "1d2a0b26c8111fc64295d6a53a8a62c3004dc29f4917446c73acf9f6985cbc7a",
+    "wholefractions-0-restored-backup-decoded.json": "9a2611eedb1bb0158dd714a56be73f1c30fa7f8a6e3798866b2f8698e9d39a14",
+    "wholefractions-0-restored-backup-storage.txt": "9a2611eedb1bb0158dd714a56be73f1c30fa7f8a6e3798866b2f8698e9d39a14",
+    "wholefractions-0-retry-decoded.json": "9daa1eda1a584f06adef0ca3ea9cbb65a6fcfd5616cff5fb029c27e6bd6757dc",
+    "wholefractions-0-retry-storage.txt": "9daa1eda1a584f06adef0ca3ea9cbb65a6fcfd5616cff5fb029c27e6bd6757dc",
+    "wholefractions-0-wrong-check-decoded.json": "66fc1cf66a69e102f8b6aac8e950b91ae1eee829d4ea9041311e072b039482b8",
+    "wholefractions-0-wrong-check-storage.txt": "66fc1cf66a69e102f8b6aac8e950b91ae1eee829d4ea9041311e072b039482b8",
+    "wholefractions-0-wrong.png": "35a38a0b613fb0fa98be10f09c66041b413590e07ef6c1c90e32685d4bce5c24"
+  }
+}

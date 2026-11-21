@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p067-similar-steps",
+  "commit": "46eb7be0afe4c403a62ec4d03ab13a5418163893",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "similar37",
+      "index": 3,
+      "nodeId": "mt_2OtRUM_0zW",
+      "type": "x-r37-steps",
+      "taskHash": "25d9a986bda4c2e3c8c7180318fe00a0c7dcbfbd8beec961363c4028a4d8c6ad"
+    }
+  ],
+  "node22": "4 PASS",
+  "referenceNode": "36 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "adea9490925c26cf75971d2517a19fd62ec9d327eda87f9d21d106d77b6dddeb",
+    "results.json": "321b1debac01e7b3fe321dd684da16c2fcd627ad6a71a61edc0e7f92411c4f7d",
+    "similar37-3-correct-check-decoded.json": "06755f0f7b991ce141429db140e15ae93456f0cd0dac73921584ac3ed8c9bc03",
+    "similar37-3-correct-check-storage.txt": "06755f0f7b991ce141429db140e15ae93456f0cd0dac73921584ac3ed8c9bc03",
+    "similar37-3-correct.png": "55326ba1f9610c964b3c0fb1b4ebdcb239e33fd021c4e32b2a0f3b31f738125a",
+    "similar37-3-corrected-draft-decoded.json": "f2f61166e8db380f261db2e6389ad577d645dd40819233449eee70d62230e0ec",
+    "similar37-3-corrected-draft-storage.txt": "f2f61166e8db380f261db2e6389ad577d645dd40819233449eee70d62230e0ec",
+    "similar37-3-offline-reload-decoded.json": "ce43933b205165aba549957de7361f18d75e2553956a7f29dff31e5d5e311252",
+    "similar37-3-offline-reload-storage.txt": "ce43933b205165aba549957de7361f18d75e2553956a7f29dff31e5d5e311252",
+    "similar37-3-restored-backup-decoded.json": "1816e93a32d65bcd748f44cc6ed84e9e4a89cab7191de193c9c69694a0890d01",
+    "similar37-3-restored-backup-storage.txt": "1816e93a32d65bcd748f44cc6ed84e9e4a89cab7191de193c9c69694a0890d01",
+    "similar37-3-retry-decoded.json": "5df7bd9ece3c2cc6ae3245cad9f9ed8f30e389b3285b0cd24d55075341a2ca09",
+    "similar37-3-retry-storage.txt": "5df7bd9ece3c2cc6ae3245cad9f9ed8f30e389b3285b0cd24d55075341a2ca09",
+    "similar37-3-wrong-step-decoded.json": "64022c632b37552684b0f470daf137cf09b437f2e571af5dea6f5fdaf9155e3a",
+    "similar37-3-wrong-step-storage.txt": "64022c632b37552684b0f470daf137cf09b437f2e571af5dea6f5fdaf9155e3a",
+    "similar37-3-wrong.png": "1c575b5eaed6025f412489e8264964de481e244cd62f51ab53673b4aa0bbb979"
+  }
+}

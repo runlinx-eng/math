@@ -1,0 +1,525 @@
+diff --git a/dist/learning/p102-product-grouping-evidence.js b/dist/learning/p102-product-grouping-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..10aaff84808d4bc407af23fc028a7932eecd4fdd
+--- /dev/null
++++ b/dist/learning/p102-product-grouping-evidence.js
+@@ -0,0 +1,103 @@
++import {initial, inspect, number, valid} from './phase5/b13-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'structurechoices';
++const nodeId = 'mt_hlGKg5M7qJ';
++const type = 'x-mulchain';
++const kind = 'p102-product-grouping';
++const reviewed = [
++  {
++    taskHash:'ed262920e9d32f3e5f625823ac136556301eea03da332647389d41a4611aab24',
++    task:{type,values:[25,4,4],prompt:'16可以分成4×4。自己选先配哪一对，让25×16变好算。'}
++  },
++  {
++    taskHash:'ae24507f82c8981c02bf089eda92dab6c4531f4067b52c01ff6d36f4814b7250',
++    task:{type,values:[23,4,4],prompt:'把25换成23，相同的结构还能让一对变成100吗？算完对比两次作品。'}
++  }
++];
++
++export const P102_SOURCES = Object.freeze(reviewed.map(({taskHash},index) =>
++  Object.freeze({sessionId,index,nodeId,type,taskHash})
++));
++
++export function p102ProductGroupingBinding(task,context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId ||
++      !sameEvidence(task,reviewed[context.index]?.task) ||
++      !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind,method:null,question:'先合了哪两个原数？另外一个数怎样进入最后的乘积？'};
++}
++
++export function replayP102ProductGroupingEvidence(task,model,context) {
++  try {
++    const binding = p102ProductGroupingBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue !== '' || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length) return null;
++
++    let groups = task.values.map((value,id) => ({ids:[id],value}));
++    let selected = [];
++    const merges = [], actions = [];
++    for (const [index,event] of model.history.entries()) {
++      const data = event.data;
++      if (data.bucket !== null || data.token !== null) return null;
++      if (event.action === 'b13-chain-pick') {
++        const groupIndex = data.index;
++        if (groups.length < 2 || !Number.isInteger(groupIndex) || groupIndex < 0 || groupIndex >= groups.length) return null;
++        const previous = selected.indexOf(groupIndex);
++        if (previous >= 0) selected.splice(previous,1);
++        else if (selected.length < 2) selected.push(groupIndex);
++        actions.push({index,action:'pick',ids:[...groups[groupIndex].ids],selected:selected.includes(groupIndex)});
++        continue;
++      }
++      if (data.index !== null) return null;
++      if (event.action === 'b13-chain-undo') {
++        const merge = merges.pop();
++        if (!merge) return null;
++        groups = merge.before;
++        selected = [];
++        actions.push({index,action:'undo',restored:groups.map(group => ({ids:[...group.ids],value:group.value}))});
++        continue;
++      }
++      if (event.action !== 'b13-chain-merge' || selected.length !== 2) return null;
++      const [first,second] = selected;
++      const left = groups[first], right = groups[second];
++      const value = left.value*right.value;
++      const ids = [...left.ids,...right.ids];
++      if (new Set(ids).size !== ids.length ||
++          ids.reduce((product,id) => product*task.values[id],1) !== value) return null;
++      const accepted = number(data.result) === value;
++      actions.push({index,action:'merge',left:left.ids,right:right.ids,product:value,raw:data.result,accepted});
++      if (accepted) {
++        merges.push({before:groups,left,right,result:data.result});
++        groups = groups.filter((_,i) => i !== first && i !== second);
++        groups.push({ids,value});
++        selected = [];
++      }
++    }
++
++    const product = task.values.reduce((total,value) => total*value,1);
++    if (merges.length !== 2 || groups.length !== 1 || groups[0].value !== product ||
++        !sameEvidence([...groups[0].ids].sort(),[0,1,2]) ||
++        !sameEvidence({groups,selected,merges},model.board) || model.result !== '' ||
++        number(model.answer) !== product || !inspect(task,model).correct) return null;
++
++    return {
++      kind,nodeId,sessionId,index:context.index,
++      factors:[...task.values],product,merges,actions,
++      learnerMasteryAssessed:false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP102ProductGroupingEvidence(task,model,record,context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP102ProductGroupingEvidence(task,model,context);
++}
+diff --git a/tests/p9-p102-product-grouping-browser.cjs b/tests/p9-p102-product-grouping-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..fd07fc9ee6a05224696c47ee1db9f2c572a90e9f
+--- /dev/null
++++ b/tests/p9-p102-product-grouping-browser.cjs
+@@ -0,0 +1,266 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P102_ARTIFACTS || path.join(root, 'verification/p9-p102-product-grouping'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (row.index === 0) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++    const start = page.locator('[data-do="start"]');
++    if (await start.isVisible()) await start.click();
++  } else {
++    await page.locator('#actions [data-do="next"]').click();
++    checks.push('native Next reaches the second position');
++  }
++  await page.waitForFunction(({id,index}) => {
++    const snap = window.mathLesson?.snapshot();
++    return snap?.id === id && snap.index === index;
++  },row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P102_SOURCES, replayP102ProductGroupingEvidence, submittedP102ProductGroupingEvidence} =
++    await entry('dist/learning/p102-product-grouping-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b13-model.js');
++  const facts = [[100,400],[92,368]];
++  const cases = P102_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), first:facts[i][0], product:facts[i][1]};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP102ProductGroupingEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      groups: result.model.board.groups, merges: result.model.board.merges, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value) {
++    const loc = await openControl(p, '#extra-controls [data-xfield="' + name + '"]');
++    await loc.fill(String(value));
++    assert.equal(await loc.inputValue(),String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P102');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const group = i => click(page,'#extra-visual [data-x="b13-chain-pick"][data-index="' + i + '"]');
++      const merge = async product => {
++        await field(page,'result',product);
++        await click(page,'#extra-controls [data-x="b13-chain-merge"]');
++      };
++      await group(1);
++      await group(2);
++      await merge(16);
++      const first = await observe(page,row,'first-pair');
++      assert.deepEqual(first.model.board.groups.at(-1),{ids:[1,2],value:16});
++      ok(first.model.board.merges.length === 1,tag + ' the two 4s have separate original IDs');
++      await click(page,'#extra-controls [data-x="b13-chain-undo"]');
++      const undone = await observe(page,row,'undo-pair');
++      assert.deepEqual(undone.model.board.groups.map(group => group.ids),[[0],[1],[2]]);
++      ok(undone.model.board.merges.length === 0,
++        tag + ' actual Undo restores the three original factors');
++
++      await group(0);
++      await group(1);
++      await merge(row.first+1);
++      const wrongMerge = await observe(page,row,'wrong-pair-product');
++      ok(wrongMerge.model.board.merges.length === 0 && wrongMerge.model.board.selected.length === 2,
++        tag + ' wrong pair product leaves the selected factors in place');
++      await merge(row.first);
++      await group(0);
++      await group(1);
++      await merge(row.product);
++      await field(page,'answer',row.first);
++      await click(page,'#actions [data-do="check"]');
++      const wrong = await observe(page,row,'wrong-total-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task,wrong.attempts[0].value).correct &&
++        !proof(row,wrong),tag + ' original Check rejects the partial product');
++      await picture(page,tag + '-wrong-total.png');
++
++      await field(page,'answer',row.product);
++      const draft = await observe(page,row,'corrected-draft');
++      const revised = replayP102ProductGroupingEvidence(row.task,draft.model,row.context);
++      assert.equal(revised?.product,row.product);
++      ok(!proof(row,draft),tag + ' corrected product requires a new Check');
++      await click(page,'#actions [data-do="check"]');
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.product === row.product,tag + ' latest original Check verifies both retained merges');
++      assert.deepEqual(accepted.merges.map(merge=>Number(merge.result)),[row.first,row.product]);
++      assert.deepEqual(good.model.board.groups.map(group=>[...group.ids].sort()),[[0,1,2]]);
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p102-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p102-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p102-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P102_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p102-product-grouping-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P102_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p102-product-grouping.test.mjs b/tests/p9-p102-product-grouping.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..8d026aa55414972f76d812b8674e469abd4d1d2b
+--- /dev/null
++++ b/tests/p9-p102-product-grouping.test.mjs
+@@ -0,0 +1,138 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b13-model.js';
++import {
++  P102_SOURCES,p102ProductGroupingBinding,
++  replayP102ProductGroupingEvidence,submittedP102ProductGroupingEvidence
++} from '../dist/learning/p102-product-grouping-evidence.js';
++
++const facts = [[100,400],[92,368]];
++const rows = P102_SOURCES.map((source,i) => {
++  const {sessionId,index} = source;
++  const [first,product] = facts[i];
++  return {source,context:{sessionId,index},task:sessionTaskFor(sessionId,index),first,product};
++});
++
++const act = (row,model,action,data) => original.act(row.task,model,'b13-chain-' + action,data);
++const pick = (row,model,index) => act(row,model,'pick',{index});
++const replay = (row,model) => replayP102ProductGroupingEvidence(row.task,model,row.context);
++const submit = (row,model,...versions) => submittedP102ProductGroupingEvidence(row.task,model,
++  {attempts:versions.map(value => ({value:structuredClone(value)}))},row.context);
++
++function merge(row,model,product) {
++  model.result = String(product);
++  act(row,model,'merge');
++}
++
++function work(row,alternate = false,undo = false) {
++  const model = original.initial(row.task);
++  if (undo || alternate) {
++    pick(row,model,1);
++    pick(row,model,2);
++    merge(row,model,16);
++    if (undo) act(row,model,'undo');
++  }
++  if (!alternate || undo) {
++    pick(row,model,0);
++    pick(row,model,1);
++    merge(row,model,row.first+1);
++    merge(row,model,row.first);
++  }
++  pick(row,model,0);
++  pick(row,model,1);
++  merge(row,model,row.product);
++  model.answer = String(row.product);
++  return model;
++}
++
++test('P102 binds the two complete original sources and fingerprints', () => {
++  assert.equal(rows.length,2);
++  for (const {source,task,context} of rows) {
++    const ordered = Object.fromEntries(Object.entries(task).sort(([a],[b]) => a.localeCompare(b,'en')));
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),source.taskHash);
++    assert.equal(p102ProductGroupingBinding(task,context)?.nodeId,source.nodeId);
++    assert.equal(p102ProductGroupingBinding({...task,values:[4,4,task.values[0]]},context),null);
++    assert.equal(p102ProductGroupingBinding({...task,prompt:'changed'},context),null);
++    assert.equal(p102ProductGroupingBinding(task,{...context,index:String(context.index)}),null);
++  }
++});
++
++test('P102 restores separate factor identities after Undo and counts each original once', () => {
++  for (const row of rows) {
++    const model = work(row,false,true), before = structuredClone(model);
++    assert.ok(original.inspect(row.task,model).correct);
++    const proof = replay(row,model);
++    assert.deepEqual(proof.factors,row.task.values);
++    assert.equal(proof.product,row.product);
++    assert.deepEqual(proof.merges.map(merge => Number(merge.result)),[row.first,row.product]);
++    assert.deepEqual(proof.actions.find(action => action.action === 'undo').restored.map(group => group.ids),
++      [[0],[1],[2]]);
++    const accepted = proof.actions.filter(action => action.action === 'merge' && action.accepted);
++    assert.deepEqual(accepted[0].left,[1]);
++    assert.deepEqual(accepted[0].right,[2]);
++    assert.equal(proof.actions.filter(action => action.action === 'merge' && !action.accepted).length,1);
++    assert.deepEqual(model,before);
++  }
++});
++
++test('P102 accepts grouping the two 4s or pairing the first factor with a 4', () => {
++  for (const row of rows) {
++    const primary = replay(row,work(row));
++    const alternate = replay(row,work(row,true));
++    assert.equal(Number(primary.merges[0].result),row.first);
++    assert.equal(Number(alternate.merges[0].result),16);
++    assert.equal(primary.product,alternate.product);
++  }
++});
++
++test('P102 requires two retained merges, exact total and a fresh matching Check', () => {
++  const row = rows[0], model = work(row,false,true);
++  model.answer = String(row.first);
++  const wrong = structuredClone(model);
++  assert.equal(replay(row,wrong),null);
++  model.answer = String(row.product);
++  assert.equal(submit(row,model,wrong),null);
++  assert.equal(submit(row,model,wrong,model)?.product,400);
++  const checked = structuredClone(model);
++  act(row,model,'undo');
++  assert.equal(replay(row,model),null);
++  pick(row,model,1);
++  pick(row,model,0);
++  merge(row,model,row.product);
++  assert.ok(replay(row,model));
++  assert.equal(submit(row,model,checked),null);
++});
++
++test('P102 rejects forged merge provenance, hidden coordinates and an incomplete path', () => {
++  const row = rows[1];
++  for (const change of [
++    m => { m.history.length=0; },
++    m => { m.history[0].data.token=0; },
++    m => { m.board.groups[0].ids=[0,1,1]; },
++    m => { m.board.merges[0].left.value=25; },
++    m => { m.result='368'; },
++    m => act(row,m,'undo'),
++    m => act(row,m,'pick',{index:0})
++  ]) {
++    const model = work(row);
++    change(model);
++    assert.equal(replay(row,model),null,change.toString());
++  }
++});
++
++test('P102 excludes other multiplication positions, practice and related bridges', async () => {
++  await ensureB39Ready();
++  for (const {task,context} of rows) {
++    assert.equal(p102ProductGroupingBinding(task,{...context,index:-1}),null);
++    assert.equal(p102ProductGroupingBinding(task,{sessionId:'factorpairs',index:2}),null);
++    assert.equal(p102ProductGroupingBinding(sessionTaskFor('factorpairs',2),context),null);
++    for (const [sessionId,bridge] of Object.entries(BRIDGES)) {
++      for (const [index,related] of bridge.tasks.entries()) {
++        if (related?.type === task.type) assert.equal(p102ProductGroupingBinding(related,{sessionId,index}),null);
++      }
++    }
++  }
++});

@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p062-zero-place-product",
+  "commit": "08961a16e316fcab5f7dfe2a7822232d3b098dbf",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "bigproduct",
+      "index": 2,
+      "nodeId": "mt_XLP1IM3Qbb",
+      "type": "x-multable",
+      "taskHash": "93c94b11850b6790d18c4ed0709321802d6fc61bd91793ee18c6a95e02fd48c7"
+    }
+  ],
+  "node22": "3 PASS",
+  "referenceNode": "30 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "bigproduct-2-correct-check-decoded.json": "6810c00db155fc440623f7289aa3664cba5c225fdf70c4227536108dbca1827a",
+    "bigproduct-2-correct-check-storage.txt": "6810c00db155fc440623f7289aa3664cba5c225fdf70c4227536108dbca1827a",
+    "bigproduct-2-correct.png": "129dc995f735808166311220726604dd30de241b9b0301e7973b76b5d524f928",
+    "bigproduct-2-corrected-draft-decoded.json": "6a7c7f1eaa730078ac50a5b722b9ac51a522b924929a0703d9265512df820db7",
+    "bigproduct-2-corrected-draft-storage.txt": "6a7c7f1eaa730078ac50a5b722b9ac51a522b924929a0703d9265512df820db7",
+    "bigproduct-2-offline-reload-decoded.json": "f24fd22d7a5ce9b99d2e3db7c49048d7c909e02a2d2990db13bf290bc533cada",
+    "bigproduct-2-offline-reload-storage.txt": "f24fd22d7a5ce9b99d2e3db7c49048d7c909e02a2d2990db13bf290bc533cada",
+    "bigproduct-2-restored-backup-decoded.json": "d355c6bf3842c98da2f53498a69a53873b696858ed606ef3aaf3df8d44a7c985",
+    "bigproduct-2-restored-backup-storage.txt": "d355c6bf3842c98da2f53498a69a53873b696858ed606ef3aaf3df8d44a7c985",
+    "bigproduct-2-retry-decoded.json": "93c775a04ba1ad67555fb25c251acdf45903d8ea893bafc1a95fea5956eb5e49",
+    "bigproduct-2-retry-storage.txt": "93c775a04ba1ad67555fb25c251acdf45903d8ea893bafc1a95fea5956eb5e49",
+    "bigproduct-2-wrong-check-decoded.json": "0db164d4ce87efde3229ab9f0265d4a6375c6efcf343ee92bc442194bc63df07",
+    "bigproduct-2-wrong-check-storage.txt": "0db164d4ce87efde3229ab9f0265d4a6375c6efcf343ee92bc442194bc63df07",
+    "bigproduct-2-wrong.png": "d653bad3bd0557a77c75a21213d2c0c96e253b9651ca16fce70b954fe8ab9308",
+    "native-state-v2.json": "7e72313834aec2d11f8204f6cec30095dd6b49355223de9694a4140a374af01a",
+    "results.json": "b36e0926ad37ccfb436754dce7c88871a851dbdb819d17ab55913aa25d670c81"
+  }
+}

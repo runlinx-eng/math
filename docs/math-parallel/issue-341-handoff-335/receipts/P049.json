@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p049-ratio-smallest-basket",
+  "commit": "64f7a69adce8fc3bd6cf8a6df133b8f5b78eece4",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "advancedPlan38",
+      "index": 1,
+      "nodeId": "mt_FieL-vVTI_",
+      "type": "x-r37-steps",
+      "taskHash": "fa0d999ca4035e429f02a11c1509d839b83aa3c2d90f8a7a4e94fbaab7c1bb58"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "36 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "advancedPlan38-1-correct-check-decoded.json": "b275198838108894a6dfcc315a1f16a3d7ece1c50e36210e8c4fd1ee0304de44",
+    "advancedPlan38-1-correct-check-storage.txt": "b275198838108894a6dfcc315a1f16a3d7ece1c50e36210e8c4fd1ee0304de44",
+    "advancedPlan38-1-correct.png": "273470606770f1b557f98e0e2f77bc84cfb0d9ea4cb2cb0b0299dd837bb51789",
+    "advancedPlan38-1-corrected-draft-decoded.json": "bd8586ce026ab2c2f359dc5e1a58a6da23973e1a23c2cd44070ec1c8b7cb1580",
+    "advancedPlan38-1-corrected-draft-storage.txt": "bd8586ce026ab2c2f359dc5e1a58a6da23973e1a23c2cd44070ec1c8b7cb1580",
+    "advancedPlan38-1-offline-reload-decoded.json": "8024028b8f51f85f8e9aafaf37d2674f23ddd6229606d62e1649764c84b07bb6",
+    "advancedPlan38-1-offline-reload-storage.txt": "8024028b8f51f85f8e9aafaf37d2674f23ddd6229606d62e1649764c84b07bb6",
+    "advancedPlan38-1-restored-backup-decoded.json": "a359089bf845a85d569f8c507b72559418b14a7e18414beb854801a767edeb64",
+    "advancedPlan38-1-restored-backup-storage.txt": "a359089bf845a85d569f8c507b72559418b14a7e18414beb854801a767edeb64",
+    "advancedPlan38-1-retry-decoded.json": "51ba1d1f86cd920ed1f1804826c0b3ff18209d6fd097f641d99e7e753c472288",
+    "advancedPlan38-1-retry-storage.txt": "51ba1d1f86cd920ed1f1804826c0b3ff18209d6fd097f641d99e7e753c472288",
+    "advancedPlan38-1-wrong-check-decoded.json": "40396fc6950415476694a2fe54f1c62f346016f420164f4fb7c0fd02d95aaac8",
+    "advancedPlan38-1-wrong-check-storage.txt": "40396fc6950415476694a2fe54f1c62f346016f420164f4fb7c0fd02d95aaac8",
+    "advancedPlan38-1-wrong.png": "8932b818dde6e453c9d1ea882936265967ab79f1a014850d9625c1b2f90c5ebf",
+    "native-state-v2.json": "b9fc6e0a18ecb3a1f0bf0dbe8e873d3f7e508d83e3e67cea5080b720a59c7812",
+    "results.json": "4314a49dc75599815e5cf4c59166634aae1788d6f0eb71096035cd4a16707fd9"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "status": "integration-ready",
+  "branch": "work/a/p009e-decimal-complements",
+  "commit": "685681b9779a871a6ebd849fa3676c23df60ce26",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "decimalmeasure3",
+      "index": 3,
+      "nodeId": "mt_sA2OvTiech",
+      "type": "x-complementpair",
+      "taskHash": "3163da45832ea57c20e567390b5c7da7838be4725c5ad1be335f45d2af50612b"
+    },
+    {
+      "sessionId": "decimalmeasure3",
+      "index": 4,
+      "nodeId": "mt_sA2OvTiech",
+      "type": "x-complementpair",
+      "taskHash": "b2729bf3190891d1f7010199cb36e22cec91cd86244ee0d161b86785101a8efb"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "37 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 22,
+  "captures": 11,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "decimalmeasure3-3-correct-check-decoded.json": "655365893be8dfbc362ca4baa30539011093e88bde77db0934e07377e9c104d3",
+    "decimalmeasure3-3-correct-check-storage.txt": "655365893be8dfbc362ca4baa30539011093e88bde77db0934e07377e9c104d3",
+    "decimalmeasure3-3-correct.png": "74e5d73ff3bbfed7985fe1eb7b02630e1591a97c48404ddcdda576f4d1646e9c",
+    "decimalmeasure3-3-corrected-draft-decoded.json": "f0f23ccae3703f3b69f68b63df606a24beb83ee3603365bc347bbe9ddc0ad430",
+    "decimalmeasure3-3-corrected-draft-storage.txt": "f0f23ccae3703f3b69f68b63df606a24beb83ee3603365bc347bbe9ddc0ad430",
+    "decimalmeasure3-3-offline-reload-decoded.json": "d8e38b982106169f0191061d2776a446c7ee82da1fe9de8d25096aee38859e61",
+    "decimalmeasure3-3-offline-reload-storage.txt": "d8e38b982106169f0191061d2776a446c7ee82da1fe9de8d25096aee38859e61",
+    "decimalmeasure3-3-restored-storage-decoded.json": "eccd33617db2bae252d92108d69aee57ca7bd94353f9b55b690958a571e37670",
+    "decimalmeasure3-3-restored-storage-storage.txt": "eccd33617db2bae252d92108d69aee57ca7bd94353f9b55b690958a571e37670",
+    "decimalmeasure3-3-wrong-check-decoded.json": "beb00780cb5c1fba395e1662615d512b9baa4332d737631cd5189b1f47949279",
+    "decimalmeasure3-3-wrong-check-storage.txt": "beb00780cb5c1fba395e1662615d512b9baa4332d737631cd5189b1f47949279",
+    "decimalmeasure3-3-wrong.png": "b659f06b31da1802b3229df05687baa57b5732f14e704620c05dec4ec61e46a0",
+    "decimalmeasure3-4-correct-check-decoded.json": "d41750c824a7f9e83683322de6709c3e75436c9352ea038eac733a4c06a56109",
+    "decimalmeasure3-4-correct-check-storage.txt": "d41750c824a7f9e83683322de6709c3e75436c9352ea038eac733a4c06a56109",
+    "decimalmeasure3-4-correct.png": "0ab442cd52ae08fb32aed83f6fdb2434f2d8ab3e48b19c65fd26de9a80808892",
+    "decimalmeasure3-4-corrected-draft-decoded.json": "8c19ef4526d1c01800654f45f4ca8f7c24aaa97b1c6e2aaf4a52c5ce2ec57085",
+    "decimalmeasure3-4-corrected-draft-storage.txt": "8c19ef4526d1c01800654f45f4ca8f7c24aaa97b1c6e2aaf4a52c5ce2ec57085",
+    "decimalmeasure3-4-offline-reload-decoded.json": "a4dbdc16ba5645adc73c39c71bc59443b4797d8783d1ef759030c92d3969de6f",
+    "decimalmeasure3-4-offline-reload-storage.txt": "a4dbdc16ba5645adc73c39c71bc59443b4797d8783d1ef759030c92d3969de6f",
+    "decimalmeasure3-4-restored-backup-decoded.json": "eccd33617db2bae252d92108d69aee57ca7bd94353f9b55b690958a571e37670",
+    "decimalmeasure3-4-restored-backup-storage.txt": "eccd33617db2bae252d92108d69aee57ca7bd94353f9b55b690958a571e37670",
+    "decimalmeasure3-4-retry-decoded.json": "2de1320ae75473c65227e7c4a311e65c119bed21a6d5b47ab66118381d7477e5",
+    "decimalmeasure3-4-retry-storage.txt": "2de1320ae75473c65227e7c4a311e65c119bed21a6d5b47ab66118381d7477e5",
+    "decimalmeasure3-4-wrong-check-decoded.json": "c15c9d6f7528284e75f8f20099f44d0a73fa765623bb77cd9faa6dd3b9e1c526",
+    "decimalmeasure3-4-wrong-check-storage.txt": "c15c9d6f7528284e75f8f20099f44d0a73fa765623bb77cd9faa6dd3b9e1c526",
+    "decimalmeasure3-4-wrong.png": "9899dbb2a7673637b83ef6fcd6d6ef50b45b58ba9b6f407899132f885ef991b3",
+    "native-state-v2.json": "4f0ac8015f85e3306823e88df1f4a59e17fc56114cda59c023929a5c9a586a6d",
+    "results.json": "bafe444b73c2d61f7b4354d2e013b8bdb454e6914d37d10fd4a5f244ddfd2145"
+  }
+}

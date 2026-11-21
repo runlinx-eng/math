@@ -1,0 +1,506 @@
+diff --git a/dist/learning/p108-digit-value-evidence.js b/dist/learning/p108-digit-value-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..099774c3f85700ad13b9eba3ead3becb3bc09775
+--- /dev/null
++++ b/dist/learning/p108-digit-value-evidence.js
+@@ -0,0 +1,102 @@
++import {equal, initial, inspect, valid} from './phase5/b16-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'mixedpoints';
++const nodeId = 'mt_PsylzZ9lHW';
++const type = 'x-digitlens';
++const kind = 'p108-digit-value';
++const taskHash = '382deaf14fd4d81d11481dea6430a0d07aa2659346c840c86ebef62eb3d18b67';
++const reviewed = {
++  type,
++  prompt:'每张卡只读高亮数字本身代表的量，往大处和小处都看一看。',
++  cases:[
++    {raw:'7,450,000,000',at:0,n:7000000000},
++    {raw:'0.0000064',at:7,n:6,d:1000000},
++    {raw:'305.0708',at:4,n:0},
++    {raw:'305.0708',at:7,n:8,d:10000}
++  ]
++};
++
++export const P108_SOURCES = Object.freeze([Object.freeze({sessionId,index:0,nodeId,type,taskHash})]);
++
++export function p108DigitValueBinding(task, context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId || context.index !== 0 ||
++      !sameEvidence(task,reviewed) || !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind,method:null,question:'高亮的数字在什么数位？这一位上的数字表示多少？'};
++}
++
++function readPlace({raw,at}) {
++  const decimal = raw.indexOf('.');
++  const boundary = decimal < 0 ? raw.length : decimal;
++  const digit = Number(raw[at]);
++  const exponent = at < boundary ? raw.slice(at + 1,boundary).replaceAll(',','').length : boundary - at;
++  return {
++    numeral:raw,
++    at,
++    digit,
++    exponent,
++    numerator:digit * 10 ** Math.max(0,exponent),
++    denominator:digit === 0 ? 1 : 10 ** Math.max(0,-exponent)
++  };
++}
++
++export function replayP108DigitValueEvidence(task, model, context) {
++  try {
++    const binding = p108DigitValueBinding(task,context);
++    const modelKeys = binding && Object.keys(initial(task));
++    if (!binding || !hasExactKeys(model,modelKeys) || !valid(task,model) || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length || model.issue !== '') return null;
++
++    const slots = modelKeys.filter(key => !['board','history','issue'].includes(key));
++    const cards = task.cases.map(readPlace);
++    if (!cards.every(({numerator,denominator},i) =>
++      BigInt(numerator) * BigInt(task.cases[i].d || 1) === BigInt(task.cases[i].n) * BigInt(denominator))) return null;
++
++    const seen = new Set([0]), saved = new Set(), latest = cards.map(() => null);
++    const actions = [];
++    let selected = 0, firstReading = null;
++    for (const [index,event] of model.history.entries()) {
++      if (!hasExactKeys(event,['action','data']) || !hasExactKeys(event.data?.fields,slots)) return null;
++      if (event.action === 'digit') {
++        if (!hasExactKeys(event.data,['index','fields']) || !/^[0-3]$/.test(event.data.index)) return null;
++        selected = Number(event.data.index);
++        seen.add(selected);
++        actions.push({index, action:'digit', card:selected});
++        continue;
++      }
++      if (event.action !== 'digit-save' || !hasExactKeys(event.data,['fields'])) return null;
++      const {numerator,denominator} = cards[selected];
++      const raw = event.data.fields.answer;
++      const accepted = equal(raw,numerator,denominator);
++      firstReading ??= raw;
++      const attempt = {index,action:'digit-save',card:selected,raw,accepted};
++      latest[selected] = attempt;
++      if (accepted) saved.add(selected);
++      actions.push(attempt);
++    }
++    if (!latest.every(reading => reading?.accepted) || !sameEvidence(model.board.seen,[...seen]) ||
++        !sameEvidence(model.board.records,[...saved]) || model.board.index !== selected ||
++        model.board.first !== firstReading || model.answer !== model.history.at(-1).data.fields.answer ||
++        !inspect(task,model).correct) return null;
++
++    return {
++      kind,nodeId,sessionId,index:context.index,
++      cards:cards.map((card,i) => ({...card, reading:latest[i]})),
++      actions,
++      learnerMasteryAssessed:false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP108DigitValueEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP108DigitValueEvidence(task,model,context);
++}
+diff --git a/tests/p9-p108-digit-value-browser.cjs b/tests/p9-p108-digit-value-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..d0f70f3d4a0fed4c2a64bf44bb72c2f6bc191282
+--- /dev/null
++++ b/tests/p9-p108-digit-value-browser.cjs
+@@ -0,0 +1,255 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P108_ARTIFACTS || path.join(root, 'verification/p9-p108-digit-value'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++  await page.waitForFunction(({id,index}) => {
++    const state = window.mathLesson?.snapshot();
++    return state?.id === id && state.index === index;
++  }, row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P108_SOURCES, replayP108DigitValueEvidence, submittedP108DigitValueEvidence} =
++    await entry('dist/learning/p108-digit-value-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b16-model.js');
++  const cases = P108_SOURCES.map(source => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index}, task:sessionTaskFor(sessionId,index)};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP108DigitValueEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      cards: result.model.board.records, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value, select = false) {
++    const loc = await openControl(p, '#extra-controls [data-xfield="' + name + '"]');
++    if (select) await loc.selectOption(value);
++    else await loc.fill(String(value));
++    assert.equal(await loc.inputValue(), String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P108');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const input = '#extra-controls [data-x="b16-digit-save"]';
++      const readings = ['7000000000','6/1000000','0','8/10000'];
++      const verifyCard = async i => {
++        assert.equal(await page.locator('.b16-numeral').innerText(),row.task.cases[i].raw);
++        assert.equal(await page.locator('.b16-numeral mark').innerText(),row.task.cases[i].raw[row.task.cases[i].at]);
++      };
++      const choose = async i => {
++        await click(page, '#extra-visual [data-x="b16-digit"][data-index="' + i + '"]');
++        await verifyCard(i);
++      };
++      const read = async value => {
++        await field(page,'answer',value);
++        await click(page,input);
++      };
++      await verifyCard(0);
++      await read('7450000000');
++      for (const i of [2,1,3]) {
++        await choose(i);
++        await read(readings[i]);
++      }
++      await click(page,'#actions [data-do="check"]');
++      const wrong = await observe(page,row,'wrong-check');
++      assert.deepEqual(wrong.model.board.records,[2,1,3]);
++      ok(wrong.attempts.length === 1 && !inspect(row.task,wrong.attempts[0].value).correct && !proof(row,wrong),
++        'whole numeral recorded as a wrong reading during original Check');
++      await picture(page, tag + '-wrong-check.png');
++
++      await choose(0);
++      await read(readings[0]);
++      const draft = await observe(page,row,'corrected-draft');
++      ok(replayP108DigitValueEvidence(row.task,draft.model,row.context)?.cards.length === 4 && !proof(row,draft),
++        'four saved card values require a new Check');
++      await click(page,'#actions [data-do="check"]');
++
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.cards.length === 4, 'actual latest Check with four exact card readings');
++      assert.deepEqual(accepted.cards.map(({digit,exponent,numerator,denominator}) =>
++        [digit,exponent,numerator,denominator]),
++        [[7,9,7000000000,1],[6,-6,6,1000000],[0,-1,0,1],[8,-4,8,10000]]);
++      ok(accepted.cards[2].numeral === accepted.cards[3].numeral &&
++        accepted.cards[2].at !== accepted.cards[3].at, 'two identical numerals preserve distinct highlighted places');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p108-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p108-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p108-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P108_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p108-digit-value-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P108_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p108-digit-value.test.mjs b/tests/p9-p108-digit-value.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..78a4a34c5ed42bbc53d84e86dffa4fc3f52c88cf
+--- /dev/null
++++ b/tests/p9-p108-digit-value.test.mjs
+@@ -0,0 +1,131 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b16-model.js';
++import {
++  P108_SOURCES,p108DigitValueBinding,
++  replayP108DigitValueEvidence,submittedP108DigitValueEvidence
++} from '../dist/learning/p108-digit-value-evidence.js';
++
++const [source] = P108_SOURCES;
++const {sessionId,index} = source;
++const context = {sessionId,index};
++const task = sessionTaskFor(sessionId,index);
++const readings = ['7000000000','6/1000000','0','8/10000'];
++const exact = [[7,9,7000000000,1],[6,-6,6,1000000],[0,-1,0,1],[8,-4,8,10000]];
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en'))
++      .map(key => [key,ordered(value[key])]));
++  }
++  return value;
++}
++
++const replay = model => replayP108DigitValueEvidence(task,model,context);
++const submit = (model,...snapshots) => submittedP108DigitValueEvidence(task,model,
++  {attempts:snapshots.map(value => ({value:structuredClone(value)}))},context);
++const select = (model,i) => original.act(task,model,'b16-digit',{index:i});
++const save = (model,answer) => {
++  model.answer = answer;
++  original.act(task,model,'b16-digit-save');
++};
++
++function work(withFirstCard = true) {
++  const model = original.initial(task);
++  save(model,'7450000000');
++  for (const i of [2,1,3,...(withFirstCard ? [0] : [])]) {
++    select(model,i);
++    save(model,readings[i]);
++  }
++  return model;
++}
++
++test('P108 binds the reviewed original and full source hash', () => {
++  assert.equal(P108_SOURCES.length,1);
++  assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),source.taskHash);
++  assert.equal(p108DigitValueBinding(task,context)?.nodeId,source.nodeId);
++  const changed = structuredClone(task);
++  changed.cases[0].at = 2;
++  assert.equal(p108DigitValueBinding(changed,context),null);
++  assert.equal(p108DigitValueBinding({...task,prompt:'different'},context),null);
++  assert.equal(p108DigitValueBinding(task,{...context,index:'0'}),null);
++});
++
++test('P108 derives integer, decimal and zero places from the exact highlighted position', () => {
++  const model = work(), before = structuredClone(model);
++  assert.equal(original.inspect(task,model).correct,true);
++  const proof = replay(model);
++  assert.deepEqual(proof.cards.map(({digit,exponent,numerator,denominator}) =>
++    [digit,exponent,numerator,denominator]),exact);
++  assert.deepEqual(proof.cards.map(card => card.reading.raw),readings);
++  assert.equal(proof.cards[2].numeral,proof.cards[3].numeral);
++  assert.notEqual(proof.cards[2].at,proof.cards[3].at);
++  assert.equal(proof.actions[0].accepted,false);
++  assert.deepEqual(model.board.records,[2,1,3,0]);
++  assert.deepEqual(model,before);
++});
++
++test('P108 requires all real saves and a latest matching original Check', () => {
++  const partial = work(false);
++  assert.equal(replay(partial),null);
++  const model = structuredClone(partial);
++  select(model,0);
++  model.answer = readings[0];
++  assert.equal(replay(model),null);
++  save(model,readings[0]);
++  assert.equal(replay(model)?.cards.length,4);
++  assert.equal(submit(model,partial),null);
++  assert.equal(submit(model,partial,model)?.cards.length,4);
++  assert.equal(submit(model,model,partial),null);
++
++  model.answer = '7';
++  assert.equal(original.inspect(task,model).correct,true);
++  assert.equal(replay(model),null);
++});
++
++test('P108 preserves a failed new save and requires it to be corrected on the same card', () => {
++  const model = work();
++  select(model,3);
++  save(model,'0.008');
++  select(model,2);
++  assert.equal(original.inspect(task,model).correct,true);
++  assert.equal(replay(model),null);
++  select(model,3);
++  save(model,'0.0008');
++  const proof = replay(model);
++  assert.equal(proof.cards[3].reading.raw,'0.0008');
++  assert.ok(proof.actions.some(action => action.card === 3 && action.raw === '0.008' && !action.accepted));
++});
++
++test('P108 rejects altered event payloads, forged saved cards and unsupported events', () => {
++  const changes = [
++    m => { m.history.length = 0; },
++    m => { m.history[1].data.index = '02'; },
++    m => { m.history[0].data.index = '0'; },
++    m => { m.board.records[0] = 0; },
++    m => { m.history[0].data.fields.answer = readings[0]; },
++    m => original.act(task,m,'b16-order',{index:0})
++  ];
++  for (const change of changes) {
++    const model = work();
++    change(model);
++    assert.equal(replay(model),null,change.toString());
++  }
++});
++
++test('P108 excludes neighboring source positions, practice and real bridge entries', async () => {
++  await ensureB39Ready();
++  assert.equal(p108DigitValueBinding(task,{...context,index:1}),null);
++  assert.equal(p108DigitValueBinding(task,{...context,index:-1}),null);
++  assert.equal(p108DigitValueBinding(sessionTaskFor(sessionId,1),context),null);
++  for (const [id,bridge] of Object.entries(BRIDGES)) {
++    for (const [i,related] of bridge.tasks.entries()) {
++      if (related?.type === task.type) assert.equal(p108DigitValueBinding(related,{sessionId:id,index:i}),null);
++    }
++    assert.equal(p108DigitValueBinding(task,{sessionId:id,index:0}),null);
++  }
++});

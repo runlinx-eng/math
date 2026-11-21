@@ -1,0 +1,61 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p027-equal-ratio-shares",
+  "commit": "6b30e4bb7884b6d6d2eab902d16acb01995649b3",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "modelChoice38",
+      "index": 0,
+      "nodeId": "mt_yqZiX6vS7D",
+      "type": "x-r37-share",
+      "taskHash": "4fe2a93628c3b9d1c6a1d389ee4ca5daaf88ab2d748cb85e31a267fa966c7c53"
+    },
+    {
+      "sessionId": "advancedPlan38",
+      "index": 0,
+      "nodeId": "mt_FieL-vVTI_",
+      "type": "x-r37-share",
+      "taskHash": "4fe2a93628c3b9d1c6a1d389ee4ca5daaf88ab2d748cb85e31a267fa966c7c53"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "36 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 23,
+  "captures": 11,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "advancedPlan38-0-correct-check-decoded.json": "02fd968a07540cc07e3344d1cbb3ea28d21ce7f3528256cde9bd9c15c4d9273b",
+    "advancedPlan38-0-correct-check-storage.txt": "02fd968a07540cc07e3344d1cbb3ea28d21ce7f3528256cde9bd9c15c4d9273b",
+    "advancedPlan38-0-correct.png": "98547743e2ae307547d8128160167f41bef4c21c71e0cdaed30cb766526c82e6",
+    "advancedPlan38-0-corrected-draft-decoded.json": "e8fadf8049d94a7f77f9a145a714ed06d6f1c97f199608ed17c2b9d345717841",
+    "advancedPlan38-0-corrected-draft-storage.txt": "e8fadf8049d94a7f77f9a145a714ed06d6f1c97f199608ed17c2b9d345717841",
+    "advancedPlan38-0-offline-reload-decoded.json": "02a788247096f63f03279eb37b4be1341309acd7ec2911b38f1ba43f2cabd758",
+    "advancedPlan38-0-offline-reload-storage.txt": "02a788247096f63f03279eb37b4be1341309acd7ec2911b38f1ba43f2cabd758",
+    "advancedPlan38-0-restored-backup-decoded.json": "05b9cf4afb129b4cae3001e4f99ddfcba101ef6fca007c97c316230f5a4cda53",
+    "advancedPlan38-0-restored-backup-storage.txt": "05b9cf4afb129b4cae3001e4f99ddfcba101ef6fca007c97c316230f5a4cda53",
+    "advancedPlan38-0-retry-decoded.json": "32674a0b7c71fa07f47035433255c217b24145b5b9c2d867ad573250c619aa30",
+    "advancedPlan38-0-retry-storage.txt": "32674a0b7c71fa07f47035433255c217b24145b5b9c2d867ad573250c619aa30",
+    "advancedPlan38-0-wrong-check-decoded.json": "400608b4d2e81d8bf33762f4da1b2a5a24ff1990321ecc12c0a53fbfef2981ea",
+    "advancedPlan38-0-wrong-check-storage.txt": "400608b4d2e81d8bf33762f4da1b2a5a24ff1990321ecc12c0a53fbfef2981ea",
+    "advancedPlan38-0-wrong.png": "b647a4020d6e23d57ac2f04444e9f12210d55f6fbe1f2365111c455305638cc3",
+    "modelChoice38-0-correct-check-decoded.json": "24f6342ef8c0eb445d7d003af9529e23da36487536fc85a1438fc8efc644806a",
+    "modelChoice38-0-correct-check-storage.txt": "24f6342ef8c0eb445d7d003af9529e23da36487536fc85a1438fc8efc644806a",
+    "modelChoice38-0-correct.png": "6e4a55444dc48c99ab9149283128e497b3470293a8d6cd1281c204ca1732935a",
+    "modelChoice38-0-corrected-draft-decoded.json": "87097eff844364c62fa14ad7eb273cae415844f434983b6b3b71b9880965782e",
+    "modelChoice38-0-corrected-draft-storage.txt": "87097eff844364c62fa14ad7eb273cae415844f434983b6b3b71b9880965782e",
+    "modelChoice38-0-offline-reload-decoded.json": "21aad9cb85116aeaffae0e1fb0a7d647d375f5744a51325ba6d736046042a3ce",
+    "modelChoice38-0-offline-reload-storage.txt": "21aad9cb85116aeaffae0e1fb0a7d647d375f5744a51325ba6d736046042a3ce",
+    "modelChoice38-0-restored-backup-decoded.json": "05b9cf4afb129b4cae3001e4f99ddfcba101ef6fca007c97c316230f5a4cda53",
+    "modelChoice38-0-restored-backup-storage.txt": "05b9cf4afb129b4cae3001e4f99ddfcba101ef6fca007c97c316230f5a4cda53",
+    "modelChoice38-0-wrong-check-decoded.json": "e5c9d5c6a0b25c1ed4bc8e45859b2a194cbf5fd54741c48636e11756431af0d9",
+    "modelChoice38-0-wrong-check-storage.txt": "e5c9d5c6a0b25c1ed4bc8e45859b2a194cbf5fd54741c48636e11756431af0d9",
+    "modelChoice38-0-wrong.png": "5c60cd8410be503c83c3e2ae3b5f8593cffb2d67ec3925e7e9f0165f0931d60a",
+    "native-state-v2.json": "1a66b8114d8d2246a1872edee62fece514b7433d0a8b4156582382c168e15a53",
+    "results.json": "f12981013836a5cd1f058029779a9e8ff5e5bdecdc1d29f964259d8ff9bd4e74"
+  }
+}

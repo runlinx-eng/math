@@ -1,0 +1,235 @@
+diff --git a/dist/learning/p066-data-clean-evidence.js b/dist/learning/p066-data-clean-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..053f11cf751e884166cfb114db4dbf3546d490c3
+--- /dev/null
++++ b/dist/learning/p066-data-clean-evidence.js
+@@ -0,0 +1,46 @@
++import {initial, inspect, valid} from './phase5/b19-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++const sessionId = 'checkrecords', index = 0, nodeId = 'mt_QHT16CrFO-', type = 'x-dataclean';
++const taskHash = "a901b8238ae22b1efcf8d6373d8cfb7b0f73ab4e587f4e6b24d32e262a325718", reviewed = {"type":"x-dataclean","prompt":"这张模拟表有空白和抄错的值。保留原表，按凭据逐条处理；没有凭据就别猜。","labels":["红","蓝","绿"],"rows":[{"id":"R01","raw":"红"},{"id":"R02","raw":"蓝"},{"id":"R03","raw":""},{"id":"R04","raw":"42","proof":"绿"},{"id":"R05","raw":"红"},{"id":"R06","raw":"蓝"},{"id":"R07","raw":"绿"},{"id":"R08","raw":"蓝"}]};
++export const P066_SOURCES = Object.freeze([Object.freeze({sessionId, index, nodeId, type, taskHash})]);
++
++export function p066DataCleanBinding(task, context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId || context.index !== index ||
++      !sameEvidence(task, reviewed) || !matchesNativeEvidenceTask(task, context, {type, nodeId})) return null;
++  return {nodeId, kind: 'p066-data-clean', method: null, question: '为什么有凭据的抄错记录（R04）可以更正为“绿”，而没有凭据的空白记录（R03）必须标为未知、不能硬猜？'};
++}
++
++export function replayP066DataCleanEvidence(task, model, context) {
++  try {
++    const binding = p066DataCleanBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const decisions = Array(task.rows.length).fill(null);
++    let cursor = 0, failed = 0, lastIssue = '';
++    for (const ev of model.history) {
++      if (!hasExactKeys(ev, ['a', 'd', 'f']) || !hasExactKeys(ev.d, [])) return null;
++      lastIssue = '';
++      if (ev.a === 'reset') { decisions.fill(null); cursor = 0; }
++      else if (ev.a === 'clean' && cursor < task.rows.length) {
++        const row = task.rows[cursor], isValid = task.labels.includes(row.raw);
++        const wantDec = isValid ? 'keep' : row.proof ? 'correct' : 'unknown';
++        const wantReason = isValid ? 'valid' : row.proof ? 'proof' : 'no-proof';
++        const okRow = ev.f.decision === wantDec && ev.f.cleanReason === wantReason &&
++          (!row.proof || ev.f.correction === row.proof);
++        if (!okRow) { lastIssue = 'bad-clean'; failed++; }
++        else { decisions[cursor] = {decision: wantDec, value: isValid ? row.raw : row.proof || null, reason: wantReason}; cursor++; }
++      } else return null;
++    }
++    const usable = decisions.filter(d => d && d.value !== null).length;
++    const unknown = task.rows.length - usable;
++    if (lastIssue !== '' || cursor !== task.rows.length || Number(model.usable) !== usable ||
++        Number(model.unknown) !== unknown || !inspect(task, model).correct) return null;
++    return {binding, totalRows: task.rows.length, usable, unknown, failed};
++  } catch { return null; }
++}
++
++export function submittedP066DataCleanEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP066DataCleanEvidence(task, model, context);
++}
+diff --git a/tests/p9-p066-data-clean-browser.cjs b/tests/p9-p066-data-clean-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..b513803d82719dc681a81482bafa1b53a18dd3eb
+--- /dev/null
++++ b/tests/p9-p066-data-clean-browser.cjs
+@@ -0,0 +1,143 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P066_ARTIFACTS || path.join(root, 'verification/p9-p066-data-clean'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (await c.count() === 0 && sel.startsWith('#extra-controls ')) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' + Object.entries(s.data || {}).map(([k, v]) => '[data-' + k + '="' + v + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P066_SOURCES, replayP066DataCleanEvidence, submittedP066DataCleanEvidence} = await entry('dist/learning/p066-data-clean-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b19 = await entry('dist/learning/phase5/b19-model.js');
++  const cases = P066_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP066DataCleanEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b19.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P066');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        await runSteps(page, b19.solveSteps(sessionTaskFor(row.id, cur)));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page, b19.solveSteps(row.task)); await (await openControl(page, '#extra-controls [data-xfield="usable"]')).fill('8');
++      await page.locator('#actions [data-do="check"]').click();
++      ok(!proof(row, await observe(page, row, 'wrong-check')), tag + ' wrong rejected');
++      await picture(page, tag + '-wrong.png');
++      await (await openControl(page, '#extra-controls [data-xfield="usable"]')).fill('7');
++      const draft = await observe(page, row, 'corrected-draft');
++      ok(Boolean(replayP066DataCleanEvidence(row.task, draft.model, row.context)) && !proof(row, draft), tag + ' needs Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good = await observe(page, row, 'correct-check');
++      const accepted = proof(row, good);
++      ok(good.attempts.length === 2 && Boolean(accepted), tag + ' verified');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p066.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p066r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    assert.deepEqual(proof(last.row, await observe(restorePage, last.row, 'restored-backup')), last.accepted);
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P066_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p066-data-clean-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P066_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p066-data-clean.test.mjs b/tests/p9-p066-data-clean.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..3865006ef6f142619402c45f58445ea2ef107530
+--- /dev/null
++++ b/tests/p9-p066-data-clean.test.mjs
+@@ -0,0 +1,28 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b19-model.js';
++import {P066_SOURCES, p066DataCleanBinding, replayP066DataCleanEvidence, submittedP066DataCleanEvidence} from '../dist/learning/p066-data-clean-evidence.js';
++
++const [source] = P066_SOURCES, context = {sessionId: source.sessionId, index: source.index}, task = sessionTaskFor(source.sessionId, source.index);
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++test('P066 locks checkrecords:0 fingerprint and replays all 8 cleaning decisions (7 usable, 1 unknown)', () => {
++  assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++  const m = original.example(task), before = structuredClone(m);
++  const p = replayP066DataCleanEvidence(task, m, context);
++  assert.equal(p?.usable, 7); assert.equal(p?.unknown, 1);
++  assert.deepEqual(m, before);
++});
++test('P066 rejects wrong usable/unknown counts and requires fresh Check', () => {
++  const good = original.example(task), bad = structuredClone(good); bad.usable = '8'; bad.unknown = '0';
++  assert.equal(submittedP066DataCleanEvidence(task, bad, {attempts:[{value:bad}]}, context), null);
++  assert.equal(submittedP066DataCleanEvidence(task, good, {attempts:[{value:bad}]}, context), null);
++  assert.equal(submittedP066DataCleanEvidence(task, good, {attempts:[{value:bad},{value:good}]}, context)?.usable, 7);
++});
++test('P066 excludes practice and bridges', async () => {
++  await ensureB39Ready();
++  assert.equal(p066DataCleanBinding(task, {sessionId: 'checkrecords', index: -1}), null);
++  for (const [id, b] of Object.entries(BRIDGES)) for (const [idx, rel] of b.tasks.entries()) if (rel?.type === 'x-dataclean') assert.equal(p066DataCleanBinding(rel, {sessionId: id, index: idx}), null);
++});

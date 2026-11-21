@@ -1,0 +1,810 @@
+diff --git a/dist/learning/p020-boundary-and-area-construction-evidence.js b/dist/learning/p020-boundary-and-area-construction-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..cede8ae381dea971c44165d45fd3a06b188c17ad
+--- /dev/null
++++ b/dist/learning/p020-boundary-and-area-construction-evidence.js
+@@ -0,0 +1,580 @@
++import {initial, inspect, valid} from './phase5/b30-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++import {rational} from './phase5/b16-model.js';
++
++const reviewed = [
++  {
++    "sessionId": "polyperim",
++    "index": 1,
++    "nodeId": "mt_WtcFrxGOgw",
++    "type": "x-a30-outline",
++    "taskHash": "92097f613b8253048d4001488489ea6ab84782e7616023a09a29e7d97c127e2f",
++    "task": {
++      "type": "x-a30-outline",
++      "prompt": "五边形的一圈是 30 cm。先走过每条边，找问号代表的那条长度。",
++      "points": [
++        [
++          0,
++          0
++        ],
++        [
++          10,
++          0
++        ],
++        [
++          10,
++          3
++        ],
++        [
++          6,
++          6
++        ],
++        [
++          0,
++          6
++        ]
++      ],
++      "unknown": 2,
++      "answer": 5,
++      "questionLabel": "未知边多长",
++      "unit": "cm"
++    }
++  },
++  {
++    "sessionId": "triArea",
++    "index": 0,
++    "nodeId": "mt_ML5t7n2-U8",
++    "type": "x-a30-pieces",
++    "taskHash": "7a17ee9b9ddd64cc09fa9a37233c2330f5ef6fca8bd02acc5c624a142b21f08a",
++    "task": {
++      "type": "x-a30-pieces",
++      "prompt": "底 8 cm、高 5 cm。把右端的小三角形移到左边，再算平行四边形。",
++      "pieces": [
++        {
++          "name": "原来的整块",
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              8,
++              0
++            ],
++            [
++              10,
++              5
++            ],
++            [
++              2,
++              5
++            ]
++          ]
++        }
++      ],
++      "unit": "cm",
++      "transform": true,
++      "before": [
++        {
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              8,
++              0
++            ],
++            [
++              8,
++              5
++            ],
++            [
++              2,
++              5
++            ]
++          ]
++        },
++        {
++          "points": [
++            [
++              8,
++              0
++            ],
++            [
++              10,
++              5
++            ],
++            [
++              8,
++              5
++            ]
++          ]
++        }
++      ],
++      "after": [
++        {
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              8,
++              0
++            ],
++            [
++              8,
++              5
++            ],
++            [
++              2,
++              5
++            ]
++          ]
++        },
++        {
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              2,
++              5
++            ],
++            [
++              0,
++              5
++            ]
++          ]
++        }
++      ],
++      "view": [
++        -1,
++        -1,
++        12,
++        7
++      ],
++      "labels": [
++        {
++          "x": 3,
++          "y": -0.3,
++          "text": "底 8"
++        },
++        {
++          "x": 10.2,
++          "y": 3,
++          "text": "垂直高 5"
++        }
++      ]
++    }
++  },
++  {
++    "sessionId": "triArea",
++    "index": 1,
++    "nodeId": "mt_ML5t7n2-U8",
++    "type": "x-a30-pieces",
++    "taskHash": "4c251647ce099b40fab52372a2cd36cc3bfb39008133ae3186be5cb41e405460",
++    "task": {
++      "type": "x-a30-pieces",
++      "prompt": "底 6 cm、高 4 cm。复制并转动一块，看看两个三角形怎样拼。",
++      "pieces": [
++        {
++          "name": "一个三角形",
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              6,
++              0
++            ],
++            [
++              0,
++              4
++            ]
++          ]
++        }
++      ],
++      "unit": "cm",
++      "transform": true,
++      "before": [
++        {
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              6,
++              0
++            ],
++            [
++              0,
++              4
++            ]
++          ]
++        }
++      ],
++      "after": [
++        {
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              6,
++              0
++            ],
++            [
++              0,
++              4
++            ]
++          ]
++        },
++        {
++          "points": [
++            [
++              6,
++              0
++            ],
++            [
++              6,
++              4
++            ],
++            [
++              0,
++              4
++            ]
++          ]
++        }
++      ],
++      "view": [
++        -1,
++        -1,
++        9,
++        7
++      ],
++      "labels": [
++        {
++          "x": 2,
++          "y": -0.3,
++          "text": "底 6"
++        },
++        {
++          "x": 6.2,
++          "y": 2,
++          "text": "高 4"
++        }
++      ]
++    }
++  },
++  {
++    "sessionId": "triArea",
++    "index": 2,
++    "nodeId": "mt_ML5t7n2-U8",
++    "type": "x-a30-pieces",
++    "taskHash": "9a3a89d8e0547c2a7e48891b90d96640868f1f7fada2fe914568e503f309fc4d",
++    "task": {
++      "type": "x-a30-pieces",
++      "prompt": "底 12 cm、高 7 cm。这个三角形的高落在外面，复制一块看看。",
++      "pieces": [
++        {
++          "name": "一个三角形",
++          "points": [
++            [
++              3,
++              0
++            ],
++            [
++              15,
++              0
++            ],
++            [
++              18,
++              7
++            ]
++          ]
++        }
++      ],
++      "unit": "cm",
++      "transform": true,
++      "before": [
++        {
++          "points": [
++            [
++              3,
++              0
++            ],
++            [
++              15,
++              0
++            ],
++            [
++              18,
++              7
++            ]
++          ]
++        }
++      ],
++      "after": [
++        {
++          "points": [
++            [
++              3,
++              0
++            ],
++            [
++              15,
++              0
++            ],
++            [
++              18,
++              7
++            ]
++          ]
++        },
++        {
++          "points": [
++            [
++              15,
++              0
++            ],
++            [
++              3,
++              0
++            ],
++            [
++              0,
++              -7
++            ]
++          ]
++        }
++      ],
++      "view": [
++        -1,
++        -8,
++        20,
++        17
++      ],
++      "lines": [
++        {
++          "a": [
++            18,
++            7
++          ],
++          "b": [
++            18,
++            0
++          ]
++        },
++        {
++          "a": [
++            15,
++            0
++          ],
++          "b": [
++            18,
++            0
++          ]
++        }
++      ],
++      "labels": [
++        {
++          "x": 7,
++          "y": -0.4,
++          "text": "底 12"
++        },
++        {
++          "x": 18.2,
++          "y": 4,
++          "text": "高 7"
++        }
++      ],
++      "questions": [
++        {
++          "label": "选面积公式时要用哪条",
++          "value": "height",
++          "options": [
++            [
++              "height",
++              "垂直的高"
++            ],
++            [
++              "slope",
++              "任意斜边"
++            ]
++          ]
++        }
++      ]
++    }
++  },
++  {
++    "sessionId": "triArea",
++    "index": 3,
++    "nodeId": "mt_ML5t7n2-U8",
++    "type": "x-a30-pieces",
++    "taskHash": "57144f49f061ebf92b2707c87cf2622595d054d1f6f3eaf5c2170519df52f2f3",
++    "task": {
++      "type": "x-a30-pieces",
++      "prompt": "底 10、高 5；斜边是 6。该用哪一段算面积？",
++      "pieces": [
++        {
++          "name": "平行四边形",
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              10,
++              0
++            ],
++            [
++              13.3166247903554,
++              5
++            ],
++            [
++              3.3166247903554,
++              5
++            ]
++          ]
++        }
++      ],
++      "unit": "cm",
++      "view": [
++        -1,
++        -1,
++        15,
++        8
++      ],
++      "labels": [
++        {
++          "x": 3,
++          "y": -0.3,
++          "text": "底 10"
++        },
++        {
++          "x": 10.5,
++          "y": 2,
++          "text": "垂直高 5"
++        }
++      ],
++      "questions": [
++        {
++          "label": "叶片形状怎样量面积",
++          "value": "estimate",
++          "options": [
++            [
++              "estimate",
++              "可以用方格近似"
++            ],
++            [
++              "formula",
++              "一定直接套这个平行四边形公式"
++            ]
++          ]
++        }
++      ]
++    }
++  },
++  {
++    "sessionId": "circleArea",
++    "index": 0,
++    "nodeId": "mt_svFa6_mjO_",
++    "type": "x-a30-circle",
++    "taskHash": "d4337d22d2b3931c72f707f10c1f81173f76d0c9f39d917084c5860e02c21d4f",
++    "task": {
++      "type": "x-a30-circle",
++      "kind": "circle",
++      "prompt": "半径 3 cm。先看直径，再把圆边拉直比较；用 3.14 估一圈和面积。",
++      "radius": 3,
++      "unit": "cm"
++    }
++  },
++  {
++    "sessionId": "circleArea",
++    "index": 1,
++    "nodeId": "mt_svFa6_mjO_",
++    "type": "x-a30-circle",
++    "taskHash": "6cbbc5ad977abcdfd0354b495423620dff42ff4f436523f2fa1547d347a88c9b",
++    "task": {
++      "type": "x-a30-circle",
++      "kind": "circle",
++      "prompt": "直径 8 cm。换个圆，先找半径，再量边和里面。",
++      "radius": 4,
++      "unit": "cm",
++      "given": "diameter"
++    }
++  }
++];
++export const P020_SOURCES = Object.freeze(reviewed.map(({task, ...source}) => Object.freeze(source)));
++export function p020BoundaryAndAreaConstructionBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = reviewed.find(source => source.sessionId === context.sessionId && source.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, entry)) return null;
++  return {nodeId:entry.nodeId, kind:'p020-boundary-and-area-construction', method:null, question:"哪条是边界，哪块是面积？怎样用同一图形核对数量和单位？"};
++}
++export function replayP020BoundaryAndAreaConstructionEvidence(task, model, context) {
++  try {
++    const binding = p020BoundaryAndAreaConstructionBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const board = initial(task).board;
++    const outline = task.type === 'x-a30-outline';
++    const circle = task.type === 'x-a30-circle';
++    const dimensions = [[8,5],[6,4],[12,7],[10,5]];
++    const part = dimensions[context.index];
++    const pieceArea = !outline && !circle ? part[0]*part[1] / ([1,2].includes(context.index)?2:1) : null;
++    const exact = (text, numerator, denominator=1) => {
++      const value = rational(text.trim().replace(/\s*\/\s*/g,'/'));
++      return value && BigInt(value[0])*BigInt(denominator) === BigInt(numerator)*BigInt(value[1]);
++    };
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','i','f']) || !hasExactKeys(event.f,event.a==='part'?['part']:[])) return null;
++      const {a,i,f} = event;
++      const index = /^\d+$/.test(i) ? Number(i) : NaN;
++      if (outline && a === 'edge' && index < task.points.length) {
++        const pos = board.edges.indexOf(index);
++        if (pos < 0) board.edges.push(index);
++        else board.edges.splice(pos,1);
++      } else if (circle && a === 'unroll' && i === '') {
++        board.unrolled = !board.unrolled;
++      } else if (!outline && !circle && a === 'transform' && i === '' && task.transform) {
++        board.transformed = !board.transformed;
++      } else if (!outline && !circle && a === 'active' && index === 0) {
++        board.active = index;
++      } else if (!outline && !circle && a === 'part' && i === '') {
++        board.first.part0 ??= f.part;
++        if (exact(f.part,pieceArea)) board.values[0] = pieceArea;
++        else board.bad = true;
++      } else return null;
++    }
++    if (!sameEvidence(board,model.board) || !inspect(task,model).correct) return null;
++    if (outline) {
++      const missing = 30 - (10+3+6+6);
++      if (board.edges.length !== 5 || !exact(model.answer,missing) || model.unit !== 'cm') return null;
++      return {binding, missing, perimeter:30};
++    }
++    if (circle) {
++      const radius = task.radius;
++      const diameter = 2*radius, circumference100 = 314*diameter, area100 = 314*radius*radius;
++      if (!board.unrolled || !exact(model.radius,radius) || !exact(model.diameter,diameter) ||
++          !exact(model.perimeter,circumference100,100) || !exact(model.area,area100,100) ||
++          model.unit !== 'cm' || model.areaUnit !== 'cm²') return null;
++      return {binding, radius, diameter, circumference:circumference100/100, area:area100/100};
++    }
++    if (board.values[0] !== pieceArea || !exact(model.area,pieceArea) || model.unit !== 'cm²' || (task.transform && !board.transformed) ||
++        (context.index === 2 && model.answers[0] !== 'height') || (context.index === 3 && model.answers[0] !== 'estimate')) return null;
++    return {binding, area:pieceArea, transformed:board.transformed};
++
++  } catch {
++    return null;
++  }
++}
++export function submittedP020BoundaryAndAreaConstructionEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replayP020BoundaryAndAreaConstructionEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-p020-boundary-and-area-construction-browser.cjs b/tests/p9-p020-boundary-and-area-construction-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e6b6cde23bddc02a1e0e448d65f831b2b86addfe
+--- /dev/null
++++ b/tests/p9-p020-boundary-and-area-construction-browser.cjs
+@@ -0,0 +1,163 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P020_ARTIFACTS || path.join(root, 'verification/p9-p020-boundary-and-area-construction'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P020_SOURCES, replayP020BoundaryAndAreaConstructionEvidence, submittedP020BoundaryAndAreaConstructionEvidence} = await entry('dist/learning/p020-boundary-and-area-construction-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b30 = await entry('dist/learning/phase5/b30-model.js');
++const answerField = task => task.type === 'x-a30-outline' ? 'answer' : 'area';
++const wrongSteps = task => b30.solveSteps(task).map(step =>
++  step.field === answerField(task) ? {...step,value:'0'} : step
++);
++const correctSteps = task => b30.solveSteps(task).filter(step => step.field === answerField(task));
++
++  const cases = P020_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP020BoundaryAndAreaConstructionEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b30.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P020');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b30].find(model => model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b30.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP020BoundaryAndAreaConstructionEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && (Boolean(accepted)),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p020.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p020r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P020_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p020-boundary-and-area-construction-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P020_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p020-boundary-and-area-construction.test.mjs b/tests/p9-p020-boundary-and-area-construction.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..a29fcd09ed8ce6774f7dd8ffd3af3f160466335f
+--- /dev/null
++++ b/tests/p9-p020-boundary-and-area-construction.test.mjs
+@@ -0,0 +1,49 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, initial, solveSteps} from '../dist/learning/phase5/b30-model.js';
++import {P020_SOURCES, p020BoundaryAndAreaConstructionBinding, replayP020BoundaryAndAreaConstructionEvidence, submittedP020BoundaryAndAreaConstructionEvidence} from '../dist/learning/p020-boundary-and-area-construction-evidence.js';
++
++const answerField = task => task.type === 'x-a30-outline' ? 'answer' : 'area';
++const wrongSteps = task => solveSteps(task).map(step =>
++  step.field === answerField(task) ? {...step,value:'0'} : step
++);
++const correctSteps = task => solveSteps(task).filter(step => step.field === answerField(task));
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) : value && typeof value === 'object'
++  ? Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en')).map(key => [key, ordered(value[key])]))
++  : value;
++
++for (const source of P020_SOURCES) {
++  const {sessionId, index} = source;
++  const context = {sessionId, index};
++  const task = sessionTaskFor(sessionId, index);
++  const replay = model => replayP020BoundaryAndAreaConstructionEvidence(task, model, context);
++  const submit = (model, saved) => submittedP020BoundaryAndAreaConstructionEvidence(task, model, {attempts:[{value:saved}]}, context);
++  const play = (model, steps) => {
++    for (const step of steps) {
++      if (step.field) {
++        if (step.field.startsWith('answers.')) model.answers[Number(step.field.split('.')[1])] = step.value;
++        else model[step.field] = step.value;
++      } else act(task, model, step.action === 'turn-extra' ? 'a30-turn' : step.action, step.data);
++    }
++  };
++  test(`P020 locks ${sessionId}:${index} and rejects stale or modified work`, () => {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.ok(p020BoundaryAndAreaConstructionBinding(task, context));
++    assert.equal(p020BoundaryAndAreaConstructionBinding(task, {sessionId,index:-1}), null);
++    const model = initial(task);
++    play(model, wrongSteps(task));
++    const failed = structuredClone(model);
++    assert.equal(replay(model), null);
++    play(model, correctSteps(task));
++    const accepted = replay(model);
++    assert.ok(accepted);
++    assert.equal(submit(model, failed), null);
++    assert.deepEqual(submit(model, structuredClone(model)), accepted);
++    const forged = structuredClone(model);
++    forged.history = [];
++    assert.equal(replay(forged), null);
++  });
++}

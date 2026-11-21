@@ -1,0 +1,457 @@
+diff --git a/dist/learning/p040-prism-face-volume-evidence.js b/dist/learning/p040-prism-face-volume-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..26a85985aa95f704d6f54799a439dede3d00ee36
+--- /dev/null
++++ b/dist/learning/p040-prism-face-volume-evidence.js
+@@ -0,0 +1,240 @@
++import {initial, inspect, valid} from './phase5/b30-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++import {rational} from './phase5/b16-model.js';
++
++const reviewed = [
++  {
++    "sessionId": "prismFormulas",
++    "index": 1,
++    "nodeId": "mt_tAJH5BrpOx",
++    "type": "x-a30-solid",
++    "taskHash": "b45dd74041a96817e559de29fb8f90db76a62cf9f1df86a0c2174b98b983bf44",
++    "task": {
++      "type": "x-a30-solid",
++      "kind": "prism",
++      "prompt": "三角形底两条直角边为 3 cm、4 cm，棱柱长 10 cm。转一转，算一层再算里面。",
++      "size": [
++        4,
++        3,
++        10
++      ],
++      "unit": "cm",
++      "faces": [
++        {
++          "name": "三角端一",
++          "dims": "3×4÷2",
++          "area": 6
++        },
++        {
++          "name": "三角端二",
++          "dims": "3×4÷2",
++          "area": 6
++        },
++        {
++          "name": "长侧一",
++          "dims": "4×10",
++          "area": 40
++        },
++        {
++          "name": "长侧二",
++          "dims": "3×10",
++          "area": 30
++        },
++        {
++          "name": "斜侧",
++          "dims": "5×10",
++          "area": 50
++        }
++      ],
++      "net": [
++        {
++          "index": 0,
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              4,
++              0
++            ],
++            [
++              0,
++              -3
++            ]
++          ]
++        },
++        {
++          "index": 1,
++          "points": [
++            [
++              0,
++              10
++            ],
++            [
++              4,
++              10
++            ],
++            [
++              0,
++              13
++            ]
++          ]
++        },
++        {
++          "index": 2,
++          "points": [
++            [
++              0,
++              0
++            ],
++            [
++              4,
++              0
++            ],
++            [
++              4,
++              10
++            ],
++            [
++              0,
++              10
++            ]
++          ]
++        },
++        {
++          "index": 3,
++          "points": [
++            [
++              4,
++              0
++            ],
++            [
++              7,
++              0
++            ],
++            [
++              7,
++              10
++            ],
++            [
++              4,
++              10
++            ]
++          ]
++        },
++        {
++          "index": 4,
++          "points": [
++            [
++              7,
++              0
++            ],
++            [
++              12,
++              0
++            ],
++            [
++              12,
++              10
++            ],
++            [
++              7,
++              10
++            ]
++          ]
++        }
++      ],
++      "requiredFaces": [],
++      "volumeRequired": true,
++      "baseArea": 6,
++      "volume": 60
++    }
++  },
++  {
++    "sessionId": "prismFormulas",
++    "index": 2,
++    "nodeId": "mt_tAJH5BrpOx",
++    "type": "x-a30-solid",
++    "taskHash": "8e254d6e19b42c3b5f83d51e2d0efe858589bcec2bb74cc26945236f63c6c427",
++    "task": {
++      "type": "x-a30-solid",
++      "kind": "cylinder",
++      "prompt": "圆柱半径 2 cm、高 4 cm。用 π≈3.14 算一层圆面，再算里面。",
++      "size": [
++        2,
++        4
++      ],
++      "unit": "cm",
++      "faces": [],
++      "requiredFaces": [],
++      "volumeRequired": true,
++      "baseArea": 12.56,
++      "volume": 50.24,
++      "questions": [
++        {
++          "label": "圆柱体积从哪一层出发",
++          "value": "base",
++          "options": [
++            [
++              "base",
++              "圆底面积×高"
++            ],
++            [
++              "edge",
++              "圆周长×高"
++            ]
++          ]
++        }
++      ]
++    }
++  }
++];
++export const P040_SOURCES = Object.freeze(reviewed.map(({task, ...source}) => Object.freeze(source)));
++export function p040PrismFaceVolumeBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = reviewed.find(source => source.sessionId === context.sessionId && source.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, entry)) return null;
++  return {nodeId:entry.nodeId, kind:'p040-prism-face-volume', method:null, question:"一层底面面积乘多少层，才得到体积？"};
++}
++export function replayP040PrismFaceVolumeEvidence(task, model, context) {
++  try {
++    const binding = p040PrismFaceVolumeBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const starting = initial(task).board;
++    const seen = new Set();
++    let turns = 0;
++    for (const event of model.history) {
++      if (!hasExactKeys(event, ['a','i','f']) || !hasExactKeys(event.f, [])) return null;
++      if (event.a === 'turn' && event.i === '') {
++        turns++;
++      } else if (event.a === 'face' && /^\d+$/.test(event.i)) {
++        const index = Number(event.i);
++        if (index >= task.faces.length) return null;
++        starting.first.face ??= index;
++        if (!seen.delete(index)) seen.add(index);
++      } else return null;
++    }
++    starting.turned = turns > 0;
++    starting.selected = [...seen];
++    const cylinder = task.kind === 'cylinder';
++    const [a,b,c] = task.size;
++    const length = cylinder ? b : c;
++    const twiceHundredths = cylinder ? 628 * a * a : 100 * a * b;
++    const exact = (text, target) => {
++      const value = rational(text.trim());
++      return value && BigInt(value[0]) * 200n === BigInt(target) * BigInt(value[1]);
++    };
++    if (!turns || !sameEvidence(starting,model.board) ||
++        !exact(model.base,twiceHundredths) || !exact(model.volume,twiceHundredths*length) ||
++        model.volumeUnit !== 'cm³' || (cylinder && model.answers[0] !== 'base') || !inspect(task,model).correct) return null;
++    return {binding, turns, baseArea:twiceHundredths/200, volume:twiceHundredths*length/200};
++
++  } catch {
++    return null;
++  }
++}
++export function submittedP040PrismFaceVolumeEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replayP040PrismFaceVolumeEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-p040-prism-face-volume-browser.cjs b/tests/p9-p040-prism-face-volume-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..33e1d0f7f14f3cde91ad93d17d07510387fd60a2
+--- /dev/null
++++ b/tests/p9-p040-prism-face-volume-browser.cjs
+@@ -0,0 +1,156 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P040_ARTIFACTS || path.join(root, 'verification/p9-p040-prism-face-volume'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P040_SOURCES, replayP040PrismFaceVolumeEvidence, submittedP040PrismFaceVolumeEvidence} = await entry('dist/learning/p040-prism-face-volume-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b30 = await entry('dist/learning/phase5/b30-model.js');
++  const cases = P040_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP040PrismFaceVolumeEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b30.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P040');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b30].find(model => model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,[{action:'turn-extra'},{field:'base',value:1},{field:'volume',value:1}]);
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b30.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,b30.solveSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP040PrismFaceVolumeEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && (Boolean(accepted)),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p040.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p040r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P040_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p040-prism-face-volume-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P040_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p040-prism-face-volume.test.mjs b/tests/p9-p040-prism-face-volume.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..8ba7d83f345a45b81576329a3beb7756b018f5fc
+--- /dev/null
++++ b/tests/p9-p040-prism-face-volume.test.mjs
+@@ -0,0 +1,43 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, initial, solveSteps} from '../dist/learning/phase5/b30-model.js';
++import {P040_SOURCES, p040PrismFaceVolumeBinding, replayP040PrismFaceVolumeEvidence, submittedP040PrismFaceVolumeEvidence} from '../dist/learning/p040-prism-face-volume-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) : value && typeof value === 'object'
++  ? Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en')).map(key => [key, ordered(value[key])]))
++  : value;
++
++for (const source of P040_SOURCES) {
++  const {sessionId, index} = source;
++  const context = {sessionId, index};
++  const task = sessionTaskFor(sessionId, index);
++  const replay = model => replayP040PrismFaceVolumeEvidence(task, model, context);
++  const submit = (model, saved) => submittedP040PrismFaceVolumeEvidence(task, model, {attempts:[{value:saved}]}, context);
++  const play = (model, steps) => {
++    for (const step of steps) {
++      if (step.field) {
++        if (step.field.startsWith('answers.')) model.answers[Number(step.field.split('.')[1])] = step.value;
++        else model[step.field] = step.value;
++      } else act(task, model, step.action === 'turn-extra' ? 'a30-turn' : step.action, step.data);
++    }
++  };
++  test(`P040 locks ${sessionId}:${index} and rejects stale or modified work`, () => {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.ok(p040PrismFaceVolumeBinding(task, context));
++    assert.equal(p040PrismFaceVolumeBinding(task, {sessionId,index:-1}), null);
++    const model = initial(task);
++    play(model, [{action:'turn-extra'},{field:'base',value:1},{field:'volume',value:1}]);
++    const failed = structuredClone(model);
++    assert.equal(replay(model), null);
++    play(model, solveSteps(task));
++    const accepted = replay(model);
++    assert.ok(accepted);
++    assert.equal(submit(model, failed), null);
++    assert.deepEqual(submit(model, structuredClone(model)), accepted);
++    const forged = structuredClone(model);
++    forged.history = [];
++    assert.equal(replay(forged), null);
++  });
++}

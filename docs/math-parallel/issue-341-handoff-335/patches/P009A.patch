@@ -1,0 +1,449 @@
+diff --git a/dist/learning/p009a-ten-landmark-evidence.js b/dist/learning/p009a-ten-landmark-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..a148f436ac1e75906751f47edbeb3bc4b393a35d
+--- /dev/null
++++ b/dist/learning/p009a-ten-landmark-evidence.js
+@@ -0,0 +1,152 @@
++import {initial, inspect, valid} from './phase5/b10-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++const reviewed = [
++  {
++    "sessionId": "screenadd",
++    "index": 1,
++    "nodeId": "mt_biGHAbkoV2",
++    "type": "x-tenbridge",
++    "taskHash": "b1363d13a7d764a139b7b46934bf626b2767792c246f43f05a4a328efcd3d83c",
++    "task": {
++      "type": "x-tenbridge",
++      "a": 8,
++      "b": 5,
++      "op": "+",
++      "prompt": "8+5：从后一堆搬一些填满十，再把剩下的接上。"
++    }
++  },
++  {
++    "sessionId": "screenadd",
++    "index": 2,
++    "nodeId": "mt_biGHAbkoV2",
++    "type": "x-tenbridge",
++    "taskHash": "ce0cb800cd40c70da5daa48b0d272585adc0184a888b2e7599c8ee30a0a33a61",
++    "task": {
++      "type": "x-tenbridge",
++      "a": 15,
++      "b": 7,
++      "op": "-",
++      "prompt": "15−7：先拿走一些到十，再把还要拿的拿走。"
++    }
++  },
++  {
++    "sessionId": "bonds20",
++    "index": 1,
++    "nodeId": "mt_s2mfRBoTal",
++    "type": "x-tenbridge",
++    "taskHash": "c651214084230a9e6475d82ed25f2e33ec3a994a14d1240225edee875b0236d3",
++    "task": {
++      "type": "x-tenbridge",
++      "a": 8,
++      "b": 5,
++      "op": "+",
++      "prompt": "8+5忘记时，可以怎样借十重新找到它？"
++    }
++  },
++  {
++    "sessionId": "bridge20",
++    "index": 0,
++    "nodeId": "mt_m1W6nTQJ2b",
++    "type": "x-tenbridge",
++    "taskHash": "4795934c42b3cbaa7e7439e38dc7c9f692d36fb828fe1474e566a94d95add3e3",
++    "task": {
++      "type": "x-tenbridge",
++      "a": 8,
++      "b": 6,
++      "op": "+",
++      "prompt": "8+6，先让十出现。哪些圆片搬过去，哪些还在后面？"
++    }
++  },
++  {
++    "sessionId": "bridge20",
++    "index": 1,
++    "nodeId": "mt_m1W6nTQJ2b",
++    "type": "x-tenbridge",
++    "taskHash": "8b18573764d3f1eccac09b5aec4e0f098b0c7bf550bc7f3ac898e05750a45c4a",
++    "task": {
++      "type": "x-tenbridge",
++      "a": 13,
++      "b": 4,
++      "op": "-",
++      "prompt": "13−4，先到十。剩下还要拿走的部分，继续往哪个方向？"
++    }
++  },
++  {
++    "sessionId": "factstwenty",
++    "index": 0,
++    "nodeId": "mt__t4afSyZRm",
++    "type": "x-tenbridge",
++    "taskHash": "d7a1d5763e56453eb29b56be539702cdca483e46784950d0a0924279464dfaa6",
++    "task": {
++      "type": "x-tenbridge",
++      "a": 15,
++      "b": 8,
++      "op": "-",
++      "prompt": "15−8，用十作为中途的一站，重新搭出这个关系。"
++    }
++  },
++  {
++    "sessionId": "tools38",
++    "index": 0,
++    "nodeId": "mt_20WfHhnL39",
++    "type": "x-tenbridge",
++    "taskHash": "4795934c42b3cbaa7e7439e38dc7c9f692d36fb828fe1474e566a94d95add3e3",
++    "task": {
++      "type": "x-tenbridge",
++      "a": 8,
++      "b": 6,
++      "op": "+",
++      "prompt": "8+6，先让十出现。哪些圆片搬过去，哪些还在后面？"
++    }
++  }
++];
++export const P009A_SOURCES = Object.freeze(reviewed.map(({task,...source})=>Object.freeze(source)));
++export function p009aTenLandmarkBinding(task,context) {
++  if (!isEvidenceContext(context)) return null;
++  const row = reviewed.find(entry=>entry.sessionId===context.sessionId && entry.index===context.index);
++  if (!row || !sameEvidence(row.task,task) || !matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p009a-ten-landmark',method:null,question:"到十时搬了几个，后来又搬了几个？"};
++}
++export function replayP009ATenLandmarkEvidence(task,model,context) {
++  try {
++    const binding=p009aTenLandmarkBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue!=='' || !model.history.length || Object.keys(model.history).length!==model.history.length) return null;
++    const add=task.op==='+', direction=add?1:-1;
++    const limit=add?task.b:task.a;
++    const first=direction*(10-task.a), second=task.b-first;
++    const ids=values=>Array.isArray(values)&&new Set(values).size===values.length&&
++      values.every(index=>Number.isInteger(index)&&index>=0&&index<limit);
++    const retains=(values,landmark)=>!landmark||landmark.ids.every(index=>values.includes(index));
++    let landmark=null, finished=null, wentToTen=0;
++    for (const event of model.history) {
++      if (!ids(event.ids)) return null;
++      if (event.action==='landmark'&&hasExactKeys(event,['action','ids','count'])&&!landmark) {
++        if (add ? event.ids.length>first : event.ids.some(index=>index<10)) return null;
++        if (event.count!==task.a+direction*event.ids.length) return null;
++        if (event.count===10) {
++          landmark={ids:event.ids,count:event.ids.length};
++          wentToTen++;
++        }
++      } else if (event.action==='finish'&&hasExactKeys(event,['action','ids'])&&landmark) {
++        if (!retains(event.ids,landmark)) return null;
++        finished=event.ids;
++      } else if (event.action==='reset'&&hasExactKeys(event,['action','ids','landmark'])) {
++        if (!sameEvidence(event.landmark,landmark)||!retains(event.ids,landmark)||
++            (!landmark&&(add?event.ids.length>first:event.ids.some(index=>index<10)))) return null;
++        landmark=null;
++        finished=null;
++      } else return null;
++    }
++    const integer=raw=>typeof raw==='string'&&/^\s*-?\d{1,4}\s*$/.test(raw)?Number(raw):null;
++    if (integer(model.first)===null||!landmark||landmark.count!==first||!finished||finished.length!==task.b||
++        !model.finished||!sameEvidence(landmark,model.landmark)||!sameEvidence(finished,model.moved)||
++        integer(model.firstPart)!==first||integer(model.secondPart)!==second||!inspect(task,model).correct) return null;
++    return {binding,landmark:10,first,second,result:10+direction*second,visitsToTen:wentToTen};
++  } catch {
++    return null;
++  }
++}
++export function submittedP009ATenLandmarkEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record) ? replayP009ATenLandmarkEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p009a-ten-landmark-browser.cjs b/tests/p9-p009a-ten-landmark-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..2bdf90e867edd00b4e1491b3f4209f354281538c
+--- /dev/null
++++ b/tests/p9-p009a-ten-landmark-browser.cjs
+@@ -0,0 +1,201 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P009A_ARTIFACTS || path.join(root, 'verification/p9-p009a-ten-landmark'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P009A_SOURCES, replayP009ATenLandmarkEvidence, submittedP009ATenLandmarkEvidence} = await entry('dist/learning/p009a-ten-landmark-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b10 = await entry('dist/learning/phase5/b10-model.js');
++
++const field=(field,value)=>({field,value:String(value)});
++const act=(action,data)=>({action,data});
++function tenSteps(task) {
++  const add=task.op==='+';
++  const head=add?10-task.a:task.a-10;
++  const answer=task.a+(add?task.b:-task.b);
++  const token=index=>act('ten-token',{index});
++  return [field('guess',answer),act('ten-predict'),
++    ...Array.from({length:head},(_,i)=>token(add?i:10+i)),act('ten-landmark'),
++    ...Array.from({length:task.b-head},(_,i)=>token(add?i+head:i)),act('ten-finish'),
++    field('firstPart',head),field('secondPart',task.b-head),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++}
++function familySteps(task) {
++  return b10.MODES.flatMap(mode=>{
++    const [a,b,op]=b10.familyNumbers(task,mode);
++    return [act('family-mode',{mode}),field('equation',`${a}${op}${b}=${a+(op==='+'?b:-b)}`),act('family-save')];
++  });
++}
++function legacySteps(task) {
++  if (task.type==='x-tenbridge') return tenSteps(task);
++  if (task.type==='x-factfamily') return familySteps(task);
++  if (task.type==='x-joinstory') {
++    const answer=task.a+(task.op==='+'?task.b:-task.b);
++    return [...Array.from({length:task.a},()=>act('story-counter',{group:'left',delta:1})),
++      ...Array.from({length:task.b},()=>act('story-counter',{group:'right',delta:1})),
++      field('op',task.op),field('guess',answer),act('story-do'),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++  }
++  if (task.type==='x-splitbench') {
++    let count=0;
++    const steps=[];
++    for (const [a,b] of task.pairs) {
++      while (count>a) steps.push(act('split-token',{index:--count}));
++      while (count<a) steps.push(act('split-token',{index:count++}));
++      steps.push(field('equation',`${a}+${b}=${task.total}`),act('split-save'));
++    }
++    return steps;
++  }
++  throw new Error('Unexpected prerequisite: '+task.type);
++}
++
++const wrongSteps=task=>tenSteps(task).map(step=>step.field==='equation'?field('equation','1+1=2'):step);
++const correctSteps=task=>tenSteps(task).slice(-1);
++
++  const cases = P009A_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP009ATenLandmarkEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b10.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P009A');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b10].find(model => model.TYPES.has(prior.type))=== b10 ? legacySteps(prior) : [].find(model => model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b10.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP009ATenLandmarkEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p009ar.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P009A_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p009a-ten-landmark-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P009A_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p009a-ten-landmark.test.mjs b/tests/p9-p009a-ten-landmark.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..251b304e0dd73751e43fcb5331a8332d43ecc2ac
+--- /dev/null
++++ b/tests/p9-p009a-ten-landmark.test.mjs
+@@ -0,0 +1,78 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as b10 from '../dist/learning/phase5/b10-model.js';
++import {P009A_SOURCES,p009aTenLandmarkBinding,replayP009ATenLandmarkEvidence,submittedP009ATenLandmarkEvidence} from '../dist/learning/p009a-ten-landmark-evidence.js';
++const field=(field,value)=>({field,value:String(value)});
++const act=(action,data)=>({action,data});
++function tenSteps(task) {
++  const add=task.op==='+';
++  const head=add?10-task.a:task.a-10;
++  const answer=task.a+(add?task.b:-task.b);
++  const token=index=>act('ten-token',{index});
++  return [field('guess',answer),act('ten-predict'),
++    ...Array.from({length:head},(_,i)=>token(add?i:10+i)),act('ten-landmark'),
++    ...Array.from({length:task.b-head},(_,i)=>token(add?i+head:i)),act('ten-finish'),
++    field('firstPart',head),field('secondPart',task.b-head),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++}
++function familySteps(task) {
++  return b10.MODES.flatMap(mode=>{
++    const [a,b,op]=b10.familyNumbers(task,mode);
++    return [act('family-mode',{mode}),field('equation',`${a}${op}${b}=${a+(op==='+'?b:-b)}`),act('family-save')];
++  });
++}
++function legacySteps(task) {
++  if (task.type==='x-tenbridge') return tenSteps(task);
++  if (task.type==='x-factfamily') return familySteps(task);
++  if (task.type==='x-joinstory') {
++    const answer=task.a+(task.op==='+'?task.b:-task.b);
++    return [...Array.from({length:task.a},()=>act('story-counter',{group:'left',delta:1})),
++      ...Array.from({length:task.b},()=>act('story-counter',{group:'right',delta:1})),
++      field('op',task.op),field('guess',answer),act('story-do'),field('equation',`${task.a}${task.op}${task.b}=${answer}`)];
++  }
++  if (task.type==='x-splitbench') {
++    let count=0;
++    const steps=[];
++    for (const [a,b] of task.pairs) {
++      while (count>a) steps.push(act('split-token',{index:--count}));
++      while (count<a) steps.push(act('split-token',{index:count++}));
++      steps.push(field('equation',`${a}+${b}=${task.total}`),act('split-save'));
++    }
++    return steps;
++  }
++  throw new Error('Unexpected prerequisite: '+task.type);
++}
++
++const wrongSteps=task=>tenSteps(task).map(step=>step.field==='equation'?field('equation','1+1=2'):step);
++const correctSteps=task=>tenSteps(task).slice(-1);
++
++const ordered = value=>Array.isArray(value)?value.map(ordered):value&&typeof value==='object'
++  ?Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])):value;
++for (const source of P009A_SOURCES) {
++  const {sessionId,index}=source, context={sessionId,index}, task=sessionTaskFor(sessionId,index);
++  const replay=model=>replayP009ATenLandmarkEvidence(task,model,context);
++  const play=(model,steps)=>{
++    for (const step of steps) {
++      if (step.field) model[step.field]=String(step.value);
++      else b10.act(task,model,step.action,step.data);
++    }
++  };
++  test(`P009A ${sessionId}:${index} exact source, correction, stale Check and history`,()=>{
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),source.taskHash);
++    assert.ok(p009aTenLandmarkBinding(task,context));
++    assert.equal(p009aTenLandmarkBinding(task,{sessionId,index:-1}),null);
++    const model=b10.initial(task);
++    play(model,wrongSteps(task));
++    assert.equal(replay(model),null);
++    const wrong=structuredClone(model);
++    play(model,correctSteps(task));
++    const proof=replay(model);
++    assert.ok(proof);
++    assert.equal(submittedP009ATenLandmarkEvidence(task,model,{attempts:[{value:wrong}]},context),null);
++    assert.deepEqual(submittedP009ATenLandmarkEvidence(task,model,{attempts:[{value:structuredClone(model)}]},context),proof);
++    const forged=structuredClone(model);
++    forged.history=[];
++    assert.equal(replay(forged),null);
++  });
++}

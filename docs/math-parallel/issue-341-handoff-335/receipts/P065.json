@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p065-similar-triangles",
+  "commit": "b58550e19081ae2feae6ba97ed563efb4ed0ca2a",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "trianglepossible",
+      "index": 3,
+      "nodeId": "mt_4bc3EAxhlY",
+      "type": "x-g25-similar",
+      "taskHash": "0275053a800c5615c242a39b16b4c22cd1d1267b108380ce514c2cdb24cd6abb"
+    }
+  ],
+  "node22": "3 PASS",
+  "referenceNode": "40 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "837f67ed212755dc11b9a743c10af0175ec8a045837a3137e7d65eb7ed55d181",
+    "results.json": "0a8e78e8401645b54f72faf3ae1b364db95a90581fcc4d95f714875e2435d5eb",
+    "trianglepossible-3-correct-check-decoded.json": "efe3767115c9f31cb9e25bc142c970bf047b1610cf1d09ef98274c79bb36fa17",
+    "trianglepossible-3-correct-check-storage.txt": "efe3767115c9f31cb9e25bc142c970bf047b1610cf1d09ef98274c79bb36fa17",
+    "trianglepossible-3-correct.png": "c60c19db038aea5e76797b6a6129b8e531c38d2a1fec0fde179e127b25d8940f",
+    "trianglepossible-3-corrected-draft-decoded.json": "7b1cc828a4691325265e36b22a682dfb7d0a0d15f79171f6ce71ce82c031910c",
+    "trianglepossible-3-corrected-draft-storage.txt": "7b1cc828a4691325265e36b22a682dfb7d0a0d15f79171f6ce71ce82c031910c",
+    "trianglepossible-3-offline-reload-decoded.json": "44d1308cc0f61eb71de3fa98de47a78430c50686d291c42a4b0ddf4746c4c0ae",
+    "trianglepossible-3-offline-reload-storage.txt": "44d1308cc0f61eb71de3fa98de47a78430c50686d291c42a4b0ddf4746c4c0ae",
+    "trianglepossible-3-restored-backup-decoded.json": "555321d1845a0d6f16ac1cdc12437fcb470661b19eaa3132251fe16d206968b2",
+    "trianglepossible-3-restored-backup-storage.txt": "555321d1845a0d6f16ac1cdc12437fcb470661b19eaa3132251fe16d206968b2",
+    "trianglepossible-3-retry-decoded.json": "e339e3b70eea32f2ca31eeda5c46e29d6762a03f28e87b93cfbfa2310b4322d3",
+    "trianglepossible-3-retry-storage.txt": "e339e3b70eea32f2ca31eeda5c46e29d6762a03f28e87b93cfbfa2310b4322d3",
+    "trianglepossible-3-wrong-check-decoded.json": "843d0b033b42184bb5404f4bf420c47f925ddff4289510f5b9202aef68c4dd9e",
+    "trianglepossible-3-wrong-check-storage.txt": "843d0b033b42184bb5404f4bf420c47f925ddff4289510f5b9202aef68c4dd9e",
+    "trianglepossible-3-wrong.png": "50d8fec5ad41c409dbf838e85ac458b7f7b76e99b81c1264c9a78f45fec3dd4e"
+  }
+}

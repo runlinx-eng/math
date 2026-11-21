@@ -1,0 +1,61 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p044-straight-angle-gap",
+  "commit": "6b100945609d07d6c96a4e0d42edeccc6b16d79a",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "structurechoices",
+      "index": 4,
+      "nodeId": "mt_hlGKg5M7qJ",
+      "type": "x-straightgap",
+      "taskHash": "112f7ddc8906f1877959c06fd93f9ba45c4b7692fbe931bcbed05d25228d47ec"
+    },
+    {
+      "sessionId": "structurechoices",
+      "index": 5,
+      "nodeId": "mt_hlGKg5M7qJ",
+      "type": "x-straightgap",
+      "taskHash": "49fbc21b0cede2f87329026e7a850ed0c83bf63d238f15240457a798509ec131"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "37 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 22,
+  "captures": 11,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "acc407ba2e3b034bb22b44bc6fca86887acf76715632e40d4f0c6d7fb9701e4c",
+    "results.json": "975837a4e56e9c87c22bc36ac88699fe3073b9a5a0ca751bed30a9a3ebc49f78",
+    "structurechoices-4-correct-check-decoded.json": "a61a556064134734dfedcb2dc5c274c8df05224bbe91dc1e0d79e1eaa25294f1",
+    "structurechoices-4-correct-check-storage.txt": "a61a556064134734dfedcb2dc5c274c8df05224bbe91dc1e0d79e1eaa25294f1",
+    "structurechoices-4-correct.png": "26c0be8238ffa8c6ce375ee3be6ad9abf1ff09b9496a470f7468d8f6c837ab3b",
+    "structurechoices-4-corrected-draft-decoded.json": "8e500d2f8587978986ddd0c2a678504fd1233d50182ad50134b7ab72f5cf0293",
+    "structurechoices-4-corrected-draft-storage.txt": "8e500d2f8587978986ddd0c2a678504fd1233d50182ad50134b7ab72f5cf0293",
+    "structurechoices-4-offline-reload-decoded.json": "da117f3d744f515d49a3b1c78958194995f67aa2c43aa44b24c601ef8b404328",
+    "structurechoices-4-offline-reload-storage.txt": "da117f3d744f515d49a3b1c78958194995f67aa2c43aa44b24c601ef8b404328",
+    "structurechoices-4-restored-storage-decoded.json": "6c81e8a08274c9c08110d7c88d4ec5d97f1934f488a3079a2d1a1fc21717bdab",
+    "structurechoices-4-restored-storage-storage.txt": "6c81e8a08274c9c08110d7c88d4ec5d97f1934f488a3079a2d1a1fc21717bdab",
+    "structurechoices-4-wrong-check-decoded.json": "61cdcd053191132cd7b4d9da63fa424c3f55e61e8821025ea31a018f068f8a24",
+    "structurechoices-4-wrong-check-storage.txt": "61cdcd053191132cd7b4d9da63fa424c3f55e61e8821025ea31a018f068f8a24",
+    "structurechoices-4-wrong.png": "cbac43f19186a839b0b14982f3f73e4154e974b5738d4988470d61c16d9e42c4",
+    "structurechoices-5-correct-check-decoded.json": "50a837efe251e7a76fbfc33989d59214ae45bf270ea8c44899a22e2273bbd2c6",
+    "structurechoices-5-correct-check-storage.txt": "50a837efe251e7a76fbfc33989d59214ae45bf270ea8c44899a22e2273bbd2c6",
+    "structurechoices-5-correct.png": "e37ea9658b85147b6497e8b90c392fc643b869e31a7f1aa5af00af6a36dbcda8",
+    "structurechoices-5-corrected-draft-decoded.json": "2a94f0f1b43a8373361240a3be14b4cf5c8dfef821a9f58f4f23bfd23147c002",
+    "structurechoices-5-corrected-draft-storage.txt": "2a94f0f1b43a8373361240a3be14b4cf5c8dfef821a9f58f4f23bfd23147c002",
+    "structurechoices-5-offline-reload-decoded.json": "a9bcbcfcc413c6657d9cb1e6c6f75d9c633526390221e6c35bd8b1106c6ec1db",
+    "structurechoices-5-offline-reload-storage.txt": "a9bcbcfcc413c6657d9cb1e6c6f75d9c633526390221e6c35bd8b1106c6ec1db",
+    "structurechoices-5-restored-backup-decoded.json": "6c81e8a08274c9c08110d7c88d4ec5d97f1934f488a3079a2d1a1fc21717bdab",
+    "structurechoices-5-restored-backup-storage.txt": "6c81e8a08274c9c08110d7c88d4ec5d97f1934f488a3079a2d1a1fc21717bdab",
+    "structurechoices-5-retry-decoded.json": "4ab885bf2638da7aff9262186095630676200009ae905aadf71204226266eee7",
+    "structurechoices-5-retry-storage.txt": "4ab885bf2638da7aff9262186095630676200009ae905aadf71204226266eee7",
+    "structurechoices-5-wrong-check-decoded.json": "4c38e89400f0573bebcf59a458d045df904b7e8541c559ada8acd16085d2c136",
+    "structurechoices-5-wrong-check-storage.txt": "4c38e89400f0573bebcf59a458d045df904b7e8541c559ada8acd16085d2c136",
+    "structurechoices-5-wrong.png": "33700017045e804a75709a81af04ed1ab14baf1dc5900eae884e0cabbb6b26e7"
+  }
+}

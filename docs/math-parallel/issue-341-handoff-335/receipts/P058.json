@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p058-leaf-grid-approximation",
+  "commit": "c267dcf05ed71778e79d187a39068387cb45a249",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "shapeapprox",
+      "index": 2,
+      "nodeId": "mt_SK7WntVZ6y",
+      "type": "x-s23-pixels",
+      "taskHash": "2f1f3192ad41990e95e59440d572527ea2a1d7f65be4c9c625ba90bff881ca48"
+    }
+  ],
+  "node22": "3 PASS",
+  "referenceNode": "37 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "414c30bbbc0ffdee9f893e212dcbb252d21332ff15754a2e77f600c155dd633d",
+    "results.json": "a9622b5e970158289bdd807833ff88ed6262bb475e3a171eea965271480c5346",
+    "shapeapprox-2-correct-check-decoded.json": "94693ac7f5f4fb091a28003325c926af81e129b44000beac1e67919d607cc736",
+    "shapeapprox-2-correct-check-storage.txt": "94693ac7f5f4fb091a28003325c926af81e129b44000beac1e67919d607cc736",
+    "shapeapprox-2-correct.png": "d1faced15bcb86de852f11b531a10af01a513f065ab39f797b717f5efdc69c36",
+    "shapeapprox-2-corrected-draft-decoded.json": "5a92907628cd06b458b001be4a8cb3e0dece646c25ab693ad42d2b3b2bef5daf",
+    "shapeapprox-2-corrected-draft-storage.txt": "5a92907628cd06b458b001be4a8cb3e0dece646c25ab693ad42d2b3b2bef5daf",
+    "shapeapprox-2-offline-reload-decoded.json": "8b16849bb0143c500853cd05ec0f54795ac2effa9f36a618861c82fe89549110",
+    "shapeapprox-2-offline-reload-storage.txt": "8b16849bb0143c500853cd05ec0f54795ac2effa9f36a618861c82fe89549110",
+    "shapeapprox-2-restored-backup-decoded.json": "70d324abf488a228d76260e22c90124bdf5dbdc10f7d879d51e4e327948ea2dd",
+    "shapeapprox-2-restored-backup-storage.txt": "70d324abf488a228d76260e22c90124bdf5dbdc10f7d879d51e4e327948ea2dd",
+    "shapeapprox-2-retry-decoded.json": "55c9c751c883e584f717e7c448f539bf4ac38acf166c53ad05d7f39549f99926",
+    "shapeapprox-2-retry-storage.txt": "55c9c751c883e584f717e7c448f539bf4ac38acf166c53ad05d7f39549f99926",
+    "shapeapprox-2-wrong-check-decoded.json": "87109b80fedb22b5b8b7ecaaa5b7a8d9d3afb76f198c7ce43d1c41f7c9d499e8",
+    "shapeapprox-2-wrong-check-storage.txt": "87109b80fedb22b5b8b7ecaaa5b7a8d9d3afb76f198c7ce43d1c41f7c9d499e8",
+    "shapeapprox-2-wrong.png": "bf56f326194f2b95e7d1ee15c350aa8fd8d6b758b85ebc81af12cc7b94d8b3b5"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p086-joined-solid-surfaces",
+  "commit": "5d57c622b0cf8757150c5dc1842a848701d60253",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "solidSurface",
+      "index": 1,
+      "nodeId": "mt_Sij9ByyHq6",
+      "type": "x-a30-solid",
+      "taskHash": "970821d3a492aa3c68cf9ed73f66707a082c8bd5758f8f2f864350bb5f544e10"
+    }
+  ],
+  "node22": "6 PASS",
+  "referenceNode": "22 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 25,
+  "captures": 9,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "0e8c5c2a316d59c1fa9f757a43ac1273ebefd99811c76ad5d08d79875c732b23",
+    "results.json": "2b873dfcfa08ebe6e5ef1cd286719d1c22af21e7b7159ffd83712e61deb10924",
+    "solidSurface-1-correct-check-decoded.json": "a807331c71373f4ea136c8aeb80f949010ee22ce0fb622a77c57737cd0ac5b02",
+    "solidSurface-1-correct-check-storage.txt": "a807331c71373f4ea136c8aeb80f949010ee22ce0fb622a77c57737cd0ac5b02",
+    "solidSurface-1-correct-check.png": "a04f34404dbc8fc3130645b85607ad380a99d3fc11ceba87b986b90e4560dbe7",
+    "solidSurface-1-corrected-draft-decoded.json": "24b49a216d8b62afd6934dd49198a092e8e5aca973819da42737e8bb81a90b5a",
+    "solidSurface-1-corrected-draft-storage.txt": "24b49a216d8b62afd6934dd49198a092e8e5aca973819da42737e8bb81a90b5a",
+    "solidSurface-1-counting-hidden-faces-decoded.json": "5ece1191477d0a2288f0dbb8f4d70cfafdec22d5dd1692748a81be3090721580",
+    "solidSurface-1-counting-hidden-faces-storage.txt": "5ece1191477d0a2288f0dbb8f4d70cfafdec22d5dd1692748a81be3090721580",
+    "solidSurface-1-counting-hidden-faces.png": "bca330b68a2ec9f11752795e445a89765567d0a473003168581c1f177c2c3918",
+    "solidSurface-1-joined-initial-decoded.json": "f1cdda96e5061428a73db978996b159a3e4d937383c729c27b1742b40ee8e964",
+    "solidSurface-1-joined-initial-storage.txt": "f1cdda96e5061428a73db978996b159a3e4d937383c729c27b1742b40ee8e964",
+    "solidSurface-1-offline-reload-decoded.json": "d41eb31ed545d071bf0f626e32c78f5e7767ca5aa5e4f4c5a978f208907e9cb0",
+    "solidSurface-1-offline-reload-storage.txt": "d41eb31ed545d071bf0f626e32c78f5e7767ca5aa5e4f4c5a978f208907e9cb0",
+    "solidSurface-1-rejoined-decoded.json": "957db7b025d34a1d7471132a5309f6587ce21e528a05d9cb14216b92ed6f9bf1",
+    "solidSurface-1-rejoined-storage.txt": "957db7b025d34a1d7471132a5309f6587ce21e528a05d9cb14216b92ed6f9bf1",
+    "solidSurface-1-restored-backup-decoded.json": "9f403fb716219f0c12eb99fc099e2acefafc458cef201126f81254e582c249fa",
+    "solidSurface-1-restored-backup-storage.txt": "9f403fb716219f0c12eb99fc099e2acefafc458cef201126f81254e582c249fa",
+    "solidSurface-1-retry-decoded.json": "b550c08b437b067e2fac752e18d8c879e7a1c7c79065020cd429bc05f891d8d9",
+    "solidSurface-1-retry-storage.txt": "b550c08b437b067e2fac752e18d8c879e7a1c7c79065020cd429bc05f891d8d9",
+    "solidSurface-1-separated-decoded.json": "7a54fe665bffd55fff75f139613b6397e1d51161ffa89a4bd25352b4f0de44fc",
+    "solidSurface-1-separated-storage.txt": "7a54fe665bffd55fff75f139613b6397e1d51161ffa89a4bd25352b4f0de44fc",
+    "solidSurface-1-separated.png": "60dfd5e84679a3d401cb9f94d18ed3bc30a3b44200b15fbde6671ee99675e944"
+  }
+}

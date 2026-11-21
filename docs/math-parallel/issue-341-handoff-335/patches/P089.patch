@@ -1,0 +1,514 @@
+diff --git a/dist/learning/p089-parity-pairing-evidence.js b/dist/learning/p089-parity-pairing-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..db83fd9cc039b7f563ae97064168b9343b43878a
+--- /dev/null
++++ b/dist/learning/p089-parity-pairing-evidence.js
+@@ -0,0 +1,101 @@
++import {initial, inspect, valid} from './phase5/b14-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'parityrules';
++const nodeId = 'mt_oxfxzbat3k';
++const type = 'x-parityjoin';
++const reviewed = [
++  {
++    taskHash:'df3acebdef9bd0750dc206d19b9552d9f1358c5f2745beb8120818e551132736',
++    task:{type,a:5,b:7,op:'+',prompt:'两堆各有一颗落单的。先猜合起来怎样，再把它们配好。'}
++  },
++  {
++    taskHash:'2c4de894dec640f76fde3af88df4537aef5092d837a216ec9dd7ff6fa657a27d',
++    task:{type,a:347,b:129,op:'+',prompt:'不先算总和，判断347+129会不会有落单的。看看两堆各剩下什么。'}
++  },
++  {
++    taskHash:'4e03f029f1ab74ee71b5aed0997942317491f67d071c30fed873057badd6a599',
++    task:{type,a:6,b:37,op:'×',prompt:'6份37个，不先算总数。把整份两两作伴，看看剩不剩一份。'}
++  },
++  {
++    taskHash:'de43b766ddb96e3e681afe3b1c411c9b38ec789d20e00575564cd5d7254cb158',
++    task:{type,a:9,b:8,op:'+',prompt:'换成一奇一偶，刚才的办法还会把所有颗粒配好吗？'}
++  }
++];
++
++export const P089_SOURCES = Object.freeze(reviewed.map(({taskHash},index) =>
++  Object.freeze({sessionId,index,nodeId,type,taskHash})
++));
++
++export function p089ParityPairingBinding(task,context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId ||
++      !sameEvidence(task,reviewed[context.index]?.task) ||
++      !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind:'p089-parity-pairing',method:null,question:task.op === '+'
++    ? '两堆各有几颗落单？把落单的放在一起，还剩几颗？'
++    : '两份里的同一位置怎样作伴？整份两两作伴后，还剩下一份吗？'};
++}
++
++function pairing({a,b,op}) {
++  if (op === '×') {
++    const groupPairs = a/2;
++    return {groupPairs,perGroup:b,totalPairs:groupPairs*b,leftovers:0,reason:'whole'};
++  }
++  const piles = [a,b].map(amount => ({pairs:Math.floor(amount/2),leftover:amount%2}));
++  const unpacked = piles[0].leftover + piles[1].leftover;
++  const extraPairs = Math.floor(unpacked/2);
++  return {piles,extraPairs,totalPairs:piles[0].pairs + piles[1].pairs + extraPairs,
++    leftovers:unpacked%2,reason:['none','one','two'][unpacked]};
++}
++
++export function replayP089ParityPairingEvidence(task,model,context) {
++  try {
++    const binding = p089ParityPairingBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue !== '' || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length) return null;
++
++    let prediction = null;
++    let joined = false;
++    let resets = 0;
++    const actions = [];
++    for (const {action,data} of model.history) {
++      if (data.index !== null || data.side !== null || data.value !== null) return null;
++      if (action === 'b14-predict' && !prediction) {
++        const raw = data.fields.prediction;
++        if (!['','even','odd'].includes(raw)) return null;
++        prediction = raw || null;
++        actions.push({action,prediction,accepted:prediction !== null});
++      } else if (action === 'b14-join' && prediction && !joined) {
++        joined = true;
++        actions.push({action});
++      } else if (action === 'b14-reset') {
++        joined = false;
++        resets++;
++        actions.push({action});
++      } else {
++        return null;
++      }
++    }
++
++    if (!joined || model.board.joined !== true || model.board.first !== prediction ||
++        model.prediction !== prediction) return null;
++    const facts = pairing(task);
++    const answer = facts.leftovers ? 'odd' : 'even';
++    if (model.answer !== answer || model.reason !== facts.reason || !inspect(task,model).correct) return null;
++    return {binding,prediction,predictionAgrees:prediction === answer,answer,...facts,actions,resets};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP089ParityPairingEvidence(task,model,record,context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP089ParityPairingEvidence(task,model,context);
++}
+diff --git a/tests/p9-p089-parity-pairing-browser.cjs b/tests/p9-p089-parity-pairing-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..367e7a130271fbf763c7485e9e2c83125b025683
+--- /dev/null
++++ b/tests/p9-p089-parity-pairing-browser.cjs
+@@ -0,0 +1,278 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P089_ARTIFACTS || path.join(root, 'verification/p9-p089-parity-pairing'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (row.index === 0) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++    const start = page.locator('[data-do="start"]');
++    if (await start.isVisible()) await start.click();
++  } else {
++    await page.locator('#actions [data-do="next"]').click();
++    checks.push('native Next reaches position ' + row.index);
++  }
++  await page.waitForFunction(({id,index}) => {
++    const snap = window.mathLesson?.snapshot();
++    return snap?.id === id && snap.index === index;
++  },row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P089_SOURCES, replayP089ParityPairingEvidence, submittedP089ParityPairingEvidence} =
++    await entry('dist/learning/p089-parity-pairing-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b14-model.js');
++  const expected = [
++    {answer:'even',reason:'two',pairs:6,leftover:0},
++    {answer:'even',reason:'two',pairs:238,leftover:0},
++    {answer:'even',reason:'whole',pairs:111,leftover:0},
++    {answer:'odd',reason:'one',pairs:8,leftover:1}
++  ];
++  const cases = P089_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), ...expected[i]};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP089ParityPairingEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      board: result.model.board, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function select(p,name,value) {
++    await (await openControl(p,'#extra-controls [data-xfield="' + name + '"]')).selectOption(value);
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P089');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const action = name => click(page,'#extra-controls [data-x="b14-' + name + '"]');
++      const check = () => click(page,'#actions [data-do="check"]');
++      await action('predict');
++      const unchosen = await observe(page,row,'blank-prediction');
++      ok(!unchosen.model.board.first && unchosen.model.issue.includes('猜想'),
++        tag + ' original button requires a selected guess');
++      const guess = row.answer === 'even' ? 'odd' : 'even';
++      await select(page,'prediction',guess);
++      await action('predict');
++      const predicted = await observe(page,row,'prediction');
++      ok(predicted.model.board.first === guess && !predicted.model.board.joined &&
++        await page.locator('#actions [data-do="check"]').isDisabled(),
++      tag + ' wrong first guess remains recorded and native Check waits for pairing');
++
++      await action('join');
++      if (row.task.op === '×') {
++        const groups = page.locator('#extra-visual .b14-whole-pairs section');
++        assert.equal(await groups.count(),3);
++        assert.deepEqual(await groups.locator('b').allTextContents(),['↔','↔','↔']);
++        checks.push('six groups are visibly joined in three pairs');
++      } else {
++        const piles = page.locator('#extra-visual .b14-pair-lanes .b14-pairs');
++        assert.equal(await piles.count(),2);
++        assert.equal(await piles.nth(0).locator('em').count(),1);
++        assert.equal(await piles.nth(1).locator('em').count(),row.index === 3 ? 0 : 1);
++        const join = await page.locator('#extra-visual .b14-joined').innerText();
++        ok(join.includes(row.index === 3 ? '仍有一个落单的' : '新的一对'),
++          tag + ' actual explanation displays what happened to the leftovers');
++        if (row.index === 1) {
++          assert.deepEqual(await piles.locator('.b14-many').allTextContents(),
++            ['173 对，每对 ● ●','64 对，每对 ● ●']);
++          checks.push('the large sets preserve their pair counts in the drawing');
++        }
++      }
++      await select(page,'answer',row.answer);
++      await select(page,'reason','none');
++      await check();
++      const wrong = await observe(page,row,'incorrect-reason-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task,wrong.attempts[0].value).correct &&
++        !proof(row,wrong), tag + ' a correct parity verdict with the wrong reason fails Check');
++      await picture(page,tag + '-incorrect-reason.png');
++
++      await select(page,'reason',row.reason);
++      const draft = await observe(page,row,'corrected-draft');
++      const replayed = replayP089ParityPairingEvidence(row.task,draft.model,row.context);
++      assert.equal(replayed?.totalPairs,row.pairs);
++      assert.equal(replayed?.leftovers,row.leftover);
++      ok(!proof(row,draft), tag + ' corrected reason awaits a new Check');
++      await check();
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.prediction === guess && accepted.predictionAgrees === false &&
++        accepted.totalPairs === row.pairs && accepted.leftovers === row.leftover,
++      tag + ' latest Check accepts pairing while preserving the earlier guess');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p089-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p089-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p089-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P089_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p089-parity-pairing-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P089_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p089-parity-pairing.test.mjs b/tests/p9-p089-parity-pairing.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..51617b9e1d31f6db082b4b5139f325fa31282fb7
+--- /dev/null
++++ b/tests/p9-p089-parity-pairing.test.mjs
+@@ -0,0 +1,117 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b14-model.js';
++import {
++  P089_SOURCES,
++  p089ParityPairingBinding,
++  replayP089ParityPairingEvidence,
++  submittedP089ParityPairingEvidence
++} from '../dist/learning/p089-parity-pairing-evidence.js';
++
++const cases = P089_SOURCES.map((source,i) => {
++  const {sessionId,index} = source;
++  return {source,context:{sessionId,index},task:sessionTaskFor(sessionId,index),
++    answer:i === 3 ? 'odd' : 'even',reason:['two','two','whole','one'][i],
++    totalPairs:[6,238,111,8][i]};
++});
++const replay = (row,model) => replayP089ParityPairingEvidence(row.task,model,row.context);
++const submit = (row,model,...versions) => submittedP089ParityPairingEvidence(row.task,model,
++  {attempts:versions.map(value => ({value:structuredClone(value)}))},row.context);
++const act = (row,model,action) => original.act(row.task,model,'b14-'+action);
++
++function complete(row,model = original.initial(row.task)) {
++  if (!model.board.first) {
++    model.prediction = row.answer === 'odd' ? 'even' : 'odd';
++    act(row,model,'predict');
++  }
++  act(row,model,'join');
++  model.answer = row.answer;
++  model.reason = row.reason;
++  return model;
++}
++
++test('P089 binds all four exact original prompts and their fingerprints', () => {
++  for (const {source,task,context} of cases) {
++    const ordered = Object.fromEntries(Object.entries(task).sort(([a],[b]) => a.localeCompare(b,'en')));
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),source.taskHash);
++    assert.equal(p089ParityPairingBinding(task,context)?.nodeId,source.nodeId);
++    assert.equal(p089ParityPairingBinding({...task,a:task.a+2},context),null);
++    assert.equal(p089ParityPairingBinding(task,{...context,index:String(context.index)}),null);
++  }
++});
++
++test('P089 distinguishes the leftovers and the pairs already formed by two piles', () => {
++  for (const index of [0,1,3]) {
++    const row = cases[index], model = complete(row), before = structuredClone(model);
++    const proof = replay(row,model);
++    assert.equal(proof?.totalPairs,row.totalPairs);
++    assert.equal(proof?.extraPairs,index === 3 ? 0 : 1);
++    assert.equal(proof?.leftovers,index === 3 ? 1 : 0);
++    assert.deepEqual(proof?.piles.map(p => p.leftover),index === 3 ? [1,0] : [1,1]);
++    assert.equal(proof?.predictionAgrees,false);
++    assert.deepEqual(model,before);
++  }
++});
++
++test('P089 reconstructs three pairs of whole groups and 37 matched positions per pair', () => {
++  const row = cases[2], proof = replay(row,complete(row));
++  assert.equal(proof?.groupPairs,3);
++  assert.equal(proof?.perGroup,37);
++  assert.equal(proof?.totalPairs,111);
++  assert.equal(proof?.leftovers,0);
++  assert.equal(proof?.reason,'whole');
++});
++
++test('P089 requires prediction, pairing, the reason and a fresh Check', () => {
++  for (const row of cases) {
++    const model = complete(row);
++    model.reason = 'none';
++    const wrong = structuredClone(model);
++    assert.equal(submit(row,model,wrong),null);
++    model.reason = row.reason;
++    assert.equal(submit(row,model,wrong),null);
++    assert.equal(submit(row,model,wrong,model)?.answer,row.answer);
++    act(row,model,'reset');
++    assert.equal(replay(row,model),null);
++    act(row,model,'join');
++    assert.equal(replay(row,model)?.resets,1);
++    assert.equal(replay(row,model)?.prediction,wrong.prediction);
++  }
++});
++
++test('P089 distinguishes a blank prediction from a saved guess and excludes forged actions', () => {
++  const [row] = cases;
++  const model = original.initial(row.task);
++  act(row,model,'predict');
++  assert.equal(replay(row,model),null);
++  complete(row,model);
++  assert.equal(replay(row,model)?.actions[0].accepted,false);
++  for (const change of [
++    m => { m.history.length = 0; },
++    m => { m.board.joined = false; },
++    m => { m.history[2].data.index = 0; },
++    m => { m.prediction = 'even'; },
++    m => act(row,m,'predict'),
++    m => act(row,m,'list')
++  ]) {
++    const copy = structuredClone(model);
++    change(copy);
++    assert.equal(replay(row,copy),null,change.toString());
++  }
++});
++
++test('P089 excludes practice, bridge and other source positions', async () => {
++  await ensureB39Ready();
++  for (const {task,context} of cases) {
++    assert.equal(p089ParityPairingBinding(task,{...context,index:-1}),null);
++    assert.equal(p089ParityPairingBinding(task,{...context,sessionId:'factoruse'}),null);
++    for (const [id,bridge] of Object.entries(BRIDGES)) {
++      for (const [index,related] of bridge.tasks.entries()) {
++        if (related?.type === task.type) assert.equal(p089ParityPairingBinding(related,{sessionId:id,index}),null);
++      }
++    }
++  }
++});

@@ -1,0 +1,633 @@
+diff --git a/dist/learning/p117-fractionfour-directed-jump-evidence.js b/dist/learning/p117-fractionfour-directed-jump-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0a149e5a606f2f8fc26a1ab7f6eb7d7339372493
+--- /dev/null
++++ b/dist/learning/p117-fractionfour-directed-jump-evidence.js
+@@ -0,0 +1,109 @@
++import {initial, inspect, valid} from './phase5/b09-model.js';
++import {parse} from './phase5/b09-math.js';
++import {
++  hasExactKeys,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++export const P117_SOURCE = Object.freeze({
++  sessionId: 'fractionfour',
++  index: 8,
++  nodeId: 'mt_gNUE4B3vuk',
++  type: 'x-directedjump',
++  taskHash: 'eb249dbc77c4acb4fc19245cfe552b6f39069c63461df463abf4bc9779a64e77'
++});
++
++const reviewedTask = Object.freeze({
++  type: 'x-directedjump',
++  start: -5,
++  op: '+',
++  operand: 3,
++  min: -10,
++  max: 10,
++  prompt: '−5加3：先预测，再从原位置画出真实方向。',
++  zero: true
++});
++
++export function p117DirectedJumpBinding(task, context) {
++  if (context?.sessionId !== P117_SOURCE.sessionId || context.index !== P117_SOURCE.index ||
++      !sameEvidence(task, reviewedTask) || !matchesNativeEvidenceTask(task, context, P117_SOURCE)) {
++    return null;
++  }
++  return {
++    nodeId: P117_SOURCE.nodeId,
++    kind: 'p117-fractionfour-directed-jump',
++    method: null,
++    question: '从 −5 出发，向哪边跳多少？终点还在 0 的哪一边？'
++  };
++}
++
++export function replayP117DirectedJumpEvidence(task, model, context) {
++  try {
++    const binding = p117DirectedJumpBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        !model.touched || model.anchor !== task.start || model.committed === null ||
++        model.guess !== model.committed || model.zero !== 'reference' ||
++        model.reference !== 0 || model.refTouched !== false || model.refSaved !== null) {
++      return null;
++    }
++
++    // The original history keeps successful jumps; undo and anchor edits don't
++    // record their position in that history. Accept only a complete current path.
++    const {history, jumps} = model;
++    if (!history.length || !sameEvidence(history, jumps) ||
++        Object.keys(history).length !== history.length || Object.keys(jumps).length !== jumps.length) {
++      return null;
++    }
++
++    let at = task.start;
++    const observableSuccessfulJumps = [];
++    for (const [index, change] of history.entries()) {
++      if (!Number.isSafeInteger(change) || change === 0) return null;
++      const to = at + change;
++      if (to < task.min || to > task.max) return null;
++      observableSuccessfulJumps.push({
++        index,
++        from: at,
++        change,
++        direction: change > 0 ? 'right' : 'left',
++        unitLength: Math.abs(change),
++        to
++      });
++      at = to;
++    }
++
++    const answer = parse(model.answer);
++    if (at - task.start !== task.operand || !answer || answer[0] !== at || answer[1] !== 1 ||
++        !inspect(task, model).correct) {
++      return null;
++    }
++
++    return {
++      kind: binding.kind,
++      nodeId: binding.nodeId,
++      sessionId: P117_SOURCE.sessionId,
++      index: P117_SOURCE.index,
++      start: task.start,
++      operation: task.op,
++      operand: task.operand,
++      signedChange: at - task.start,
++      end: at,
++      observableSuccessfulJumps,
++      zeroReferenceSelected: true,
++      initialGuessCorrectnessAssessed: false,
++      undoOrAnchorResetChronologyProven: false,
++      learnerMasteryAssessed: false
++    };
++  } catch {
++    return null;
++  }
++}
++
++// The pure replay checks a model. Evidence for the current saved Check needs
++// the separately stored attempt as well.
++export function submittedP117DirectedJumpEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP117DirectedJumpEvidence(task, model, context);
++}
+diff --git a/docs/math-parallel/local-b/P117-PREAUDIT.md b/docs/math-parallel/local-b/P117-PREAUDIT.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..176d3a4caa2bb1a752bbe24a06452d3029f8ffdd
+--- /dev/null
++++ b/docs/math-parallel/local-b/P117-PREAUDIT.md
+@@ -0,0 +1,39 @@
++# P117 数轴跳跃预审
++
++B 线 [#343](https://github.com/runlinx-eng/math/issues/343)，中央 [#341](https://github.com/runlinx-eng/math/issues/341)。本地分支 `work/b/p117-preaudit`，测试基于 `f4be9f88da7af59b6df1819ae242cf134591c376`。Node 22.22.0，macOS Chromium 141.0.7390.37。
++
++## 四道原题
++
++原题由运行时 `sessionTaskFor` 读取，来源与 `LESSONS[sessionId].topicId` 和审计结果比对，按仓库现有方法递归排序对象键后计算完整题目 SHA-256。四道当前均为 E，正式主线仍为 A813/1,996。
++
++| 原生位置 | 来源节点 | 完整题目 SHA-256 | 数学与结论 |
++| --- | --- | --- | --- |
++| `signedwalk:3` | `mt_9QzSnn8m80` | `18a8b8cfd19534a4a52ffcd6e82acafdbbaebc15ba269040a1f46fdf525d5a21` | 1−(−3)=4，参考变化 0→−3，实际变化 +3。当前记录证据不足。 |
++| `signedwalk:4` | `mt_9QzSnn8m80` | `d04d07348426908f58c460d1c7b14b2d009e9cbfc1e7bd2e6239dc9c7eac670d` | −2−(−5)=3，参考变化 0→−5，实际变化 +5。当前记录证据不足。 |
++| `fractionfour:8` | `mt_gNUE4B3vuk` | `eb249dbc77c4acb4fc19245cfe552b6f39069c63461df463abf4bc9779a64e77` | −5+3=−2，整数有向跳跃。建议中央准入这一道。 |
++| `fractionfour:9` | `mt_gNUE4B3vuk` | `49b314335636b93f32cef04cf51fe6cc6638dee6f2466e71a79f61e95b51d7e0` | −2−(−5)=3，参考变化 0→−5，实际变化 +5。当前记录证据不足。 |
++
++`fractionfour:8/9` 虽在分数课次里，运行时使用的都是整数数轴题。三道减负数题分别用原控件做了「先留参考变化再跳」与「先跳再留参考变化」。原判题都接受，两种顺序得到逐值相同的最终模型。记录只有主路径的跳跃增量和最终 `refSaved`，所以三道标为 `insufficient-evidence`。
++
++## 建议只实现 fractionfour:8
++
++- 限定原生位置、来源、完整原题和最新 Check。头尾分别是 −5 和 −2，保存的成功跳跃为整数；以精确整数逐段重建，逐段检查数轴 −10 到 10，净变化必须为 +3。零参照填项仍按原题，预测值允许与正确结果不同。
++- 原控件实测先保留猜想 0，向右跳 3，原 Check 先提交 −1 再订正为 −2。两次提交均保留，刷新后整个当前题记录逐值一致。另一组先向左跳 1、撤销、再向右跳 3，原判题仍通过，保存的 `history=[-1,3]` 与 `jumps=[3]` 不同。严格回放必须拒绝这种无法重建的过程。
++- 需保留缺段、错方向、越界、非整数、篡改模型和旧 Check 反例。原生 `fractionfour:9`、异源同控件、关联会话及练习必须排除。反馈可描述已保存的实际位移和终点，猜测正确性、心算策略及撤销先后均超出证据范围。
++
++## 本地证据
++
++- `node scripts/audit-learning-evidence.mjs` 通过。原题、来源、整数等式、原 `valid` / `inspect`、已有登记及真实关联和练习上下文由 `preaudit-source.mjs` 复核通过。
++- `node --test tests/p9-directed-jump-evidence-adapter.test.mjs` 为 5 通过、1 失败。第 67 行把 `PRACTICE.signedwalk` 以原生位置 `signedwalk:0` 传入。其题目序列化与原生 :0 相同，所以命中原生绑定。按练习真实索引 `-1`、以及五个数轴关联题的真实会话 ID 调用，均被拒绝。原断言保留，中央需一并核对这条既有回归。
++- `preaudit-browser.cjs` 用原控件跑 8 个场景，50 个已记录检查均通过，0 个页面错误。只预选原题位置，跳跃、参考变化、撤销、答案和 Check 均由原控件产生。保留 8 张图、原 State-v2 字节与解码状态。已直接查看 `fractionfour-8-ordered.png`。
++- 证据在该工作树旁的 `evidence/`。入口为 `source-audit.log`、`reference-node.log`、`browser.log`、`chromium/results.json`，后者 SHA-256 为 `de2c8b2bf19b20f172f45cee09b1004d6edc271b832cf647e9c6c4da5f606a59`。两份预审脚本及完整原题 JSON 在同目录。正式家族测试、备份导入、停服离线、P10 与 GitHub CI 当前均为 NOT_RUN。
++
++## 请中央确认的范围
++
++来源只锁 `fractionfour:8`（`mt_gNUE4B3vuk` 与上表题目哈希）。本地实现拟新增下列三个专属文件，现有 B09/B17 模型和中央共享文件均作为只读依赖。
++
++- `dist/learning/p117-fractionfour-directed-jump-evidence.js`
++- `tests/p9-p117-fractionfour-directed-jump.test.mjs`
++- `tests/p9-p117-fractionfour-directed-jump-browser.cjs`
++
++A 线 P001 目前申请的是 `gridarea:2`（`mt_6xNmQLzuqm`）。两项的当前申请来源和拟开发模块不同。正式实现待中央 #341 确认准入与文件锁。
+diff --git a/tests/p9-p117-fractionfour-directed-jump-browser.cjs b/tests/p9-p117-fractionfour-directed-jump-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..4b42799761c1e6489ed8737cce509a59cd5a882c
+--- /dev/null
++++ b/tests/p9-p117-fractionfour-directed-jump-browser.cjs
+@@ -0,0 +1,290 @@
++'use strict';
++
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const fs = require('node:fs');
++const path = require('node:path');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, capture, warmAndStop} = require('./helpers/p9-basic-artifact.cjs');
++const {STANDARD_DESKTOP_VIEWPORT, newDesktopContext} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P117_ARTIFACTS ||
++  path.join(root, 'verification/p9-p117-fractionfour-directed-jump'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (condition, description) => {
++  assert.ok(condition, description);
++  checks.push(description);
++};
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function click(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  await control.click();
++}
++
++async function field(page, name, value, kind = 'text') {
++  const control = page.locator('#extra-controls [data-xfield="' + name + '"]');
++  assert.equal(await control.count(), 1, 'original field: ' + name);
++  if (kind === 'range') {
++    await control.focus();
++    await control.press('Home');
++    for (let step = -10; step < value; step++) await control.press('ArrowRight');
++  } else if (kind === 'select') {
++    await control.selectOption(String(value));
++  } else {
++    await control.fill(String(value));
++  }
++  assert.equal(await control.inputValue(), String(value));
++}
++
++async function routePosition(page, origin, row) {
++  const reply = await page.goto(origin.base + 'learn.html#' + row.id);
++  ok(reply?.fromServiceWorker() === true, 'original lesson reachable with the HTTP origin stopped');
++  await page.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, row.id);
++
++  // Jump only to an original lesson position. All work, attempts and answers
++  // are created below through the existing visible controls.
++  await page.evaluate(async ({id, index}) => {
++    const {packText, unpackText} = await import('./storage.js');
++    const key = 'math-explorer-v2';
++    const state = JSON.parse(unpackText(localStorage.getItem(key)));
++    const lesson = state.lessons[id];
++    if (!lesson || lesson.cases[index]?.attempts?.length) throw Error('Expected a fresh original position');
++    lesson.index = index;
++    lesson.view = 'task';
++    localStorage.setItem(key, packText(JSON.stringify(state)));
++  }, row);
++  ok((await page.reload())?.fromServiceWorker() === true, 'original task reload uses the service worker');
++  await page.waitForFunction(index => window.mathLesson?.snapshot()?.index === index, row.index);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P117_SOURCE, replayP117DirectedJumpEvidence, submittedP117DirectedJumpEvidence} =
++    await entry('dist/learning/p117-fractionfour-directed-jump-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b09-model.js');
++  const context = {sessionId: P117_SOURCE.sessionId, index: P117_SOURCE.index};
++  const original = sessionTaskFor(context.sessionId, context.index);
++  const row = {id: context.sessionId, index: context.index};
++  const proof = state => submittedP117DirectedJumpEvidence(original, state.model, state.record, context);
++  let origin, browser, learner, restore, page, browserVersion = null;
++  let current = 'startup';
++
++  async function saveImage(name) {
++    await page.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++
++  async function captureWork(phase) {
++    const result = await capture(page, out, 'fractionfour-8', row, phase);
++    observations.push({
++      phase,
++      attempts: result.attempts.length,
++      jumps: result.model.jumps,
++      history: result.model.history,
++      answer: result.model.answer,
++      acceptedProof: proof(result),
++      storage: result.storage
++    });
++    return result;
++  }
++
++  async function selectAnchorAndPredict() {
++    await field(page, 'anchor', -5, 'range');
++    await field(page, 'guess', '0');
++    await click(page, '#extra-controls [data-x="direct-predict"]');
++  }
++
++  async function jump(change) {
++    await field(page, 'size', Math.abs(change));
++    await field(page, 'dir', change > 0 ? 'right' : 'left', 'select');
++    await click(page, '#extra-controls [data-x="direct-jump"]');
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath: process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion: 'reduce', serviceWorkers: 'allow', acceptDownloads: true});
++    restore = await newDesktopContext(browser, {reducedMotion: 'reduce', serviceWorkers: 'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(current + ': ' + error.message));
++    }
++    for (const c of [learner, restore]) {
++      c.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    ok(await restorePage.evaluate(() => !!navigator.serviceWorker.controller), 'independent backup context is SW-controlled');
++    await warmAndStop(page, origin, release, ok, 'P117');
++
++    current = 'source';
++    await routePosition(page, origin, row);
++    const live = await page.evaluate(async ({id,index}) => {
++      const {sessionTaskFor} = await import('./learning/bridges.js');
++      const {LESSONS} = await import('./learning/catalog.js');
++      return {task: sessionTaskFor(id,index), nodeId: LESSONS[id].topicId};
++    }, row);
++    assert.deepEqual(live.task, original);
++    const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++    ok(live.nodeId === P117_SOURCE.nodeId && digest === P117_SOURCE.taskHash, 'runtime source and complete task fingerprint');
++    ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), 'standard desktop viewport');
++
++    current = 'wrong-then-correct';
++    await selectAnchorAndPredict();
++    await jump(3);
++    await field(page, 'zero', 'reference', 'select');
++    await field(page, 'answer', -1);
++    await click(page, '#actions [data-do="check"]');
++    const wrong = await captureWork('wrong-check');
++    ok(wrong.attempts.length === 1 && !inspect(original, wrong.attempts[0].value).correct &&
++      proof(wrong) === null, 'original wrong Check is preserved and rejected by candidate');
++    await saveImage('wrong-check.png');
++
++    await field(page, 'answer', -2);
++    const draft = await captureWork('correct-unsubmitted-draft');
++    ok(replayP117DirectedJumpEvidence(original, draft.model, context)?.end === -2 &&
++      proof(draft) === null, 'corrected draft cannot reuse the previous wrong Check');
++
++    await click(page, '#actions [data-do="check"]');
++    const good = await captureWork('correct-check');
++    const accepted = proof(good);
++    ok(good.attempts.length === 2 && inspect(original, good.attempts.at(-1).value).correct &&
++      accepted?.start === -5 && accepted?.end === -2 && accepted.signedChange === 3,
++    'latest actual Check accepts exactly the signed integer displacement');
++    assert.deepEqual(accepted.observableSuccessfulJumps, [
++      {index: 0, from: -5, change: 3, direction: 'right', unitLength: 3, to: -2}
++    ]);
++    ok(accepted.initialGuessCorrectnessAssessed === false && good.model.committed === '0',
++      'actual guess is retained independently of verified jumps');
++    ok(await page.locator('#thinking-feedback').count() === 0, 'standalone candidate has no registered strict feedback');
++    await saveImage('correct-check.png');
++
++    ok((await page.reload())?.fromServiceWorker() === true, 'stopped-origin Chromium reload');
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++    const reloaded = await captureWork('offline-reload');
++    assert.deepEqual(reloaded.model, good.model);
++    assert.deepEqual(reloaded.record, good.record);
++    assert.deepEqual(proof(reloaded), accepted);
++    checks.push('original v2 active model, both attempts and evidence survive reload');
++
++    current = 'backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const download = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await download).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'native offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType: 'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++
++    ok((await upload(bytes, 'p117-backup.json')).includes('备份已合并'), 'native empty-context import accepts the backup');
++    const restoredRaw = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p117-repeat.json')).includes('备份已合并'), 'native repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredRaw,
++      'reimport preserves exact stored bytes');
++    ok(!(await upload(Buffer.from('{'), 'p117-invalid.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredRaw,
++      'rejected import leaves exact restored bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++    const restored = await capture(restorePage, out, 'fractionfour-8', row, 'restored-backup');
++    assert.deepEqual(restored.model, good.model);
++    assert.deepEqual(restored.record, good.record);
++    assert.deepEqual(proof(restored), accepted);
++    observations.push({phase: 'restored-backup', acceptedProof: proof(restored), storage: restored.storage});
++    await restorePage.screenshot({path: path.join(out, 'restored-backup.png')});
++    screenshots.push('restored-backup.png');
++    checks.push('restored original model, history, and correction independently match');
++
++    current = 'retry-and-undo';
++    await page.goto(origin.base + 'learn.html#' + row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retried = await captureWork('retry-new-draft');
++    ok(retried.model.history.length === 0 && retried.attempts.length === good.attempts.length &&
++      proof(retried) === null, 'native Retry keeps attempts and clears eligibility on the new draft');
++    await selectAnchorAndPredict();
++    await jump(-1);
++    await click(page, '#extra-controls [data-x="direct-undo"]');
++    await jump(3);
++    await field(page, 'zero', 'reference', 'select');
++    await field(page, 'answer', -2);
++    await click(page, '#actions [data-do="check"]');
++    const undone = await captureWork('undo-correct-original-check');
++    assert.deepEqual(undone.model.history, [-1,3]);
++    assert.deepEqual(undone.model.jumps, [3]);
++    ok(undone.attempts.length === 3 && inspect(original, undone.attempts.at(-1).value).correct &&
++      proof(undone) === null, 'real Undo diverges from retained history and is excluded despite original success');
++    await saveImage('undo-correct-original-check.png');
++    ok(errors.length === 0, 'no page errors or non-local HTTP requests');
++
++    console.log('P117_CHROMIUM_OK ' + JSON.stringify({
++      testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length
++    }));
++  } catch (error) {
++    errors.push(current + ': ' + (error.stack || error));
++    await page?.screenshot({path: path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({
++      schema: 'math-p117-fractionfour-directed-jump-browser/1',
++      testedCheckoutSha: sha, originalControls: true, seededLessonPositionOnly: true,
++      chromium: browserVersion, viewport: STANDARD_DESKTOP_VIEWPORT, source: P117_SOURCE,
++      checks, observations, screenshots, errors
++    }, null, 2) + '\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p117-fractionfour-directed-jump.test.mjs b/tests/p9-p117-fractionfour-directed-jump.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..1906163817088ee8bdf3e957155b9c8162e19a28
+--- /dev/null
++++ b/tests/p9-p117-fractionfour-directed-jump.test.mjs
+@@ -0,0 +1,171 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {readFileSync} from 'node:fs';
++import {LESSONS} from '../dist/learning/catalog.js';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as b09 from '../dist/learning/phase5/b09-model.js';
++import {
++  P117_SOURCE,
++  p117DirectedJumpBinding,
++  replayP117DirectedJumpEvidence,
++  submittedP117DirectedJumpEvidence
++} from '../dist/learning/p117-fractionfour-directed-jump-evidence.js';
++
++const {sessionId, index, nodeId, taskHash} = P117_SOURCE;
++const context = {sessionId, index};
++const task = sessionTaskFor(sessionId, index);
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++function start() {
++  const model = b09.initial(task);
++  model.anchor = -5;
++  b09.field(task, model, 'anchor');
++  model.guess = '0';
++  b09.act(task, model, 'direct-predict');
++  model.zero = 'reference';
++  return model;
++}
++
++function draw(model, change) {
++  const count = model.jumps.length;
++  model.dir = change > 0 ? 'right' : 'left';
++  model.size = String(Math.abs(change));
++  b09.act(task, model, 'direct-jump');
++  assert.equal(model.jumps.length, count + 1);
++}
++
++function work(moves = [3], answer = '-2') {
++  const model = start();
++  for (const change of moves) draw(model, change);
++  model.answer = answer;
++  return model;
++}
++
++const replay = (model) => replayP117DirectedJumpEvidence(task, model, context);
++const attempts = (...models) => ({attempts: models.map(value => ({value: structuredClone(value)}))});
++
++test('P117 freezes one exact original and leaves the formal review list untouched', () => {
++  const digest = createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex');
++  assert.equal(digest, taskHash);
++  assert.equal(LESSONS[sessionId].topicId, nodeId);
++  assert.equal(p117DirectedJumpBinding(task, context)?.nodeId, nodeId);
++  const manifest = JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json', import.meta.url), 'utf8'));
++  assert.equal(manifest.tasks.some(row => row.sessionId === sessionId && row.index === index), false);
++  const changes = [{prompt: '伪造题面'}, {max: 11}, {operand: 4}, {reverse: true}, {extra: true}];
++  for (const change of changes) assert.equal(p117DirectedJumpBinding({...task, ...change}, context), null);
++});
++
++test('P117 replays the successful integer path and preserves signs, lengths and endpoints', () => {
++  const model = work([-1, 4], '−2');
++  const before = structuredClone(model);
++  const proof = replay(model);
++  assert.equal(b09.inspect(task, model).correct, true);
++  assert.equal(proof.start, -5);
++  assert.equal(proof.end, -2);
++  assert.equal(proof.signedChange, 3);
++  assert.deepEqual(proof.observableSuccessfulJumps, [
++    {index: 0, from: -5, change: -1, direction: 'left', unitLength: 1, to: -6},
++    {index: 1, from: -6, change: 4, direction: 'right', unitLength: 4, to: -2}
++  ]);
++  assert.equal(proof.zeroReferenceSelected, true);
++  assert.equal(proof.initialGuessCorrectnessAssessed, false);
++  assert.equal(proof.undoOrAnchorResetChronologyProven, false);
++  assert.equal(proof.learnerMasteryAssessed, false);
++  assert.deepEqual(model, before);
++});
++
++test('P117 accepts exact equivalent answers and a 40-jump original history', () => {
++  for (const answer of ['−2', '-2.0', '-4/2']) assert.equal(replay(work([1, 2], answer))?.end, -2);
++  const moves = [...Array.from({length: 19}, () => [1, -1]).flat(), 1, 2];
++  assert.equal(replay(work(moves))?.observableSuccessfulJumps.length, 40);
++  const tooLong = work(moves);
++  tooLong.history.push(1);
++  tooLong.jumps.push(1);
++  assert.equal(replay(tooLong), null);
++});
++
++test('P117 rejects final-only, malformed, inconsistent and mathematically invalid snapshots', () => {
++  const mutations = [
++    model => { model.history = []; },
++    model => { model.history = new Array(1); model.jumps = new Array(1); },
++    model => { model.history.extra = 3; },
++    model => { model.history = [3, 0]; model.jumps = [3, 0]; },
++    model => { model.history = [0.5, 2.5]; model.jumps = [0.5, 2.5]; },
++    model => { model.history = [-6, 9]; model.jumps = [-6, 9]; },
++    model => { model.history = [-3]; model.jumps = [-3]; },
++    model => { model.history = [Number.MAX_SAFE_INTEGER]; model.jumps = [Number.MAX_SAFE_INTEGER]; },
++    model => { model.anchor = -4; },
++    model => { model.touched = false; },
++    model => { model.committed = null; },
++    model => { model.guess = '5'; },
++    model => { model.answer = '-2.000001'; },
++    model => { model.zero = ''; },
++    model => { model.refSaved = 0; },
++    model => { delete model.refTouched; }
++  ];
++  for (const change of mutations) {
++    const model = work();
++    change(model);
++    assert.equal(replay(model), null, change.toString());
++  }
++  assert.equal(replay(null), null);
++});
++
++test('P117 declines an undo or anchor reset that leaves extra history despite the original correct grade', () => {
++  for (const reset of [
++    model => b09.act(task, model, 'direct-undo'),
++    model => b09.field(task, model, 'anchor')
++  ]) {
++    const model = work([-1]);
++    reset(model);
++    draw(model, 3);
++    assert.deepEqual(model.jumps, [3]);
++    assert.deepEqual(model.history, [-1, 3]);
++    assert.equal(b09.inspect(task, model).correct, true);
++    assert.equal(replay(model), null);
++  }
++});
++
++test('P117 only yields submitted evidence for the latest matching correct Check', () => {
++  const wrong = work([3], '-1');
++  const good = work([3], '-2');
++  const edit = work([1, 2], '-2');
++  const submitted = (model, record) => submittedP117DirectedJumpEvidence(task, model, record, context);
++  assert.equal(submitted(wrong, attempts(wrong)), null);
++  assert.equal(submitted(good, attempts(wrong)), null);
++  assert.equal(submitted(good, attempts(wrong, good))?.end, -2);
++  assert.equal(submitted(good, attempts(good, wrong)), null);
++  assert.equal(submitted(edit, attempts(wrong, good)), null);
++  assert.equal(submitted(b09.initial(task), attempts(good)), null);
++  assert.equal(submitted(good, {attempts: [null, {value: good}]}), null);
++  assert.equal(submitted(good, {attempts: []}), null);
++});
++
++test('P117 source isolation uses true practice and bridge contexts', async () => {
++  await ensureB39Ready();
++  const boundAt = (original, ctx) => p117DirectedJumpBinding(original, ctx);
++  assert.equal(boundAt(sessionTaskFor(sessionId, 9), {sessionId, index: 9}), null);
++  assert.equal(boundAt(task, {sessionId, index: '8'}), null);
++  assert.equal(boundAt(task, {sessionId: 'signedwalk', index}), null);
++  assert.equal(boundAt(sessionTaskFor(sessionId, -1), {sessionId, index: -1}), null);
++  assert.equal(boundAt(task, {sessionId, index: -1}), null);
++  let directed = 0;
++  for (const [bridgeId, bridge] of Object.entries(BRIDGES)) {
++    for (const [bridgeIndex, original] of bridge.tasks.entries()) {
++      if (original?.type !== task.type) continue;
++      directed++;
++      assert.equal(boundAt(original, {sessionId: bridgeId, index: bridgeIndex}), null);
++      assert.equal(boundAt(task, {sessionId: bridgeId, index: bridgeIndex}), null);
++    }
++  }
++  assert.ok(directed > 0);
++});

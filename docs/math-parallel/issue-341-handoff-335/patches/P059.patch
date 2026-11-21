@@ -1,0 +1,267 @@
+diff --git a/dist/learning/p059-whole-unit-walk-evidence.js b/dist/learning/p059-whole-unit-walk-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0cca724f955b2b7ea75578fc20c4baa9df814545
+--- /dev/null
++++ b/dist/learning/p059-whole-unit-walk-evidence.js
+@@ -0,0 +1,40 @@
++import {initial, inspect, valid} from './phase5/b16-model.js';
++import {replayWalkHistory} from './unitwalk-evidence.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++const source = Object.freeze({
++  sessionId:'wholefractions',index:0,nodeId:'mt_AYzE1EAvI0',type:'x-unitwalk',
++  taskHash:'dabf9dc0e71a31b56110233f473f9e91fefc4fe4a6625b5486e613d9388be562'
++});
++const original = {
++  type:source.type,n:5,d:1,
++  prompt:'每个整体不再切开，一步走一个，走出5。用下面是1的分数给它命名。'
++};
++export const P059_SOURCES = Object.freeze([source]);
++
++export function p059WholeUnitWalkBinding(task,context) {
++  if (context?.sessionId !== source.sessionId || context.index !== source.index ||
++      !sameEvidence(task,original) || !matchesNativeEvidenceTask(task,context,source)) return null;
++  return {nodeId:source.nodeId,kind:'p059-whole-unit-walk',method:null,
++    question:'每一步走一个完整的 1。走五步时，为什么可以写成 5/1？'};
++}
++
++export function replayP059WholeUnitWalkEvidence(task,model,context) {
++  try {
++    const binding = p059WholeUnitWalkBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) ||
++        !valid(task,model) || !/^\s*\+?0*5\s*[/／]\s*\+?0*1\s*$/.test(model.answer)) return null;
++
++    const history = replayWalkHistory(task,model);
++    if (!history || history.current.cause !== 'partition' || history.board.parts !== 1 ||
++        history.current.advances-history.current.retreats !== task.n ||
++        !inspect(task,model).correct) return null;
++    return {binding,start:[0,1],end:[task.n,1],unit:[1,1],history};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP059WholeUnitWalkEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record) ? replayP059WholeUnitWalkEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p059-whole-unit-walk-browser.cjs b/tests/p9-p059-whole-unit-walk-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..c48901da59f287fbe9942f6758e558b1da3cee6d
+--- /dev/null
++++ b/tests/p9-p059-whole-unit-walk-browser.cjs
+@@ -0,0 +1,156 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P059_ARTIFACTS || path.join(root, 'verification/p9-p059-whole-unit-walk'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  const c = page.locator(sel); assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        (s.data?.index !== undefined ? '[data-index="' + s.data.index + '"]' : '') +
++        (s.data?.value !== undefined ? '[data-value="' + s.data.value + '"]' : '');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P059_SOURCES, replayP059WholeUnitWalkEvidence, submittedP059WholeUnitWalkEvidence} = await entry('dist/learning/p059-whole-unit-walk-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b16 = await entry('dist/learning/phase5/b16-model.js');
++  const cases = P059_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP059WholeUnitWalkEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b16.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P059');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        await runSteps(page, b16.solveSteps(sessionTaskFor(row.id, cur)));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,b16.solveSteps(row.task));
++      await runSteps(page,[{action:'b16-walk-back'},{action:'b16-walk'},{field:'answer',value:'5/2'}]);
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong = await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length === 1 && !b16.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'wrong denominator fails the original Check');
++      await picture(page,tag + '-wrong.png');
++      await runSteps(page,[{field:'answer',value:'5/1'}]);
++      const draft = await observe(page,row,'corrected-draft');
++      const replayed = replayP059WholeUnitWalkEvidence(row.task,draft.model,row.context);
++      ok(replayed?.history.current.retreats === 1 && !proof(row,draft),'real retreat and correction await Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && accepted?.end[0] === 5 && accepted.end[1] === 1,
++        'latest Check accepts the five whole-unit steps and 5/1');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p059.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p059r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P059_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p059-whole-unit-walk-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P059_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p059-whole-unit-walk.test.mjs b/tests/p9-p059-whole-unit-walk.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..a7c3e6cb51c2de99fb4702828c35fdacaeea1b6e
+--- /dev/null
++++ b/tests/p9-p059-whole-unit-walk.test.mjs
+@@ -0,0 +1,53 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, initial, inspect} from '../dist/learning/phase5/b16-model.js';
++import {P059_SOURCES,p059WholeUnitWalkBinding,replayP059WholeUnitWalkEvidence,submittedP059WholeUnitWalkEvidence} from '../dist/learning/p059-whole-unit-walk-evidence.js';
++
++const [source] = P059_SOURCES;
++const {sessionId,index} = source;
++const context = {sessionId,index};
++const task = sessionTaskFor(sessionId,index);
++const replay = m => replayP059WholeUnitWalkEvidence(task,m,context);
++function walk(partition = true) {
++  const m = initial(task);
++  m.parts = '1';
++  if (partition) act(task,m,'partition');
++  for (let i=0; i<5; i++) act(task,m,'walk');
++  m.answer = '5/1';
++  return m;
++}
++
++test('P059 binds only the exact native denominator-one task', () => {
++  const ordered = Object.fromEntries(Object.entries(task).sort(([a],[b])=>a.localeCompare(b,'en')));
++  assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),source.taskHash);
++  assert.ok(p059WholeUnitWalkBinding(task,context));
++  for (const index of [-1,1,'0']) assert.equal(p059WholeUnitWalkBinding(task,{sessionId,index}),null);
++  assert.equal(p059WholeUnitWalkBinding({...task,n:4},context),null);
++});
++
++test('P059 replays one whole per click and keeps an actual retreat', () => {
++  const m = walk();
++  act(task,m,'walk-back');
++  act(task,m,'walk');
++  const proof = replay(m);
++  assert.deepEqual(proof?.end,[5,1]);
++  assert.equal(proof.history.current.retreats,1);
++  assert.deepEqual(proof.history.current.steps[5],{delta:-1,from:[5,1],to:[4,1]});
++});
++
++test('P059 requires an explicit recorded unit and the requested fraction representation', () => {
++  assert.equal(inspect(task,walk(false)).correct,true);
++  assert.equal(replay(walk(false)),null);
++  const m = walk();
++  const good = structuredClone(m);
++  m.answer = '10/2';
++  assert.equal(inspect(task,m).correct,true);
++  assert.equal(replay(m),null);
++  m.answer = '5/1';
++  assert.equal(submittedP059WholeUnitWalkEvidence(task,m,{attempts:[{value:{...m,answer:'5/2'}}]},context),null);
++  assert.deepEqual(submittedP059WholeUnitWalkEvidence(task,m,{attempts:[{value:good}]},context)?.end,[5,1]);
++  m.history.pop();
++  assert.equal(replay(m),null);
++});

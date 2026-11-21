@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p051-compound-unit-meaning",
+  "commit": "a968df723037304b9a888ab4bd6bda662ac72759",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "rateWords37",
+      "index": 3,
+      "nodeId": "mt_ATYLKt0je-",
+      "type": "x-r37-steps",
+      "taskHash": "2380528b4a76c0350550f79d39e6ce6d99f7a97a2234df27dac438a025da3828"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "36 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "32ee5372807a15b6080bea6e163d06a426b4524936b2f90ccd60a217122b4614",
+    "rateWords37-3-correct-check-decoded.json": "a6dd66ee1b9ab7d5b615a7292f3f628292ebbdb14f762659fa9ce776e3849d8c",
+    "rateWords37-3-correct-check-storage.txt": "a6dd66ee1b9ab7d5b615a7292f3f628292ebbdb14f762659fa9ce776e3849d8c",
+    "rateWords37-3-correct.png": "fb1d7d302a8cba9716c136268d73bd371439b89cd710b959ceda1be488956755",
+    "rateWords37-3-corrected-draft-decoded.json": "804b0827dad6444b4154e7ff4bd3396f40147d7811c4bbf8648c73ba2695c052",
+    "rateWords37-3-corrected-draft-storage.txt": "804b0827dad6444b4154e7ff4bd3396f40147d7811c4bbf8648c73ba2695c052",
+    "rateWords37-3-offline-reload-decoded.json": "fb01c3d27b41c4dce58bd60a32c7e59e7b45f4f033103e0386c531b1cf8f1c21",
+    "rateWords37-3-offline-reload-storage.txt": "fb01c3d27b41c4dce58bd60a32c7e59e7b45f4f033103e0386c531b1cf8f1c21",
+    "rateWords37-3-restored-backup-decoded.json": "68e3bc3f418ce490bde1e71393111b6b13e4ff2b06d2cd09b46ccb7d527b7afe",
+    "rateWords37-3-restored-backup-storage.txt": "68e3bc3f418ce490bde1e71393111b6b13e4ff2b06d2cd09b46ccb7d527b7afe",
+    "rateWords37-3-retry-decoded.json": "ef4dee9d818446066c69bbfa86d52e1f30b35c41f60270d931661797b7c892b2",
+    "rateWords37-3-retry-storage.txt": "ef4dee9d818446066c69bbfa86d52e1f30b35c41f60270d931661797b7c892b2",
+    "rateWords37-3-wrong-check-decoded.json": "e3b8f14be47f35de5e2d4b6498fd967e6f45525023143643c49f2aafee0ee120",
+    "rateWords37-3-wrong-check-storage.txt": "e3b8f14be47f35de5e2d4b6498fd967e6f45525023143643c49f2aafee0ee120",
+    "rateWords37-3-wrong.png": "508a02848198ecbf5037bb83310bc846bd7fc90f4fa17c919db35061441f13b2",
+    "results.json": "9d198e6ad5b46d97c97578851950ee2c4425b7481606b24efd148b480a98cdee"
+  }
+}

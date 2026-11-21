@@ -1,0 +1,61 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p039-shortchains",
+  "commit": "fb8fb2f6adf63b09cfbf2ebd9ca48f20bf4de7a7",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "because38",
+      "index": 1,
+      "nodeId": "mt_a3dov8CZkq",
+      "type": "x-r38-chain",
+      "taskHash": "7d481edaeedb653e58ca840b2381946e6fd1140e3d63d20769472102ab4fa749"
+    },
+    {
+      "sessionId": "because38",
+      "index": 2,
+      "nodeId": "mt_a3dov8CZkq",
+      "type": "x-r38-chain",
+      "taskHash": "79eb0b58ae2f424514b2311e523bfc71244582c6a2f3a4e188b92bd090d52dcf"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "20 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 22,
+  "captures": 11,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "because38-1-correct-check-decoded.json": "0493b46a48f0200c9fb9c2ae5f6206e63baec27ba76295f9e6dee195d765b317",
+    "because38-1-correct-check-storage.txt": "0493b46a48f0200c9fb9c2ae5f6206e63baec27ba76295f9e6dee195d765b317",
+    "because38-1-correct.png": "6056385a5ecb4688e7cd97678cefed7b7402e572fc76ba2e8ed566e673cc864b",
+    "because38-1-corrected-draft-decoded.json": "d822a9343604d555871e9c10a2fd5d6a4bc99f891971c5fe8313a22dd6308db8",
+    "because38-1-corrected-draft-storage.txt": "d822a9343604d555871e9c10a2fd5d6a4bc99f891971c5fe8313a22dd6308db8",
+    "because38-1-offline-reload-decoded.json": "9ea438d7bc5bbb90008ce7c3eeb074cc5a5ca60cc26924370cc6a8bb24b82ca0",
+    "because38-1-offline-reload-storage.txt": "9ea438d7bc5bbb90008ce7c3eeb074cc5a5ca60cc26924370cc6a8bb24b82ca0",
+    "because38-1-restored-storage-decoded.json": "93e870eb6a385538ee036bdc4052f5d54c1ae8114b95dc878a467ad806e2659d",
+    "because38-1-restored-storage-storage.txt": "93e870eb6a385538ee036bdc4052f5d54c1ae8114b95dc878a467ad806e2659d",
+    "because38-1-wrong-check-decoded.json": "d8c0ec3175997104946a6f16beb5665cd4c62d32aca93867358c78c1f92f6dbf",
+    "because38-1-wrong-check-storage.txt": "d8c0ec3175997104946a6f16beb5665cd4c62d32aca93867358c78c1f92f6dbf",
+    "because38-1-wrong.png": "439d8bccdd955506727c1423a487237ce9c0e7a468af919d80c3f8f29fcabb1a",
+    "because38-2-correct-check-decoded.json": "f6bc94c2d6eb77435993c1f32d2de0b1ec058f8cc600f0060ca4e193dbb67020",
+    "because38-2-correct-check-storage.txt": "f6bc94c2d6eb77435993c1f32d2de0b1ec058f8cc600f0060ca4e193dbb67020",
+    "because38-2-correct.png": "5aa8a7c603dab7e8e0888437174f43992f31214479a3ff6a50a04d7fe2f8076b",
+    "because38-2-corrected-draft-decoded.json": "4a3ca07eeefe95cdf036bd2efa669ff78a773b343e1619ba9187a00318e7b533",
+    "because38-2-corrected-draft-storage.txt": "4a3ca07eeefe95cdf036bd2efa669ff78a773b343e1619ba9187a00318e7b533",
+    "because38-2-offline-reload-decoded.json": "c48a50e5d8a62b561afd565bcd11da79613fbb8c830d5b6e13a9cd9b112d50e8",
+    "because38-2-offline-reload-storage.txt": "c48a50e5d8a62b561afd565bcd11da79613fbb8c830d5b6e13a9cd9b112d50e8",
+    "because38-2-restored-backup-decoded.json": "93e870eb6a385538ee036bdc4052f5d54c1ae8114b95dc878a467ad806e2659d",
+    "because38-2-restored-backup-storage.txt": "93e870eb6a385538ee036bdc4052f5d54c1ae8114b95dc878a467ad806e2659d",
+    "because38-2-retry-decoded.json": "0eae678c2c141ed619987aeec9f5a65a301786847d4a3bafb3ae0765e48707ae",
+    "because38-2-retry-storage.txt": "0eae678c2c141ed619987aeec9f5a65a301786847d4a3bafb3ae0765e48707ae",
+    "because38-2-wrong-check-decoded.json": "0bb0eee58602339ce0ccb27920be32f0cd241255055f3af0b70904a94f3f663b",
+    "because38-2-wrong-check-storage.txt": "0bb0eee58602339ce0ccb27920be32f0cd241255055f3af0b70904a94f3f663b",
+    "because38-2-wrong.png": "666c9ee103de5c3433796d8cad655c3d1a1ea5ed9dce916dd36962913abcbbfa",
+    "native-state-v2.json": "d2b10e0a36121d59651693d316dbf0a5870de66143a94e5d8f7c0a84bcfcb6a0",
+    "results.json": "c2e5cb7576cc97f3466736345d5688853c7a61b28cb4915c1af0e5593d2f2205"
+  }
+}

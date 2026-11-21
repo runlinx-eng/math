@@ -1,0 +1,61 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p040-prism-face-volume",
+  "commit": "506189de6dfd172da09b467375f2c0cbf98e6529",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "prismFormulas",
+      "index": 1,
+      "nodeId": "mt_tAJH5BrpOx",
+      "type": "x-a30-solid",
+      "taskHash": "b45dd74041a96817e559de29fb8f90db76a62cf9f1df86a0c2174b98b983bf44"
+    },
+    {
+      "sessionId": "prismFormulas",
+      "index": 2,
+      "nodeId": "mt_tAJH5BrpOx",
+      "type": "x-a30-solid",
+      "taskHash": "8e254d6e19b42c3b5f83d51e2d0efe858589bcec2bb74cc26945236f63c6c427"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "22 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 22,
+  "captures": 11,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "537c68b33a0cf50fe4ed7edc5ab03c46b417de9e4451390397b578173e44c22d",
+    "prismFormulas-1-correct-check-decoded.json": "564de72d6847a233e91349a8dbc403f2e62ae815819504134e5aea8783f22a99",
+    "prismFormulas-1-correct-check-storage.txt": "564de72d6847a233e91349a8dbc403f2e62ae815819504134e5aea8783f22a99",
+    "prismFormulas-1-correct.png": "97b10e42e14dc6965971bad159e81b39bd04805f4ff194433f5ed0046d9cea7d",
+    "prismFormulas-1-corrected-draft-decoded.json": "1b70a5246c866f817ef5dd68f2148fdc8484f233855d0a9bd12385676ecf78f8",
+    "prismFormulas-1-corrected-draft-storage.txt": "1b70a5246c866f817ef5dd68f2148fdc8484f233855d0a9bd12385676ecf78f8",
+    "prismFormulas-1-offline-reload-decoded.json": "3d30ac0f45dcf1b6dd35562bad54a6cf39faa8135e8dd07f120a2ea66912a0b8",
+    "prismFormulas-1-offline-reload-storage.txt": "3d30ac0f45dcf1b6dd35562bad54a6cf39faa8135e8dd07f120a2ea66912a0b8",
+    "prismFormulas-1-restored-storage-decoded.json": "d91c9abe76a828815ee829f0c7927550ad3e384356e6e4a43e9c92cceff9aaee",
+    "prismFormulas-1-restored-storage-storage.txt": "d91c9abe76a828815ee829f0c7927550ad3e384356e6e4a43e9c92cceff9aaee",
+    "prismFormulas-1-wrong-check-decoded.json": "0f5072e3fe45e4c6f04b8c21eee7c4bcc42a94112d1ac298b510825e7759abda",
+    "prismFormulas-1-wrong-check-storage.txt": "0f5072e3fe45e4c6f04b8c21eee7c4bcc42a94112d1ac298b510825e7759abda",
+    "prismFormulas-1-wrong.png": "78ca3a847c2d654fa7e0b3be243adf5fa862ab528f5d922fbda9227e90006a47",
+    "prismFormulas-2-correct-check-decoded.json": "2f3e7a2e0f7764611b7d84d59f2ecd27ce57607b71be684503fcca55691e76cf",
+    "prismFormulas-2-correct-check-storage.txt": "2f3e7a2e0f7764611b7d84d59f2ecd27ce57607b71be684503fcca55691e76cf",
+    "prismFormulas-2-correct.png": "a8aa8ab0d8f724c5512b781278e128f333d2184e22b70ad9471988a93884c6dc",
+    "prismFormulas-2-corrected-draft-decoded.json": "107bb63c3bc273929d5997a1abb2dc3679f5ea50db2b692f60b9192ce3c155bf",
+    "prismFormulas-2-corrected-draft-storage.txt": "107bb63c3bc273929d5997a1abb2dc3679f5ea50db2b692f60b9192ce3c155bf",
+    "prismFormulas-2-offline-reload-decoded.json": "c4e92c92c256aaf66d66f84168c28422098b7df1a5ff8f6806aa04f84efde204",
+    "prismFormulas-2-offline-reload-storage.txt": "c4e92c92c256aaf66d66f84168c28422098b7df1a5ff8f6806aa04f84efde204",
+    "prismFormulas-2-restored-backup-decoded.json": "d91c9abe76a828815ee829f0c7927550ad3e384356e6e4a43e9c92cceff9aaee",
+    "prismFormulas-2-restored-backup-storage.txt": "d91c9abe76a828815ee829f0c7927550ad3e384356e6e4a43e9c92cceff9aaee",
+    "prismFormulas-2-retry-decoded.json": "b842deab99d9b7182d8afdeb9c7b23f26f2ddf6b3f362f4583edaa3cbc10186c",
+    "prismFormulas-2-retry-storage.txt": "b842deab99d9b7182d8afdeb9c7b23f26f2ddf6b3f362f4583edaa3cbc10186c",
+    "prismFormulas-2-wrong-check-decoded.json": "38eaecbcc9ea41382e214e3bc4674a18b95dae51c91933173c2f5384ba33889c",
+    "prismFormulas-2-wrong-check-storage.txt": "38eaecbcc9ea41382e214e3bc4674a18b95dae51c91933173c2f5384ba33889c",
+    "prismFormulas-2-wrong.png": "43c6469f559e8efac8ab39ad28336a7805566d55596c77b859c3ed1a6f615f57",
+    "results.json": "c6142ad940adba093b3ab28a677d7a097b437520cac1053d753c37324d9a7db5"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p054-opposite-side-marks",
+  "commit": "70afe009c2974d3b7ad8a6d8d56c4d4315ad84b4",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "linenotation",
+      "index": 2,
+      "nodeId": "mt_e4V6hvcuEJ",
+      "type": "x-g25-ticks",
+      "taskHash": "f586e383c91a66d9f4b592d237c834f39cb18230a3dfc4d26665eda597fff4c1"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "40 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "linenotation-2-correct-check-decoded.json": "cd297b6024eb52b8cf83edbc309c15c64f719f416567324c188fb973c3ff30ea",
+    "linenotation-2-correct-check-storage.txt": "cd297b6024eb52b8cf83edbc309c15c64f719f416567324c188fb973c3ff30ea",
+    "linenotation-2-correct.png": "d5effafcf8361d7e04ab3ee0bb7eccab678cd107818e8cbfa4d6c086a9109c48",
+    "linenotation-2-corrected-draft-decoded.json": "f3b756dbc61acc66d5648f36aeea53ac84e05e9c813b3a0c49070995bb8e634e",
+    "linenotation-2-corrected-draft-storage.txt": "f3b756dbc61acc66d5648f36aeea53ac84e05e9c813b3a0c49070995bb8e634e",
+    "linenotation-2-offline-reload-decoded.json": "e492b2643d0c16fb7279589745571255c4a06338c97c393eaf08028ee49d3daa",
+    "linenotation-2-offline-reload-storage.txt": "e492b2643d0c16fb7279589745571255c4a06338c97c393eaf08028ee49d3daa",
+    "linenotation-2-restored-backup-decoded.json": "7055311f14354827be90b3cfb988f684fa147d184fdd9b714581172511202d8b",
+    "linenotation-2-restored-backup-storage.txt": "7055311f14354827be90b3cfb988f684fa147d184fdd9b714581172511202d8b",
+    "linenotation-2-retry-decoded.json": "e62a175dad02f254840d401ff4b636c15a917d81a642f6d867cb93309d72f74e",
+    "linenotation-2-retry-storage.txt": "e62a175dad02f254840d401ff4b636c15a917d81a642f6d867cb93309d72f74e",
+    "linenotation-2-wrong-check-decoded.json": "3b38ceda829d341e3e44b7827cdcc8b80908d6600620070a31410fc6cae3ac63",
+    "linenotation-2-wrong-check-storage.txt": "3b38ceda829d341e3e44b7827cdcc8b80908d6600620070a31410fc6cae3ac63",
+    "linenotation-2-wrong.png": "c7b5753bf04bef6236a665149773734a5136b847c3c8a19433e68e94a7533d57",
+    "native-state-v2.json": "8db91b88c64b8ef10c3616681724bf9b5fc1f9220ca387b601b8e51ac3c6fc8a",
+    "results.json": "1848379360778a73edd5a8484d459f1d1a2614350e54c7e7f1e712badca6a925"
+  }
+}

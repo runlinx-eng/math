@@ -1,0 +1,531 @@
+diff --git a/dist/learning/p114-solidstack-evidence.js b/dist/learning/p114-solidstack-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..e7d4ca5a8044866a76aa0f7331c385aed0696aa4
+--- /dev/null
++++ b/dist/learning/p114-solidstack-evidence.js
+@@ -0,0 +1,127 @@
++import {initial, inspect, valid} from './phase5/b27-model.js';
++import {
++  hasExactKeys,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'solidstack';
++const nodeId = 'mt_QNxFnxikCN';
++const type = 'x-g27-build';
++const reviewed = new Map([
++  [0, {
++    taskHash: 'c47708d41a0f551fe7ac7a60effee5468286cb069f2a0cafba604497e7c5f235',
++    task: {
++      "type": "x-g27-build",
++      "prompt": "从下往上，用一个长方体和两个正方体搭高塔。",
++      "target": [
++        "cuboid",
++        "cube",
++        "cube"
++      ],
++      "options": [
++        "cube",
++        "cuboid",
++        "cylinder"
++      ],
++      "rotate": true
++    }
++  }],
++  [1, {
++    taskHash: 'f2a5ef9ff701bb81b8b24d5fb8d7b042b8e38aa1384a7a2dd5456001e6e1982a',
++    task: {
++      "type": "x-g27-build",
++      "prompt": "先放圆柱，再给它盖上圆锥屋顶。",
++      "target": [
++        "cylinder",
++        "cone"
++      ],
++      "options": [
++        "cylinder",
++        "cone",
++        "cube"
++      ],
++      "rotate": true
++    }
++  }]
++]);
++
++export const P114_SOURCES = Object.freeze([...reviewed].map(([index, {taskHash}]) =>
++  Object.freeze({sessionId, index, nodeId, type, taskHash})
++));
++
++export function p114SolidStackBinding(task, context) {
++  const source = reviewed.get(context?.index);
++  if (context?.sessionId !== sessionId || !source ||
++      !sameEvidence(task, source.task) || !matchesNativeEvidenceTask(task, context, {nodeId, type})) {
++    return null;
++  }
++  return {
++    nodeId,
++    kind: 'p114-solidstack',
++    method: null,
++    question: '从底到顶分别是哪几块？拿走的是哪一块？'
++  };
++}
++
++export function replayP114SolidStackEvidence(task, model, context) {
++  try {
++    const binding = p114SolidStackBinding(task, context);
++    const blank = binding && initial(task, 1);
++    if (!blank || !hasExactKeys(model, Object.keys(blank)) || !valid(task, model) ||
++        !model.history.length || Object.keys(model.history).length !== model.history.length ||
++        model.issue !== '' || model.position !== blank.position || model.foldPosition !== blank.foldPosition) {
++      return null;
++    }
++
++    const parts = [];
++    const observableActions = [];
++    let turnRecorded = false;
++    for (const [eventIndex, event] of model.history.entries()) {
++      if (!hasExactKeys(event, ['a', 'd'])) return null;
++      if (event.a === 'add') {
++        if (!hasExactKeys(event.d, ['index']) || !task.options.includes(event.d.index)) return null;
++        const part = event.d.index;
++        const accepted = parts.length < task.target.length;
++        if (accepted) parts.push(part);
++        observableActions.push({eventIndex, action:'add', part, accepted, height:parts.length});
++      } else if (event.a === 'remove') {
++        if (!hasExactKeys(event.d, [])) return null;
++        const removed = parts.pop() ?? null;
++        observableActions.push({eventIndex, action:'remove', removed, height:parts.length});
++      } else if (event.a === 'turn') {
++        if (!hasExactKeys(event.d, [])) return null;
++        turnRecorded = true;
++        observableActions.push({eventIndex, action:'turn'});
++      } else {
++        return null;
++      }
++    }
++
++    if (!sameEvidence(parts, task.target) || !sameEvidence(parts, model.board.parts) ||
++        !turnRecorded || model.board.turned !== turnRecorded || !inspect(task, model).correct) {
++      return null;
++    }
++    return {
++      kind: binding.kind,
++      nodeId: binding.nodeId,
++      sessionId,
++      index: context.index,
++      stackBottomToTop: parts,
++      observableActions,
++      turnRecorded,
++      rotationAngleAssessed: false,
++      physicalStabilityAssessed: false,
++      freeExplanationAssessed: false,
++      learnerMasteryAssessed: false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP114SolidStackEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP114SolidStackEvidence(task, model, context);
++}
+diff --git a/tests/p9-p114-solidstack-browser.cjs b/tests/p9-p114-solidstack-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..02f9640aabc9b1a8242fffd5157e0c35b09a92d4
+--- /dev/null
++++ b/tests/p9-p114-solidstack-browser.cjs
+@@ -0,0 +1,250 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P114_ARTIFACTS || path.join(root, 'verification/p9-p114-solidstack'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (page.url() !== url) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, row.index + ' original lesson with origin stopped');
++  }
++  await page.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, row.id);
++  // Select only a position in a fresh record. All mathematics is done through
++  // the original place, revise and Check controls.
++  await page.evaluate(async ({id,index}) => {
++    const {packText, unpackText} = await import('./storage.js');
++    const key = 'math-explorer-v2';
++    const state = JSON.parse(unpackText(localStorage.getItem(key)));
++    const lesson = state.lessons[id];
++    if (!lesson || lesson.cases[index]?.attempts?.length) throw Error('Expected empty native case');
++    lesson.index = index;
++    lesson.view = 'task';
++    localStorage.setItem(key, packText(JSON.stringify(state)));
++  }, row);
++  ok((await page.reload())?.fromServiceWorker() === true, row.index + ' original position loads from SW');
++  await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P114_SOURCES, replayP114SolidStackEvidence, submittedP114SolidStackEvidence} =
++    await entry('dist/learning/p114-solidstack-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b27-model.js');
++  const cases = P114_SOURCES.map(source => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index}, task:sessionTaskFor(sessionId,index)};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP114SolidStackEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, 'solidstack-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      parts: result.model.board.parts, turned: result.model.board.turned, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function addPiece(piece) {
++    await click(page, '#extra-controls [data-x="g27-add"][data-index="' + piece + '"]');
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P114');
++
++    for (const row of cases) {
++      phase = 'solidstack:' + row.index;
++      const tag = 'solidstack-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      await click(page, '#extra-controls [data-x="turn-extra"]');
++      for (const part of row.task.target.slice(0,-1)) await addPiece(part);
++      const top = row.task.target.at(-1);
++      const wrongPiece = row.task.options.find(piece => piece !== top);
++      await addPiece(wrongPiece);
++      await click(page, '#actions [data-do="check"]');
++      const wrong = await observe(page, row, 'wrong-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task, wrong.attempts[0].value).correct &&
++        proof(row,wrong) === null, tag + ' incorrect original stack is preserved');
++      await picture(page, tag + '-wrong-check.png');
++
++      await click(page, '#extra-controls [data-x="g27-remove"]');
++      await addPiece(top);
++      const draft = await observe(page, row, 'corrected-draft');
++      ok(replayP114SolidStackEvidence(row.task,draft.model,row.context) && !proof(row,draft),
++        tag + ' corrected stack stays ineligible before Check');
++      await click(page, '#actions [data-do="check"]');
++
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.turnRecorded === true, tag + ' actual latest Check and original turn event');
++      assert.deepEqual(accepted.stackBottomToTop, row.task.target);
++      assert.equal(accepted.observableActions[0].action,'turn');
++      assert.equal(accepted.observableActions.at(-2).removed,wrongPiece);
++      assert.equal(accepted.observableActions.at(-1).part,top);
++      ok(!accepted.rotationAngleAssessed && !accepted.physicalStabilityAssessed &&
++        good.model.board.bad === true, tag + ' records ordered parts and actual correction');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p114-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p114-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p114-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#solidstack');
++    await restorePage.waitForFunction(() => window.mathLesson?.snapshot()?.id === 'solidstack');
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#solidstack');
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P114_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p114-solidstack-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:true, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P114_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p114-solidstack.test.mjs b/tests/p9-p114-solidstack.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..db872c5800c7fc94d9e335d20d556a9c44fdffd6
+--- /dev/null
++++ b/tests/p9-p114-solidstack.test.mjs
+@@ -0,0 +1,136 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {LESSONS} from '../dist/learning/catalog.js';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b27-model.js';
++import {
++  P114_SOURCES,
++  p114SolidStackBinding,
++  replayP114SolidStackEvidence,
++  submittedP114SolidStackEvidence
++} from '../dist/learning/p114-solidstack-evidence.js';
++
++const expected = [['cuboid','cube','cube'],['cylinder','cone']];
++const cases = P114_SOURCES.map(source => {
++  const {sessionId,index} = source;
++  return {source,context:{sessionId,index},task:sessionTaskFor(sessionId,index)};
++});
++function ordered(value) {
++  if(Array.isArray(value))return value.map(ordered);
++  if(value&&typeof value==='object')
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(value[k])]));
++  return value;
++}
++const add = (task,model,part) => original.act(task,model,'g27-add',{index:part});
++const remove = (task,model) => original.act(task,model,'g27-remove');
++const turn = (task,model) => original.act(task,model,'g27-turn');
++function work({task,context}, parts=expected[context.index], useTurn=true) {
++  const model=original.initial(task,1);
++  if(useTurn)turn(task,model);
++  for(const part of parts)add(task,model,part);
++  return model;
++}
++const replay = (row,model) => replayP114SolidStackEvidence(row.task,model,row.context);
++const attempt=value=>({value:structuredClone(value)});
++
++test('P114 binds only the two full original source fingerprints',()=>{
++  for(const {source,task,context} of cases){
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),source.taskHash);
++    assert.equal(LESSONS[context.sessionId].topicId,source.nodeId);
++    assert.equal(p114SolidStackBinding(task,context)?.nodeId,source.nodeId);
++    for(const change of [{rotate:false},{target:[...task.target].reverse()},{prompt:'altered'}])
++      assert.equal(p114SolidStackBinding({...task,...change},context),null);
++    assert.equal(p114SolidStackBinding(task,{...context,index:String(context.index)}),null);
++  }
++});
++
++test('P114 replays bottom-to-top placement, repeated identical shapes and actual turn events',()=>{
++  for(const row of cases){
++    const model=work(row);
++    const before=structuredClone(model);
++    const proof=replay(row,model);
++    assert.deepEqual(proof.stackBottomToTop, expected[row.context.index]);
++    assert.equal(proof.observableActions[0].action,'turn');
++    assert.equal(proof.turnRecorded,true);
++    assert.equal(proof.rotationAngleAssessed,false);
++    assert.equal(proof.physicalStabilityAssessed,false);
++    assert.equal(proof.freeExplanationAssessed,false);
++    assert.deepEqual(model,before);
++    assert.equal(replay(row,work(row,[...expected[row.context.index]].reverse())),null);
++    assert.equal(replay(row,work(row,expected[row.context.index],false)),null);
++  }
++});
++
++test('P114 keeps wrong original work, removes only the top and rejects an unsubmitted edit',()=>{
++  for(const row of cases){
++    const parts=expected[row.context.index];
++    const wrongPart=row.task.options.find(p=>p!==parts.at(-1));
++    const wrong=work(row,[...parts.slice(0,-1),wrongPart]);
++    assert.equal(original.inspect(row.task,wrong).correct,false);
++    const fixed=structuredClone(wrong);
++    remove(row.task,fixed);
++    add(row.task,fixed,parts.at(-1));
++    assert.equal(original.inspect(row.task,fixed).correct,true);
++    assert.equal(fixed.board.bad,true);
++    const proof=replay(row,fixed);
++    assert.deepEqual(proof.stackBottomToTop,parts);
++    assert.equal(proof.observableActions.at(-2).removed,wrongPart);
++    assert.equal(proof.observableActions.at(-1).part,parts.at(-1));
++    const submit=(record)=>submittedP114SolidStackEvidence(row.task,fixed,record,row.context);
++    assert.equal(submit({attempts:[attempt(wrong)]}),null);
++    assert.deepEqual(submit({attempts:[attempt(wrong),attempt(fixed)]}),proof);
++    assert.equal(submit({attempts:[attempt(fixed),attempt(wrong)]}),null);
++    assert.equal(submit({attempts:[null,attempt(fixed)]}),null);
++  }
++});
++
++test('P114 records a refused extra piece and reconstructs the actual repaired stack',()=>{
++  const row=cases[1], model=work(row);
++  add(row.task,model,'cube');
++  assert.match(model.issue,/放满/);
++  assert.equal(replay(row,model),null);
++  remove(row.task,model);
++  add(row.task,model,'cone');
++  const proof=replay(row,model);
++  assert.deepEqual(proof.stackBottomToTop,['cylinder','cone']);
++  assert.deepEqual(proof.observableActions[3],{eventIndex:3,action:'add',part:'cube',accepted:false,height:2});
++});
++
++test('P114 rejects malformed, incomplete, oversized and unsupported actions',()=>{
++  const row=cases[0];
++  const changes=[
++    model=>{model.history=[];},
++    model=>{model.history=new Array(4);},
++    model=>{model.history[0].d.index='0';},
++    model=>{model.history[0].forged=true;},
++    model=>{model.history[1].d.index='sphere';},
++    model=>{model.history=Array.from({length:1001},()=>model.history[0]);},
++    model=>{model.board.parts.reverse();},
++    model=>{model.board.turned=false;},
++    model=>{model.position='3';},
++    model=>{model.seed=0;},
++    model=>{original.act(row.task,model,'g27-help');}
++  ];
++  for(const change of changes){
++    const model=work(row);
++    change(model);
++    assert.equal(replay(row,model),null,change.toString());
++  }
++});
++
++test('P114 excludes given models, practice, copied and related contexts',async()=>{
++  await ensureB39Ready();
++  for(const {task,context} of cases){
++    assert.equal(p114SolidStackBinding(sessionTaskFor('solidstack',2),{sessionId:'solidstack',index:2}),null);
++    assert.equal(p114SolidStackBinding(task,{...context,index:-1}),null);
++    assert.equal(p114SolidStackBinding(sessionTaskFor('solidstack',-1),{...context,index:-1}),null);
++    for(const [sessionId, bridge] of Object.entries(BRIDGES)){
++      for(const [index, related] of bridge.tasks.entries()){
++        if(related?.type===task.type)assert.equal(p114SolidStackBinding(related,{sessionId,index}),null);
++      }
++      assert.equal(p114SolidStackBinding(task,{sessionId,index:0}),null);
++    }
++  }
++});

@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p063-temperature-order",
+  "commit": "6e862904b5f3322ddf15c7472a4158d2224ad481",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "temperaturechange",
+      "index": 2,
+      "nodeId": "mt_RVK655t391",
+      "type": "x-m29-order",
+      "taskHash": "3d8efdf2a4168309bf441e68fc90d1dd3334ce1b7f3ed8dd057c85e9b8960d92"
+    }
+  ],
+  "node22": "3 PASS",
+  "referenceNode": "14 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "95749f84082df6724dd41940d1c3edc4f662d520a7482f95c4e6b35cedd929fe",
+    "results.json": "7d5d5e26105106876ad573a7bbd4cf633223945fbb87bda434a10c0ef9590334",
+    "temperaturechange-2-correct-check-decoded.json": "b5f2c36af712eef4e65862c104ee886465cc6cbf6c9cb36cc2c99beb8a6b99b9",
+    "temperaturechange-2-correct-check-storage.txt": "b5f2c36af712eef4e65862c104ee886465cc6cbf6c9cb36cc2c99beb8a6b99b9",
+    "temperaturechange-2-correct.png": "1c14542e49fd070ad83b4a674facf01f23558cea4348f32ac68c5b3da836999f",
+    "temperaturechange-2-corrected-draft-decoded.json": "2d50eeac588d4c61ec9e23a0252f4c0d7f0e6f05ce2a89845c12acd1b04f2aa6",
+    "temperaturechange-2-corrected-draft-storage.txt": "2d50eeac588d4c61ec9e23a0252f4c0d7f0e6f05ce2a89845c12acd1b04f2aa6",
+    "temperaturechange-2-offline-reload-decoded.json": "51ab0014173acaf641e0e73f8e303c1843e731f61b505c7a053089daa46222c5",
+    "temperaturechange-2-offline-reload-storage.txt": "51ab0014173acaf641e0e73f8e303c1843e731f61b505c7a053089daa46222c5",
+    "temperaturechange-2-restored-backup-decoded.json": "96f253fd72f9559036ccc0534f30ed0305c8fa4d839af7713773e314a3fcd707",
+    "temperaturechange-2-restored-backup-storage.txt": "96f253fd72f9559036ccc0534f30ed0305c8fa4d839af7713773e314a3fcd707",
+    "temperaturechange-2-retry-decoded.json": "0734db527cb50f98e8f38940cdcbfb5983eda8bae55ef70804a0be06107eee05",
+    "temperaturechange-2-retry-storage.txt": "0734db527cb50f98e8f38940cdcbfb5983eda8bae55ef70804a0be06107eee05",
+    "temperaturechange-2-wrong-check-decoded.json": "dc4e64a21838ce925029746c68564bae7039101fa70f89f7714ffa26a01f9950",
+    "temperaturechange-2-wrong-check-storage.txt": "dc4e64a21838ce925029746c68564bae7039101fa70f89f7714ffa26a01f9950",
+    "temperaturechange-2-wrong.png": "ed0ea055b51925a1982a5b8c7a963f97170c995903493ad96bdf982e6b03f9e6"
+  }
+}

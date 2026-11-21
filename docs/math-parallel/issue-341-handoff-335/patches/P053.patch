@@ -1,0 +1,251 @@
+diff --git a/dist/learning/p053-data-kind-order-evidence.js b/dist/learning/p053-data-kind-order-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..27c7b1061f5ec3d3ba97e47cd03d26a119d9673e
+--- /dev/null
++++ b/dist/learning/p053-data-kind-order-evidence.js
+@@ -0,0 +1,48 @@
++import {initial,inspect,valid} from './phase5/b19-model.js';
++import {hasExactKeys,latestSubmissionMatches,matchesNativeEvidenceTask,sameEvidence} from './evidence-contract.js';
++
++const source=Object.freeze({sessionId:'checkrecords',index:1,nodeId:'mt_QHT16CrFO-',type:'x-datakind',
++  taskHash:'278ca8beb1bb93f7d27e4a493d1b15a782c5d3b0d09de66a0cbeb0bfea530584'});
++const original={type:source.type,prompt:'把三种记录分组。能排出高低，不代表每一级相差一样多。',
++  cards:[{label:'最喜欢的颜色：红、蓝、绿',kind:'nominal'},
++    {label:'满意程度：1很不满意 → 5很满意',kind:'ordinal'},
++    {label:'交通方式：走路、骑车、公交',kind:'nominal'}]};
++const orderedCard=[false,true,false];
++export const P053_SOURCES=Object.freeze([source]);
++export function p053DataKindOrderBinding(task,context) {
++  if (context?.sessionId!==source.sessionId || context.index!==source.index ||
++      !sameEvidence(task,original) || !matchesNativeEvidenceTask(task,context,source)) return null;
++  return {nodeId:source.nodeId,kind:'p053-data-kind-order',method:null,
++    question:'哪些类别本身能分高低？能分高低时，为什么还不能说每级的差相等？'};
++}
++export function replayP053DataKindOrderEvidence(task,model,context) {
++  try {
++    const binding=p053DataKindOrderBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue!=='' || !model.history.length || Object.keys(model.history).length!==model.history.length) return null;
++    const placed=['','',''], submissions=[];
++    let saved=false;
++    for (const e of model.history) {
++      if (!hasExactKeys(e,['a','f','d'])) return null;
++      if (e.a==='kind' && hasExactKeys(e.d,['index','kind']) && /^[0-2]$/.test(e.d.index) &&
++          ['nominal','ordinal'].includes(e.d.kind)) {
++        placed[Number(e.d.index)]=e.d.kind;
++        saved=false;
++      } else if (e.a==='classify' && hasExactKeys(e.d,[])) {
++        const {orderReason,precisionReason}=e.f;
++        saved=orderedCard.every((ordered,i)=>placed[i]===(ordered?'ordinal':'nominal')) &&
++          orderReason==='order' && precisionReason==='not-equal';
++        submissions.push({placed:[...placed],orderReason,precisionReason,accepted:saved});
++      } else return null;
++    }
++    if (!saved || !sameEvidence(placed,model.board.placed) || model.board.saved!==true ||
++        model.orderReason!=='order' || model.precisionReason!=='not-equal' ||
++        !inspect(task,model).correct) return null;
++    return {binding,placed,submissions};
++  } catch {
++    return null;
++  }
++}
++export function submittedP053DataKindOrderEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record) ? replayP053DataKindOrderEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p053-data-kind-order-browser.cjs b/tests/p9-p053-data-kind-order-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..cfb2d20f474c6e1fb62aa774ba3189de69d84b1b
+--- /dev/null
++++ b/tests/p9-p053-data-kind-order-browser.cjs
+@@ -0,0 +1,154 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P053_ARTIFACTS || path.join(root, 'verification/p9-p053-data-kind-order'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  const c = page.locator(sel); assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-'+key+'='+JSON.stringify(String(value))+']').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P053_SOURCES, replayP053DataKindOrderEvidence, submittedP053DataKindOrderEvidence} = await entry('dist/learning/p053-data-kind-order-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b19 = await entry('dist/learning/phase5/b19-model.js');
++  const cases = P053_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP053DataKindOrderEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b19.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P053');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        await runSteps(page, b19.solveSteps(sessionTaskFor(row.id, cur)));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      const steps=b19.solveSteps(row.task).map(step=>step.field==='precisionReason'?{...step,value:'equal'}:step);
++      await runSteps(page,steps);
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b19.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'equal intervals do not follow from ordering');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,[{field:'precisionReason',value:'not-equal'},{action:'b19-classify'}]);
++      const draft=await observe(page,row,'corrected-draft');
++      assert.deepEqual(replayP053DataKindOrderEvidence(row.task,draft.model,row.context)?.submissions.map(s=>s.accepted),[false,true]);
++      ok(!proof(row,draft),'the corrected classification awaits Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && accepted?.placed.length===3,'new Check preserves classification and reasons');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p053.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p053r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P053_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p053-data-kind-order-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P053_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p053-data-kind-order.test.mjs b/tests/p9-p053-data-kind-order.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..0028a329c6a96dee7217a94addd44fdb1b5878c2
+--- /dev/null
++++ b/tests/p9-p053-data-kind-order.test.mjs
+@@ -0,0 +1,31 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act,initial} from '../dist/learning/phase5/b19-model.js';
++import {P053_SOURCES,p053DataKindOrderBinding,replayP053DataKindOrderEvidence,submittedP053DataKindOrderEvidence} from '../dist/learning/p053-data-kind-order-evidence.js';
++const [source]=P053_SOURCES;
++const {sessionId,index}=source,context={sessionId,index},task=sessionTaskFor(sessionId,index);
++const types=['nominal','ordinal','nominal'];
++const replay=m=>replayP053DataKindOrderEvidence(task,m,context);
++
++test('P053 locks the three original cards and rejects practice',()=>{
++  const sorted=v=>Array.isArray(v)?v.map(sorted):v&&typeof v==='object'
++    ?Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,sorted(v[k])])):v;
++  assert.equal(createHash('sha256').update(JSON.stringify(sorted(task))).digest('hex'),source.taskHash);
++  assert.ok(p053DataKindOrderBinding(task,context));
++  assert.equal(p053DataKindOrderBinding(task,{sessionId,index:-1}),null);
++});
++test('P053 requires both classification and the distinction between order and equal intervals',()=>{
++  const m=initial(task);
++  types.forEach((kind,index)=>act(task,m,'b19-kind',{kind,index}));
++  m.orderReason='order';m.precisionReason='equal';
++  act(task,m,'b19-classify');
++  const wrong=structuredClone(m);
++  m.precisionReason='not-equal';
++  assert.equal(replay(m),null);
++  act(task,m,'b19-classify');
++  assert.deepEqual(replay(m)?.submissions.map(s=>s.accepted),[false,true]);
++  assert.equal(submittedP053DataKindOrderEvidence(task,m,{attempts:[{value:wrong}]},context),null);
++  assert.ok(submittedP053DataKindOrderEvidence(task,m,{attempts:[{value:m}]},context));
++});

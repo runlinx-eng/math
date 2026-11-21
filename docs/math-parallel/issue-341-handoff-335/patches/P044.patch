@@ -1,0 +1,291 @@
+diff --git a/dist/learning/p044-straight-angle-gap-evidence.js b/dist/learning/p044-straight-angle-gap-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..6f51107ec34db4a91acb24e56b2c6d3e6b0d6990
+--- /dev/null
++++ b/dist/learning/p044-straight-angle-gap-evidence.js
+@@ -0,0 +1,72 @@
++import {initial, inspect, valid} from './phase5/b17-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++import {rational} from './phase5/b16-model.js';
++
++const reviewed = [
++  {
++    "sessionId": "structurechoices",
++    "index": 4,
++    "nodeId": "mt_hlGKg5M7qJ",
++    "type": "x-straightgap",
++    "taskHash": "112f7ddc8906f1877959c06fd93f9ba45c4b7692fbe931bcbed05d25228d47ec",
++    "task": {
++      "type": "x-straightgap",
++      "known": 110,
++      "prompt": "两块沿一条直线相接。已知110°，不用测量，算出缺角再把它拼好。"
++    }
++  },
++  {
++    "sessionId": "structurechoices",
++    "index": 5,
++    "nodeId": "mt_hlGKg5M7qJ",
++    "type": "x-straightgap",
++    "taskHash": "49fbc21b0cede2f87329026e7a850ed0c83bf63d238f15240457a798509ec131",
++    "task": {
++      "type": "x-straightgap",
++      "known": 64,
++      "prompt": "换成64°，这次沿用哪一条关系？先计算，再转动补上的角核对。"
++    }
++  }
++];
++export const P044_SOURCES = Object.freeze(reviewed.map(({task, ...source}) => Object.freeze(source)));
++export function p044StraightAngleGapBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = reviewed.find(source => source.sessionId === context.sessionId && source.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, entry)) return null;
++  return {nodeId:entry.nodeId, kind:'p044-straight-angle-gap', method:null, question:"为什么两块沿同一直线接好时，两个角的和是 180°？"};
++}
++export function replayP044StraightAngleGapEvidence(task, model, context) {
++  try {
++    const binding = p044StraightAngleGapBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    const target = 180 - task.known;
++    let first = null;
++    let angle = null;
++    let turns = 0;
++    for (const event of model.history) {
++      if (!hasExactKeys(event, ['a','d','f']) || !hasExactKeys(event.d, []) ||
++          !hasExactKeys(event.f, Object.keys(initial(task)).filter(key => !['board','history','issue'].includes(key)))) return null;
++      if (event.a === 'reset') {
++        angle = null;
++        turns = 0;
++      } else if (event.a === 'angle') {
++        first ??= event.f.angle;
++        const raw = Number(event.f.angle);
++        if (Number.isInteger(raw) && raw >= 0 && raw <= 180) angle = raw;
++        turns++;
++      } else return null;
++    }
++    const written = rational(model.answer.trim());
++    if (!turns || angle !== target || Number(model.angle) !== target || model.reason !== 'straight' ||
++        !written || BigInt(written[0]) !== BigInt(target) * BigInt(written[1]) ||
++        !sameEvidence({angle,first}, model.board) || !inspect(task, model).correct) return null;
++    return {binding, known:task.known, angle, first, turns};
++
++  } catch {
++    return null;
++  }
++}
++export function submittedP044StraightAngleGapEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replayP044StraightAngleGapEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-p044-straight-angle-gap-browser.cjs b/tests/p9-p044-straight-angle-gap-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..c141c54428e3cfdbf301f74b37ff12f558b4f870
+--- /dev/null
++++ b/tests/p9-p044-straight-angle-gap-browser.cjs
+@@ -0,0 +1,158 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P044_ARTIFACTS || path.join(root, 'verification/p9-p044-straight-angle-gap'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P044_SOURCES, replayP044StraightAngleGapEvidence, submittedP044StraightAngleGapEvidence} = await entry('dist/learning/p044-straight-angle-gap-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b17 = await entry('dist/learning/phase5/b17-model.js');
++  const b13 = await entry('dist/learning/phase5/b13-model.js');
++  const b16 = await entry('dist/learning/phase5/b16-model.js');
++  const cases = P044_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP044StraightAngleGapEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b17.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P044');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b17, b13, b16].find(model => model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,[{field:'angle',value:90},{action:'b17-angle'}]);
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b17.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,b17.solveSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP044StraightAngleGapEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && (accepted?.angle === 180 - row.task.known),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p044.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p044r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P044_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p044-straight-angle-gap-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P044_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p044-straight-angle-gap.test.mjs b/tests/p9-p044-straight-angle-gap.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..c648bf2d93f221d908596fd9e0f3202c6dd9fe67
+--- /dev/null
++++ b/tests/p9-p044-straight-angle-gap.test.mjs
+@@ -0,0 +1,43 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, initial, solveSteps} from '../dist/learning/phase5/b17-model.js';
++import {P044_SOURCES, p044StraightAngleGapBinding, replayP044StraightAngleGapEvidence, submittedP044StraightAngleGapEvidence} from '../dist/learning/p044-straight-angle-gap-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) : value && typeof value === 'object'
++  ? Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en')).map(key => [key, ordered(value[key])]))
++  : value;
++
++for (const source of P044_SOURCES) {
++  const {sessionId, index} = source;
++  const context = {sessionId, index};
++  const task = sessionTaskFor(sessionId, index);
++  const replay = model => replayP044StraightAngleGapEvidence(task, model, context);
++  const submit = (model, saved) => submittedP044StraightAngleGapEvidence(task, model, {attempts:[{value:saved}]}, context);
++  const play = (model, steps) => {
++    for (const step of steps) {
++      if (step.field) {
++        if (step.field.startsWith('answers.')) model.answers[Number(step.field.split('.')[1])] = step.value;
++        else model[step.field] = step.value;
++      } else act(task, model, step.action, step.data);
++    }
++  };
++  test(`P044 locks ${sessionId}:${index} and rejects stale or modified work`, () => {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.ok(p044StraightAngleGapBinding(task, context));
++    assert.equal(p044StraightAngleGapBinding(task, {sessionId,index:-1}), null);
++    const model = initial(task);
++    play(model, [{field:'angle',value:90},{action:'b17-angle'}]);
++    const failed = structuredClone(model);
++    assert.equal(replay(model), null);
++    play(model, solveSteps(task));
++    const accepted = replay(model);
++    assert.ok(accepted);
++    assert.equal(submit(model, failed), null);
++    assert.deepEqual(submit(model, structuredClone(model)), accepted);
++    const forged = structuredClone(model);
++    forged.history = [];
++    assert.equal(replay(forged), null);
++  });
++}

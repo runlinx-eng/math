@@ -1,0 +1,488 @@
+diff --git a/dist/learning/p091-one-sided-range-evidence.js b/dist/learning/p091-one-sided-range-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..12512dbab837432c6db6849b4b732660590bc642
+--- /dev/null
++++ b/dist/learning/p091-one-sided-range-evidence.js
+@@ -0,0 +1,79 @@
++import {cmp, normalized, parse} from './phase5/b09-math.js';
++import {initial, inspect, valid} from './phase5/b09-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'allowedrange';
++const nodeId = 'mt_i2F1nWxJjv';
++const type = 'x-allowedrange';
++const reviewed = [
++  {
++    taskHash:'6a24b358799b89eb9025160a1354eef7ada2762f2383937f6db4a55a357933fb',
++    task:{type,bound:12,relation:'>=',min:-5,max:17,
++      prompt:'长度至少12厘米。x可以取哪些长度？画出范围，用符号写下，并试一试两边。'}
++  },
++  {
++    taskHash:'0fe9148d7f7be7a36807e72749a2649a52cb34dadad9b99ad35d3bd1d9387df4',
++    task:{type,bound:-2,relation:'>',min:-7,max:15,
++      prompt:'所有大于−2的数都可以。把端点和方向做出来，−2本身算不算？'}
++  }
++];
++
++export const P091_SOURCES = Object.freeze(reviewed.map(({taskHash},index) =>
++  Object.freeze({sessionId,index,nodeId,type,taskHash})
++));
++
++export function p091OneSidedRangeBinding(task,context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId ||
++      !sameEvidence(task,reviewed[context.index]?.task) ||
++      !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind:'p091-one-sided-range',method:null,
++    question:'端点本身符合题意吗？怎样用数轴上的点和不等号表达这一点？'};
++}
++
++export function replayP091OneSidedRangeEvidence(task,model,context) {
++  try {
++    const binding = p091OneSidedRangeBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.commands.length || model.operation !== '' || model.amount !== '' ||
++        model.otherTouched || model.other !== 0 || model.otherClosed !== '' ||
++        Object.keys(model.trials).length !== model.trials.length) return null;
++
++    const {bound,relation} = task;
++    const inclusive = relation === '>=';
++    const reversed = inclusive ? '<=' : '<';
++    if (!model.touched || model.boundary !== bound || model.side !== 'right' ||
++        model.closed !== (inclusive ? 'yes' : 'no') ||
++        !['x'+relation+bound, bound+reversed+'x'].includes(normalized(model.statement))) return null;
++
++    const represented = new Set();
++    const trials = [];
++    for (const trial of model.trials) {
++      if (!hasExactKeys(trial,['value','actual','graph'])) return null;
++      const value = parse(trial.value);
++      const relative = cmp(value,[bound,1]);
++      const allowed = relative === 1 || inclusive && relative === 0;
++      if (trial.actual !== allowed) return null;
++      // The original record preserves the verdict for the graph in use at the time.
++      // It does not preserve that graph's position or open/closed setting.
++      const agrees = trial.graph === allowed;
++      if (agrees) represented.add(relative);
++      trials.push({entered:trial.value,value,relative,allowed,observedGraph:trial.graph,agrees});
++    }
++
++    if (represented.size !== 3 || !inspect(task,model).correct) return null;
++    return {binding,bound,side:'right',inclusive,relation,statement:model.statement,trials};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP091OneSidedRangeEvidence(task,model,record,context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP091OneSidedRangeEvidence(task,model,context);
++}
+diff --git a/tests/p9-p091-one-sided-range-browser.cjs b/tests/p9-p091-one-sided-range-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..616960b3a20fd02b8b231e6174b39db4cdb7d26e
+--- /dev/null
++++ b/tests/p9-p091-one-sided-range-browser.cjs
+@@ -0,0 +1,264 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P091_ARTIFACTS || path.join(root, 'verification/p9-p091-one-sided-range'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (row.index === 0) {
++    ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++    const start = page.locator('[data-do="start"]');
++    if (await start.isVisible()) await start.click();
++  } else {
++    await page.locator('#actions [data-do="next"]').click();
++    checks.push('native Next reaches the second position');
++  }
++  await page.waitForFunction(({id,index}) => {
++    const snap = window.mathLesson?.snapshot();
++    return snap?.id === id && snap.index === index;
++  },row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P091_SOURCES, replayP091OneSidedRangeEvidence, submittedP091OneSidedRangeEvidence} =
++    await entry('dist/learning/p091-one-sided-range-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b09-model.js');
++  const expected = [
++    {bound:12,inclusive:true,statement:'12 ≤ x',probes:['23/2','12','25/2']},
++    {bound:-2,inclusive:false,statement:'−2 < x',probes:['-5/2','-2','-3/2']}
++  ];
++  const cases = P091_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), ...expected[i]};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP091OneSidedRangeEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      boundary: result.model.boundary, closed: result.model.closed, trials: result.model.trials,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value) {
++    const input = await openControl(p,'#extra-controls [data-xfield="' + name + '"]');
++    if (name === 'side' || name === 'closed') await input.selectOption(String(value));
++    else await input.fill(String(value));
++    assert.equal(await input.inputValue(), String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P091');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const probe = async value => {
++        await field(page,'probe',value);
++        await click(page,'#extra-controls [data-x="range-test"]');
++      };
++      const point = page.locator('#extra-visual .b9-point');
++      const check = () => click(page,'#actions [data-do="check"]');
++      await field(page,'boundary',row.bound);
++      await field(page,'side','right');
++      await field(page,'closed',row.inclusive ? 'no' : 'yes');
++      await field(page,'statement',row.statement);
++      assert.equal(await point.evaluate(el => el.classList.contains('open')),row.inclusive);
++      for (const value of row.probes) await probe(value);
++      await check();
++      const wrong = await observe(page,row,'wrong-endpoint-check');
++      assert.equal(wrong.model.trials[1].actual,row.inclusive);
++      assert.equal(wrong.model.trials[1].graph,!row.inclusive);
++      ok(wrong.attempts.length === 1 && !inspect(row.task,wrong.attempts[0].value).correct &&
++        !proof(row,wrong), tag + ' native Check rejects the opposite endpoint style');
++      await picture(page,tag + '-wrong-endpoint.png');
++
++      await field(page,'closed',row.inclusive ? 'yes' : 'no');
++      assert.equal(await point.evaluate(el => el.classList.contains('open')),!row.inclusive);
++      const changed = await observe(page,row,'endpoint-style-fixed');
++      ok(!replayP091OneSidedRangeEvidence(row.task,changed.model,row.context),
++        tag + ' endpoint needs an actual new probe with the corrected graph');
++      await probe(row.probes[1]);
++      const draft = await observe(page,row,'corrected-draft');
++      const replayed = replayP091OneSidedRangeEvidence(row.task,draft.model,row.context);
++      assert.deepEqual(replayed?.trials.map(t => t.relative),[-1,0,1,0]);
++      assert.deepEqual(replayed.trials.map(t => t.allowed),[false,row.inclusive,true,row.inclusive]);
++      ok(!proof(row,draft), tag + ' proven draft is excluded until a new Check');
++
++      await check();
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.bound === row.bound && accepted.inclusive === row.inclusive,
++      tag + ' actual latest Check accepts the symbol, endpoint and probe evidence');
++      ok(accepted.trials[1].agrees === false && accepted.trials.at(-1).agrees === true,
++        tag + ' evidence retains both endpoint trials');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p091-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p091-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p091-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.trials.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P091_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p091-one-sided-range-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P091_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p091-one-sided-range.test.mjs b/tests/p9-p091-one-sided-range.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e5f96f578177a132510f5b2c2445c0b64f255ba2
+--- /dev/null
++++ b/tests/p9-p091-one-sided-range.test.mjs
+@@ -0,0 +1,127 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b09-model.js';
++import {
++  P091_SOURCES,
++  p091OneSidedRangeBinding,
++  replayP091OneSidedRangeEvidence,
++  submittedP091OneSidedRangeEvidence
++} from '../dist/learning/p091-one-sided-range-evidence.js';
++
++const cases = P091_SOURCES.map((source,i) => {
++  const {sessionId,index} = source;
++  return {source,context:{sessionId,index},task:sessionTaskFor(sessionId,index),
++    inclusive:i===0,statement:['12 ≤ x','−2 < x'][i],samples:[['23/2','12','25/2'],['-5/2','-2','-3/2']][i]};
++});
++const replay = (row,model) => replayP091OneSidedRangeEvidence(row.task,model,row.context);
++const submit = (row,model,...versions) => submittedP091OneSidedRangeEvidence(row.task,model,
++  {attempts:versions.map(value => ({value:structuredClone(value)}))},row.context);
++
++function plotted(row, inclusive, boundary = row.task.bound) {
++  const model = original.initial(row.task);
++  model.boundary = boundary;
++  original.field(row.task,model,'boundary');
++  model.side = 'right';
++  model.closed = inclusive ? 'yes' : 'no';
++  model.statement = row.statement;
++  return model;
++}
++
++function probe(row,model,text) {
++  model.probe = text;
++  original.act(row.task,model,'range-test');
++}
++
++test('P091 checks both original prompts and fingerprints', () => {
++  for (const {source,task,context} of cases) {
++    const ordered = Object.fromEntries(Object.entries(task).sort(([a],[b]) => a.localeCompare(b,'en')));
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered)).digest('hex'),source.taskHash);
++    assert.equal(p091OneSidedRangeBinding(task,context)?.nodeId,source.nodeId);
++    assert.equal(p091OneSidedRangeBinding({...task,bound:17},context),null);
++    assert.equal(p091OneSidedRangeBinding({...task,relation:'<'},context),null);
++    assert.equal(p091OneSidedRangeBinding(task,{...context,index:String(context.index)}),null);
++  }
++});
++
++test('P091 distinguishes open and closed endpoints and compares fractional probes exactly', () => {
++  for (const row of cases) {
++    const model = plotted(row,row.inclusive);
++    for (const value of row.samples) probe(row,model,value);
++    const before = structuredClone(model);
++    const proof = replay(row,model);
++    assert.ok(original.inspect(row.task,model).correct);
++    assert.deepEqual(proof?.trials.map(t => t.relative),[-1,0,1]);
++    assert.deepEqual(proof?.trials.map(t => t.allowed),[false,row.inclusive,true]);
++    assert.deepEqual(proof?.trials[0].value,row.inclusive ? [23,2] : [-5,2]);
++    assert.deepEqual(model,before);
++    model.statement = row.inclusive ? 'x ≥ 12' : 'x > −2';
++    assert.equal(replay(row,model)?.inclusive,row.inclusive);
++    model.statement = row.inclusive ? '12 ≥ x' : '−2 > x';
++    assert.equal(replay(row,model),null);
++  }
++});
++
++test('P091 retains a disagreement at the endpoint and requires a fresh Check', () => {
++  for (const row of cases) {
++    const model = plotted(row,!row.inclusive);
++    for (const value of row.samples) probe(row,model,value);
++    assert.equal(submit(row,model,model),null);
++    const wrong = structuredClone(model);
++    model.closed = row.inclusive ? 'yes' : 'no';
++    assert.equal(replay(row,model),null);
++    probe(row,model,row.samples[1]);
++    assert.equal(submit(row,model,wrong),null);
++    const proof = submit(row,model,wrong,model);
++    assert.deepEqual(proof?.trials.filter(t => t.relative === 0).map(t => t.agrees),[false,true]);
++  }
++});
++
++test('P091 needs all three actual probe classes and a deliberately set boundary', () => {
++  for (const row of cases) {
++    const model = plotted(row,row.inclusive);
++    probe(row,model,row.samples[0]);
++    probe(row,model,row.samples[0]);
++    probe(row,model,row.samples[1]);
++    model.probe = row.samples[2];
++    assert.equal(replay(row,model),null);
++    probe(row,model,row.samples[2]);
++    assert.equal(replay(row,model)?.bound,row.task.bound);
++    model.touched = false;
++    assert.equal(replay(row,model),null);
++  }
++});
++
++test('P091 rejects altered probe verdicts, the graph and extra unrecorded algebra', () => {
++  const [row] = cases;
++  const model = plotted(row,row.inclusive);
++  for (const value of row.samples) probe(row,model,value);
++  for (const change of [
++    m => { m.trials[0].actual = true; },
++    m => { m.trials[0].boundary = 12; },
++    m => { m.trials[0].graph = true; },
++    m => { m.side = 'left'; },
++    m => { m.commands.push({op:'sub',value:2}); }
++  ]) {
++    const copy = structuredClone(model);
++    change(copy);
++    assert.equal(replay(row,copy),null,change.toString());
++  }
++});
++
++test('P091 does not bind practice, bridges, algebra or a two-ended interval', async () => {
++  await ensureB39Ready();
++  const [row] = cases;
++  assert.equal(p091OneSidedRangeBinding(row.task,{...row.context,index:-1}),null);
++  for (let index = 2; index <= 4; index++) {
++    const id = row.context.sessionId;
++    assert.equal(p091OneSidedRangeBinding(sessionTaskFor(id,index),{sessionId:id,index}),null);
++  }
++  for (const [id,bridge] of Object.entries(BRIDGES)) {
++    for (const [index,related] of bridge.tasks.entries()) {
++      if (related?.type === row.task.type) assert.equal(p091OneSidedRangeBinding(related,{sessionId:id,index}),null);
++    }
++  }
++});

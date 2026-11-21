@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p055-right-triangle-condition",
+  "commit": "a11e5c0b509fdbef8f18f8db7c2e8a7310797820",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "pythagoras",
+      "index": 1,
+      "nodeId": "mt_1VmTUxBrNd",
+      "type": "x-g26-check",
+      "taskHash": "26539f6dcbf85c9df81d08b9de9ceaf4112cec899e8c586b6eea6f252c6c1c8c"
+    }
+  ],
+  "node22": "2 PASS",
+  "referenceNode": "15 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 16,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "native-state-v2.json": "80ce145584b927f3017871a7e6f234902151360a83ae92a8cd13ec6166f826f5",
+    "pythagoras-1-correct-check-decoded.json": "0993979ea61921a17d056b92d7c4b257c728a6430495f7d839d1de49b73364b3",
+    "pythagoras-1-correct-check-storage.txt": "0993979ea61921a17d056b92d7c4b257c728a6430495f7d839d1de49b73364b3",
+    "pythagoras-1-correct.png": "0044b0e2848ce6f890a54fc8fe279f324e25fb35a5770edcc64d6e02d3da3c81",
+    "pythagoras-1-corrected-draft-decoded.json": "c25c175c126da738517a6cc730d4fd166857c89d0f242c2d989eb3b06b5de244",
+    "pythagoras-1-corrected-draft-storage.txt": "c25c175c126da738517a6cc730d4fd166857c89d0f242c2d989eb3b06b5de244",
+    "pythagoras-1-offline-reload-decoded.json": "cadf95d002a45d9bc71a1313ffc111af6e880188955faa62db43592dc2afea87",
+    "pythagoras-1-offline-reload-storage.txt": "cadf95d002a45d9bc71a1313ffc111af6e880188955faa62db43592dc2afea87",
+    "pythagoras-1-restored-backup-decoded.json": "24d47aca4cb71b065e6d5a307a2a6a09f14b6459482893d00ef347cbbda7e34e",
+    "pythagoras-1-restored-backup-storage.txt": "24d47aca4cb71b065e6d5a307a2a6a09f14b6459482893d00ef347cbbda7e34e",
+    "pythagoras-1-retry-decoded.json": "837d58e644eabfa73ab86e6509ddc0d8b973149a9a371782db379f695ab0bbc5",
+    "pythagoras-1-retry-storage.txt": "837d58e644eabfa73ab86e6509ddc0d8b973149a9a371782db379f695ab0bbc5",
+    "pythagoras-1-wrong-check-decoded.json": "7640ff96e4a4ec1b687decb31d6aaff6b854d09de2cdeea61982727e9e29a20c",
+    "pythagoras-1-wrong-check-storage.txt": "7640ff96e4a4ec1b687decb31d6aaff6b854d09de2cdeea61982727e9e29a20c",
+    "pythagoras-1-wrong.png": "eca16df4ea332a3be8c8d847c4ccae65fd665171ceed9383c1d004ea9d560c73",
+    "results.json": "9da37c58f419467d0a78ed0cef6207d0ad32ece6d7f6d85fcd3ccd778a0ebc34"
+  }
+}

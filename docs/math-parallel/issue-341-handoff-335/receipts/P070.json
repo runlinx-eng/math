@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p070-perimeter-walk",
+  "commit": "e7e29e431ae108c14238a43c49128365780bb486",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "multiShape38",
+      "index": 1,
+      "nodeId": "mt_SmghasIvbT",
+      "type": "x-a30-grid",
+      "taskHash": "3d67e040b458696577c6cfbbe4511d065ad96e6d629a6487d330fabff2735bfe"
+    }
+  ],
+  "node22": "4 PASS",
+  "referenceNode": "22 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "multiShape38-1-correct-check-decoded.json": "8d2d702473b4d6ad460baf2a73533752c8f674a15b22ef008dfd42654be85f0f",
+    "multiShape38-1-correct-check-storage.txt": "8d2d702473b4d6ad460baf2a73533752c8f674a15b22ef008dfd42654be85f0f",
+    "multiShape38-1-correct.png": "05d21e146af930cb346c635b1fbd2bd7cea560e67b8efb3102f6890f01d1cf5e",
+    "multiShape38-1-corrected-draft-decoded.json": "0d7c898e1dc607367855e11e760422c76bae32a9e8ec97c38e2bcd70bf8fadc3",
+    "multiShape38-1-corrected-draft-storage.txt": "0d7c898e1dc607367855e11e760422c76bae32a9e8ec97c38e2bcd70bf8fadc3",
+    "multiShape38-1-offline-reload-decoded.json": "5671e58a4cef081c87ab3ac69807f42c95d8fa5090f94d982718ef9ad0c987f8",
+    "multiShape38-1-offline-reload-storage.txt": "5671e58a4cef081c87ab3ac69807f42c95d8fa5090f94d982718ef9ad0c987f8",
+    "multiShape38-1-restored-backup-decoded.json": "16ee107937889c70030708759970a3a966ae0958a3950cd7163534c88d336f58",
+    "multiShape38-1-restored-backup-storage.txt": "16ee107937889c70030708759970a3a966ae0958a3950cd7163534c88d336f58",
+    "multiShape38-1-retry-decoded.json": "5953f7fefc0021351436504fcee72f8852cbed1a60d983aef104d313dcb559b5",
+    "multiShape38-1-retry-storage.txt": "5953f7fefc0021351436504fcee72f8852cbed1a60d983aef104d313dcb559b5",
+    "multiShape38-1-wrong-perimeter-decoded.json": "1a9d383830f0f133a4953117d4fbbbd503ea5db25a89852eef1de9c345ccd4cc",
+    "multiShape38-1-wrong-perimeter-storage.txt": "1a9d383830f0f133a4953117d4fbbbd503ea5db25a89852eef1de9c345ccd4cc",
+    "multiShape38-1-wrong.png": "d4f12d07ca3ec9db36352d7e18c7322881db3ce7f4eea5003baad990a1963d92",
+    "native-state-v2.json": "6428d2f1414acc95b875a06757a116ddfabcff927743014b3995165fb5b3ad0e",
+    "results.json": "3ffbbaa83c90860e27dd9298c828c6ac56f97191d09434af1704644d2bd5b6b9"
+  }
+}

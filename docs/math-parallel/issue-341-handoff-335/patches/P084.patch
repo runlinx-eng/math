@@ -1,0 +1,382 @@
+diff --git a/dist/learning/p084-expression-build-evidence.js b/dist/learning/p084-expression-build-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..4577248612c414e3f81eee5e5528f1cbed8c5ff1
+--- /dev/null
++++ b/dist/learning/p084-expression-build-evidence.js
+@@ -0,0 +1,118 @@
++import {initial, inspect, valid, equivalent, parse} from './phase5/b15-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++const type = 'x-orderlab';
++const REVIEWED = Object.freeze([
++  {
++    "sessionId": "expressions",
++    "index": 0,
++    "nodeId": "mt_4WaKWECpcv",
++    "type": "x-orderlab",
++    "taskHash": "5d2aa55b08dcdf23d6c8bad463a9dceac11b6989f94bb05dae9353a08a5b1906",
++    "task": {
++      "type": "x-orderlab",
++      "expression": "",
++      "prompt": "把“8与7先合起来，再取2份”写成一行。只表示关系，不必算结果。",
++      "construct": true,
++      "expected": "(8+7)*2",
++      "writeOnly": true
++    },
++    "question": "为什么括号位置决定先算哪一步，不算出结果也能直接表达数量关系？"
++  },
++  {
++    "sessionId": "expressions",
++    "index": 1,
++    "nodeId": "mt_4WaKWECpcv",
++    "type": "x-orderlab",
++    "taskHash": "9df4c015fa3809f29e71fadbe0fcd92d62c11c38a060b1e29d053ecdc23e8bd2",
++    "task": {
++      "type": "x-orderlab",
++      "expression": "4*(365-12)",
++      "prompt": "把“先从365拿走12，再取4份”写出来。上方是要表达的关系，不必算总数。",
++      "construct": true,
++      "expected": "4*(365-12)",
++      "writeOnly": true
++    },
++    "question": "为什么括号位置决定先算哪一步，不算出结果也能直接表达数量关系？"
++  },
++  {
++    "sessionId": "expressions",
++    "index": 2,
++    "nodeId": "mt_4WaKWECpcv",
++    "type": "x-orderlab",
++    "taskHash": "9e2b36a50405175e2e213e20d0faa0a8eeec4323a8b32a9cf78e18aeddcc520c",
++    "task": {
++      "type": "x-orderlab",
++      "expression": "",
++      "prompt": "甲是18932与921的和，乙是甲的3倍。写出乙，再比较，先不算两个大数。",
++      "construct": true,
++      "expected": "3*(18932+921)",
++      "writeOnly": true,
++      "reason": "triple",
++      "choices": [
++        [
++          "triple",
++          "乙是甲的3倍"
++        ],
++        [
++          "plus",
++          "乙比甲多3"
++        ],
++        [
++          "same",
++          "两者相等"
++        ]
++      ]
++    },
++    "question": "为什么括号位置决定先算哪一步，不算出结果也能直接表达数量关系？"
++  }
++]);
++export const P084_SOURCES = Object.freeze(REVIEWED.map(({sessionId, index, nodeId, type: t, taskHash}) => Object.freeze({sessionId, index, nodeId, type: t, taskHash})));
++
++export function p084ExpressionBuildBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = REVIEWED.find(e => e.sessionId === context.sessionId && e.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, {type, nodeId: entry.nodeId})) return null;
++  return {nodeId: entry.nodeId, kind: 'p084-expression-build', method: null, question: entry.question};
++}
++
++export function replayP084ExpressionBuildEvidence(task, model, context) {
++  try {
++    const binding = p084ExpressionBuildBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        model.issue !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    let first = null, expression = '', tree = null, failedBuilds = 0, builds = 0, resets = 0, buildFailed = false;
++    for (const {action, data} of model.history) {
++      if (data.index !== null || data.value !== null) return null;
++      buildFailed = false;
++      if (action === 'b15-reset') {
++        expression = '';
++        tree = null;
++        resets++;
++        continue;
++      }
++      if (action !== 'b15-build') return null;
++
++      const raw = data.fields.expression;
++      first ??= raw;
++      builds++;
++      try {
++        tree = parse(raw);
++        expression = raw;
++      } catch {
++        buildFailed = true;
++        failedBuilds++;
++      }
++    }
++    if (buildFailed || !tree || !sameEvidence(tree, model.board.tree) ||
++        expression !== model.board.expression || model.board.first !== first ||
++        !equivalent(expression, task.expected) || !equivalent(model.expression, expression) ||
++        (task.reason && model.reason !== task.reason) || !inspect(task, model).correct) return null;
++    return {binding, expression, expected: task.expected, reason: model.reason || null, builds, failedBuilds, resets};
++  } catch { return null; }
++}
++
++export function submittedP084ExpressionBuildEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP084ExpressionBuildEvidence(task, model, context);
++}
+diff --git a/tests/p9-p084-expression-build-browser.cjs b/tests/p9-p084-expression-build-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..cf98d11d66071d2641ce2d570de609e7b5a1cbe0
+--- /dev/null
++++ b/tests/p9-p084-expression-build-browser.cjs
+@@ -0,0 +1,172 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P084_ARTIFACTS || path.join(root, 'verification/p9-p084-expression-build'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  const c = page.locator(sel); assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        (s.data?.index !== undefined ? '[data-index="' + s.data.index + '"]' : '') +
++        (s.data?.value !== undefined ? '[data-value="' + s.data.value + '"]' : '');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P084_SOURCES, replayP084ExpressionBuildEvidence, submittedP084ExpressionBuildEvidence} = await entry('dist/learning/p084-expression-build-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b15 = await entry('dist/learning/phase5/b15-model.js');
++  const cases = P084_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP084ExpressionBuildEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b15.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P084');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        await runSteps(page, b15.solveSteps(sessionTaskFor(row.id, cur)));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await (await openControl(page, '#extra-controls [data-xfield="expression"]')).fill(row.task.expected.replace(/[()]/g, '')); await (await openControl(page, '#extra-controls [data-x="b15-build"]')).click();
++      await page.locator('#actions [data-do="check"]').click();
++      ok(!proof(row, await observe(page, row, 'wrong-check')), tag + ' wrong rejected');
++      await picture(page, tag + '-wrong.png');
++      await runSteps(page, b15.solveSteps(row.task));
++      const draft = await observe(page, row, 'corrected-draft');
++      ok(Boolean(replayP084ExpressionBuildEvidence(row.task, draft.model, row.context)) && !proof(row, draft), tag + ' needs Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const beforeReset = await observe(page, row, 'checked-before-reset');
++      ok(beforeReset.attempts.length === 2 && Boolean(proof(row, beforeReset)),
++        tag + ' original Check before reset');
++
++      await (await openControl(page, '#extra-controls [data-x="b15-reset"]')).click();
++      const reset = await observe(page, row, 'original-reset');
++      assert.deepEqual(reset.attempts, beforeReset.attempts);
++      ok(reset.model.board.tree === null && reset.model.board.expression === '' &&
++        reset.model.board.first === beforeReset.model.board.first && !proof(row, reset), tag + ' original reset clears work and preserves both attempts');
++      await picture(page, tag + '-reset.png');
++
++      await runSteps(page, b15.solveSteps(row.task));
++      const rebuilt = await observe(page, row, 'rebuilt-draft');
++      const replayed = replayP084ExpressionBuildEvidence(row.task, rebuilt.model, row.context);
++      assert.deepEqual(rebuilt.attempts, beforeReset.attempts);
++      ok(replayed?.resets === 1 && !proof(row, rebuilt),
++        tag + ' rebuilt work requires a fresh Check');
++
++      await page.locator('#actions [data-do="check"]').click();
++      const good = await observe(page, row, 'correct-check');
++      const accepted = proof(row, good);
++      assert.deepEqual(good.attempts.slice(0,-1), beforeReset.attempts);
++      ok(good.attempts.length === 3 && b15.inspect(row.task, good.attempts.at(-1).value).correct &&
++        accepted?.resets === 1, tag + ' fresh original Check accepts work after reset');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p084.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p084r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P084_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p084-expression-build-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P084_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p084-expression-build.test.mjs b/tests/p9-p084-expression-build.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..bc1e7531f26580ec9f0375648fcf9f8eb841e2ea
+--- /dev/null
++++ b/tests/p9-p084-expression-build.test.mjs
+@@ -0,0 +1,74 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import {freshLesson, submitLesson} from '../dist/learning/state.js';
++import * as original from '../dist/learning/phase5/b15-model.js';
++import {P084_SOURCES, p084ExpressionBuildBinding, replayP084ExpressionBuildEvidence, submittedP084ExpressionBuildEvidence} from '../dist/learning/p084-expression-build-evidence.js';
++
++const cases = P084_SOURCES.map(s => ({source: s, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++test('P084 locks fingerprints and replays AST build including syntax error recovery', () => {
++  for (const e of cases) {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(e.task))).digest('hex'), e.source.taskHash);
++    const m = original.initial(e.task);
++    m.expression = '(8+7'; original.act(e.task, m, 'b15-build');
++    m.expression = e.task.expected; original.act(e.task, m, 'b15-build');
++    if (e.task.reason) m.reason = e.task.reason;
++    const p = replayP084ExpressionBuildEvidence(e.task, m, e.context);
++    assert.equal(p?.expected, e.task.expected);
++    assert.equal(p?.failedBuilds, 1);
++  }
++});
++test('P084 rejects missing parentheses and requires fresh Check', () => {
++  for (const e of cases) {
++    const good = original.example(e.task), bad = original.initial(e.task);
++    bad.expression = e.task.expected.replace(/[()]/g, ''); original.act(e.task, bad, 'b15-build');
++    assert.equal(submittedP084ExpressionBuildEvidence(e.task, bad, {attempts:[{value:bad}]}, e.context), null);
++    assert.equal(submittedP084ExpressionBuildEvidence(e.task, good, {attempts:[{value:bad}]}, e.context), null);
++    assert.equal(submittedP084ExpressionBuildEvidence(e.task, good, {attempts:[{value:bad},{value:good}]}, e.context)?.expected, e.task.expected);
++  }
++});
++
++test('P084 requires a new build and Check after the original reset', () => {
++  for (const {task, context} of cases) {
++    const lesson = freshLesson(context.sessionId);
++    lesson.index = context.index;
++    const model = original.initial(task);
++    lesson.models[context.index] = model;
++    model.expression = '(8+7';
++    original.act(task, model, 'b15-build');
++    model.expression = task.expected;
++    original.act(task, model, 'b15-build');
++    if (task.reason) model.reason = task.reason;
++
++    assert.equal(submitLesson(lesson).correct, true);
++    const record = lesson.cases[context.index];
++    const saved = structuredClone(record.attempts[0]);
++
++    original.act(task, model, 'b15-reset');
++    assert.equal(model.board.tree, null);
++    assert.equal(model.board.first, '(8+7');
++    assert.equal(replayP084ExpressionBuildEvidence(task, model, context), null);
++    original.act(task, model, 'b15-build');
++    const rebuilt = replayP084ExpressionBuildEvidence(task, model, context);
++    assert.equal(rebuilt?.resets, 1);
++    assert.equal(rebuilt.failedBuilds, 1);
++    assert.equal(submittedP084ExpressionBuildEvidence(task, model, record, context), null);
++
++    assert.equal(submitLesson(lesson).correct, true);
++    assert.deepEqual(record.attempts[0], saved);
++    assert.deepEqual(submittedP084ExpressionBuildEvidence(task, model, record, context), rebuilt);
++
++    const altered = structuredClone(model);
++    altered.history.find(event => event.action === 'b15-reset').data.index = 0;
++    assert.equal(replayP084ExpressionBuildEvidence(task, altered, context), null);
++  }
++});
++
++test('P084 excludes practice and bridges', async () => {
++  await ensureB39Ready();
++  for (const e of cases) assert.equal(p084ExpressionBuildBinding(e.task, {sessionId: 'expressions', index: -1}), null);
++  for (const [id, b] of Object.entries(BRIDGES)) for (const [idx, rel] of b.tasks.entries()) if (rel?.type === 'x-orderlab') assert.equal(p084ExpressionBuildBinding(rel, {sessionId: id, index: idx}), null);
++});

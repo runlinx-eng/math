@@ -1,0 +1,626 @@
+diff --git a/dist/learning/p111-bilateral-equations-evidence.js b/dist/learning/p111-bilateral-equations-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..89f29d1959f44699cd4d393a8496a7813be2b029
+--- /dev/null
++++ b/dist/learning/p111-bilateral-equations-evidence.js
+@@ -0,0 +1,179 @@
++import {rational as inputFraction} from './phase5/b16-model.js';
++import {add, div, equal, fmt, mul, rational, sub} from './phase5/b09-math.js';
++import {initial, inspect, valid} from './phase5/b35-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'equations35';
++const nodeId = 'mt_QhFEDyIwSO';
++const type = 'x-a35-balance';
++const kind = 'p111-bilateral-equations';
++const reviewed = new Map([
++  [0, {
++    taskHash:'4df0391cef9fb6565ac87dca2d7e4d8bc71ea8fb4a862bacf4231c708d5e413e',
++    prompt:'3x＋5＝26。每一步让两边一起变化，找到x，再代回原式。',
++    left:['3','5'], right:['0','26'], solution:'7', moves:[['sub','5'],['div','3']]
++  }],
++  [2, {
++    taskHash:'f454d546ed0dc70273c50fd4665cf5fddaba4b0d2935c44d3d1acbc8f7836d49',
++    prompt:'刚才左边变成3x＋6，现在让它等于15，两边一起变化并代回检查。',
++    left:['3','6'], right:['0','15'], solution:'3', moves:[['sub','6'],['div','3']]
++  }],
++  [3, {
++    taskHash:'5f3aa17cb238481d80074b5fc8d2cd780a12229d60ac9ad508c14a121b08dc61',
++    prompt:'4x＋3＝2x＋11。两边都有x，也可以让两边一起减去相同的份数。',
++    left:['4','3'], right:['2','11'], solution:'4', moves:[['subx','2'],['sub','3'],['div','2']]
++  }],
++  [4, {
++    taskHash:'bd3043c910cd96791099a4e3ec21b52f152394f3253e9a84b694562563bec7cc',
++    prompt:'5−x＝6。两边一起变化；找到数后代回，看看负数能不能成立。',
++    left:['-1','5'], right:['0','6'], solution:'-1', moves:[['sub','5'],['div','-1']]
++  }],
++  [5, {
++    taskHash:'a342a7dd7bb7e16fb3e5dabca46f3692abe65f6411e34e8094f81e87bf347fd7',
++    prompt:'半个x再加3等于5。两边一起变化；除以1/2也是一种可试的操作。',
++    left:['1/2','3'], right:['0','5'], solution:'4', moves:[['sub','3'],['div','1/2']]
++  }]
++]);
++
++const locked = new Map([...reviewed].map(([index, {prompt, left, right, solution, moves}]) =>
++  [index, {type, prompt, left, right, solution, exampleOps:moves.map(([op,value]) => ({op,value})), questions:[]}]
++));
++export const P111_SOURCES = Object.freeze([...reviewed].map(([index, {taskHash}]) =>
++  Object.freeze({sessionId, index, nodeId, type, taskHash})
++));
++
++export function p111BilateralEquationsBinding(task, context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId ||
++      !sameEvidence(task, locked.get(context.index)) ||
++      !matchesNativeEvidenceTask(task, context, {type, nodeId})) return null;
++  return {nodeId, kind, method:null, question:'每一步怎样同时改变两边？把解代回原式后，两边各是多少？'};
++}
++
++// Match the bounds of the original activity while using exact rational operations.
++const bounded = value => value && Math.abs(value[0]) <= 10000000 && value[1] <= 1000000 ? value : null;
++function inputNumber(raw) {
++  const pair = inputFraction(raw);
++  return pair && bounded(rational(...pair));
++}
++
++const transforms = {
++  add: ([a,b], value) => [a, add(b,value)],
++  sub: ([a,b], value) => [a, sub(b,value)],
++  addx: ([a,b], value) => [add(a,value), b],
++  subx: ([a,b], value) => [sub(a,value), b],
++  mul: (side, value) => side.map(part => mul(part,value)),
++  div: (side, value) => side.map(part => div(part,value))
++};
++
++function evaluateExact([coefficient,constant], x) {
++  const [a, ad] = coefficient.map(BigInt);
++  const [b, bd] = constant.map(BigInt);
++  const [n, d] = x.map(BigInt);
++  return [a * n * bd + b * ad * d, ad * d * bd];
++}
++
++function evaluateOriginal([coefficient,constant], x) {
++  const product = bounded(mul(coefficient,x));
++  return product && bounded(add(product,constant));
++}
++
++const zero = [0,1], one = [1,1];
++
++export function replayP111BilateralEquationsEvidence(task, model, context) {
++  try {
++    const binding = p111BilateralEquationsBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        !model.history.length || Object.keys(model.history).length !== model.history.length ||
++        model.issue !== '' || model.board.preview !== null) return null;
++
++    const start = {left:task.left.map(inputNumber), right:task.right.map(inputNumber)};
++    const root = div(sub(start.right[1],start.left[1]), sub(start.left[0],start.right[0]));
++    if (!equal(root, inputNumber(task.solution))) return null;
++
++    const steps = [], trials = [], events = [];
++    let frame = start, lastEquationChange = -1, lastTrial = null;
++
++    for (const [index, event] of model.history.entries()) {
++      if (!hasExactKeys(event, ['a','i','v','w','z','k'])) return null;
++      const amount = inputNumber(event.v);
++      if (event.a === 'op') {
++        if (!Object.hasOwn(transforms, event.i)) return null;
++        const scale = event.i === 'mul' || event.i === 'div';
++        const next = amount && (!scale || !equal(amount,zero)) ? {
++          left:transforms[event.i](frame.left,amount),
++          right:transforms[event.i](frame.right,amount)
++        } : null;
++        const accepted = Boolean(next && [...next.left,...next.right].every(bounded));
++        events.push({index, action:'op', op:event.i, raw:event.v, accepted});
++        if (!accepted) continue;
++        if (equal(next.left[0],next.right[0]) ||
++            !equal(evaluateExact(next.left,root),evaluateExact(next.right,root))) return null;
++        steps.push({op:event.i, value:fmt(amount), left:next.left, right:next.right});
++        frame = next;
++        lastEquationChange = index;
++        continue;
++      }
++      if (event.a === 'one-side' && event.i === 'sub') {
++        events.push({index, action:'one-side', raw:event.v, accepted:false});
++        continue;
++      }
++      if (event.i !== '') return null;
++      if (event.a === 'undo' || event.a === 'reset') {
++        const changed = steps.length > 0;
++        if (event.a === 'undo') steps.pop();
++        else steps.length = 0;
++        if (changed) {
++          frame = steps.at(-1) || start;
++          lastEquationChange = index;
++        }
++        events.push({index, action:event.a, changed});
++        continue;
++      }
++      if (event.a !== 'try') return null;
++      const left = amount && evaluateOriginal(start.left,amount);
++      const right = amount && evaluateOriginal(start.right,amount);
++      const recorded = Boolean(left && right && trials.length < 40);
++      events.push({index, action:'try', raw:event.v, recorded});
++      if (recorded) {
++        const result = {x:fmt(amount), left:fmt(left), right:fmt(right), equal:equal(left,right)};
++        trials.push(result);
++        lastTrial = {index, ...result};
++      }
++    }
++
++    const isolated = (left,right) => equal(left[0],one) && equal(left[1],zero) &&
++      equal(right[0],zero) && equal(right[1],root);
++    if (!steps.length || (!isolated(frame.left,frame.right) && !isolated(frame.right,frame.left)) ||
++        !lastTrial?.equal || lastTrial.index <= lastEquationChange ||
++        !equal(inputNumber(lastTrial.x),root) || !equal(inputNumber(model.value),root) ||
++        !sameEvidence(frame.left,model.board.left) || !sameEvidence(frame.right,model.board.right) ||
++        !sameEvidence(steps,model.board.steps) || !sameEvidence(trials,model.board.trials) ||
++        !inspect(task, model).correct) return null;
++
++    return {
++      kind,
++      nodeId,
++      sessionId,
++      index:context.index,
++      solution:fmt(root),
++      transforms:steps,
++      events,
++      trials,
++      substitution:lastTrial,
++      learnerMasteryAssessed:false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP111BilateralEquationsEvidence(task, model, record, context) {
++  if (!latestSubmissionMatches(model, record)) return null;
++  return replayP111BilateralEquationsEvidence(task, model, context);
++}
+diff --git a/tests/p9-p111-bilateral-equations-browser.cjs b/tests/p9-p111-bilateral-equations-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..d0330361f720ebdd2a7fe1c5be8b1dc87de5c653
+--- /dev/null
++++ b/tests/p9-p111-bilateral-equations-browser.cjs
+@@ -0,0 +1,273 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P111_ARTIFACTS || path.join(root, 'verification/p9-p111-bilateral-equations'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  if (page.url() !== url) {
++    await page.goto(url);
++  }
++  await page.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, row.id);
++  // Select only a position in a fresh record. All mathematics is done through
++  // the original equation, substitution and Check controls.
++  await page.evaluate(async ({id,index}) => {
++    const {packText, unpackText} = await import('./storage.js');
++    const key = 'math-explorer-v2';
++    const state = JSON.parse(unpackText(localStorage.getItem(key)));
++    const lesson = state.lessons[id];
++    if (!lesson || lesson.cases[index]?.attempts?.length) throw Error('Expected empty native case');
++    lesson.index = index;
++    lesson.view = 'task';
++    localStorage.setItem(key, packText(JSON.stringify(state)));
++  }, row);
++  ok((await page.reload())?.fromServiceWorker() === true,
++    row.id + ':' + row.index + ' original position loads from SW');
++  await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P111_SOURCES, replayP111BilateralEquationsEvidence, submittedP111BilateralEquationsEvidence} =
++    await entry('dist/learning/p111-bilateral-equations-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b35-model.js');
++  const expected = [['7','26'], ['3','15'], ['4','19'], ['-1','6'], ['4','5']];
++  const cases = P111_SOURCES.map((source, i) => {
++    const {sessionId, index} = source;
++    const [root, substitution] = expected[i];
++    return {source, id:sessionId, index, context:{sessionId,index},
++      task:sessionTaskFor(sessionId,index), root, substitution};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP111BilateralEquationsEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      sessionId: row.id, index: row.index, stage, attempts: result.attempts.length,
++      steps: result.model.board.steps, trials: result.model.board.trials, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value) {
++    const loc = await openControl(p, '#extra-controls [data-xfield="' + name + '"]');
++    await loc.fill(String(value));
++    assert.equal(await loc.inputValue(), String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P111');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const op = async (name, value) => {
++        await field(page, 'value', value);
++        await click(page, '#extra-controls [data-x="a35-op"][data-index="' + name + '"]');
++      };
++      await op('div', '0');
++      const zero = await observe(page, row, 'invalid-zero');
++      ok(zero.model.board.steps.length === 0 && zero.model.issue.includes('不能用0'),
++        tag + ' original divide by zero leaves both sides intact');
++
++      await field(page, 'value', '1');
++      await click(page, '#extra-controls [data-x="a35-one-side"][data-index="sub"]');
++      const preview = await observe(page, row, 'preview');
++      ok(preview.model.board.preview && preview.model.board.steps.length === 0,
++        tag + ' original one-side operation displays a preview only');
++
++      await field(page, 'value', Number(row.root) + 1);
++      await click(page, '#extra-controls [data-x="a35-try"]');
++      if (row.index === 0) {
++        await op('add', '2');
++        await click(page, '#extra-controls [data-x="a35-undo"]');
++        const undone = await observe(page,row,'undo');
++        ok(undone.model.board.steps.length === 0, tag + ' Undo restores the original equality');
++      }
++      for (const {op:name,value} of row.task.exampleOps) await op(name,value);
++      await click(page, '#actions [data-do="check"]');
++      const wrong = await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length === 1 && !inspect(row.task,wrong.attempts[0].value).correct &&
++        !proof(row,wrong), tag + ' original Check records failure with wrong substitution');
++      await picture(page, tag + '-wrong-check.png');
++
++      await field(page, 'value', row.root);
++      await click(page, '#extra-controls [data-x="a35-try"]');
++      const draft = await observe(page,row,'corrected-draft');
++      ok(replayP111BilateralEquationsEvidence(row.task,draft.model,row.context)?.solution === row.root &&
++        !proof(row,draft), tag + ' corrected solution and substitution need a new Check');
++      await click(page, '#actions [data-do="check"]');
++
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.solution === row.root, tag + ' original Check comes after verified substitution');
++      assert.deepEqual(accepted.transforms.map(({op,value}) => [op,value]),
++        row.task.exampleOps.map(({op,value}) => [op,value]));
++      ok(accepted.substitution.left === row.substitution && accepted.substitution.right === row.substitution &&
++        accepted.trials[0].equal === false, tag + ' equal exact quantities in the original expression');
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p111-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p111-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p111-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P111_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p111-bilateral-equations-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:true, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P111_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p111-bilateral-equations.test.mjs b/tests/p9-p111-bilateral-equations.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..82eb1dcde7eef50b47b8923eef3c1bb796dbad8d
+--- /dev/null
++++ b/tests/p9-p111-bilateral-equations.test.mjs
+@@ -0,0 +1,156 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b35-model.js';
++import {
++  P111_SOURCES, p111BilateralEquationsBinding,
++  replayP111BilateralEquationsEvidence, submittedP111BilateralEquationsEvidence
++} from '../dist/learning/p111-bilateral-equations-evidence.js';
++
++const expected = [['7','26'], ['3','15'], ['4','19'], ['-1','6'], ['4','5']];
++const rows = P111_SOURCES.map((source, i) => {
++  const {sessionId,index} = source;
++  const [root, substitution] = expected[i];
++  return {source, context:{sessionId,index}, task:sessionTaskFor(sessionId,index), root, substitution};
++});
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en'))
++      .map(key => [key,ordered(value[key])]));
++  }
++  return value;
++}
++
++const replay = (row, model) => replayP111BilateralEquationsEvidence(row.task,model,row.context);
++const submit = (row, model, ...attempts) => submittedP111BilateralEquationsEvidence(row.task,model,
++  {attempts:attempts.map(value => ({value:structuredClone(value)}))},row.context);
++
++function act(row, model, action, value, index) {
++  if (value !== undefined) model.value = String(value);
++  original.act(row.task, model, 'a35-' + action, index === undefined ? {} : {index});
++}
++
++function isolate(row, model) {
++  for (const {op,value} of row.task.exampleOps) act(row,model,'op',value,op);
++}
++
++function solve(row) {
++  const model = original.initial(row.task);
++  isolate(row,model);
++  act(row,model,'try',row.root);
++  return model;
++}
++
++test('P111 binds five original equation positions and frozen full hashes', () => {
++  assert.equal(rows.length, 5);
++  for (const {source, task, context} of rows) {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.equal(p111BilateralEquationsBinding(task, context)?.nodeId, source.nodeId);
++    assert.equal(p111BilateralEquationsBinding({...task, solution:'0'}, context), null);
++    assert.equal(p111BilateralEquationsBinding({...task, exampleOps:[]}, context), null);
++    assert.equal(p111BilateralEquationsBinding(task, {...context,index:String(context.index)}), null);
++  }
++});
++
++test('P111 proves each unique solution and exact substitution through original events', () => {
++  for (const row of rows) {
++    const model = original.initial(row.task);
++    act(row,model,'op','0','div');
++    act(row,model,'one-side','1','sub');
++    act(row,model,'try',Number(row.root) + 1);
++    isolate(row,model);
++    assert.equal(original.inspect(row.task,model).correct,false);
++    assert.equal(replay(row,model),null);
++    act(row,model,'try',row.root);
++    assert.equal(original.inspect(row.task,model).correct,true);
++    const before = structuredClone(model);
++    const proof = replay(row,model);
++    assert.equal(proof.solution,row.root);
++    assert.deepEqual(proof.transforms,model.board.steps);
++    assert.equal(proof.substitution.left,row.substitution);
++    assert.equal(proof.substitution.right,row.substitution);
++    assert.deepEqual(proof.events.slice(0,2).map(e => [e.action,e.accepted]), [['op',false],['one-side',false]]);
++    assert.deepEqual(proof.trials.map(e => e.equal), [false,true]);
++    assert.deepEqual(model,before);
++  }
++});
++
++test('P111 accepts alternate legal paths with actual Undo and Reset', () => {
++  const row = rows[0], model = original.initial(row.task);
++  act(row,model,'op','3','add');
++  act(row,model,'reset');
++  act(row,model,'op','2','mul');
++  act(row,model,'op','1','addx');
++  act(row,model,'undo');
++  act(row,model,'op','-10','add');
++  act(row,model,'op','6','div');
++  act(row,model,'try','14/2');
++  assert.equal(original.inspect(row.task,model).correct,true);
++  const proof = replay(row,model);
++  assert.equal(proof.solution,'7');
++  assert.deepEqual(proof.transforms.map(step => [step.op,step.value]), [['mul','2'],['add','-10'],['div','6']]);
++  assert.deepEqual(proof.events.filter(event => ['reset','undo'].includes(event.action))
++    .map(event => [event.action,event.changed]), [['reset',true],['undo',true]]);
++});
++
++test('P111 requires a fresh substitution following the active transformation path and latest Check', () => {
++  const row = rows[0], model = original.initial(row.task);
++  act(row,model,'try',row.root);
++  isolate(row,model);
++  model.value = row.root;
++  assert.equal(original.inspect(row.task,model).correct,true);
++  assert.equal(replay(row,model),null);
++  const stale = structuredClone(model);
++  act(row,model,'try',row.root);
++  assert.equal(submit(row,model,stale),null);
++  assert.equal(submit(row,model,stale,model)?.solution,'7');
++  assert.equal(submit(row,model,model,stale),null);
++
++  act(row,model,'undo');
++  act(row,model,'op','3','div');
++  model.value = row.root;
++  assert.equal(original.inspect(row.task,model).correct,true);
++  assert.equal(replay(row,model),null);
++});
++
++test('P111 rejects forged steps, unsupported controls and an unresolved preview', () => {
++  const row = rows[2];
++  const changes = [
++    m => { m.history.length = 0; },
++    m => { m.history[0].v = '3'; },
++    m => { m.board.steps[0].left[0] = [4,1]; },
++    m => { m.board.trials.at(-1).right = '0'; },
++    m => { m.history[0].unverified = true; },
++    m => act(row,m,'walk','4','1'),
++    m => {
++      act(row,m,'one-side','1','sub');
++      act(row,m,'try',row.root);
++      assert.equal(original.inspect(row.task,m).correct,true);
++      assert.ok(m.board.preview);
++    }
++  ];
++  for (const change of changes) {
++    const model = solve(row);
++    change(model);
++    assert.equal(replay(row,model),null,change.toString());
++  }
++});
++
++test('P111 excludes the neighboring expansion, practice and bridge positions', async () => {
++  await ensureB39Ready();
++  for (const {task, context} of rows) {
++    assert.equal(p111BilateralEquationsBinding(task,{...context,index:-1}),null);
++    assert.equal(p111BilateralEquationsBinding(task,{...context,index:1}),null);
++    assert.equal(p111BilateralEquationsBinding(sessionTaskFor('equations35',1),context),null);
++    for (const [sessionId, bridge] of Object.entries(BRIDGES)) {
++      for (const [index, related] of bridge.tasks.entries()) {
++        if (related?.type === task.type) assert.equal(p111BilateralEquationsBinding(related,{sessionId,index}),null);
++      }
++      assert.equal(p111BilateralEquationsBinding(task,{sessionId,index:0}),null);
++    }
++  }
++});

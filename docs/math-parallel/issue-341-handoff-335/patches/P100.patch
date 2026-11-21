@@ -1,0 +1,498 @@
+diff --git a/dist/learning/p100-boxplot-marks-evidence.js b/dist/learning/p100-boxplot-marks-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..ba1ed513efa96649ca04c0143a630b6af0457966
+--- /dev/null
++++ b/dist/learning/p100-boxplot-marks-evidence.js
+@@ -0,0 +1,105 @@
++import {fields, initial, inspect, number, valid} from './phase5/b20-model.js';
++import {
++  hasExactKeys,
++  isEvidenceContext,
++  latestSubmissionMatches,
++  matchesNativeEvidenceTask,
++  sameEvidence
++} from './evidence-contract.js';
++
++const sessionId = 'boxsummary';
++const nodeId = 'mt_8VjmxR1yfw';
++const type = 'x-boxsummary';
++const kind = 'p100-boxplot-marks';
++const taskHash = '5b2698fd0135df607a4879a15747f7624af14086e3d658b567522a0440fc0057';
++const reviewed = {
++  type,mode:'build',
++  prompt:'先把五个位置放到同一把尺上，再画箱与两条须。这里须从最小值走到最大值。',
++  summary:[3,6,9,14,21],domain:[0,24],
++  questions:[
++    {label:'中间那个位置',value:9},
++    {label:'箱子的跨度',value:8},
++    {label:'最小到最大的跨度',value:18},
++    {label:'须线到哪里',value:['minmax'],options:[['minmax','最小与最大'],['fence','自动删去两端']]}
++  ]
++};
++
++export const P100_SOURCES = Object.freeze([Object.freeze({sessionId,index:0,nodeId,type,taskHash})]);
++
++export function p100BoxplotMarksBinding(task,context) {
++  if (!isEvidenceContext(context) || context.sessionId !== sessionId || context.index !== 0 ||
++      !sameEvidence(task,reviewed) || !matchesNativeEvidenceTask(task,context,{type,nodeId})) return null;
++  return {nodeId,kind,method:null,question:'箱子的宽度和最小到最大的距离，分别用哪两个位置相减？'};
++}
++
++function isExactInteger(raw, value) {
++  const text = raw.trim();
++  const integer = /^(-?\d+)(?:\.0+)?$/.exec(text);
++  if (integer) return BigInt(integer[1]) === BigInt(value);
++  const fraction = /^(-?\d+)(?:\s+(\d+))?\/(\d+)$/.exec(text);
++  if (!fraction) return false;
++  const [, leading, part, divisor] = fraction;
++  const bottom = BigInt(divisor);
++  const top = part === undefined ? BigInt(leading) :
++    BigInt(leading) * bottom + (leading.startsWith('-') ? -1n : 1n) * BigInt(part);
++  return bottom > 0n && top === BigInt(value) * bottom;
++}
++
++const roles = ['minimum','lowerQuartile','median','upperQuartile','maximum'];
++
++export function replayP100BoxplotMarksEvidence(task,model,context) {
++  try {
++    const binding = p100BoxplotMarksBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue !== '' || !model.history.length ||
++        Object.keys(model.history).length !== model.history.length) return null;
++
++    const fieldKeys = Object.keys(fields(task));
++    const [lower,upper] = task.domain;
++    const stored = task.summary.map(() => null);
++    const events = [];
++    let cursor = 0;
++    for (const [index,event] of model.history.entries()) {
++      if (!hasExactKeys(event,['a','d','f']) || !hasExactKeys(event.f,fieldKeys)) return null;
++      if (event.a === 'row') {
++        if (!hasExactKeys(event.d,['index']) || !/^[0-4]$/.test(event.d.index)) return null;
++        cursor = Number(event.d.index);
++        events.push({index,action:'row',position:cursor});
++        continue;
++      }
++      if (event.a !== 'mark' || !hasExactKeys(event.d,[])) return null;
++      const raw = event.f.value;
++      const value = number(raw);
++      const recorded = value >= lower && value <= upper;
++      events.push({index,action:'mark',position:cursor,raw,recorded});
++      if (recorded) {
++        stored[cursor] = {index,raw,value};
++        const next = stored.indexOf(null);
++        if (next >= 0) cursor = next;
++      }
++    }
++
++    if (stored.some((mark,i) => !mark || mark.value !== task.summary[i] || !isExactInteger(mark.raw,task.summary[i])) ||
++        !sameEvidence(stored.map(mark => mark.value),model.board.marks) || cursor !== model.board.cursor ||
++        model.value !== model.history.at(-1).f.value) return null;
++    const [minimum,lowerQuartile,median,upperQuartile,maximum] = stored.map(mark => mark.value);
++    const boxWidth = upperQuartile-lowerQuartile;
++    const range = maximum-minimum;
++    if (![median,boxWidth,range].every((value,i) => isExactInteger(model.answers[i],value)) ||
++        model.answers[3] !== 'minmax' || !inspect(task,model).correct) return null;
++
++    return {
++      kind,nodeId,sessionId,index:context.index,
++      marks:stored.map((mark,i) => ({role:roles[i],value:mark.value,eventIndex:mark.index})),
++      box:[lowerQuartile,upperQuartile],whiskers:[minimum,maximum],median,boxWidth,range,
++      events,sourceSuppliedSummary:true,learnerMasteryAssessed:false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP100BoxplotMarksEvidence(task,model,record,context) {
++  if (!latestSubmissionMatches(model,record)) return null;
++  return replayP100BoxplotMarksEvidence(task,model,context);
++}
+diff --git a/tests/p9-p100-boxplot-marks-browser.cjs b/tests/p9-p100-boxplot-marks-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..a6385f76e1ee2787a7ec003ce67bba7c19fed276
+--- /dev/null
++++ b/tests/p9-p100-boxplot-marks-browser.cjs
+@@ -0,0 +1,245 @@
++'use strict';
++
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P100_ARTIFACTS || path.join(root, 'verification/p9-p100-boxplot-marks'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd:root, encoding:'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (value, label) => { assert.ok(value, label); checks.push(label); };
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en'))
++      .map(key=>[key, ordered(value[key])]));
++  }
++  return value;
++}
++
++async function openControl(page, selector) {
++  const control = page.locator(selector);
++  assert.equal(await control.count(), 1, 'unique original control: ' + selector);
++  for (let i = 0; i < 8 && !(await control.isVisible()); i++) {
++    const closed = control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await closed.count(), 1);
++    await closed.locator(':scope > summary').click();
++  }
++  return control;
++}
++
++async function routePosition(page, origin, row) {
++  const url = origin.base + 'learn.html#' + row.id;
++  ok((await page.goto(url))?.fromServiceWorker() === true, 'original first position opens offline');
++  await page.waitForFunction(({id,index}) => {
++    const state = window.mathLesson?.snapshot();
++    return state?.id === id && state.index === index;
++  }, row);
++}
++
++async function run() {
++  fs.mkdirSync(out, {recursive:true});
++  const {P100_SOURCES, replayP100BoxplotMarksEvidence, submittedP100BoxplotMarksEvidence} =
++    await entry('dist/learning/p100-boxplot-marks-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const {inspect} = await entry('dist/learning/phase5/b20-model.js');
++  const cases = P100_SOURCES.map(source => {
++    const {sessionId, index} = source;
++    return {source, id:sessionId, index, context:{sessionId,index}, task:sessionTaskFor(sessionId,index)};
++  });
++  const verified = [];
++  let origin, browser, learner, restore, page, browserVersion = null, phase = 'startup';
++
++  function proof(row, snap) {
++    return submittedP100BoxplotMarksEvidence(row.task, snap.model, snap.record, row.context);
++  }
++  async function observe(p, row, stage) {
++    const result = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({
++      index: row.index, stage, attempts: result.attempts.length,
++      marks: result.model.board.marks, cursor: result.model.board.cursor, historyLength: result.model.history.length,
++      proof: proof(row, result), storage: result.storage
++    });
++    return result;
++  }
++  async function picture(p, name) {
++    await p.screenshot({path: path.join(out, name)});
++    screenshots.push(name);
++  }
++  async function click(p, selector) {
++    await (await openControl(p, selector)).click();
++  }
++  async function field(p, name, value, select = false) {
++    const loc = await openControl(p, '#extra-controls [data-xfield="' + name + '"]');
++    if (select) await loc.selectOption(value);
++    else await loc.fill(String(value));
++    assert.equal(await loc.inputValue(), String(value));
++  }
++
++  try {
++    origin = await createOrigin(root);
++    browser = await chromium.launch({
++      headless: true,
++      args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
++      ...(process.env.MATH_CHROMIUM_EXECUTABLE ? {executablePath:process.env.MATH_CHROMIUM_EXECUTABLE} : {})
++    });
++    browserVersion = browser.version();
++    learner = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow', acceptDownloads:true});
++    restore = await newDesktopContext(browser, {reducedMotion:'reduce', serviceWorkers:'allow'});
++    page = await learner.newPage();
++    const restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.setDefaultTimeout(15000);
++      p.on('pageerror', error => errors.push(phase + ': ' + error.message));
++    }
++    for (const context of [learner, restore]) {
++      context.on('request', request => {
++        if (/^https?:/.test(request.url()) && !request.url().startsWith(origin.base)) {
++          errors.push('non-local request: ' + request.url());
++        }
++      });
++    }
++
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P100');
++
++    for (const row of cases) {
++      phase = row.id + ':' + row.index;
++      const tag = row.id + '-' + row.index;
++      await routePosition(page, origin, row);
++      const live = await page.evaluate(async ({id,index}) => {
++        const {sessionTaskFor} = await import('./learning/bridges.js');
++        const {LESSONS} = await import('./learning/catalog.js');
++        return {task:sessionTaskFor(id,index), nodeId:LESSONS[id].topicId};
++      }, row);
++      const digest = createHash('sha256').update(JSON.stringify(ordered(live.task))).digest('hex');
++      ok(live.nodeId === row.source.nodeId && digest === row.source.taskHash, tag + ' source fingerprint');
++      assert.deepEqual(live.task, row.task);
++      ok(await page.evaluate(() => innerWidth === 1920 && innerHeight === 1080), tag + ' standard viewport');
++
++      const mark = async value => {
++        await field(page,'value',value);
++        await click(page,'#extra-controls [data-x="b20-mark"]');
++      };
++      await mark(25);
++      const invalid = await observe(page,row,'out-of-range');
++      ok(invalid.model.board.marks.every(value => value === null), 'off-scale mark leaves the five positions empty');
++
++      for (const value of [3,7,9,14,21]) await mark(value);
++      for (const [i,value] of [9,8,18,'minmax'].entries()) {
++        await field(page,'answers.'+i,value,i===3);
++      }
++      await click(page,'#actions [data-do="check"]');
++      const wrong = await observe(page,row,'wrong-quartile-check');
++      ok(wrong.attempts.length === 1 && wrong.model.board.marks[1] === 7 &&
++        !inspect(row.task,wrong.attempts[0].value).correct && !proof(row,wrong),
++        'correct numerical answers do not replace the actual misplotted quartile');
++      await picture(page,tag + '-wrong-quartile.png');
++
++      await click(page,'#extra-controls [data-x="b20-row"][data-index="1"]');
++      await mark(6);
++      const draft = await observe(page,row,'replotted-quartile');
++      const revised = replayP100BoxplotMarksEvidence(row.task,draft.model,row.context);
++      ok(revised?.boxWidth === 8 && !proof(row,draft),'corrected marked quartile still needs a fresh Check');
++      await click(page,'#actions [data-do="check"]');
++      const good = await observe(page,row,'correct-check');
++      const accepted = proof(row,good);
++      ok(good.attempts.length === 2 && inspect(row.task,good.attempts.at(-1).value).correct &&
++        accepted?.range === 18,'actual latest Check matches all five marks and the full range');
++      assert.deepEqual(accepted.marks.map(mark => mark.value),[3,6,9,14,21]);
++      assert.deepEqual(accepted.box,[6,14]);
++      assert.deepEqual(accepted.whiskers,[3,21]);
++      assert.deepEqual([accepted.median,accepted.boxWidth,accepted.range],[9,8,18]);
++      ok(await page.locator('#thinking-feedback').count() === 0, tag + ' candidate has no global registration');
++      await picture(page, tag + '-correct-check.png');
++
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' stopped-origin reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      const reloaded = await observe(page, row, 'offline-reload');
++      assert.deepEqual(reloaded.model, good.model);
++      assert.deepEqual(reloaded.record, good.record);
++      assert.deepEqual(proof(row,reloaded), accepted);
++      checks.push(tag + ' raw model and both Checks survive reload');
++      verified.push({row, good, accepted});
++    }
++
++    phase = 'State-v2 backup';
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download');
++    await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    const envelope = JSON.parse(bytes);
++    ok(envelope.app === 'math-explorer' && envelope.version === 2, 'real offline State-v2 export');
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++
++    async function upload(buffer, name) {
++      const chooser = restorePage.waitForEvent('filechooser');
++      await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await chooser).setFiles({name, mimeType:'application/json', buffer});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    }
++    ok((await upload(bytes, 'p100-backup.json')).includes('备份已合并'), 'fresh context imports the backup');
++    const restoredBytes = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p100-repeat.json')).includes('备份已合并'), 'repeat import succeeds');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'repeat import preserves exact bytes');
++    ok(!(await upload(Buffer.from('{'), 'p100-corrupt.json')).includes('备份已合并'), 'corrupt backup is rejected');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === restoredBytes,
++      'failed import preserves exact bytes');
++    await restorePage.goto(origin.base + 'learn.html#' + cases.at(-1).id);
++    await restorePage.waitForFunction(id => window.mathLesson?.snapshot()?.id === id, cases.at(-1).id);
++    for (const {row, good, accepted} of verified) {
++      const imported = await observe(restorePage,row,'restored-backup');
++      assert.deepEqual(imported.model, good.model);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row,imported), accepted);
++      checks.push(row.index + ' restored model, correction and evidence match exactly');
++    }
++
++    phase = 'Retry';
++    const last = verified.at(-1).row;
++    await page.goto(origin.base + 'learn.html#' + last.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.index);
++    await click(page, '[data-do="p3-retry"]');
++    const retry = await observe(page, last, 'retry');
++    ok(retry.model.history.length === 0 && retry.attempts.length === 2 &&
++      proof(last,retry) === null, 'Retry keeps saved attempts and excludes the new blank draft');
++    ok(errors.length === 0, 'no non-local requests or page errors');
++    console.log('P100_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha:sha,chromium:browserVersion,checks:checks.length,captures:observations.length}));
++  } catch (error) {
++    errors.push(phase + ': ' + (error.stack || error));
++    await page?.screenshot({path:path.join(out, 'failure.png')}).catch(() => {});
++    throw error;
++  } finally {
++    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
++      schema:'math-p100-boxplot-marks-browser/1', testedCheckoutSha:sha,
++      originalControls:true, seededLessonPositionOnly:false, chromium:browserVersion,
++      viewport:STANDARD_DESKTOP_VIEWPORT, sources:P100_SOURCES,
++      checks, observations, screenshots, errors
++    },null,2)+'\n');
++    await restore?.close().catch(() => {});
++    await learner?.close().catch(() => {});
++    await browser?.close().catch(() => {});
++    await origin?.close().catch(() => {});
++  }
++}
++
++run().catch(error => { console.error(error.stack || error); process.exitCode = 1; });
+diff --git a/tests/p9-p100-boxplot-marks.test.mjs b/tests/p9-p100-boxplot-marks.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..c44083d42aecc07aab578a5537b0d9f013c8ae61
+--- /dev/null
++++ b/tests/p9-p100-boxplot-marks.test.mjs
+@@ -0,0 +1,130 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {BRIDGES, sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import * as original from '../dist/learning/phase5/b20-model.js';
++import {
++  P100_SOURCES,p100BoxplotMarksBinding,
++  replayP100BoxplotMarksEvidence,submittedP100BoxplotMarksEvidence
++} from '../dist/learning/p100-boxplot-marks-evidence.js';
++
++const [source] = P100_SOURCES;
++const {sessionId,index} = source;
++const context = {sessionId,index};
++const task = sessionTaskFor(sessionId,index);
++const replay = model => replayP100BoxplotMarksEvidence(task,model,context);
++const submit = (model,...versions) => submittedP100BoxplotMarksEvidence(task,model,
++  {attempts:versions.map(value => ({value:structuredClone(value)}))},context);
++
++function ordered(value) {
++  if (Array.isArray(value)) return value.map(ordered);
++  if (value && typeof value === 'object') {
++    return Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en'))
++      .map(key => [key,ordered(value[key])]));
++  }
++  return value;
++}
++
++function mark(model,value) {
++  model.value = String(value);
++  original.act(task,model,'b20-mark');
++}
++
++function row(model,index) {
++  original.act(task,model,'b20-row',{index});
++}
++
++function work(q1 = '7') {
++  const model = original.initial(task);
++  mark(model,25);
++  for (const value of [3,q1,9,14,21]) mark(model,value);
++  model.answers = ['9','8','18','minmax'];
++  return model;
++}
++
++function correct(model) {
++  row(model,1);
++  mark(model,6);
++}
++
++test('P100 binds the complete box construction source and fingerprint', () => {
++  assert.equal(P100_SOURCES.length,1);
++  assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),source.taskHash);
++  assert.equal(p100BoxplotMarksBinding(task,context)?.nodeId,source.nodeId);
++  assert.equal(p100BoxplotMarksBinding({...task,domain:[0,25]},context),null);
++  assert.equal(p100BoxplotMarksBinding({...task,summary:[3,5,9,14,21]},context),null);
++  assert.equal(p100BoxplotMarksBinding(task,{...context,index:'0'}),null);
++});
++
++test('P100 replays all five marks and a returned row correction', () => {
++  const model = work();
++  assert.equal(original.inspect(task,model).correct,false);
++  assert.equal(replay(model),null);
++  correct(model);
++  assert.equal(original.inspect(task,model).correct,true);
++  const before = structuredClone(model), proof = replay(model);
++  assert.deepEqual(proof.marks.map(mark => mark.value),[3,6,9,14,21]);
++  assert.deepEqual(proof.box,[6,14]);
++  assert.deepEqual(proof.whiskers,[3,21]);
++  assert.deepEqual([proof.median,proof.boxWidth,proof.range],[9,8,18]);
++  assert.equal(proof.events[0].recorded,false);
++  assert.equal(proof.events.at(-2).position,1);
++  assert.equal(proof.marks[1].eventIndex,model.history.length-1);
++  assert.equal(proof.sourceSuppliedSummary,true);
++  assert.deepEqual(model,before);
++});
++
++test('P100 requires exact numeric quantities and the source whisker convention', () => {
++  const m = work('6.0000000000000000000');
++  m.answers = ['18/2','0 8/1','36/2','minmax'];
++  assert.equal(replay(m)?.boxWidth,8);
++  m.answers[1]='8.000000001';
++  assert.ok(original.inspect(task,m).correct);
++  assert.equal(replay(m),null);
++  m.answers[1]='8';
++  m.answers[3]='fence';
++  assert.equal(replay(m),null);
++  const rounded = work('6.0000000000000000001');
++  assert.ok(original.inspect(task,rounded).correct);
++  assert.equal(replay(rounded),null);
++});
++
++test('P100 requires current saves and a latest matching original Check', () => {
++  const wrong = work(), model = structuredClone(wrong);
++  correct(model);
++  assert.equal(submit(model,wrong),null);
++  assert.equal(submit(model,wrong,model)?.range,18);
++  assert.equal(submit(model,model,wrong),null);
++  model.value='5';
++  assert.ok(original.inspect(task,model).correct);
++  assert.equal(replay(model),null);
++});
++
++test('P100 rejects forged event coordinates, missing marks and hidden alterations', () => {
++  for (const change of [
++    m => { m.history.length=0; },
++    m => { m.board.marks[3]=21; },
++    m => { m.history.at(-2).d.index='01'; },
++    m => { m.history.at(-1).d.index='1'; },
++    m => original.act(task,m,'b20-alter')
++  ]) {
++    const model = work();
++    correct(model);
++    change(model);
++    assert.equal(replay(model),null,change.toString());
++  }
++});
++
++test('P100 excludes the other boxplot modes, practice and original bridges', async () => {
++  await ensureB39Ready();
++  for (const position of [-1,1,2]) {
++    assert.equal(p100BoxplotMarksBinding(task,{...context,index:position}),null);
++  }
++  assert.equal(p100BoxplotMarksBinding(sessionTaskFor(sessionId,1),context),null);
++  for (const [id,bridge] of Object.entries(BRIDGES)) {
++    for (const [i,related] of bridge.tasks.entries()) {
++      if (related?.type === task.type) assert.equal(p100BoxplotMarksBinding(related,{sessionId:id,index:i}),null);
++    }
++  }
++});

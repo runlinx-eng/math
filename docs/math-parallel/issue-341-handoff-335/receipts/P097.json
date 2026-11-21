@@ -1,0 +1,46 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p097-square-pair",
+  "commit": "e74a2b68465139da612c717b8c3434e25eb52f6e",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "factoruse",
+      "index": 3,
+      "nodeId": "mt_0Wg5F97osg",
+      "type": "x-squarepair",
+      "taskHash": "c5b37c0ff70f96ebcaebbbb46295e044fc3b3ab317b5d1455199500ec3da8a59"
+    }
+  ],
+  "node22": "5 PASS",
+  "referenceNode": "30 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 26,
+  "captures": 8,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "factoruse-3-correct-check-decoded.json": "cad87562f37b9839bd844989c24c282915206f965a18e57164e2a5f591d74eb9",
+    "factoruse-3-correct-check-storage.txt": "cad87562f37b9839bd844989c24c282915206f965a18e57164e2a5f591d74eb9",
+    "factoruse-3-correct-check.png": "da22968d1ae316c729e855a95ce54d967f9ae16c9433c0fee99635da9ecccaa4",
+    "factoruse-3-insufficient-area-check-decoded.json": "acb68f02646e8860d1a8d30e38863f00cdd811c8b0dbb06a8de460005b79b485",
+    "factoruse-3-insufficient-area-check-storage.txt": "acb68f02646e8860d1a8d30e38863f00cdd811c8b0dbb06a8de460005b79b485",
+    "factoruse-3-insufficient-area.png": "f9b3215a056d7e1ed6c750cc9a2e02d37de120d4768f3a7797d6489bb772c73d",
+    "factoruse-3-offline-reload-decoded.json": "0995bc126b0e31dc96bbaaed898bba4cdb8d7f5d13c12776537b1dca123a68b6",
+    "factoruse-3-offline-reload-storage.txt": "0995bc126b0e31dc96bbaaed898bba4cdb8d7f5d13c12776537b1dca123a68b6",
+    "factoruse-3-restored-backup-decoded.json": "3ce477e2101065b3a12d2df9b37341b7c9a12e6b3da4a614db5175cc03597c1a",
+    "factoruse-3-restored-backup-storage.txt": "3ce477e2101065b3a12d2df9b37341b7c9a12e6b3da4a614db5175cc03597c1a",
+    "factoruse-3-retry-decoded.json": "2ac8351939787a731767f2f1fef693a09122021d7c00b5dbe21f31fded3b30b2",
+    "factoruse-3-retry-storage.txt": "2ac8351939787a731767f2f1fef693a09122021d7c00b5dbe21f31fded3b30b2",
+    "factoruse-3-saved-pair-decoded.json": "2789296a0fdcc9eeb68b9ec34d5df3e674a5fdbb6ff2c56c4187e377eea30a7e",
+    "factoruse-3-saved-pair-storage.txt": "2789296a0fdcc9eeb68b9ec34d5df3e674a5fdbb6ff2c56c4187e377eea30a7e",
+    "factoruse-3-unapplied-side-decoded.json": "25452f93b90c0baed5f4432ed3721cfd0144e5fa7b6093d2dca658fa67c8e99c",
+    "factoruse-3-unapplied-side-storage.txt": "25452f93b90c0baed5f4432ed3721cfd0144e5fa7b6093d2dca658fa67c8e99c",
+    "factoruse-3-zero-side-decoded.json": "53f6247375f597b0927cb8082bb17b6d8fb6590c3fdef78bf3928fa6630e6952",
+    "factoruse-3-zero-side-storage.txt": "53f6247375f597b0927cb8082bb17b6d8fb6590c3fdef78bf3928fa6630e6952",
+    "native-state-v2.json": "1fbe489f9816d86967159989357eb82a7d21b6da328512e653408d31750e67a9",
+    "results.json": "e4542e6dc72a15fbb9f79171a0be32a5ea024db7f9e45630f4936f89a8a0bc85"
+  }
+}

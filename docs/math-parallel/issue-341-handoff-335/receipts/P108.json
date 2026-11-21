@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p108-digit-value",
+  "commit": "a459d62081221530468ecb8f06cbfef9252288c7",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "mixedpoints",
+      "index": 0,
+      "nodeId": "mt_PsylzZ9lHW",
+      "type": "x-digitlens",
+      "taskHash": "382deaf14fd4d81d11481dea6430a0d07aa2659346c840c86ebef62eb3d18b67"
+    }
+  ],
+  "node22": "6 PASS",
+  "referenceNode": "32 PASS",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 21,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "mixedpoints-0-correct-check-decoded.json": "36d43481ff6bcd8eff14e041c14369761cccbfac4832611e57096b070c76bd22",
+    "mixedpoints-0-correct-check-storage.txt": "36d43481ff6bcd8eff14e041c14369761cccbfac4832611e57096b070c76bd22",
+    "mixedpoints-0-correct-check.png": "f7a9777dcab15e0cc69afc2816daf6394e425d1824c7f34e3aeda57f32a2c112",
+    "mixedpoints-0-corrected-draft-decoded.json": "fd255f2e8ef7e03c6b4a2a8fc7d070408a5f817b03c0242360c6fdcfdbee942d",
+    "mixedpoints-0-corrected-draft-storage.txt": "fd255f2e8ef7e03c6b4a2a8fc7d070408a5f817b03c0242360c6fdcfdbee942d",
+    "mixedpoints-0-offline-reload-decoded.json": "506132b1500a3c708cbcb81ff712598ffcce8fe1e84596f588a7fbfa0515adbb",
+    "mixedpoints-0-offline-reload-storage.txt": "506132b1500a3c708cbcb81ff712598ffcce8fe1e84596f588a7fbfa0515adbb",
+    "mixedpoints-0-restored-backup-decoded.json": "6bfbcb045ce891b31018ebac7f99add1a54eb4c3cd3959211af08614a4ecad06",
+    "mixedpoints-0-restored-backup-storage.txt": "6bfbcb045ce891b31018ebac7f99add1a54eb4c3cd3959211af08614a4ecad06",
+    "mixedpoints-0-retry-decoded.json": "8c3328c47134ca1aa783c4da908c239d7bcfd8081b75588628f3b404c49ba4f5",
+    "mixedpoints-0-retry-storage.txt": "8c3328c47134ca1aa783c4da908c239d7bcfd8081b75588628f3b404c49ba4f5",
+    "mixedpoints-0-wrong-check-decoded.json": "02dc6ffa7ea4043c4fad9ca3f96d1662b8db5c33a736fa2df36c8de35e6f94d3",
+    "mixedpoints-0-wrong-check-storage.txt": "02dc6ffa7ea4043c4fad9ca3f96d1662b8db5c33a736fa2df36c8de35e6f94d3",
+    "mixedpoints-0-wrong-check.png": "4d258ddacc86ca1d6b554e35ba09834f313ca02828b2a435097c13687ffb4c4d",
+    "native-state-v2.json": "c69703229a6308f0ef2ec8207eb175da5366b5663026c9bbdd819fd4ca0474c8",
+    "results.json": "1ecf6b8c6419ed8f540e979704a0627bd6cf6c466e5bf0eb776ea6373d6f677b"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p045-three-fifths-vs-half",
+  "commit": "7d819a4c21be3aad123b67d41236aad9885018ee",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "multiShape38",
+      "index": 3,
+      "nodeId": "mt_SmghasIvbT",
+      "type": "x-r38-chain",
+      "taskHash": "41a3553b292ceb8f90e59f8d88a31c551e82e840f8dc0731e98fa9ed5cef0df9"
+    }
+  ],
+  "node22": "5 PASS",
+  "referenceNode": "20 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "multiShape38-3-correct-check-decoded.json": "f6c0440e0c349eb855ae18745bdac60d8069847fce966a006fc3cef0d11211ed",
+    "multiShape38-3-correct-check-storage.txt": "f6c0440e0c349eb855ae18745bdac60d8069847fce966a006fc3cef0d11211ed",
+    "multiShape38-3-correct.png": "64f80abc528f2019d17881a54e7e1bd8a526b243b0a23d41c05dfde50b266702",
+    "multiShape38-3-corrected-draft-decoded.json": "026202f995f2b2dbd341888aa6a5c59439d2bed5b3e192f6a77817c1a88bb75f",
+    "multiShape38-3-corrected-draft-storage.txt": "026202f995f2b2dbd341888aa6a5c59439d2bed5b3e192f6a77817c1a88bb75f",
+    "multiShape38-3-offline-reload-decoded.json": "fa7ce4ed74550d6df99e199272c3ebe8cdfe4ce4990afc99c7ff99cde35e9eba",
+    "multiShape38-3-offline-reload-storage.txt": "fa7ce4ed74550d6df99e199272c3ebe8cdfe4ce4990afc99c7ff99cde35e9eba",
+    "multiShape38-3-restored-backup-decoded.json": "a36b631c36087f9c8d8e4500a54f6ffe7a2b613b033f55f6f9e2335eb5993564",
+    "multiShape38-3-restored-backup-storage.txt": "a36b631c36087f9c8d8e4500a54f6ffe7a2b613b033f55f6f9e2335eb5993564",
+    "multiShape38-3-retry-decoded.json": "3acc7c2cfd3d287e5db98a09d747ea9849487721406d549eeeb24b424e1f92b2",
+    "multiShape38-3-retry-storage.txt": "3acc7c2cfd3d287e5db98a09d747ea9849487721406d549eeeb24b424e1f92b2",
+    "multiShape38-3-wrong-check-decoded.json": "9e2c3ab973a900b7a74893d6010d76f0b5a8c4338b3a70752a78ca0b47c3135e",
+    "multiShape38-3-wrong-check-storage.txt": "9e2c3ab973a900b7a74893d6010d76f0b5a8c4338b3a70752a78ca0b47c3135e",
+    "multiShape38-3-wrong.png": "0a9bbe41c5f5eb2765292decadfe670ca03a6d293393fca1dfb4ab13cf8f97bf",
+    "native-state-v2.json": "fa6b9acb79f862678b33a9fa0ed8f85faff82652e11d0ac8e7bb57575f7e1bde",
+    "results.json": "238c7f0e11d8b9558094b515a452cd299395f1816e944abb395a3edfcd093421"
+  }
+}

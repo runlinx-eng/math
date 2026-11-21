@@ -1,0 +1,42 @@
+{
+  "status": "integration-ready",
+  "branch": "work/b/p069-complex-steps",
+  "commit": "e7b040f8727b0d41850c81ccf6324b722eacdf5c",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "sources": [
+    {
+      "sessionId": "complex38",
+      "index": 0,
+      "nodeId": "mt_GpltXPoaoc",
+      "type": "x-r37-steps",
+      "taskHash": "3106348fc627d39c7aaf96d5adafca84750e0531ef186ae385330327bbb6b511"
+    }
+  ],
+  "node22": "4 PASS",
+  "referenceNode": "36 PASS / 0 FAIL (baseline)",
+  "preflight": "232 PASS",
+  "chromium": "141.0.7390.37",
+  "browserChecks": 14,
+  "captures": 6,
+  "globalP10": "NOT_RUN",
+  "formalCI": "NOT_RUN",
+  "formalAIncrement": 0,
+  "browserArtifactSha256": {
+    "complex38-0-correct-check-decoded.json": "b3c26963b8076d37c5a1d69d3f62d153ff2ebb7d275727ec19764bfea7e6000b",
+    "complex38-0-correct-check-storage.txt": "b3c26963b8076d37c5a1d69d3f62d153ff2ebb7d275727ec19764bfea7e6000b",
+    "complex38-0-correct.png": "9712015a9710de1e560274eaa99ee91f2dad6d39ff6e67433e626a474090aaa0",
+    "complex38-0-corrected-draft-decoded.json": "47a6ed401ab315e93fc54ccd6b04c4690d895f93b6618071faf2c013842f5720",
+    "complex38-0-corrected-draft-storage.txt": "47a6ed401ab315e93fc54ccd6b04c4690d895f93b6618071faf2c013842f5720",
+    "complex38-0-offline-reload-decoded.json": "761b29d3923a41e324cadc2837c3a771ec8883ee63e3a0580a043f614e44959d",
+    "complex38-0-offline-reload-storage.txt": "761b29d3923a41e324cadc2837c3a771ec8883ee63e3a0580a043f614e44959d",
+    "complex38-0-restored-backup-decoded.json": "81a8d14dff0f85053d98d52b8f4c232cfd2046d026b9fcd5ff7bc1d0a95ec111",
+    "complex38-0-restored-backup-storage.txt": "81a8d14dff0f85053d98d52b8f4c232cfd2046d026b9fcd5ff7bc1d0a95ec111",
+    "complex38-0-retry-decoded.json": "d4c1edf7df79471caa0abe0ee3961c7e2ed56e98e453c6f26d9f7226d51171ba",
+    "complex38-0-retry-storage.txt": "d4c1edf7df79471caa0abe0ee3961c7e2ed56e98e453c6f26d9f7226d51171ba",
+    "complex38-0-wrong-step-decoded.json": "a48026053238675bd0ed130dce8c7e973e38d07fb1f28590456c39ef5b85107e",
+    "complex38-0-wrong-step-storage.txt": "a48026053238675bd0ed130dce8c7e973e38d07fb1f28590456c39ef5b85107e",
+    "complex38-0-wrong.png": "2292f020a3a298becd8f6528d75b2fa8db0d17fe95764af16cddc2f0b90bcab2",
+    "native-state-v2.json": "4d6b1c81edd38c0a0aab5e282f742f8c1a05993e1155bb264a58d0f30924b81a",
+    "results.json": "962e0c593605155b24b4fd4bda090ea39f952b1af546464153e38a42c46f2fbd"
+  }
+}

@@ -1,0 +1,528 @@
+diff --git a/dist/learning/p017-signed-walk-and-between-evidence.js b/dist/learning/p017-signed-walk-and-between-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..4760b7740b42d6458a0e9e7575945614ffdd3ea5
+--- /dev/null
++++ b/dist/learning/p017-signed-walk-and-between-evidence.js
+@@ -0,0 +1,138 @@
++import {initial, inspect, valid} from './phase5/b09-model.js';
++import {hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++import {rational} from './phase5/b16-model.js';
++
++const reviewed = [
++  {
++    "sessionId": "negativefirst",
++    "index": 0,
++    "nodeId": "mt_vXRzMbiPff",
++    "type": "x-signedline",
++    "taskHash": "9029c914a9ca28adb72154e1e4440dd8376b468500b93d1a4cdbcddb0d7027f5",
++    "task": {
++      "type": "x-signedline",
++      "mode": "walk",
++      "start": 5,
++      "end": -3,
++      "min": -4,
++      "max": 6,
++      "prompt": "从5往回数，每走一步先写下一个数。经过零以后继续。"
++    }
++  },
++  {
++    "sessionId": "negativecontext",
++    "index": 2,
++    "nodeId": "mt_1KkvzwYxbR",
++    "type": "x-signedline",
++    "taskHash": "44f710270cc96d351da561c27ea1f5f66662e84c38e266aa24183249c98f81c8",
++    "task": {
++      "type": "x-signedline",
++      "mode": "walk",
++      "start": 3,
++      "end": -2,
++      "min": -3,
++      "max": 4,
++      "prompt": "从3层向下，一层层经过地面，继续到地下两层。"
++    }
++  },
++  {
++    "sessionId": "numberworld",
++    "index": 4,
++    "nodeId": "mt_b4lbTOJYwI",
++    "type": "x-betweenpoints",
++    "taskHash": "f0b581c829b24f6331a76bd9b38982ba544b9537255712edd01593a9481d24fc",
++    "task": {
++      "type": "x-betweenpoints",
++      "a": [
++        1,
++        4
++      ],
++      "b": [
++        1,
++        3
++      ],
++      "rounds": 3,
++      "prompt": "1/4与1/3之间，找一个新数，再选一边放大。连做三次，看看什么时候能继续。"
++    }
++  },
++  {
++    "sessionId": "numberworld",
++    "index": 5,
++    "nodeId": "mt_b4lbTOJYwI",
++    "type": "x-betweenpoints",
++    "taskHash": "c87c50d17e658c666950ff6685c1440a3ca8e6fe7879115f61d71fa756b196f9",
++    "task": {
++      "type": "x-betweenpoints",
++      "a": [
++        12,
++        100
++      ],
++      "b": [
++        13,
++        100
++      ],
++      "rounds": 3,
++      "prompt": "换到0.12与0.13之间。写分数或小数都可以；每次找中间，再放大一边。"
++    }
++  }
++];
++export const P017_SOURCES = Object.freeze(reviewed.map(({task, ...source}) => Object.freeze(source)));
++export function p017SignedWalkAndBetweenBinding(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const entry = reviewed.find(source => source.sessionId === context.sessionId && source.index === context.index);
++  if (!entry || !sameEvidence(task, entry.task) || !matchesNativeEvidenceTask(task, context, entry)) return null;
++  return {nodeId:entry.nodeId, kind:'p017-signed-walk-and-between', method:null, question:"数轴经过 0 时怎样保持步长？缩小区间后怎样再次在两端之间取数？"};
++}
++export function replayP017SignedWalkAndBetweenEvidence(task, model, context) {
++  try {
++    const binding = p017SignedWalkAndBetweenBinding(task, context);
++    if (!binding || !hasExactKeys(model, Object.keys(initial(task))) || !valid(task, model) ||
++        (model.issue ?? '') !== '' || !model.history.length || Object.keys(model.history).length !== model.history.length) return null;
++    if (!inspect(task,model).correct) return null;
++    if (task.type === 'x-signedline') {
++      const direction = Math.sign(task.end-task.start);
++      const points = Array.from({length:Math.abs(task.end-task.start)}, (_,i) => task.start+(i+1)*direction);
++      if (!sameEvidence(model.history,points) || !sameEvidence(model.hops,points) || !points.includes(0)) return null;
++      return {binding, points, direction};
++    }
++    if (model.pending !== null || model.history.length < task.rounds || model.rule !== 'midpoint') return null;
++    const compare = (one,two) => BigInt(one[0])*BigInt(two[1])-BigInt(two[0])*BigInt(one[1]);
++    let low = task.a, high = task.b;
++    let used = 0;
++    const inside = value => compare(value,low)>0n && compare(value,high)<0n;
++    const takeAttempt = attempt => {
++      if (!hasExactKeys(attempt,['inside','value'])) return null;
++      const value = rational(attempt.value.trim().replace(/\s*\/\s*/g,'/'));
++      return value && attempt.inside === inside(value) ? value : null;
++    };
++    const intervals = [];
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['p','side']) || !inside(event.p)) return null;
++      let stored = false;
++      while (used < model.attempts.length) {
++        const attempt = model.attempts[used++];
++        const value = takeAttempt(attempt);
++        if (!value) return null;
++        if (attempt.inside && compare(value,event.p)===0n) {
++          stored = true;
++          break;
++        }
++      }
++      if (!stored) return null;
++      if (event.side === 'left') high=event.p;
++      else if (event.side === 'right') low=event.p;
++      else return null;
++      intervals.push({low,high});
++    }
++    for (const attempt of model.attempts.slice(used)) {
++      if (!takeAttempt(attempt) || attempt.inside) return null;
++    }
++    return {binding, intervals, demonstrations:intervals.length};
++
++  } catch {
++    return null;
++  }
++}
++export function submittedP017SignedWalkAndBetweenEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replayP017SignedWalkAndBetweenEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-p017-signed-walk-and-between-browser.cjs b/tests/p9-p017-signed-walk-and-between-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..85519a6c7c8c00b7e000f02a8a15a94603f4245a
+--- /dev/null
++++ b/tests/p9-p017-signed-walk-and-between-browser.cjs
+@@ -0,0 +1,258 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P017_ARTIFACTS || path.join(root, 'verification/p9-p017-signed-walk-and-between'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function placeRange(input, target) {
++  const start = Number(await input.inputValue());
++  const step = Number(await input.getAttribute('step'));
++  const min = Number(await input.getAttribute('min'));
++  const max = Number(await input.getAttribute('max'));
++  assert.ok(target >= min && target <= max && (target-min)%step === 0);
++  let current = start;
++  if (target === current) {
++    await input.press(target === max ? 'ArrowLeft' : 'ArrowRight');
++    current = Number(await input.inputValue());
++  }
++  while (Math.abs(target-current) > Math.max(2*step,(max-min)/10)) {
++    await input.press(target > current ? 'PageUp' : 'PageDown');
++    const next = Number(await input.inputValue());
++    if (next === current || Math.abs(target-next) >= Math.abs(target-current)) {
++      current = next;
++      break;
++    }
++    current = next;
++  }
++  while (current !== target) {
++    const key = target > current ? 'ArrowRight' : 'ArrowLeft';
++    await input.press(key);
++    const next = Number(await input.inputValue());
++    assert.equal(next,current+(key==='ArrowRight'?step:-step));
++    current = next;
++  }
++}
++
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.getAttribute('type') === 'range') await placeRange(inp,Number(s.value));
++      else if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P017_SOURCES, replayP017SignedWalkAndBetweenEvidence, submittedP017SignedWalkAndBetweenEvidence} = await entry('dist/learning/p017-signed-walk-and-between-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b09 = await entry('dist/learning/phase5/b09-model.js');
++const fullSteps = task => {
++  const steps=[];
++  const f=(field,value)=>steps.push({field,value:String(value)});
++  const a=(action,data)=>steps.push({action,data});
++  if (task.type === 'x-signedline' && task.mode === 'walk') {
++    const step=Math.sign(task.end-task.start);
++    for (let point=task.start; point!==task.end;) {
++      point+=step;
++      f('next',point);
++      a('signed-step');
++    }
++  } else if (task.type === 'x-signedline' && task.mode === 'place') {
++    task.values.forEach((value,i)=>f('positions.'+i,value*100));
++    if (task.zero) f('zero','reference');
++    if (task.compare) f('relation',task.values[task.compare[0]]<task.values[task.compare[1]]?'<':'>');
++  } else if (task.type === 'x-directedjump') {
++    f('anchor',task.start);
++    f('guess',task.start+task.operand);
++    a('direct-predict');
++    for (const segment of task.path) {
++      f('size',Math.abs(segment));
++      f('dir',segment>0?'right':'left');
++      a('direct-jump');
++    }
++    f('answer',task.start+task.operand);
++  } else if (task.type === 'x-betweenpoints') {
++    const [an,ad]=task.a;
++    let [bn,bd]=task.b;
++    for (let i=0;i<task.rounds;i++) {
++      bn=an*bd+bn*ad;
++      bd=2*ad*bd;
++      let g=bn, r=bd;
++      while (r) [g,r]=[r,g%r];
++      bn/=g;
++      bd/=g;
++      f('entry',bn+'/'+bd);
++      a('between-insert');
++      a('between-zoom',{side:'left'});
++    }
++    f('rule','midpoint');
++  } else if (task.type === 'x-decimalmachine') {
++    const seen=new Set();
++    let remainder=task.n%task.d;
++    while (remainder && !seen.has(remainder)) {
++      seen.add(remainder);
++      const parts=remainder*10;
++      f('digit',Math.floor(parts/task.d));
++      remainder=parts%task.d;
++      f('remainder',remainder);
++      a('decimal-next');
++    }
++    f('kind',remainder?'repeats':'ends');
++    f('fraction',task.n+'/'+task.d);
++  } else if (task.type === 'x-numbercards') {
++    task.cards.forEach((card,index)=>{
++      a('number-card',{index});
++      f('kinds.'+index,card.kind);
++      if (card.fraction) f('fractions.'+index,card.fraction.join('/'));
++      else a('number-basis');
++      f('reasons.'+index,card.why);
++    });
++  } else throw new Error('Unexpected prerequisite '+task.type);
++  return steps;
++};
++const wrongSteps=task=>task.type==='x-signedline'
++  ? fullSteps(task).slice(0,2)
++  : fullSteps(task).map(step=>step.field==='rule'?{...step,value:'plusone'}:step);
++const correctSteps=task=>task.type==='x-signedline'
++  ? fullSteps(task).slice(2)
++  : fullSteps(task).slice(-1);
++
++  const cases = P017_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP017SignedWalkAndBetweenEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b09.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P017');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,fullSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b09.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP017SignedWalkAndBetweenEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && (Boolean(accepted)),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p017.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p017r.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row.index === last.row.index ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P017_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p017-signed-walk-and-between-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P017_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p017-signed-walk-and-between.test.mjs b/tests/p9-p017-signed-walk-and-between.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..4da084f637396533c1efe2dda68a843545f30784
+--- /dev/null
++++ b/tests/p9-p017-signed-walk-and-between.test.mjs
+@@ -0,0 +1,114 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, initial} from '../dist/learning/phase5/b09-model.js';
++import {P017_SOURCES, p017SignedWalkAndBetweenBinding, replayP017SignedWalkAndBetweenEvidence, submittedP017SignedWalkAndBetweenEvidence} from '../dist/learning/p017-signed-walk-and-between-evidence.js';
++
++const fullSteps = task => {
++  const steps=[];
++  const f=(field,value)=>steps.push({field,value:String(value)});
++  const a=(action,data)=>steps.push({action,data});
++  if (task.type === 'x-signedline' && task.mode === 'walk') {
++    const step=Math.sign(task.end-task.start);
++    for (let point=task.start; point!==task.end;) {
++      point+=step;
++      f('next',point);
++      a('signed-step');
++    }
++  } else if (task.type === 'x-signedline' && task.mode === 'place') {
++    task.values.forEach((value,i)=>f('positions.'+i,value*100));
++    if (task.zero) f('zero','reference');
++    if (task.compare) f('relation',task.values[task.compare[0]]<task.values[task.compare[1]]?'<':'>');
++  } else if (task.type === 'x-directedjump') {
++    f('anchor',task.start);
++    f('guess',task.start+task.operand);
++    a('direct-predict');
++    for (const segment of task.path) {
++      f('size',Math.abs(segment));
++      f('dir',segment>0?'right':'left');
++      a('direct-jump');
++    }
++    f('answer',task.start+task.operand);
++  } else if (task.type === 'x-betweenpoints') {
++    const [an,ad]=task.a;
++    let [bn,bd]=task.b;
++    for (let i=0;i<task.rounds;i++) {
++      bn=an*bd+bn*ad;
++      bd=2*ad*bd;
++      let g=bn, r=bd;
++      while (r) [g,r]=[r,g%r];
++      bn/=g;
++      bd/=g;
++      f('entry',bn+'/'+bd);
++      a('between-insert');
++      a('between-zoom',{side:'left'});
++    }
++    f('rule','midpoint');
++  } else if (task.type === 'x-decimalmachine') {
++    const seen=new Set();
++    let remainder=task.n%task.d;
++    while (remainder && !seen.has(remainder)) {
++      seen.add(remainder);
++      const parts=remainder*10;
++      f('digit',Math.floor(parts/task.d));
++      remainder=parts%task.d;
++      f('remainder',remainder);
++      a('decimal-next');
++    }
++    f('kind',remainder?'repeats':'ends');
++    f('fraction',task.n+'/'+task.d);
++  } else if (task.type === 'x-numbercards') {
++    task.cards.forEach((card,index)=>{
++      a('number-card',{index});
++      f('kinds.'+index,card.kind);
++      if (card.fraction) f('fractions.'+index,card.fraction.join('/'));
++      else a('number-basis');
++      f('reasons.'+index,card.why);
++    });
++  } else throw new Error('Unexpected prerequisite '+task.type);
++  return steps;
++};
++const wrongSteps=task=>task.type==='x-signedline'
++  ? fullSteps(task).slice(0,2)
++  : fullSteps(task).map(step=>step.field==='rule'?{...step,value:'plusone'}:step);
++const correctSteps=task=>task.type==='x-signedline'
++  ? fullSteps(task).slice(2)
++  : fullSteps(task).slice(-1);
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) : value && typeof value === 'object'
++  ? Object.fromEntries(Object.keys(value).sort((a,b) => a.localeCompare(b,'en')).map(key => [key, ordered(value[key])]))
++  : value;
++
++for (const source of P017_SOURCES) {
++  const {sessionId, index} = source;
++  const context = {sessionId, index};
++  const task = sessionTaskFor(sessionId, index);
++  const replay = model => replayP017SignedWalkAndBetweenEvidence(task, model, context);
++  const submit = (model, saved) => submittedP017SignedWalkAndBetweenEvidence(task, model, {attempts:[{value:saved}]}, context);
++  const play = (model, steps) => {
++    for (const step of steps) {
++      if (step.field) {
++        if (step.field.startsWith('answers.')) model.answers[Number(step.field.split('.')[1])] = step.value;
++        else model[step.field] = step.value;
++      } else act(task, model, step.action === 'turn-extra' ? 'a30-turn' : step.action, step.data);
++    }
++  };
++  test(`P017 locks ${sessionId}:${index} and rejects stale or modified work`, () => {
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), source.taskHash);
++    assert.ok(p017SignedWalkAndBetweenBinding(task, context));
++    assert.equal(p017SignedWalkAndBetweenBinding(task, {sessionId,index:-1}), null);
++    const model = initial(task);
++    play(model, wrongSteps(task));
++    const failed = structuredClone(model);
++    assert.equal(replay(model), null);
++    play(model, correctSteps(task));
++    const accepted = replay(model);
++    assert.ok(accepted);
++    assert.equal(submit(model, failed), null);
++    assert.deepEqual(submit(model, structuredClone(model)), accepted);
++    const forged = structuredClone(model);
++    forged.history = [];
++    assert.equal(replay(forged), null);
++  });
++}
