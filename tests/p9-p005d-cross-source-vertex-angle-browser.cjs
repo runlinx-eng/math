@@ -154,7 +154,7 @@ async function run(){
    captures.push({position,phase:'correct-check',attempts:accepted.attempts.length,
     history:accepted.model.history.length,storage:accepted.storage});
    ok(accepted.attempts.length===2,'wrong and corrected original Checks retained');
-   const oldOk=await page.evaluate(async({index,model})=>{
+   const oldOk=await page.evaluate(async({id,index,model})=>{
     const {sessionTaskFor}=await import('./learning/bridges.js');
     const native=await import('./learning/phase5/b25-model.js');
     return native.inspect(sessionTaskFor(id,index),model).correct;
