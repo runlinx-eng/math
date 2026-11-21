@@ -1,0 +1,455 @@
+{
+  "schema": "issue-341-node-test-contract-inventory/1",
+  "sourceHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "sourceHandoff": "3c4801f969f09a98c9f2bc4ed2f1cb953adbd530",
+  "start": 0,
+  "end": 15,
+  "records": [
+    {
+      "packet": "P117",
+      "positions": [
+        "fractionfour:8"
+      ],
+      "commit": "f6683e726374a8e601f03ff5354a553f4e0b6bba",
+      "testPath": "tests/p9-p117-fractionfour-directed-jump.test.mjs",
+      "browserPath": "tests/p9-p117-fractionfour-directed-jump-browser.cjs",
+      "evidencePath": "dist/learning/p117-fractionfour-directed-jump-evidence.js",
+      "nodeTests": 7,
+      "nodeTestTitles": [
+        "P117 freezes one exact original and leaves the formal review list untouched",
+        "P117 replays the successful integer path and preserves signs, lengths and endpoints",
+        "P117 accepts exact equivalent answers and a 40-jump original history",
+        "P117 rejects final-only, malformed, inconsistent and mathematically invalid snapshots",
+        "P117 declines an undo or anchor reset that leaves extra history despite the original correct grade",
+        "P117 only yields submitted evidence for the latest matching correct Check",
+        "P117 source isolation uses true practice and bridge contexts"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P116",
+      "positions": [
+        "dotrecords:0",
+        "dotrecords:2"
+      ],
+      "commit": "659e4613a6eee911e0fb1a16a6ae1a2e1d146fb3",
+      "testPath": "tests/p9-p116-integer-dotplot.test.mjs",
+      "browserPath": "tests/p9-p116-integer-dotplot-browser.cjs",
+      "evidencePath": "dist/learning/p116-integer-dotplot-evidence.js",
+      "nodeTests": 7,
+      "nodeTestTitles": [
+        "P116 locks both original task fingerprints, sources and complete shapes",
+        "P116 reconstructs revision by record and keeps exact frequency, gaps and mode",
+        "P116 distinguishes invalid input with no effect from approximate rounding",
+        "P116 accepts exact alternative numeric spellings used by original controls",
+        "P116 rejects missing, forged, oversized or unobservable histories",
+        "P116 admits only evidence bound to the latest original Check",
+        "P116 source isolation excludes prefilled, fraction, practice and bridge versions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P115",
+      "positions": [
+        "signedpoints:0",
+        "signedpoints:1",
+        "signedpoints:2"
+      ],
+      "commit": "7207f32fa58bb25cad9cd07bf0d556a1d0c01246",
+      "testPath": "tests/p9-p115-signedpoints-quadrants.test.mjs",
+      "browserPath": "tests/p9-p115-signedpoints-quadrants-browser.cjs",
+      "evidencePath": "dist/learning/p115-signedpoints-quadrants-evidence.js",
+      "nodeTests": 7,
+      "nodeTestTitles": [
+        "P115 freezes three exact original fingerprints and isolates their source",
+        "P115 independently classifies all four quadrants and the vertical axis from real actions",
+        "P115 replays a wrong point, real Undo and SVG coordinate selection before the latest Check",
+        "P115 preserves genuine rejected coordinate attempts without pretending they placed a point",
+        "P115 excludes a near integer accepted by floating point coercion",
+        "P115 rejects missing, corrupt, wrong-index and unsupported state",
+        "P115 keeps wrong-source, practice and actual bridge contexts outside this witness"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P114",
+      "positions": [
+        "solidstack:0",
+        "solidstack:1"
+      ],
+      "commit": "519c9da68961e44240cc966613447409af111163",
+      "testPath": "tests/p9-p114-solidstack.test.mjs",
+      "browserPath": "tests/p9-p114-solidstack-browser.cjs",
+      "evidencePath": "dist/learning/p114-solidstack-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P114 binds only the two full original source fingerprints",
+        "P114 replays bottom-to-top placement, repeated identical shapes and actual turn events",
+        "P114 keeps wrong original work, removes only the top and rejects an unsubmitted edit",
+        "P114 records a refused extra piece and reconstructs the actual repaired stack",
+        "P114 rejects malformed, incomplete, oversized and unsupported actions",
+        "P114 excludes given models, practice, copied and related contexts"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P113",
+      "positions": [
+        "decadetake:0",
+        "decadetake:1",
+        "tenslarge:1",
+        "general34:1"
+      ],
+      "commit": "af26d4693cb37393fb14a92da47e8555e2987b3f",
+      "testPath": "tests/p9-p113-tens-removal.test.mjs",
+      "browserPath": "tests/p9-p113-tens-removal-browser.cjs",
+      "evidencePath": "dist/learning/p113-tens-removal-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P113 locks four complete original source shapes and hashes",
+        "P113 independently preserves non-tens columns and sums the four exact results",
+        "P113 requires both the real removal and a matching latest Check",
+        "P113 declines an exchange cycle or removal no-op even when original grade accepts the result",
+        "P113 rejects forged starts, removal snapshots and model fields",
+        "P113 excludes other native math, actual practice and all related contexts"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P112",
+      "positions": [
+        "chancefraction:0",
+        "chancecalc:1",
+        "chancescale:1",
+        "chancenone:1",
+        "chancecomplement:1",
+        "chancecomplement:2"
+      ],
+      "commit": "6953cfb5c47261b5c839248bee4abcbe474f32bb",
+      "testPath": "tests/p9-p112-fair-die.test.mjs",
+      "browserPath": "tests/p9-p112-fair-die-browser.cjs",
+      "evidencePath": "dist/learning/p112-fair-die-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P112 binds the six reviewed original dice positions and complete hashes",
+        "P112 replays actual individual face toggles and the exact sample space",
+        "P112 requires the newest matching original Check after editing the selected faces",
+        "P112 accepts equivalent exact forms and declines rounded primary or follow-up answers",
+        "P112 excludes overlap counted twice and unsupported or forged selection events",
+        "P112 declines other likelihood tasks, original practice and same-type bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P111",
+      "positions": [
+        "equations35:0",
+        "equations35:2",
+        "equations35:3",
+        "equations35:4",
+        "equations35:5"
+      ],
+      "commit": "2d334f3e0e99cd8af16c5db8cfc8447a335d826f",
+      "testPath": "tests/p9-p111-bilateral-equations.test.mjs",
+      "browserPath": "tests/p9-p111-bilateral-equations-browser.cjs",
+      "evidencePath": "dist/learning/p111-bilateral-equations-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P111 binds five original equation positions and frozen full hashes",
+        "P111 proves each unique solution and exact substitution through original events",
+        "P111 accepts alternate legal paths with actual Undo and Reset",
+        "P111 requires a fresh substitution following the active transformation path and latest Check",
+        "P111 rejects forged steps, unsupported controls and an unresolved preview",
+        "P111 excludes the neighboring expansion, practice and bridge positions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P110",
+      "positions": [
+        "meandistance:0",
+        "meandistance:1"
+      ],
+      "commit": "80cecc012875ab5972079e0ac13af88ed4018d79",
+      "testPath": "tests/p9-p110-mean-distance.test.mjs",
+      "browserPath": "tests/p9-p110-mean-distance-browser.cjs",
+      "evidencePath": "dist/learning/p110-mean-distance-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P110 binds both complete native distance tasks and their frozen hashes",
+        "P110 replays an anchor correction and real distance edit with independent exact math",
+        "P110 keeps the zero and duplicate heights as independent observations",
+        "P110 accepts original older full-field event snapshots",
+        "P110 excludes rounded anchors, rounded totals, missing actions and forged rows",
+        "P110 declines related spread, bridge and practice tasks"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": false
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P109",
+      "positions": [
+        "factor35:0",
+        "factor35:1",
+        "factor35:2"
+      ],
+      "commit": "5846be80af9d8458d51f2bd7406b51a7a4d40754",
+      "testPath": "tests/p9-p109-common-factor.test.mjs",
+      "browserPath": "tests/p9-p109-common-factor-browser.cjs",
+      "evidencePath": "dist/learning/p109-common-factor-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P109 binds all three actual source positions and entire source hashes",
+        "P109 requires the maximal factor even when a smaller one expands correctly",
+        "P109 distinguishes the negative constant, common x and valid signed input spellings",
+        "P109 requires a new real expansion and Check after edits",
+        "P109 rejects forged or unsupported events and removes no retained attempts",
+        "P109 excludes different expansion, bridged and practice positions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P108",
+      "positions": [
+        "mixedpoints:0"
+      ],
+      "commit": "a459d62081221530468ecb8f06cbfef9252288c7",
+      "testPath": "tests/p9-p108-digit-value.test.mjs",
+      "browserPath": "tests/p9-p108-digit-value-browser.cjs",
+      "evidencePath": "dist/learning/p108-digit-value-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P108 binds the reviewed original and full source hash",
+        "P108 derives integer, decimal and zero places from the exact highlighted position",
+        "P108 requires all real saves and a latest matching original Check",
+        "P108 preserves a failed new save and requires it to be corrected on the same card",
+        "P108 rejects altered event payloads, forged saved cards and unsupported events",
+        "P108 excludes neighboring source positions, practice and real bridge entries"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P107",
+      "positions": [
+        "factorpairs:0",
+        "factorpairs:1"
+      ],
+      "commit": "be708fb91f910f4adcd3d2fee0319417e591188f",
+      "testPath": "tests/p9-p107-factor-pairs.test.mjs",
+      "browserPath": "tests/p9-p107-factor-pairs-browser.cjs",
+      "evidencePath": "dist/learning/p107-factor-pairs-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P107 locks both originals and their full source fingerprints",
+        "P107 reconstructs every original pair from genuine saves in either direction",
+        "P107 keeps rotations and the square from being recorded twice",
+        "P107 requires a complete set and freshness for fields and latest Check",
+        "P107 declines forged ranges, false pairs, hidden actions and a mismatched total",
+        "P107 excludes same-payload reuses, practice and related original bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P106",
+      "positions": [
+        "folds:0"
+      ],
+      "commit": "a0ce272f8a5fe786e051c310f90455bab7463a30",
+      "testPath": "tests/p9-p106-paper-fold-counts.test.mjs",
+      "browserPath": "tests/p9-p106-paper-fold-counts-browser.cjs",
+      "evidencePath": "dist/learning/p106-paper-fold-counts-evidence.js",
+      "nodeTests": 5,
+      "nodeTestTitles": [
+        "P106 locks the complete original paper strip task and fingerprint",
+        "P106 uses the three original folds to check that every stage doubles",
+        "P106 records the wrong label, then requires a fresh matching Check after correction",
+        "P106 rejects forged counts and duplicate, missing or reversed stage labels",
+        "P106 excludes nearby tasks, actual practice and related original bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P105",
+      "positions": [
+        "primetest:0",
+        "primetest:1",
+        "primetest:2"
+      ],
+      "commit": "3beb8631a99edc0721da1e63c2294f08ce266a40",
+      "testPath": "tests/p9-p105-prime-divisors.test.mjs",
+      "browserPath": "tests/p9-p105-prime-divisors-browser.cjs",
+      "evidencePath": "dist/learning/p105-prime-divisors-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P105 binds the full immutable source for all three positions",
+        "P105 replays the complete square-root range and reconstructs distinct factor pairs",
+        "P105 distinguishes the single factor of 1, the prime 2 and the complementary factor 17",
+        "P105 requires the latest original Check on a complete and correctly classified work",
+        "P105 rejects forged divisors, hidden action coordinates and an uncorrected wrong remainder",
+        "P105 excludes the other native modes, practice and real bridge contexts"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P104",
+      "positions": [
+        "toolchoice:0",
+        "toolchoice:1"
+      ],
+      "commit": "b4de22f622a767b1764228116f73413c296a69df",
+      "testPath": "tests/p9-p104-step-tools.test.mjs",
+      "browserPath": "tests/p9-p104-step-tools-browser.cjs",
+      "evidencePath": "dist/learning/p104-step-tools-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P104 binds both originals and the entire task fingerprints",
+        "P104 reconstructs both independent paths from the given origin",
+        "P104 accepts either complete path, backtracking and exact equivalent answers",
+        "P104 requires the current tool, destination and latest matching Check",
+        "P104 excludes reconstructed arrays, non-native event types and moves beyond the saved log",
+        "P104 excludes the same payload at a different origin, other modes and bridges"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    },
+    {
+      "packet": "P103",
+      "positions": [
+        "pairs34:0",
+        "pairs34:1"
+      ],
+      "commit": "736bd73bca56544fce6b04b9a6cdea8d66f50fb9",
+      "testPath": "tests/p9-p103-pair-grid.test.mjs",
+      "browserPath": "tests/p9-p103-pair-grid-browser.cjs",
+      "evidencePath": "dist/learning/p103-pair-grid-evidence.js",
+      "nodeTests": 6,
+      "nodeTestTitles": [
+        "P103 binds both complete original task shapes and fingerprints",
+        "P103 independently enumerates and replays every labeled pair",
+        "P103 requires every pair and the count in every original answer field",
+        "P103 does not use an older Check after a cell is changed and reselected",
+        "P103 excludes forged cells, unsupported actions and duplicate saved IDs",
+        "P103 excludes related pairing mode, actual practice and bridge positions"
+      ],
+      "indicators": {
+        "sourceHash": true,
+        "sourceIsolation": true,
+        "mathReplay": true,
+        "adversarial": true,
+        "latestCheck": true
+      },
+      "hasNullAssertions": true,
+      "hasAssertCorrect": true
+    }
+  ]
+}
