@@ -113,7 +113,7 @@ async function run(){
    console.log('P005J_NATIVE_FULL_TASK_SHA256 '+position+' '+hash);
    nativeHashes.push({position,sha256:hash,nodeId:original.nodeId});
    ok(original.nodeId===spec.node&&hash===spec.hash&&
-      original.task.type==='x-g25-polygon','full runtime SHA/source/original corners');
+      original.task.type==='x-g25-polygon','full runtime SHA/source/original polygon');
    ok(!!candidate.polygonBinding(original.task,context),'source-specific candidate binding');
    ok(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),'1920x1080 viewport');
    ok(await page.locator('#thinking-feedback').count()===0,
@@ -129,7 +129,7 @@ async function run(){
    for(let i=0;i<original.task.questions.length;i++)
     await answer(i,i===0?999:original.task.questions[i].value);
    await originalCheck();
-   const wrong=await capture(page,out,label,{id:spec.id,index:0},'wrong-check');
+   const wrong=await capture(page,out,label,{id:spec.id,index:spec.index},'wrong-check');
    captures.push({position,phase:'wrong-check',attempts:wrong.attempts.length,
     history:wrong.model.history.length,storage:wrong.storage});
    ok(wrong.attempts.length===1,'wrong original Check preserved');
@@ -137,7 +137,7 @@ async function run(){
       'independent mathematics refuses wrong Check');
    stage=position+':correct-check';
    await answer(0,original.task.questions[0].value);await originalCheck();
-   const good=await capture(page,out,label,{id:spec.id,index:0},'correct-check');
+   const good=await capture(page,out,label,{id:spec.id,index:spec.index},'correct-check');
    captures.push({position,phase:'correct-check',attempts:good.attempts.length,
     history:good.model.history.length,storage:good.storage});
    ok(good.attempts.length===2,'wrong and corrected original Checks persist');
@@ -145,7 +145,7 @@ async function run(){
     const {sessionTaskFor}=await import('./learning/bridges.js');
     const api=await import('./learning/phase5/b25-model.js');
     return api.inspect(sessionTaskFor(id,index),model).correct;
-   },{id:spec.id,index:0,model:good.model});
+   },{id:spec.id,index:spec.index,model:good.model});
    ok(grade===true,'original grader accepts corrected submission');
    const proof=candidate.submittedPolygonEvidence(original.task,good.model,good.record,context);
    ok(proof?.kind==='native-convex-polygon-fan-triangulation'&&
@@ -155,9 +155,9 @@ async function run(){
     'independent Euclidean fan areas, interior/exterior sums and original click history');
    const stale={...good.record,attempts:good.record.attempts.slice(0,-1)};
    const forged=structuredClone(good.model);forged.history[0].a='test';
-   ok(!candidate.submittedCornerEvidence(original.task,good.model,stale,context)&&
-    !candidate.replayCornerEvidence(original.task,forged,context)&&
-    !candidate.replayCornerEvidence(original.task,good.model,{sessionId:spec.id,index:1}),
+   ok(!candidate.submittedPolygonEvidence(original.task,good.model,stale,context)&&
+    !candidate.replayPolygonEvidence(original.task,forged,context)&&
+    !candidate.replayPolygonEvidence(original.task,good.model,{sessionId:spec.id,index:0}),
     'stale Check, forged history and wrong source rejected');
    ok(proof.strictAApproved===false&&!proof.verbalProofAssessed&&!proof.generalMasteryAssessed,
       'no formal-A or mastery claim');
@@ -167,7 +167,7 @@ async function run(){
    const offline=await page.reload();
    ok(offline?.fromServiceWorker()===true,'corrected task reloads offline');
    await page.waitForFunction(index=>window.mathLesson?.snapshot()?.index===index,spec.index);
-   const saved=await capture(page,out,label,{id:spec.id,index:0},'offline-reload');
+   const saved=await capture(page,out,label,{id:spec.id,index:spec.index},'offline-reload');
    captures.push({position,phase:'offline-reload',attempts:saved.attempts.length,
     history:saved.model.history.length,storage:saved.storage});
    assert.deepEqual(saved.model,good.model,'State-v2 original model survives offline');
