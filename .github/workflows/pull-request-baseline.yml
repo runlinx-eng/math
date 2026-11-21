@@ -167,6 +167,8 @@ jobs:
           node --check dist/learning/positive-order-evidence.js
           node --check scripts/positive-order-evidence-fixture.mjs
           node --check tests/p9-positive-order-preaudit.test.mjs
+          node --check dist/learning/signed-order-preaudit.js
+          node --check tests/p9-signed-order-preaudit.test.mjs
           node --check tests/p9-positive-order-preaudit-browser.cjs
           node --check scripts/wideshift-evidence-fixture.mjs
           node --check tests/fixtures/p9-wideshift-navigation.cjs
@@ -324,6 +326,7 @@ jobs:
             tests/p9-paperlab-evidence.test.mjs
             tests/p9-wideshift-evidence.test.mjs
             tests/p9-positive-order-preaudit.test.mjs
+            tests/p9-signed-order-preaudit.test.mjs
             tests/p9-wideshift-navigation.test.mjs
             tests/p9-multable-evidence.test.mjs
             tests/p9-multable-navigation.test.mjs
