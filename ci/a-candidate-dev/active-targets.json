@@ -2,20 +2,20 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P007b-pyramid-view-identity",
-      "sha": "6a2bd6024727cccbae2c143d82568e44e32640b4",
-      "node_test": "tests/p9-p007b-pyramid-view-evidence.test.mjs",
-      "browser_test": "tests/p9-p007b-pyramid-view-browser.cjs",
+      "case": "P007c-triangle-sas-drawing",
+      "sha": "5b766e5ab3cb153f10887ef5d6ed1377d5357fa1",
+      "node_test": "tests/p9-p007c-triangle-sas-evidence.test.mjs",
+      "browser_test": "tests/p9-p007c-triangle-sas-browser.cjs",
       "native": [
         {
-          "sessionId": "shapedraw",
-          "index": 5,
-          "nodeId": "mt_vJUa62bxeR",
-          "taskSha256": "fde74143edf21a92606e9f5c565cd883d0b714fb2d5cefd0ce18a4bde7727774",
-          "type": "x-s23-frame",
+          "sessionId": "shapemeasures",
+          "index": 0,
+          "nodeId": "mt_hdrMoiTgqu",
+          "taskSha256": "07b7c68d5d254f6042b17f6ba7f18f850caad412da75f82ee00f01ca7f236e36",
+          "type": "x-s23-ruler",
           "view": "b23",
           "controls": [
-            "turn-extra"
+            "draw"
           ]
         }
       ]
