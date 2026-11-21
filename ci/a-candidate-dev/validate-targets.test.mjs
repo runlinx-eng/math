@@ -92,3 +92,24 @@ test('legacy original survey task admitted only at survey:0 and survey:1',()=>{
   }
  }
 });
+
+test('P007b exact original pyramid turn-extra UI is admitted only at shapedraw:5',()=>{
+ const valid=changed(x=>{
+  x.targets[0].native[0]={sessionId:'shapedraw',index:5,
+   nodeId:'mt_vJUa62bxeR',
+   taskSha256:'fde74143edf21a92606e9f5c565cd883d0b714fb2d5cefd0ce18a4bde7727774',
+   type:'x-s23-frame',view:'b23',controls:['turn-extra']};
+ });
+ assert.equal(validateTargets(valid).include[0].native[0].controls[0],'turn-extra');
+ for(const mutate of [
+  s=>s.index=4,
+  s=>s.sessionId='shapeframe',
+  s=>s.type='x-s23-circle',
+  s=>s.view='b25',
+  s=>s.controls=['turn_fake'],
+  s=>s.controls=['turn-extra','g23-do_fake']
+ ]){
+  const bad=structuredClone(valid);mutate(bad.targets[0].native[0]);
+  assert.throws(()=>validateTargets(bad),/A_DEV_TARGET_INVALID/);
+ }
+});

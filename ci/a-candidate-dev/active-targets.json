@@ -1,1 +1,24 @@
-{"schema":"math-a-candidate-targets/2","targets":[{"case":"P007a-cube-frame-edge-build","sha":"6666ad4f5d09d124c11dc8309c9ea39bbae6efb0","node_test":"tests/p9-p007a-cube-frame-edge-evidence.test.mjs","browser_test":"tests/p9-p007a-cube-frame-edge-browser.cjs","native":[{"sessionId":"shapeframe","index":2,"nodeId":"mt_2VR963szuk","taskSha256":"1c0ff827c79b8f6dcd423ae54c45e4a9e39faba861dba0d6c4badbb155d5fd4e","type":"x-s23-frame","view":"b23","controls":["g23-stick"]},{"sessionId":"shapedraw","index":4,"nodeId":"mt_vJUa62bxeR","taskSha256":"ccbb859c4d93758378686ab0e62edd7e69a3d3b137913aec8b14f144d537dbdd","type":"x-s23-frame","view":"b23","controls":["g23-stick"]}]}]}
+{
+  "schema": "math-a-candidate-targets/2",
+  "targets": [
+    {
+      "case": "P007b-pyramid-view-identity",
+      "sha": "6a2bd6024727cccbae2c143d82568e44e32640b4",
+      "node_test": "tests/p9-p007b-pyramid-view-evidence.test.mjs",
+      "browser_test": "tests/p9-p007b-pyramid-view-browser.cjs",
+      "native": [
+        {
+          "sessionId": "shapedraw",
+          "index": 5,
+          "nodeId": "mt_vJUa62bxeR",
+          "taskSha256": "fde74143edf21a92606e9f5c565cd883d0b714fb2d5cefd0ce18a4bde7727774",
+          "type": "x-s23-frame",
+          "view": "b23",
+          "controls": [
+            "turn-extra"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -37,7 +37,13 @@ export function validateTargets(value){
    reject(typeof s.type==='string'&&(/^(?:x-[a-z0-9-]{2,45})$/.test(s.type)||
     (s.type==='survey'&&s.sessionId==='survey'&&[0,1].includes(s.index))),at+' task type');
    reject(['b15','b16','b19','b21','b23','b25',null].includes(s.view),at+' view adapter');
-   reject(Array.isArray(s.controls)&&s.controls.length<=30&&s.controls.every(a=>typeof a==='string'&&uiAction.test(a)),at+' control IDs');
+   // P007b: the original B23 frame's real UI button is turn-extra, not g23-turn.
+// Admit it only for the single reviewed native pyramid-view position.
+    const nativeControl=a=>uiAction.test(a)||
+     (a==='turn-extra'&&s.sessionId==='shapedraw'&&s.index===5&&
+      s.type==='x-s23-frame'&&s.view==='b23');
+    reject(Array.isArray(s.controls)&&s.controls.length<=30&&
+     s.controls.every(a=>typeof a==='string'&&nativeControl(a)),at+' control IDs');
    reject((s.view!==null||s.controls.length===0),at+' controls need a view adapter');
    const key=s.sessionId+':'+s.index;
    reject(!usedPositions.has(key),at+' duplicate native position');usedPositions.add(key);
