@@ -75,7 +75,7 @@ test('new optional feedback copy is sourced from original successful Check, not 
    assert.ok(note.detail.some(x=>x.includes('不')));
    assert.deepEqual(model,original,'new presentation must never mutate original B model');
    assert.equal(issue341ProposedFeedback(task,model,{attempts:[]},context),null);
-   assert.equal(issue341ProposedFeedback(task,model,{attempts:[{value:p14.initial({type:'wrong'})}]},context),null);
+   assert.equal(issue341ProposedFeedback(task,model,{attempts:[{value:{unrelated:'older-invalid-check'}}]},context),null);
    assert.equal(issue341ProposedGuide({...task,prompt:'forged'},context),null);
    assert.equal(issue341ProposedFeedback(task,model,r,{...context,index:String(context.index)}),null);
    assert.equal(thinkingGuide(task,context),null,'official UI has not been connected');
