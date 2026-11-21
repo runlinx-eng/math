@@ -36,7 +36,7 @@ function complete(wrong=false){
 test('P006q original task, source, exact fingerprint and two different variations',()=>{
  const hash=digest(task);
  console.log('P006Q_NATIVE_FULL_TASK_SHA256 samplevary:3 '+hash);
- assert.equal(hash,process.env.A_DEV_EXPECTED_TASK_SHA256||'__P006Q_RUNTIME_SHA_PENDING__');
+ assert.equal(hash,'3d675ec15ac349231bfff6609b098091f56c56506d9cb20c83b3546e35c03fc7');
  assert.equal(LESSONS.samplevary.topicId,'mt_x7V1qrkiqH');
  assert.equal(task.type,'x-samplelab');
  assert.equal(task.N,120);assert.equal(task.n,20);assert.equal(task.runs,5);
