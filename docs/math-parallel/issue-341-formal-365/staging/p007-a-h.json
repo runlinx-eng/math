@@ -1,0 +1,90 @@
+[
+  {
+    "packet": "P007",
+    "family": "P007a-cube-frame-edge-build",
+    "position": "shapeframe:2",
+    "nodeId": "mt_2VR963szuk",
+    "taskSha256": "1c0ff827c79b8f6dcd423ae54c45e4a9e39faba861dba0d6c4badbb155d5fd4e",
+    "candidateCommit": "6666ad4f5d09d124c11dc8309c9ea39bbae6efb0"
+  },
+  {
+    "packet": "P007",
+    "family": "P007a-cube-frame-edge-build",
+    "position": "shapedraw:4",
+    "nodeId": "mt_vJUa62bxeR",
+    "taskSha256": "ccbb859c4d93758378686ab0e62edd7e69a3d3b137913aec8b14f144d537dbdd",
+    "candidateCommit": "6666ad4f5d09d124c11dc8309c9ea39bbae6efb0"
+  },
+  {
+    "packet": "P007",
+    "family": "P007b-pyramid-view-identity",
+    "position": "shapedraw:5",
+    "nodeId": "mt_vJUa62bxeR",
+    "taskSha256": "fde74143edf21a92606e9f5c565cd883d0b714fb2d5cefd0ce18a4bde7727774",
+    "candidateCommit": "6a2bd6024727cccbae2c143d82568e44e32640b4"
+  },
+  {
+    "packet": "P007",
+    "family": "P007c-triangle-sas-drawing",
+    "position": "shapemeasures:0",
+    "nodeId": "mt_hdrMoiTgqu",
+    "taskSha256": "07b7c68d5d254f6042b17f6ba7f18f850caad412da75f82ee00f01ca7f236e36",
+    "candidateCommit": "01f3a0942b3c7f4d190f89f62b334f8868dfff41"
+  },
+  {
+    "packet": "P007",
+    "family": "P007d-rectangle-dimensions",
+    "position": "shapemeasures:1",
+    "nodeId": "mt_hdrMoiTgqu",
+    "taskSha256": "5280a44cd6f5b3b782ec4184a213a613064f914e42b465e79e5c616930492fd9",
+    "candidateCommit": "6c0e5265ad106820085ef3529dffddda662a7fbf"
+  },
+  {
+    "packet": "P007",
+    "family": "P007e-regular-pentagon",
+    "position": "shapemeasures:2",
+    "nodeId": "mt_hdrMoiTgqu",
+    "taskSha256": "52776a525512c4e7505d49436d3289d6c31b2d8e9600268aca5916f8a7c66dfb",
+    "candidateCommit": "6c8f91980f6a44e6180b0d56530ddb2cc7a8c526"
+  },
+  {
+    "packet": "P007",
+    "family": "P007f-native-circle-radius-diameter",
+    "position": "circleparts:0",
+    "nodeId": "mt_xq3YHZ2zeR",
+    "taskSha256": "a1466d51fcca03b4c7946c32cf66db3dc1eea6a4bf0fff0b1baea449ee38a234",
+    "candidateCommit": "f39bfd988ca85d4709dc942c3704e31c21e2f212"
+  },
+  {
+    "packet": "P007",
+    "family": "P007f-native-circle-radius-diameter",
+    "position": "circleparts:1",
+    "nodeId": "mt_xq3YHZ2zeR",
+    "taskSha256": "bd59fb60e1bd3b60d6f5a1b8d798b976020c1e398fe8e8ab8a8ad80b1fee6153",
+    "candidateCommit": "f39bfd988ca85d4709dc942c3704e31c21e2f212"
+  },
+  {
+    "packet": "P007",
+    "family": "P007f-native-circle-radius-diameter",
+    "position": "circleparts:2",
+    "nodeId": "mt_xq3YHZ2zeR",
+    "taskSha256": "7f8e7528fbd4d96973c497478e732b2d213e2be8f92a64e691e8cd5fdd53ec27",
+    "candidateCommit": "f39bfd988ca85d4709dc942c3704e31c21e2f212"
+  },
+  {
+    "packet": "P007",
+    "family": "P007g-native-compass-bisector",
+    "position": "compasswork:0",
+    "nodeId": "mt_ZrsqGVG-Wt",
+    "taskSha256": "05568f1f7538a0362961fc24bb1411c5e568e36abc065c1f6b1598554150aaba",
+    "candidateCommit": "3ed4b279f63039f0926fb59cbfdbce321bf7fe12"
+  },
+  {
+    "packet": "P007",
+    "family": "P007h-native-angle-bisector",
+    "position": "compasswork:1",
+    "nodeId": "mt_ZrsqGVG-Wt",
+    "taskSha256": "afc67970d24d820a8a7cedabd17eebeee81d46dbf74999cb27496b36bd029579",
+    "candidateCommit": "dd4faa8eadbd2253c4b21774f435e24c93f6e96c"
+  }
+]
