@@ -2,25 +2,23 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005n-structurebridge-parallel-rectangle",
-      "sha": "d0e5c27e9b737dfd12cfa39c3f22a5e8480df9c2",
-      "node_test": "tests/p9-p005n-structurebridge-parallel-rectangle-evidence.test.mjs",
-      "browser_test": "tests/p9-p005n-structurebridge-parallel-rectangle-browser.cjs",
+      "case": "P006a-category-frequency-count",
+      "sha": "dd4459d4daaa394674ee8a8e7d9b24614f77cef7",
+      "node_test": "tests/p9-p006a-category-frequency-count-evidence.test.mjs",
+      "browser_test": "tests/p9-p006a-category-frequency-count-browser.cjs",
       "native": [
         {
-          "sessionId": "structurebridge",
+          "sessionId": "categoryuse",
           "index": 0,
-          "nodeId": "mt_hImiKNiaNh",
-          "taskSha256": "5574b42f8ac8c33a3c07232a2784d22dfc88e25b0df58091122628b648517dc6",
-          "type": "x-shapeangle",
-          "view": "b15",
+          "nodeId": "mt_1VSfm9yiLn",
+          "taskSha256": "945aa122537d0193ef311aadb9b1d47bd5c3bbe22f472c19163977e69b117fbe",
+          "type": "x-datacount",
+          "view": "b19",
           "controls": [
-            "b15-parallel",
-            "b15-shape"
+            "b19-bar"
           ]
         }
       ]
     }
   ]
 }
-
