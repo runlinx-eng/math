@@ -232,7 +232,8 @@ async function main(){
     axisFinalOnly:true,strictAApproved:false,screenshot:label+'-corrected-1920x1080.png'});
   }
   ok(errors.length===0,'no Chromium page errors');ok(remote.length===0,'no external requests');
-  const report={schema:'math-positive-order-browser-preaudit/1',provenance,cases,checks,errors,remote,preparations,observations,
+  const report={schema:'math-positive-order-browser-preaudit/1',provenance,
+   proofContracts:['math','correction','persistence','negative'],cases,checks,errors,remote,preparations,observations,
    cautions:['no slider movement chronology','no independently observed comparison strategy','no child mastery study','no strict A registration']};
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(report,null,2)+'\n');
   fs.writeFileSync(path.join(out,'raw-evidence.json'),JSON.stringify({
