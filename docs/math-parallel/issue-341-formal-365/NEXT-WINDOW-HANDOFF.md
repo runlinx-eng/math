@@ -1,3 +1,13 @@
+<!-- issue341-main-merge-20261122:begin -->
+## 2026-11-22 当前主线合并：365道已入 main；新 main Required 运行中，Fallback 成功
+
+已获用户单独授权，[#354](https://github.com/runlinx-eng/math/pull/354) 以 squash 合入 main，main HEAD [`8214f570fc1e408ee1fb3308e73907bf659874e4`](https://github.com/runlinx-eng/math/commit/8214f570fc1e408ee1fb3308e73907bf659874e4)。main 正式 manifest 实测 **1178/1996**，准确增加本批 113 家族365道；新B126完全不参与。原 #351 隔离PR已标记 superseded 关闭（不是再次合并）。
+
+新 main [P9 Fallback #44963802810](https://github.com/runlinx-eng/math/actions/runs/44963802810) **success**；[Required #44963802916](https://github.com/runlinx-eng/math/actions/runs/44963802916) 此刻仍 in_progress，成功前不宣布新main门禁全部通过。此前 PR #354 HEAD 六项相关 CI 全success继续保留为原工程集成证据。
+
+**生产未部署，VPS仅手动workflow_dispatch+confirm_deploy**。已在原365行JSON/CSV更新main合并状态与待决Required，保留既有原数学/Check/Artifact引用，不增加老B308重测与额外Python普查；下一批B126继续排后。等Required终态后只需在本台账完成状态更新，不再新增审计项目。
+<!-- issue341-main-merge-20261122:end -->
+
 <!-- issue341-ci-final-20261122:begin -->
 ## 最新完成状态（2026-11-22）：本批365道正式集成分支CI已通过
 
