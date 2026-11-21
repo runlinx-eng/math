@@ -29,7 +29,8 @@ function fixture(){
 const changed=(model,edit)=>{const m=structuredClone(model);edit(m);return m;};
 test('P003 runtime native source + event-by-event equivalent arithmetic',()=>{
  const {task,model}=fixture();
- assert.equal(digest(task).length,64); // Runtime hash observable, but not yet a frozen constant.
+ assert.equal(digest(task),'860ef4c64b8993c38591ccf90ddf032c3e9aaa789f8a10e459b2362757436fce',
+  'runtime native task must match source-constructed candidate SHA');
  assert.equal(binding(task,context)?.nodeId,'mt_jCy07DyBNU');
  assert.equal(original.valid(task,model),true);
  assert.equal(original.inspect(task,model).correct,true);
