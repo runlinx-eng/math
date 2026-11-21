@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 72,
-    "developmentTestedCandidateCases": 34,
+    "developmentTestedPositions": 74,
+    "developmentTestedCandidateCases": 35,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 6,
+      "developmentTested": 8,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 25
+      "pendingOrOtherNotAccepted": 23
     }
   ],
   "cases": [
@@ -759,6 +759,26 @@
       },
       "artifact": {
         "id": 14700990783,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006d-native-countif-records",
+      "branch": "work/a/p006d-native-countif-records",
+      "candidateSha": "8acf9eddee78e610ec971e8b0212eda5f1adfd86",
+      "positions": [
+        "digitalstudy:2",
+        "checkrecords:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44888265350,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14701555094,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
