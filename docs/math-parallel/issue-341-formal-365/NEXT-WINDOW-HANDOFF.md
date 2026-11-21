@@ -3,7 +3,7 @@
 
 [Draft PR #354](https://github.com/runlinx-eng/math/pull/354) **exact HEAD** `86de7b6d9d36dd4aa11480a3979f0302760335b6`：当前113家族365道已按冻结的精确原生题位写入**PR分支正式manifest**，接通正式学习反馈、SW离线缓存、release以及原始完整Check记录。分支A–E统计 **A1178/1996（原813+365）**，逐题冻结来源365/365与台账一致。排队的B新增126道未参加。
 
-**当前HEAD的必要门禁**：[Required #44962787677](https://github.com/runlinx-eng/math/actions/runs/44962787677) **completed/success**（正式来源、Node、定向Chromium、离线与发布升级）；[P8 #44962787662](https://github.com/runlinx-eng/math/actions/runs/44962787662) **completed/success**；[Overview #44962787642](https://github.com/runlinx-eng/math/actions/runs/44962787642) **completed/success**。P9故障/ESM恢复也success；P9 fraction ordinal 90独立附加作业上次检查仍在运行，不提前宣称成功。没有重跑原B308数学或298道额外Python普查。
+**当前HEAD的必要门禁**：[Required #44962787677](https://github.com/runlinx-eng/math/actions/runs/44962787677) **completed/success**（正式来源、Node、定向Chromium、离线与发布升级）；[P8 #44962787662](https://github.com/runlinx-eng/math/actions/runs/44962787662) **completed/success**；[Overview #44962787642](https://github.com/runlinx-eng/math/actions/runs/44962787642) **completed/success**。P9故障/ESM恢复也success；P9 fraction ordinal 90 [#44962787668](https://github.com/runlinx-eng/math/actions/runs/44962787668) 也已 **completed/success**。本次全部适用 workflow 已全部成功。没有重跑原B308数学或298道额外Python普查。
 
 **分支通过≠主线合并/部署**：main仍 **A813/1996**，本批main新增A0；#351/#354均Draft，没有合并、没有部署。下一步仅剩单独授权的main合并、合并后新main Required/Fallback，部署另需授权。无需独立人工审批，#352已关闭；#353长期供给不恢复。此节优先于下方历史“等待审批/等待代码接线”旧待办，历史原文保留仅供追溯。
 

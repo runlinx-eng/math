@@ -108,7 +108,9 @@
     "formalIntegrationBranchRequiredRun": 44962787677,
     "formalIntegrationBranchRequiredStatus": "COMPLETED_SUCCESS",
     "formalIntegrationBranchP8Run": 44962787662,
-    "formalIntegrationBranchOverviewRun": 44962787642
+    "formalIntegrationBranchOverviewRun": 44962787642,
+    "formalIntegrationBranchP9FractionOrdinal90Run": 44962787668,
+    "formalIntegrationBranchP9FractionOrdinal90Status": "COMPLETED_SUCCESS"
   },
   "policy": "All rows NEEDS_EVIDENCE at formal intake, not a mathematical rejection nor an A grant; prior passing CI and archival checks preserved, no main merge, no change to candidates or grader.",
   "rows": [
@@ -33726,7 +33728,7 @@
       "overview": "completed/success",
       "p9ESMFault": "completed/success",
       "p9ModuleFallback": "completed/success",
-      "p9FractionOrdinal90": "in_progress_at_last_check"
+      "p9FractionOrdinal90": "completed/success"
     },
     "mainMerged": false,
     "deployed": false
