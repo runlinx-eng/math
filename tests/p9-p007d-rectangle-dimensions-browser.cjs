@@ -166,7 +166,7 @@ async function run(){
   ok(!candidate.submittedRectangleDimensionsEvidence(source.task,good.model,stale,taskContext)&&
    !candidate.replayRectangleDimensionsEvidence(source.task,forged,taskContext)&&
    !candidate.replayRectangleDimensionsEvidence(source.task,good.model,
-      {sessionId:'shapemeasures',index:1}),
+      {sessionId:'shapemeasures',index:0}),
    'stale Check, forged dimension and adjacent task rejected');
   const png='shapemeasures-1-rectangle-correct.png';
   await page.screenshot({path:path.join(out,png),fullPage:false});screenshots.push(png);
