@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261121-p9-signed-order-v1');
+registerClientRelease('math-explorer-20261122-issue341-formal-365-v1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -30,6 +30,8 @@ import {BRIDGES,sessionMeta,sessionTasks,sessionTaskFor as taskFor,sessionRoute,
 import {captureSession,sessionRecord,rememberSession,addQuestion,questionAction,questionDone} from './daily.js';
 import {askQuestion} from './question-ui.js';
 import {thinkingFeedback,thinkingGuide} from './thinking-feedback.js';
+import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
+ from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
 import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -41,6 +43,24 @@ let extraLab=null,extraKey='',cleanupB06=null;
 let CubeView,SolidView,SpaceLab,AreaSolidLab,FractionCubeView,PatternGrowthView,FrameView,PowerView;
 let questionId=new URLSearchParams(location.search).get('question'),atlas,all,id,a,blocked=false,feedback='',spread=0,view=null,cube=null,cubeKey='',dirty=false;
 let savedNoteFeedback='';
+// Load large source-specific adapters only for a reviewed native session.
+// Missing/unavailable routes stay closed; legacy sources keep their old logic.
+let issue341FormalRouting=null,issue341RoutingPromise=null;
+const formalGuide=(task,context)=>hasIssue341FormalSource(context.sessionId,context.index)
+ ?(issue341FormalRouting?.guide(task,context)??null):thinkingGuide(task,context);
+const formalFeedback=(task,model,record,context)=>hasIssue341FormalSource(context.sessionId,context.index)
+ ?(issue341FormalRouting?.feedback(task,model,record,context)??null):thinkingFeedback(task,model,record,context);
+function ensureIssue341FormalRouting(sessionId){
+ if(issue341FormalRouting||issue341RoutingPromise||!hasIssue341FormalSession(sessionId))return;
+ issue341RoutingPromise=import('./issue341-formal-source-routing.js')
+  .then(({createIssue341ManifestGatedRouting})=>{
+   const routing=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
+   if(routing.approvedPositions!==365||routing.approvedFamilies!==113)
+    throw new Error('Issue341 manifest and frozen source mismatch');
+   issue341FormalRouting=routing;
+   if(a?.view==='task'&&hasIssue341FormalSession(id)&&!blocked)render();
+  }).catch(error=>{console.error('Issue341 formal feedback stays closed',error);});
+}
 let lessonOpenSerial=0;
 let numericBackup=null,numericExportMessage='';
 
@@ -245,10 +265,10 @@ function renderNumericCompatibility(){
 }
 function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();cleanupB06=null;const writingOpen=$('.b6-writing')?.open;const accessOpen=$('.x-access')?.open;const edgeListOpen=$('.g23-edge-list')?.open;const lesson=sessionMeta(id),route=sessionRoute(id),summary=lessonSummary(a),p03=isP03(),checked=currentSubmission(a),readyToContinue=a.view==='task'&&summary.cases[a.index]?.complete&&checked.status==='correct';document.body.classList.toggle('p03-focus',p03);document.body.classList.toggle('embedded-learning',parent!==window);renderQuestion();$('#learning-next > #system-explanation')?.remove();alignLearningLayout();$('#route-title').textContent=route.title;$('#status').textContent=p03?(summary.completed?'三项已完成':`任务 ${a.index+1} / ${sessionTasks(id).length}`):a.view==='summary'?'操作检查已通过':`任务 ${a.index+1} / ${sessionTasks(id).length}`;$('#route').innerHTML=route.ids.map((lid,i)=>`<button data-do="lesson" data-id="${lid}" ${lid===(BRIDGES[id]?.to||id)?'aria-current="step"':''}><small>${route.id}–0${i+1} ${nodeState(all,LESSONS[lid].topicId).progress==='completed'?'✓':''}</small>${LESSONS[lid].title}</button>`).join('');$('#title').textContent=lesson.title;$('#learning-goal').textContent=lesson.formal;
  if(a.view==='summary'){$('#check-feedback').hidden=true;$('#instruction').textContent=p03?'怎样数才能不漏也不重复？':'你有什么发现？能说说为什么吗？';$('#work').innerHTML=`<div class="summary-art"><div class="seal">✓</div><div><h2>这组操作已通过检查</h2><p>${summary.done} / ${summary.total} 项检查通过。这是作品结果，不代表文字解释已经核验。</p></div></div><label class="field" for="note">${esc(REFLECTIONS[id]||'写下你刚才的发现。')}（可选）</label><p class="reflection-optional">可以用自己的话写一句，也可以不写，直接继续探索。</p><textarea id="note" maxlength="2000" placeholder="写下你的解释（可选，不必照抄问题）">${esc(a.draft)}</textarea>${a.notes.length?`<div class="saved-note-preview"><strong>已保存的发现（文字解释待确认）</strong><p>${esc(a.notes.at(-1).text)}</p></div>`:''}<details id="system-explanation" class="system-explanation"><summary>查看系统的数学说明（可选）</summary><div class="system-explanation-body"><p>${esc(lesson.summary)}</p>${id==='quarters'&&summary.completed?'<div class="summary-thinking" data-thinking-node-id="mt_EBYGhd8X3x"><strong>已检查作品中的思考方法：连接不同表示方式</strong><p>你用百格、杯子里的水位、分数与小数表示了对应的比例。哪一种表示最容易帮你核对？</p><small>这是作品线索，不是你已掌握该方法的结论。</small></div>':''}<small>以上是系统的数学说明，不等于你已经独立解释了原因。</small></div></details><details id="source-goals-details"><summary>课程来源资料（参考）</summary><ul id="source-goals">${atlas.nodes.find(n=>n.id===lesson.topicId).evidence.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></details>`;$('#note').after($('#note-save-status'));renderSummaryActions();if(cube){cube.destroy();cube=null;cubeKey='';}}
- else{const t=task(),m=model();$('#instruction').textContent=p03?P03_NAMES[a.index]:t.prompt;const checkFeedback=$('#check-feedback');if(checkFeedback){const message=checked.status==='correct'&&t.type==='match'?'三个杯子的水位、分数与小数都对应上了。':feedback||(checked.status==='modified'?'已修改，尚未重新检查。上次结果保留在历史记录中。':checked.result?.feedback||'');checkFeedback.hidden=!message;checkFeedback.textContent=message;const repair=correctionGuidance({task:t,model:m,checked});if(repair&&message){checkFeedback.insertAdjacentHTML('beforeend',`<div class="feedback-next" aria-label="下一步操作"><strong>${esc(repair.title)}</strong><p>${esc(repair.observation)}</p><p>${esc(repair.action)}</p><small>${esc(repair.method)}</small></div>`);}checkFeedback.dataset.state=feedback&&checked.status==='modified'?'guidance':checked.status==='correct'?'correct':checked.status==='revise'?'revise':'guidance';}const p03Info=p03?p03Stage(t,m):null;$('#work').innerHTML=p03?`<section class="p03-task" data-phase="${p03Info.phase}" aria-label="当前任务"><div class="p03-guidance"><span class="p03-step-label">现在做什么 · ${a.index+1} / 3</span><p id="p03-guidance" role="status">${esc(p03Info.instruction)}</p></div>${feedback?`<p class="p03-feedback" role="alert">${esc(feedback)}</p>`:''}${widgets(t,m)}</section>`:widgets(t,m);const guide=thinkingGuide(t,{sessionId:id,index:a.index});
+ else{const t=task(),m=model();$('#instruction').textContent=p03?P03_NAMES[a.index]:t.prompt;const checkFeedback=$('#check-feedback');if(checkFeedback){const message=checked.status==='correct'&&t.type==='match'?'三个杯子的水位、分数与小数都对应上了。':feedback||(checked.status==='modified'?'已修改，尚未重新检查。上次结果保留在历史记录中。':checked.result?.feedback||'');checkFeedback.hidden=!message;checkFeedback.textContent=message;const repair=correctionGuidance({task:t,model:m,checked});if(repair&&message){checkFeedback.insertAdjacentHTML('beforeend',`<div class="feedback-next" aria-label="下一步操作"><strong>${esc(repair.title)}</strong><p>${esc(repair.observation)}</p><p>${esc(repair.action)}</p><small>${esc(repair.method)}</small></div>`);}checkFeedback.dataset.state=feedback&&checked.status==='modified'?'guidance':checked.status==='correct'?'correct':checked.status==='revise'?'revise':'guidance';}const p03Info=p03?p03Stage(t,m):null;$('#work').innerHTML=p03?`<section class="p03-task" data-phase="${p03Info.phase}" aria-label="当前任务"><div class="p03-guidance"><span class="p03-step-label">现在做什么 · ${a.index+1} / 3</span><p id="p03-guidance" role="status">${esc(p03Info.instruction)}</p></div>${feedback?`<p class="p03-feedback" role="alert">${esc(feedback)}</p>`:''}${widgets(t,m)}</section>`:widgets(t,m);const guide=formalGuide(t,{sessionId:id,index:a.index});
   if(guide)$('#work').insertAdjacentHTML('afterbegin',`<details id="thinking-guide" class="thinking-guide"><summary>${esc(guide.summary)}</summary><p>${esc(guide.question)}</p><small>这只是可选的思考问题。你可以不打开，照常操作和检查；打开也不代表已经掌握。</small></details>`);
 
-  const thought=a.view==='task'&&thinkingFeedback(t,m,a.cases[a.index],{sessionId:id,index:a.index});if(thought)$('#work').insertAdjacentHTML('beforeend',`<aside id="thinking-feedback" aria-label="刚才的办法"><strong>${esc(thought.title)}</strong><p>${esc(thought.observation)}</p><p>${esc(thought.connection)}</p>${thought.detail.length?`<small>${thought.detail.map(esc).join(' ')}</small>`:''}${thought.method?`<p class="source-thinking" data-thinking-node-id="${esc(thought.method.nodeId)}">相关数学思维 · ${esc(thought.method.label)}（${esc(thought.method.code)}）<small>与 50 个来源思维节点中的一个关联；仅记录本次作品线索，不代表已掌握。</small></p>`:''}</aside>`);renderTaskActions(checked);
+  const thought=a.view==='task'&&formalFeedback(t,m,a.cases[a.index],{sessionId:id,index:a.index});if(thought)$('#work').insertAdjacentHTML('beforeend',`<aside id="thinking-feedback" aria-label="刚才的办法"><strong>${esc(thought.title)}</strong><p>${esc(thought.observation)}</p><p>${esc(thought.connection)}</p>${thought.detail.length?`<small>${thought.detail.map(esc).join(' ')}</small>`:''}${thought.method?`<p class="source-thinking" data-thinking-node-id="${esc(thought.method.nodeId)}">相关数学思维 · ${esc(thought.method.label)}（${esc(thought.method.code)}）<small>与 50 个来源思维节点中的一个关联；仅记录本次作品线索，不代表已掌握。</small></p>`:''}</aside>`);renderTaskActions(checked);
  if(t.dims){const key=id+':'+(a.view==='play'?-1:a.index)+':'+t.dims.join(',');if(cube&&cubeKey!==key){cube.destroy();cube=null;}if(!cube){cube=new CubeView($('#cube-world'),t,placeCube);cubeKey=key;cube.restoreCamera(a.ui?.camera);cube.controls.addEventListener('end',()=>update(()=>{}));}else cube.attach($('#cube-world'));cube.update(m,{spread});}else if(cube){cube.destroy();cube=null;cubeKey='';}}
  if(a.view!=='summary'&&(['x-solid','x-net','x-s23-frame'].includes(task().type)||task().type.startsWith('x-g27-')||task().type==='x-a30-solid'||task().type==='x-m31-cubes'||task().type==='x-m31-product'||task().type==='x-p34-growth'||task().type==='x-powerbuild'&&task().pow===3)){const key=id+':'+a.view+':'+a.index;if(extraLab&&extraKey!==key){extraLab.destroy();extraLab=null;}if(!extraLab){const patternGrowth=task().type==='x-p34-growth',power=task().type==='x-powerbuild',frame=task().type==='x-s23-frame',space=task().type.startsWith('x-g27-'),fractionCube=task().type==='x-m31-cubes',fractionProduct=task().type==='x-m31-product',areaSolid=task().type==='x-a30-solid'||fractionProduct;extraLab=new (patternGrowth?PatternGrowthView:fractionCube?FractionCubeView:areaSolid?AreaSolidLab:space?SpaceLab:frame?FrameView:power?PowerView:SolidView)($('#extra-world'),task(),i=>fractionProduct?null:edit(m=>actExtra(task(),m,patternGrowth?'p34-fill':fractionCube?'m31-fill':areaSolid?'a30-face':space?'g27-probe':frame?'g23-stick':power?'power-cell':'solid-mark',space?{}:{index:i}),{renderNow:true}),()=>patternGrowth?edit(m=>actExtra(task(),m,'p34-turn'),{renderNow:true}):fractionCube||fractionProduct?edit(m=>actExtra(task(),m,'m31-turn'),{renderNow:true}):areaSolid?edit(m=>actExtra(task(),m,'a30-turn'),{renderNow:true}):space?edit(m=>actExtra(task(),m,'g27-turn'),{renderNow:true}):frame?edit(m=>actExtra(task(),m,'g23-turn'),{renderNow:true}):update(()=>{}));extraKey=key;if(!space||model()?.board?.turned)extraLab.restoreCamera(a.ui?.camera);}else extraLab.attach($('#extra-world'));extraLab.update(model());}else if(extraLab){extraLab.destroy();extraLab=null;extraKey='';}if(accessOpen&&$('.x-access'))$('.x-access').open=true;if(edgeListOpen&&$('.g23-edge-list'))$('.g23-edge-list').open=true;
  if(a.view!=='summary'&&B06_TYPES.has(task().type)){cleanupB06=mountB06($('#work'),task(),model,{mutate:(act,data={},renderNow=true)=>edit(m=>actExtra(task(),m,act,data),{renderNow}),saveInk:stroke=>edit(m=>m.ink.push(stroke)),help:()=>{if(a.view==='task')update(r=>supportLesson(r));}});if(writingOpen&&$('.b6-writing'))$('.b6-writing').open=true;}
@@ -316,7 +336,7 @@ async function openLesson(next,{keepQuestion=false}={}){
     if(cube){cube.destroy();cube=null;cubeKey='';}
     if(!keepQuestion)questionId=null;
     if(extraLab){extraLab.destroy();extraLab=null;extraKey='';}
-    id=next;feedback='';savedNoteFeedback='';numericBackup=null;numericExportMessage='';
+    id=next;ensureIssue341FormalRouting(next);feedback='';savedNoteFeedback='';numericBackup=null;numericExportMessage='';
     all=read();a=sessionRecord(all,id)||freshLesson(id);
     view=a.ui?.view||null;spread=a.ui?.spread||0;
     const savedUI=structuredClone(a.ui);
@@ -381,7 +401,7 @@ $('#lesson').addEventListener('click',e=>{
  for(const other of document.querySelectorAll('#system-explanation,.p3-more,.p3-application,#record'))if(other!==section)other.open=false;
 },true);
 $('#lesson').addEventListener('toggle',e=>{
- if(e.target.matches('#thinking-guide')&&e.target.open&&a?.view==='task'&&thinkingGuide(task(),{sessionId:id,index:a.index}))update(r=>supportLesson(r));
+ if(e.target.matches('#thinking-guide')&&e.target.open&&a?.view==='task'&&formalGuide(task(),{sessionId:id,index:a.index}))update(r=>supportLesson(r));
  if(e.target.matches('.x-access')&&e.target.open&&a?.view==='task')update(r=>supportLesson(r));
 },true);
 
