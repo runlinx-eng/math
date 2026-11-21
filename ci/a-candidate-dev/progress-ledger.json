@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 80,
-    "developmentTestedCandidateCases": 38,
+    "developmentTestedPositions": 81,
+    "developmentTestedCandidateCases": 39,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 14,
+      "developmentTested": 15,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 17
+      "pendingOrOtherNotAccepted": 16
     }
   ],
   "cases": [
@@ -839,6 +839,25 @@
       },
       "artifact": {
         "id": 14700549529,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006h-native-usage-vs-people",
+      "branch": "work/a/p006h-native-usage-vs-people",
+      "candidateSha": "39bc0c1e0eaacd37ad47d8830323970371bf092d",
+      "positions": [
+        "playgroundstudy:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44890804365,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14701573135,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
