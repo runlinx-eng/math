@@ -39,3 +39,15 @@ test('original B15 native geometry controls are admitted, unknown B15 action is 
  valid.targets[0].native[0].controls.push('b15_make_up');
  assert.throws(()=>validateTargets(valid),/A_DEV_TARGET_INVALID/);
 });
+
+test('native B19 data-count view and original bar control permitted, unsafe action denied',()=>{
+ const valid=changed(x=>{
+  x.targets[0].native[0]={...x.targets[0].native[0],
+   sessionId:'categoryuse',index:0,nodeId:'mt_1VSfm9yiLn',
+   taskSha256:'945aa122537d0193ef311aadb9b1d47bd5c3bbe22f472c19163977e69b117fbe',
+   type:'x-datacount',view:'b19',controls:['b19-bar']};
+ });
+ assert.equal(validateTargets(valid).include[0].native[0].controls[0],'b19-bar');
+ valid.targets[0].native[0].controls[0]='b19_bad';
+ assert.throws(()=>validateTargets(valid),/A_DEV_TARGET_INVALID/);
+});
