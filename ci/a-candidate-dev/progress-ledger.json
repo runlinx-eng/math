@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 63,
-    "developmentTestedCandidateCases": 29,
+    "developmentTestedPositions": 65,
+    "developmentTestedCandidateCases": 30,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 27,
+      "developmentTested": 29,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 5
+      "pendingOrOtherNotAccepted": 3
     }
   ],
   "cases": [
@@ -649,6 +649,26 @@
       },
       "artifact": {
         "id": 14699391807,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005m-native-fractionreason-anglejoin",
+      "branch": "work/a/p005m-native-fractionreason-anglejoin",
+      "candidateSha": "89b87873c5b6f4d0d3f11c41fe66a1a2c7b28bd0",
+      "positions": [
+        "fractionreason:2",
+        "fractionreason:3"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44885537558,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14699701755,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
