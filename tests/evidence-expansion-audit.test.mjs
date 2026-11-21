@@ -43,7 +43,7 @@ test('reviewed task disappearance, content drift and missing binding fail withou
  const result=auditEvidenceExpansion({adapters:changed(adapter=>({...adapter,
   binding:(task,context)=>targeted(context)?null:adapter.binding(task,context)}))});
  assert.ok(result.defects.some(defect=>defect.id===key&&defect.kind==='reviewed-binding-missing-or-changed'));
- assert.deepEqual(JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url))),manifest);
+ assert.deepEqual(JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url))),fullManifest);
 });
 
 test('new or overlapping bindings cannot authorize themselves through the registry',()=>{
