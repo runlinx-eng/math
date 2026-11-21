@@ -1,3 +1,15 @@
+# #341 最新：365 道来源锁定预检通过，B 线已有证据继续复用（2026-11-21）
+
+[隔离 Draft PR #348](https://github.com/runlinx-eng/math/pull/348) 的 [专用源码锁定 CI #44920634904](https://github.com/runlinx-eng/math/actions/runs/44920634904) **completed/success**：113 候选家族的 `Binding/replay/submitted` 函数均已解析，365 个原生位置对照完整 source nodeId/task SHA-256 成功；与既有 813 条正式 A manifest **0 重叠**，候选之间与既有运行时注册互相绑定冲突 **0**。未做第二套数学重测，未修改公开的 `evidence-review-manifest.json` 或 main，新增严格 A=0。#348 通用 Required 的最终状态须另核，不因专用绿灯提前宣称成功。
+
+B 线 **308 道已有原工程测试证据仍按上一轮接收并复用，不要求 298 道统一重测**。只读整理了 P091／P105／P107／P109／P116 共 **5 家族、12 道**的明确数学主张与不能外推之处，仍需正常共享接入和正式双门禁。已有 28/28 原生导航证明和此前有界独立数值复核全部保持。
+
+[完整来源锁定与 12 道范围审查报告](./20261121-preintegration-source-lock-and-first-12-scopes.md) · [B 12 道边界 JSON](./b-first-12-observable-contract-review.json) · [正式 A813 与 365 候选静态冲突预检](./staging-integration/approved-manifest-collision-precheck.json) · [365 道最新机器台账](./issue-341-formal-365-intake.json) · [CSV](./issue-341-formal-365-intake.csv)
+
+---
+
+> 下方各段为不同时间点的历史进度快照；以本页顶部及机器台账为当前执行结论。
+
 # B 线当前结论：已有测试证据复用（2026-11-21｜最新口径）
 
 **B 线 92 家族／308 道的已有开发 Node/Chromium、错误拒绝、原始 Check/State-v2/Artifact 及 28 道专项导航证据，已接受为候选工程证据；不再要求“未做第二套独立算术抽查”的 298 道统一重新测试。** 这个裁决仅是**复用已有合格证据进入中央正式集成流程**，不是批准 B 308 道数学严格 A。main 仍 **A813/1996**，本次新增 A=0。
