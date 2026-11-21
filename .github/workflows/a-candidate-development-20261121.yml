@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004b-quadrilateral-nesting
-            sha: bbeadb6701fd1c1594b6bb36ddd38700c636bfb3
+            sha: 4b1d888921330bbdb06654654787a30c70745bc6
             node_test: tests/p9-p004b-quadrilateral-nesting-evidence.test.mjs
             browser_test: tests/p9-p004b-quadrilateral-nesting-browser.cjs
 
