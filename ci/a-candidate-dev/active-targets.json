@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P005d-cross-source-vertex-angles",
-      "sha": "a91e5e5039f85d06bae9fdd84c4d44978a1a2067",
+      "sha": "5d08c89e98ee3c74ed4931fed8432b6fa44b3a05",
       "node_test": "tests/p9-p005d-cross-source-vertex-angle-evidence.test.mjs",
       "browser_test": "tests/p9-p005d-cross-source-vertex-angle-browser.cjs",
       "native": [
