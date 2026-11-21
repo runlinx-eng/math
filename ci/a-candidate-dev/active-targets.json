@@ -2,61 +2,189 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P007j-native-rectangle-invariants",
-      "sha": "00f6dbeec869b866ed9b8df4cd61a322eee170ef",
-      "node_test": "tests/p9-p007j-rectangle-invariants-evidence.test.mjs",
-      "browser_test": "tests/p9-p007j-rectangle-invariants-browser.cjs",
+      "case": "P007l-native-triangle-sas",
+      "sha": "62e5ad637bcd4cda7d63e8a90dcec3ca160dcbcb",
+      "node_test": "tests/p9-p007l-triangle-sas-evidence.test.mjs",
+      "browser_test": "tests/p9-p007l-triangle-sas-browser.cjs",
       "native": [
         {
-          "sessionId": "rectanglefacts",
+          "sessionId": "triangledraw",
           "index": 0,
-          "nodeId": "mt_KFKUR_gBg_",
-          "taskSha256": "51525557b3ab785b3a256fc25dd26a594c233e27f89c4022977b9e01d3f4703b",
-          "type": "x-s23-ruler",
-          "view": "b23",
+          "nodeId": "mt_Jf8xcX4UTq",
+          "taskSha256": "d78e88326c59af0ccc0ca3efe5f5504d3f8ba3a84a5299983709bc47d140aced",
+          "type": "x-g25-triangle",
+          "view": "b25",
           "controls": [
-            "g23-draw"
+            "g25-base",
+            "g25-construct"
           ]
         },
         {
-          "sessionId": "rectanglefacts",
-          "index": 1,
-          "nodeId": "mt_KFKUR_gBg_",
-          "taskSha256": "5ead1dacb723f7815f8644c3ca88a37f9441430aa415fe830d521b54b5a097e0",
-          "type": "x-s23-ruler",
-          "view": "b23",
+          "sessionId": "trianglecongruent",
+          "index": 0,
+          "nodeId": "mt_167X6Ax8P7",
+          "taskSha256": "8bdcc1a887e2c7ae16d5c0a62eb8492cb8d5f4931e7d6f8061c8aa6d5f8e6546",
+          "type": "x-g25-triangle",
+          "view": "b25",
           "controls": [
-            "g23-draw"
+            "g25-base",
+            "g25-construct"
           ]
         },
         {
-          "sessionId": "rectanglefacts",
-          "index": 2,
-          "nodeId": "mt_KFKUR_gBg_",
-          "taskSha256": "0426eaa9e4788cbcddee61834514a651dbb9bc068f45e3fc9f3abf3b7e856110",
-          "type": "x-s23-ruler",
-          "view": "b23",
+          "sessionId": "trianglecongruent",
+          "index": 3,
+          "nodeId": "mt_167X6Ax8P7",
+          "taskSha256": "c59ca48c2f01cef41ec430856d75412dc35f4b08f18a5b0fc2d61ce3e6c945d2",
+          "type": "x-g25-triangle",
+          "view": "b25",
           "controls": [
-            "g23-draw"
+            "g25-base",
+            "g25-construct"
+          ]
+        },
+        {
+          "sessionId": "trianglepossible",
+          "index": 5,
+          "nodeId": "mt_4bc3EAxhlY",
+          "taskSha256": "e371888c52fd73a0d699bcaab3331d09089cad2950bf907452c7d6af84543ddc",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
           ]
         }
       ]
     },
     {
-      "case": "P007k-native-circle-pi",
-      "sha": "1f528006c22aac2f7ea7d91a80ff3dcdad2ede81",
-      "node_test": "tests/p9-p007k-circle-pi-evidence.test.mjs",
-      "browser_test": "tests/p9-p007k-circle-pi-browser.cjs",
+      "case": "P007m-native-triangle-sss",
+      "sha": "9eb90f233d66077e78c8b4d60569d4575ee88469",
+      "node_test": "tests/p9-p007m-triangle-sss-evidence.test.mjs",
+      "browser_test": "tests/p9-p007m-triangle-sss-browser.cjs",
       "native": [
         {
-          "sessionId": "shapefacts",
-          "index": 2,
-          "nodeId": "mt_DNYQLahbfa",
-          "taskSha256": "bc230723f50cd5fc792097e4690916ea1b6c9cb2935c042f40005569f0d3c825",
-          "type": "x-s23-circle",
-          "view": "b23",
+          "sessionId": "triangledraw",
+          "index": 1,
+          "nodeId": "mt_Jf8xcX4UTq",
+          "taskSha256": "302faf6169e478bf52f437da2260f3df89c44e6dca59685338936ca75e60d9dd",
+          "type": "x-g25-triangle",
+          "view": "b25",
           "controls": [
-            "g23-circle"
+            "g25-base",
+            "g25-construct"
+          ]
+        },
+        {
+          "sessionId": "trianglecongruent",
+          "index": 1,
+          "nodeId": "mt_167X6Ax8P7",
+          "taskSha256": "9a7ee5c241934793e038f0666c9a05651d59eb8378428852a9971202786d884b",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
+          ]
+        },
+        {
+          "sessionId": "trianglepossible",
+          "index": 0,
+          "nodeId": "mt_4bc3EAxhlY",
+          "taskSha256": "885bc61dfe1a5cba9a124a647ff61d7dd1cb01357b298aea0239d552ca5648f6",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
+          ]
+        },
+        {
+          "sessionId": "trianglepossible",
+          "index": 1,
+          "nodeId": "mt_4bc3EAxhlY",
+          "taskSha256": "c792e3a7b1e6dafbad974834706e6fc14792f74d0b0e8f9f61d5b4ad168959b8",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
+          ]
+        },
+        {
+          "sessionId": "trianglepossible",
+          "index": 2,
+          "nodeId": "mt_4bc3EAxhlY",
+          "taskSha256": "3a91dd0733dfbcf86a1f7e9800b5758626ebd3065b9fa6b789ed9a9d77830eca",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "P007n-native-triangle-asa",
+      "sha": "eea37181efe7892428e21599228d4b6419f6d26f",
+      "node_test": "tests/p9-p007n-triangle-asa-evidence.test.mjs",
+      "browser_test": "tests/p9-p007n-triangle-asa-browser.cjs",
+      "native": [
+        {
+          "sessionId": "triangledraw",
+          "index": 2,
+          "nodeId": "mt_Jf8xcX4UTq",
+          "taskSha256": "97dac8caa523064fba09be4f7e14cfb3e0b66a18028bae7d08e671b46238e357",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
+          ]
+        },
+        {
+          "sessionId": "trianglecongruent",
+          "index": 2,
+          "nodeId": "mt_167X6Ax8P7",
+          "taskSha256": "e861d76f1bf70dfb609609121750a2658e3c601b1c992f78a1488ce20562f5eb",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "P007o-native-triangle-ssa",
+      "sha": "656c4cd2141fadc35d08566b40b841fa9bacb64c",
+      "node_test": "tests/p9-p007o-triangle-ssa-evidence.test.mjs",
+      "browser_test": "tests/p9-p007o-triangle-ssa-browser.cjs",
+      "native": [
+        {
+          "sessionId": "trianglecongruent",
+          "index": 4,
+          "nodeId": "mt_167X6Ax8P7",
+          "taskSha256": "9cd8ce5144aae798870f1c8963263591e3952ecc3c7d980c3df81b0ccbe4d5e8",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
+          ]
+        },
+        {
+          "sessionId": "trianglepossible",
+          "index": 4,
+          "nodeId": "mt_4bc3EAxhlY",
+          "taskSha256": "605f91198116643147a2977f4482fd4f3f6b1c6de4721a7d66f21f9d72fc4d33",
+          "type": "x-g25-triangle",
+          "view": "b25",
+          "controls": [
+            "g25-base",
+            "g25-construct"
           ]
         }
       ]
