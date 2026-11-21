@@ -11,6 +11,23 @@ permissions:
   contents: read
 
 jobs:
+  handoff-integrity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify immutable manifest, SHA-256, native dedup and all 97 exact-base git apply patches
+        run: python3 scripts/issue-341-handoff-audit.py
+      - name: Preserve per-packet replay and failure receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-patch-worktree-audit
+          path: verification/issue-341-handoff-audit/
+          if-no-files-found: warn
+          retention-days: 7
   candidate-node:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
