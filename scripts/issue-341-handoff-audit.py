@@ -126,7 +126,7 @@ def audit():
                         match = re.search(
                             r"(?m)^diff --git a/" + re.escape(filename) +
                             r" b/" + re.escape(filename) +
-                            r"\\nnew file mode 100644\\nindex 0{40}\\.\\.([a-f0-9]{40})",
+                            r"\nnew file mode 100644\nindex 0{40}\.\.([a-f0-9]{40})",
                             patch.decode("utf-8"))
                         if not match:
                             raise AssertionError(f"missing additive Git Blob index: {filename}")
