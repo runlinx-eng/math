@@ -177,9 +177,11 @@ async function main(){
    ok(proof.finalAxisPositions.every(p=>p.finalPositionError<=6),label+' mathematically correct final axis');
    assert.equal(await page.locator('#thinking-feedback').count(),0,'preaudit may not show strict A feedback');
    await page.screenshot({path:path.join(out,label+'-corrected-1920x1080.png'),fullPage:true});
-   const beforeReload=await verified();
+   const beforeReload=await saved(s.id);
    const reloadResponse=await page.reload();assert.ok(reloadResponse);await wait(s);
-   assert.deepEqual(await verified(),beforeReload,'State-v2 preserves checked history on real reload');
+   const afterReload=await saved(s.id);
+   assert.deepEqual(afterReload.models,beforeReload.models,'State-v2 preserves original models on real reload');
+   assert.deepEqual(afterReload.cases,beforeReload.cases,'State-v2 preserves original attempts on real reload');
    observations.push({id:s.id,index:s.index,nodeId:s.nodeId,taskHash:s.taskHash,selectedOrder:proof.selectedOrder,
     eventCount:proof.events.length,wrongFirstSaved:true,correctionSaved:true,originalGrader:true,
     axisFinalOnly:true,strictAApproved:false,screenshot:label+'-corrected-1920x1080.png'});
