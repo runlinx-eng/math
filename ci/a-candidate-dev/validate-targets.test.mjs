@@ -113,3 +113,23 @@ test('P007b exact original pyramid turn-extra UI is admitted only at shapedraw:5
   assert.throws(()=>validateTargets(bad),/A_DEV_TARGET_INVALID/);
  }
 });
+
+test('P007p exact B38 camel-case circle is admitted only for reviewed native source',()=>{
+ const valid=changed(x=>{
+  x.targets[0].native[0]={sessionId:'advancedWords38',index:0,
+   nodeId:'mt_3rTIyJDw7-',
+   taskSha256:'a1466d51fcca03b4c7946c32cf66db3dc1eea6a4bf0fff0b1baea449ee38a234',
+   type:'x-s23-circle',view:'b23',controls:['g23-circle']};
+ });
+ assert.equal(validateTargets(valid).include[0].native[0].sessionId,'advancedWords38');
+ for(const mutate of [
+  s=>s.index=1,s=>s.nodeId='mt_3rTIyJDw7x',
+  s=>s.taskSha256='b'.repeat(64),
+  s=>s.type='x-s23-compass',s=>s.view='b25',
+  s=>s.controls=['g23-arc'],
+  s=>s.sessionId='advancedWords39'
+ ]){
+  const bad=structuredClone(valid);mutate(bad.targets[0].native[0]);
+  assert.throws(()=>validateTargets(bad),/A_DEV_TARGET_INVALID/);
+ }
+});
