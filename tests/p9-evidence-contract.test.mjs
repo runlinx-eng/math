@@ -20,6 +20,7 @@ import pvbench from './fixtures/p9-pvbench-cases.cjs';
 import {pvbenchEvidenceExample} from '../scripts/pvbench-evidence-fixture.mjs';
 import {pvSavedEvidenceExample} from '../scripts/pv-saved-evidence-fixture.mjs';
 import {positiveOrderEvidenceExample} from '../scripts/positive-order-evidence-fixture.mjs';
+import {signedOrderEvidenceExample} from '../scripts/signed-order-evidence-fixture.mjs';
 import wideShift from './fixtures/p9-wideshift-cases.cjs';
 import {wideShiftEvidenceExample} from '../scripts/wideshift-evidence-fixture.mjs';
 import {paperLabEvidenceExample} from '../scripts/paperlab-evidence-fixture.mjs';
@@ -109,6 +110,7 @@ const reviewed={
  pvbench:pvbench.cases.map(({id,index})=>({sessionId:id,index})),
  'pv-saved':[...positions('twoproblems',[2]),...positions('faces100',[1]),...positions('faces120',[1]),...positions('screen1000',[0])],
  'positive-order':[...positions('bigcompare',[2]),...positions('sixdigits',[2]),...positions('millionwords',[1])],
+ 'signed-order':positions('tenmillion',[1]),
  wideshift:wideShift.cases.map(({sessionId,index})=>({sessionId,index})),
  'wideshift-add':positions('thousandstep',[0,1,2,3]),
  sequence:[...positions('general34',[2,3]),...positions('tables34',[0,2]),...positions('reason34',[1]),
@@ -153,7 +155,7 @@ const unitTileAreaExample=task=>{
  model.unit='cm²';
  return model;
 };
-const example=(adapter,task,context)=>adapter.id==='positive-order'?positiveOrderEvidenceExample(task,context):adapter.id==='pv-saved'?pvSavedEvidenceExample(task,context):adapter.id==='unit-tile-area'?unitTileAreaExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id==='week-day-cards'?weekDayCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
+const example=(adapter,task,context)=>adapter.id==='signed-order'?signedOrderEvidenceExample(task,context):adapter.id==='positive-order'?positiveOrderEvidenceExample(task,context):adapter.id==='pv-saved'?pvSavedEvidenceExample(task,context):adapter.id==='unit-tile-area'?unitTileAreaExample(task):adapter.id==='pvbench'?pvbenchEvidenceExample(task):adapter.id==='fraction'?fractionEvidenceExample(task):adapter.id==='joinstory'?joinStoryEvidenceExample(task):adapter.id==='scalechain'?scaleChainEvidenceExample(task):adapter.id==='fracshare'?fracShareEvidenceExample(task):adapter.id==='mixedtrade'?mixedTradeEvidenceExample(task):adapter.id==='paperlab'?paperLabEvidenceExample(task):adapter.id==='wideshift'?wideShiftEvidenceExample(task):adapter.id==='time-unit-parts'?timeUnitPartsEvidenceExample(task):adapter.id==='time-identity-cards'?timeIdentityCardsEvidenceExample(task):adapter.id==='week-day-cards'?weekDayCardsEvidenceExample(task):adapter.id.startsWith('time-')?timeEvidenceExample(task):adapter.id==='area-edge'?exampleModel(task):adapter.id.startsWith('area-')?areaEvidenceExample(task):adapter.id==='order'?orderEvidenceExample(task):exampleModel(task);
 const native=Object.keys(LESSONS).flatMap(sessionId=>sessionTasks(sessionId).map((task,index)=>({task,context:{sessionId,index}})));
 
 // These inputs can all come from JSON. In particular, object property keys
@@ -293,7 +295,7 @@ for(const adapter of EVIDENCE_ADAPTERS){
    if(adapter.id==='pv-saved'){
     assert.equal(absent.history.length,0,'saved-form evidence must not invent click history');
     absent.saved=[];
-   }else if(adapter.id==='positive-order')absent.orderTrace=[];
+   }else if(adapter.id==='positive-order'||adapter.id==='signed-order')absent.orderTrace=[];
    else absent.history=[];
    assert.equal(adapter.replay(task,absent,context),null,
     adapter.id==='pv-saved'?'missing original saved representations are insufficient':

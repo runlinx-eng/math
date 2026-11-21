@@ -62,6 +62,12 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
   for(const file of changed){
    if(registered.has(file)){add(file);continue;}
    if(safeScript.test(file)&&fileExists(file)){add(file);continue;}
+   // #339: registered signed-order's source-bound replay and Node tests map to
+   // its original native-Control Chromium family without a cross-family run.
+   if(file==='dist/learning/signed-order-preaudit.js'||
+      file==='tests/p9-signed-order-preaudit.test.mjs'){
+    add('tests/p9-signed-order-preaudit-browser.cjs');continue;
+   }
    if(file==='ci/math-families.json'){
     check(previousRegistry&&Array.isArray(previousRegistry.newFamilies),
      'Registry change requires a previous registry for exact new-family detection');

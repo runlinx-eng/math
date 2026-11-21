@@ -167,7 +167,10 @@ jobs:
           node --check dist/learning/positive-order-evidence.js
           node --check scripts/positive-order-evidence-fixture.mjs
           node --check tests/p9-positive-order-preaudit.test.mjs
+          node --check dist/learning/signed-order-preaudit.js
+          node --check tests/p9-signed-order-preaudit.test.mjs
           node --check tests/p9-positive-order-preaudit-browser.cjs
+          node --check tests/p9-signed-order-preaudit-browser.cjs
           node --check scripts/wideshift-evidence-fixture.mjs
           node --check tests/fixtures/p9-wideshift-navigation.cjs
           node --check tests/p9-wideshift-adapter-browser.cjs
@@ -324,6 +327,7 @@ jobs:
             tests/p9-paperlab-evidence.test.mjs
             tests/p9-wideshift-evidence.test.mjs
             tests/p9-positive-order-preaudit.test.mjs
+            tests/p9-signed-order-preaudit.test.mjs
             tests/p9-wideshift-navigation.test.mjs
             tests/p9-multable-evidence.test.mjs
             tests/p9-multable-navigation.test.mjs
@@ -586,6 +590,18 @@ jobs:
             verification/p9-positive-order-preaudit/results.json
             verification/p9-positive-order-preaudit/raw-evidence.json
             verification/p9-positive-order-preaudit/*-corrected-1920x1080.png
+          if-no-files-found: error
+          retention-days: 7
+      # #339 one-off original native replay, still not a formal A family.
+      - name: Preserve signed B08 original Chromium evidence for independent preaudit
+        if: ${{ success() && matrix.script == 'tests/p9-signed-order-preaudit-browser.cjs' && github.head_ref == 'wip/issue-339-signed-order-preaudit' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-signed-order-review-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: |
+            verification/p9-signed-order-preaudit/results.json
+            verification/p9-signed-order-preaudit/raw-evidence.json
+            verification/p9-signed-order-preaudit/*-corrected-1920x1080.png
           if-no-files-found: error
           retention-days: 7
       - name: Save full family evidence only for investigation on failure

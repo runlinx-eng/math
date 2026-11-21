@@ -1096,6 +1096,32 @@
         "runnerType": "standard",
         "exclusiveLocks": []
       }
+    },
+    {
+      "familyId": "signed-order",
+      "version": 1,
+      "required": true,
+      "entry": "tests/p9-signed-order-preaudit-browser.cjs",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "artifacts": [
+        "verification/p9-signed-order-preaudit/"
+      ],
+      "proofContracts": [
+        "math",
+        "correction",
+        "persistence",
+        "negative"
+      ],
+      "dependsOn": [],
+      "resources": {
+        "estimatedScriptMinutes": 5,
+        "memoryMiB": 4096,
+        "runnerType": "standard",
+        "exclusiveLocks": []
+      }
     }
   ]
 }
