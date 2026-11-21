@@ -1,0 +1,287 @@
+diff --git a/dist/learning/p095i-interval-distance-evidence.js b/dist/learning/p095i-interval-distance-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..623b7be1b2c4e997926a43a85c0afb1ec494cf67
+--- /dev/null
++++ b/dist/learning/p095i-interval-distance-evidence.js
+@@ -0,0 +1,75 @@
++import {initial, valid} from './phase5/b29-model.js';
++import {equal} from './phase5/b16-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++import {number} from './phase5/b20-model.js';
++
++export const P095I_SOURCES = Object.freeze([
++  {
++    "sessionId": "temperaturechange",
++    "index": 3,
++    "nodeId": "mt_RVK655t391",
++    "type": "x-m29-interval",
++    "taskHash": "05f894ea37993959879f0e61d3a73d188f4178ddd61107e781a08211c5ff8b70"
++  },
++  {
++    "sessionId": "discounts",
++    "index": 2,
++    "nodeId": "mt_oMkQQ2O-ML",
++    "type": "x-m29-interval",
++    "taskHash": "40e7789b20de23a6041ea822eff28e5623ad3e9d424b96d6d95a57a82a87477f"
++  }
++].map(Object.freeze));
++
++export function p095iIntervalDistanceBinding(task,context) {
++  const row=P095I_SOURCES.find(source=>source.sessionId===context?.sessionId&&source.index===context?.index);
++  if (!row||!matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p095i-interval-distance',method:null,question:'经过零时，怎样数走过的间隔？'};
++}
++
++export function replayP095IIntervalDistanceEvidence(task,model,context) {
++  try {
++    const binding=p095iIntervalDistanceBinding(task,context);
++    if (!binding||!hasExactKeys(model,Object.keys(initial(task)))||!valid(task,model)||
++        model.issue!==''||Object.keys(model.history).length!==model.history.length) return null;
++    const moves=[];
++    const positions=[task.start];
++    const direction=Math.sign(task.end-task.start);
++    let first;
++    let bad=false;
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['a','i','v'])||event.i!=='') return null;
++      if (event.a==='move') {
++        first ??= event.v;
++        const jump=number(event.v);
++        if (!Number.isSafeInteger(jump)||jump<=0||jump>Math.abs(task.end-positions.at(-1))) {
++          bad=true;
++          continue;
++        }
++        if (!equal(event.v,jump)) return null;
++        moves.push(jump);
++        positions.push(positions.at(-1)+direction*jump);
++      } else if (event.a==='undo'&&event.v==='') {
++        if (moves.length) {
++          moves.pop();
++          positions.pop();
++        }
++      } else if (event.a==='clear'&&event.v==='') {
++        moves.length=0;
++        positions.length=1;
++      } else {
++        return null;
++      }
++    }
++    const span=Math.abs(task.end-task.start);
++    if (!moves.length||positions.at(-1)!==task.end||!sameEvidence(moves,model.board.moves)||
++        first!==model.board.first.move||bad!==model.board.bad||model.unit!==task.unit||!equal(model.answer,span)) return null;
++    return {...binding,positions,span,unit:task.unit};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP095IIntervalDistanceEvidence(task,model,record,context) {
++  return latestSubmissionMatches(model,record)?replayP095IIntervalDistanceEvidence(task,model,context):null;
++}
+diff --git a/tests/p9-p095i-interval-distance-browser.cjs b/tests/p9-p095i-interval-distance-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e446c6a38dfe872bffdeb3ce4a1f7f07b965197c
+--- /dev/null
++++ b/tests/p9-p095i-interval-distance-browser.cjs
+@@ -0,0 +1,163 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P095I_ARTIFACTS || path.join(root, 'verification/p9-p095i-interval-distance'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P095I_SOURCES, replayP095IIntervalDistanceEvidence, submittedP095IIntervalDistanceEvidence} = await entry('dist/learning/p095i-interval-distance-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b29 = await entry('dist/learning/phase5/b29-model.js');
++  const b33 = await entry('dist/learning/phase5/b33-model.js');
++
++const wrongSteps = task => b29.solveSteps(task).map(step =>
++  step.field === 'answer' ? {...step,value:'0'} : step);
++const correctSteps = task => b29.solveSteps(task).filter(step => step.field === "answer");
++
++  const cases = P095I_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP095IIntervalDistanceEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b29.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P095I');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b33,b29].find(model=>model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b29.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP095IIntervalDistanceEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P095I_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p095i-interval-distance-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P095I_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p095i-interval-distance.test.mjs b/tests/p9-p095i-interval-distance.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..afd15eae7b9dc34d7f78d26559633482880f2ca4
+--- /dev/null
++++ b/tests/p9-p095i-interval-distance.test.mjs
+@@ -0,0 +1,31 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example, inspect} from '../dist/learning/phase5/b29-model.js';
++import {P095I_SOURCES, replayP095IIntervalDistanceEvidence, submittedP095IIntervalDistanceEvidence} from '../dist/learning/p095i-interval-distance-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P095I_SOURCES) {
++  test(`${sessionId}:${index} replays directed movement and exact interval length`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP095IIntervalDistanceEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const correct = example(task);
++    assert.ok(inspect(task, correct).correct);
++    assert.deepEqual(replay(correct)?.positions.at(-1), task.end);
++    assert.equal(replayP095IIntervalDistanceEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    wrong.answer = '0';
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP095IIntervalDistanceEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP095IIntervalDistanceEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].v = '27';
++    assert.equal(replay(forged), null);
++    assert.equal(replay({...correct,unit:'kg'}),null);
++  });
++}

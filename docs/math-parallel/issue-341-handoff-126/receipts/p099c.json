@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-measurement-combine",
+  "commit": "31dae4429b354f73908fb75b04c67b7db81510ed",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p099c-measurement-combine-evidence.js",
+    "tests/p9-p099c-measurement-combine-browser.cjs",
+    "tests/p9-p099c-measurement-combine.test.mjs"
+  ],
+  "scope": "重放各段的合并和撤回，按最小单位核对总和与单位。",
+  "sources": [
+    {
+      "sessionId": "measurecalc",
+      "index": 4,
+      "nodeId": "mt_6oxQPNLHNv",
+      "type": "x-m29-combine",
+      "taskHash": "69de8d06f8b4faca3206960618a4ffd486255a5a35bce8e495d89195ec1645a5"
+    },
+    {
+      "sessionId": "practicalmeasure",
+      "index": 3,
+      "nodeId": "mt_5HV4mbgSGH",
+      "type": "x-m29-combine",
+      "taskHash": "0288899bf3d3fb5ac98d6e7507945b95f07aa3de7b30843665ef60f2d8c61760"
+    }
+  ],
+  "nodePass": 16,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 23,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "8018d5fb8414266e94253a2606a0a9eb284216561314c5de7efacfbc477c85b6",
+    "measurecalc-4-correct-check-decoded.json": "76513d792ed7c437bab49f357bedde09dc31da9e9b5678087cd2e5c244b4eec9",
+    "measurecalc-4-correct-check-storage.txt": "76513d792ed7c437bab49f357bedde09dc31da9e9b5678087cd2e5c244b4eec9",
+    "measurecalc-4-correct.png": "fb80afb87ffe981afb66419658acf6a77136d088dabae3531c5849b44fb7b9d3",
+    "measurecalc-4-corrected-draft-decoded.json": "24f697e687a1edbbc421bafcf82673e6b3f1444fd53af7f764a3d6b62f61014e",
+    "measurecalc-4-corrected-draft-storage.txt": "24f697e687a1edbbc421bafcf82673e6b3f1444fd53af7f764a3d6b62f61014e",
+    "measurecalc-4-offline-reload-decoded.json": "9305a783487f7dc0b115dba8c8b0c75558d20b5b3364d26b43d4f99b9ef2fb8d",
+    "measurecalc-4-offline-reload-storage.txt": "9305a783487f7dc0b115dba8c8b0c75558d20b5b3364d26b43d4f99b9ef2fb8d",
+    "measurecalc-4-restored-storage-decoded.json": "aa41fe3a01006d162e8a45e48d54f5d703d055d19b217c029e72e5832ea0868e",
+    "measurecalc-4-restored-storage-storage.txt": "aa41fe3a01006d162e8a45e48d54f5d703d055d19b217c029e72e5832ea0868e",
+    "measurecalc-4-wrong-check-decoded.json": "6ce0347685cfae534d34c6f65bb01ce27f0f098f5715913961122817a80e1d58",
+    "measurecalc-4-wrong-check-storage.txt": "6ce0347685cfae534d34c6f65bb01ce27f0f098f5715913961122817a80e1d58",
+    "measurecalc-4-wrong.png": "dc511241acfb3af41fce38d804d918e6020e097bce0a3f54f24326518e164196",
+    "native-state-v2.json": "e568e513c6edb44ecdebecd26f3814ff921ea1c96560e7b024ea07612894929e",
+    "node.log": "470db2c78174b36424fcae9cfd6de8e814947085a6ad581add602756583d07c0",
+    "practicalmeasure-3-correct-check-decoded.json": "cd9690f33c22cab38a0c02b18d2d676282e6e2fb3cd5ee88cbc303de3bb114ab",
+    "practicalmeasure-3-correct-check-storage.txt": "cd9690f33c22cab38a0c02b18d2d676282e6e2fb3cd5ee88cbc303de3bb114ab",
+    "practicalmeasure-3-correct.png": "a5d0990527cb64e7256a55d0daf1318a1e206b8decd64821694d1187e1c872a0",
+    "practicalmeasure-3-corrected-draft-decoded.json": "13132416483924a8f42bc61a6af91c7050bdf5ac4c5b53fa3311914bee1556b1",
+    "practicalmeasure-3-corrected-draft-storage.txt": "13132416483924a8f42bc61a6af91c7050bdf5ac4c5b53fa3311914bee1556b1",
+    "practicalmeasure-3-offline-reload-decoded.json": "aab9bc75c039f1a3323a62ed6416f1a63abbc16c6d631285ff04c177e16365ea",
+    "practicalmeasure-3-offline-reload-storage.txt": "aab9bc75c039f1a3323a62ed6416f1a63abbc16c6d631285ff04c177e16365ea",
+    "practicalmeasure-3-restored-backup-decoded.json": "aa41fe3a01006d162e8a45e48d54f5d703d055d19b217c029e72e5832ea0868e",
+    "practicalmeasure-3-restored-backup-storage.txt": "aa41fe3a01006d162e8a45e48d54f5d703d055d19b217c029e72e5832ea0868e",
+    "practicalmeasure-3-retry-decoded.json": "a637bb5600adbfcffd8a852f3a50d0c3033986153be0701c50e11947c3900c3d",
+    "practicalmeasure-3-retry-storage.txt": "a637bb5600adbfcffd8a852f3a50d0c3033986153be0701c50e11947c3900c3d",
+    "practicalmeasure-3-wrong-check-decoded.json": "55505fe0f444d2530b1b1d4692691f68f6e5314219303ce9df006de4908de592",
+    "practicalmeasure-3-wrong-check-storage.txt": "55505fe0f444d2530b1b1d4692691f68f6e5314219303ce9df006de4908de592",
+    "practicalmeasure-3-wrong.png": "7046dc8029a20435ba1de1ce33c265725b6def0337db7ace1e774cc056ab3dfe",
+    "preflight.log": "f69513a872287b5621f4fe04caf2f8ec1f815b177cd6aeed73c4afca4178bb91",
+    "results.json": "fa23ef8e7edd30e1145a3504c02c1df706cb5630d772a9bb9862329672e19435"
+  }
+}

@@ -1,0 +1,299 @@
+diff --git a/dist/learning/p102c-multiplication-chain-evidence.js b/dist/learning/p102c-multiplication-chain-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..8d9ee79b8d9e569361f00698a18b00e750555073
+--- /dev/null
++++ b/dist/learning/p102c-multiplication-chain-evidence.js
+@@ -0,0 +1,87 @@
++import {initial, number, valid} from './phase5/b13-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++export const P102C_SOURCES = Object.freeze([
++  {
++    "sessionId": "factorpairs",
++    "index": 2,
++    "nodeId": "mt_nZkL5-XjRX",
++    "type": "x-mulchain",
++    "taskHash": "29f7ed332f4176a7dd57e434add18d4bd967d3407b0c3d9f3befefc42b8d326a"
++  },
++  {
++    "sessionId": "mentalproducts",
++    "index": 4,
++    "nodeId": "mt_pjfmCMMPjO",
++    "type": "x-mulchain",
++    "taskHash": "13940b8e20c76dd506a11f1e9b1bdd38edb35f3adcdd06d25b574d6c1aeedd33"
++  },
++  {
++    "sessionId": "productways",
++    "index": 2,
++    "nodeId": "mt_Lb2ZnMdkYR",
++    "type": "x-mulchain",
++    "taskHash": "6bb052a024060d23e39637c05a490bac35b27caad2d7464cac89f5d614d67bdc"
++  }
++].map(Object.freeze));
++
++export function p102cMultiplicationChainBinding(task, context) {
++  const source = P102C_SOURCES.find(row => row.sessionId === context?.sessionId && row.index === context?.index);
++  if (!source || !matchesNativeEvidenceTask(task,context,source)) return null;
++  return {nodeId:source.nodeId,kind:'p102c-multiplication-chain',method:null,question:'先合并哪两个因数？怎样保证第三个没有漏掉？'};
++}
++
++export function replayP102CMultiplicationChainEvidence(task, model, context) {
++  try {
++    const binding = p102cMultiplicationChainBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue !== '' || Object.keys(model.history).length !== model.history.length) return null;
++    const original = task.values.map((value,index) => ({ids:[index],value}));
++    let groups = original;
++    let selected = [];
++    let merges = [];
++    for (const {action,data} of model.history) {
++      if (data.bucket !== null || data.token !== null) return null;
++      if (action === 'b13-chain-pick') {
++        const i = data.index;
++        if (!Number.isInteger(i) || i < 0 || i >= groups.length || groups.length < 2) return null;
++        if (selected.includes(i)) selected = selected.filter(index => index !== i);
++        else if (selected.length < 2) selected.push(i);
++        continue;
++      }
++      if (data.index !== null) return null;
++      if (action === 'b13-reset') {
++        groups = original;
++        selected = [];
++        merges = [];
++      } else if (action === 'b13-chain-undo') {
++        if (merges.length) {
++          groups = merges.pop().before;
++          selected = [];
++        }
++      } else if (action === 'b13-chain-merge') {
++        if (selected.length !== 2) continue;
++        const [i,j] = selected;
++        const left = groups[i];
++        const right = groups[j];
++        const value = left.value * right.value;
++        if (number(data.result) !== value) continue;
++        merges.push({before:groups,left,right,result:data.result});
++        groups = [...groups.filter((_,index) => index !== i && index !== j),{ids:[...left.ids,...right.ids],value}];
++        selected = [];
++      } else {
++        return null;
++      }
++    }
++    if (!sameEvidence({groups,selected,merges},model.board) || groups.length !== 1 ||
++        !sameEvidence([...groups[0].ids].sort((a,b)=>a-b),original.map((_,i)=>i)) ||
++        number(model.answer) !== groups[0].value) return null;
++    return {...binding,products:merges.map(({left,right})=>left.value*right.value)};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP102CMultiplicationChainEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model,record) ? replayP102CMultiplicationChainEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p102c-multiplication-chain-browser.cjs b/tests/p9-p102c-multiplication-chain-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..e312c25b9d892d3a17810954fa41ef85d32b51eb
+--- /dev/null
++++ b/tests/p9-p102c-multiplication-chain-browser.cjs
+@@ -0,0 +1,160 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P102C_ARTIFACTS || path.join(root, 'verification/p9-p102c-multiplication-chain'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P102C_SOURCES, replayP102CMultiplicationChainEvidence, submittedP102CMultiplicationChainEvidence} = await entry('dist/learning/p102c-multiplication-chain-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b13 = await entry('dist/learning/phase5/b13-model.js');
++
++const wrongSteps = task => b13.solveSteps(task).map(step => step.field === 'answer' ? {...step,value:'999'} : step);
++const correctSteps = task => b13.solveSteps(task).filter(step => step.field === 'answer');
++  const cases = P102C_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP102CMultiplicationChainEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b13.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P102C');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b13.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b13.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP102CMultiplicationChainEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P102C_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p102c-multiplication-chain-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P102C_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p102c-multiplication-chain.test.mjs b/tests/p9-p102c-multiplication-chain.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..de8a57bc5d1d1d31034daba604e9e800eb67538a
+--- /dev/null
++++ b/tests/p9-p102c-multiplication-chain.test.mjs
+@@ -0,0 +1,34 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {act, example, inspect} from '../dist/learning/phase5/b13-model.js';
++import {P102C_SOURCES, replayP102CMultiplicationChainEvidence, submittedP102CMultiplicationChainEvidence} from '../dist/learning/p102c-multiplication-chain-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P102C_SOURCES) {
++  test(`${sessionId}:${index} replays merges without reusing an original factor`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP102CMultiplicationChainEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const correct = example(task);
++    assert.ok(inspect(task, correct).correct);
++    assert.deepEqual(replay(correct)?.products.at(-1), task.values.reduce((a,b)=>a*b,1));
++    assert.equal(replayP102CMultiplicationChainEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    act(task, wrong, 'b13-reset');
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP102CMultiplicationChainEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP102CMultiplicationChainEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].data.index = 5;
++    assert.equal(replay(forged), null);
++    act(task, correct, 'b13-chain-undo');
++    assert.equal(replay(correct), null);
++    act(task, correct, 'b13-reset');
++    assert.equal(replay(correct), null);
++  });
++}

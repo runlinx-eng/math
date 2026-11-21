@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/followup-division-reverse",
+  "commit": "94bd04cf51f2036cff6910a1217617d71b440e1c",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p096d-division-reverse-evidence.js",
+    "tests/p9-p096d-division-reverse-browser.cjs",
+    "tests/p9-p096d-division-reverse.test.mjs"
+  ],
+  "scope": "重放总量与组数交换，核对交换后确实停在新方向，并精确复核两个商。",
+  "sources": [
+    {
+      "sessionId": "turnarray",
+      "index": 2,
+      "nodeId": "mt_C9ZfT-4cgn",
+      "type": "x-divreverse",
+      "taskHash": "592b776fadec59fc3ce05d41ea0eb2083b5a6b8fcf01dc60f10bdf719d71fd40"
+    }
+  ],
+  "nodePass": 21,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "c2254592868358b21c72be34301e1fcc7c6422ab29b367f19a2ff055bf64f115",
+    "native-state-v2.json": "75412322bbe50a5cf9d4a6e0bf78b5220a998673d6c3c68fd66944137b4ed78b",
+    "node.log": "c4e80610272bc6d7483f12a4bc04d616b197a283a38fd3a3ae9ab692ad2c1915",
+    "preflight.log": "517b2f69b1ede653e4fa540d37e31072fb0d9934bed00b0f9ad3a2b0852a65f4",
+    "results.json": "fd2f2631e2010203f02e4da5cdc0df4174ebd15f79e783f4dabcb98715a22319",
+    "turnarray-2-correct-check-decoded.json": "c995d30329ea0b4964e9f8246279e6e48d6ed674110410e0fd2ff27c72686684",
+    "turnarray-2-correct-check-storage.txt": "c995d30329ea0b4964e9f8246279e6e48d6ed674110410e0fd2ff27c72686684",
+    "turnarray-2-correct.png": "b51d40b848f81caace4e986c34aefb556bbe37bc435b7dbc5a688d3dd2c642d2",
+    "turnarray-2-corrected-draft-decoded.json": "edceece554103d329e3d63989ab020ee5632750c4126e08b90cdfe495a22dee9",
+    "turnarray-2-corrected-draft-storage.txt": "edceece554103d329e3d63989ab020ee5632750c4126e08b90cdfe495a22dee9",
+    "turnarray-2-offline-reload-decoded.json": "60ed5e0c4c6e2fa8059730a2946704e562663e5ccd770e54a6cd76d6b8937f65",
+    "turnarray-2-offline-reload-storage.txt": "60ed5e0c4c6e2fa8059730a2946704e562663e5ccd770e54a6cd76d6b8937f65",
+    "turnarray-2-restored-backup-decoded.json": "3754907e5fbdebefeab801b9d38e56f5d094bbe6f4d1894a2cf1810cf450fd22",
+    "turnarray-2-restored-backup-storage.txt": "3754907e5fbdebefeab801b9d38e56f5d094bbe6f4d1894a2cf1810cf450fd22",
+    "turnarray-2-retry-decoded.json": "20d29124322af2ac84bd14471e89f7d3b79be3cb974b232da392f5da5e4ed338",
+    "turnarray-2-retry-storage.txt": "20d29124322af2ac84bd14471e89f7d3b79be3cb974b232da392f5da5e4ed338",
+    "turnarray-2-wrong-check-decoded.json": "ce609cdae9b318d4f13ecc6e89155ac9d489228c7c2a0868c88e11380b085f91",
+    "turnarray-2-wrong-check-storage.txt": "ce609cdae9b318d4f13ecc6e89155ac9d489228c7c2a0868c88e11380b085f91",
+    "turnarray-2-wrong.png": "5139ee52308bdbbd7666aef3d73699616d9b1567657ec2880d3e5f784f85c1e7"
+  }
+}

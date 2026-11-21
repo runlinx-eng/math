@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-coordinate-distance",
+  "commit": "a7897095a6c4bf17f0d630833c2cbdda0b6e06ef",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p115d-coordinate-distance-evidence.js",
+    "tests/p9-p115d-coordinate-distance-browser.cjs",
+    "tests/p9-p115d-coordinate-distance.test.mjs"
+  ],
+  "scope": "轴向距离、跨零及百米比例换算。原生动作记录量了哪一段。",
+  "sources": [
+    {
+      "sessionId": "pointdistance",
+      "index": 1,
+      "nodeId": "mt_h7zVgCDVmx",
+      "type": "x-p24-distance",
+      "taskHash": "35fabaa46e93299ef0becd3de92d4e874e8b70b1ebcf55a93cb01eeef1955b18"
+    },
+    {
+      "sessionId": "pointdistance",
+      "index": 2,
+      "nodeId": "mt_h7zVgCDVmx",
+      "type": "x-p24-distance",
+      "taskHash": "31269dcc46821781bb2d78994f1d530ddd1ef3b2cc5df6046f666bba049abd02"
+    }
+  ],
+  "nodePass": 39,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "b0103bd5b3c91ea277b287b320de0a426b71a4ad4b483b68c8152a33eb691284",
+    "native-state-v2.json": "41b2af1046b67969c52daeb4faf35f731332e609bad88d91b88533b458e2b5ab",
+    "node.log": "5708679e53738d43d4ebd3abcfd7c1eaf0ec5480044230813e643c3c3129d41e",
+    "pointdistance-1-correct-check-decoded.json": "84cf37e1cbcb7b388d7d8d8de2e3240d77ceeda5430977dd1826b1b1503ae0bb",
+    "pointdistance-1-correct-check-storage.txt": "84cf37e1cbcb7b388d7d8d8de2e3240d77ceeda5430977dd1826b1b1503ae0bb",
+    "pointdistance-1-correct.png": "af04098b62915039c4c8486d51a3dce90afad8cba18f59fe7fb72793e259ef8b",
+    "pointdistance-1-corrected-draft-decoded.json": "8047c1c5637b1ffb7aba74ebf97b6bd6d5342a8fa741ca40d3d4ac2ad26a5396",
+    "pointdistance-1-corrected-draft-storage.txt": "8047c1c5637b1ffb7aba74ebf97b6bd6d5342a8fa741ca40d3d4ac2ad26a5396",
+    "pointdistance-1-offline-reload-decoded.json": "456ec59ad66d4285f46a90abe53221536480d40d967f34dcdff0eac82c77a797",
+    "pointdistance-1-offline-reload-storage.txt": "456ec59ad66d4285f46a90abe53221536480d40d967f34dcdff0eac82c77a797",
+    "pointdistance-1-restored-storage-decoded.json": "5fdfb5fb387f29b36d4822206167cd7a3d8de96e6d10f674fdfe86f4d27ecd9d",
+    "pointdistance-1-restored-storage-storage.txt": "5fdfb5fb387f29b36d4822206167cd7a3d8de96e6d10f674fdfe86f4d27ecd9d",
+    "pointdistance-1-wrong-check-decoded.json": "cb00ec9abb287eb5e3bcb5b3a6ef8bfa57199f1117fe88d6fb60a12c9589788a",
+    "pointdistance-1-wrong-check-storage.txt": "cb00ec9abb287eb5e3bcb5b3a6ef8bfa57199f1117fe88d6fb60a12c9589788a",
+    "pointdistance-1-wrong.png": "3d9d331edde2852833c5bdc4a689c08faa2dda244984802cb5da1762b692cd25",
+    "pointdistance-2-correct-check-decoded.json": "93205a242a4adc19203a3a7ff709f86ca1bfcb90ac808d6b739cdd816a73ed91",
+    "pointdistance-2-correct-check-storage.txt": "93205a242a4adc19203a3a7ff709f86ca1bfcb90ac808d6b739cdd816a73ed91",
+    "pointdistance-2-correct.png": "af37a490d4cdacc85ff5956353be77b1b055b6690103b2b582d4835c282d821d",
+    "pointdistance-2-corrected-draft-decoded.json": "391150943d398d8b6cfa26940d6afbf5b58c0cf07e8c959201501312b4129d27",
+    "pointdistance-2-corrected-draft-storage.txt": "391150943d398d8b6cfa26940d6afbf5b58c0cf07e8c959201501312b4129d27",
+    "pointdistance-2-offline-reload-decoded.json": "9968a21636df38dba82ff29f4bbeacb2086606f43c3a987b917dfa7f4bfafdd0",
+    "pointdistance-2-offline-reload-storage.txt": "9968a21636df38dba82ff29f4bbeacb2086606f43c3a987b917dfa7f4bfafdd0",
+    "pointdistance-2-restored-backup-decoded.json": "5fdfb5fb387f29b36d4822206167cd7a3d8de96e6d10f674fdfe86f4d27ecd9d",
+    "pointdistance-2-restored-backup-storage.txt": "5fdfb5fb387f29b36d4822206167cd7a3d8de96e6d10f674fdfe86f4d27ecd9d",
+    "pointdistance-2-retry-decoded.json": "b882af5a21c3b40483696e86f5ff87e37033e58fef1437f2574ab7b82209a5d0",
+    "pointdistance-2-retry-storage.txt": "b882af5a21c3b40483696e86f5ff87e37033e58fef1437f2574ab7b82209a5d0",
+    "pointdistance-2-wrong-check-decoded.json": "0fc472515b59bdf21b9e09fbc59e3b4ccf466240da2c149253fa74b9746fe995",
+    "pointdistance-2-wrong-check-storage.txt": "0fc472515b59bdf21b9e09fbc59e3b4ccf466240da2c149253fa74b9746fe995",
+    "pointdistance-2-wrong.png": "cc962d8446f778ed356acfc468158a8615671062228f277c2a56bccc2c45245c",
+    "preflight.log": "ca7d7724d97ef212f1acd66ffa6ece9570cd9a805ef38f4eedc8384e7a673bca",
+    "results.json": "b09db2411bf3fc76ea61dfa5d92c1a50976fae4bb301853f0cc17e07ad66d54f"
+  }
+}

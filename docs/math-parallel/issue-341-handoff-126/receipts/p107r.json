@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-factor-rectangles",
+  "commit": "85404d7a119c3f98403b60688eb67fe4b7da3704",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p107r-factor-rectangles-evidence.js",
+    "tests/p9-p107r-factor-rectangles-browser.cjs",
+    "tests/p9-p107r-factor-rectangles.test.mjs"
+  ],
+  "scope": "重放所有因数长方形的保存，逐一核面积、成对因数和旋转去重。",
+  "sources": [
+    {
+      "sessionId": "factorlab",
+      "index": 0,
+      "nodeId": "mt_FHIAv6dfhU",
+      "type": "x-factorrects",
+      "taskHash": "ff89024af2052faa14649d37531ef1de7a1f3d64d2c1b0ca2284a39df21e91d9"
+    },
+    {
+      "sessionId": "term38",
+      "index": 0,
+      "nodeId": "mt_xfwv0M83mJ",
+      "type": "x-factorrects",
+      "taskHash": "3565ef221b2242c95b06538b5bb4337ed2408bffbe99bc8e115f49b87ab808b0"
+    }
+  ],
+  "nodePass": 22,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 23,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "a05d69137eb3994a3e1a7610c7ebe0706a1e16f953320285132552bccb8460bb",
+    "factorlab-0-correct-check-decoded.json": "db07e8fe9cc30df1998244c52a0d4498dafbfe9b72a29e94cbd165b345e89a1a",
+    "factorlab-0-correct-check-storage.txt": "db07e8fe9cc30df1998244c52a0d4498dafbfe9b72a29e94cbd165b345e89a1a",
+    "factorlab-0-correct.png": "07812e1d0a121510ad30ae3d8df49611164ad042c27fca17b557ab9744c54425",
+    "factorlab-0-corrected-draft-decoded.json": "e712ab50eb443deb85dd6b6adad60fd4a19c26f8c4317dbfbfa6da590db6a7a0",
+    "factorlab-0-corrected-draft-storage.txt": "e712ab50eb443deb85dd6b6adad60fd4a19c26f8c4317dbfbfa6da590db6a7a0",
+    "factorlab-0-offline-reload-decoded.json": "920e4bc22e52b143e638fee27cc2bf1a8cf7f2d990c2c808d51a48f7d8056756",
+    "factorlab-0-offline-reload-storage.txt": "920e4bc22e52b143e638fee27cc2bf1a8cf7f2d990c2c808d51a48f7d8056756",
+    "factorlab-0-restored-storage-decoded.json": "31874878977ca739f615d3e0bda56c1995769521f676a55603b1eb098dbec8af",
+    "factorlab-0-restored-storage-storage.txt": "31874878977ca739f615d3e0bda56c1995769521f676a55603b1eb098dbec8af",
+    "factorlab-0-wrong-check-decoded.json": "f6699c6fc8437028facecbe9bea7c92aaf3544cc1c8d7941d99552cf8e32038f",
+    "factorlab-0-wrong-check-storage.txt": "f6699c6fc8437028facecbe9bea7c92aaf3544cc1c8d7941d99552cf8e32038f",
+    "factorlab-0-wrong.png": "e1eb1fc30d7e73c875e49f913f07ab8782f72a3ff539a114a416c5afbd39d9e7",
+    "native-state-v2.json": "fca9cd2cbe0f4b064c4749c6b405de5ccc98b23cd19159cc3d71f7cb9a5d2155",
+    "node.log": "0a7f36c21d3cb588b7e5fb1b01e0adebd7c1999efb0517b10d114bbb0562a9cd",
+    "preflight.log": "a06554fa65ab6faa18220cb8f46ef61e97d272edb9369b737224b2443e7aa0c4",
+    "results.json": "0fbdaa4ec39c8df99927f133bd79ea261d48558492ab5d0e14ec1052015241bb",
+    "term38-0-correct-check-decoded.json": "eba43bfee0318f438f93434f1a9e07449331fc199e74127059b1cf361019e8a6",
+    "term38-0-correct-check-storage.txt": "eba43bfee0318f438f93434f1a9e07449331fc199e74127059b1cf361019e8a6",
+    "term38-0-correct.png": "e2bc04571f3809ebd7b0035e2a7273ddc7dc4df199ae0abfb767eb85a3c3357b",
+    "term38-0-corrected-draft-decoded.json": "89cf84cc9920b90fd371ce4134956adafba8ea89cf5f3c0df88db75bcc43b1ec",
+    "term38-0-corrected-draft-storage.txt": "89cf84cc9920b90fd371ce4134956adafba8ea89cf5f3c0df88db75bcc43b1ec",
+    "term38-0-offline-reload-decoded.json": "90df942ac74c29ea422b0ee8c2df5ad39dd2fd2b701f780784d533831c66fcad",
+    "term38-0-offline-reload-storage.txt": "90df942ac74c29ea422b0ee8c2df5ad39dd2fd2b701f780784d533831c66fcad",
+    "term38-0-restored-backup-decoded.json": "31874878977ca739f615d3e0bda56c1995769521f676a55603b1eb098dbec8af",
+    "term38-0-restored-backup-storage.txt": "31874878977ca739f615d3e0bda56c1995769521f676a55603b1eb098dbec8af",
+    "term38-0-retry-decoded.json": "56722d29f7804086ca737b44930011022b6a83f5d01c6d0a196163d54df1769e",
+    "term38-0-retry-storage.txt": "56722d29f7804086ca737b44930011022b6a83f5d01c6d0a196163d54df1769e",
+    "term38-0-wrong-check-decoded.json": "e888ce260d7cd1340e3941d9b0d88bffaf51b3b0b0c91c66f9123e205d345e99",
+    "term38-0-wrong-check-storage.txt": "e888ce260d7cd1340e3941d9b0d88bffaf51b3b0b0c91c66f9123e205d345e99",
+    "term38-0-wrong.png": "7e14b382d151a963c8b38564d219a0060146c5884cb948cb2619f974e533eba6"
+  }
+}

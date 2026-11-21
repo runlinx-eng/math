@@ -1,0 +1,399 @@
+diff --git a/dist/learning/p107a-area-products-evidence.js b/dist/learning/p107a-area-products-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..647b6c4d0be4403d6d223eacd2755b5a3af4b498
+--- /dev/null
++++ b/dist/learning/p107a-area-products-evidence.js
+@@ -0,0 +1,147 @@
++import {initial, number, valid} from './phase5/b14-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++export const P107A_SOURCES = Object.freeze([
++  {
++    "sessionId": "largerfacts",
++    "index": 0,
++    "nodeId": "mt_8A3pZNOp7Z",
++    "type": "x-areaproduct",
++    "taskHash": "591026b38d52b774e1a3289c2bf11e9178eb1dc9c11e960e1689d97cc5fbb2ea"
++  },
++  {
++    "sessionId": "largerfacts",
++    "index": 1,
++    "nodeId": "mt_8A3pZNOp7Z",
++    "type": "x-areaproduct",
++    "taskHash": "ed2dc02f1d456d845765b4c81a431b3e052d260de4922b5ac742507a75454cd0"
++  },
++  {
++    "sessionId": "writtenstart",
++    "index": 0,
++    "nodeId": "mt_DyGBW3ZHh3",
++    "type": "x-areaproduct",
++    "taskHash": "1a6dcd3e5c36624a268981a123be68b5368c33a1d79c77f42a79b23df5e2b08a"
++  },
++  {
++    "sessionId": "longproduct",
++    "index": 2,
++    "nodeId": "mt_q9EaJc2FP8",
++    "type": "x-areaproduct",
++    "taskHash": "b87f5b78ca6bd987300746cd885724bce804a730ddefb85d37a0d0ae9bed63ca"
++  },
++  {
++    "sessionId": "decimalproduct",
++    "index": 2,
++    "nodeId": "mt_SoDP1fSQEB",
++    "type": "x-areaproduct",
++    "taskHash": "ffc0ea216ee83ea53525e160a5012c9f083642d2e616e9fa76ac3bacc3c91304"
++  },
++  {
++    "sessionId": "mentalchoices",
++    "index": 0,
++    "nodeId": "mt_vmW2cb5c7A",
++    "type": "x-areaproduct",
++    "taskHash": "13580d87a5587378d3e1e80a8f27e620d2d05fb3e5a769c53a891e529a2f1832"
++  },
++  {
++    "sessionId": "combineproducts",
++    "index": 0,
++    "nodeId": "mt_AR-K72OIIO",
++    "type": "x-areaproduct",
++    "taskHash": "2922a2a328d419550bd9c1e130d8b86ed95ff1dbe687a2bf724a10cc32edfa25"
++  },
++  {
++    "sessionId": "modelrecipe",
++    "index": 0,
++    "nodeId": "mt_K3R0yaHVcx",
++    "type": "x-areaproduct",
++    "taskHash": "3dba29ecc8254b08178281e156f6cde8a1a9245ad70e462a5dc6d54bccbaf415"
++  },
++  {
++    "sessionId": "translateamount",
++    "index": 1,
++    "nodeId": "mt_3VmBdlAeOZ",
++    "type": "x-areaproduct",
++    "taskHash": "08ae045d0d726879d652f82115094c8f91c36d90d56f95739bfdd338440e583f"
++  },
++  {
++    "sessionId": "structure39",
++    "index": 0,
++    "nodeId": "mt__Itf4aQZUj",
++    "type": "x-areaproduct",
++    "taskHash": "39f6a5cf05b613d211f3d0482378110a02ae812ee12f0722ecc4b92b2e018172"
++  }
++].map(Object.freeze));
++
++export function p107aAreaProductsBinding(task, context) {
++  const source = P107A_SOURCES.find(row => row.sessionId === context?.sessionId && row.index === context?.index);
++  if (!source || !matchesNativeEvidenceTask(task,context,source)) return null;
++  return {nodeId:source.nodeId,kind:'p107a-area-products',method:null,question:'两个边长怎样拆？每块面积加起来为什么等于整个长方形？'};
++}
++
++function nativeCut(task,x,y) {
++  if (!Number.isInteger(x) || !Number.isInteger(y) || x < 1 || x > task.a || y < 1 || y > task.b) return false;
++  if (task.a === 7 && task.b === 15) return y === 5 || y === 10;
++  if (task.a === 23 && task.b === 4) return x === 3 || x === 20;
++  if (task.a === 45 && task.b === 23) return [5,40].includes(x) && [3,20].includes(y);
++  return true;
++}
++
++function matchesRequestedSplit(task,[x,y],parts) {
++  if (task.a === 40 && task.b === 60) return parts.length === 4;
++  if (task.a === 45 && task.b === 23) return parts.length === 4;
++  if (parts.length !== 2) return false;
++  if (task.a === 456) return x === 400 || x === 56;
++  if (task.a === 14) return x === 10 || x === 4;
++  if (task.a === 7) return y < task.b;
++  if (task.a === 6) return true;
++  return x < task.a;
++}
++
++export function replayP107AAreaProductsEvidence(task, model, context) {
++  try {
++    const binding = p107aAreaProductsBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue !== '' || Object.keys(model.history).length !== model.history.length) return null;
++    let cuts = null;
++    let parts = [];
++    let values = [];
++    for (const {action,data} of model.history) {
++      if (data.index !== null || data.side !== null || data.value !== null) return null;
++      const {fields} = data;
++      if (action === 'b14-reset') {
++        cuts = null;
++        parts = [];
++        values = [];
++      } else if (action === 'b14-cut') {
++        const x = number(fields.cutA);
++        const y = number(fields.cutB);
++        if (!nativeCut(task,x,y)) continue;
++        cuts = [x,y];
++        parts = [x,task.a-x].flatMap((a,i) => [y,task.b-y].flatMap((b,j) =>
++          a && b ? [{a,b,side:[i,j]}] : []));
++        values = [];
++      } else if (action === 'b14-part') {
++        const part = parts[values.length];
++        if (!part || !sameEvidence(cuts,[number(fields.cutA),number(fields.cutB)])) continue;
++        const area = part.a*part.b;
++        if (number(fields.part) === area) values.push(area);
++      } else {
++        return null;
++      }
++    }
++    if (!cuts || !matchesRequestedSplit(task,cuts,parts) ||
++        !sameEvidence({cuts,parts,values},model.board) || !sameEvidence(cuts,[number(model.cutA),number(model.cutB)]) ||
++        values.length !== parts.length || number(model.answer) !== values.reduce((a,b)=>a+b,0) ||
++        number(model.answer) !== task.a*task.b) return null;
++    if (task.a === 40 && task.b === 60 && number(model.base) !== (task.a/10)*(task.b/10)) return null;
++    return {...binding,cuts,partialProducts:values,totalUnits:task.a*task.b,unitsPerWhole:task.a === 456 ? 100 : 1};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP107AAreaProductsEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model,record) ? replayP107AAreaProductsEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p107a-area-products-browser.cjs b/tests/p9-p107a-area-products-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..5b61b71c276af10517e77fd4c7df10f5bbdaf996
+--- /dev/null
++++ b/tests/p9-p107a-area-products-browser.cjs
+@@ -0,0 +1,176 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P107A_ARTIFACTS || path.join(root, 'verification/p9-p107a-area-products'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P107A_SOURCES, replayP107AAreaProductsEvidence, submittedP107AAreaProductsEvidence} = await entry('dist/learning/p107a-area-products-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b14 = await entry('dist/learning/phase5/b14-model.js');
++  const b15 = await entry('dist/learning/phase5/b15-model.js');
++  const b16 = await entry('dist/learning/phase5/b16-model.js');
++  await (await entry('dist/learning/phase4/async-batches.js')).ensureB39Ready();
++
++function areaSteps(task) {
++  const first = task.a === 456 ? 400 : task.a === 40 ? 20 : task.a === 6 ? 3 :
++    task.a >= 10 ? Math.floor(task.a / 10) * 10 : task.a;
++  const second = task.b === 60 ? 30 : task.b >= 10 ? Math.floor(task.b / 10) * 10 : task.b;
++  const field = (field,value) => ({field,value:String(value)});
++  const steps = [field('cutA',first),field('cutB',second),{action:'b14-cut'}];
++  for (const a of [first,task.a-first].filter(Boolean)) {
++    for (const b of [second,task.b-second].filter(Boolean)) steps.push(field('part',a*b),{action:'b14-part'});
++  }
++  if (task.a === 40 && task.b === 60) steps.push(field('base',24));
++  steps.push(field('answer',task.a*task.b));
++  return steps;
++}
++const wrongSteps = task => areaSteps(task).map(step => step.field === 'answer' ? {...step,value:'0'} : step);
++const correctSteps = task => areaSteps(task).filter(step => step.field === 'answer');
++  const cases = P107A_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP107AAreaProductsEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b14.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P107A');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,[b14,b15,b16].find(model => model.TYPES.has(prior.type)).solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b14.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP107AAreaProductsEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P107A_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p107a-area-products-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P107A_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p107a-area-products.test.mjs b/tests/p9-p107a-area-products.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..076a94a12284395b7552bf1fb51f64ad7a128f7e
+--- /dev/null
++++ b/tests/p9-p107a-area-products.test.mjs
+@@ -0,0 +1,58 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
++import {act, initial, inspect} from '../dist/learning/phase5/b14-model.js';
++import {P107A_SOURCES, replayP107AAreaProductsEvidence, submittedP107AAreaProductsEvidence} from '../dist/learning/p107a-area-products-evidence.js';
++
++await ensureB39Ready();
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++function solve(task,cutA,cutB) {
++  const model=initial(task);
++  model.cutA=String(cutA);
++  model.cutB=String(cutB);
++  act(task,model,'b14-cut');
++  for (const a of [cutA,task.a-cutA].filter(Boolean)) {
++    for (const b of [cutB,task.b-cutB].filter(Boolean)) {
++      model.part=String(a*b);
++      act(task,model,'b14-part');
++    }
++  }
++  model.answer=String(task.a*task.b);
++  if (task.a===40 && task.b===60) model.base='24';
++  return model;
++}
++
++const choices = {
++  'largerfacts:0':[20,30], 'largerfacts:1':[7,5], 'writtenstart:0':[3,4], 'longproduct:2':[40,3],
++  'decimalproduct:2':[56,7], 'mentalchoices:0':[7,8], 'combineproducts:0':[10,6], 'modelrecipe:0':[6,3],
++  'translateamount:1':[20,4], 'structure39:0':[7,8],
++};
++
++for (const {sessionId,index,taskHash} of P107A_SOURCES) {
++  const position=`${sessionId}:${index}`;
++  test(`${position} replays each required area block`,()=>{
++    const context={sessionId,index};
++    const task=sessionTaskFor(sessionId,index);
++    const replay=model=>replayP107AAreaProductsEvidence(task,model,context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    const model=solve(task,...choices[position]);
++    assert.ok(inspect(task,model).correct);
++    assert.equal(replay(model)?.partialProducts.reduce((a,b)=>a+b,0),task.a*task.b);
++    assert.equal(replayP107AAreaProductsEvidence(task,model,{sessionId,index:-1}),null);
++    const wrong=structuredClone(model);
++    wrong.answer='0';
++    assert.equal(submittedP107AAreaProductsEvidence(task,model,{attempts:[{value:wrong}]},context),null);
++    assert.deepEqual(submittedP107AAreaProductsEvidence(task,model,{attempts:[{value:structuredClone(model)}]},context),replay(model));
++    const forged=structuredClone(model);
++    forged.history[1].data.fields.part='0';
++    assert.equal(replay(forged),null);
++    const unsplit=solve(task,task.a,task.b);
++    assert.equal(replay(unsplit),null);
++    act(task,model,'b14-reset');
++    assert.equal(replay(model),null);
++  });
++}

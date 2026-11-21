@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-equal-mass-sharing",
+  "commit": "f24312b09f6a880402f7b3fbebee092f615010d6",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p095s-equal-mass-sharing-evidence.js",
+    "tests/p9-p095s-equal-mass-sharing-browser.cjs",
+    "tests/p9-p095s-equal-mass-sharing.test.mjs"
+  ],
+  "scope": "重放分配与撤销，核验各份克数、总量守恒及精确千克换算。",
+  "sources": [
+    {
+      "sessionId": "practicalmeasure",
+      "index": 1,
+      "nodeId": "mt_5HV4mbgSGH",
+      "type": "x-m29-share",
+      "taskHash": "4788db12f79b43484493b264396c1bc2f1c9137413897c30b5b1581dff0cf4dd"
+    },
+    {
+      "sessionId": "practicalmeasure",
+      "index": 4,
+      "nodeId": "mt_5HV4mbgSGH",
+      "type": "x-m29-share",
+      "taskHash": "daaa2225c03a36cae24415cf283fa511a85c1c6025ea85bc5bc3a9ca59d674ae"
+    }
+  ],
+  "nodePass": 16,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "e903091a49cedcc6f424c118efe62495052136f0681c641947e01d7e8b5bce9b",
+    "native-state-v2.json": "21741b224c7cb55fcb6cf1ad3430f65fd46aa56ae1b97b074b98cd995fa25a37",
+    "node.log": "aece5f6311e9cdff75725743eea49c2e25d3ca4cc6ebcf95136823cedc1ed942",
+    "practicalmeasure-1-correct-check-decoded.json": "f804601bbe219d683b801e65276f1e8a9fb1519c838fecf3d9c3750230e6fca0",
+    "practicalmeasure-1-correct-check-storage.txt": "f804601bbe219d683b801e65276f1e8a9fb1519c838fecf3d9c3750230e6fca0",
+    "practicalmeasure-1-correct.png": "76efcab0af7ffd533f3c967c954344fad9a7bc8af78f8ddda2b0af35b9e2d6e5",
+    "practicalmeasure-1-corrected-draft-decoded.json": "b054a48807445ebc06dbaf1874a55610e8d05cf4c9f1736974d065d2e020913f",
+    "practicalmeasure-1-corrected-draft-storage.txt": "b054a48807445ebc06dbaf1874a55610e8d05cf4c9f1736974d065d2e020913f",
+    "practicalmeasure-1-offline-reload-decoded.json": "6a43910a43dd1f02794c6bc583681c53858b6f47d134a355f4bd64a2807548fa",
+    "practicalmeasure-1-offline-reload-storage.txt": "6a43910a43dd1f02794c6bc583681c53858b6f47d134a355f4bd64a2807548fa",
+    "practicalmeasure-1-restored-storage-decoded.json": "8482a98868dbf0a1a88b337ff8f48293e69f21f7109a198343caf9fdb9d6d2d3",
+    "practicalmeasure-1-restored-storage-storage.txt": "8482a98868dbf0a1a88b337ff8f48293e69f21f7109a198343caf9fdb9d6d2d3",
+    "practicalmeasure-1-wrong-check-decoded.json": "c7beec77ed0a88a8c4ecd572a9b1c80a6899185c6b95fdcc75e704c225914893",
+    "practicalmeasure-1-wrong-check-storage.txt": "c7beec77ed0a88a8c4ecd572a9b1c80a6899185c6b95fdcc75e704c225914893",
+    "practicalmeasure-1-wrong.png": "c020ec15b09f47dd49b073e5c85019af18fe68cd266484bdfc1f0fb377efd15a",
+    "practicalmeasure-4-correct-check-decoded.json": "bebd2f5c1cfc91382d74b1450ebcf71d7c6760e68d6e9aadd99ccb113ff34d6d",
+    "practicalmeasure-4-correct-check-storage.txt": "bebd2f5c1cfc91382d74b1450ebcf71d7c6760e68d6e9aadd99ccb113ff34d6d",
+    "practicalmeasure-4-correct.png": "e2d47e9e93cc867fa8e027d55bed1ea8de3083b42c801a6b97ea57f0d2459a33",
+    "practicalmeasure-4-corrected-draft-decoded.json": "0c6cfcf801b8845648a38c85ac4fe468e2fb8ec21ef6fe17ce610d6c1d8e34d3",
+    "practicalmeasure-4-corrected-draft-storage.txt": "0c6cfcf801b8845648a38c85ac4fe468e2fb8ec21ef6fe17ce610d6c1d8e34d3",
+    "practicalmeasure-4-offline-reload-decoded.json": "ab6ebf9bb0719f3201faec5682b64cfbcdc5fd1aa73e3683334a10fe661760bd",
+    "practicalmeasure-4-offline-reload-storage.txt": "ab6ebf9bb0719f3201faec5682b64cfbcdc5fd1aa73e3683334a10fe661760bd",
+    "practicalmeasure-4-restored-backup-decoded.json": "8482a98868dbf0a1a88b337ff8f48293e69f21f7109a198343caf9fdb9d6d2d3",
+    "practicalmeasure-4-restored-backup-storage.txt": "8482a98868dbf0a1a88b337ff8f48293e69f21f7109a198343caf9fdb9d6d2d3",
+    "practicalmeasure-4-retry-decoded.json": "47728010e4dd45c8ebdce22b0d636747f94587855c66f5e1462cf664b2eb9d4f",
+    "practicalmeasure-4-retry-storage.txt": "47728010e4dd45c8ebdce22b0d636747f94587855c66f5e1462cf664b2eb9d4f",
+    "practicalmeasure-4-wrong-check-decoded.json": "0ca882a0c665600eb0ef65f1c26d5c9ac5c79fb5f97692496539847cb2782c6e",
+    "practicalmeasure-4-wrong-check-storage.txt": "0ca882a0c665600eb0ef65f1c26d5c9ac5c79fb5f97692496539847cb2782c6e",
+    "practicalmeasure-4-wrong.png": "67c23c445c408a18255f72db3f8b003f8ef395a57c6e6a389c9dca4c5961bebd",
+    "preflight.log": "3fd96def373d511bdc45905f85cce712ecd8a4007ed0da73d96e6828271b4610",
+    "results.json": "46e59f96b372731e825771a8e9365d90ab859460eca721ee5cb5198859848f67"
+  }
+}

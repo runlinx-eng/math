@@ -1,0 +1,311 @@
+diff --git a/dist/learning/p113p-place-alignment-evidence.js b/dist/learning/p113p-place-alignment-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..3d3e224ec2fdcb8c9e9bd8c193b58bf80db0ad7d
+--- /dev/null
++++ b/dist/learning/p113p-place-alignment-evidence.js
+@@ -0,0 +1,101 @@
++import {initial, number, valid} from './phase5/b11-model.js';
++import {replayPlaceEvidence} from './place-evidence.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++
++export const P113P_SOURCES = Object.freeze([
++  {
++    "sessionId": "tensmove",
++    "index": 0,
++    "nodeId": "mt_I5j1ZWo2cn",
++    "type": "x-placecalc",
++    "taskHash": "67d7cb5553c7acd62ab6418d6cc310aebc39ca5d0941b8f1746aa4bcf65b8a07"
++  },
++  {
++    "sessionId": "tensmove",
++    "index": 2,
++    "nodeId": "mt_I5j1ZWo2cn",
++    "type": "x-placecalc",
++    "taskHash": "8a84d02cde54fad9ddd8cc826ec24ead7ad0ff27d61cbc33c029d2dc7afe3e68"
++  },
++  {
++    "sessionId": "addhundred",
++    "index": 1,
++    "nodeId": "mt_glPPG-kTQY",
++    "type": "x-placecalc",
++    "taskHash": "77f665a2c5de55af31227f3b75509266a4db3fd76f28e960d4fbbb55d37a7546"
++  },
++  {
++    "sessionId": "oneslarge",
++    "index": 2,
++    "nodeId": "mt_oDU_8zMZjp",
++    "type": "x-placecalc",
++    "taskHash": "b5451188d02838125f3c4a68406e125204c3bc9c75856c58460e1954bdcf3d3a"
++  },
++  {
++    "sessionId": "tenslarge",
++    "index": 0,
++    "nodeId": "mt_aHQ9kNt3is",
++    "type": "x-placecalc",
++    "taskHash": "05382c98ca409f48f70da3e836a7efae9edc144ebbeda48227e4b1353b150e43"
++  },
++  {
++    "sessionId": "hundredsmove",
++    "index": 0,
++    "nodeId": "mt_xPqczp7zPX",
++    "type": "x-placecalc",
++    "taskHash": "e74d44eb9cc76183463a80255467706a319c07d4a1940a7be88c3d7ab0509069"
++  },
++  {
++    "sessionId": "hundredsmove",
++    "index": 2,
++    "nodeId": "mt_xPqczp7zPX",
++    "type": "x-placecalc",
++    "taskHash": "de57cb5286a3acb97dd91b0a0d83be1749600e006b421305eaa2c404190462ff"
++  }
++].map(Object.freeze));
++
++export function p113pPlaceAlignmentBinding(task, context) {
++  const row = P113P_SOURCES.find(source => source.sessionId === context?.sessionId && source.index === context?.index);
++  if (!row || !matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p113p-place-alignment',method:null,question:'新增的是几个一、十或百？哪些数位没有变？'};
++}
++
++function replayAlignment(task, model) {
++  const columns = model.counts.length;
++  const total = task.values[0]+task.values[1];
++  const counts = Array.from({length:columns},(_,i)=>task.values.reduce((sum,value)=>
++    sum+Math.floor(value/10**i)%10,0));
++  if (model.issue !== '' || !model.started || counts.some(count=>count>=10) ||
++      !sameEvidence(counts,model.counts) || model.remaining.some(value=>value!==0) ||
++      number(model.answer)!==total || !sameEvidence(model.align,['0','0'])) return null;
++  let first=null;
++  let accepted=null;
++  for (const event of model.history) {
++    if (accepted !== null || !hasExactKeys(event,['action','guess','align']) ||
++        event.action !== 'b11-place-start' || number(event.guess) === null ||
++        !Array.isArray(event.align) || event.align.length !== 2 ||
++        !Array.from(event.align).every(value=>value === '' ||
++          typeof value === 'string' && /^[0-9]+$/.test(value) && Number(value)<columns)) return null;
++    first ??= event.guess;
++    if (sameEvidence(event.align,['0','0'])) accepted=event.guess;
++  }
++  if (accepted === null || first!==model.first || accepted!==model.guess) return null;
++  return {counts,total,exchanges:[]};
++}
++
++export function replayP113PPlaceAlignmentEvidence(task, model, context) {
++  try {
++    const binding = p113pPlaceAlignmentBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        Object.keys(model.history).length!==model.history.length) return null;
++    const proof = model.history.some(event=>event.action==='b11-exchange') ?
++      replayPlaceEvidence(task,model) : replayAlignment(task,model);
++    return proof ? {...binding,counts:proof.counts,total:proof.total,exchanges:proof.exchanges} : null;
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP113PPlaceAlignmentEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model,record) ? replayP113PPlaceAlignmentEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p113p-place-alignment-browser.cjs b/tests/p9-p113p-place-alignment-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..271f9a68ddba6c08df4ee852547bba4c26d7610f
+--- /dev/null
++++ b/tests/p9-p113p-place-alignment-browser.cjs
+@@ -0,0 +1,160 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P113P_ARTIFACTS || path.join(root, 'verification/p9-p113p-place-alignment'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P113P_SOURCES, replayP113PPlaceAlignmentEvidence, submittedP113PPlaceAlignmentEvidence} = await entry('dist/learning/p113p-place-alignment-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b11 = await entry('dist/learning/phase5/b11-model.js');
++
++const wrongSteps = task => b11.solveSteps(task).map(step => step.field === 'answer' ? {...step,value:'999'} : step);
++const correctSteps = task => b11.solveSteps(task).filter(step => step.field === 'answer');
++  const cases = P113P_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP113PPlaceAlignmentEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b11.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P113P');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,b11.solveSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b11.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP113PPlaceAlignmentEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P113P_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p113p-place-alignment-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P113P_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p113p-place-alignment.test.mjs b/tests/p9-p113p-place-alignment.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..a948b2d7987e898a8e6f2acde145ca8f6d057dd2
+--- /dev/null
++++ b/tests/p9-p113p-place-alignment.test.mjs
+@@ -0,0 +1,32 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example, inspect} from '../dist/learning/phase5/b11-model.js';
++import {P113P_SOURCES, replayP113PPlaceAlignmentEvidence, submittedP113PPlaceAlignmentEvidence} from '../dist/learning/p113p-place-alignment-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId, index, taskHash} of P113P_SOURCES) {
++  test(`${sessionId}:${index} replays alignment and matching place values`, () => {
++    const context = {sessionId, index};
++    const task = sessionTaskFor(sessionId, index);
++    const replay = model => replayP113PPlaceAlignmentEvidence(task, model, context);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'), taskHash);
++    const correct = example(task);
++    assert.ok(inspect(task, correct).correct);
++    assert.deepEqual(replay(correct)?.total, task.values[0]+task.values[1]);
++    assert.equal(replayP113PPlaceAlignmentEvidence(task, correct, {sessionId, index:-1}), null);
++    const wrong = structuredClone(correct);
++    wrong.answer = '999';
++    assert.equal(replay(wrong), null);
++    assert.equal(submittedP113PPlaceAlignmentEvidence(task, correct, {attempts:[{value:wrong}]}, context), null);
++    assert.deepEqual(submittedP113PPlaceAlignmentEvidence(task, correct, {attempts:[{value:structuredClone(correct)}]}, context), replay(correct));
++    const forged = structuredClone(correct);
++    forged.history[0].align[0] = '1';
++    assert.equal(replay(forged), null);
++    correct.history=[];
++    assert.equal(replay(correct),null);
++  });
++}

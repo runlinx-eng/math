@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-interval-distance",
+  "commit": "914d928ebb7ca662e18ebd76eb6bf754054974f9",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p095i-interval-distance-evidence.js",
+    "tests/p9-p095i-interval-distance-browser.cjs",
+    "tests/p9-p095i-interval-distance.test.mjs"
+  ],
+  "scope": "重放移动与撤销，核算跨零的起终点、总间隔和单位。",
+  "sources": [
+    {
+      "sessionId": "temperaturechange",
+      "index": 3,
+      "nodeId": "mt_RVK655t391",
+      "type": "x-m29-interval",
+      "taskHash": "05f894ea37993959879f0e61d3a73d188f4178ddd61107e781a08211c5ff8b70"
+    },
+    {
+      "sessionId": "discounts",
+      "index": 2,
+      "nodeId": "mt_oMkQQ2O-ML",
+      "type": "x-m29-interval",
+      "taskHash": "40e7789b20de23a6041ea822eff28e5623ad3e9d424b96d6d95a57a82a87477f"
+    }
+  ],
+  "nodePass": 16,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 23,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "34c939d5d61b83baa9a7d0c34f64bc76e2d8ea414b532157ccc35c8d9e6c0eb6",
+    "discounts-2-correct-check-decoded.json": "7b971b20f7d48a046ca96fba785e29a54129a042a89ad1a73de299660417aaee",
+    "discounts-2-correct-check-storage.txt": "7b971b20f7d48a046ca96fba785e29a54129a042a89ad1a73de299660417aaee",
+    "discounts-2-correct.png": "95d2114d3336d8854decb6a7d0d81702e7f5488ed9546a5e4903ad4de81749a3",
+    "discounts-2-corrected-draft-decoded.json": "be14761bf68f1dd2ba024872bde9d587066e84e6b73648d7686094047bc4dc45",
+    "discounts-2-corrected-draft-storage.txt": "be14761bf68f1dd2ba024872bde9d587066e84e6b73648d7686094047bc4dc45",
+    "discounts-2-offline-reload-decoded.json": "47666371d774e77a94bfbc89c608552842af218f13e1ab02c53a589cd5f8f44a",
+    "discounts-2-offline-reload-storage.txt": "47666371d774e77a94bfbc89c608552842af218f13e1ab02c53a589cd5f8f44a",
+    "discounts-2-restored-backup-decoded.json": "f97fbab0bd0352081aa86d0f4a3ccc03a0ffe84732529ce1331608fc69f04490",
+    "discounts-2-restored-backup-storage.txt": "f97fbab0bd0352081aa86d0f4a3ccc03a0ffe84732529ce1331608fc69f04490",
+    "discounts-2-retry-decoded.json": "fc5e8069decbd9a4f1664365d5c59110586312f488c5beec883d040aff11cb8a",
+    "discounts-2-retry-storage.txt": "fc5e8069decbd9a4f1664365d5c59110586312f488c5beec883d040aff11cb8a",
+    "discounts-2-wrong-check-decoded.json": "bf6f7a22aab4eb6eb4ab80305e96a53596c986abae5f53f4de45c8051ba4659e",
+    "discounts-2-wrong-check-storage.txt": "bf6f7a22aab4eb6eb4ab80305e96a53596c986abae5f53f4de45c8051ba4659e",
+    "discounts-2-wrong.png": "513a6d378bd6b4a3a8ab8a23a062c95be43c6fe882cc552f2c3584bbd598db95",
+    "native-state-v2.json": "4144f2454a5ce93d71dc0feaa70b379dd6c7aad0ca7283502e8ebe866fcb93c8",
+    "node.log": "2c09ba3be55cc0d31a44f066c7dc582739d1b49edfd11381e6c55093c62ff748",
+    "preflight.log": "307646430edebde657fddae1b4b24698f8246c334619dadaeab3bfcba967b185",
+    "results.json": "682aa51ea98be454c6222d4f729a0732f32629a22e2b04ac56d929114d41e8d5",
+    "temperaturechange-3-correct-check-decoded.json": "9a26bd8564056ae353d70caaca16b58917775d33cb5f5f1b8d6870589ed1cb8f",
+    "temperaturechange-3-correct-check-storage.txt": "9a26bd8564056ae353d70caaca16b58917775d33cb5f5f1b8d6870589ed1cb8f",
+    "temperaturechange-3-correct.png": "36ba8e69b29c4887fe3d2cdddad87a77c4ec45f72974949c3c340cb2978351f6",
+    "temperaturechange-3-corrected-draft-decoded.json": "ba7d93cb0a1acb2f832a58afd57ca8487e49f109acda3a0eac477e601e29a15e",
+    "temperaturechange-3-corrected-draft-storage.txt": "ba7d93cb0a1acb2f832a58afd57ca8487e49f109acda3a0eac477e601e29a15e",
+    "temperaturechange-3-offline-reload-decoded.json": "a4179688b8bc773521dede01c9ed7790e62c58eedaa4dbf0fe94d6ec027883a3",
+    "temperaturechange-3-offline-reload-storage.txt": "a4179688b8bc773521dede01c9ed7790e62c58eedaa4dbf0fe94d6ec027883a3",
+    "temperaturechange-3-restored-storage-decoded.json": "f97fbab0bd0352081aa86d0f4a3ccc03a0ffe84732529ce1331608fc69f04490",
+    "temperaturechange-3-restored-storage-storage.txt": "f97fbab0bd0352081aa86d0f4a3ccc03a0ffe84732529ce1331608fc69f04490",
+    "temperaturechange-3-wrong-check-decoded.json": "fbb23145008432f89b7f4be9fd781c64f23efa3f951adfe1f5058f3c2ae655bc",
+    "temperaturechange-3-wrong-check-storage.txt": "fbb23145008432f89b7f4be9fd781c64f23efa3f951adfe1f5058f3c2ae655bc",
+    "temperaturechange-3-wrong.png": "dcc979fc4f8851ec9785109173448ffe56d3464502c860756a059945d55b7fb6"
+  }
+}

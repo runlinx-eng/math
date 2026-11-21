@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-signed-mul-div",
+  "commit": "71eaa111aba5d2e296b5a89783f34a27978d5b6b",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p090s-signed-mul-div-evidence.js",
+    "tests/p9-p090s-signed-mul-div-browser.cjs",
+    "tests/p9-p090s-signed-mul-div.test.mjs"
+  ],
+  "scope": "按原生顺序重放有符号乘除各行和重置，精确核对结果与零。",
+  "sources": [
+    {
+      "sessionId": "fractionfour",
+      "index": 10,
+      "nodeId": "mt_gNUE4B3vuk",
+      "type": "x-signwalk",
+      "taskHash": "014eace4356e307ff71c16ffcd44c6c83e01a36c62959859f967fa4f40b9f022"
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 11,
+      "nodeId": "mt_gNUE4B3vuk",
+      "type": "x-signwalk",
+      "taskHash": "d63b42bc76511488879485dde716eb4468bb948750d823213c00b4a92733b700"
+    }
+  ],
+  "nodePass": 30,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "9e0a7574301794bb71689919c93ed0a0187d5ed23e4079bc3f831256f2bf7cdd",
+    "fractionfour-10-correct-check-decoded.json": "7747b9e030ad281e157a4ff66fa0bd6602868fc95a0391f5029979449db41912",
+    "fractionfour-10-correct-check-storage.txt": "7747b9e030ad281e157a4ff66fa0bd6602868fc95a0391f5029979449db41912",
+    "fractionfour-10-correct.png": "558b387f88f84c1ea76271ea3863cb3f101d355b838432139fa6581d30ae3bd6",
+    "fractionfour-10-corrected-draft-decoded.json": "a316440ac8c055d277376663b138e410acc1aa459dc4f6fd403a453581a43d00",
+    "fractionfour-10-corrected-draft-storage.txt": "a316440ac8c055d277376663b138e410acc1aa459dc4f6fd403a453581a43d00",
+    "fractionfour-10-offline-reload-decoded.json": "ad4e5c53dfef902db19a802ebdb00fefee7f51342d73b161043631e8f3641e18",
+    "fractionfour-10-offline-reload-storage.txt": "ad4e5c53dfef902db19a802ebdb00fefee7f51342d73b161043631e8f3641e18",
+    "fractionfour-10-restored-storage-decoded.json": "a671bba2d514fbd6a95bc829388f4b1aa65c1a7b2f0788932a7ef748b070ecd0",
+    "fractionfour-10-restored-storage-storage.txt": "a671bba2d514fbd6a95bc829388f4b1aa65c1a7b2f0788932a7ef748b070ecd0",
+    "fractionfour-10-wrong-check-decoded.json": "a4a5ef4c0b98aad4899c64d497c51aa37528a0a2924db4a448d802084cbfb3ed",
+    "fractionfour-10-wrong-check-storage.txt": "a4a5ef4c0b98aad4899c64d497c51aa37528a0a2924db4a448d802084cbfb3ed",
+    "fractionfour-10-wrong.png": "88d18b130eef7db5fa77b337836968ad90d92672083fcd46bf304706ddfe9128",
+    "fractionfour-11-correct-check-decoded.json": "dc41a61d78de28bdad749125707067c5314c5a481cfe67ca2464c9f115eccbac",
+    "fractionfour-11-correct-check-storage.txt": "dc41a61d78de28bdad749125707067c5314c5a481cfe67ca2464c9f115eccbac",
+    "fractionfour-11-correct.png": "36608fd8007471bff6d66e6df7b66240142483aa6aa2f13aa26f84dc25b932aa",
+    "fractionfour-11-corrected-draft-decoded.json": "d41cfeecb948549b2a38a6c75e29a032b09b344d48a2ba253d88db5e542e1659",
+    "fractionfour-11-corrected-draft-storage.txt": "d41cfeecb948549b2a38a6c75e29a032b09b344d48a2ba253d88db5e542e1659",
+    "fractionfour-11-offline-reload-decoded.json": "73c286befa8dcfedf6187ed6c270052a49b677cc27333262b0b00e047187d74f",
+    "fractionfour-11-offline-reload-storage.txt": "73c286befa8dcfedf6187ed6c270052a49b677cc27333262b0b00e047187d74f",
+    "fractionfour-11-restored-backup-decoded.json": "a671bba2d514fbd6a95bc829388f4b1aa65c1a7b2f0788932a7ef748b070ecd0",
+    "fractionfour-11-restored-backup-storage.txt": "a671bba2d514fbd6a95bc829388f4b1aa65c1a7b2f0788932a7ef748b070ecd0",
+    "fractionfour-11-retry-decoded.json": "c2fed9b2637dadb5263452ad651573954deb7ca3ea50f9685738c2064df194e2",
+    "fractionfour-11-retry-storage.txt": "c2fed9b2637dadb5263452ad651573954deb7ca3ea50f9685738c2064df194e2",
+    "fractionfour-11-wrong-check-decoded.json": "000db76bf6383603213f717869898c44f4e1cd6758f2735605dba4c23d97850b",
+    "fractionfour-11-wrong-check-storage.txt": "000db76bf6383603213f717869898c44f4e1cd6758f2735605dba4c23d97850b",
+    "fractionfour-11-wrong.png": "1745fbb5ab954458e63e4b80ad355f6af450aff7ca20fc3b880f026797f65f64",
+    "native-state-v2.json": "9cf0d4a3369b0449d93e091a9677ceb8583d4e053e4bd157648f5366477528df",
+    "node.log": "f629de7e1fb320e36cb0fad9611575f38e4aba971cc03b8b216605eca98cc803",
+    "preflight.log": "3cf67be10f8806711e315212e0072ac4ad46f68fd8fe89a7ef351a4e38078580",
+    "results.json": "ef5b41200e2ed1b348e44fdc39273351707f4351dbe6510203e254533cfd281d"
+  }
+}

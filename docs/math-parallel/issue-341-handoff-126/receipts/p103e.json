@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/followup-division-equivalence",
+  "commit": "0d252a118fb430d6bb85ca90a2856cd96fd697a0",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p103e-division-equivalence-evidence.js",
+    "tests/p9-p103e-division-equivalence-browser.cjs",
+    "tests/p9-p103e-division-equivalence.test.mjs"
+  ],
+  "scope": "以精确分数交叉相乘核对所选等值卡片、分母变化和除数为零。",
+  "sources": [
+    {
+      "sessionId": "reason34",
+      "index": 3,
+      "nodeId": "mt_iyovKgZC1q",
+      "type": "x-p34-relation",
+      "taskHash": "839718feb4a22325dabca700e65026e25914255c9b02db4c964971d2ad61103d"
+    }
+  ],
+  "nodePass": 23,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "db5d0ed34fd41ebf9ee9f45fd1b4259cefba0b42ecf04b33f2b3de9f69ed2cc3",
+    "native-state-v2.json": "1754e0e06d4be77022491003a562e2ccff2fe2909d67d1b351b3e861ae5dd7bf",
+    "node.log": "e9a56bce8c8a3e2ddfbe4a9b951e90111883ca619825fe67f68230278cfa83d9",
+    "preflight.log": "2ab6a20182dbbc9f2f6bdb05970f2f20a5e4d43dbd73ba8ec5b302f82256bb28",
+    "reason34-3-correct-check-decoded.json": "35dc2fcef2da047e20cad7d26b08fb2a421909e6a5d1383b075b1d0928977a43",
+    "reason34-3-correct-check-storage.txt": "35dc2fcef2da047e20cad7d26b08fb2a421909e6a5d1383b075b1d0928977a43",
+    "reason34-3-correct.png": "88fad1701765f5260cd7ede4d567903f227409a64e0325ab62cdf02a8d744d82",
+    "reason34-3-corrected-draft-decoded.json": "e8135cb4c448f54a7ec019e9c23ee2fd7eaefe48d55b5678d2ddd13676a1f6a8",
+    "reason34-3-corrected-draft-storage.txt": "e8135cb4c448f54a7ec019e9c23ee2fd7eaefe48d55b5678d2ddd13676a1f6a8",
+    "reason34-3-offline-reload-decoded.json": "1c76724d70782bc8226220a4c8c0650097a7bf91fbf75d9f0f10913ae0339574",
+    "reason34-3-offline-reload-storage.txt": "1c76724d70782bc8226220a4c8c0650097a7bf91fbf75d9f0f10913ae0339574",
+    "reason34-3-restored-backup-decoded.json": "ea2d76de4457e6e774fe1284f838a79ed3202ec7466748d6f9f87a3ba9bea0f9",
+    "reason34-3-restored-backup-storage.txt": "ea2d76de4457e6e774fe1284f838a79ed3202ec7466748d6f9f87a3ba9bea0f9",
+    "reason34-3-retry-decoded.json": "6159c30aa3027d583e92a97b7c1e93126e70e64071d131c5a97e959cc4a26ca5",
+    "reason34-3-retry-storage.txt": "6159c30aa3027d583e92a97b7c1e93126e70e64071d131c5a97e959cc4a26ca5",
+    "reason34-3-wrong-check-decoded.json": "dd3bf58e2ca6a255db231d58af0b0373d210ae74952cffc3e9bef2b64b9de8ae",
+    "reason34-3-wrong-check-storage.txt": "dd3bf58e2ca6a255db231d58af0b0373d210ae74952cffc3e9bef2b64b9de8ae",
+    "reason34-3-wrong.png": "ee6869c514108aa93d1db6129922696598cf38fd43953bab37cf795300f35106",
+    "results.json": "5293945ed44a25d671581542eaed52f70016c7248c8c7e06419dea2d76b353ba"
+  }
+}

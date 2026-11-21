@@ -1,0 +1,297 @@
+diff --git a/dist/learning/p113u-unit-addition-evidence.js b/dist/learning/p113u-unit-addition-evidence.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..1fd65ce08ac4ca64beca729f11af57cf3db39d01
+--- /dev/null
++++ b/dist/learning/p113u-unit-addition-evidence.js
+@@ -0,0 +1,69 @@
++import {equation, initial, valid} from './phase5/b10-model.js';
++import {hasExactKeys, latestSubmissionMatches, matchesNativeEvidenceTask} from './evidence-contract.js';
++
++export const P113U_SOURCES = Object.freeze([
++  {
++    "sessionId": "scaleadd",
++    "index": 2,
++    "nodeId": "mt_3e_PQxwC12",
++    "type": "x-unitadd",
++    "taskHash": "5b4ee2fc32304e1151dea7f0ebc52eac200457604b5218823057abc6e1374c57"
++  },
++  {
++    "sessionId": "scaleadd",
++    "index": 3,
++    "nodeId": "mt_3e_PQxwC12",
++    "type": "x-unitadd",
++    "taskHash": "8ed11ea4a3d2508ed1f682b22ee34152a0d6e18084299ca5cbbbf3775aeb100d"
++  },
++  {
++    "sessionId": "scaleadd",
++    "index": 4,
++    "nodeId": "mt_3e_PQxwC12",
++    "type": "x-unitadd",
++    "taskHash": "8911952e6454629a8599363b5c973c3e7edd122f6cc0516e385049de36b92be8"
++  }
++].map(Object.freeze));
++
++export function p113uUnitAdditionBinding(task, context) {
++  const row = P113U_SOURCES.find(source=>source.sessionId === context?.sessionId && source.index === context?.index);
++  if (!row || !matchesNativeEvidenceTask(task,context,row)) return null;
++  return {nodeId:row.nodeId,kind:'p113u-unit-addition',method:null,question:'这次加的是几个十、几个一？满十后怎样换捆？'};
++}
++
++export function replayP113UUnitAdditionEvidence(task, model, context) {
++  try {
++    const binding = p113uUnitAdditionBinding(task,context);
++    if (!binding || !hasExactKeys(model,Object.keys(initial(task))) || !valid(task,model) ||
++        model.issue !== '' || !model.joined || Object.keys(model.history).length !== model.history.length) return null;
++    let joined = null;
++    let exchanges = 0;
++    for (const event of model.history) {
++      if (!hasExactKeys(event,['action','tens','ones'])) return null;
++      const {action,tens,ones} = event;
++      if (!Number.isInteger(tens) || tens < 0 || tens > 10 ||
++          !Number.isInteger(ones) || ones < 0 || ones > 20) return null;
++      if (action === 'join') {
++        if (joined?.tens !== tens || joined?.ones !== ones) exchanges = 0;
++        joined = {tens,ones};
++      } else if (action === 'exchange') {
++        if (joined?.tens !== tens || joined?.ones !== ones || task.start % 10 + ones - exchanges * 10 < 10) return null;
++        exchanges++;
++      } else {
++        return null;
++      }
++    }
++    const tens = Math.floor(task.amount/10);
++    const ones = task.amount%10;
++    if (joined?.tens !== tens || joined?.ones !== ones || model.tens !== tens || model.ones !== ones ||
++        model.exchanges !== exchanges || (task.exchange && exchanges < 1) ||
++        !equation(model.equation,task.start,10*tens+ones,'+',task.start+task.amount)) return null;
++    return {...binding,added:{tens,ones},exchanges,total:task.start+task.amount};
++  } catch {
++    return null;
++  }
++}
++
++export function submittedP113UUnitAdditionEvidence(task, model, record, context) {
++  return latestSubmissionMatches(model,record) ? replayP113UUnitAdditionEvidence(task,model,context) : null;
++}
+diff --git a/tests/p9-p113u-unit-addition-browser.cjs b/tests/p9-p113u-unit-addition-browser.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..59c8fdca19aac6b8066d2eb4bca68bfad7f2c7ef
+--- /dev/null
++++ b/tests/p9-p113u-unit-addition-browser.cjs
+@@ -0,0 +1,177 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const {execFileSync} = require('node:child_process');
++const {createHash} = require('node:crypto');
++const {pathToFileURL} = require('node:url');
++const {chromium} = require(process.env.MATH_PLAYWRIGHT_MODULE || 'playwright');
++const {createOrigin, warmAndStop, capture} = require('./helpers/p9-basic-artifact.cjs');
++const {newDesktopContext, STANDARD_DESKTOP_VIEWPORT} = require('./helpers/standard-desktop-viewport.cjs');
++
++const root = path.resolve(__dirname, '..');
++const out = path.resolve(process.env.MATH_P113U_ARTIFACTS || path.join(root, 'verification/p9-p113u-unit-addition'));
++const entry = name => import(pathToFileURL(path.join(root, name)).href);
++const sha = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
++const checks = [], observations = [], screenshots = [], errors = [];
++const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
++const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
++
++async function openControl(page, sel) {
++  let c = page.locator(sel);
++  if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
++  assert.equal(await c.count(), 1, 'unique: ' + sel);
++  for (let i = 0; i < 8 && !(await c.isVisible()); i++) {
++    const cl = c.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
++    assert.equal(await cl.count(), 1); await cl.locator(':scope > summary').click();
++  }
++  return c;
++}
++async function runSteps(page, steps) {
++  for (const s of steps) {
++    if (s.field) {
++      const inp = await openControl(page, '#extra-controls [data-xfield="' + s.field + '"]');
++      if (await inp.evaluate(el => el.tagName) === 'SELECT') await inp.selectOption(String(s.value));
++      else await inp.fill(String(s.value));
++    } else {
++      const sel = '#extra-controls [data-x="' + s.action + '"]' +
++        Object.entries(s.data || {}).map(([key,value]) => '[data-' + key + '="' + value + '"]').join('');
++      await (await openControl(page, sel)).click();
++    }
++  }
++}
++async function run() {
++  fs.mkdirSync(out, {recursive: true});
++  const {P113U_SOURCES, replayP113UUnitAdditionEvidence, submittedP113UUnitAdditionEvidence} = await entry('dist/learning/p113u-unit-addition-evidence.js');
++  const {sessionTaskFor} = await entry('dist/learning/bridges.js');
++  const b10 = await entry('dist/learning/phase5/b10-model.js');
++
++const field = (field,value) => ({field,value:String(value)});
++const count = (action,key,name,total) => Array.from({length:total},() => ({action,data:{[key]:name,delta:1}}));
++function correctSteps(task) {
++  return [...count('unit-counter','unit','tens',Math.floor(task.amount/10)),
++    ...count('unit-counter','unit','ones',task.amount%10),{action:'unit-join'},
++    ...(task.exchange ? [{action:'unit-exchange'}] : []),
++    field('equation',`${task.start}+${task.amount}=${task.start+task.amount}`)];
++}
++const wrongSteps = task => correctSteps(task).map(step=>step.field ? field('equation','1+1=2') : step);
++function prerequisiteSteps(task) {
++  if (task.type === 'x-unitadd') return correctSteps(task);
++  if (task.type === 'x-recallbench') return task.cases.flatMap(c=>[
++    field('answer',c.a+(c.op==='+'?c.b:-c.b)), {action:'recall-save'},
++  ]);
++  if (task.type === 'x-joinstory') return [...count('story-counter','group','left',task.a),
++    ...count('story-counter','group','right',task.b),field('op',task.op),
++    field('guess',task.a+task.b),{action:'story-do'},field('equation',`${task.a}+${task.b}=${task.a+task.b}`)];
++  throw Error('Unexpected prerequisite '+task.type);
++}
++  const cases = P113U_SOURCES.map(s => ({source: s, id: s.sessionId, index: s.index, context: {sessionId: s.sessionId, index: s.index}, task: sessionTaskFor(s.sessionId, s.index)}));
++  const verified = [];
++  let origin, browser, learner, restore, page, restorePage, browserVersion = null;
++  const proof = (row, snap) => submittedP113UUnitAdditionEvidence(row.task, snap.model, snap.record, row.context);
++  async function observe(p, row, stage) {
++    const r = await capture(p, out, row.id + '-' + row.index, row, stage);
++    observations.push({index: row.index, stage, attempts: r.attempts.length, correct: b10.inspect(row.task, r.model).correct, evidence: Boolean(proof(row, r))});
++    return r;
++  }
++  async function picture(p, n) { await p.screenshot({path: path.join(out, n), fullPage: true}); screenshots.push(n); }
++  try {
++    origin = await createOrigin(root); browser = await chromium.launch({headless: true}); browserVersion = browser.version();
++    learner = await newDesktopContext(browser); restore = await newDesktopContext(browser);
++    page = await learner.newPage(); restorePage = await restore.newPage();
++    for (const p of [page, restorePage]) {
++      p.on('pageerror', err => errors.push(err.message));
++      p.on('request', req => { if (!req.url().startsWith(origin.base) && !req.url().startsWith('data:') && !req.url().startsWith('blob:')) errors.push(req.url()); });
++    }
++    const release = fs.readFileSync(path.join(root, 'dist/sw.js'), 'utf8').match(/const CACHE = '([^']+)'/)[1];
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    await restorePage.goto(origin.base + 'v2.html#trail');
++    await restorePage.locator('#main [data-do="import"]').first().waitFor();
++    await restorePage.evaluate(async () => Boolean(await navigator.serviceWorker.ready));
++    await restorePage.reload();
++    await restorePage.waitForFunction(() => !!navigator.serviceWorker.controller);
++    await warmAndStop(page, origin, release, ok, 'P113U');
++    let lastSid = null, cur = 0;
++    for (const row of cases) {
++      if (row.id !== lastSid) {
++        if (lastSid) await page.goto(origin.base + 'v2.html#trail');
++        ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
++        await page.waitForFunction(() => window.mathLesson);
++        const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
++        lastSid = row.id; cur = 0;
++      }
++      while (cur < row.index) {
++        const prior=sessionTaskFor(row.id,cur);
++        await runSteps(page,prerequisiteSteps(prior));
++        await page.locator('#actions [data-do="check"]').click();
++        await page.locator('#actions [data-do="next"]').click();
++        cur++; await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++      const tag = row.id + '-' + row.index;
++      ok(createHash('sha256').update(JSON.stringify(ordered(row.task))).digest('hex') === row.source.taskHash, tag + ' hash');
++      await runSteps(page,wrongSteps(row.task));
++      await page.locator('#actions [data-do="check"]').click();
++      const wrong=await observe(page,row,'wrong-check');
++      ok(wrong.attempts.length===1 && !b10.inspect(row.task,wrong.model).correct && !proof(row,wrong),
++        'the incorrect first step fails the original Check');
++      await picture(page,tag+'-wrong.png');
++      await runSteps(page,correctSteps(row.task).filter(step=>step.field));
++      const draft=await observe(page,row,'corrected-draft');
++      const replayed=replayP113UUnitAdditionEvidence(row.task,draft.model,row.context);
++      ok(Boolean(replayed) && !proof(row,draft),'correction awaits a fresh Check');
++      await page.locator('#actions [data-do="check"]').click();
++      const good=await observe(page,row,'correct-check');
++      const accepted=proof(row,good);
++      ok(good.attempts.length===2 && Boolean(accepted),'new Check preserves all steps');
++      await picture(page, tag + '-correct.png');
++      ok((await page.reload())?.fromServiceWorker() === true, tag + ' reload');
++      await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, row.index);
++      assert.deepEqual(proof(row, await observe(page, row, 'offline-reload')), accepted);
++      verified.push({row, good, accepted});
++      const next = cases[cases.indexOf(row) + 1];
++      if (next && next.id === row.id) {
++        await page.locator('#actions [data-do="next"]').click(); cur++;
++        await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, cur);
++      }
++    }
++    await page.goto(origin.base + 'v2.html#trail');
++    await page.locator('#main [data-do="export"]').first().waitFor();
++    const saving = page.waitForEvent('download'); await page.locator('#main [data-do="export"]').first().click();
++    const bytes = fs.readFileSync(await (await saving).path());
++    fs.writeFileSync(path.join(out, 'native-state-v2.json'), bytes);
++    const upload = async (buf, name) => {
++      const ch = restorePage.waitForEvent('filechooser'); await restorePage.locator('#main [data-do="import"]').first().click();
++      await (await ch).setFiles({name, mimeType: 'application/json', buffer: buf});
++      await restorePage.waitForFunction(() => document.querySelector('#import-file')?.value === '');
++      return restorePage.locator('#toast').innerText();
++    };
++    ok((await upload(bytes, 'p009a.json')).includes('备份已合并'), 'import');
++    const rb = await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2'));
++    ok((await upload(bytes, 'p098qr.json')).includes('备份已合并'), 'repeat');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb, 'idempotent');
++    ok(!(await upload(Buffer.from('{'), 'bad.json')).includes('备份已合并'), 'corrupt');
++    ok(await restorePage.evaluate(() => localStorage.getItem('math-explorer-v2')) === rb,
++      'corrupt import preserves exact bytes');
++    const last = verified.at(-1);
++    await restorePage.goto(origin.base + 'learn.html#' + last.row.id);
++    await restorePage.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    for (const {row, good, accepted} of verified) {
++      const stage = row === last.row ? 'restored-backup' : 'restored-storage';
++      const imported = await observe(restorePage, row, stage);
++      assert.deepEqual(imported.record, good.record);
++      assert.deepEqual(proof(row, imported), accepted);
++      checks.push(row.index + ' imported history and rechecked proof match');
++    }
++    await page.goto(origin.base + 'learn.html#' + last.row.id);
++    await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
++    await (await openControl(page, '[data-do="p3-retry"]')).click();
++    ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
++    ok(errors.length === 0, 'no errors');
++    console.log('P113U_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));
++  } finally {
++    fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({schema:'math-p113u-unit-addition-browser/1',testedCheckoutSha:sha,originalControls:true,seededLessonPositionOnly:false,chromium:browserVersion,viewport:STANDARD_DESKTOP_VIEWPORT,sources:P113U_SOURCES,checks,observations,screenshots,errors},null,2)+'\n');
++    await restore?.close().catch(()=>{}); await learner?.close().catch(()=>{}); await browser?.close().catch(()=>{}); await origin?.close().catch(()=>{});
++  }
++}
++run().catch(e => { console.error(e.stack || e); process.exitCode = 1; });
+diff --git a/tests/p9-p113u-unit-addition.test.mjs b/tests/p9-p113u-unit-addition.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..ee32c8d12f997e8ba47d0b52adb8eabaace9f4dc
+--- /dev/null
++++ b/tests/p9-p113u-unit-addition.test.mjs
+@@ -0,0 +1,33 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {example, inspect} from '../dist/learning/phase5/b10-model.js';
++import {P113U_SOURCES, replayP113UUnitAdditionEvidence, submittedP113UUnitAdditionEvidence} from '../dist/learning/p113u-unit-addition-evidence.js';
++
++const ordered = value => Array.isArray(value) ? value.map(ordered) :
++  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort((a,b)=>a.localeCompare(b,'en')).map(key=>[key,ordered(value[key])])) : value;
++
++for (const {sessionId,index,taskHash} of P113U_SOURCES) {
++  test(`${sessionId}:${index} replays the saved units and regrouping`,()=>{
++    const context={sessionId,index};
++    const task=sessionTaskFor(sessionId,index);
++    const replay=model=>replayP113UUnitAdditionEvidence(task,model,context);
++    const model=example(task);
++    assert.equal(createHash('sha256').update(JSON.stringify(ordered(task))).digest('hex'),taskHash);
++    assert.ok(inspect(task,model).correct);
++    assert.equal(replay(model)?.total,task.start+task.amount);
++    assert.equal(replayP113UUnitAdditionEvidence(task,model,{sessionId,index:-1}),null);
++    const wrong=structuredClone(model);
++    wrong.equation='1+1=2';
++    assert.equal(submittedP113UUnitAdditionEvidence(task,model,{attempts:[{value:wrong}]},context),null);
++    assert.deepEqual(submittedP113UUnitAdditionEvidence(task,model,{attempts:[{value:structuredClone(model)}]},context),replay(model));
++    const tampered=structuredClone(model);
++    tampered.history[0].tens++;
++    assert.equal(replay(tampered),null);
++    const empty=structuredClone(model);
++    empty.history=[];
++    assert.ok(inspect(task,empty).correct);
++    assert.equal(replay(empty),null);
++  });
++}

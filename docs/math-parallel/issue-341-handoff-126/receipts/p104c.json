@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-calculator-check",
+  "commit": "4bacf46b234fde3412952aed8b97b65f1f195fc1",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p104c-calculator-check-evidence.js",
+    "tests/p9-p104c-calculator-check-browser.cjs",
+    "tests/p9-p104c-calculator-check.test.mjs"
+  ],
+  "scope": "追踪保留估算及随后的内置计算器运行，独立核对输入项、运算及精确结果。",
+  "sources": [
+    {
+      "sessionId": "calculator39",
+      "index": 0,
+      "nodeId": "mt_ish_uH8vZe",
+      "type": "x-s39-calc",
+      "taskHash": "88024d7bb496b690c6a1951e3aa933e25ed5bea59318a5df861ee1f0ed469d7b"
+    },
+    {
+      "sessionId": "calculator39",
+      "index": 3,
+      "nodeId": "mt_ish_uH8vZe",
+      "type": "x-s39-calc",
+      "taskHash": "68ac9b9b8699c9716fd47afcaebceffc1b48c6f6fdd364314a32e62ef1b17edf"
+    }
+  ],
+  "nodePass": 25,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "caa7b77d656eb303a7c244acf46de8adbb843aa30b327377039546ad78a1e492",
+    "calculator39-0-correct-check-decoded.json": "cf2494f2aab91d1421b61771a9f7a01005937fb1448971b59683b33630f9015b",
+    "calculator39-0-correct-check-storage.txt": "cf2494f2aab91d1421b61771a9f7a01005937fb1448971b59683b33630f9015b",
+    "calculator39-0-correct.png": "ddb54b328c98b81a09ffd7c27320dd55a535a64776237ec3f9485d8fae0f744b",
+    "calculator39-0-corrected-draft-decoded.json": "48abd162f6b9166514532a442ea16461dfdba6ca483ac561a00f0a5ce5e0186b",
+    "calculator39-0-corrected-draft-storage.txt": "48abd162f6b9166514532a442ea16461dfdba6ca483ac561a00f0a5ce5e0186b",
+    "calculator39-0-offline-reload-decoded.json": "9a1ab893d5e349f9e4e89b37e444fa1a84d15d37c63681c1b32ed58ba9746768",
+    "calculator39-0-offline-reload-storage.txt": "9a1ab893d5e349f9e4e89b37e444fa1a84d15d37c63681c1b32ed58ba9746768",
+    "calculator39-0-restored-storage-decoded.json": "54ef4203e49c176d1f14e927f8520261efebedf08b4c19a8e2b4cb5c29de55a5",
+    "calculator39-0-restored-storage-storage.txt": "54ef4203e49c176d1f14e927f8520261efebedf08b4c19a8e2b4cb5c29de55a5",
+    "calculator39-0-wrong-check-decoded.json": "59d9de796d48cf5ed6bc64502a216e5a24c6d7a3445f8dfa01226028f87a21d6",
+    "calculator39-0-wrong-check-storage.txt": "59d9de796d48cf5ed6bc64502a216e5a24c6d7a3445f8dfa01226028f87a21d6",
+    "calculator39-0-wrong.png": "1bb5fc2178a2f2a62d7a00236c42f2352e64ce4cc693e013cd978b39a5fc105c",
+    "calculator39-3-correct-check-decoded.json": "946f7691e0be9579ab31bd085f6e6704b8602319ca97c86e17f846608f9d33c2",
+    "calculator39-3-correct-check-storage.txt": "946f7691e0be9579ab31bd085f6e6704b8602319ca97c86e17f846608f9d33c2",
+    "calculator39-3-correct.png": "1b7b48b8709ac360ec77b80280765d7543b2dda2e7a37d363e48dd69463d543b",
+    "calculator39-3-corrected-draft-decoded.json": "6eee7c02a5ca60532e21d7a6de6fbb6ec4998c17b239d7b61008a65ebbe151db",
+    "calculator39-3-corrected-draft-storage.txt": "6eee7c02a5ca60532e21d7a6de6fbb6ec4998c17b239d7b61008a65ebbe151db",
+    "calculator39-3-offline-reload-decoded.json": "f09b645b9b1c5d616af1542fd2fd570a33bb0d450462cab5019e1585fd6f3b39",
+    "calculator39-3-offline-reload-storage.txt": "f09b645b9b1c5d616af1542fd2fd570a33bb0d450462cab5019e1585fd6f3b39",
+    "calculator39-3-restored-backup-decoded.json": "54ef4203e49c176d1f14e927f8520261efebedf08b4c19a8e2b4cb5c29de55a5",
+    "calculator39-3-restored-backup-storage.txt": "54ef4203e49c176d1f14e927f8520261efebedf08b4c19a8e2b4cb5c29de55a5",
+    "calculator39-3-retry-decoded.json": "00f40a161acd9f38cac22af64e97ef96d1d3a66854d09459e8a87810ec085430",
+    "calculator39-3-retry-storage.txt": "00f40a161acd9f38cac22af64e97ef96d1d3a66854d09459e8a87810ec085430",
+    "calculator39-3-wrong-check-decoded.json": "54ca2be9639a50d37ec2e8e7436523db05fb4922f0700dcd9f28cf7fe835a15b",
+    "calculator39-3-wrong-check-storage.txt": "54ca2be9639a50d37ec2e8e7436523db05fb4922f0700dcd9f28cf7fe835a15b",
+    "calculator39-3-wrong.png": "58104712d0be88d7b507246acfe756f11ef77158eb135ba450962321faf6440c",
+    "native-state-v2.json": "f896170dd7093f23f1d6316103a27b43fd323922ca569c7f0d5a64bd29c85323",
+    "node.log": "d46f21907016175729d934aa61c22d2a8e150bd3225669a3f61141b4d72313b1",
+    "preflight.log": "e746ad45970efefa333bd62907203c3a78aabfa389abcf588b5c58eb4fbfeeec",
+    "results.json": "754d8264e0df3b94a403a3301927fa3c708998d51a787a58938d67befd504a21"
+  }
+}

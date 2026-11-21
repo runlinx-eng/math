@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/followup-coordinate-change-ratio",
+  "commit": "901aeb8cdf6138e3b9fe38e74c5cc5a1428a5b57",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p098r-coordinate-change-ratio-evidence.js",
+    "tests/p9-p098r-coordinate-change-ratio-browser.cjs",
+    "tests/p9-p098r-coordinate-change-ratio.test.mjs"
+  ],
+  "scope": "重放左点到右点的选择过程，精确重算横纵变化和比值。",
+  "sources": [
+    {
+      "sessionId": "plot36",
+      "index": 2,
+      "nodeId": "mt_-3udyo6VyB",
+      "type": "x-f36-ratio",
+      "taskHash": "f039c702661a1ec34711df28a6e6f14e79f9325507e6574a67ef1c8ca874de61"
+    }
+  ],
+  "nodePass": 31,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "568bfc048a572ba4b6ac0e12ae74b6a2de78bd82cac15189808af41125f99d11",
+    "native-state-v2.json": "274635380e339ed750f17589ff9a0d8d719c8c38d8887ecbb33bb3e6bed3481d",
+    "node.log": "e4f01f1407495cb431e3d5c5f9a9a634b3fef04f6509efa24d32823c538d3625",
+    "plot36-2-correct-check-decoded.json": "a8402be4811de4a8a1555a610ff0fbaf06a775e8a0a85ba3ec22357f0736fed9",
+    "plot36-2-correct-check-storage.txt": "a8402be4811de4a8a1555a610ff0fbaf06a775e8a0a85ba3ec22357f0736fed9",
+    "plot36-2-correct.png": "72907e33f2b03d76689a492b70d106c3c624b110fc56a288cc81513a7b34c584",
+    "plot36-2-corrected-draft-decoded.json": "35ab7a6245e32a6ddf16c07cc63a0ea384c58939b4254b672c9946abba1da162",
+    "plot36-2-corrected-draft-storage.txt": "35ab7a6245e32a6ddf16c07cc63a0ea384c58939b4254b672c9946abba1da162",
+    "plot36-2-offline-reload-decoded.json": "691613e79828cca32af5095a54050b87158eb04fbdeb4512f10a3ceafc3cc6a7",
+    "plot36-2-offline-reload-storage.txt": "691613e79828cca32af5095a54050b87158eb04fbdeb4512f10a3ceafc3cc6a7",
+    "plot36-2-restored-backup-decoded.json": "6ffac117b92a11267864495dcabd81505ba5405c6b43d35e89f251a02f9aca91",
+    "plot36-2-restored-backup-storage.txt": "6ffac117b92a11267864495dcabd81505ba5405c6b43d35e89f251a02f9aca91",
+    "plot36-2-retry-decoded.json": "26b078257d86fa3346791917529fdeb18dde73592bb5891587f3170d715442c5",
+    "plot36-2-retry-storage.txt": "26b078257d86fa3346791917529fdeb18dde73592bb5891587f3170d715442c5",
+    "plot36-2-wrong-check-decoded.json": "78046514db2e6c5b170715e59d6d8211883bd6bc5e0f8407228617fb51503e34",
+    "plot36-2-wrong-check-storage.txt": "78046514db2e6c5b170715e59d6d8211883bd6bc5e0f8407228617fb51503e34",
+    "plot36-2-wrong.png": "1500ace82cce6efffe600f315204c17c182d7a711b5246364bb27d36ee3ca04a",
+    "preflight.log": "a2f25b51928f2862dcaf5ba6f0573889c6b915ca8497b66a711975565856191f",
+    "results.json": "9584c09570876cba92e169941a5858f5b3f2344565f6bfa9cfc960e1be7c4826"
+  }
+}

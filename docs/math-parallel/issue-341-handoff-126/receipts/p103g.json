@@ -1,0 +1,47 @@
+{
+  "branch": "work/b/followup-pattern-growth",
+  "commit": "3eb88a851aa4f44512304c5b6a93022dfe5c777f",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p103g-pattern-growth-evidence.js",
+    "tests/p9-p103g-pattern-growth-browser.cjs",
+    "tests/p9-p103g-pattern-growth.test.mjs"
+  ],
+  "scope": "精确重放积木填放，从前三项独立求公差和第四项。",
+  "sources": [
+    {
+      "sessionId": "repeat34",
+      "index": 2,
+      "nodeId": "mt_WXW0hjNhph",
+      "type": "x-p34-growth",
+      "taskHash": "993cc4053b9f1506b726619870d35e4eb676c3231cdbbe0ef454fcdb6a7e1e28"
+    }
+  ],
+  "nodePass": 23,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 16,
+  "captures": 6,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "bc7d7665ae346b7f9b3295a3abac0c95d78dcc5a2cd7058e22e8290aa8201ce7",
+    "native-state-v2.json": "5a1cbd98010541d2a0591186c474799a20f1e83895b3473d183703d7f456760a",
+    "node.log": "fa72cddeadfb85ddb0e47d15355e6c8deebb2ee496bcdcd22f76baaadafb1f5b",
+    "preflight.log": "7aef481d23e5f413a1168488d79d8084b99e55b97b1ee5fe89a6d14522e577c5",
+    "repeat34-2-correct-check-decoded.json": "f73e68648b32ac4d11dd7d145bdd5410b85180b3550f97c7baf0f592fa3ef9f1",
+    "repeat34-2-correct-check-storage.txt": "f73e68648b32ac4d11dd7d145bdd5410b85180b3550f97c7baf0f592fa3ef9f1",
+    "repeat34-2-correct.png": "2b553d5b4b397aa16ca0fa55049984fd7526921d7231d9b6ff6b935a53910dff",
+    "repeat34-2-corrected-draft-decoded.json": "5f2cd1cdc1728f2753f7a2ee29fddcf512c0cd35ce4320a189667b86810220d7",
+    "repeat34-2-corrected-draft-storage.txt": "5f2cd1cdc1728f2753f7a2ee29fddcf512c0cd35ce4320a189667b86810220d7",
+    "repeat34-2-offline-reload-decoded.json": "109d7851c257c4c6f68c14ebea2ca16ac2588433e9ba99c18c40cb3db8adc0ba",
+    "repeat34-2-offline-reload-storage.txt": "109d7851c257c4c6f68c14ebea2ca16ac2588433e9ba99c18c40cb3db8adc0ba",
+    "repeat34-2-restored-backup-decoded.json": "0670ee7beef32818d6a974861210babb97eaefa2f7bba6f8c7d413a1de36cacb",
+    "repeat34-2-restored-backup-storage.txt": "0670ee7beef32818d6a974861210babb97eaefa2f7bba6f8c7d413a1de36cacb",
+    "repeat34-2-retry-decoded.json": "8b156576f368901cfd239f9971e9a4b67cf4280c03fd2f8b1926dc7f9a66decf",
+    "repeat34-2-retry-storage.txt": "8b156576f368901cfd239f9971e9a4b67cf4280c03fd2f8b1926dc7f9a66decf",
+    "repeat34-2-wrong-check-decoded.json": "c36bb4ae21e2fcce3e321e73c6e2394663204705888550319dc7abc20324107e",
+    "repeat34-2-wrong-check-storage.txt": "c36bb4ae21e2fcce3e321e73c6e2394663204705888550319dc7abc20324107e",
+    "repeat34-2-wrong.png": "a0883b6f3b236bf5da8e6dc4271a8619480ccf4107d9f42b7883b4350dcab0a8",
+    "results.json": "3cbde27e69653660598e6b505d5df41ea86be2617cf78dba1961cd7e4c91255b"
+  }
+}

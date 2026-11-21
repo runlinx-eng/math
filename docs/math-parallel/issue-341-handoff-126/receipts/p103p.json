@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-paired-sequences",
+  "commit": "5f46ca523dcf7050456bcff10bd7fd69efade3aa",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p103p-paired-sequences-evidence.js",
+    "tests/p9-p103p-paired-sequences-browser.cjs",
+    "tests/p9-p103p-paired-sequences.test.mjs"
+  ],
+  "scope": "重放两列对应项和落点，通过起点及步长逐项核对两倍关系是否成立。",
+  "sources": [
+    {
+      "sessionId": "paired34",
+      "index": 0,
+      "nodeId": "mt_fxPtngwUfz",
+      "type": "x-p34-pair",
+      "taskHash": "c7f012a6c4757e8a2f9bac03008fad07c2418943955667c9e06fd902c531339c"
+    },
+    {
+      "sessionId": "paired34",
+      "index": 1,
+      "nodeId": "mt_fxPtngwUfz",
+      "type": "x-p34-pair",
+      "taskHash": "df232c0fb8e4fb9fa892a63314fd2a7c4284d7f607559dbf91a2ae18d8496b3c"
+    }
+  ],
+  "nodePass": 24,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "c41c96582d27ad6a54493b2f7c0c537dd2b5558ae96847dccbf9689328c8be5b",
+    "native-state-v2.json": "47f7d687384cc82aeebb2746dcb6611589535e73eb66f2de320e0b5c057aa567",
+    "node.log": "b4dc94a70de134ca6e3e9cfd269cde418330cc34e5f48d6e00054ee5e66f0fd8",
+    "paired34-0-correct-check-decoded.json": "4a072f20994a93ca0a7fcdf1f0b5a042e642f4584524a655402b6103de602fc3",
+    "paired34-0-correct-check-storage.txt": "4a072f20994a93ca0a7fcdf1f0b5a042e642f4584524a655402b6103de602fc3",
+    "paired34-0-correct.png": "8e555c0640ca683355b913ce9603bfba6a82ccc9ee2384a0db285a92c6735002",
+    "paired34-0-corrected-draft-decoded.json": "6fb8f4b0c3e338f2eef67e5caf1c6dd9ee138518bc911ca9dd22025331aa38d0",
+    "paired34-0-corrected-draft-storage.txt": "6fb8f4b0c3e338f2eef67e5caf1c6dd9ee138518bc911ca9dd22025331aa38d0",
+    "paired34-0-offline-reload-decoded.json": "625590e1d4a9118e96f340957a69024eba71fbf85d318b72048714cab2d5f202",
+    "paired34-0-offline-reload-storage.txt": "625590e1d4a9118e96f340957a69024eba71fbf85d318b72048714cab2d5f202",
+    "paired34-0-restored-storage-decoded.json": "89ced5621ae89cb99eed7ffb910324e291c56f7614cfd8c61f3fe81bfc3b87b6",
+    "paired34-0-restored-storage-storage.txt": "89ced5621ae89cb99eed7ffb910324e291c56f7614cfd8c61f3fe81bfc3b87b6",
+    "paired34-0-wrong-check-decoded.json": "f3a1c09946bd11e086a0690a7960c1ab4573b51ae4cc64ae8abf86a9d1d7141e",
+    "paired34-0-wrong-check-storage.txt": "f3a1c09946bd11e086a0690a7960c1ab4573b51ae4cc64ae8abf86a9d1d7141e",
+    "paired34-0-wrong.png": "812677583db4576ed654cf817040daa9ef2cd9c18524cd953d82576b77bb662b",
+    "paired34-1-correct-check-decoded.json": "8ff580530a20c877dd6bbd39c933b7f5e9e9760b19cc18aa246c863a5362af85",
+    "paired34-1-correct-check-storage.txt": "8ff580530a20c877dd6bbd39c933b7f5e9e9760b19cc18aa246c863a5362af85",
+    "paired34-1-correct.png": "96f355bf7b59ace9d3483e3b7bcb10c23417696379c004ad539fdde64eb6d383",
+    "paired34-1-corrected-draft-decoded.json": "ee6112fc123290de5c2ff15d5539994eac7fe1dabfbf61b99370e9b2554c4204",
+    "paired34-1-corrected-draft-storage.txt": "ee6112fc123290de5c2ff15d5539994eac7fe1dabfbf61b99370e9b2554c4204",
+    "paired34-1-offline-reload-decoded.json": "d9af6bd754a67317dda1ab1d80668e9a63aa40c584129378aee7267630bf2d6c",
+    "paired34-1-offline-reload-storage.txt": "d9af6bd754a67317dda1ab1d80668e9a63aa40c584129378aee7267630bf2d6c",
+    "paired34-1-restored-backup-decoded.json": "89ced5621ae89cb99eed7ffb910324e291c56f7614cfd8c61f3fe81bfc3b87b6",
+    "paired34-1-restored-backup-storage.txt": "89ced5621ae89cb99eed7ffb910324e291c56f7614cfd8c61f3fe81bfc3b87b6",
+    "paired34-1-retry-decoded.json": "560f7f110f8557e8ef7c66b6a76ce153b8f175968554ec848c82c1b7fd5efc18",
+    "paired34-1-retry-storage.txt": "560f7f110f8557e8ef7c66b6a76ce153b8f175968554ec848c82c1b7fd5efc18",
+    "paired34-1-wrong-check-decoded.json": "432b8b1bfcb41681cdb7a8132f7d65ca965150ceae8e1d61b0abc2c5e4234978",
+    "paired34-1-wrong-check-storage.txt": "432b8b1bfcb41681cdb7a8132f7d65ca965150ceae8e1d61b0abc2c5e4234978",
+    "paired34-1-wrong.png": "c2a2277eb8a7ec7788b96f00e045fca0e50d6c4223e9b6ae2ec1f9c0404675db",
+    "preflight.log": "f5b38703cf4f456e05607202f3f1c45928d723029d2f6d529b5946a54d5d92cf",
+    "results.json": "092f89972a9a5e8ea84cec846fe90af568d0186d293b479ca8db08aa3867393a"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-decimal-products",
+  "commit": "78f74627c189cb27ec92aab07b101ffdf01b892c",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p094d-decimal-products-evidence.js",
+    "tests/p9-p094d-decimal-products-browser.cjs",
+    "tests/p9-p094d-decimal-products.test.mjs"
+  ],
+  "scope": "逐位重放估值、小单位部分积和换捆进位，精确核对换回原单位的积。",
+  "sources": [
+    {
+      "sessionId": "mentalchoices",
+      "index": 2,
+      "nodeId": "mt_vmW2cb5c7A",
+      "type": "x-decimalproduct",
+      "taskHash": "1d739fd4e69645b4e6b7e12176e6a051fbc772dc6f1520b02ac02309982e38f6"
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 15,
+      "nodeId": "mt_gNUE4B3vuk",
+      "type": "x-decimalproduct",
+      "taskHash": "c5145e209159f21c69f6eeb00367fe4f7122049e5d57a0c0aff1dcb2581beadf"
+    }
+  ],
+  "nodePass": 30,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 23,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "c533180cfaf5a9ed3128a8159ecf8571b566cd24a34e3908e2ac3a7a2adde1ae",
+    "fractionfour-15-correct-check-decoded.json": "f3477efb3af3eb432d35e18c962f1151be6a337c9cf40f699c17bdc409cae85b",
+    "fractionfour-15-correct-check-storage.txt": "f3477efb3af3eb432d35e18c962f1151be6a337c9cf40f699c17bdc409cae85b",
+    "fractionfour-15-correct.png": "954a7e76425bc3eaa246e13f0324110bedfe587331ed2c76f4a334567ffe2cf4",
+    "fractionfour-15-corrected-draft-decoded.json": "b65a4fea9852045561feb4246bc5fb4dca83812720e64dcd80f631a578fc9ea0",
+    "fractionfour-15-corrected-draft-storage.txt": "b65a4fea9852045561feb4246bc5fb4dca83812720e64dcd80f631a578fc9ea0",
+    "fractionfour-15-offline-reload-decoded.json": "4b82f4c19b531e3564dd83a6b7ec7dd046b768c7c460770890db249762b9b206",
+    "fractionfour-15-offline-reload-storage.txt": "4b82f4c19b531e3564dd83a6b7ec7dd046b768c7c460770890db249762b9b206",
+    "fractionfour-15-restored-backup-decoded.json": "136e62031c65262cf675a510770b2b95ec25efcc6edc450025e5574b1713bbd9",
+    "fractionfour-15-restored-backup-storage.txt": "136e62031c65262cf675a510770b2b95ec25efcc6edc450025e5574b1713bbd9",
+    "fractionfour-15-retry-decoded.json": "52bbd78cffeab6a561e626c3ac5024d2546075cd4f6917e24a1b2ebd174ad9b7",
+    "fractionfour-15-retry-storage.txt": "52bbd78cffeab6a561e626c3ac5024d2546075cd4f6917e24a1b2ebd174ad9b7",
+    "fractionfour-15-wrong-check-decoded.json": "fafdcf7693e7b1f22e7723d9b406176b795dd7647eb1abb2f762b971f61fd1db",
+    "fractionfour-15-wrong-check-storage.txt": "fafdcf7693e7b1f22e7723d9b406176b795dd7647eb1abb2f762b971f61fd1db",
+    "fractionfour-15-wrong.png": "2c83da83c822f1a3d17c21b00d1af557af01dc14ca6c015de916c93d0d278c84",
+    "mentalchoices-2-correct-check-decoded.json": "103934f6fce975ad9c4f25cb087ecdc30987fa486f6bbe2912c81e43a3583533",
+    "mentalchoices-2-correct-check-storage.txt": "103934f6fce975ad9c4f25cb087ecdc30987fa486f6bbe2912c81e43a3583533",
+    "mentalchoices-2-correct.png": "3af6d0e601882503eb68582a8455947247e72d8ca7631f12b5552dec46f807e5",
+    "mentalchoices-2-corrected-draft-decoded.json": "aa6f09ae6b7f3dd649376adb4521200e32fdfc1621e48a6a3f354dde4f1a28c5",
+    "mentalchoices-2-corrected-draft-storage.txt": "aa6f09ae6b7f3dd649376adb4521200e32fdfc1621e48a6a3f354dde4f1a28c5",
+    "mentalchoices-2-offline-reload-decoded.json": "c88ab56e31d5b6740175094bd7449f9cdb3bade7b7c242547b9319763ed6f1fd",
+    "mentalchoices-2-offline-reload-storage.txt": "c88ab56e31d5b6740175094bd7449f9cdb3bade7b7c242547b9319763ed6f1fd",
+    "mentalchoices-2-restored-storage-decoded.json": "136e62031c65262cf675a510770b2b95ec25efcc6edc450025e5574b1713bbd9",
+    "mentalchoices-2-restored-storage-storage.txt": "136e62031c65262cf675a510770b2b95ec25efcc6edc450025e5574b1713bbd9",
+    "mentalchoices-2-wrong-check-decoded.json": "2ebbb44e2918e6e61b9e88b7dca4a6417545b9a91694cde421cb2e720706b1c0",
+    "mentalchoices-2-wrong-check-storage.txt": "2ebbb44e2918e6e61b9e88b7dca4a6417545b9a91694cde421cb2e720706b1c0",
+    "mentalchoices-2-wrong.png": "115053e452814f012ec41aa7b2769f7862fae0844d5fea027d43820900882703",
+    "native-state-v2.json": "c4265fa6a31e2f352ca4a46532fc2215dbd758e2b25ba1f5baa306a1f56b1abc",
+    "node.log": "13ae77c3a01e9d89ec13895efe19331efb5badfb5baf8025e1180d32f70808ae",
+    "preflight.log": "97f73fe546ddbce9a1f8c8176a13e8760dfc3ecbb5abd088ce8bb4a998dec18e",
+    "results.json": "02ca44f5ef984125fe09cc8cb5517960c85ecaa0d37f6e93d9454607e62e626a"
+  }
+}

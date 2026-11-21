@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-fraction-dotplot",
+  "commit": "489de2eed0742ae323adc07cfc2556ea86e75dfa",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p116f-fraction-dotplot-evidence.js",
+    "tests/p9-p116f-fraction-dotplot-browser.cjs",
+    "tests/p9-p116f-fraction-dotplot.test.mjs"
+  ],
+  "scope": "按八分之一单位精确核对各条记录、重复点、极差与总长。",
+  "sources": [
+    {
+      "sessionId": "fractiondots",
+      "index": 0,
+      "nodeId": "mt_IHipFGTFEY",
+      "type": "x-dotdraw",
+      "taskHash": "01c9342ab60f8cfd9120318de2d8b22eddddcc8d5ffd7283253a2345ce1d4924"
+    },
+    {
+      "sessionId": "fractiondots",
+      "index": 1,
+      "nodeId": "mt_IHipFGTFEY",
+      "type": "x-dotdraw",
+      "taskHash": "b79c0f90a8ce7c2a0bfd63e41a38c040979ad599b56bbc7469d966e68dba2447"
+    }
+  ],
+  "nodePass": 31,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 22,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "d4340f15fdd466814dac91d172c177c4f920bd4ecef8110210f585576a38f006",
+    "fractiondots-0-correct-check-decoded.json": "8f58bda6df6614fc947aa9d4e467b3b4139a660298a02674b96b85aa7b0bdb1d",
+    "fractiondots-0-correct-check-storage.txt": "8f58bda6df6614fc947aa9d4e467b3b4139a660298a02674b96b85aa7b0bdb1d",
+    "fractiondots-0-correct.png": "80ab3b95cbb82e8899116af3dd7a15653233855f29ddabd8ad6b5eefa6347548",
+    "fractiondots-0-corrected-draft-decoded.json": "7e94bba70904ea4c64c6e2906258efc9c88ccbce61c14b840d1a4aae323e0dfc",
+    "fractiondots-0-corrected-draft-storage.txt": "7e94bba70904ea4c64c6e2906258efc9c88ccbce61c14b840d1a4aae323e0dfc",
+    "fractiondots-0-offline-reload-decoded.json": "8070dc479cbce8b384c5c8c6baec98ed26f59ff254fad640dd74cab4cb87bdf0",
+    "fractiondots-0-offline-reload-storage.txt": "8070dc479cbce8b384c5c8c6baec98ed26f59ff254fad640dd74cab4cb87bdf0",
+    "fractiondots-0-restored-storage-decoded.json": "5cb18f14cbebf2c027f3863ea69f6a0d3fc105be542b98fa06d9ba88791585a7",
+    "fractiondots-0-restored-storage-storage.txt": "5cb18f14cbebf2c027f3863ea69f6a0d3fc105be542b98fa06d9ba88791585a7",
+    "fractiondots-0-wrong-check-decoded.json": "3caa03a057c9aa89d87a5aa1304973008122f968727a9ebfc1d14c0a548372ee",
+    "fractiondots-0-wrong-check-storage.txt": "3caa03a057c9aa89d87a5aa1304973008122f968727a9ebfc1d14c0a548372ee",
+    "fractiondots-0-wrong.png": "7cdddc1671231efa7edd88b674bc968059a1b0538a1c89f67edf033c77bd5fcc",
+    "fractiondots-1-correct-check-decoded.json": "f44a0b1f956f99b22ac9f07343ce6da8608f42be511bb52304ef4a9965d36275",
+    "fractiondots-1-correct-check-storage.txt": "f44a0b1f956f99b22ac9f07343ce6da8608f42be511bb52304ef4a9965d36275",
+    "fractiondots-1-correct.png": "af42b8f6e6978837fed97a9e7a9bd8e721542391ad9c3ed43377e752a9ab3e81",
+    "fractiondots-1-corrected-draft-decoded.json": "c9f4112bcca06be14b45cce9afa5d0563da2cdcdb5df5b89a96a099c7a220667",
+    "fractiondots-1-corrected-draft-storage.txt": "c9f4112bcca06be14b45cce9afa5d0563da2cdcdb5df5b89a96a099c7a220667",
+    "fractiondots-1-offline-reload-decoded.json": "7258583f1bb071bdddfc365f73bf90493d5d0484026847ff84267b3325c78cd8",
+    "fractiondots-1-offline-reload-storage.txt": "7258583f1bb071bdddfc365f73bf90493d5d0484026847ff84267b3325c78cd8",
+    "fractiondots-1-restored-backup-decoded.json": "5cb18f14cbebf2c027f3863ea69f6a0d3fc105be542b98fa06d9ba88791585a7",
+    "fractiondots-1-restored-backup-storage.txt": "5cb18f14cbebf2c027f3863ea69f6a0d3fc105be542b98fa06d9ba88791585a7",
+    "fractiondots-1-retry-decoded.json": "3dfa79525b4ed2bc03d5c0e1572247ba7fb5d89b19e221336d1a2cc3b7138496",
+    "fractiondots-1-retry-storage.txt": "3dfa79525b4ed2bc03d5c0e1572247ba7fb5d89b19e221336d1a2cc3b7138496",
+    "fractiondots-1-wrong-check-decoded.json": "091607533d08ab384e337dd2a204975e730b575f3f5d1c9b047453c550d27537",
+    "fractiondots-1-wrong-check-storage.txt": "091607533d08ab384e337dd2a204975e730b575f3f5d1c9b047453c550d27537",
+    "fractiondots-1-wrong.png": "2dc819dba4dc1feb4d8db47b91e2522572f2682a0e3d7204ff8f50c4de47235e",
+    "native-state-v2.json": "21043cc3eb570ce09cb47f4fedfa0506e22124a2cecb9dccf59d0cea2caa48b6",
+    "node.log": "85038dc8435783ed9fc91c593ba9ee3be6e7dc0b2bca4c161b8a55e4144b3417",
+    "preflight.log": "5dcdaf0aa1a2f3eb76ad50eeb25055c9705a811aa9331c84ccace3b037388fd9",
+    "results.json": "e6ae017f04f3e4f04c621359379501fc31fdae3233bdf6e716ca118247cbaa19"
+  }
+}

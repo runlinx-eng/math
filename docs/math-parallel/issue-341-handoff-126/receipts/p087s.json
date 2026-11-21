@@ -1,0 +1,66 @@
+{
+  "branch": "work/b/followup-splitbench",
+  "commit": "e65e8d1eac7ae775ffad7945846c03603661a6d8",
+  "base": "f4be9f88da7af59b6df1819ae242cf134591c376",
+  "files": [
+    "dist/learning/p087s-splitbench-evidence.js",
+    "tests/p9-p087s-splitbench-browser.cjs",
+    "tests/p9-p087s-splitbench.test.mjs"
+  ],
+  "scope": "核对各次保存的分法、整体守恒和算式。圆片逐次搬动未入原记录。",
+  "sources": [
+    {
+      "sessionId": "screenadd",
+      "index": 0,
+      "nodeId": "mt_biGHAbkoV2",
+      "type": "x-splitbench",
+      "taskHash": "e726d13b782e63dba36b55cc3fef57a98a04e9c9a6f8b1d63e87967f0044d289"
+    },
+    {
+      "sessionId": "partnersten",
+      "index": 2,
+      "nodeId": "mt_e8CZ7E5qW7",
+      "type": "x-splitbench",
+      "taskHash": "ecba5938b7cb4482c38bcb021925f3b786614e9854041c3d5b0e1941245f859d"
+    }
+  ],
+  "nodePass": 20,
+  "preflightPass": 232,
+  "chromium": "141.0.7390.37",
+  "checks": 23,
+  "captures": 11,
+  "state": "local-development-tested",
+  "artifacts": {
+    "browser.log": "115a38dc1ce41a457531632fc54feb59b35aabd2637fcc8b392b0894f6c4b170",
+    "native-state-v2.json": "31d2fb227ed337565288bb9aa7e3213fa4def69ca5c624b4ede95fd7cd71b7f0",
+    "node.log": "97c49588857d2869bdd40bf3b57dcdbe107aacc18aa52a95b33413e59d2ea16e",
+    "partnersten-2-correct-check-decoded.json": "b41ec343922898d17f6d7ee17f279ebd274079b8b1fac747580de81f706addf3",
+    "partnersten-2-correct-check-storage.txt": "b41ec343922898d17f6d7ee17f279ebd274079b8b1fac747580de81f706addf3",
+    "partnersten-2-correct.png": "ff7591926350258b4aa69ae069bd096580fd42d6d35a598fb96551558b787da1",
+    "partnersten-2-corrected-draft-decoded.json": "e043fb1c9dee74ad8f325e54c2cf1958ceb3d34ba1b2f290b84db1e5d3763afd",
+    "partnersten-2-corrected-draft-storage.txt": "e043fb1c9dee74ad8f325e54c2cf1958ceb3d34ba1b2f290b84db1e5d3763afd",
+    "partnersten-2-offline-reload-decoded.json": "d290b2fe324a74e82357f232fec32faec531b77d63fe7c802a78ce001240e623",
+    "partnersten-2-offline-reload-storage.txt": "d290b2fe324a74e82357f232fec32faec531b77d63fe7c802a78ce001240e623",
+    "partnersten-2-restored-backup-decoded.json": "ba7c99becadbaec68ae38edaaab2848b11d41807d33f1064a9af70c1887e472d",
+    "partnersten-2-restored-backup-storage.txt": "ba7c99becadbaec68ae38edaaab2848b11d41807d33f1064a9af70c1887e472d",
+    "partnersten-2-retry-decoded.json": "dabf4b1dba3f52173300248f0c714c62a060dfb34acfacb78d5078b6a20138a9",
+    "partnersten-2-retry-storage.txt": "dabf4b1dba3f52173300248f0c714c62a060dfb34acfacb78d5078b6a20138a9",
+    "partnersten-2-wrong-check-decoded.json": "c3c32e7d41619c8e3f730468a46a46eee5104fa0fd3ceb7c580a643c172cb016",
+    "partnersten-2-wrong-check-storage.txt": "c3c32e7d41619c8e3f730468a46a46eee5104fa0fd3ceb7c580a643c172cb016",
+    "partnersten-2-wrong.png": "8b2b6f14fa0146bc211ce9c0bd6d200af07a3f2ae35021be02709ce5aa817d07",
+    "preflight.log": "45bcc75351cb3f34df354ad4e309d93f9743b9ed6d5ea63bda4d79350c2e0fca",
+    "results.json": "ddecc3a8361a4b9e8c97e3d96592dc6eec27abfa6891a19b2ca655bca2d2f87e",
+    "screenadd-0-correct-check-decoded.json": "2c0c729f57b6524e5f2a65d7997d07c9c9e46f5e1813a5a67eadf657ac370a12",
+    "screenadd-0-correct-check-storage.txt": "2c0c729f57b6524e5f2a65d7997d07c9c9e46f5e1813a5a67eadf657ac370a12",
+    "screenadd-0-correct.png": "033320571a669250b48ae4a34c1de540593b21216163a9a76e9730e5e7f28630",
+    "screenadd-0-corrected-draft-decoded.json": "b4a878506481cd48c9f6f0c0ec3a178e6d84bf431fe042b022a20c1eab7e3c17",
+    "screenadd-0-corrected-draft-storage.txt": "b4a878506481cd48c9f6f0c0ec3a178e6d84bf431fe042b022a20c1eab7e3c17",
+    "screenadd-0-offline-reload-decoded.json": "2d6d6fb71f27fd2b49cdf2610aec0fbec804dbc5a648c0d8593bd12d1c55a080",
+    "screenadd-0-offline-reload-storage.txt": "2d6d6fb71f27fd2b49cdf2610aec0fbec804dbc5a648c0d8593bd12d1c55a080",
+    "screenadd-0-restored-storage-decoded.json": "ba7c99becadbaec68ae38edaaab2848b11d41807d33f1064a9af70c1887e472d",
+    "screenadd-0-restored-storage-storage.txt": "ba7c99becadbaec68ae38edaaab2848b11d41807d33f1064a9af70c1887e472d",
+    "screenadd-0-wrong-check-decoded.json": "1a2b2deda7fab16fda105ce9ae7bbe2bf28e4195107282190614d3d763f4f2d8",
+    "screenadd-0-wrong-check-storage.txt": "1a2b2deda7fab16fda105ce9ae7bbe2bf28e4195107282190614d3d763f4f2d8",
+    "screenadd-0-wrong.png": "e30ae60d4382e114baa2ad21870063105e5bbe3f486f12a85ff010d078891d9e"
+  }
+}
