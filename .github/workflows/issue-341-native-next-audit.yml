@@ -1,0 +1,99 @@
+name: Issue 341 native Next navigation audit
+on:
+  pull_request:
+    paths:
+      - 'tests/issue341-native-next-*.cjs'
+      - '.github/workflows/issue-341-native-next-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-route:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install real Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Exercise original Next and Check
+        env:
+          SHARD: ${{ matrix.shard }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=(
+            tests/issue341-native-next-p109-common-factor.cjs
+            tests/issue341-native-next-p110-mean-distance.cjs
+            tests/issue341-native-next-p111-bilateral-equations.cjs
+            tests/issue341-native-next-p112-fair-die.cjs
+            tests/issue341-native-next-p113-tens-removal.cjs
+            tests/issue341-native-next-p114-solidstack.cjs
+            tests/issue341-native-next-p115-signedpoints-quadrants.cjs
+            tests/issue341-native-next-p116-integer-dotplot.cjs
+            tests/issue341-native-next-p117-fractionfour-directed-jump.cjs
+          )
+          count=0
+          for i in "${!files[@]}"; do
+            if (( i % 3 == SHARD )); then
+              echo "::group::${files[$i]}"
+              node --check "${files[$i]}"
+              node "${files[$i]}"
+              echo "::endgroup::"
+              count=$((count+1))
+            fi
+          done
+          test "$count" -eq 3
+      - name: Summarize verified and still-seeded positions
+        if: success()
+        env:
+          SHARD: ${{ matrix.shard }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib
+          base=pathlib.Path("verification/issue341-navigation")
+          shard=int(os.environ["SHARD"])
+          families=sorted(base.glob("p9-*/results.json"))
+          assert len(families)==3, f"expected 3 families, got {len(families)}"
+          routes=[]
+          for f in families:
+              r=json.loads(f.read_text())
+              assert r.get("errors")==[], (f,r.get("errors"))
+              entries=r.get("navigationRoutes") or []
+              assert entries and len(entries)==len({e["position"] for e in entries})
+              assert r.get("seededLessonPositionOnly")==any(e["method"]=="seeded-only" for e in entries)
+              for e in entries:
+                  if e["method"]=="native-next-after-correct-check":
+                      assert e["previousTaskComplete"] is True, e
+                  routes.append({"family":f.parent.name, **e})
+          native=sum(r["method"]!="seeded-only" for r in routes)
+          summary={"schema":"issue-341-native-route-audit/1",
+                   "shard":shard,"families":len(families),
+                   "positions":len(routes),"native":native,
+                   "seededOnly":len(routes)-native,"routes":routes}
+          (base/f"shard-{shard}-route-summary.json").write_text(
+              json.dumps(summary,indent=2,ensure_ascii=False)+"\n")
+          print(json.dumps({k:v for k,v in summary.items() if k!="routes"}))
+          PY
+      - name: Archive route proof, screenshots and raw storage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-341-native-next-${{ matrix.shard }}
+          path: verification/issue341-navigation/
+          retention-days: 7
+          if-no-files-found: warn
