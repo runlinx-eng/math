@@ -15,7 +15,7 @@
           "type": "x-s23-ruler",
           "view": "b23",
           "controls": [
-            "draw"
+            "g23-draw"
           ]
         }
       ]
