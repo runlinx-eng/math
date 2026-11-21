@@ -2,16 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P007c-triangle-sas-drawing",
-      "sha": "01f3a0942b3c7f4d190f89f62b334f8868dfff41",
-      "node_test": "tests/p9-p007c-triangle-sas-evidence.test.mjs",
-      "browser_test": "tests/p9-p007c-triangle-sas-browser.cjs",
+      "case": "P007d-rectangle-dimensions",
+      "sha": "a4826d54cb195c6c79a561b178e62b468d0abe94",
+      "node_test": "tests/p9-p007d-rectangle-dimensions-evidence.test.mjs",
+      "browser_test": "tests/p9-p007d-rectangle-dimensions-browser.cjs",
       "native": [
         {
           "sessionId": "shapemeasures",
-          "index": 0,
+          "index": 1,
           "nodeId": "mt_hdrMoiTgqu",
-          "taskSha256": "07b7c68d5d254f6042b17f6ba7f18f850caad412da75f82ee00f01ca7f236e36",
+          "taskSha256": "5280a44cd6f5b3b782ec4184a213a613064f914e42b465e79e5c616930492fd9",
           "type": "x-s23-ruler",
           "view": "b23",
           "controls": [
