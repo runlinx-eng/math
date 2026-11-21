@@ -2,42 +2,31 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005h-native-parallel",
-      "sha": "cf4ec2258fe91793730cf319a9960e9d90eff8f6",
-      "node_test": "tests/p9-p005h-native-parallel-transversal-evidence.test.mjs",
-      "browser_test": "tests/p9-p005h-native-parallel-transversal-browser.cjs",
+      "case": "P005i-native-triangle-corners",
+      "sha": "fa8554b539181bdc61b957e36428cc857a7de724",
+      "node_test": "tests/p9-p005i-native-triangle-corner-evidence.test.mjs",
+      "browser_test": "tests/p9-p005i-native-triangle-corner-browser.cjs",
       "native": [
         {
-          "sessionId": "parallelangle",
+          "sessionId": "triangleangles",
           "index": 0,
-          "nodeId": "mt_H_pNJ3ZI_S",
-          "taskSha256": "cdbbc402bfcdd7e8593aa876f501b474fc69660ab61edce5e128fa3ca92ad28e",
-          "type": "x-g25-parallel",
+          "nodeId": "mt_cdMlC7EpTJ",
+          "taskSha256": "86aafc8c07cd506552e0981c4b0b3c09384154e3d48f788050b71d7deaf13d4e",
+          "type": "x-g25-corners",
           "view": "b25",
           "controls": [
-            "g25-slide"
+            "g25-choose"
           ]
         },
         {
-          "sessionId": "parallelangle",
-          "index": 1,
-          "nodeId": "mt_H_pNJ3ZI_S",
-          "taskSha256": "455479ecfd0c03dc7b71f9e935889928d0727461b2bcf2c2faa74990eeab8b08",
-          "type": "x-g25-parallel",
+          "sessionId": "polygonangles",
+          "index": 0,
+          "nodeId": "mt_J03RFlVdas",
+          "taskSha256": "45f21a1463bb3b9b5a08f95f1d7010bc2b5b6eae63607cda1e269cbbd67f938b",
+          "type": "x-g25-corners",
           "view": "b25",
           "controls": [
-            "g25-slide"
-          ]
-        },
-        {
-          "sessionId": "parallelangle",
-          "index": 2,
-          "nodeId": "mt_H_pNJ3ZI_S",
-          "taskSha256": "74516eb7aa89d993be4b4c918e5aab4b1ccd7d7c08360714fb4b2596411d6fb9",
-          "type": "x-g25-parallel",
-          "view": "b25",
-          "controls": [
-            "g25-slide"
+            "g25-choose"
           ]
         }
       ]
