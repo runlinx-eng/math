@@ -17,8 +17,8 @@
       "P007"
     ],
     "historicalResearchPositions": 222,
-    "developmentTestedPositions": 100,
-    "developmentTestedCandidateCases": 52,
+    "developmentTestedPositions": 101,
+    "developmentTestedCandidateCases": 53,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -82,9 +82,9 @@
       "id": "P007",
       "topic": "shape-draw",
       "historicalResearchPositions": 30,
-      "developmentTested": 3,
+      "developmentTested": 4,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 27
+      "pendingOrOtherNotAccepted": 26
     }
   ],
   "cases": [
@@ -1120,6 +1120,25 @@
       },
       "artifact": {
         "id": 14706155673,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007c-triangle-sas-drawing",
+      "branch": "work/a/p007c-triangle-sas-drawing",
+      "candidateSha": "01f3a0942b3c7f4d190f89f62b334f8868dfff41",
+      "positions": [
+        "shapemeasures:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44901188579,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14705838774,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
