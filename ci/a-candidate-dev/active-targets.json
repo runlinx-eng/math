@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P007g-native-compass-bisector",
-      "sha": "afe3721155c1ea7c3e47ff673c28d42cb33c2889",
+      "sha": "3ed4b279f63039f0926fb59cbfdbce321bf7fe12",
       "node_test": "tests/p9-p007g-compass-bisector-evidence.test.mjs",
       "browser_test": "tests/p9-p007g-compass-bisector-browser.cjs",
       "native": [
