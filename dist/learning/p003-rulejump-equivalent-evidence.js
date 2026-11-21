@@ -7,8 +7,8 @@ import {
 } from './evidence-contract.js';
 
 const NODE='mt_jCy07DyBNU';
-// Runtime task SHA is deliberately left unverified until native sessionTaskFor executes.
-const SHA=null;
+// Source-constructed candidate SHA; runtime sessionTaskFor verification is NOT_RUN.
+const SOURCE_CONSTRUCTED_SHA='860ef4c64b8993c38591ccf90ddf032c3e9aaa789f8a10e459b2362757436fce';
 const PROMPT='每份25。试用“先乘100，再除4”搭规则；用不同份数检查它与每份25是否相同。';
 const CONTEXT='每份25，4份、7份、16份';
 const EXPECTED=[4,7,16];
@@ -22,7 +22,7 @@ function sourceFor(task,context){
     !keys(task,['type','a','b','inputs','exampleRule','context','prompt'])||
     task.a!==25||task.b!==0||task.prompt!==PROMPT||task.context!==CONTEXT||
     !same(task.inputs,EXPECTED)||!same(task.exampleRule,[100,0,4]))return null;
-  return {nodeId:NODE,sha:SHA};
+  return {nodeId:NODE,sourceConstructedSha256:SOURCE_CONSTRUCTED_SHA};
 }
 
 export function rulejumpEquivalentBinding(task,context={}){
@@ -95,7 +95,7 @@ export function replayRulejumpEquivalentEvidence(task,model,context={}){
     }
     return {
       kind:'rulejump-times100-divide4',nodeId:NODE,sessionId:context.sessionId,index:context.index,
-      taskFingerprintStatus:'NOT_RUN',originalInputs:[...EXPECTED],targetMultiplier:25,
+      sourceConstructedTaskSha256:SOURCE_CONSTRUCTED_SHA,taskFingerprintStatus:'NOT_RUN',originalInputs:[...EXPECTED],targetMultiplier:25,
       finalToolRule:[100,0,4],canonicalRuns,chronologicalControlEvents:events,
       observedFirstRule:first,firstRuleNecessarilyCanonical:same(first,['100','0','4']),
       equivalentArithmeticVerified:true,
