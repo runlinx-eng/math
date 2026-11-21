@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 45,
-    "developmentTestedCandidateCases": 21,
+    "developmentTestedPositions": 47,
+    "developmentTestedCandidateCases": 22,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 9,
+      "developmentTested": 11,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 23
+      "pendingOrOtherNotAccepted": 21
     }
   ],
   "cases": [
@@ -487,6 +487,26 @@
       },
       "artifact": {
         "id": 14697735619,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005e-directed-angle-classification",
+      "branch": "work/a/p005e-directed-angle-classification",
+      "candidateSha": "22353075b55ebb81b055d35500e5eb281c866024",
+      "positions": [
+        "rightcheck:0",
+        "anglestraight:1"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44880567705,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14698036547,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
