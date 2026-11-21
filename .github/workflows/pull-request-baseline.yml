@@ -165,6 +165,7 @@ jobs:
           node --check dist/learning/wideshift-evidence.js
           node --check dist/learning/positive-order-preaudit.js
           node --check tests/p9-positive-order-preaudit.test.mjs
+          node --check tests/p9-positive-order-preaudit-browser.cjs
           node --check scripts/wideshift-evidence-fixture.mjs
           node --check tests/fixtures/p9-wideshift-navigation.cjs
           node --check tests/p9-wideshift-adapter-browser.cjs
