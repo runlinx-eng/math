@@ -25,10 +25,13 @@ export function positiveOrderPreauditBinding(task,context={}){
  return source?{nodeId:source.nodeId,preReviewOnly:true,strictAApproved:false,
    mathematicalClaim:'learner-selected-positive-integer-card-order-only'}:null;
 }
-export function replayPositiveOrderPreaudit(task,model,record,context={}){
+// Pure, independently rechecked mathematical/observed-action replay. A correct
+// model is NOT evidence of a saved Check: submission matching is enforced only
+// by replayPositiveOrderPreaudit below. Neither entrypoint grants strict A.
+export function replayPositiveOrderModel(task,model,context={}){
  try{
   const source=sourceFor(task,context);
-  if(!source||!record||!latestSubmissionMatches(model,record)||
+  if(!source||
     !original.valid(task,model)||!original.inspect(task,model).correct||
     !Array.isArray(model.orderTrace)||!model.orderTrace.length||model.orderTrace.length>512||
     model.orderTraceOverflow!==false)return null;
@@ -69,4 +72,11 @@ export function replayPositiveOrderPreaudit(task,model,record,context={}){
    pickRemoveChronologyObserved:true,independentStrategyAssessed:false,
    learnerUnderstandingAssessed:false};
  }catch{return null;}
+}
+
+// Preserve the strict saved-submission gate at the preaudit boundary. Never
+// fabricate a record from the current board or reconstruct old click traces.
+export function replayPositiveOrderPreaudit(task,model,record,context={}){
+ return latestSubmissionMatches(model,record)
+  ?replayPositiveOrderModel(task,model,context):null;
 }

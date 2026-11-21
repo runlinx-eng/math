@@ -5,7 +5,7 @@ import {LESSONS} from '../dist/learning/catalog.js';
 import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as M from '../dist/learning/phase5/b08-model.js';
-import {positiveOrderPreauditBinding,replayPositiveOrderPreaudit} from '../dist/learning/positive-order-preaudit.js';
+import {positiveOrderPreauditBinding,replayPositiveOrderModel,replayPositiveOrderPreaudit} from '../dist/learning/positive-order-preaudit.js';
 import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {thinkingGuide} from '../dist/learning/thinking-feedback.js';
 
@@ -153,4 +153,22 @@ test('only three exact positive native positions bind; all other wideboards and 
   assert.equal(positiveOrderPreauditBinding(task,{sessionId:id,index}),null);
  });
  assert.ok(excluded>0,'exercise real associated wideboard sources');
+});
+
+test('model-only mathematical replay remains pure and does not fabricate a saved Check',()=>{
+ for(const c of native){
+  const {task,m,record}=build(c),before=JSON.stringify(m);
+  const proof=replayPositiveOrderModel(task,m,context(c));
+  assert.ok(proof,'genuine picked cards independently reconstruct their ascending order');
+  assert.deepEqual(proof,replay(c,m,record));
+  assert.equal(proof.preReviewOnly,true);
+  assert.equal(proof.strictAApproved,false);
+  assert.equal(replay(c,m,{attempts:[]}),null,'no saved Check cannot be inferred');
+  assert.equal(replay(c,m,{attempts:[{value:{}}]}),null,'stale Check cannot be inferred');
+  const forged=copy(m);forged.orderTrace.pop();
+  assert.equal(replayPositiveOrderModel(task,forged,context(c)),null,
+   'a terminal order cannot repair missing pick history');
+  assert.equal(replayPositiveOrderModel({...task,prompt:task.prompt+' changed'},m,context(c)),null);
+  assert.equal(JSON.stringify(m),before,'independent replay must never change learner state');
+ }
 });
