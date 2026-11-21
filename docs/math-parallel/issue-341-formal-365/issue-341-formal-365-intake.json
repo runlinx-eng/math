@@ -19,8 +19,8 @@
       "B": 308
     },
     "archiveAndStateEvidence": 365,
-    "independentMathBoundedEvidence": 59,
-    "mathContractIndependentAdjudicationRemaining": 306,
+    "independentMathBoundedEvidence": 67,
+    "mathContractIndependentAdjudicationRemaining": 298,
     "navigationAudited": 28,
     "navigationNativeProof": 28,
     "navigationSeededOnly": 0,
@@ -5646,10 +5646,13 @@
       "receiptSha256": "936bfef0f011c1da616dee99ca711297a23a59b07d0fc5ee2af0c19cb64d95f2",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 4,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709950119
     },
     {
       "group": "B",
@@ -5663,10 +5666,13 @@
       "receiptSha256": "936bfef0f011c1da616dee99ca711297a23a59b07d0fc5ee2af0c19cb64d95f2",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 4,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709950119
     },
     {
       "group": "B",
@@ -5680,10 +5686,13 @@
       "receiptSha256": "936bfef0f011c1da616dee99ca711297a23a59b07d0fc5ee2af0c19cb64d95f2",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 4,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709950119
     },
     {
       "group": "B",
@@ -5714,10 +5723,13 @@
       "receiptSha256": "548ad19399950825a3fc6c1e15aeb4eb1d7a3fba1fd708a863415e4b3237bcba",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 4,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709606323
     },
     {
       "group": "B",
@@ -5731,10 +5743,13 @@
       "receiptSha256": "548ad19399950825a3fc6c1e15aeb4eb1d7a3fba1fd708a863415e4b3237bcba",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NOT_PART_OF_28_SCOPE",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 4,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709606323
     },
     {
       "group": "B",
@@ -5765,10 +5780,13 @@
       "receiptSha256": "a1bd5537ed501fe8c901e9c3ca798c3f561520dbd7376236c0b9e0ded57db95e",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709214794
     },
     {
       "group": "B",
@@ -5782,10 +5800,13 @@
       "receiptSha256": "a1bd5537ed501fe8c901e9c3ca798c3f561520dbd7376236c0b9e0ded57db95e",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709214794
     },
     {
       "group": "B",
@@ -5799,10 +5820,13 @@
       "receiptSha256": "a1bd5537ed501fe8c901e9c3ca798c3f561520dbd7376236c0b9e0ded57db95e",
       "centralArchiveAndState": "PASS_0cafdaed",
       "formalStrictA": "NOT_GRANTED",
-      "independentMathReview": "PENDING_ITEM_MATH_ADJUDICATION",
+      "independentMathReview": "BOUNDED_B_FACTOR_PRIME_41_CHECKS_PASS",
       "navigation": "NATIVE_FIRST_OR_CHECK_NEXT_PASS",
       "auditDisposition": "NEEDS_EVIDENCE",
-      "missingEvidence": "independent original-task math contract adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback"
+      "missingEvidence": "final math contract and negative-boundary adjudication; shared registry/feedback/manifest integration, exact-HEAD PR CI, new main Required/Fallback",
+      "independentMathCheckCount": 7,
+      "independentMathAuditSource": "original_CI_44909628782_Python_divisors_gcd_factorization",
+      "independentMathAuditArtifactId": 14709214794
     },
     {
       "group": "B",
@@ -6257,7 +6281,10 @@
       "newP009Positions": 27,
       "checks": 227,
       "families": 5,
-      "originalArtifactRun": 44909628782
+      "originalArtifactRun": 44909628782,
+      "addedBFactorAndPrimePositions": 8,
+      "addedBChecks": 41,
+      "bFactorReport": "docs/math-parallel/issue-341-formal-365/20261121-b-p105-p107-p109-bounded-math.md"
     },
     "auditReport": "docs/math-parallel/issue-341-formal-365/20261121-followup-navigation-and-p009-math.md",
     "policy": "No main merge, no strict A grant. Already successful Node/Chromium tests were not rerun for mathematical evaluation; all new navigation proofs originated from distinct audit-only workflows."
