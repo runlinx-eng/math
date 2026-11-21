@@ -4,6 +4,7 @@
 // submitted through the existing UI, then preserved as original State-v2 bytes.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
+const {pathToFileURL}=require('node:url');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('./helpers/standard-desktop-viewport.cjs');
@@ -32,6 +33,7 @@ async function run(){
  fs.mkdirSync(out,{recursive:true});
  let origin,browser,ctx,restore,page,restorePage,label='startup';
  try{
+  const candidate=await import(pathToFileURL(path.join(root,'dist/learning/gridarea-perimeter-contrast-evidence.js')).href);
   origin=await createOrigin(root);
   browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader'],
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{})});
@@ -94,7 +96,7 @@ async function run(){
     const {LESSONS}=await import('./learning/catalog.js');
     const {boundaryRuns,perimeterEdges}=await import('./learning/phase5/b30-geometry.js');
     const task=sessionTaskFor(id,index);
-    return {type:task.type,mode:task.mode,nodeId:LESSONS[id].topicId,
+    return {type:task.type,mode:task.mode,nodeId:LESSONS[id].topicId,nativeTask:task,
      count:boundaryRuns(task.cells).length,length:perimeterEdges(task.cells).length};
    },row);
    ok(original.type==='x-a30-grid'&&original.mode==='edge'&&
@@ -103,9 +105,10 @@ async function run(){
    ok(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),
     row.id+' required viewport');
    ok(await page.locator('#thinking-feedback').count()===0,row.id+' no early feedback');
+   return original.nativeTask;
   };
   for(const row of rows){
-   await selectOriginal(row);
+   const nativeTask=await selectOriginal(row);
    for(let i=0;i<row.count;i++)
     await action('#extra-visual [data-x="a30-edge"][data-index="'+i+'"]');
    let snapBefore=await snap(row,'edges-selected');
@@ -128,11 +131,10 @@ async function run(){
    ok(accepted.attempts.length===2&&accepted.attempts[0].value.perimeter===String(row.length-1)&&
     accepted.attempts[1].value.perimeter===String(row.length),
     row.id+' correction and both Check attempts persisted');
-   const proof=await page.evaluate(async({id,index,model,record})=>{
-    const {sessionTaskFor}=await import('./learning/bridges.js');
-    const {submittedGridareaPerimeterContrastEvidence}=await import('./learning/gridarea-perimeter-contrast-evidence.js');
-    return submittedGridareaPerimeterContrastEvidence(sessionTaskFor(id,index),model,record,{sessionId:id,index});
-   },{...row,model:accepted.model,record:accepted.record});
+   // Released SW deliberately excludes this candidate; replay the exact
+   // browser-captured native task, model and Check bytes in the Node runner.
+   const proof=candidate.submittedGridareaPerimeterContrastEvidence(
+    nativeTask,accepted.model,accepted.record,{sessionId:row.id,index:row.index});
    ok(proof?.perimeterCentimeters===row.length&&proof.areaSquareCentimeters===12&&proof.exteriorUnitEdgesVerified===row.length&&
      proof.runs.length===row.count&&proof.runs.reduce((n,r)=>n+r.length,0)===row.length,
      row.id+' independent exterior units equal actual run lengths');
