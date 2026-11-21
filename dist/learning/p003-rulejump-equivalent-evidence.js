@@ -7,7 +7,8 @@ import {
 } from './evidence-contract.js';
 
 const NODE='mt_jCy07DyBNU';
-const SHA='860ef4c64b8993c38591ccf90ddf032c3e9aaa789f8a10e459b2362757436fce';
+// Runtime task SHA is deliberately left unverified until native sessionTaskFor executes.
+const SHA=null;
 const PROMPT='每份25。试用“先乘100，再除4”搭规则；用不同份数检查它与每份25是否相同。';
 const CONTEXT='每份25，4份、7份、16份';
 const EXPECTED=[4,7,16];
@@ -94,7 +95,7 @@ export function replayRulejumpEquivalentEvidence(task,model,context={}){
     }
     return {
       kind:'rulejump-times100-divide4',nodeId:NODE,sessionId:context.sessionId,index:context.index,
-      frozenTaskSha256:SHA,originalInputs:[...EXPECTED],targetMultiplier:25,
+      taskFingerprintStatus:'NOT_RUN',originalInputs:[...EXPECTED],targetMultiplier:25,
       finalToolRule:[100,0,4],canonicalRuns,chronologicalControlEvents:events,
       observedFirstRule:first,firstRuleNecessarilyCanonical:same(first,['100','0','4']),
       equivalentArithmeticVerified:true,
