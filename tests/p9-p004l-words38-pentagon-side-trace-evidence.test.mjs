@@ -9,21 +9,21 @@ import {words38PentagonSideTraceBinding as binding,
   submittedWords38PentagonSideTraceEvidence as submitted}
   from '../dist/learning/p004l-words38-pentagon-side-trace-evidence.js';
 
-const context={sessionId:'words38',index:0};
+const context={sessionId:'words38',index:2};
 const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?
   Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en'))
     .map(k=>[k,stable(v[k])])):v;
 const hash=v=>createHash('sha256').update(JSON.stringify(stable(v))).digest('hex');
 const changed=(m,edit)=>{const c=structuredClone(m);edit(c);return c;};
 function fixture(){
-  const task=sessionTaskFor('words38',0),model=native.initial(task,314159);
+  const task=sessionTaskFor('words38',2),model=native.initial(task,314159);
   for(let i=0;i<5;i++)native.act(task,model,'g23-mark',{index:i});
   model.answers=['5','5'];
   return {task,model};
 }
 test('P004l exact original source and runtime full task hash',()=>{
   const {task,model}=fixture(),sha=hash(task);
-  console.log('P004L_NATIVE_FULL_TASK_SHA256 words38:0 '+sha);
+  console.log('P004L_NATIVE_FULL_TASK_SHA256 words38:2 '+sha);
   assert.match(sha,/^[a-f0-9]{64}$/);
   assert.equal(task.type,'x-s23-sides');
   assert.equal(task.shape,'pentagon');assert.equal(task.rotation,24);
