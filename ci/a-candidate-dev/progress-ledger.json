@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 49,
-    "developmentTestedCandidateCases": 23,
+    "developmentTestedPositions": 52,
+    "developmentTestedCandidateCases": 24,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 13,
+      "developmentTested": 16,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 19
+      "pendingOrOtherNotAccepted": 16
     }
   ],
   "cases": [
@@ -527,6 +527,27 @@
       },
       "artifact": {
         "id": 14697474199,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005g-native-protractor",
+      "branch": "work/a/p005g-native-protractor-alignment",
+      "candidateSha": "7c62d3f5d80833a48c9459073c039901ab3d02e4",
+      "positions": [
+        "angleprotractor:0",
+        "angleprotractor:1",
+        "angleprotractor:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44881607481,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14698038621,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
