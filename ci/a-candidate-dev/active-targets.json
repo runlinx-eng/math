@@ -2,33 +2,33 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005e-directed-angle-classification",
-      "sha": "22353075b55ebb81b055d35500e5eb281c866024",
-      "node_test": "tests/p9-p005e-directed-angle-classification-evidence.test.mjs",
-      "browser_test": "tests/p9-p005e-directed-angle-classification-browser.cjs",
+      "case": "P005f-native-angle-estimates",
+      "sha": "60e083a100cbb3833fa968b4de1db67d0a3b8bc4",
+      "node_test": "tests/p9-p005f-native-angle-estimates-evidence.test.mjs",
+      "browser_test": "tests/p9-p005f-native-angle-estimates-browser.cjs",
       "native": [
         {
-          "sessionId": "rightcheck",
+          "sessionId": "angleestimate",
           "index": 0,
-          "nodeId": "mt_MFfYcnv6Tv",
-          "taskSha256": "09beb6f706b5d3ed887b4002c1fbe8b01f0baa34252d1beb3545e6a3537b3faa",
-          "type": "x-g25-compare",
+          "nodeId": "mt_YUJ5pwalqL",
+          "taskSha256": "2e95b28676442bc8fc86c1bdfdeec5cfb3cff4d88efa1c546acbf6dfa3e06e35",
+          "type": "x-g25-estimate",
           "view": "b25",
           "controls": [
-            "g25-test",
-            "g25-choose"
+            "g25-guess",
+            "g25-reveal"
           ]
         },
         {
-          "sessionId": "anglestraight",
+          "sessionId": "angleestimate",
           "index": 1,
-          "nodeId": "mt_LBT-9jz7kR",
-          "taskSha256": "8f6bc73d9e3bf01ece867b47a886b45e84a9de11e58b38e18785e971e8e227ce",
-          "type": "x-g25-compare",
+          "nodeId": "mt_YUJ5pwalqL",
+          "taskSha256": "0747b513cf0a1b47fa7287c24c8f1124fad9decd5264b49ac198cc44d8c24b6d",
+          "type": "x-g25-estimate",
           "view": "b25",
           "controls": [
-            "g25-test",
-            "g25-choose"
+            "g25-guess",
+            "g25-reveal"
           ]
         }
       ]
