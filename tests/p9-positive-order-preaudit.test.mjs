@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {LESSONS} from '../dist/learning/catalog.js';
-import {sessionTasks} from '../dist/learning/bridges.js';
+import {BRIDGES,sessionTasks} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import * as M from '../dist/learning/phase5/b08-model.js';
 import {positiveOrderPreauditBinding,replayPositiveOrderPreaudit} from '../dist/learning/positive-order-preaudit.js';
@@ -99,6 +99,11 @@ test('real control overflow preserves original ordering grade but strictly refus
   // 514 actual toggles return this card to its starting inclusion state;
   // event capture must stop at 512 and remember the loss permanently.
   for(let i=0;i<514;i++)M.act(task,m,'wide-order',{index:first});
+  // Toggling a selected card removes then appends it, changing its order.
+  // Use actual controls to restore a sorted final state after the capture limit.
+  // Overflow must remain true: the missing chronology is never recovered.
+  for(const i of [...m.order])M.act(task,m,'wide-order',{index:i});
+  for(const i of expected)M.act(task,m,'wide-order',{index:i});
   assert.equal(m.orderTrace.length,512);
   assert.equal(m.orderTraceOverflow,true);
   assert.equal(M.valid(task,m),true);
