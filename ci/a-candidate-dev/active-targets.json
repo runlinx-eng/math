@@ -2,20 +2,42 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P007e-regular-pentagon",
-      "sha": "6c8f91980f6a44e6180b0d56530ddb2cc7a8c526",
-      "node_test": "tests/p9-p007e-regular-pentagon-evidence.test.mjs",
-      "browser_test": "tests/p9-p007e-regular-pentagon-browser.cjs",
+      "case": "P007f-native-circle-radius-diameter",
+      "sha": "acdcba68add71edf44a2493b1f108525d05d8e9f",
+      "node_test": "tests/p9-p007f-circle-radius-diameter-evidence.test.mjs",
+      "browser_test": "tests/p9-p007f-circle-radius-diameter-browser.cjs",
       "native": [
         {
-          "sessionId": "shapemeasures",
-          "index": 2,
-          "nodeId": "mt_hdrMoiTgqu",
-          "taskSha256": "52776a525512c4e7505d49436d3289d6c31b2d8e9600268aca5916f8a7c66dfb",
-          "type": "x-s23-ruler",
+          "sessionId": "circleparts",
+          "index": 0,
+          "nodeId": "mt_xq3YHZ2zeR",
+          "taskSha256": "a1466d51fcca03b4c7946c32cf66db3dc1eea6a4bf0fff0b1baea449ee38a234",
+          "type": "x-s23-circle",
           "view": "b23",
           "controls": [
-            "g23-draw"
+            "g23-circle"
+          ]
+        },
+        {
+          "sessionId": "circleparts",
+          "index": 1,
+          "nodeId": "mt_xq3YHZ2zeR",
+          "taskSha256": "bd59fb60e1bd3b60d6f5a1b8d798b976020c1e398fe8e8ab8a8ad80b1fee6153",
+          "type": "x-s23-circle",
+          "view": "b23",
+          "controls": [
+            "g23-circle"
+          ]
+        },
+        {
+          "sessionId": "circleparts",
+          "index": 2,
+          "nodeId": "mt_xq3YHZ2zeR",
+          "taskSha256": "7f8e7528fbd4d96973c497478e732b2d213e2be8f92a64e691e8cd5fdd53ec27",
+          "type": "x-s23-circle",
+          "view": "b23",
+          "controls": [
+            "g23-circle"
           ]
         }
       ]
