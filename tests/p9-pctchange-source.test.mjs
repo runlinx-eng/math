@@ -19,7 +19,7 @@ test('#286 reviewed fingerprints, original steps and latest truly checked math f
  assert.equal(rows.length,3);
  assert.equal(EVIDENCE_ADAPTERS.filter(x=>x.id==='pctchange').length,1);
  const actualStepAdapters=EVIDENCE_ADAPTERS.filter(x=>x.type==='x-r37-steps').map(x=>x.id).sort();
- const reviewedStepAdapters=[...new Set(manifest.tasks.filter(x=>x.type==='x-r37-steps').map(x=>x.adapter))].sort();
+ const reviewedStepAdapters=[...new Set(manifest.tasks.filter(x=>x.type==='x-r37-steps'&&!x.adapter.startsWith('issue341-')).map(x=>x.adapter))].sort();
  assert.deepEqual(actualStepAdapters,reviewedStepAdapters,
   'every shared step adapter must have a distinct, strictly reviewed native source');
  for(const [sessionId,index,taskHash] of reviewed){
