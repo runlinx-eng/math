@@ -1,0 +1,351 @@
+{
+  "schema": "issue-341-frozen-source-export-map/1",
+  "begin": 60,
+  "end": 75,
+  "records": [
+    {
+      "packet": "P077",
+      "path": "dist/learning/p077-digital-sets-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p077DigitalSetsBinding"
+      ],
+      "replays": [
+        "replayP077DigitalSetsEvidence"
+      ],
+      "submitted": [
+        "submittedP077DigitalSetsEvidence"
+      ],
+      "sourceExports": [
+        "P077_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-digitalsets"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 5075
+    },
+    {
+      "packet": "P076",
+      "path": "dist/learning/p076-measure-story-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p076MeasureStoryBinding"
+      ],
+      "replays": [
+        "replayP076MeasureStoryEvidence"
+      ],
+      "submitted": [
+        "submittedP076MeasureStoryEvidence"
+      ],
+      "sourceExports": [
+        "P076_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-measurestory"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 6690
+    },
+    {
+      "packet": "P075",
+      "path": "dist/learning/p075-pair-table-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p075PairTableBinding"
+      ],
+      "replays": [
+        "replayP075PairTableEvidence"
+      ],
+      "submitted": [
+        "submittedP075PairTableEvidence"
+      ],
+      "sourceExports": [
+        "P075_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-pairtable"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3584
+    },
+    {
+      "packet": "P074",
+      "path": "dist/learning/p074-complex-chain-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p074ComplexChainBinding"
+      ],
+      "replays": [
+        "replayP074ComplexChainEvidence"
+      ],
+      "submitted": [
+        "submittedP074ComplexChainEvidence"
+      ],
+      "sourceExports": [
+        "P074_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3733
+    },
+    {
+      "packet": "P073",
+      "path": "dist/learning/p073-plan-chain-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p073PlanChainBinding"
+      ],
+      "replays": [
+        "replayP073PlanChainEvidence"
+      ],
+      "submitted": [
+        "submittedP073PlanChainEvidence"
+      ],
+      "sourceExports": [
+        "P073_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3543
+    },
+    {
+      "packet": "P072",
+      "path": "dist/learning/p072-sense-chain-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p072SenseChainBinding"
+      ],
+      "replays": [
+        "replayP072SenseChainEvidence"
+      ],
+      "submitted": [
+        "submittedP072SenseChainEvidence"
+      ],
+      "sourceExports": [
+        "P072_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3535
+    },
+    {
+      "packet": "P071",
+      "path": "dist/learning/p071-story-chain-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p071StoryChainBinding"
+      ],
+      "replays": [
+        "replayP071StoryChainEvidence"
+      ],
+      "submitted": [
+        "submittedP071StoryChainEvidence"
+      ],
+      "sourceExports": [
+        "P071_SOURCES"
+      ],
+      "typeLiterals": [
+        "x-r38-chain"
+      ],
+      "typeAmbiguous": false,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3482
+    },
+    {
+      "packet": "P070",
+      "path": "dist/learning/p070-perimeter-walk-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p070PerimeterWalkBinding"
+      ],
+      "replays": [
+        "replayP070PerimeterWalkEvidence"
+      ],
+      "submitted": [
+        "submittedP070PerimeterWalkEvidence"
+      ],
+      "sourceExports": [
+        "P070_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3143
+    },
+    {
+      "packet": "P069",
+      "path": "dist/learning/p069-complex-steps-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p069ComplexStepsBinding"
+      ],
+      "replays": [
+        "replayP069ComplexStepsEvidence"
+      ],
+      "submitted": [
+        "submittedP069ComplexStepsEvidence"
+      ],
+      "sourceExports": [
+        "P069_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2850
+    },
+    {
+      "packet": "P068",
+      "path": "dist/learning/p068-percent-steps-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p068PercentStepsBinding"
+      ],
+      "replays": [
+        "replayP068PercentStepsEvidence"
+      ],
+      "submitted": [
+        "submittedP068PercentStepsEvidence"
+      ],
+      "sourceExports": [
+        "P068_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2766
+    },
+    {
+      "packet": "P067",
+      "path": "dist/learning/p067-similar-steps-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p067SimilarStepsBinding"
+      ],
+      "replays": [
+        "replayP067SimilarStepsEvidence"
+      ],
+      "submitted": [
+        "submittedP067SimilarStepsEvidence"
+      ],
+      "sourceExports": [
+        "P067_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2824
+    },
+    {
+      "packet": "P066",
+      "path": "dist/learning/p066-data-clean-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p066DataCleanBinding"
+      ],
+      "replays": [
+        "replayP066DataCleanEvidence"
+      ],
+      "submitted": [
+        "submittedP066DataCleanEvidence"
+      ],
+      "sourceExports": [
+        "P066_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3140
+    },
+    {
+      "packet": "P065",
+      "path": "dist/learning/p065-similar-triangles-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p065SimilarTrianglesBinding"
+      ],
+      "replays": [
+        "replayP065SimilarTrianglesEvidence"
+      ],
+      "submitted": [
+        "submittedP065SimilarTrianglesEvidence"
+      ],
+      "sourceExports": [
+        "P065_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2537
+    },
+    {
+      "packet": "P064",
+      "path": "dist/learning/p064-pythagoras-area-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p064PythagorasAreaBinding"
+      ],
+      "replays": [
+        "replayP064PythagorasAreaEvidence"
+      ],
+      "submitted": [
+        "submittedP064PythagorasAreaEvidence"
+      ],
+      "sourceExports": [
+        "P064_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 3082
+    },
+    {
+      "packet": "P063",
+      "path": "dist/learning/p063-temperature-order-evidence.js",
+      "group": "B",
+      "bindings": [
+        "p063TemperatureOrderBinding"
+      ],
+      "replays": [
+        "replayP063TemperatureOrderEvidence"
+      ],
+      "submitted": [
+        "submittedP063TemperatureOrderEvidence"
+      ],
+      "sourceExports": [
+        "P063_SOURCES"
+      ],
+      "typeLiterals": [],
+      "typeAmbiguous": true,
+      "hasLatestCheck": true,
+      "usesOriginalInspect": true,
+      "byteCount": 2485
+    }
+  ]
+}
