@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/p9-p006
 const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
 const cases=[
  {id:'playgroundstudy',index:0,node:'mt_kxeuXm6EyC',
-  hash:'HASH_PENDING_NATIVE_PREFLIGHT',counts:[6,4,2],rows:12}
+  hash:'271fc40982890e7b261ed64bf00b387dd8f4071d13db5098186b47ebe1ecadff',counts:[6,4,2],rows:12}
 ];
 let stage='startup';
 const checks=[],errors=[],captures=[],screenshots=[],nativeHashes=[];
@@ -104,7 +104,7 @@ async function run(){
    const hash=digest(original.task);
    console.log('P006J_NATIVE_FULL_TASK_SHA256 '+position+' '+hash);
    nativeHashes.push({position,nodeId:original.nodeId,sha256:hash});
-   ok(original.nodeId===s.node&&original.task.type==='x-datastudio',
+   ok(original.nodeId===s.node&&hash===s.hash&&original.task.type==='x-datastudio',
     'exact full runtime SHA and native B19 source');
    ok(candidate.nativeThreeDayUsageBinding(original.task,context)?.recordCount===s.rows,
     'source-locked simulated row contract');
