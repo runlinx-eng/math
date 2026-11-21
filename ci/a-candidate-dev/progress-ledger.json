@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 74,
-    "developmentTestedCandidateCases": 35,
+    "developmentTestedPositions": 76,
+    "developmentTestedCandidateCases": 36,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 8,
+      "developmentTested": 10,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 23
+      "pendingOrOtherNotAccepted": 21
     }
   ],
   "cases": [
@@ -779,6 +779,26 @@
       },
       "artifact": {
         "id": 14701555094,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006e-native-bounded-survey-plans",
+      "branch": "work/a/p006e-bounded-survey-plans",
+      "candidateSha": "906fe4cb54c3029b387811453d3557e63d83054a",
+      "positions": [
+        "studyplan:0",
+        "betterquestion:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44888953363,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14701576369,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
