@@ -68,7 +68,7 @@ async function run(){
    await reveal(loc);await loc.fill(String(value));
   };
   const draw=async()=>{
-   const loc=page.locator('#extra-controls [data-x="draw"]');
+   const loc=page.locator('#extra-controls [data-x="g23-draw"]');
    await reveal(loc);await loc.click();
   };
   const check=async()=>{
