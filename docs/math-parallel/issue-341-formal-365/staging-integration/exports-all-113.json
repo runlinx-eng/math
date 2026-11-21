@@ -1,0 +1,1511 @@
+{
+  "schema": "issue-341-preintegration-export-lock/1",
+  "baseCandidateHead": "0cafdaed5aad3d32bf09ab1d9abf6e77130a069d",
+  "count": 113,
+  "sourceTypeDerivation": "Runtime sessionTaskFor during next isolated CI; lexical type tokens are diagnostics only, never authoritative",
+  "families": [
+    {
+      "packet": "P007A",
+      "group": "P007",
+      "path": "dist/learning/p007a-cube-frame-edge-evidence.js",
+      "bindingExport": "cubeFrameEdgeBinding",
+      "replayExport": "replayCubeFrameEdgeEvidence",
+      "submittedExport": "submittedCubeFrameEdgeEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-frame"
+      ]
+    },
+    {
+      "packet": "P007B",
+      "group": "P007",
+      "path": "dist/learning/p007b-pyramid-view-evidence.js",
+      "bindingExport": "pyramidViewBinding",
+      "replayExport": "replayPyramidViewEvidence",
+      "submittedExport": "submittedPyramidViewEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-frame"
+      ]
+    },
+    {
+      "packet": "P007C",
+      "group": "P007",
+      "path": "dist/learning/p007c-triangle-sas-evidence.js",
+      "bindingExport": "triangleSasBinding",
+      "replayExport": "replayTriangleSasEvidence",
+      "submittedExport": "submittedTriangleSasEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-ruler"
+      ]
+    },
+    {
+      "packet": "P007D",
+      "group": "P007",
+      "path": "dist/learning/p007d-rectangle-dimensions-evidence.js",
+      "bindingExport": "rectangleDimensionsBinding",
+      "replayExport": "replayRectangleDimensionsEvidence",
+      "submittedExport": "submittedRectangleDimensionsEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-ruler"
+      ]
+    },
+    {
+      "packet": "P007E",
+      "group": "P007",
+      "path": "dist/learning/p007e-regular-pentagon-evidence.js",
+      "bindingExport": "regularPentagonBinding",
+      "replayExport": "replayRegularPentagonEvidence",
+      "submittedExport": "submittedRegularPentagonEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-ruler"
+      ]
+    },
+    {
+      "packet": "P007F",
+      "group": "P007",
+      "path": "dist/learning/p007f-circle-radius-diameter-evidence.js",
+      "bindingExport": "nativeCircleBinding",
+      "replayExport": "replayNativeCircleEvidence",
+      "submittedExport": "submittedNativeCircleEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-circle"
+      ]
+    },
+    {
+      "packet": "P007G",
+      "group": "P007",
+      "path": "dist/learning/p007g-compass-bisector-evidence.js",
+      "bindingExport": "nativeCompassBisectorBinding",
+      "replayExport": "replayNativeCompassBisectorEvidence",
+      "submittedExport": "submittedNativeCompassBisectorEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-compass"
+      ]
+    },
+    {
+      "packet": "P007H",
+      "group": "P007",
+      "path": "dist/learning/p007h-compass-angle-evidence.js",
+      "bindingExport": "nativeCompassBinding",
+      "replayExport": "replayNativeCompassEvidence",
+      "submittedExport": "submittedNativeCompassEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P007I",
+      "group": "P007",
+      "path": "dist/learning/p007i-compass-perpendicular-evidence.js",
+      "bindingExport": "nativeCompassBinding",
+      "replayExport": "replayNativeCompassEvidence",
+      "submittedExport": "submittedNativeCompassEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P007J",
+      "group": "P007",
+      "path": "dist/learning/p007j-rectangle-invariants-evidence.js",
+      "bindingExport": "nativeRectangleBinding",
+      "replayExport": "replayNativeRectangleEvidence",
+      "submittedExport": "submittedNativeRectangleEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-ruler"
+      ]
+    },
+    {
+      "packet": "P007K",
+      "group": "P007",
+      "path": "dist/learning/p007k-circle-pi-evidence.js",
+      "bindingExport": "nativeCirclePiBinding",
+      "replayExport": "replayNativeCirclePiEvidence",
+      "submittedExport": "submittedNativeCirclePiEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P007L",
+      "group": "P007",
+      "path": "dist/learning/p007l-triangle-sas-evidence.js",
+      "bindingExport": "nativeTriangleBinding",
+      "replayExport": "replayNativeTriangleEvidence",
+      "submittedExport": "submittedNativeTriangleEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-g25-triangle"
+      ]
+    },
+    {
+      "packet": "P007M",
+      "group": "P007",
+      "path": "dist/learning/p007m-triangle-sss-evidence.js",
+      "bindingExport": "nativeTriangleBinding",
+      "replayExport": "replayNativeTriangleEvidence",
+      "submittedExport": "submittedNativeTriangleEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-g25-triangle"
+      ]
+    },
+    {
+      "packet": "P007N",
+      "group": "P007",
+      "path": "dist/learning/p007n-triangle-asa-evidence.js",
+      "bindingExport": "nativeTriangleBinding",
+      "replayExport": "replayNativeTriangleEvidence",
+      "submittedExport": "submittedNativeTriangleEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-g25-triangle"
+      ]
+    },
+    {
+      "packet": "P007O",
+      "group": "P007",
+      "path": "dist/learning/p007o-triangle-ssa-evidence.js",
+      "bindingExport": "nativeTriangleBinding",
+      "replayExport": "replayNativeTriangleEvidence",
+      "submittedExport": "submittedNativeTriangleEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-g25-triangle"
+      ]
+    },
+    {
+      "packet": "P007P",
+      "group": "P007",
+      "path": "dist/learning/p007p-circle-terminology-evidence.js",
+      "bindingExport": "nativeCircleBinding",
+      "replayExport": "replayNativeCircleEvidence",
+      "submittedExport": "submittedNativeCircleEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-s23-circle"
+      ]
+    },
+    {
+      "packet": "P009A",
+      "group": "P009",
+      "path": "dist/learning/p009a-ten-landmark-evidence.js",
+      "bindingExport": "p009aTenLandmarkBinding",
+      "replayExport": "replayP009ATenLandmarkEvidence",
+      "submittedExport": "submittedP009ATenLandmarkEvidence",
+      "sourceExports": [
+        "P009A_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P009B",
+      "group": "P009",
+      "path": "dist/learning/p009b-add-subtract-family-evidence.js",
+      "bindingExport": "p009bAddSubtractFamilyBinding",
+      "replayExport": "replayP009BAddSubtractFamilyEvidence",
+      "submittedExport": "submittedP009BAddSubtractFamilyEvidence",
+      "sourceExports": [
+        "P009B_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P009C",
+      "group": "P009",
+      "path": "dist/learning/p009c-three-group-pairings-evidence.js",
+      "bindingExport": "p009cThreeGroupPairingsBinding",
+      "replayExport": "replayP009CThreeGroupPairingsEvidence",
+      "submittedExport": "submittedP009CThreeGroupPairingsEvidence",
+      "sourceExports": [
+        "P009C_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P009D",
+      "group": "P009",
+      "path": "dist/learning/p009d-inverse-calculation-evidence.js",
+      "bindingExport": "p009dInverseCalculationBinding",
+      "replayExport": "replayP009DInverseCalculationEvidence",
+      "submittedExport": "submittedP009DInverseCalculationEvidence",
+      "sourceExports": [
+        "P009D_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P009E",
+      "group": "P009",
+      "path": "dist/learning/p009e-decimal-complements-evidence.js",
+      "bindingExport": "p009eDecimalComplementsBinding",
+      "replayExport": "replayP009EDecimalComplementsEvidence",
+      "submittedExport": "submittedP009EDecimalComplementsEvidence",
+      "sourceExports": [
+        "P009E_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P117",
+      "group": "B",
+      "path": "dist/learning/p117-fractionfour-directed-jump-evidence.js",
+      "bindingExport": "p117DirectedJumpBinding",
+      "replayExport": "replayP117DirectedJumpEvidence",
+      "submittedExport": "submittedP117DirectedJumpEvidence",
+      "sourceExports": [],
+      "diagnosticTypeLiterals": [
+        "x-directedjump"
+      ]
+    },
+    {
+      "packet": "P116",
+      "group": "B",
+      "path": "dist/learning/p116-integer-dotplot-evidence.js",
+      "bindingExport": "p116IntegerDotplotBinding",
+      "replayExport": "replayP116IntegerDotplotEvidence",
+      "submittedExport": "submittedP116IntegerDotplotEvidence",
+      "sourceExports": [
+        "P116_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-dotdraw"
+      ]
+    },
+    {
+      "packet": "P115",
+      "group": "B",
+      "path": "dist/learning/p115-signedpoints-quadrants-evidence.js",
+      "bindingExport": "p115QuadrantBinding",
+      "replayExport": "replayP115QuadrantEvidence",
+      "submittedExport": "submittedP115QuadrantEvidence",
+      "sourceExports": [
+        "P115_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-p24-grid"
+      ]
+    },
+    {
+      "packet": "P114",
+      "group": "B",
+      "path": "dist/learning/p114-solidstack-evidence.js",
+      "bindingExport": "p114SolidStackBinding",
+      "replayExport": "replayP114SolidStackEvidence",
+      "submittedExport": "submittedP114SolidStackEvidence",
+      "sourceExports": [
+        "P114_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-g27-build"
+      ]
+    },
+    {
+      "packet": "P113",
+      "group": "B",
+      "path": "dist/learning/p113-tens-removal-evidence.js",
+      "bindingExport": "p113TensRemovalBinding",
+      "replayExport": "replayP113TensRemovalEvidence",
+      "submittedExport": "submittedP113TensRemovalEvidence",
+      "sourceExports": [
+        "P113_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-placecalc"
+      ]
+    },
+    {
+      "packet": "P112",
+      "group": "B",
+      "path": "dist/learning/p112-fair-die-evidence.js",
+      "bindingExport": "p112FairDieBinding",
+      "replayExport": "replayP112FairDieEvidence",
+      "submittedExport": "submittedP112FairDieEvidence",
+      "sourceExports": [
+        "P112_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-p22-pick"
+      ]
+    },
+    {
+      "packet": "P111",
+      "group": "B",
+      "path": "dist/learning/p111-bilateral-equations-evidence.js",
+      "bindingExport": "p111BilateralEquationsBinding",
+      "replayExport": "replayP111BilateralEquationsEvidence",
+      "submittedExport": "submittedP111BilateralEquationsEvidence",
+      "sourceExports": [
+        "P111_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-a35-balance"
+      ]
+    },
+    {
+      "packet": "P110",
+      "group": "B",
+      "path": "dist/learning/p110-mean-distance-evidence.js",
+      "bindingExport": "p110MeanDistanceBinding",
+      "replayExport": "replayP110MeanDistanceEvidence",
+      "submittedExport": "submittedP110MeanDistanceEvidence",
+      "sourceExports": [
+        "P110_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-meandistance"
+      ]
+    },
+    {
+      "packet": "P109",
+      "group": "B",
+      "path": "dist/learning/p109-common-factor-evidence.js",
+      "bindingExport": "p109CommonFactorBinding",
+      "replayExport": "replayP109CommonFactorEvidence",
+      "submittedExport": "submittedP109CommonFactorEvidence",
+      "sourceExports": [
+        "P109_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-a35-factor"
+      ]
+    },
+    {
+      "packet": "P108",
+      "group": "B",
+      "path": "dist/learning/p108-digit-value-evidence.js",
+      "bindingExport": "p108DigitValueBinding",
+      "replayExport": "replayP108DigitValueEvidence",
+      "submittedExport": "submittedP108DigitValueEvidence",
+      "sourceExports": [
+        "P108_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-digitlens"
+      ]
+    },
+    {
+      "packet": "P107",
+      "group": "B",
+      "path": "dist/learning/p107-factor-pairs-evidence.js",
+      "bindingExport": "p107FactorPairsBinding",
+      "replayExport": "replayP107FactorPairsEvidence",
+      "submittedExport": "submittedP107FactorPairsEvidence",
+      "sourceExports": [
+        "P107_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-factorrects"
+      ]
+    },
+    {
+      "packet": "P106",
+      "group": "B",
+      "path": "dist/learning/p106-paper-fold-counts-evidence.js",
+      "bindingExport": "p106PaperFoldCountsBinding",
+      "replayExport": "replayP106PaperFoldCountsEvidence",
+      "submittedExport": "submittedP106PaperFoldCountsEvidence",
+      "sourceExports": [
+        "P106_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-foldpaper"
+      ]
+    },
+    {
+      "packet": "P105",
+      "group": "B",
+      "path": "dist/learning/p105-prime-divisors-evidence.js",
+      "bindingExport": "p105PrimeDivisorsBinding",
+      "replayExport": "replayP105PrimeDivisorsEvidence",
+      "submittedExport": "submittedP105PrimeDivisorsEvidence",
+      "sourceExports": [
+        "P105_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-numbersearch"
+      ]
+    },
+    {
+      "packet": "P104",
+      "group": "B",
+      "path": "dist/learning/p104-step-tools-evidence.js",
+      "bindingExport": "p104StepToolsBinding",
+      "replayExport": "replayP104StepToolsEvidence",
+      "submittedExport": "submittedP104StepToolsEvidence",
+      "sourceExports": [
+        "P104_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-toolwork"
+      ]
+    },
+    {
+      "packet": "P103",
+      "group": "B",
+      "path": "dist/learning/p103-pair-grid-evidence.js",
+      "bindingExport": "p103PairGridBinding",
+      "replayExport": "replayP103PairGridEvidence",
+      "submittedExport": "submittedP103PairGridEvidence",
+      "sourceExports": [
+        "P103_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-p34-grid"
+      ]
+    },
+    {
+      "packet": "P102",
+      "group": "B",
+      "path": "dist/learning/p102-product-grouping-evidence.js",
+      "bindingExport": "p102ProductGroupingBinding",
+      "replayExport": "replayP102ProductGroupingEvidence",
+      "submittedExport": "submittedP102ProductGroupingEvidence",
+      "sourceExports": [
+        "P102_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-mulchain"
+      ]
+    },
+    {
+      "packet": "P101",
+      "group": "B",
+      "path": "dist/learning/p101-axis-mirror-evidence.js",
+      "bindingExport": "p101AxisMirrorBinding",
+      "replayExport": "replayP101AxisMirrorEvidence",
+      "submittedExport": "submittedP101AxisMirrorEvidence",
+      "sourceExports": [
+        "P101_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-p24-mirror"
+      ]
+    },
+    {
+      "packet": "P100",
+      "group": "B",
+      "path": "dist/learning/p100-boxplot-marks-evidence.js",
+      "bindingExport": "p100BoxplotMarksBinding",
+      "replayExport": "replayP100BoxplotMarksEvidence",
+      "submittedExport": "submittedP100BoxplotMarksEvidence",
+      "sourceExports": [
+        "P100_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-boxsummary"
+      ]
+    },
+    {
+      "packet": "P099",
+      "group": "B",
+      "path": "dist/learning/p099-length-tape-evidence.js",
+      "bindingExport": "p099LengthTapeBinding",
+      "replayExport": "replayP099LengthTapeEvidence",
+      "submittedExport": "submittedP099LengthTapeEvidence",
+      "sourceExports": [
+        "P099_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-m29-tape"
+      ]
+    },
+    {
+      "packet": "P098",
+      "group": "B",
+      "path": "dist/learning/p098-linear-parameter-evidence.js",
+      "bindingExport": "p098LinearParameterBinding",
+      "replayExport": "replayP098LinearParameterEvidence",
+      "submittedExport": "submittedP098LinearParameterEvidence",
+      "sourceExports": [
+        "P098_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-f36-live"
+      ]
+    },
+    {
+      "packet": "P097",
+      "group": "B",
+      "path": "dist/learning/p097-square-pair-evidence.js",
+      "bindingExport": "p097SquarePairBinding",
+      "replayExport": "replayP097SquarePairEvidence",
+      "submittedExport": "submittedP097SquarePairEvidence",
+      "sourceExports": [
+        "P097_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-squarepair"
+      ]
+    },
+    {
+      "packet": "P096",
+      "group": "B",
+      "path": "dist/learning/p096-four-addends-evidence.js",
+      "bindingExport": "p096FourAddendsBinding",
+      "replayExport": "replayP096FourAddendsEvidence",
+      "submittedExport": "submittedP096FourAddendsEvidence",
+      "sourceExports": [
+        "P096_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-groupfour"
+      ]
+    },
+    {
+      "packet": "P095",
+      "group": "B",
+      "path": "dist/learning/p095-zero-crossing-evidence.js",
+      "bindingExport": "p095ZeroCrossingBinding",
+      "replayExport": "replayP095ZeroCrossingEvidence",
+      "submittedExport": "submittedP095ZeroCrossingEvidence",
+      "sourceExports": [
+        "P095_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-m29-interval"
+      ]
+    },
+    {
+      "packet": "P094",
+      "group": "B",
+      "path": "dist/learning/p094-small-unit-product-evidence.js",
+      "bindingExport": "p094SmallUnitProductBinding",
+      "replayExport": "replayP094SmallUnitProductEvidence",
+      "submittedExport": "submittedP094SmallUnitProductEvidence",
+      "sourceExports": [
+        "P094_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-decimalproduct"
+      ]
+    },
+    {
+      "packet": "P093",
+      "group": "B",
+      "path": "dist/learning/p093-triangular-prism-net-evidence.js",
+      "bindingExport": "p093TriangularPrismNetBinding",
+      "replayExport": "replayP093TriangularPrismNetEvidence",
+      "submittedExport": "submittedP093TriangularPrismNetEvidence",
+      "sourceExports": [
+        "P093_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-g27-net"
+      ]
+    },
+    {
+      "packet": "P092",
+      "group": "B",
+      "path": "dist/learning/p092-triangle-tiling-evidence.js",
+      "bindingExport": "p092TriangleTilingBinding",
+      "replayExport": "replayP092TriangleTilingEvidence",
+      "submittedExport": "submittedP092TriangleTilingEvidence",
+      "sourceExports": [
+        "P092_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-s23-tile"
+      ]
+    },
+    {
+      "packet": "P091",
+      "group": "B",
+      "path": "dist/learning/p091-one-sided-range-evidence.js",
+      "bindingExport": "p091OneSidedRangeBinding",
+      "replayExport": "replayP091OneSidedRangeEvidence",
+      "submittedExport": "submittedP091OneSidedRangeEvidence",
+      "sourceExports": [
+        "P091_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-allowedrange"
+      ]
+    },
+    {
+      "packet": "P090",
+      "group": "B",
+      "path": "dist/learning/p090-signed-product-rows-evidence.js",
+      "bindingExport": "p090SignedProductRowsBinding",
+      "replayExport": "replayP090SignedProductRowsEvidence",
+      "submittedExport": "submittedP090SignedProductRowsEvidence",
+      "sourceExports": [
+        "P090_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-signwalk"
+      ]
+    },
+    {
+      "packet": "P089",
+      "group": "B",
+      "path": "dist/learning/p089-parity-pairing-evidence.js",
+      "bindingExport": "p089ParityPairingBinding",
+      "replayExport": "replayP089ParityPairingEvidence",
+      "submittedExport": "submittedP089ParityPairingEvidence",
+      "sourceExports": [
+        "P089_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-parityjoin"
+      ]
+    },
+    {
+      "packet": "P088",
+      "group": "B",
+      "path": "dist/learning/p088-graph-crossings-evidence.js",
+      "bindingExport": "p088GraphCrossingsBinding",
+      "replayExport": "replayP088GraphCrossingsEvidence",
+      "submittedExport": "submittedP088GraphCrossingsEvidence",
+      "sourceExports": [
+        "P088_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-s39-graph"
+      ]
+    },
+    {
+      "packet": "P087",
+      "group": "B",
+      "path": "dist/learning/p087-unordered-split-pairs-evidence.js",
+      "bindingExport": "p087UnorderedSplitPairsBinding",
+      "replayExport": "replayP087UnorderedSplitPairsEvidence",
+      "submittedExport": "submittedP087UnorderedSplitPairsEvidence",
+      "sourceExports": [
+        "P087_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-splitbench"
+      ]
+    },
+    {
+      "packet": "P086",
+      "group": "B",
+      "path": "dist/learning/p086-joined-solid-surfaces-evidence.js",
+      "bindingExport": "p086JoinedSolidSurfacesBinding",
+      "replayExport": "replayP086JoinedSolidSurfacesEvidence",
+      "submittedExport": "submittedP086JoinedSolidSurfacesEvidence",
+      "sourceExports": [
+        "P086_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-a30-solid"
+      ]
+    },
+    {
+      "packet": "P085",
+      "group": "B",
+      "path": "dist/learning/p085-pythagoras-length-evidence.js",
+      "bindingExport": "p085PythagorasLengthBinding",
+      "replayExport": "replayP085PythagorasLengthEvidence",
+      "submittedExport": "submittedP085PythagorasLengthEvidence",
+      "sourceExports": [
+        "P085_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-g26-length"
+      ]
+    },
+    {
+      "packet": "P084",
+      "group": "B",
+      "path": "dist/learning/p084-expression-build-evidence.js",
+      "bindingExport": "p084ExpressionBuildBinding",
+      "replayExport": "replayP084ExpressionBuildEvidence",
+      "submittedExport": "submittedP084ExpressionBuildEvidence",
+      "sourceExports": [
+        "P084_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-orderlab"
+      ]
+    },
+    {
+      "packet": "P083",
+      "group": "B",
+      "path": "dist/learning/p083-chance-mapping-evidence.js",
+      "bindingExport": "p083ChanceMappingBinding",
+      "replayExport": "replayP083ChanceMappingEvidence",
+      "submittedExport": "submittedP083ChanceMappingEvidence",
+      "sourceExports": [
+        "P083_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-p22-mapping"
+      ]
+    },
+    {
+      "packet": "P082",
+      "group": "B",
+      "path": "dist/learning/p082-shape-uses-evidence.js",
+      "bindingExport": "p082ShapeUsesBinding",
+      "replayExport": "replayP082ShapeUsesEvidence",
+      "submittedExport": "submittedP082ShapeUsesEvidence",
+      "sourceExports": [
+        "P082_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-s23-objects"
+      ]
+    },
+    {
+      "packet": "P081",
+      "group": "B",
+      "path": "dist/learning/p081-stat-brief-evidence.js",
+      "bindingExport": "p081StatBriefBinding",
+      "replayExport": "replayP081StatBriefEvidence",
+      "submittedExport": "submittedP081StatBriefEvidence",
+      "sourceExports": [
+        "P081_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-statbrief"
+      ]
+    },
+    {
+      "packet": "P080",
+      "group": "B",
+      "path": "dist/learning/p080-argument-chain-evidence.js",
+      "bindingExport": "p080ArgumentChainBinding",
+      "replayExport": "replayP080ArgumentChainEvidence",
+      "submittedExport": "submittedP080ArgumentChainEvidence",
+      "sourceExports": [
+        "P080_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P079",
+      "group": "B",
+      "path": "dist/learning/p079-net-surface-evidence.js",
+      "bindingExport": "p079NetSurfaceBinding",
+      "replayExport": "replayP079NetSurfaceEvidence",
+      "submittedExport": "submittedP079NetSurfaceEvidence",
+      "sourceExports": [
+        "P079_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-a30-solid"
+      ]
+    },
+    {
+      "packet": "P077",
+      "group": "B",
+      "path": "dist/learning/p077-digital-sets-evidence.js",
+      "bindingExport": "p077DigitalSetsBinding",
+      "replayExport": "replayP077DigitalSetsEvidence",
+      "submittedExport": "submittedP077DigitalSetsEvidence",
+      "sourceExports": [
+        "P077_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-digitalsets"
+      ]
+    },
+    {
+      "packet": "P076",
+      "group": "B",
+      "path": "dist/learning/p076-measure-story-evidence.js",
+      "bindingExport": "p076MeasureStoryBinding",
+      "replayExport": "replayP076MeasureStoryEvidence",
+      "submittedExport": "submittedP076MeasureStoryEvidence",
+      "sourceExports": [
+        "P076_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-measurestory"
+      ]
+    },
+    {
+      "packet": "P075",
+      "group": "B",
+      "path": "dist/learning/p075-pair-table-evidence.js",
+      "bindingExport": "p075PairTableBinding",
+      "replayExport": "replayP075PairTableEvidence",
+      "submittedExport": "submittedP075PairTableEvidence",
+      "sourceExports": [
+        "P075_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-pairtable"
+      ]
+    },
+    {
+      "packet": "P074",
+      "group": "B",
+      "path": "dist/learning/p074-complex-chain-evidence.js",
+      "bindingExport": "p074ComplexChainBinding",
+      "replayExport": "replayP074ComplexChainEvidence",
+      "submittedExport": "submittedP074ComplexChainEvidence",
+      "sourceExports": [
+        "P074_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P073",
+      "group": "B",
+      "path": "dist/learning/p073-plan-chain-evidence.js",
+      "bindingExport": "p073PlanChainBinding",
+      "replayExport": "replayP073PlanChainEvidence",
+      "submittedExport": "submittedP073PlanChainEvidence",
+      "sourceExports": [
+        "P073_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P072",
+      "group": "B",
+      "path": "dist/learning/p072-sense-chain-evidence.js",
+      "bindingExport": "p072SenseChainBinding",
+      "replayExport": "replayP072SenseChainEvidence",
+      "submittedExport": "submittedP072SenseChainEvidence",
+      "sourceExports": [
+        "P072_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P071",
+      "group": "B",
+      "path": "dist/learning/p071-story-chain-evidence.js",
+      "bindingExport": "p071StoryChainBinding",
+      "replayExport": "replayP071StoryChainEvidence",
+      "submittedExport": "submittedP071StoryChainEvidence",
+      "sourceExports": [
+        "P071_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P070",
+      "group": "B",
+      "path": "dist/learning/p070-perimeter-walk-evidence.js",
+      "bindingExport": "p070PerimeterWalkBinding",
+      "replayExport": "replayP070PerimeterWalkEvidence",
+      "submittedExport": "submittedP070PerimeterWalkEvidence",
+      "sourceExports": [
+        "P070_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P069",
+      "group": "B",
+      "path": "dist/learning/p069-complex-steps-evidence.js",
+      "bindingExport": "p069ComplexStepsBinding",
+      "replayExport": "replayP069ComplexStepsEvidence",
+      "submittedExport": "submittedP069ComplexStepsEvidence",
+      "sourceExports": [
+        "P069_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P068",
+      "group": "B",
+      "path": "dist/learning/p068-percent-steps-evidence.js",
+      "bindingExport": "p068PercentStepsBinding",
+      "replayExport": "replayP068PercentStepsEvidence",
+      "submittedExport": "submittedP068PercentStepsEvidence",
+      "sourceExports": [
+        "P068_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P067",
+      "group": "B",
+      "path": "dist/learning/p067-similar-steps-evidence.js",
+      "bindingExport": "p067SimilarStepsBinding",
+      "replayExport": "replayP067SimilarStepsEvidence",
+      "submittedExport": "submittedP067SimilarStepsEvidence",
+      "sourceExports": [
+        "P067_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P066",
+      "group": "B",
+      "path": "dist/learning/p066-data-clean-evidence.js",
+      "bindingExport": "p066DataCleanBinding",
+      "replayExport": "replayP066DataCleanEvidence",
+      "submittedExport": "submittedP066DataCleanEvidence",
+      "sourceExports": [
+        "P066_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P065",
+      "group": "B",
+      "path": "dist/learning/p065-similar-triangles-evidence.js",
+      "bindingExport": "p065SimilarTrianglesBinding",
+      "replayExport": "replayP065SimilarTrianglesEvidence",
+      "submittedExport": "submittedP065SimilarTrianglesEvidence",
+      "sourceExports": [
+        "P065_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P064",
+      "group": "B",
+      "path": "dist/learning/p064-pythagoras-area-evidence.js",
+      "bindingExport": "p064PythagorasAreaBinding",
+      "replayExport": "replayP064PythagorasAreaEvidence",
+      "submittedExport": "submittedP064PythagorasAreaEvidence",
+      "sourceExports": [
+        "P064_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P063",
+      "group": "B",
+      "path": "dist/learning/p063-temperature-order-evidence.js",
+      "bindingExport": "p063TemperatureOrderBinding",
+      "replayExport": "replayP063TemperatureOrderEvidence",
+      "submittedExport": "submittedP063TemperatureOrderEvidence",
+      "sourceExports": [
+        "P063_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P062",
+      "group": "B",
+      "path": "dist/learning/p062-zero-place-product-evidence.js",
+      "bindingExport": "p062ZeroPlaceProductBinding",
+      "replayExport": "replayP062ZeroPlaceProductEvidence",
+      "submittedExport": "submittedP062ZeroPlaceProductEvidence",
+      "sourceExports": [
+        "P062_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P059",
+      "group": "B",
+      "path": "dist/learning/p059-whole-unit-walk-evidence.js",
+      "bindingExport": "p059WholeUnitWalkBinding",
+      "replayExport": "replayP059WholeUnitWalkEvidence",
+      "submittedExport": "submittedP059WholeUnitWalkEvidence",
+      "sourceExports": [
+        "P059_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-unitwalk"
+      ]
+    },
+    {
+      "packet": "P058",
+      "group": "B",
+      "path": "dist/learning/p058-leaf-grid-approximation-evidence.js",
+      "bindingExport": "p058LeafGridApproximationBinding",
+      "replayExport": "replayP058LeafGridApproximationEvidence",
+      "submittedExport": "submittedP058LeafGridApproximationEvidence",
+      "sourceExports": [
+        "P058_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-s23-pixels"
+      ]
+    },
+    {
+      "packet": "P057",
+      "group": "B",
+      "path": "dist/learning/p057-chance-condition-sort-evidence.js",
+      "bindingExport": "p057ChanceConditionSortBinding",
+      "replayExport": "replayP057ChanceConditionSortEvidence",
+      "submittedExport": "submittedP057ChanceConditionSortEvidence",
+      "sourceExports": [
+        "P057_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-p22-sort"
+      ]
+    },
+    {
+      "packet": "P055",
+      "group": "B",
+      "path": "dist/learning/p055-right-triangle-condition-evidence.js",
+      "bindingExport": "p055RightTriangleConditionBinding",
+      "replayExport": "replayP055RightTriangleConditionEvidence",
+      "submittedExport": "submittedP055RightTriangleConditionEvidence",
+      "sourceExports": [
+        "P055_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-g26-check"
+      ]
+    },
+    {
+      "packet": "P054",
+      "group": "B",
+      "path": "dist/learning/p054-opposite-side-marks-evidence.js",
+      "bindingExport": "p054OppositeSideMarksBinding",
+      "replayExport": "replayP054OppositeSideMarksEvidence",
+      "submittedExport": "submittedP054OppositeSideMarksEvidence",
+      "sourceExports": [
+        "P054_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-g25-ticks"
+      ]
+    },
+    {
+      "packet": "P053",
+      "group": "B",
+      "path": "dist/learning/p053-data-kind-order-evidence.js",
+      "bindingExport": "p053DataKindOrderBinding",
+      "replayExport": "replayP053DataKindOrderEvidence",
+      "submittedExport": "submittedP053DataKindOrderEvidence",
+      "sourceExports": [
+        "P053_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-datakind"
+      ]
+    },
+    {
+      "packet": "P051",
+      "group": "B",
+      "path": "dist/learning/p051-compound-unit-meaning-evidence.js",
+      "bindingExport": "p051CompoundUnitMeaningBinding",
+      "replayExport": "replayP051CompoundUnitMeaningEvidence",
+      "submittedExport": "submittedP051CompoundUnitMeaningEvidence",
+      "sourceExports": [
+        "P051_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P050",
+      "group": "B",
+      "path": "dist/learning/p050-drawing-area-scale-evidence.js",
+      "bindingExport": "p050DrawingAreaScaleBinding",
+      "replayExport": "replayP050DrawingAreaScaleEvidence",
+      "submittedExport": "submittedP050DrawingAreaScaleEvidence",
+      "sourceExports": [
+        "P050_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P049",
+      "group": "B",
+      "path": "dist/learning/p049-ratio-smallest-basket-evidence.js",
+      "bindingExport": "p049RatioSmallestBasketBinding",
+      "replayExport": "replayP049RatioSmallestBasketEvidence",
+      "submittedExport": "submittedP049RatioSmallestBasketEvidence",
+      "sourceExports": [
+        "P049_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P048",
+      "group": "B",
+      "path": "dist/learning/p048-rope-cut-chain-evidence.js",
+      "bindingExport": "p048RopeCutChainBinding",
+      "replayExport": "replayP048RopeCutChainEvidence",
+      "submittedExport": "submittedP048RopeCutChainEvidence",
+      "sourceExports": [
+        "P048_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P047",
+      "group": "B",
+      "path": "dist/learning/p047-subtraction-first-error-evidence.js",
+      "bindingExport": "p047SubtractionFirstErrorBinding",
+      "replayExport": "replayP047SubtractionFirstErrorEvidence",
+      "submittedExport": "submittedP047SubtractionFirstErrorEvidence",
+      "sourceExports": [
+        "P047_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P046",
+      "group": "B",
+      "path": "dist/learning/p046-three-fourths-chain-evidence.js",
+      "bindingExport": "p046ThreeFourthsChainBinding",
+      "replayExport": "replayP046ThreeFourthsChainEvidence",
+      "submittedExport": "submittedP046ThreeFourthsChainEvidence",
+      "sourceExports": [
+        "P046_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P045",
+      "group": "B",
+      "path": "dist/learning/p045-three-fifths-vs-half-evidence.js",
+      "bindingExport": "p045ThreeFifthsVsHalfBinding",
+      "replayExport": "replayP045ThreeFifthsVsHalfEvidence",
+      "submittedExport": "submittedP045ThreeFifthsVsHalfEvidence",
+      "sourceExports": [
+        "P045_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-r38-chain"
+      ]
+    },
+    {
+      "packet": "P044",
+      "group": "B",
+      "path": "dist/learning/p044-straight-angle-gap-evidence.js",
+      "bindingExport": "p044StraightAngleGapBinding",
+      "replayExport": "replayP044StraightAngleGapEvidence",
+      "submittedExport": "submittedP044StraightAngleGapEvidence",
+      "sourceExports": [
+        "P044_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P043",
+      "group": "B",
+      "path": "dist/learning/p043-multiple-sheet-evidence.js",
+      "bindingExport": "p043MultipleSheetBinding",
+      "replayExport": "replayP043MultipleSheetEvidence",
+      "submittedExport": "submittedP043MultipleSheetEvidence",
+      "sourceExports": [
+        "P043_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P042",
+      "group": "B",
+      "path": "dist/learning/p042-perimeter-area-trials-evidence.js",
+      "bindingExport": "p042PerimeterAreaTrialsBinding",
+      "replayExport": "replayP042PerimeterAreaTrialsEvidence",
+      "submittedExport": "submittedP042PerimeterAreaTrialsEvidence",
+      "sourceExports": [
+        "P042_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P040",
+      "group": "B",
+      "path": "dist/learning/p040-prism-face-volume-evidence.js",
+      "bindingExport": "p040PrismFaceVolumeBinding",
+      "replayExport": "replayP040PrismFaceVolumeEvidence",
+      "submittedExport": "submittedP040PrismFaceVolumeEvidence",
+      "sourceExports": [
+        "P040_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P039",
+      "group": "B",
+      "path": "dist/learning/p039-shortchains-evidence.js",
+      "bindingExport": "p039ShortChainsBinding",
+      "replayExport": "replayP039ShortChainsEvidence",
+      "submittedExport": "submittedP039ShortChainsEvidence",
+      "sourceExports": [
+        "P039_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P037",
+      "group": "B",
+      "path": "dist/learning/p037-composite-scene-evidence.js",
+      "bindingExport": "p037CompositeSceneBinding",
+      "replayExport": "replayP037CompositeSceneEvidence",
+      "submittedExport": "submittedP037CompositeSceneEvidence",
+      "sourceExports": [
+        "P037_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P036",
+      "group": "B",
+      "path": "dist/learning/p036-geometry-notation-evidence.js",
+      "bindingExport": "p036GeometryNotationBinding",
+      "replayExport": "replayP036GeometryNotationEvidence",
+      "submittedExport": "submittedP036GeometryNotationEvidence",
+      "sourceExports": [
+        "P036_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P035",
+      "group": "B",
+      "path": "dist/learning/p035-ordered-pair-grid-evidence.js",
+      "bindingExport": "p035OrderedPairGridBinding",
+      "replayExport": "replayP035OrderedPairGridEvidence",
+      "submittedExport": "submittedP035OrderedPairGridEvidence",
+      "sourceExports": [
+        "P035_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P033",
+      "group": "B",
+      "path": "dist/learning/p033-observation-tally-evidence.js",
+      "bindingExport": "p033ObservationTallyBinding",
+      "replayExport": "replayP033ObservationTallyEvidence",
+      "submittedExport": "submittedP033ObservationTallyEvidence",
+      "sourceExports": [
+        "P033_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P031",
+      "group": "B",
+      "path": "dist/learning/p031-hundred-chart-evidence.js",
+      "bindingExport": "p031HundredChartBinding",
+      "replayExport": "replayP031HundredChartEvidence",
+      "submittedExport": "submittedP031HundredChartEvidence",
+      "sourceExports": [
+        "P031_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P028",
+      "group": "B",
+      "path": "dist/learning/p028-trig-roles-and-ratios-evidence.js",
+      "bindingExport": "p028TrigRolesAndRatiosBinding",
+      "replayExport": "replayP028TrigRolesAndRatiosEvidence",
+      "submittedExport": "submittedP028TrigRolesAndRatiosEvidence",
+      "sourceExports": [
+        "P028_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P027",
+      "group": "B",
+      "path": "dist/learning/p027-equal-ratio-shares-evidence.js",
+      "bindingExport": "p027EqualRatioSharesBinding",
+      "replayExport": "replayP027EqualRatioSharesEvidence",
+      "submittedExport": "submittedP027EqualRatioSharesEvidence",
+      "sourceExports": [
+        "P027_SOURCES"
+      ],
+      "diagnosticTypeLiterals": []
+    },
+    {
+      "packet": "P025",
+      "group": "B",
+      "path": "dist/learning/p025-decimal-remainders-and-place-values-evidence.js",
+      "bindingExport": "p025DecimalRemaindersAndPlaceValuesBinding",
+      "replayExport": "replayP025DecimalRemaindersAndPlaceValuesEvidence",
+      "submittedExport": "submittedP025DecimalRemaindersAndPlaceValuesEvidence",
+      "sourceExports": [
+        "P025_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-decimalmachine"
+      ]
+    },
+    {
+      "packet": "P023",
+      "group": "B",
+      "path": "dist/learning/p023-graph-interpretation-evidence.js",
+      "bindingExport": "p023GraphInterpretationBinding",
+      "replayExport": "replayP023GraphInterpretationEvidence",
+      "submittedExport": "submittedP023GraphInterpretationEvidence",
+      "sourceExports": [
+        "P023_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-scatterbuild",
+        "x-graphcompare"
+      ]
+    },
+    {
+      "packet": "P020",
+      "group": "B",
+      "path": "dist/learning/p020-boundary-and-area-construction-evidence.js",
+      "bindingExport": "p020BoundaryAndAreaConstructionBinding",
+      "replayExport": "replayP020BoundaryAndAreaConstructionEvidence",
+      "submittedExport": "submittedP020BoundaryAndAreaConstructionEvidence",
+      "sourceExports": [
+        "P020_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-a30-outline",
+        "x-a30-circle"
+      ]
+    },
+    {
+      "packet": "P019",
+      "group": "B",
+      "path": "dist/learning/p019-equivalent-names-and-percent-evidence.js",
+      "bindingExport": "p019EquivalentNamesAndPercentBinding",
+      "replayExport": "replayP019EquivalentNamesAndPercentEvidence",
+      "submittedExport": "submittedP019EquivalentNamesAndPercentEvidence",
+      "sourceExports": [
+        "P019_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-fractionbridge",
+        "x-decimalzoom",
+        "x-percentkit"
+      ]
+    },
+    {
+      "packet": "P018",
+      "group": "B",
+      "path": "dist/learning/p018-probability-observations-evidence.js",
+      "bindingExport": "p018ProbabilityObservationsBinding",
+      "replayExport": "replayP018ProbabilityObservationsEvidence",
+      "submittedExport": "submittedP018ProbabilityObservationsEvidence",
+      "sourceExports": [
+        "P018_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-p22-experiment",
+        "x-p22-draw"
+      ]
+    },
+    {
+      "packet": "P017",
+      "group": "B",
+      "path": "dist/learning/p017-signed-walk-and-between-evidence.js",
+      "bindingExport": "p017SignedWalkAndBetweenBinding",
+      "replayExport": "replayP017SignedWalkAndBetweenEvidence",
+      "submittedExport": "submittedP017SignedWalkAndBetweenEvidence",
+      "sourceExports": [
+        "P017_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-signedline"
+      ]
+    },
+    {
+      "packet": "P016",
+      "group": "B",
+      "path": "dist/learning/p016-model-and-rule-checks-evidence.js",
+      "bindingExport": "p016ModelAndRuleChecksBinding",
+      "replayExport": "replayP016ModelAndRuleChecksEvidence",
+      "submittedExport": "submittedP016ModelAndRuleChecksEvidence",
+      "sourceExports": [
+        "P016_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-divreverse",
+        "x-p22-pick",
+        "x-s23-notation",
+        "x-m29-interval",
+        "x-p34-ambiguity",
+        "x-a35-try",
+        "x-a35-plot"
+      ]
+    },
+    {
+      "packet": "P014",
+      "group": "B",
+      "path": "dist/learning/p014-multiplicative-bars-evidence.js",
+      "bindingExport": "p014MultiplicativeBarsBinding",
+      "replayExport": "replayP014MultiplicativeBarsEvidence",
+      "submittedExport": "submittedP014MultiplicativeBarsEvidence",
+      "sourceExports": [
+        "P014_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-comparebars"
+      ]
+    },
+    {
+      "packet": "P013",
+      "group": "B",
+      "path": "dist/learning/p013-recall-and-estimation-evidence.js",
+      "bindingExport": "p013RecallAndEstimationBinding",
+      "replayExport": "replayP013RecallAndEstimationEvidence",
+      "submittedExport": "submittedP013RecallAndEstimationEvidence",
+      "sourceExports": [
+        "P013_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-recallbench",
+        "x-estimate"
+      ]
+    },
+    {
+      "packet": "P012",
+      "group": "B",
+      "path": "dist/learning/p012-time-calendar-and-timetables-evidence.js",
+      "bindingExport": "p012TimeCalendarAndTimetablesBinding",
+      "replayExport": "replayP012TimeCalendarAndTimetablesEvidence",
+      "submittedExport": "submittedP012TimeCalendarAndTimetablesEvidence",
+      "sourceExports": [
+        "P012_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-timetable",
+        "x-m29-clock",
+        "x-t32-order",
+        "x-t32-units",
+        "x-t32-calendar"
+      ]
+    },
+    {
+      "packet": "P011",
+      "group": "B",
+      "path": "dist/learning/p011-measurement-models-evidence.js",
+      "bindingExport": "p011MeasurementModelsBinding",
+      "replayExport": "replayP011MeasurementModelsEvidence",
+      "submittedExport": "submittedP011MeasurementModelsEvidence",
+      "sourceExports": [
+        "P011_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-m33-sort",
+        "x-m33-compare",
+        "x-m33-model"
+      ]
+    },
+    {
+      "packet": "P010",
+      "group": "B",
+      "path": "dist/learning/p010-story-operation-plans-evidence.js",
+      "bindingExport": "p010StoryOperationPlansBinding",
+      "replayExport": "replayP010StoryOperationPlansEvidence",
+      "submittedExport": "submittedP010StoryOperationPlansEvidence",
+      "sourceExports": [
+        "P010_SOURCES"
+      ],
+      "diagnosticTypeLiterals": [
+        "x-storyparts",
+        "x-storyplan"
+      ]
+    }
+  ]
+}
