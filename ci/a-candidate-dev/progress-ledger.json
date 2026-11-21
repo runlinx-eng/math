@@ -15,8 +15,8 @@
       "P005"
     ],
     "historicalResearchPositions": 161,
-    "developmentTestedPositions": 62,
-    "developmentTestedCandidateCases": 28,
+    "developmentTestedPositions": 63,
+    "developmentTestedCandidateCases": 29,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3"
@@ -62,9 +62,9 @@
       "id": "P005",
       "topic": "angles",
       "historicalResearchPositions": 32,
-      "developmentTested": 26,
+      "developmentTested": 27,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 6
+      "pendingOrOtherNotAccepted": 5
     }
   ],
   "cases": [
@@ -630,6 +630,25 @@
       },
       "artifact": {
         "id": 14699242271,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P005",
+      "case": "P005l-reason34-polygon-fan",
+      "branch": "work/a/p005l-reason34-polygon-fan",
+      "candidateSha": "b92c976ce016b7ac562b22095d3007be1982b445",
+      "positions": [
+        "reason34:0"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44884823500,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14699391807,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
