@@ -9,7 +9,7 @@ const {createOrigin,capture,warmAndStop}=require('./helpers/p9-basic-artifact.cj
 const root=path.resolve(__dirname,'..');
 const out=path.join(root,'verification/p9-p006o-native-club-vs-all-repeats');
 const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
-const sample={id:'samplevary',index:1,node:'mt_x7V1qrkiqH',hash:'89c72b9bbd6503b5c39ce9ee0393ed631f0595f91cd2015a5a95290978deaa04'};
+const sample={id:'samplevary',index:1,node:'mt_x7V1qrkiqH',hash:'0a01bd8e8dd95df5a801bc216e7d0d60d3f19c5dcbe5d94c135b958604e6896a'};
 let stage='startup';
 const checks=[],errors=[],captures=[],screenshots=[],nativeHashes=[];
 const ok=(v,msg)=>{assert.ok(v,stage+': '+msg);checks.push(stage+': '+msg);};
