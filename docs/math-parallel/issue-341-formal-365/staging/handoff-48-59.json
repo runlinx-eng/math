@@ -1,0 +1,134 @@
+[
+  {
+    "group": "B",
+    "packet": "P068",
+    "family": "work/b/p068-percent-steps",
+    "position": "pctFraction37:1",
+    "nodeId": "mt_ALUrJpY0cZ",
+    "taskSha256": "5206b7175e71346970b858e3b1fa7c27da723942796f06afa444d9335c51504f",
+    "candidateCommit": "d2b8f8b0da44b83c72211034c40628e57c9fa5af",
+    "patchSha256": "a38bd65127ef55cf38a8e5b75258f2e7d34d089dcff91852dfe00c9917d5a541",
+    "receiptSha256": "be6af1f14a37f538271cf9a435609cc6d3237e7875ce1f168580ddd4c10769d2"
+  },
+  {
+    "group": "B",
+    "packet": "P067",
+    "family": "work/b/p067-similar-steps",
+    "position": "similar37:3",
+    "nodeId": "mt_2OtRUM_0zW",
+    "taskSha256": "25d9a986bda4c2e3c8c7180318fe00a0c7dcbfbd8beec961363c4028a4d8c6ad",
+    "candidateCommit": "46eb7be0afe4c403a62ec4d03ab13a5418163893",
+    "patchSha256": "17d79affad06bcbef1ed3397750f3b9718823b0ebfe5904f2fca7aabb0b437ff",
+    "receiptSha256": "6b857a6a0759e6c50d0350b752947896231bec20c71b24f6f079f5762586626c"
+  },
+  {
+    "group": "B",
+    "packet": "P066",
+    "family": "work/b/p066-data-clean",
+    "position": "checkrecords:0",
+    "nodeId": "mt_QHT16CrFO-",
+    "taskSha256": "a901b8238ae22b1efcf8d6373d8cfb7b0f73ab4e587f4e6b24d32e262a325718",
+    "candidateCommit": "f9789b278277618cc92003c5ae95036382e3f161",
+    "patchSha256": "f8d1ee77c08a8721b3ab47c43417cd01c1025b7eec11802fbc9b343b2ae8ceab",
+    "receiptSha256": "32decb79c09a39aca10f72e19dd20bfb93eb7e39824152e6ea8ebcb02e813f48"
+  },
+  {
+    "group": "B",
+    "packet": "P065",
+    "family": "work/b/p065-similar-triangles",
+    "position": "trianglepossible:3",
+    "nodeId": "mt_4bc3EAxhlY",
+    "taskSha256": "0275053a800c5615c242a39b16b4c22cd1d1267b108380ce514c2cdb24cd6abb",
+    "candidateCommit": "b58550e19081ae2feae6ba97ed563efb4ed0ca2a",
+    "patchSha256": "283799f817b326d251568eb1c341378daef5a44ac79a3aa3f039ded3800b7f9c",
+    "receiptSha256": "dfd4c85a5b208119ec23fae79bca9e8c9a52bc77f3b8cae4aa6a632eb64ee3cd"
+  },
+  {
+    "group": "B",
+    "packet": "P064",
+    "family": "work/b/p064-pythagoras-area",
+    "position": "pythagoras:0",
+    "nodeId": "mt_1VmTUxBrNd",
+    "taskSha256": "8f559c38faf512463c188b7ff76fd16ea9936a81445d35b8b0250fdeff512e94",
+    "candidateCommit": "84a9acacfa7baf0cbf71a4ebb5a36c0f01eefb71",
+    "patchSha256": "287ac56b25bf071125ee638722d69413ef1f1376c7182946d109044011773661",
+    "receiptSha256": "60ff0d843c3e33a9183dccad4600b4ce6340bd468f786020be3d1d76080c3aa0"
+  },
+  {
+    "group": "B",
+    "packet": "P063",
+    "family": "work/b/p063-temperature-order",
+    "position": "temperaturechange:2",
+    "nodeId": "mt_RVK655t391",
+    "taskSha256": "3d8efdf2a4168309bf441e68fc90d1dd3334ce1b7f3ed8dd057c85e9b8960d92",
+    "candidateCommit": "6e862904b5f3322ddf15c7472a4158d2224ad481",
+    "patchSha256": "6bc25346c9996b0f3c3bdcd44b49383279d66c7efc6f3f437f5b46bb5546d68b",
+    "receiptSha256": "a23063eca1b1b9d5a9a10a04b3e0813003a29e44f6b8dd6dc4b75074d77ca54f"
+  },
+  {
+    "group": "B",
+    "packet": "P062",
+    "family": "work/b/p062-zero-place-product",
+    "position": "bigproduct:2",
+    "nodeId": "mt_XLP1IM3Qbb",
+    "taskSha256": "93c94b11850b6790d18c4ed0709321802d6fc61bd91793ee18c6a95e02fd48c7",
+    "candidateCommit": "08961a16e316fcab5f7dfe2a7822232d3b098dbf",
+    "patchSha256": "f258daa8853656d7143130926c33d3f6b2ab712ec0b44e86c1bb8371cc4512e6",
+    "receiptSha256": "b7677a60cf4761aa2566ba0fcf4bd9edd4e8ede12cbb3215dc9221523561af7f"
+  },
+  {
+    "group": "B",
+    "packet": "P059",
+    "family": "work/b/p059-whole-unit-walk",
+    "position": "wholefractions:0",
+    "nodeId": "mt_AYzE1EAvI0",
+    "taskSha256": "dabf9dc0e71a31b56110233f473f9e91fefc4fe4a6625b5486e613d9388be562",
+    "candidateCommit": "3ca286a3e03829e53e7a1767484c17a442388dd6",
+    "patchSha256": "d3804406f7161645b49206c08b0726102b63c9521c32418837c440cb62c2d91b",
+    "receiptSha256": "1a2cf38e153adffe7266335ba6f627d6575e034e3c60771331b1cb460482ead6"
+  },
+  {
+    "group": "B",
+    "packet": "P058",
+    "family": "work/b/p058-leaf-grid-approximation",
+    "position": "shapeapprox:2",
+    "nodeId": "mt_SK7WntVZ6y",
+    "taskSha256": "2f1f3192ad41990e95e59440d572527ea2a1d7f65be4c9c625ba90bff881ca48",
+    "candidateCommit": "c267dcf05ed71778e79d187a39068387cb45a249",
+    "patchSha256": "052c66283a0274bbc4611127c8afd143208d22ba7bca255748b0940cc4a779b5",
+    "receiptSha256": "7d903ddd19178b471b1129f933fdd348fabeba468c5aec6d62b357c78f952269"
+  },
+  {
+    "group": "B",
+    "packet": "P057",
+    "family": "work/b/p057-chance-condition-sort",
+    "position": "chanceindependent:2",
+    "nodeId": "mt_dlg6i-Lw0I",
+    "taskSha256": "40b4314474c8ac6309f3282cff942dd91fd5b4f31b15919d511685aff9d03e0e",
+    "candidateCommit": "34e4845c7648cd4d0af32522fb7ef391b360ccc7",
+    "patchSha256": "b568977649ec1db07bd596d7e0f7d7a5f2ef961322c22fb0eef8ddf79bea2f11",
+    "receiptSha256": "a23b06f410faea8ff2f5809eb1509d4e29cb7f403db0dad5d6500e035a105c18"
+  },
+  {
+    "group": "B",
+    "packet": "P055",
+    "family": "work/b/p055-right-triangle-condition",
+    "position": "pythagoras:1",
+    "nodeId": "mt_1VmTUxBrNd",
+    "taskSha256": "26539f6dcbf85c9df81d08b9de9ceaf4112cec899e8c586b6eea6f252c6c1c8c",
+    "candidateCommit": "a11e5c0b509fdbef8f18f8db7c2e8a7310797820",
+    "patchSha256": "b69992e2e83ae0d213653b9b587986afe4b5f9267c707bae33ec2f14b6361afc",
+    "receiptSha256": "2c31899607f63d2273730169034df46ae42cafb1a1cc527813f41c690c964572"
+  },
+  {
+    "group": "B",
+    "packet": "P054",
+    "family": "work/b/p054-opposite-side-marks",
+    "position": "linenotation:2",
+    "nodeId": "mt_e4V6hvcuEJ",
+    "taskSha256": "f586e383c91a66d9f4b592d237c834f39cb18230a3dfc4d26665eda597fff4c1",
+    "candidateCommit": "70afe009c2974d3b7ad8a6d8d56c4d4315ad84b4",
+    "patchSha256": "de3509bf0c9d4a73de7cd0f76daec511c18a744f7df237f970bb5799b455619b",
+    "receiptSha256": "c525221114f0de919709e7814c8123a69098c9c5506bf76ca56b14233fd10a08"
+  }
+]
