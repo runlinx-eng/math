@@ -36,9 +36,9 @@
    const p=replayNativeTriangleEvidence(task,good,context);assert.ok(p,s.sessionId+':'+s.index);
    assert.equal(p.independentGeometry.chosenCount,s.chooseCount);
    assert.equal(p.independentGeometry.baseCm,s.target.base);
-   
+
    assert.equal(p.independentGeometry.distinctNondegeneratePoints,2);
-   
+
    assert.ok(submittedNativeTriangleEvidence(task,good,record,context)
     ?.wrongToCorrectOriginalConstructionObserved);
    assert.equal(p.physicalRulerOrCompassSkillAssessed,false);assert.equal(p.strictAApproved,false);
@@ -88,4 +88,3 @@
     assert.equal(submittedNativeTriangleEvidence(task,good,{attempts},context),null);
   }
  });
- 

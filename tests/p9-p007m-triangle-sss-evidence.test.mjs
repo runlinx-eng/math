@@ -37,8 +37,8 @@
    assert.equal(p.independentGeometry.chosenCount,s.chooseCount);
    assert.equal(p.independentGeometry.baseCm,s.target.base);
    if(s.chooseCount===0)assert.equal(p.independentGeometry.distinctNondegeneratePoints,0);
-   
-   
+
+
    assert.ok(submittedNativeTriangleEvidence(task,good,record,context)
     ?.wrongToCorrectOriginalConstructionObserved);
    assert.equal(p.physicalRulerOrCompassSkillAssessed,false);assert.equal(p.strictAApproved,false);
@@ -88,4 +88,3 @@
     assert.equal(submittedNativeTriangleEvidence(task,good,{attempts},context),null);
   }
  });
- 

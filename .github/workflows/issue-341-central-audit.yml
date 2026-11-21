@@ -113,7 +113,17 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install --with-deps chromium
       - name: P10 backup and extended offline regression
+        shell: bash
         run: |
+          set -euo pipefail
+          python3 -m http.server 43827 --bind 127.0.0.1 --directory dist >/tmp/issue-341-p10-origin.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          for i in $(seq 1 30); do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:43827/learn.html; then break; fi
+            sleep 1
+          done
+          curl --fail --silent --output /dev/null http://127.0.0.1:43827/learn.html
           node tests/p10-backup-safety-browser.cjs
           node tests/p10-longterm-offline-browser.cjs
       - name: Archive P10 evidence
