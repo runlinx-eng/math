@@ -34,7 +34,8 @@ export function validateTargets(value){
    reject(Number.isInteger(s.index)&&s.index>=0&&s.index<1000,at+' index');
    reject(typeof s.nodeId==='string'&&/^mt_[A-Za-z0-9_-]{6,30}$/.test(s.nodeId),at+' nodeId');
    reject(typeof s.taskSha256==='string'&&sha64.test(s.taskSha256),at+' full task SHA256');
-   reject(typeof s.type==='string'&&/^x-[a-z0-9-]{2,45}$/.test(s.type),at+' task type');
+   reject(typeof s.type==='string'&&(/^(?:x-[a-z0-9-]{2,45})$/.test(s.type)||
+    (s.type==='survey'&&s.sessionId==='survey'&&[0,1].includes(s.index))),at+' task type');
    reject(['b15','b16','b19','b21','b23','b25',null].includes(s.view),at+' view adapter');
    reject(Array.isArray(s.controls)&&s.controls.length<=30&&s.controls.every(a=>typeof a==='string'&&uiAction.test(a)),at+' control IDs');
    reject((s.view!==null||s.controls.length===0),at+' controls need a view adapter');
