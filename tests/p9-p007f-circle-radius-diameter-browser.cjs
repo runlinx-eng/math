@@ -95,7 +95,7 @@ async function run(){
      throw Error('requires untouched original case');
     lesson.index=index;lesson.view='task';
     localStorage.setItem('math-explorer-v2',packText(JSON.stringify(data)));
-    return lesson.cases[index].attempts.length;
+    return lesson.cases?.[index]?.attempts?.length||0;
    },spec);
    ok(existing===0,'untouched original task');
    const load=await page.reload();
