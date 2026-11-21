@@ -2,42 +2,31 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006c-native-frequency-scopes",
-      "sha": "21ac6f9ef4f089a2847c295eaa5e03cac67f1158",
-      "node_test": "tests/p9-p006c-native-frequency-scopes-evidence.test.mjs",
-      "browser_test": "tests/p9-p006c-native-frequency-scopes-browser.cjs",
+      "case": "P006d-native-countif-records",
+      "sha": "8acf9eddee78e610ec971e8b0212eda5f1adfd86",
+      "node_test": "tests/p9-p006d-native-countif-records-evidence.test.mjs",
+      "browser_test": "tests/p9-p006d-native-countif-records-browser.cjs",
       "native": [
         {
-          "sessionId": "playgroundstudy",
-          "index": 1,
-          "nodeId": "mt_kxeuXm6EyC",
-          "taskSha256": "f0a5bb49744b71e2999b4cd02a6ccdad8687c20e8531100e31c3f3539c9b5be9",
-          "type": "x-datacount",
-          "view": "b19",
-          "controls": [
-            "b19-bar"
-          ]
-        },
-        {
-          "sessionId": "measurestory",
-          "index": 0,
-          "nodeId": "mt_6gpryAnpoZ",
-          "taskSha256": "ed4ec76e97c65506709940aafd84b7adabba2cd9f05558ffc2f88f3ece5be500",
-          "type": "x-datacount",
-          "view": "b19",
-          "controls": [
-            "b19-bar"
-          ]
-        },
-        {
-          "sessionId": "ownstudy",
+          "sessionId": "digitalstudy",
           "index": 2,
-          "nodeId": "mt_Y6JmLjnfRP",
-          "taskSha256": "42fae338a6579eb8eb924ba776d3a156ec5ca5c4ee324b74ec0413b70f4a2e41",
+          "nodeId": "mt_yrvYKSwSRZ",
+          "taskSha256": "772d795d586bc5e00f1eb0a20be87e5bccca909c46f6de2a622907030cbf01df",
           "type": "x-datacount",
           "view": "b19",
           "controls": [
-            "b19-bar",
+            "b19-max",
+            "b19-min"
+          ]
+        },
+        {
+          "sessionId": "checkrecords",
+          "index": 2,
+          "nodeId": "mt_QHT16CrFO-",
+          "taskSha256": "387c9a4156b40d7e2143b716ccca795f815afcf18585996be6c2cf8c462a65e4",
+          "type": "x-datacount",
+          "view": "b19",
+          "controls": [
             "b19-max",
             "b19-min"
           ]
