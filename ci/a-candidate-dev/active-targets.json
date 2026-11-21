@@ -2,16 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006p-native-sample-size-ranges",
-      "sha": "fc260379a78d188662f95d05e2e08a77c25bfb82",
-      "node_test": "tests/p9-p006p-native-sample-size-ranges-evidence.test.mjs",
-      "browser_test": "tests/p9-p006p-native-sample-size-ranges-browser.cjs",
+      "case": "P006q-native-sleep-means-vs-individual",
+      "sha": "408437d602bcdebc24e9f642d5f584209f67cf24",
+      "node_test": "tests/p9-p006q-native-sleep-means-vs-individual-evidence.test.mjs",
+      "browser_test": "tests/p9-p006q-native-sleep-means-vs-individual-browser.cjs",
       "native": [
         {
           "sessionId": "samplevary",
-          "index": 2,
+          "index": 3,
           "nodeId": "mt_x7V1qrkiqH",
-          "taskSha256": "2a09fa4bc4b0a85e4f7855b02ccc9e7ed8f7140e0e81a4e25b36d37cd9311b3e",
+          "taskSha256": "3d675ec15ac349231bfff6609b098091f56c56506d9cb20c83b3546e35c03fc7",
           "type": "x-samplelab",
           "view": "b21",
           "controls": [
