@@ -91,3 +91,41 @@ test('reject forgery, stale latest Check, no trace, wrong signed/source and trun
  }
  assert.equal(positiveOrderPreauditBinding(tFor(native[0]),{sessionId:'tenmillion',index:1}),null);
 });
+
+test('real control overflow preserves original ordering grade but strictly refuses truncated evidence',()=>{
+ for(const c of native){
+  const {task,m,expected}=build(c);
+  const first=expected[0];
+  // 514 actual toggles return this card to its starting inclusion state;
+  // event capture must stop at 512 and remember the loss permanently.
+  for(let i=0;i<514;i++)M.act(task,m,'wide-order',{index:first});
+  assert.equal(m.orderTrace.length,512);
+  assert.equal(m.orderTraceOverflow,true);
+  assert.equal(M.valid(task,m),true);
+  assert.equal(M.inspect(task,m).correct,true);
+  assert.deepEqual(m.order,expected);
+  assert.equal(replay(c,m,{attempts:[{value:copy(m)}]}),null,
+   'a valid original grade never promotes incomplete event evidence');
+ }
+});
+
+test('only three exact positive native positions bind; all other wideboards and every bridge remain excluded',()=>{
+ const allowed=new Set(native.map(([id,index])=>id+':'+index));
+ const actual=[];
+ for(const id of Object.keys(LESSONS))sessionTasks(id).forEach((task,index)=>{
+  if(task.type!=='x-wideboard')return;
+  const found=positiveOrderPreauditBinding(task,{sessionId:id,index});
+  if(found)actual.push(id+':'+index);
+  else assert.equal(replayPositiveOrderPreaudit(task,M.example(task),
+   {attempts:[{value:M.example(task)}]},{sessionId:id,index}),null,
+   id+':'+index+' must not infer history from a final answer');
+ });
+ assert.deepEqual(actual.sort(),[...allowed].sort());
+ let excluded=0;
+ for(const id of Object.keys(BRIDGES))sessionTasks(id).forEach((task,index)=>{
+  if(task.type!=='x-wideboard')return;
+  excluded++;
+  assert.equal(positiveOrderPreauditBinding(task,{sessionId:id,index}),null);
+ });
+ assert.ok(excluded>0,'exercise real associated wideboard sources');
+});
