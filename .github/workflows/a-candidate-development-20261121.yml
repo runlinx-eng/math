@@ -24,10 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P004f-four-point-quadrilateral
-            sha: 9b7f06d17268b208c332b23637988b5455e8b0c4
-            node_test: tests/p9-p004f-four-point-quadrilateral-evidence.test.mjs
-            browser_test: tests/p9-p004f-four-point-quadrilateral-browser.cjs
+          - case: P004g-polygon-vertex-count
+            sha: 9966828952c04b1e153411e0a45e7af51f800bac
+            node_test: tests/p9-p004g-polygon-vertex-count-evidence.test.mjs
+            browser_test: tests/p9-p004g-polygon-vertex-count-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
