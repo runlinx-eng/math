@@ -3,7 +3,7 @@
   "targets": [
     {
       "case": "P005g-native-protractor",
-      "sha": "fbae03b6cff424d9456cdd5200a3a23e4f96ba2b",
+      "sha": "4f791374bc379461c9f8226a48124cfd470c46f9",
       "node_test": "tests/p9-p005g-native-protractor-evidence.test.mjs",
       "browser_test": "tests/p9-p005g-native-protractor-browser.cjs",
       "native": [
