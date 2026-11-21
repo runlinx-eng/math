@@ -128,10 +128,14 @@ async function run(){
    stage=position+':native-corrected-record-table-plot-report';
    await field('questions.0','clear');
    await action('plan');
+   // The wrong-to-correct native plan was already completed through real UI.
+   // Do not replay its stage-zero fields after the B19 view advances to recording.
+   let passedInitialPlan=false;
    for(const step of steps){
-    if(step.action==='b19-plan')continue;
+    if(!passedInitialPlan){if(step.action==='b19-plan')passedInitialPlan=true;continue;}
     await doStep(step);
    }
+   ok(passedInitialPlan,'canonical native recipe starts with plan stage');
    await check();
    const good=await capture(page,out,label,{id:s.id,index:s.index},'correct-check');
    captures.push({position,phase:'correct-check',attempts:good.attempts.length,
