@@ -32900,5 +32900,27 @@
     "oldMathAndOriginalSuiteReruns": 0,
     "scopeRegressionRun": 44933304290,
     "scopeRegressionCodeHead": "90fafe6506a3fb83f6d6bf876be3425ac8a5d787"
+  },
+  "operationalFocus20261122": {
+    "state": "ADMISSION_FIRST_NO_DISCRETIONARY_AUDIT_CHURN",
+    "sourceCodePR": 351,
+    "sourceCodeHead": "fec2d5446c979741e3207a0c70f3e792a10eb5cf",
+    "independentHumanReviewIssue": 352,
+    "independentHumanReviewStatus": "WAITING_FOR_INDEPENDENT_REVIEWER_AND_SIGNED_ITEM_DECISIONS",
+    "authorizedDurableCiInputIssue": 353,
+    "authorizedDurableCiInputStatus": "BLOCKED_ON_AUTHORIZED_REMOTE_PROVIDER_AND_DELIVERY",
+    "originalB308EvidenceReused": true,
+    "blanketPython298RetestRequired": false,
+    "newAuditOnlyPRPermittedWithoutSpecificReproducibleBlocker": false,
+    "oldMathOrBrowserRerunsAuthorized": false,
+    "affectedRows": 365,
+    "perPositionDecisionsChanged": 0,
+    "newFormalAGrants": 0,
+    "baseFormalA": 813,
+    "productionRegistrationExecuted": false,
+    "mainMerged": false,
+    "deploymentExecuted": false,
+    "followupRule": "Use signed exact-source subset once genuinely approved; otherwise request review/provider decision rather than create more checks.",
+    "new126Handoff": "SEPARATE_CANDIDATE_INPUT_NOT_INCLUDED_IN_CURRENT_365_FORMAL_QUEUE"
   }
 }
