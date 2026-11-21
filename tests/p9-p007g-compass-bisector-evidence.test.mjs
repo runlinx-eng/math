@@ -69,7 +69,7 @@ test('P007g fail closed on fabricated arc/meet/line, geometry, events and fields
   m=>m.history[0].f.center='C',m=>m.history[0].f.radius='-3',
   m=>m.history[0].f.extra='fake',m=>m.history[2].d.index='2',
   m=>m.history[2].d.extra='fake',m=>m.history[2].a='line',
-  m=>m.history.splice(2,0,structuredClone(m.history[2])),
+  m=>m.history.splice(2,0,{a:'meet',f:{},d:{index:'9'}}),
   m=>m.history.push({a:'measure',f:{},d:{}}),
   m=>m.board.circles.A=4,m=>m.board.marked=[0],
   m=>m.board.finished=false,m=>m.board.lastArc.center='A',
