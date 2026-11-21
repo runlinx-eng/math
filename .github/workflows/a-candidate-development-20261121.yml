@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - case: P004g-polygon-vertex-count
-            sha: 9966828952c04b1e153411e0a45e7af51f800bac
+            sha: 7e17436890542706c9028c7e029ed29949c70aa6
             node_test: tests/p9-p004g-polygon-vertex-count-evidence.test.mjs
             browser_test: tests/p9-p004g-polygon-vertex-count-browser.cjs
 
