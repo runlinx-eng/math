@@ -17,8 +17,8 @@
       "P007"
     ],
     "historicalResearchPositions": 222,
-    "developmentTestedPositions": 102,
-    "developmentTestedCandidateCases": 54,
+    "developmentTestedPositions": 103,
+    "developmentTestedCandidateCases": 55,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -82,9 +82,9 @@
       "id": "P007",
       "topic": "shape-draw",
       "historicalResearchPositions": 30,
-      "developmentTested": 5,
+      "developmentTested": 6,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 25
+      "pendingOrOtherNotAccepted": 24
     }
   ],
   "cases": [
@@ -1158,6 +1158,25 @@
       },
       "artifact": {
         "id": 14706058868,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P007",
+      "case": "P007e-regular-pentagon",
+      "branch": "work/a/p007e-native-regular-pentagon",
+      "candidateSha": "6c8f91980f6a44e6180b0d56530ddb2cc7a8c526",
+      "positions": [
+        "shapemeasures:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44902374524,
+        "firstRunPass": true
+      },
+      "artifact": {
+        "id": 14705489699,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
