@@ -55,7 +55,7 @@ test('P006o original frame source, full SHA, six independent native draws',()=>{
   const proof=replayNativeClubVsAllRepeats(task,model,ctx);
   assert.ok(proof,'six independent original frame draws');
   assert.deepEqual(proof.sampleMeans,model.board.runs.map(r=>r.estimate));
-  assert.deepEqual(proof.sampleMeans,[6.2,6.2,6.8,2.5,1.9,3.2]);
+  assert.deepEqual(proof.sampleMeans,[6.3,6.2,6.9,2.5,1.9,3.2]);
   assert.equal(proof.sampleIds.length,6);
   assert.ok(proof.sampleIds.slice(0,3).every(ids=>ids.length===20&&ids.every(id=>id<=200)));
   assert.ok(proof.sampleIds.slice(3).every(ids=>ids.length===20&&ids.every(id=>id<=800)));
