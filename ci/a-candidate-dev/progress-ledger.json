@@ -16,8 +16,8 @@
       "P006"
     ],
     "historicalResearchPositions": 192,
-    "developmentTestedPositions": 69,
-    "developmentTestedCandidateCases": 33,
+    "developmentTestedPositions": 72,
+    "developmentTestedCandidateCases": 34,
     "blockedRuntime": [
       "structure39:2",
       "structure39:3",
@@ -73,9 +73,9 @@
       "id": "P006",
       "topic": "data-collect",
       "historicalResearchPositions": 31,
-      "developmentTested": 3,
+      "developmentTested": 6,
       "blockedRuntime": 0,
-      "pendingOrOtherNotAccepted": 28
+      "pendingOrOtherNotAccepted": 25
     }
   ],
   "cases": [
@@ -738,6 +738,27 @@
       },
       "artifact": {
         "id": 14699404670,
+        "uploaded": true,
+        "independentAudit": "NOT_RUN"
+      }
+    },
+    {
+      "packet": "P006",
+      "case": "P006c-native-frequency-scopes",
+      "branch": "work/a/p006c-native-frequency-scopes",
+      "candidateSha": "21ac6f9ef4f089a2847c295eaa5e03cac67f1158",
+      "positions": [
+        "playgroundstudy:1",
+        "measurestory:0",
+        "ownstudy:2"
+      ],
+      "developmentTest": {
+        "state": "PASS",
+        "runId": 44887736294,
+        "firstRunPass": false
+      },
+      "artifact": {
+        "id": 14700990783,
         "uploaded": true,
         "independentAudit": "NOT_RUN"
       }
