@@ -4,6 +4,7 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
 const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
+const {createReloadStartupProbe}=require('./helpers/p9-issue180-reload-probe.cjs');
 const {capture}=require('./helpers/p9-basic-artifact.cjs');
 const decimalScope=process.env.MATH_PLACE_EVIDENCE_SCOPE==='decimal';
 const root=path.resolve(__dirname,'..'),out=path.join(root,decimalScope?'verification/p9-decimal-place-adapter':'verification/p9-place-adapter');
@@ -25,6 +26,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
  const displayedAnswer=task=>fmt(answer(task),task.scale??1);
  const {replayPlaceEvidence}=await import('../dist/learning/place-evidence.js');
  let browser,server,activePage,activeLabel='setup',diagnostics,failureDiagnostic=null;
+ let activeNativeProbe=null,activeNativeBefore=null;
  try{
   browser=await chromium.launch({headless:true,
    ...(process.env.MATH_CHROMIUM_EXECUTABLE?{executablePath:process.env.MATH_CHROMIUM_EXECUTABLE}:{}),
@@ -71,7 +73,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
     ok(response?.fromServiceWorker()===true,activeLabel+' document reload comes from the stopped-origin SW');
    };
    const navigate=async spec=>{await page.goto(base+'learn.html#'+spec.id);await reload(spec);};
-   const open=async spec=>{
+   const open=async(spec,afterSeed=null)=>{
     await page.evaluate(async({id,index})=>{
      const [{KEY,fresh},{freshLesson},{BRIDGES}]=await Promise.all([
       import('./exploration-core.js'),import('./learning/state.js'),import('./learning/bridges.js')
@@ -80,6 +82,7 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
      if(Object.hasOwn(BRIDGES,id))state.daily.bridges[id]=lesson;else state.lessons[id]=lesson;
      localStorage.setItem(KEY,JSON.stringify(state));
     },spec);
+    if(afterSeed)await afterSeed(); // Read-only pre-navigation snapshot after the test seeds its isolated fixture.
     await navigate(spec);
    };
    const act=async(spec,name,data={})=>{
@@ -145,7 +148,20 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    for(const spec of cases){
     activeLabel=`${width}x${height}-${spec.id}-${spec.index}`;
     const snapshots=[],save=async phase=>{const x=await capture(page,out,activeLabel,spec,phase);snapshots.push(x);return x;};
-    const task=sessionTasks(spec.id)[spec.index];await open(spec);
+    const task=sessionTasks(spec.id)[spec.index];
+    // Explicit diagnostic opt-in: capture the exact native B11 path that failed
+    // in main-compatible Required #43705224073, without altering normal CI.
+    const nativeTarget=process.env.MATH_ISSUE180_PLACE_NATIVE_PROBE==='1'&&
+     !decimalScope&&spec.id==='twodigitpair'&&spec.index===1;
+    if(nativeTarget){
+     activeNativeProbe=createReloadStartupProbe({context,page,out,cache});
+     await activeNativeProbe.start();
+    }
+    await open(spec,nativeTarget?async()=>{activeNativeBefore=await activeNativeProbe.snapshot();}:null);
+    if(nativeTarget){
+     await activeNativeProbe.success({label:activeLabel,before:activeNativeBefore});
+     await activeNativeProbe.close();activeNativeProbe=null;activeNativeBefore=null;
+    }
     ok(await guide.isVisible(),activeLabel+' exact native optional guide works offline');
     ok(!(await guide.evaluate(element=>element.open)),activeLabel+' optional guide starts collapsed');
     ok(await hint.count()===0,activeLabel+' no positive evidence before actions or checking');
@@ -283,11 +299,14 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
   console.log((decimalScope?'P9_DECIMAL_PLACE_ADAPTER_BROWSER_OK ':'P9_PLACE_ADAPTER_BROWSER_OK ')+
    JSON.stringify({checks:checks.length,nativeTasks:cases.length,nativeNodes,taskViewportPairs:observations.length}));
  }catch(error){
+  if(activeNativeProbe)await activeNativeProbe.failure({label:activeLabel,before:activeNativeBefore,error})
+   .catch(probeError=>console.error('Passive native startup failure evidence:',String(probeError)));
   if(diagnostics)failureDiagnostic=await diagnostics.dump(error).catch(diagnosticError=>({diagnosticError:String(diagnosticError)}));
   if(activePage)await activePage.screenshot({path:path.join(out,activeLabel+'-failure.png'),fullPage:true}).catch(()=>{});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,observations,correctionObservations,isolations,offline,error:String(error),failureDiagnostic,at:activeLabel},null,2));
   console.error(error.stack);process.exitCode=1;
  }finally{
+  if(activeNativeProbe)await activeNativeProbe.close().catch(()=>{});
   if(server?.listening)await new Promise(resolve=>{server.close(resolve);server.closeAllConnections();});
   if(browser)await browser.close();
  }

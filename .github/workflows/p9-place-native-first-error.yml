@@ -1,0 +1,50 @@
+name: P9 authentic B11 place native first-error
+on:
+  pull_request:
+    paths:
+      - 'tests/p9-place-adapter-browser.cjs'
+      - 'tests/helpers/p9-issue180-reload-probe.cjs'
+      - 'tests/p9-issue180-reload-probe.test.cjs'
+      - '.github/workflows/p9-place-native-first-error.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unchanged-place-and-native-failure-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check first-error probe and original mathematical contract
+        run: |
+          node --check tests/helpers/p9-issue180-reload-probe.cjs
+          node --check tests/p9-place-adapter-browser.cjs
+          node --test tests/p9-issue180-reload-probe.test.cjs
+          node --test tests/p9-place-evidence-adapter.test.mjs
+      - name: Install existing Chromium runtime
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            sudo apt-get update -qq -o Acquire::Retries=3
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fonts-noto-cjk
+            fc-cache -f >/dev/null
+          fi
+          fc-list :lang=zh-cn family | grep -q .
+      - name: Run authentic place sequence with only bounded passive CDP evidence
+        env:
+          MATH_ISSUE180_PLACE_NATIVE_PROBE: '1'
+        run: node tests/p9-place-adapter-browser.cjs
+      - name: Always preserve original mathematical and native startup evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p9-place-native-first-error
+          path: verification/p9-place-adapter/
+          if-no-files-found: warn
