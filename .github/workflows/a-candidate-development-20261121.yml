@@ -24,10 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - case: P004i-rotated-parallelogram-family
-            sha: f51b43b8c55ee99e7cc01da1b65d78c70a7883dd
-            node_test: tests/p9-p004i-rotated-parallelogram-family-evidence.test.mjs
-            browser_test: tests/p9-p004i-rotated-parallelogram-family-browser.cjs
+          - case: P004j-regular-hexagon-construction
+            sha: ec2560565bf5d9e7e4ea497bfb2c1e90ac3396a8
+            node_test: tests/p9-p004j-regular-hexagon-construction-evidence.test.mjs
+            browser_test: tests/p9-p004j-regular-hexagon-construction-browser.cjs
 
     steps:
       - name: Sparse checkout of the exact isolated A candidate
