@@ -2,22 +2,42 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P005b-angle-ordering",
-      "sha": "8e595357d081d62c444861550d259996e15105dc",
-      "node_test": "tests/p9-p005b-angle-ordering-evidence.test.mjs",
-      "browser_test": "tests/p9-p005b-angle-ordering-browser.cjs",
+      "case": "P005c-native-vertex-angles",
+      "sha": "ffae8774686b6a572f2f9eb488078ae6d0675e3d",
+      "node_test": "tests/p9-p005c-native-vertex-angle-evidence.test.mjs",
+      "browser_test": "tests/p9-p005c-native-vertex-angle-browser.cjs",
       "native": [
         {
           "sessionId": "angletypes",
-          "index": 1,
+          "index": 2,
           "nodeId": "mt_h0CVtqI2xo",
-          "taskSha256": "126024ce38ae4972a7a8fe4b3a93dfdbbf7e25d72267b6d07c718425dc371324",
-          "type": "x-g25-compare",
+          "taskSha256": "fe8d25eebb372ca59917395fad7ad2c641ebeb9e66b59da04e536e11850ffd4c",
+          "type": "x-g25-vertices",
           "view": "b25",
           "controls": [
-            "g25-test",
-            "g25-choose",
-            "g25-undo"
+            "g25-choose"
+          ]
+        },
+        {
+          "sessionId": "angletypes",
+          "index": 3,
+          "nodeId": "mt_h0CVtqI2xo",
+          "taskSha256": "3e545f1207fd64dcee25f76cc7449116ba45995afd385738fec4c7fce527b140",
+          "type": "x-g25-vertices",
+          "view": "b25",
+          "controls": [
+            "g25-choose"
+          ]
+        },
+        {
+          "sessionId": "angletypes",
+          "index": 4,
+          "nodeId": "mt_h0CVtqI2xo",
+          "taskSha256": "e2b698087a7edc69401092db6ff10b55938c9b49caedb5dfaed420bef75e96c6",
+          "type": "x-g25-vertices",
+          "view": "b25",
+          "controls": [
+            "g25-choose"
           ]
         }
       ]
