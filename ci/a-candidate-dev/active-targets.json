@@ -2,16 +2,16 @@
   "schema": "math-a-candidate-targets/2",
   "targets": [
     {
-      "case": "P006f-native-inference-boundaries",
-      "sha": "69795ef4ebce224a8affcde9c7e493c0afea9fce",
-      "node_test": "tests/p9-p006f-native-inference-boundaries-evidence.test.mjs",
-      "browser_test": "tests/p9-p006f-native-inference-boundaries-browser.cjs",
+      "case": "P006g-native-question-schema",
+      "sha": "ed56d6f5577e6518d416dbe825ac085753fca520",
+      "node_test": "tests/p9-p006g-native-question-schema-evidence.test.mjs",
+      "browser_test": "tests/p9-p006g-native-question-schema-browser.cjs",
       "native": [
         {
-          "sessionId": "studyplan",
-          "index": 2,
-          "nodeId": "mt_SHVyE1CLUa",
-          "taskSha256": "d961dacf687bbe09a860c314838adc89cc1ef382fdec40ffd6ab8aefe3f1d40e",
+          "sessionId": "digitalstudy",
+          "index": 1,
+          "nodeId": "mt_yrvYKSwSRZ",
+          "taskSha256": "8a6ab9dade6db9c69df3522079c61190e5fddba7940162181553db02d582dc53",
           "type": "x-dataplan",
           "view": "b19",
           "controls": [
@@ -19,10 +19,10 @@
           ]
         },
         {
-          "sessionId": "betterquestion",
-          "index": 2,
-          "nodeId": "mt_O-U263ukg1",
-          "taskSha256": "ad6950d2c3c35cde3e202def61672215e16a15be8fd195b8db019fc89dada00c",
+          "sessionId": "ownstudy",
+          "index": 1,
+          "nodeId": "mt_Y6JmLjnfRP",
+          "taskSha256": "24d52fec334e5c24456dbbcdfddeba1a645863b650bee50527c68fec6fe8eedb",
           "type": "x-dataplan",
           "view": "b19",
           "controls": [
