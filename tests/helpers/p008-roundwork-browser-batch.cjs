@@ -192,6 +192,15 @@ async function runShard(shard,positionIds,createDesktopContext){
    if(task.values.length>1)await action(page,'wide-active',0);
    await field(page,'steps.0.result',wanted.steps[0].result);
    const draft=await captureState('corrected-draft');
+   if(!model.inspect(task,draft.model).correct){
+    // An original UI rerender may discard a native field after a trusted
+    // pointer/key gesture. Report the actual submitted model before changing
+    // any expectations; never inject or invent a corrected Check.
+    console.error('P008_NATIVE_CORRECTED_DIAGNOSTIC '+JSON.stringify({
+     position,task:task.type,expected:wanted,observed:draft.model,
+     inspected:model.inspect(task,draft.model)
+    }));
+   }
    ok(model.inspect(task,draft.model).correct,position+' corrected original math');
    ok(evidence.submittedP008RoundworkEvidence(task,draft.model,draft.record,context)===null,
     position+' stale Check never authorizes corrected draft');
