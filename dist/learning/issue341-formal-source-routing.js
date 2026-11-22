@@ -4,7 +4,10 @@
 import {createIsolatedThinkingFeedback} from './thinking-feedback.js';
 import {ISSUE341_NORMALIZED_ADAPTERS,issue341GuideForBinding,
  issue341FeedbackForProof} from './issue341-candidate-feedback.js';
+import {ISSUE341_FOLLOWUP_126_ADAPTERS} from './issue341-followup-126-candidates.js';
 
+const allFrozenCandidates=Object.freeze([...ISSUE341_NORMALIZED_ADAPTERS,
+ ...ISSUE341_FOLLOWUP_126_ADAPTERS]);
 const sourceKey=(sessionId,index)=>JSON.stringify([sessionId,index]);
 
 export function createIssue341ManifestGatedRouting(formalManifest){
@@ -12,7 +15,7 @@ export function createIssue341ManifestGatedRouting(formalManifest){
     !Array.isArray(formalManifest.tasks))
   throw new TypeError('Explicit reviewed formal manifest required');
  const candidateSources=new Map();
- for(const family of ISSUE341_NORMALIZED_ADAPTERS){
+ for(const family of allFrozenCandidates){
   for(const source of family.sources){
    const key=sourceKey(source.sessionId,source.index);
    if(candidateSources.has(key))throw new Error('Overlapping candidate source positions');
@@ -49,7 +52,7 @@ export function createIssue341ManifestGatedRouting(formalManifest){
  }
  // Register each family at most once, but a binding can see only the exact
  // subset explicitly written to the independently approved formal manifest.
- const adapters=ISSUE341_NORMALIZED_ADAPTERS.filter(f=>approvedByFamily.has(f.id))
+ const adapters=allFrozenCandidates.filter(f=>approvedByFamily.has(f.id))
   .map(family=>{
    const allowed=approvedByFamily.get(family.id);
    const sources=Object.freeze([...allowed.values()]);
