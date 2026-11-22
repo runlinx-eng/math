@@ -45,12 +45,29 @@ async function control(page,selector){
 async function fill(page,key,value){
  const loc=await control(page,'#extra-controls [data-xfield="'+key+'"]');
  if(await loc.getAttribute('type')==='range'){
-  let n=Number(await loc.inputValue()),goal=Number(value);
-  if(n===goal){await loc.press('ArrowRight');n=Number(await loc.inputValue());}
-  let i=0;while(n!==goal&&i++<1001){
-   await loc.press(n<goal?'ArrowRight':'ArrowLeft');
-   const next=Number(await loc.inputValue());
-   assert.notEqual(next,n,'real range tick');n=next;
+  const goal=Number(value),min=Number(await loc.getAttribute('min')),
+   max=Number(await loc.getAttribute('max')),original=Number(await loc.inputValue());
+  const rect=await loc.boundingBox();
+  assert.ok(rect&&rect.width>35&&goal>=min&&goal<=max,'real native range geometry');
+  const inset=Math.min(10,rect.width/8);
+  await loc.click({position:{x:inset+(goal-min)/(max-min)*(rect.width-2*inset),
+   y:rect.height/2}});
+  let n=Number(await loc.inputValue());
+  if(original===goal&&n===goal){
+   await loc.focus();await loc.press(goal===max?'ArrowLeft':'ArrowRight');
+   n=Number(await loc.inputValue());
+  }
+  let i=0;
+  while(n!==goal&&i++<100){
+   const key=n<goal?'ArrowRight':'ArrowLeft';
+   let next=n;
+   for(let retry=0;retry<3&&next===n;retry++){
+    await loc.focus();await loc.press(key);
+    next=Number(await loc.inputValue());
+   }
+   assert.ok(next!==n&&Math.abs(next-goal)<Math.abs(n-goal),
+    'real B07 range tick toward target: '+n+' -> '+next+' of '+goal);
+   n=next;
   }
   assert.equal(n,goal);
  }else{await loc.fill(String(value));await loc.press('Tab');}
