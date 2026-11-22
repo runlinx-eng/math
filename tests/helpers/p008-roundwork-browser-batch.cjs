@@ -84,11 +84,38 @@ async function moveRange(el,target){
  }
  assert.equal(pos,target,'original slider reaches exact desired tick');
 }
+// Check the ORIGINAL persisted model rather than trusting a control which
+// may have been asynchronously replaced by the real formal feedback router.
+async function persistedField(page,key){
+ return page.evaluate(async key=>{
+  const {unpackText}=await import('./storage.js');
+  const raw=localStorage.getItem('math-explorer-v2');
+  if(!raw)return null;
+  const state=JSON.parse(unpackText(raw));
+  const snap=window.mathLesson?.snapshot();
+  const m=state.lessons?.[snap?.id]?.models?.[snap?.index];
+  const value=key.split('.').reduce((o,k)=>o?.[k],m);
+  const touched=/^steps\\.\\d+\\.mark$/.test(key)?
+   m?.steps?.[Number(key.split('.')[1])]?.touched:null;
+  return {value,touched};
+ },key);
+}
 async function field(page,key,value){
- const el=await control(page,'#extra-controls [data-xfield="'+key+'"]');
- if(await el.getAttribute('type')==='range')return moveRange(el,Number(value));
- if(await el.evaluate(e=>e.tagName)==='SELECT')await el.selectOption(String(value));
- else{await el.fill(String(value));await el.press('Tab');}
+ const target=String(value),isMark=/^steps\\.\\d+\\.mark$/.test(key);
+ for(let attempt=0;attempt<4;attempt++){
+  const el=await control(page,'#extra-controls [data-xfield="'+key+'"]');
+  if(await el.getAttribute('type')==='range')await moveRange(el,Number(value));
+  else if(await el.evaluate(e=>e.tagName)==='SELECT')await el.selectOption(target);
+  else{await el.fill(target);await el.press('Tab');}
+  const stored=await persistedField(page,key);
+  if(String(stored?.value)===target&&(!isMark||stored?.touched===true))return;
+  // Re-acquire only the original visible control; no evaluate-based state
+  // mutation, synthetic input, manufactured Check or relaxed math assertion.
+  if(attempt<3)await page.waitForTimeout(100);
+ }
+ const final=await persistedField(page,key);
+ assert.fail('original field did not persist from real control '+key+
+  ': wanted '+target+', got '+JSON.stringify(final));
 }
 async function action(page,name,index){
  const selector='#extra-visual [data-x="'+name+'"][data-index="'+index+'"]';
