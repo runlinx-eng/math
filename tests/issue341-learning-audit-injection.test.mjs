@@ -52,12 +52,12 @@ test('explicit learning-audit injection consumes all365 archived full records in
  }
  assert.ok(JSON.stringify(fixtures.rows)===originalsBefore,'original archived inputs unchanged');
  assert.equal(read('../docs/spatial-learning/evidence-review-manifest.json'),officialBefore);
- assert.equal(JSON.parse(officialBefore).tasks.length,1663);
+ assert.equal(JSON.parse(officialBefore).tasks.length,1667);
  assert.match(report.report[0],/未授 A/);
  console.log('ISSUE341_LEARNING_AUDIT_INJECTION '+JSON.stringify({
   status:'PASS_PROPOSED_CLASSIFICATION_INJECTION_NOT_FORMAL_APPROVAL',
   families:113,positions:365,originalRecords:delivered.size,bridgeBindings:0,
-  formalStrictAGranted:0,officialManifestTasks:1663,
+  formalStrictAGranted:0,officialManifestTasks:1667,
   originalArtifactRun:fixtures.sourceRun,originalArtifactHead:fixtures.sourceHead
  }));
 });
