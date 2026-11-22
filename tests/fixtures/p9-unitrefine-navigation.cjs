@@ -145,7 +145,7 @@ module.exports={
     }
   ],
   "sourceHashes": {
-    "dist/learning/learn.js": "cd4d99d4a6bf4740cc16bf4b219009e4b180cfc5c2bfd6f1e9c8e3b2658bcf3d"
+    "dist/learning/learn.js": "1d5ef702bf8f7d2b2a82e2325251b7a456e6a86ea53b69e2e8e191aeff1f70ae"
   },
   "controllerSourceHashes": {
     "update": "e9cce21f3f3cf36ba81f6d4996bc6bc090e22cb545cc0a2e7349720c9f0ff1cc",
