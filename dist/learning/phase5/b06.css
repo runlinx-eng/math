@@ -2,3 +2,23 @@
 
 .b6-ten-frame{display:grid;grid-template-columns:repeat(5,45px);gap:4px}.b6-ten-frame span{width:45px;height:45px;display:grid;place-items:center;background:#faf6e9;border:1px solid #b4a78e;font-size:31px;color:var(--orange)}.b6-flash.domino>div .b6-static-dots{display:grid;grid-template-columns:repeat(2,27px);gap:15px}.b6-beads.line:has(>button:nth-child(15)){flex-wrap:nowrap;gap:4px;max-width:100%}.b6-beads.line:has(>button:nth-child(15)) .b6-dot{min-width:28px;min-height:32px;font-size:12px;padding:2px}.b6-equation{font-size:24px;letter-spacing:.08em}
 .b6-lab .field:has(select){display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:15px 0}.b6-lab select{width:520px;max-width:100%;min-height:42px}.b6-lab #extra-controls{min-width:0}
+
+
+/* One set of six beads, used in sequence: puppet demonstration, error selection, self recount. */
+.b6-countonce-step{min-width:0}
+.b6-task-step{font-weight:700;margin:8px 0}
+.b6-puppet-status{min-height:1.6em;color:#385f55;margin:10px 0}
+.b6-countonce-beads{gap:18px;min-height:95px;padding:12px 0}
+.b6-countonce-beads .b6-dot{display:inline-grid;place-items:center;position:relative;min-width:46px;min-height:46px}
+.b6-countonce-beads .b6-puppet-bead{background:#fffdfa;color:#855939;border:2px solid #a9855c}
+.b6-countonce-beads .b6-puppet-bead:disabled{opacity:1;cursor:default}
+.b6-countonce-beads .b6-puppet-bead:not(:disabled){cursor:pointer}
+.b6-countonce-beads .b6-puppet-bead:not(:disabled):hover{background:#fff0d4;border-color:#9f6036}
+.b6-countonce-beads .b6-puppet-bead.puppet-active{background:#205d52;color:#fff;border-color:#205d52;box-shadow:0 0 0 4px #c6ded2}
+.b6-countonce-beads .b6-puppet-bead.puppet-active::after{content:"数到 " attr(data-count-word);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);white-space:nowrap;border-radius:7px;background:#205d52;color:#fff;font-size:13px;padding:3px 8px}
+.b6-countonce-beads .b6-dot.selected{box-shadow:0 0 0 3px #e5c4a4;font-weight:700}
+.b6-countonce-beads .b6-dot.selected:disabled{opacity:1}
+.b6-countonce-beads .b6-dot:focus-visible{outline:3px solid #205d52;outline-offset:3px}
+@keyframes b6-puppet-count-tap{0%{transform:scale(.88)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
+.b6-countonce-beads .b6-puppet-bead.puppet-active{animation:b6-puppet-count-tap .42s ease-out}
+@media(prefers-reduced-motion:reduce){.b6-countonce-beads .b6-puppet-bead.puppet-active{animation:none}}
