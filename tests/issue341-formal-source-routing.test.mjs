@@ -120,7 +120,7 @@ test('A258 33 source-locked new bindings reject sibling, wrong hash and altered 
   assert.equal(resolved.match.binding.candidateSource.taskHash,s.taskHash,s.position);
   assert.equal(resolved.match.binding.strictAApproved,true,s.position);
   const bad={...task,prompt:(task.prompt||'')+' forged'};
-  assert.equal(route.registry.resolve(bad,ctx).status,'none',s.position+' forged task');
+  assert.equal(route.registry.resolve(bad,ctx).status,'unbound',s.position+' forged task');
   const isolated=createIssue341ManifestGatedRouting(only({...s,adapter:f.id,method:null}));
   assert.equal(isolated.approvedPositions,1);
   assert.equal(isolated.approvedFamilies,1);
@@ -128,7 +128,7 @@ test('A258 33 source-locked new bindings reject sibling, wrong hash and altered 
   const sibling=f.sources.find(row=>row.position!==s.position);
   if(sibling){
    const otherTask=sessionTaskFor(sibling.sessionId,sibling.index);
-   assert.equal(isolated.registry.resolve(otherTask,context(sibling)).status,'none',
+   assert.equal(isolated.registry.resolve(otherTask,context(sibling)).status,'unbound',
     'no same-family sibling auto-approved '+sibling.position);
   }
  }
