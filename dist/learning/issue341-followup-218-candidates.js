@@ -128,7 +128,10 @@ export const ISSUE341_FOLLOWUP_218_ADAPTERS=Object.freeze(definitions.map(([batc
    const s=byPosition.get(key(context.sessionId,context.index));
    if(!s||task?.type!==s.type)return null;
    const raw=bind(task,context);
-   if(!raw||raw.method!=null||(raw.nodeId??raw.sourceNodeId)!==s.nodeId)return null;
+   if(!raw||(raw.nodeId??raw.sourceNodeId)!==s.nodeId)return null;
+   // An original control can prove calculator usage without authorizing a
+   // general learning-method classification. Keep the native replay but bound
+   // formal method metadata to null.
    return Object.freeze({...raw,nodeId:s.nodeId,method:null,
     question:typeof raw.question==='string'&&raw.question?raw.question:'哪些保存的记录可以支持这次计算？',
     candidateSource:s,strictAApproved:false});
