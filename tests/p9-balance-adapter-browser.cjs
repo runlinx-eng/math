@@ -355,7 +355,32 @@ async function main(){
     const value=await capture(c,phase,strict,{role,checked:true});value.attempt=attempt;checkedLedger.push(value);return value;
    };
    const retry=async(c,kind,role)=>{
-    const before=await current(c),control=page.locator('[data-do="p3-retry"]');assert.equal(await control.count(),1);await reveal(control);assert.equal(await control.isEnabled(),true);await control.click();await wait(c);const after=await current(c);
+    const before=await current(c),control=page.locator('[data-do="p3-retry"]');
+    assert.equal(await control.count(),1,'one genuine original p3-retry control');
+    // A newly loaded formal source guide can re-render and re-close the
+    // original optional disclosure between reveal() and a trusted click.
+    // Re-open the actual details and retry the real Playwright click only.
+    // Do not synthesize events, write lesson state or skip the retry proof.
+    let performed=false,lastError=null;
+    for(let attempt=0;attempt<8;attempt++){
+     try{
+      await reveal(control);
+      assert.equal(await control.isEnabled(),true);
+      await control.click({timeout:4000});
+      performed=true;break;
+     }catch(error){
+      const reason=String(error);lastError=error;
+      if(!/TimeoutError|locator\\.click|Element is not attached|false !== true|not stable|not visible/i.test(reason))
+       throw error;
+      const intermediate=await current(c);
+      const reset=Tasks.defaultModel(taskFor(c));reset.seed=intermediate.model.seed;
+      if(JSON.stringify(intermediate.model)===JSON.stringify(reset)&&
+         JSON.stringify(before.model)!==JSON.stringify(reset)){performed=true;break;}
+      if(attempt<7)await page.waitForTimeout(150);
+     }
+    }
+    if(!performed)throw lastError??Error('native p3-retry never became clickable');
+    await wait(c);const after=await current(c);
     const initial=Tasks.defaultModel(taskFor(c));initial.seed=after.model.seed;assert.deepEqual(after.model,initial);assert.deepEqual(after.lesson.cases,before.lesson.cases);assert.deepEqual(after.lesson.notes,before.lesson.notes);assert.equal(after.lesson.draft,before.lesson.draft);
     for(const[index,value]of Object.entries(before.lesson.models))if(Number(index)!==c.index)assert.deepEqual(after.lesson.models[index],value);assert.equal(await hint.count(),0);
     const storage=null;

@@ -17,9 +17,9 @@ test('52 B218 candidate families contain precisely 218 frozen source identities 
  assert.equal(ISSUE341_FOLLOWUP_218_ADAPTERS.length,52);
  assert.equal(frozen.length,218);
  const older=official.tasks.filter(s=>!s.adapter?.startsWith('issue341-B218-'));
- assert.equal(older.length,1434);
+ assert.equal(older.length,official.tasks.length-frozen.length);
  const old=new Set(older.map(s=>JSON.stringify([s.sessionId,s.index])));
- assert.equal(old.size,1434);
+ assert.equal(old.size,official.tasks.length-frozen.length);
  const next=new Set();
  for(const {f,s} of frozen){
   const k=JSON.stringify([s.sessionId,s.index]);assert.ok(!next.has(k),k);

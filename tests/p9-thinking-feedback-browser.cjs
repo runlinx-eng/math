@@ -16,18 +16,30 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
  page.setDefaultTimeout(15000);
  page.on('pageerror',e=>errors.push(String(e)));
  ctx.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith(base))remote.push(r.url());});
+ // Formal source feedback may add nested native disclosures. Open the
+ // outermost still-closed ancestor each time; never force hidden inputs or
+ // synthesize events. A non-disclosure visibility regression remains a failure.
+ const reveal=async(element)=>{
+  for(let attempt=0;attempt<12;attempt++){
+   if(await element.isVisible())return;
+   const closed=element.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
+   if(await closed.count()!==1)throw Error('original control hidden without one closed disclosure');
+   await closed.locator(':scope > summary').click();
+  }
+  if(!(await element.isVisible()))throw Error('original control remains hidden after opening disclosures');
+ };
  const field=async(key,value)=>{
   const element=page.locator('[data-xfield="'+key+'"]');
-  const closed=element.locator('xpath=ancestor::details[not(@open)]').first();
-  if(await closed.count())await closed.locator(':scope > summary').click();
+  if(await element.count()!==1)throw Error('non-unique original field '+key);
+  await reveal(element);
   if(await element.evaluate(e=>e.tagName)==='SELECT')await element.selectOption(String(value));
   else await element.fill(String(value));
  };
  const action=async(name,data={})=>{
   const selector='[data-x="'+name+'"]'+Object.entries(data).map(([key,value])=>'[data-'+key+'="'+value+'"]').join('');
   const element=page.locator(selector).last();
-  const closed=element.locator('xpath=ancestor::details[not(@open)]').first();
-  if(await closed.count())await closed.locator(':scope > summary').click();
+  if(await element.count()!==1)throw Error('missing original action '+name);
+  await reveal(element);
   await element.click();
  };
  const submit=()=>page.locator('#actions [data-do="check"]').click();

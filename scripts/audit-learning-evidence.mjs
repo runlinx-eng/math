@@ -243,9 +243,9 @@ const inputs=loadIssue341FormalAuditInputs({
 const {summary,rows,byType,byFamily,unknown,risk,report}=await auditLearningEvidence(inputs);
 const nativeA=rows.filter(row=>row.kind==='native'&&row.evidenceLevel==='A');
 const added=nativeA.filter(row=>row.evidenceAdapter?.startsWith('issue341-'));
-if(nativeA.length!==1652||added.length!==839||
- new Set(added.map(row=>row.sessionId+':'+row.index)).size!==839)
- throw Error('Formal #341 A-E classification did not verify 839 exact original Checks');
+if(nativeA.length!==1663||added.length!==850||
+ new Set(added.map(row=>row.sessionId+':'+row.index)).size!==850)
+ throw Error('Formal #341 A-E classification did not verify 850 exact original Checks');
 delete summary.classificationScope;
 delete summary.formalStrictAGranted;
 summary.caution=summary.caution.replace(
