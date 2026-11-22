@@ -30,6 +30,7 @@ function persist(){
 }
 async function control(page,selector){
  let loc=page.locator(selector);
+ if(!(await loc.count()))loc=page.locator(selector.replace('#extra-controls ','.extra-controls '));
  if(!(await loc.count()))loc=page.locator(selector.replace('#extra-controls ','#extra-visual '));
  assert.equal(await loc.count(),1,'unique original '+selector);
  for(let i=0;i<10&&!(await loc.isVisible());i++){
