@@ -31,31 +31,40 @@ async function control(page,selector){
 async function moveRange(el,target){
  const min=Number(await el.getAttribute('min')),max=Number(await el.getAttribute('max'));
  const step=Number(await el.getAttribute('step'))||1;
- assert.ok(Number.isInteger(target)&&target>=min&&target<=max,'original slider limits');
+ assert.ok(Number.isInteger(target)&&Number.isInteger(min)&&Number.isInteger(max)&&
+  max>min&&target>=min&&target<=max,'original slider limits');
+ const original=Number(await el.inputValue());
+ // A real pointer click on the native range is faster and less prone to focus
+ // loss than 700 browser-key events across rerendered lesson controls.
+ const rect=await el.boundingBox();
+ assert.ok(rect&&rect.width>35&&rect.height>0,'original range control has visible geometry');
+ const inset=Math.min(10,rect.width/8);
+ const px=inset+(target-min)/(max-min)*(rect.width-2*inset);
+ await el.click({position:{x:px,y:rect.height/2}});
  let pos=Number(await el.inputValue());
- if(pos===target){
-  await el.press(pos===max?'ArrowLeft':'ArrowRight');
-  pos=Number(await el.inputValue());
+ if(original===target&&pos===target){
+  // The native touched flag requires an actual changed input event; don't
+  // claim a slider gesture merely because an untouched default equals target.
+  await el.focus();
+  await el.press(target===max?'ArrowLeft':'ArrowRight');
+  const moved=Number(await el.inputValue());
+  assert.notEqual(moved,target,'native range must move off its default');
+  pos=moved;
  }
- // PageUp/PageDown on real range input is browser-native; avoid synthesized events.
- for(let i=0;i<20&&Math.abs(pos-target)>15*step;i++){
-  const key=pos<target?'PageUp':'PageDown';
-  await el.press(key);
-  const next=Number(await el.inputValue());
-  if(next===pos||Math.abs(next-target)>=Math.abs(pos-target)){
-   if(next!==pos){await el.press(pos<target?'PageDown':'PageUp');pos=Number(await el.inputValue());}
-   break;
+ let actions=0;
+ while(pos!==target&&actions++<100){
+  const key=pos<target?'ArrowRight':'ArrowLeft';
+  let next=pos;
+  for(let retry=0;retry<3&&next===pos;retry++){
+   await el.focus();
+   await el.press(key);
+   next=Number(await el.inputValue());
   }
+  assert.ok(next!==pos&&Math.abs(next-target)<Math.abs(pos-target),
+   'real range keyboard move toward target: '+pos+' -> '+next+' of '+target);
   pos=next;
  }
- let count=0;
- while(pos!==target&&count++<1100){
-  await el.press(pos<target?'ArrowRight':'ArrowLeft');
-  const next=Number(await el.inputValue());
-  assert.ok(next!==pos&&Math.abs(next-target)<Math.abs(pos-target),'original slider moved one step');
-  pos=next;
- }
- assert.equal(pos,target,'original slider lands on desired tick');
+ assert.equal(pos,target,'original slider reaches exact desired tick');
 }
 async function field(page,key,value){
  const el=await control(page,'#extra-controls [data-xfield="'+key+'"]');
