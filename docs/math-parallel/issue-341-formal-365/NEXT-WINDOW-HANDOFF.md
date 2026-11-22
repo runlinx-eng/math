@@ -1,3 +1,243 @@
+<!-- issue341-final-main-a1178-20261122:begin -->
+## 2026-11-22 最新最终交接：365 道正式 main 验收完成，未部署
+
+[PR #354](https://github.com/runlinx-eng/math/pull/354) 已按用户授权将本批 **113 家族/365 道**正式合入 main，原始 main 合并commit [`8214f570`](https://github.com/runlinx-eng/math/commit/8214f570fc1e408ee1fb3308e73907bf659874e4)。首轮新main Required发现实际CI数据恢复入口缺失（不是数学失败）；[PR #355](https://github.com/runlinx-eng/math/pull/355) 仅补上“存在 #341 正式清单时恢复已验证的原始完整 Check”条件，经过独立PR CI通过后已合入。**当前 main 最终 HEAD [`a45eaf17b824a7e5109d0a91a126ccd9934b446e`](https://github.com/runlinx-eng/math/commit/a45eaf17b824a7e5109d0a91a126ccd9934b446e)**。
+
+该准确main HEAD对应 **[Required #44964430830](https://github.com/runlinx-eng/math/actions/runs/44964430830) completed/success** 和 **[P9 Fallback #44964430748](https://github.com/runlinx-eng/math/actions/runs/44964430748) completed/success**，包含原件恢复/指纹校验及现成 A–E 和来源核对；原PR HEAD的P8/Overview/P9六项亦已成功，未替代合并后检查。main官方manifest和现有A–E为 **A1178/1996 = 原813 + 本批365**，新增题位113家族，逐题冻结身份365/365一致。B线新增126道始终排后不触碰，原B308数学/负例/Check/Artifact复用，没有额外298道Python普查或重做数学。
+
+**状态已落到本目录365行 JSON/CSV：** `formalStrictA=GRANTED_ON_MAIN`、`publicNewFormalA=1`、main合并及新main Required/Fallback=success。独立人工审批已由用户取消且#352关闭，历史pending语句仅属当时进度。#351已被#354完整取代并关闭，不重复合并。
+
+**尚未部署**：VPS工作流仅能手动workflow_dispatch并明确confirm_deploy，用户本次没有授予部署授权；`publicProductionActive=false`。不擅自启动部署，不再追加审计；后续单独处理B线排队的126道。
+<!-- issue341-final-main-a1178-20261122:end -->
+
+<!-- issue341-ci-final-20261122:begin -->
+## 最新完成状态（2026-11-22）：本批365道正式集成分支CI已通过
+
+[Draft PR #354](https://github.com/runlinx-eng/math/pull/354) **exact HEAD** `86de7b6d9d36dd4aa11480a3979f0302760335b6`：当前113家族365道已按冻结的精确原生题位写入**PR分支正式manifest**，接通正式学习反馈、SW离线缓存、release以及原始完整Check记录。分支A–E统计 **A1178/1996（原813+365）**，逐题冻结来源365/365与台账一致。排队的B新增126道未参加。
+
+**当前HEAD的必要门禁**：[Required #44962787677](https://github.com/runlinx-eng/math/actions/runs/44962787677) **completed/success**（正式来源、Node、定向Chromium、离线与发布升级）；[P8 #44962787662](https://github.com/runlinx-eng/math/actions/runs/44962787662) **completed/success**；[Overview #44962787642](https://github.com/runlinx-eng/math/actions/runs/44962787642) **completed/success**。P9故障/ESM恢复也success；P9 fraction ordinal 90 [#44962787668](https://github.com/runlinx-eng/math/actions/runs/44962787668) 也已 **completed/success**。本次全部适用 workflow 已全部成功。没有重跑原B308数学或298道额外Python普查。
+
+**分支通过≠主线合并/部署**：main仍 **A813/1996**，本批main新增A0；#351/#354均Draft，没有合并、没有部署。下一步仅剩单独授权的main合并、合并后新main Required/Fallback，部署另需授权。无需独立人工审批，#352已关闭；#353长期供给不恢复。此节优先于下方历史“等待审批/等待代码接线”旧待办，历史原文保留仅供追溯。
+
+当前365行JSON与CSV已更新分支成功及main尚未合并的状态，`formalStrictA=NOT_GRANTED_ON_MAIN`只表示main不宣称这365道已获A。
+<!-- issue341-ci-final-20261122:end -->
+
+<!-- issue341-formal-activation-live-pr354-20261122:begin -->
+## 2026-11-22 最新执行交接：365道正式工程接入已提交，正在最终CI
+
+**已经实际写代码，不再等人工批准：** [Draft PR #354](https://github.com/runlinx-eng/math/pull/354) 叠在 #351 已通过的365隔离集成上，当前激活代码HEAD `b360e2b300ec6744eb9c1841a38cdcec620e76d4`。正式manifest在**此集成分支**由813增至1178（当前365道、113家族，冻结身份与旧813去重）；浏览器正式题位快照同源、learn.js按原生位置启动新反馈路由并保留旧P9既有反馈；SW新增118条缓存依赖并同步release `math-explorer-20261122-issue341-formal-365-v1`、启动SHA与8份既有导航指纹。没加入排队中的126道。原模型/完整Check、负例/Artifact证据复用，不重做298Python普查。
+
+**当前验收不是全部通过。** 最初新激活HEAD `5ea0ad2` 的Overview、P8与两项P9恢复成功，但Required中的P9思维反馈/旧隔离浏览器测试暴露两个真实兼容性缺口。已按最小范围修复：[`ac051267`](https://github.com/runlinx-eng/math/commit/ac051267908ff15b2decad9eb11458cf07c21bbf) 更新旧隔离浏览器测试以核真实正式接线；[`b360e2b3`](https://github.com/runlinx-eng/math/commit/b360e2b300ec6744eb9c1841a38cdcec620e76d4) 保留原P9 MP.3反馈并同步入口SHA/导航指纹。**最终只能以后一个HEAD的CI终态为准**：Required [#44961847398](https://github.com/runlinx-eng/math/actions/runs/44961847398)、P8 [#44961847413](https://github.com/runlinx-eng/math/actions/runs/44961847413)、Overview [#44961847374](https://github.com/runlinx-eng/math/actions/runs/44961847374) 及P9相关，当前Overview已通过，其余尚未取得整轮终态；不拿旧HEAD成功冒充最终结果。
+
+**授权边界：** 用户已取消独立人工审批，[#352](https://github.com/runlinx-eng/math/issues/352)已not_planned关闭；工程准入仅要求准确题位、旧数学证据复用与变更HEAD的必要CI。main**仍 A813/1996**、本批新main A0；集成分支内1178不是合并/部署完成。#351/#354继续Draft、main未合并、VPS未部署。只有真实CI故障才定向修复；main合并、部署仍各需用户另行授权。#353不恢复，126题排后。目标2026-11-27。
+
+<!-- issue341-formal-activation-live-pr354-20261122:end -->
+
+<!-- issue341-no-human-review-20261122:begin -->
+## 2026-11-22 生效决定：当前365道不需要独立人工审批（优先级最高）
+
+**用户明确取消独立人工审批。** [#352](https://github.com/runlinx-eng/math/issues/352) 已按 `not_planned` 关闭。以下旧章节中“须由独立审核人签署、等签署后才能工程接入”等仅是历史记录，不能再当作当前阻塞；不得重开人审、审批预检或新增审计项目。
+
+下一步直接开展已有工程证据支持的正式题位注册：仅针对现有365道，使用 #351 已通过的113家族隔离代码、原数学/完整Check/负例/Artifact和新增有界反馈；正式 manifest 的每个条目都要与冻结原生 `sessionId/index/nodeId/type/完整taskHash/adapter` 精确一致；同族未被列入的题位不生效，数据/证据错误仍 fail closed。#354 取消刚添加的独立签名决定第二道门控，恢复早先已通过CI的精确manifest路由源树（原始等价代码 HEAD `b32077b856b2131f28ea69779624adf3aa3387e3`）；提交 [`071944d63310`](https://github.com/runlinx-eng/math/commit/071944d633101650eb739894fd8129704e6c5f48) 保留明确的 Git 历史。
+
+**状态**：main 仍正式 A813/1996；新365尚未正式提交/合并到main，不虚报A1178或已上线；#351/#354保持Draft。新 HEAD 需验证适用CI，之后接正式manifest/adapter/feedback、SW缓存/release、实际激活HEAD必要门禁；main合并/部署仍需单独授权。旧数学与Chromium有效回执复用，不重跑原B308/298Python。B线新增126道继续排后，#353不恢复；目标2026-11-27。
+
+<!-- issue341-no-human-review-20261122:end -->
+
+<!-- issue341-staged-formal-routing-20261122:begin -->
+## PR #354 实际 HEAD 的 CI 终态（2026-11-22）
+
+**正式题位精确路由代码（尚未激活）**：[Draft PR #354](https://github.com/runlinx-eng/math/pull/354)，源 HEAD `b32077b856b2131f28ea69779624adf3aa3387e3`，base 仍 #351 隔离分支。新源仅包含1个运行时正式题位路由模块、1份其定向Node测试及Required清单新增1行，正式manifest、production入口、SW/release、main均未变化。
+
+- [Required #44936948491](https://github.com/runlinx-eng/math/actions/runs/44936948491)：**completed/success**；原正式 Node inventory 在此**代码变更HEAD**运行并通过 **2428/2428**，包含新的3项正式范围路由测试。plan、static、smoke、P9 thinking-feedback、P10 learning continuity 定向job和required-checks全部success；非定向 browser matrix skipped，不声称全量 Chromium 再验。
+- [P8 #44936948532](https://github.com/runlinx-eng/math/actions/runs/44936948532)：**completed/success**。
+- 本次只验证**新路由的工程增量**，没有重新证明B308原数学或重新生成旧Check；原 [#351的Required/P8/Overview](https://github.com/runlinx-eng/math/pull/351)既有结果直接继承。B新增126道继续排后。
+
+**状态保持**：在没有 #352 的正式独立逐题批准前，#354不被生产模块导入，不把模拟题位选择当审批，不运行cache patch，不授A；正式813/1996，新增0/365，#351与#354均Draft、未合并。真实获批后再做正式manifest、shared入口、SW/release和实际激活HEAD门禁；合并main/部署各需另行授权。
+
+
+## 当前365道正式接线的代码进展（2026-11-22）
+
+**不只继续写审计：** 在已通过 CI 的隔离共享代码 [PR #351](https://github.com/runlinx-eng/math/pull/351) 之上，新建真正的运行时接线代码 [Draft PR #354](https://github.com/runlinx-eng/math/pull/354)，源提交 `b32077b856b2131f28ea69779624adf3aa3387e3`，base 是 #351 的隔离分支，不指向 main，也未合并。
+
+本次实际增量仅为新 `dist/learning/issue341-formal-source-routing.js` 与其定向 Node 测试，以及既有 Required Node inventory 新增1项测试入口；代码显式从将来独立审批的正式 manifest 提取精确获批来源，把同一数学家族中的其他未批准来源拒之于运行时路由之外。它继续调用已有 `createIsolatedThinkingFeedback` 和原 `submitted` 完整记录门槛，不复制原数学。原正式 manifest 的813条仍完全不变；现无人审批365道，所以**新路由没有被正式模块或页面导入/调用，实际授A仍0/365**。没有生产接入、SW/release、main合并或部署。
+
+新提交的 [Required CI #44936948491](https://github.com/runlinx-eng/math/actions/runs/44936948491) 与 [P8 #44936948532](https://github.com/runlinx-eng/math/actions/runs/44936948532) 在本交接更新时尚未记为 PASS；只在收到该HEAD终态成功后才能关闭新代码门禁。原 PR #351 HEAD 已通过的旧完整 CI 继续复用；不要把过期/其它 HEAD 结果当成 #354 成功或把新测试当原数学重测。
+
+下一实际动作：[#352](https://github.com/runlinx-eng/math/issues/352) 取得授权的独立逐题决定后，中央才将这份精确路由与真实获准来源接到正式 registry/feedback/manifest，随后同步 SW/release 并按真实新激活 HEAD 做必要 CI。新126道依然排后，不参加本批。
+<!-- issue341-staged-formal-routing-20261122:end -->
+
+<!-- issue341-queue-order-20261122:begin -->
+## 当前唯一优先批次：先完成既有 365 道；B 线新 126 道排后（2026-11-22）
+
+**执行次序已由用户明确决定：**
+
+1. **当前优先（正在办理）：** #341 现有 113 家族 / 365 道正式验收，使用既有 [Draft PR #351](https://github.com/runlinx-eng/math/pull/351) 已成功的共享隔离 CI 和 [#352 的365道逐题准入申请](https://github.com/runlinx-eng/math/issues/352)。先取得有效独立批准，按批准题位集成，完成新激活代码必要 CI；目标 2026-11-27。未经批准不授A，不改正式 manifest 或部署；正式 A813/1996，本批新增0。
+2. **下一批（明确排队、现在不接手）：** B 线 [#341 评论 7067039457](https://github.com/runlinx-eng/math/issues/341#issuecomment-7067039457) 交付的 **35个独立候选、126道原生题位**，固定交接提交 [`b2391b02558e`](https://github.com/runlinx-eng/math/commit/b2391b02558e2960196866d8b2299f820b0cd09a)，目录 `docs/math-parallel/issue-341-handoff-126/`，属于**后续验收队列的输入**，不立即导入本次365名单、准入申请、#351、正式 manifest、CI或题数统计。不先审核这126道，也不重跑其本机已通过的测试。待当前365批次完成或明确释放优先级后再接。
+3. 旧335与新126去重后的461只是 B 线交接范围的候选统计，**不是当前365道正式准入数字，不是已授A数，不与365或P007直接相加**；后续独立收件时再核重与范围。
+
+**当前真实阻塞并非新批到达：** #352 暂无有效审核签署，#351 仍 Draft；因此应推进当前批次的独立裁决与获批后集成，不能把“再审计、新增126道”当成替代进展。原B308数学/工程证据仍复用，5天窗口内不做长期CI原件接入（#353已 not_planned），原main合并和部署需独立授权。此前交接历史按时间保留。
+<!-- issue341-queue-order-20261122:end -->
+
+<!-- issue341-five-day-window:begin -->
+## 用户最新决定｜5 天完成；11月28日前不做 CI 原件长期接入（2026-11-22）
+
+**执行目标：2026-11-27 前推进完成本批365道的必要正式审核、获批子集生产集成与变更HEAD的必要门禁。** 这是时间目标，不是已完成或默认授权。现有 GitHub 原始 Artifact 7 天留存，已核对最早约于 **2026-11-28 13:41 UTC** 到期（原12个浏览器输入最早约13:42 UTC）。已保存156份同字节原 ZIP；原 CI/数学/负例结果继续复用。
+
+**决定：#353 已关闭为 not_planned。** 在上述五天窗口内不建设持久远端原件服务、不寻找新存储或长期CI取件方，**不再把 `authorized-durable-ci-input-source` 写作当前365题的必经关卡**。若到期前完成，原件过期不影响已取得的合格证据；若超期且实际新CI确需过期原件，届时才针对这个实际失败恢复 #353，不能假定届时仍可直接下载。原摘要/CRC/完整记录缺失时的失败关闭必须保留，严禁为续期重跑旧数学/浏览器或未授权公开raw。
+
+**真正优先级：** #352 独立正式逐题裁决（仍0/365），随后按有效签署的准确题位子集生产注册、SW/release和实际变更HEAD必要CI；main合并与部署仍须分别授权。禁止新增无缺口审计/重复预检。不因关闭 #353 自动授A，也不承诺一定能在时间内完成。
+<!-- issue341-five-day-window:end -->
+
+<!-- issue341-current-execution-focus:begin -->
+## 当前实际执行优先级｜停止无缺口审计，转入正式准入（2026-11-22）
+
+**自本交接起，新增只读审计/预检脚本、重复 CI、第二份逐题数学证明和额外 Python 普查不再作为默认工作。** 除非给出精确题位、可复现的实际阻塞、旧证据为何不能覆盖及最小修复范围，否则**不要再开 audit-only PR、预检队列或复审回合**。已有 113 家族/365 道隔离共享集成代码和 #351 的成功 CI 完整继承；B 线 308 道已有原数学 replay、负例、Node/Chromium、Check、State-v2 继续复用，298 道无额外 Python 抽查不是待办。
+
+**下一步只做真正能推进正式资格或关闭实质阻塞的工作：**
+
+1. **正式准入 #352**：[向独立审核人提出了 365 道逐题签署请求](https://github.com/runlinx-eng/math/issues/352)。申请材料已经齐全，下一动作是确定有权限且独立的审核人，并收逐题 APPROVE/BLOCK/REJECT、范围和反馈签署；不是重新制作数学证据。无审核人则如实写 `WAITING_FOR_INDEPENDENT_REVIEWER`，不可由 AI 代理或作者自授 A；支持获批一批、集成一批。
+2. **CI 原件供给 #353**：[需要具备明确授权的远端原件来源](https://github.com/runlinx-eng/math/issues/353)。156 份原 ZIP 已保存，但 GitHub runner 原 Artifact 于 2026-11-28 起陆续过期；必须由资料持有人指定私有、受许可的取件渠道及凭证交付方式。只在获得渠道后接现成 `--archive-dir` 校验；不得公开原件、删除旧失败或为续期重跑旧数学/浏览器。
+3. **审批后生产接入**：按精确 `(sessionId,index,nodeId,完整taskHash)` 的已签名单实现 adapter/feedback/正式 manifest 交集过滤，未批准题位不启用；随后按真正改动的代码 HEAD 做适用 CI/Artifact、SW/release。正式 main 合并、主线双验及部署各保留原授权边界，不能提前执行。
+
+**当前计数：** 365/365 工程隔离准备完成；正式人工签署 **0/365**，新增 A **0**，main 正式 A **813/1996**。#351 仍 Draft、未合并。这里提交的是执行方向，不是新的数学审计回执或生产放行。新增126道本机交接是独立候选输入，不自动加入这365道正式准入计数；需独立接收后再核对。
+
+执行纪律：每次续办先看 #352 是否有有效逐题决定、#353 是否有合法 CI 来源；如果没有，直接明确要求外部决定/授权，不要通过扩大审计代替。仅有真实来源冲突或新反馈超范围的证据时才定向修缺口。
+<!-- issue341-current-execution-focus:end -->
+
+**专项 CI 终态（2026-11-22）：** [Actions #44933304290](https://github.com/runlinx-eng/math/actions/runs/44933304290) 已在准入边界修复代码 HEAD `90fafe6506a3fb83f6d6bf876be3425ac8a5d787` completed/success，job `exact-native-scope` 通过。只运行365条元数据结构及跨家族重叠/HEAD 篡改负例；未运行 B 数学、浏览器或原 Check。它不是任何数学正式批准。后续文档/台账提交复用该固定代码 HEAD 的成功结论。
+
+## 2026-11-22 本窗口后续：准入边界定向加固（不授 A）
+
+- 在审计分支提交 [`90fafe6506a3`](https://github.com/runlinx-eng/math/commit/90fafe6506a3fb83f6d6bf876be3425ac8a5d787)，只更新旧的 `formal-activation/approval-scope-preflight.mjs`，新增对应元数据负例回归与限定审计分支 push 的工作流，没有改动 PR #351、正式 manifest、生产运行时、原数学/浏览器测试。
+- **实际发现并修补**：旧去重键含 packet，跨家族复用相同 `(sessionId,index)` 可能未触发拒绝；现在全局原生位置去重。旧 source HEAD 只查格式与行内一致，现在绑定已审阅 PR #351 的准确 HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`；任何新代码 HEAD 要由新的独立审阅申请更新固定绑定，不准静默继承。
+- 用原申请结构构造的跨家族别名会保留 365 个包内去重键，却只有 364 个原生位置；定向负例已写入 `approval-scope-preflight.test.mjs`。已验证原提交的 365 条 request / 365 条台账在完整原生来源、nodeId、taskHash 与 adapter 上一一对应；这是结构审计而不是复验数学。
+- 此次仅提交回归测试，不把尚未返回的 GitHub Actions 结果记为 PASS。真实人工批准、生产题位注册、`authorized-durable-ci-input-source`、SW/release 与新激活 HEAD CI 仍是单独门槛。原 PR #351 的 Required/P8/Overview 旧成功保留，B308 原合同、负例与 Node/Chromium 完整复用，不重跑 298 Python。
+- 正式 A813/1996，新增 A0；#351 继续 Draft，main 合并/部署均未获授权。新逐题字段 `approvalScopePreflightStatus` 仅报告防误授结构状态，不是数学正式批准。
+
+# #341 审计扩展材料公开授权与增量交接（2026-11-22）
+
+## #341 当前新增：逐题精确范围预检（2026-11-22）
+
+**71个多题家族覆盖323/365道。** 部分题位获独立批准时不得仅按家族ID注册，否则扩大到未批准来源。新 [只读边界检查](./formal-activation/APPROVAL-SCOPE-READONLY.md)、[脚本](./formal-activation/approval-scope-preflight.mjs)及[365题结果](./formal-activation/approval-scope-check-365.json)已经核对每题身份，验证1题假设选中、错误hash/HEAD/重复/伪批准等失败关闭；逐题JSON/CSV新增3个`approvalScope*`字段，CSV现81列。该检查不复测B线原数学，不实施生产注册，不授A。正式A813/1996、新A0，独立人审PENDING。当前PR#351实际仍Draft=true、未合并；历史`draft=false`元数据不是当前GitHub PR状态。
+
+
+**状态：29份已审阅文档获用户明确授权公开。** 全量详细证明范围、工程审核、Artifact索引、逐题准入申请和未执行的激活提案发布于本审计分支。正式批准、生产启用、main合并、部署均未授权；A仍813/1996，本批A0。以下先完整保留上一轮已公开的交接前言（其中“扩展材料待授权”属于历史状态），随后进入本轮全量详细交接。
+
+---
+
+## 上一轮公开状态（历史原文）
+
+# 数学项目 #341｜中央验收公开状态交接（2026-11-22）
+
+## 当前公开状态：全部113家族／365道隔离共享集成代码
+
+**本次接续范围为全部365道，不再限于 PR #350 的首批12道。** [PR #351](https://github.com/runlinx-eng/math/pull/351) 已公开相应隔离共享集成代码，源 HEAD 为 `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。下列本仓库公开 workflow 均已 `completed/success`：
+
+| 公开 workflow | 运行 | 当前公开结论 |
+| --- | --- | --- |
+| Required | [44927311010](https://github.com/runlinx-eng/math/actions/runs/44927311010) | success |
+| P8 | [44927311025](https://github.com/runlinx-eng/math/actions/runs/44927311025) | success |
+| Overview | [44927311018](https://github.com/runlinx-eng/math/actions/runs/44927311018) | success |
+
+这里同步的是**公开代码范围与当前公开 CI 状态**，不表示独立人工正式数学准入、生产启用或发布批准。正式 A 仍为 **813**，本批新增 A **0**；独立人工批准仍 **PENDING**，生产候选仍未启用。
+
+[逐题 JSON](./issue-341-formal-365-intake.json) 和 [逐题 CSV](./issue-341-formal-365-intake.csv) 保留全部既有公开字段与历史记录，并为365道新增 `publicCurrentStatus`、PR/HEAD、三项公开运行和未准入状态。旧 `auditDisposition`、`missingEvidence` 与其他历史字段未删除、未改写；当前公开进度以新增 `public*` 字段和本节为准。
+
+**完整扩展验收与交接材料仍待明确的公开授权。** 本次只更新用户明确指定的 JSON、CSV 和本交接三个文件，不包含该待审扩展包。本节不把未公开的细项材料转换成已批准或已公开的证据。
+
+## 继续推进的门槛
+
+1. 独立人工正式数学／反馈准入。
+2. 按获批来源进行生产 adapter／feedback／manifest 接入，并完成适用的 SW 与 release 集成。
+3. 在实际生产启用的变更 HEAD 上完成必要 CI；当前隔离代码的公开成功不能替代后续不同 HEAD 的验收。
+4. 主线合并和部署分别保留用户授权；获授权合并后，再核对新 main Required／Fallback。
+5. 完整扩展材料的公开发布另待明确授权。
+
+继续复用已经公开记录的原数学、负例、Node／Chromium和工程证据；298道没有额外 Python 抽查不是统一任务。仅对具体缺口或实际代码变更执行必要工作，不因等待一项批准而停止其他已有授权的工作。
+
+## 下一窗口接续
+
+> 先读本节、#341最新公开交接、PR #351及其实际源HEAD和最新公开CI，再读365道JSON／CSV中的publicCurrentStatus。继续按全部113家族365道推进，继承既有公开证据，不回退到首批试点。保留人工正式批准、生产启用、后续实际HEAD门禁和合并／部署授权边界；完整扩展材料未经明确公开授权不得发布。下方旧交接与旧复制任务仅作历史，不能覆盖本节的当前公开进度。
+
+---
+
+---
+
+## 全量详细交接（本次获批公开）
+
+# 数学项目 #341｜新窗口中央验收交接（2026-11-22）
+
+<!-- issue341-window:33dddc361614fa9d -->
+## 最新中央接续：全部113家族／365道共享隔离集成（2026-11-22）
+
+**当前工作对象已覆盖全部365道，不再停留于 #350 的首批12道。** 本节覆盖下方历史段落中“仍只完成首批反馈”“还需重做范围说明”等旧待办；原通过、失败、来源与限制记录全部保留。
+
+代码：[Draft PR #351](https://github.com/runlinx-eng/math/pull/351)；exact HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`；CI/Artifact 状态 **`EXACT_HEAD_CI_AND_ARTIFACTS_ACCEPTED`**。正式 manifest 仍813，本批新增 A 0，人工正式准入 **PENDING**；生产候选尚未启用。
+
+### 本窗口已经完成的实际准备
+
+- 113 家族／365 道接入显式共享 registry 与 feedback factory；按原题来源唯一匹配，同 type 多家族参与解析，歧义/异常拒绝。纯候选反馈模块与隔离组合分开，默认正式注册和生产导入保持不启用候选。
+- 原 binding/replay/submitted 合同直接复用。P007 的完整两次错→对 Check 条件保留；不拿通用 replay 取代原 submitted。检查前提示中性，原含答案问题只在提交通过后出现，`method:null`，不外推 P091 历史图形或 P110 容差范围。
+- 最终独立 agent [完整代码审核](./all365-final-code-review.json) 已绑定实际发布的24份文件与 [发布身份回执](./all365-final-code-publication-identity-receipt.json)，源HEAD、tree和唯一parent明确，原raw gzip不在发布tree或祖先中；早先6份反馈文件审核继续保留为历史子证据。这是隔离准备审核，**不是独立人工数学准入**。
+- 扩展审计支持 `.types[]`、原模型与完整 Check provider；A–E 分类审计状态为 **`IMPLEMENTED_EXPLICIT_INJECTION_DEFAULT_OUTPUT_BYTE_IDENTICAL`**。兼容性核对中原/新 CLI 各执行一次，stdout 与7份输出逐字节一致，默认 A813；原提案新增注入测试3/3通过，最终测试已收窄失败断言以免输出原record，其发布字节由24-file审核绑定，实际HEAD CI另列。原113候选数学套件未单独重跑，旧113浏览器suite未选；Required既有正式Node门禁仍按实际共享变更执行，不能记作整个CI旧Node执行0。
+- 已准备365行正式批准请求，技术方案已选定113个 types-aware 家族条目；145个单type条目只保留为历史备选，不是待用户批准的阻塞。精确生产缓存闭包与未应用 patch 已备；纯生产入口缺116个缓存模块，隔离 wrapper 另加1个。详见 [正式激活材料](./formal-activation/ACTIVATION-CHANGESET.md)。
+
+### 本窗口实际 HEAD 的 CI 与 Artifact
+
+- [Pull request required checks #44927311010](https://github.com/runlinx-eng/math/actions/runs/44927311010)：`completed/success`，HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。
+- [P8 startup performance comparison #44927311025](https://github.com/runlinx-eng/math/actions/runs/44927311025)：`completed/success`，HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。
+- [Math Tree overview checks #44927311018](https://github.com/runlinx-eng/math/actions/runs/44927311018)：`completed/success`，HEAD `fec2d5446c979741e3207a0c70f3e792a10eb5cf`。
+
+
+| 本HEAD实际验证范围 | 结果 |
+| --- | --- |
+| 新增组合／审计／传输 Node | 13/13 PASS |
+| 保留的 Required 正式 Node 门禁 | full 144文件，2425/2425 PASS |
+| 新共享隔离 Chromium | 365/365题、113家族、2952项检查，errors=0 |
+| 新浏览器视口 | 1920×1080 |
+| 当前HEAD原 Artifact | 5份，全部实核大小/SHA256/ZIP CRC |
+
+实际测试 checkout `8f46a03173eff3b16627f4856b67deb21a0b06f9` 是GitHub PR merge提交，源PR HEAD仍为 `fec2d5446c979741e3207a0c70f3e792a10eb5cf`，二者分别保留。完整门禁和3项targeted作业结果见 [最终CI原元数据](./all365-final-pr351-ci-evidence.json)。
+
+
+完整范围、运行状态、Artifact ID/SHA与覆盖指标见 [本窗口元数据回执](./all365-current-window-evidence.json)。CI 尚未提供/未完成/Artifact尚未核对时均保留为真实门槛；旧 #344–#350 的成功不替代当前共享变更的验证。
+
+本轮新增隔离组合的两张代表截图已有 [有界视觉审核](./all365-bounded-visual-review.json)；该审核仅覆盖1920×1080下新共享组合卡片的可读性和P091边界文字，不代表重新运行原生113套控件测试或人工正式数学批准。
+
+### 原件留存与安全恢复
+
+144 份原 ZIP 已原样保存：`issue341-original-artifacts-144-20261122.tar`（已持久保存，按文件名与SHA取回）；TAR SHA256 `b756251a717727e4132625d4dd35438d5d12a73e836c951c4d5df6ac3221bea7`，原ZIP字节未改。当前所需12份浏览器原输入均于2026-11-28到期，最早为 `2026-11-28T13:42:40Z`（上海21:42:40）；全部144份原件中最早到期 `2026-11-28T13:41:38Z`（上海21:41:38）。不能把中央12分片误当90天。到期不等于已持久保存的数学证据失效，也不能成为重跑旧套件的理由。
+
+另有 **7份互异的历史失败/取消轮次原ZIP** 已保存到 `issue341-historical-artifacts-7-20261122.tar`（已持久保存，按文件名与SHA取回），TAR SHA256 `7311899ebd938b44f6d977760ce26ddd3ba1fa6b23d2affdd01f734c79935830`，见 [历史清单](./all365-historical-artifact-inventory-7.json) 与 [保存回执](./all365-historical-archive-save-receipt.json)。原144份未改。source-lock失败轮次 #44920568201 无Artifact，保留其失败元数据；导航失败轮次 #44916179044 保存3份原件；PR350三轮cancelled包含部分Required汇总job failure，保留run级与job级区别，不把整轮改成failure或PASS。
+
+本HEAD新增 **5份原ZIP** 也已保存到 `issue341-pr351-artifacts-5-20261122.tar`（已持久保存，按文件名与SHA取回），TAR SHA256 `4273f9e5c870171a94da68521b34451e196aeed9b9a6fff7b12a45cac55b5b23`，见 [新增保存回执](./all365-pr351-archive-save-receipt.json) 与 [5份清单](./all365-pr351-original-artifact-inventory-5.json)。**三档共156份互异原ZIP（144+7+5）均保留原bytes。**
+
+Git 仅发布代码、来源引用和摘要哈希；原模型/完整 Check 只由既有官方 Artifact 或上述同一字节归档读入 ignored `verification/issue341-inputs`。读取脚本校验原 ZIP 大小、SHA256、CRC与member哈希；缺失、过期或不匹配即 fail closed，清除旧输入，禁止伪造/放行。需要恢复时先核 TAR SHA，再恢复原 ZIP 到本地只读输入目录，运行已有 `--archive-dir` 模式；不把原记录重新上传Git或新CI Artifact。详见 [归档元数据](./all365-original-archive-retention.json) 与 [365题引用](./all365-archived-input-references.json)。
+
+**尚未解决的工程门槛：`authorized-durable-ci-input-source`。** 持久保存原件和本地 `--archive-dir` 精确恢复，**不等于GitHub runner已经具备长期自动取件能力**；当前runner仍按原Artifact IDs下载，12份输入到期后会拒绝运行。后续必须落实受许可、CI可访问的持久原件源或获许可的精确原件交付流程，继续核原ZIP摘要；未落实时维持fail closed，禁止为续期重跑旧套件或再次未经许可把raw输入写Git/公开发布。此前自动审批已经拒绝把原模型和完整Check的gzip写入Git，本轮采用metadata-only引用与ignored运行时读取的安全替代，发布tree和祖先均排除了被拒绝的raw提交；这不构成未来raw再发布授权。
+
+### 真实剩余门槛与下一窗口动作
+
+1. 仅对本次实际共享代码 HEAD 收齐适用 CI/Artifact；若已通过，直接复用，不再重跑无变更的原合同、源码锁定或首批预检。
+2. 取得独立人工正式数学/反馈批准，再由中央单写入者做获批生产 adapter/feedback/manifest 注册。当前365行均 `formalStrictA=NOT_GRANTED`。
+3. 正式启用时应用经审阅的 SW 依赖与 release/entry/navigation 同步，按实际激活 HEAD 做必要 CI与 Artifact；当前隔离通过不代替生产启用验收。
+   同时落实 `authorized-durable-ci-input-source`：当前CI成功仅说明原Artifact仍可读，不能提前关闭到期后的远端原件供应门槛。
+4. main 合并与部署仍分别保留用户授权；获授权合并后再看新 main Required/Fallback。等待某项批准时，继续处理其他已有授权的缺口。
+
+B308 原合同/负例/Node/Chromium与工程证据继续全部复用；298 没有额外 Python 抽查不是统一任务，历史18道范围笔记不生成剩余逐题重写队列。只有具体题位的可复现矛盾或新反馈主张超出原证据时，才开启定向核查。逐题旧状态原文保留在 `intakeDecisionHistory`，其他历史字段未删改。
+
+### 最新可复制的下一窗口任务
+
+> 接手数学项目 #341 中央验收。先读本文件最上方“最新中央接续”节、#341最新评论、PR #351 的真实源HEAD与最终CI/Artifact、365道JSON/CSV、24-file代码审核及发布身份回执。全部113家族365道已具备显式共享隔离组合与两类审计注入，不回退到 #350 首批12道试点。复用B308原合同/负例/Node/Chromium和既有导航/来源证据；298额外Python抽查不是任务。若本共享HEAD适用CI/Artifact已完成就直接继承，仅修真实缺口。采用已定113 types-aware方案，继续准备独立人工正式准入、获批生产注册和隔离元数据处理、SW/release及真实激活HEAD门禁；不得自行授A、合并main或部署，也不得等待某项批准就停止其他可执行工作。原12分片将于2026-11-28到期；持久归档与本地恢复不等于远端CI长期自动取件，需落实authorized-durable-ci-input-source，缺失/不匹配fail closed，不续期重跑旧套件，不重新未经许可发布被自动审批拒绝的raw输入。持续更新#341、365台账和本交接，保留全部历史。
+
+**下方历史第6节的旧复制任务仅作留档，不能继续作为当前任务入口或把工作限制回首批。**
+<!-- /issue341-window:33dddc361614fa9d -->
+
+---
+
+### 以下为保留的历史交接
+
 # 数学项目 #341｜新窗口中央验收交接（2026-11-21）
 
 > **唯一接续入口。** 下个窗口先读本文件和 [#341 最新交接评论](https://github.com/runlinx-eng/math/issues/341)，再核对 GitHub 实时分支与 CI；优先**接着做尚缺的共享集成准备**，不要从开发测试重来。本文是交接，不是授权合并或正式授 A。
