@@ -1324,3 +1324,154 @@ body[data-world="network"][data-network-version="53"] .space-label.node.selected
   font-weight:700;color:#204c3c;background:#fffef9f7;border:1px solid #57816a;
   box-shadow:0 2px 10px #29453b18;
 }
+
+
+
+/* P11 cosmos visual language v1 (#377): style only, no fabricated knowledge nodes.
+   Body-scoped for rollback; existing source labels, actions and hierarchy remain. */
+body.cosmos{
+  --ink:#ecede6;--muted:#a6b8bd;--line:#314651;--paper:#12242f;
+  --shadow:0 20px 60px #020912bb;
+  color:#e9e9e3;background:#081520;color-scheme:dark;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+body.cosmos #space-canvas{
+  background:
+    radial-gradient(ellipse 55% 62% at 42% 47%,#25465362 0%,transparent 75%),
+    radial-gradient(ellipse 37% 52% at 63% 18%,#1e46503d 0%,transparent 79%),
+    #081520;
+}
+body.cosmos .topbar{top:21px;left:36px;right:36px;gap:22px}
+body.cosmos .brand{gap:12px}
+body.cosmos .brand-mark{width:43px;height:43px;background:transparent;border:0;border-radius:0;color:#d9be91;font-size:29px;text-shadow:0 0 17px #d5ad6659}
+body.cosmos .brand strong{color:#ead7b5;font-family:Georgia,"Songti SC","STSong",serif;font-size:25px;font-weight:500;letter-spacing:.075em}
+body.cosmos .brand small{color:#8fa9b1;font-size:9px;letter-spacing:.23em;margin-top:8px}
+body.cosmos .primary-nav,body.cosmos .top-tools{background:transparent;border:0;box-shadow:none;border-radius:0;backdrop-filter:none}
+body.cosmos .primary-nav{padding:0;gap:8px}
+body.cosmos .primary-nav button{padding:11px 14px 14px;min-height:45px;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:#adc0c3;font-size:14px;letter-spacing:.12em;font-weight:450}
+body.cosmos .primary-nav button:hover{color:#fff0d7;background:transparent}
+body.cosmos .primary-nav button[aria-pressed="true"]{color:#e8cc9e;border-color:#be9b68;background:transparent;box-shadow:0 5px 9px -8px #f1d59a;font-weight:600}
+body.cosmos .top-tools{gap:4px}
+body.cosmos .top-tools button{color:#a9bec2;background:#11242fd1;border:1px solid #28414bbb;border-radius:8px;padding:10px 12px;font-size:12px}
+body.cosmos .top-tools button:hover{color:#f7eddb;background:#24404c;border-color:#698b94}
+body.cosmos .top-tools .search-button{min-width:104px;background:#132834c4;color:#a3b7bb}
+body.cosmos .keycap{color:#78959e}
+body.cosmos .place-indicator{color:#8aa4aa;letter-spacing:.1em}
+body.cosmos .place-indicator b{color:#d4e0dd;font-weight:500}
+body.cosmos .tool-rail{background:#102430d9;border:1px solid #3b525f9c;border-radius:13px;box-shadow:0 16px 45px #020a15b8;backdrop-filter:blur(20px);padding:6px}
+body.cosmos .tool-rail button{background:transparent;border:0;color:#aec5c7}
+body.cosmos .tool-rail button:hover,body.cosmos .tool-rail button[aria-pressed="true"]{background:#273e4a;color:#edd4a7}
+body.cosmos .tool-divider{background:#344d5b}
+body.cosmos .lens-indicator{color:#a0b6b8}
+body.cosmos .lens-indicator .meter{background:#1a323e;border-color:#47606c}
+body.cosmos .lens-indicator .meter i{background:#c5aa82}
+body.cosmos .overall-progress,body.cosmos .save-status,body.cosmos .today-progress{background:#0b1e29d8;border-color:#2e4653;color:#a9bec2;box-shadow:none;backdrop-filter:blur(12px)}
+body.cosmos .overall-progress b{color:#e6ceb0}
+body.cosmos .overall-progress progress{accent-color:#c2a57b}
+body.cosmos .save-status button{background:transparent;color:#b2c5c5}
+body.cosmos .save-status button:hover{background:#1b3441;color:#f1e4cb}
+body.cosmos[data-world="network"] #network-guide{background:#102430e0;border:1px solid #354f5b;border-radius:14px;box-shadow:0 18px 48px #030a15a6;backdrop-filter:blur(20px);color:#d1e2df}
+body.cosmos[data-world="network"][data-network-version="53"] #network-guide{background:#102430e0;border:1px solid #354f5b;border-radius:14px;padding:10px 12px;box-shadow:0 18px 48px #030a15a6}
+body.cosmos #network-guide strong,body.cosmos #network-guide #network-view-title{color:#e6d6b7;font-weight:550}
+body.cosmos #network-guide p,body.cosmos #network-guide small,body.cosmos #network-guide .observation-heading span{color:#a4b9bb}
+body.cosmos #network-guide button,body.cosmos #network-guide .network-legend button{background:#162e3a;color:#c5d5d4;border:1px solid #35515e;border-radius:7px;font-weight:500}
+body.cosmos #network-guide button:hover{background:#24414e;color:#f0dfc5}
+body.cosmos #network-guide button[aria-pressed="true"]{background:#2d424a;color:#f1d4a0;border-color:#a28b69}
+body.cosmos #network-guide .network-edge-controls,body.cosmos #network-edge-hint{color:#a7bcbf}
+body.cosmos #network-guide .network-edge-controls .guide-entry{background:#233c49;color:#e6d6b8;border-color:#66838d}
+body.cosmos #network-guide details,body.cosmos #network-guide details[open]{background:#102835;color:#cadad9;border-color:#344b57}
+body.cosmos .overview-structure-controls{background:#112936e8;border:1px solid #3a5461;border-radius:12px;box-shadow:0 12px 35px #020913a8;backdrop-filter:blur(20px)}
+body.cosmos .overview-structure-controls strong{color:#e6d5b7}
+body.cosmos .overview-structure-controls small{color:#9fb6bc}
+body.cosmos .overview-structure-controls button{color:#a9c1c4}
+body.cosmos .overview-structure-controls button:hover{background:#243f4c;color:#f3e3cd}
+body.cosmos .overview-structure-controls button[aria-pressed="true"]{background:#354c59;color:#e8d3af}
+body.cosmos .space-label{color:#cce0db;background:#102833b0;border-color:#38545d8a;box-shadow:none;text-shadow:0 2px 9px #02080e;letter-spacing:.01em}
+body.cosmos .space-label.theme{color:#eceddd;background:#102630ce;border:1px solid #38515b;border-left:2px solid var(--object-color);box-shadow:0 6px 25px #0209118c;font-weight:550;font-size:17px}
+body.cosmos .space-label.theme small{color:#a6bdbd}
+body.cosmos .space-label.pack{color:#dae6de;background:#102a36cc;border:1px solid #405963;border-left:2px solid var(--object-color)}
+body.cosmos[data-world="network"] .space-label.node{color:#cedfdb;background:#0c222dbd;border:1px solid #36545d96;font-weight:500;text-shadow:0 1px 8px #020910}
+body.cosmos[data-world="network"][data-network-version="53"][data-map-focus="node"] .space-label.node{color:#cfe2dd;background:#0e222bc9;border-color:transparent;text-shadow:0 1px 9px #020912,0 0 10px #020912}
+body.cosmos[data-world="network"] .space-label.node.related,body.cosmos[data-world="network"][data-network-version="53"][data-map-focus="node"] .space-label.node.related{color:#e1ede5;background:#16313ec9;border:1px solid #557782a6;box-shadow:0 4px 16px #030b15b8}
+body.cosmos[data-world="network"] .space-label.node.selected:not(.active-target),body.cosmos[data-world="network"][data-network-version="53"] .space-label.node.selected:not(.active-target):not(.preview-target){color:#f1dfbf;background:#1d303bf5;border:1px solid #ac946d;box-shadow:0 4px 20px #020a14b8;text-shadow:none;font-weight:650}
+body.cosmos[data-world="network"] .space-label.node.active-target,body.cosmos[data-world="network"].has-journey.has-explore-selection .space-label.node.active-target{color:#fff0d4!important;background:#283b42!important;border:2px solid #d8b67f!important;outline:2px solid #d8b67f!important;outline-offset:2px;box-shadow:0 0 0 6px #cbb07b2b,0 0 22px #d5af6b63!important;text-shadow:none;font-weight:750!important}
+body.cosmos[data-world="network"] .space-label.node.hovered:not(.selected):not(.active-target){background:#193541dd!important;color:#e0f3ed!important;border:1px dashed #78a7ac!important;box-shadow:0 0 0 2px #6fa6a628!important;font-weight:600}
+body.cosmos[data-world="network"][data-network-version="53"] .space-label.node.preview-target:not(.active-target){color:#e6f3e9;background:#1d3844dd;border:1px solid #81bbb5;box-shadow:0 0 0 3px #7fc2bd33}
+body.cosmos[data-world="network"][data-network-version="53"] .space-label.node.preview-neighbor:not(.selected):not(.active-target){color:#dae9e1;background:#112c38de;border:1px solid #567984}
+body.cosmos .space-label.node[data-progress="tier-1"]::before{border-color:#869ca0;background:transparent}
+body.cosmos .space-label.node[data-progress="tier-2"]::before{border-color:#d6b77b;background:linear-gradient(90deg,#d6b77b 50%,transparent 50%)}
+body.cosmos .space-label.node[data-progress="tier-3"]::before{border-color:#70c5a9;background:#225147;color:#e5fff0;box-shadow:0 0 0 2px #70c5a935,0 0 11px #70c5a965}
+body.cosmos[data-world="network"] .space-label:focus-visible,body.cosmos[data-world="network"] #focus-card button:focus-visible,body.cosmos[data-world="network"] #journey-surface button:focus-visible{outline:3px solid #81cdd8!important;outline-offset:4px}
+body.cosmos .label-tethers path{stroke:#7195a0;opacity:.41}
+body.cosmos .relation-caption{background:#142c38f0;color:#e1e6df;border:1px solid #415b63;box-shadow:0 5px 18px #020b15c4}
+body.cosmos #focus-card,body.cosmos[data-world="network"] .focus-card,body.cosmos[data-world="network"] .focus-card[data-kind="node"]{background:linear-gradient(140deg,#162934ed,#0c1e29f5);color:#e9ebe4;border:1px solid #3e5660;border-top:1px solid #60727a;border-radius:18px;box-shadow:0 24px 75px #020a16db;backdrop-filter:blur(24px);padding:21px 23px}
+body.cosmos[data-world="network"][data-network-version="53"] #focus-card[data-kind="node"]{padding:19px 22px}
+body.cosmos #focus-card .focus-sticky,body.cosmos[data-network-version="53"] #focus-card[data-kind="node"] .focus-sticky{background:#102430f5;border-bottom:1px solid #394c56;top:-20px;z-index:8;padding:4px 0 11px}
+body.cosmos[data-network-version="53"] #focus-card[data-kind="node"] h2{position:static;background:transparent;color:#f2dfbf;font-family:Georgia,"Songti SC","STSong",serif;font-weight:500;font-size:27px;line-height:1.42;letter-spacing:.035em;margin:12px 0}
+body.cosmos #focus-card .overline{color:#92afb5;font-size:10px;letter-spacing:.22em}
+body.cosmos #focus-card p,body.cosmos #focus-card .quiet,body.cosmos #focus-card .network-concept,body.cosmos #focus-card small{color:#b0c1c2!important;line-height:1.65}
+body.cosmos #focus-card .focus-context-section{border-color:#3c5159}
+body.cosmos #focus-card .focus-context-section h3,body.cosmos #focus-card .network-relations h3{color:#e0be8e;font-size:12px;font-weight:550}
+body.cosmos #focus-card .focus-section-nav{background:#122731ef}
+body.cosmos #focus-card .focus-section-nav button,body.cosmos #focus-card button:not(.primary-button){background:#172f3b;color:#bfd3d2;border:1px solid #38525e;border-radius:8px}
+body.cosmos #focus-card .focus-section-nav button:hover,body.cosmos #focus-card button:not(.primary-button):hover{background:#284753;color:#f5e1bf;border-color:#75949c}
+body.cosmos #focus-card .focus-actions .primary-button,body.cosmos #focus-card button.primary-button{background:linear-gradient(180deg,#f0dab1,#c8a77b);color:#10212a;border:1px solid #e1c79c;border-radius:24px;font-weight:650;box-shadow:0 6px 28px #bc905636;padding:11px 17px}
+body.cosmos #focus-card button.primary-button:hover{background:#f2dfba;box-shadow:0 8px 30px #d8ae7445}
+body.cosmos #focus-card .network-relation,body.cosmos #focus-card .relation-button,body.cosmos #focus-card .focus-filter,body.cosmos #focus-card .grade-node-position{background:#152d38;border-color:#3b5661;color:#d6e4dd}
+body.cosmos #focus-card .relation-reason,body.cosmos #focus-card .network-relation small{color:#aabfc0}
+body.cosmos #focus-card .network-focus-key .before{color:#dcad7e}
+body.cosmos #focus-card .network-focus-key .after{color:#7fc7cf}
+body.cosmos .guide-panel,body.cosmos .continue-card,body.cosmos .popover,body.cosmos .learning-hub,body.cosmos .utility-drawer,body.cosmos .work-panel{background:#102631ee;color:#dce8e1;border:1px solid #3d5661;box-shadow:0 20px 65px #020b16c7;backdrop-filter:blur(20px)}
+body.cosmos .popover button,body.cosmos .guide-panel button,body.cosmos .continue-card button,body.cosmos .learning-hub button,body.cosmos .utility-drawer button{background:#1a3642;color:#d3e0dd;border-color:#3b5863}
+body.cosmos .popover button:hover,body.cosmos .guide-panel button:hover,body.cosmos .continue-card button:hover{background:#294753;color:#f3e4c8}
+body.cosmos .popover h2,body.cosmos .continue-card h2,body.cosmos .guide-panel h2,body.cosmos .learning-hub h2{color:#e8d5b8}
+body.cosmos .popover p,body.cosmos .guide-panel p,body.cosmos .continue-card small{color:#b2c4c3}
+body.cosmos .search-popover input,body.cosmos .popover input{color:#e7eee8;background:#091e29;border:1px solid #3b5966}
+body.cosmos .search-popover input::placeholder{color:#91a9b0}
+body.cosmos .guide-panel .guide-prompt,body.cosmos .guide-panel .guide-nodes button,body.cosmos .continue-card{background:#1a323e;color:#d6e0d8}
+body.cosmos .utility-drawer>header,body.cosmos .learning-hub>header,body.cosmos .work-header,body.cosmos .work-tabs{background:#142e39;color:#ead9bc;border-color:#3c5660}
+body.cosmos .utility-drawer .trail-node-context{background:#152e39;color:#d7e2db;border-color:#405a63}
+body.cosmos .utility-drawer .trail-node-heading strong{color:#efd6b2}
+body.cosmos .utility-drawer .trail-node-hint,body.cosmos .utility-drawer .trail-node-details{color:#b5c7c7}
+body.cosmos .warning,body.cosmos .toast{background:#1b333f;color:#f3e2c4;border-color:#8f7557}
+body.cosmos #loading{background:#081520;color:#ead8b7}
+body.cosmos .journey-surface{background:#fbf8f0;color:#2c4441;border:1px solid #b4a17d;box-shadow:0 23px 79px #020a16d9}
+body.cosmos .journey-surface>header{background:#efece2;color:#3c5450;border-color:#d7d0c1}
+body.cosmos .journey-surface>header button{color:#39524e}
+body.cosmos .journey-surface iframe{background:#fcfbf6}
+body.cosmos #learning-map-context{background:#152c38;color:#d9e8e1;border-color:#4a6570}
+body.cosmos #learning-map-context .learning-map-eyebrow{color:#d4b48a}
+body.cosmos #learning-map-context .learning-map-title{color:#f1dab3}
+body.cosmos #learning-map-context .learning-map-neighbor{background:#1a3542;color:#d4e6df;border-color:#5c808a}
+body.cosmos #learning-map-context .learning-map-neighbor small,body.cosmos #learning-map-context .learning-map-neighbor span{color:#afc4c4}
+body.cosmos #learning-map-context .learning-map-footer{border-color:#3c5562}
+body.cosmos #focus-card::-webkit-scrollbar,body.cosmos .network-guide::-webkit-scrollbar{width:6px}
+body.cosmos #focus-card::-webkit-scrollbar-thumb,body.cosmos .network-guide::-webkit-scrollbar-thumb{background:#536e78;border-radius:12px}
+@media(min-width:1100px){
+  body.cosmos[data-world="network"]:not(.has-task-surface):not(.has-journey) #focus-card:not([hidden]){
+    top:clamp(106px,14vh,154px)!important;
+    max-height:calc(100dvh - clamp(106px,14vh,154px) - 44px)!important;
+  }
+}
+@media(max-width:900px){
+  body.cosmos .topbar{top:15px;left:16px;right:16px;gap:8px}
+  body.cosmos .brand strong{font-size:19px}
+  body.cosmos .brand-mark{font-size:24px;width:32px;height:32px}
+  body.cosmos .primary-nav{gap:1px}
+  body.cosmos .primary-nav button{padding:9px;min-height:40px;font-size:12px}
+  body.cosmos .top-tools button{padding:8px}
+}
+@media(max-width:600px){
+  body.cosmos .brand small{display:none}
+  body.cosmos .brand strong{font-size:16px;letter-spacing:0}
+  body.cosmos .brand-mark{font-size:20px;width:27px;height:27px}
+  body.cosmos .topbar{gap:5px}
+  body.cosmos .primary-nav button{font-size:11px;padding:7px}
+  body.cosmos .top-tools button{padding:6px;font-size:10px;background:transparent;border-color:transparent}
+  body.cosmos .place-indicator{top:76px}
+  body.cosmos #focus-card{padding:14px}
+  body.cosmos #focus-card h2{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.cosmos .space-label,body.cosmos .primary-nav button,body.cosmos #focus-card button{transition:none!important}
+}
