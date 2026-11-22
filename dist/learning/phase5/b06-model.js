@@ -58,10 +58,23 @@ case'x-teenbuild':ok=m.bundle.length===10&&m.tens===1&&m.ones===t.n-10&&m.total=
 case'x-numberwrite':ok=amount(m)===t.n&&m.numeral===String(t.n)&&m.word===cn(t.n)&&(t.mode!=='audio'||m.heard>0||m.textHelp);help='把数量、数字和中文名字对起来。整十代表十个一，零也有含义；手写只保存，不自动判断字形。';break;
 }return{correct:!!ok,feedback:ok?'这次操作和记录对上了。':help};}
 export function act(t,m,action,d={}){const i=Number(d.index);switch(action){
-case'count-tap':{const a=m.moved&&t.recount?m.again:m.taps;if(int(i,0,t.n-1)&&a.length<t.n*3)a.push(i);break;}
-case'count-undo':(m.moved&&t.recount?m.again:m.taps).pop();break;
+case'count-tap':{
+ const a=m.moved&&t.recount?m.again:m.taps;
+ if(int(i,0,t.n-1)&&a.length<(t.error?t.n:t.n*3)&&(!t.error||!a.includes(i))){
+  a.push(i);
+  if(t.error)m.total=a.length;
+ }
+ break;
+}
+case'count-undo':{
+ const a=m.moved&&t.recount?m.again:m.taps;
+ a.pop();
+ if(t.error)m.total=a.length||null;
+ break;
+}
+case'count-error-step':if(t.error&&int(i,0,t.error.length-1))m.badStep=i+1;break;
 case'count-move':if(full(m.taps,t.n)&&m.total!==null&&m.prediction!==null&&!m.moved){m.before=m.total;m.moved=true;}break;
-case'count-reset':Object.assign(m,initial(t));break;
+case'count-reset':if(t.error){m.taps=[];m.total=null;}else Object.assign(m,initial(t));break;
 case'pair-a':if(int(i,0,t.a-1)&&!m.pairs.some(p=>p[0]===i))m.pending=i;break;
 case'pair-b':if(m.pending!==null&&int(i,0,t.b-1)&&!m.pairs.some(p=>p[1]===i)){m.pairs.push([m.pending,i]);m.pending=null;}break;
 case'pair-undo':m.pairs.pop();m.pending=null;break;
