@@ -86,6 +86,7 @@ jobs:
           python3 scripts/issue342-prepare-a258-first33-inputs.py
           python3 scripts/issue342-prepare-a258-next11-inputs.py
           python3 scripts/issue343-prepare-a214-b39-inputs.py
+          python3 scripts/issue343-prepare-a214-next95-inputs.py
           if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
             python3 scripts/issue341-prepare-followup-218-inputs.py
           fi
@@ -614,6 +615,9 @@ jobs:
       - name: Read source-locked B39 original exports for real file-chooser import
         if: matrix.script == 'tests/issue343-a214-b39-backup-import-browser.cjs'
         run: python3 scripts/issue343-prepare-a214-b39-inputs.py
+      - name: Read remaining 95 frozen native exports for real chooser regression
+        if: matrix.script == 'tests/issue343-a214-next95-backup-import-browser.cjs'
+        run: python3 scripts/issue343-prepare-a214-next95-inputs.py
       - name: Run impacted math family in Chromium
         shell: bash
         run: |
