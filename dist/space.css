@@ -1475,3 +1475,7 @@ body.cosmos #focus-card::-webkit-scrollbar-thumb,body.cosmos .network-guide::-we
 @media(prefers-reduced-motion:reduce){
   body.cosmos .space-label,body.cosmos .primary-nav button,body.cosmos #focus-card button{transition:none!important}
 }
+
+/* The root has fixed-position children; the body alone cannot paint the full backdrop. */
+html:has(body.cosmos){background:#081520;color-scheme:dark}
+body.cosmos #space-app{background:#081520}
