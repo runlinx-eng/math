@@ -614,5 +614,16 @@
     "sha256": "164975b19335ad7da127019722d5d812801e86bf3f214b0f55f42d5fcc5b5bc9"
   },
   "formalProjectCi": "NOT_RUN",
-  "nativeBackupImportThroughFileChooser": "NOT_RUN"
+  "nativeBackupImportThroughFileChooser": "NOT_RUN",
+  "intakeDecisions": {
+    "directlyReusableCompleteCandidate": 0,
+    "requiresDevelopmentOrVerification": 99,
+    "closedWithoutDevelopment": 115,
+    "existingReplayReusedForAdditionalSource": 4,
+    "priorADevelopmentLedger": "https://github.com/runlinx-eng/math/blob/0da77fa915ee3ab460853aa529e54e4ea31acb1e/ci/a-candidate-dev/progress-ledger.json",
+    "priorAPassPositionsChecked": 127,
+    "priorAPassPositionsOverlapping": 0,
+    "existingFormalPrerequisitePositionsUsedInNativeNext": 14,
+    "existingFormalPrerequisiteChecksInArchivedBrowserExports": 19
+  }
 }
