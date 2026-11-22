@@ -4,6 +4,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const assert=require('node:assert/strict');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
+const {newDesktopContext}=require('./helpers/standard-desktop-viewport.cjs');
 const root=path.resolve(__dirname,'..');
 const out=path.join(root,'verification/issue343-a214-b39-backup-import');
 const input=path.join(root,'verification/issue341-inputs');
@@ -28,7 +29,7 @@ const check=(condition,message)=>{assert.ok(condition,message);results.push(mess
    const expected=backup.state.lessons[sid];
    assert.ok(expected);
    assert.equal(expected.cases[index].attempts.length,2);
-   const ctx=await browser.newContext({viewport:{width:1440,height:900},serviceWorkers:'allow'});
+   const ctx=await newDesktopContext(browser,{serviceWorkers:'allow'});
    const page=await ctx.newPage();
    page.on('pageerror',e=>errors.push(String(e)));
    try {
