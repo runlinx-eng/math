@@ -72,8 +72,8 @@ test('all365 archived records pass the new composition, with source-exclusive ro
 
 test('isolated factory stays separate from the newly connected formal route',()=>{
  const manifest=JSON.parse(read('../docs/spatial-learning/evidence-review-manifest.json'));
- assert.equal(manifest.tasks.length,1553);
- assert.equal(manifest.tasks.filter(row=>row.adapter?.startsWith('issue341-')).length,740);
+ assert.equal(manifest.tasks.length,1619);
+ assert.equal(manifest.tasks.filter(row=>row.adapter?.startsWith('issue341-')).length,806);
  assert.ok(EVIDENCE_ADAPTERS.every(row=>!row.id.startsWith('issue341-')));
  assert.equal(read('../dist/learning/learn.js').includes('issue341-formal-admissions.js'),true);
  assert.equal(read('../dist/learning/thinking-feedback.js').includes("from './issue341-"),false);

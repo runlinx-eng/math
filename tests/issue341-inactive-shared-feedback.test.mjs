@@ -52,7 +52,7 @@ test('candidate-only feedback stays isolated after the formal source snapshot is
  assert.equal(ISSUE341_FEEDBACK_PROPOSAL_STATUS,'INACTIVE_NOT_APPROVED_NOT_RUNTIME_REGISTERED');
  assert.equal(ISSUE341_INACTIVE_ADAPTER_PROPOSALS.length,5);
  const official=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
- assert.equal(official.tasks.length,1553);
+ assert.equal(official.tasks.length,1619);
  assert.ok(EVIDENCE_ADAPTERS.every(x=>!x.id.startsWith('issue341-')));
  for(const row of ISSUE341_INACTIVE_ADAPTER_PROPOSALS){
    assert.equal(row.id.startsWith('issue341-'),true);

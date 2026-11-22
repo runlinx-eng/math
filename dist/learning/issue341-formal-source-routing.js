@@ -7,10 +7,11 @@ import {ISSUE341_NORMALIZED_ADAPTERS,issue341GuideForBinding,
 import {ISSUE341_FOLLOWUP_126_ADAPTERS} from './issue341-followup-126-candidates.js';
 import {ISSUE341_FOLLOWUP_218_ADAPTERS} from './issue341-followup-218-candidates.js';
 import {ISSUE342_A_P006_ADAPTERS} from './issue342-a355-p006-candidates.js';
+import {ISSUE342_A_P001_P005_ADAPTERS} from './issue342-a355-next-66-candidates.js';
 
 const allFrozenCandidates=Object.freeze([...ISSUE341_NORMALIZED_ADAPTERS,
  ...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS,
- ...ISSUE342_A_P006_ADAPTERS]);
+ ...ISSUE342_A_P006_ADAPTERS,...ISSUE342_A_P001_P005_ADAPTERS]);
 const sourceKey=(sessionId,index)=>JSON.stringify([sessionId,index]);
 
 export function createIssue341ManifestGatedRouting(formalManifest){

@@ -82,6 +82,7 @@ jobs:
           python3 scripts/issue341-prepare-archived-inputs.py
           python3 scripts/issue341-prepare-followup-126-inputs.py
           python3 scripts/issue342-prepare-p006-inputs.py
+          python3 scripts/issue342-prepare-p001-p005-inputs.py
           if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
             python3 scripts/issue341-prepare-followup-218-inputs.py
           fi
@@ -92,6 +93,7 @@ jobs:
           if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
             node --test tests/issue341-followup-218-staged-routing.test.mjs tests/issue341-followup-218-original-inputs.test.mjs
           fi
+          node --test tests/issue342-a355-p001-p005-source-candidates.test.mjs
 
       - name: Plan safe Node test scope from actual changed files
         id: node_scope
