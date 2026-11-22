@@ -10,7 +10,7 @@ import {thinkingFeedback,thinkingGuide} from '../dist/learning/thinking-feedback
 const fullManifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url)));
 const manifest={...fullManifest,tasks:fullManifest.tasks.filter(row=>!row.adapter.startsWith('issue341-'))};
 // Original 813 negative mutation cases remain unchanged; the default CLI
-// checks all 1178 with preserved original full Check records.
+// checks all 1304 with preserved original full Check records.
 const auditEvidenceExpansion=(options={})=>runExpansion({manifest,...options});
 const clone=()=>structuredClone(manifest);
 const has=(report,kind)=>report.defects.some(defect=>defect.kind===kind);
