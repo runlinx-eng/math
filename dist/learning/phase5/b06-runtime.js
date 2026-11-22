@@ -13,6 +13,16 @@ export function mountB06(root,t,getModel,{mutate,saveInk,help}){
    try{await current.play();}catch{if(!disposed&&status)status.textContent='声音暂时无法播放，可以看文字提示。';}
   }
  };
+ // Keep the shared check button unchanged on other tasks.
+ if(t.type==='x-counttrail'&&t.error){
+  const check=root.ownerDocument.querySelector('#actions [data-do="check"]');
+  if(check){
+   const m=getModel();
+   const ready=Number.isInteger(m.badStep)&&m.badStep>=1&&m.badStep<=t.error.length&&m.why!==''&&m.taps.length===t.n&&new Set(m.taps).size===t.n&&m.taps.every(i=>Number.isInteger(i)&&i>=0&&i<t.n);
+   check.textContent='检查结果';
+   check.disabled=!ready;
+  }
+ }
  root.addEventListener('click',click);
  const pad=root.querySelector('#b6-ink');
  const point=e=>{const r=pad.getBoundingClientRect();return[Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];};
