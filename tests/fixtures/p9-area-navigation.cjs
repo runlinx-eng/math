@@ -1195,7 +1195,7 @@ module.exports={
   ],
   "sourceHashes": {
     "dist/learning/tasks.js": "4eac447b0944644b1c1077464e849950b296fd708f7f8f0ecf9d4ac1fd7cb4a7",
-    "dist/learning/learn.js": "fabeb1bec48950555b35dffddf65f6ef97d905dad51351aea996c111c9d71a35",
+    "dist/learning/learn.js": "59148be8d126e7ca1ad169876398c0291599487da144c45b7535738a86b9f910",
     "dist/learning/phase4/engine.js": "8164e3f66e9c1489ef4831a6477fe782591ea1a7bc0ed4da859fc3c575b9f9ee",
     "dist/learning/phase4/ui.js": "88a1fe937b6b4e9b2f1405e2f80d6e48a8750afa833b8ac2d76b046bd28678a8",
     "dist/learning/phase4/b02-model.js": "b0b17bdc7f7fa95c0ad53258f2804cd06404272b1946a4e5830af3b337e55927",
