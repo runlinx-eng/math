@@ -158,7 +158,7 @@ async function runShard(shard,positionIds){
    ok(evidence.replayP008RoundworkEvidence(task,wrong.model,context)===null,
     position+' independently reject wrong value');
    stage='corrected-check-'+position;
-   await action(page,'wide-active',0);
+   if(task.values.length>1)await action(page,'wide-active',0);
    await field(page,'steps.0.result',wanted.steps[0].result);
    const draft=await captureState('corrected-draft');
    ok(model.inspect(task,draft.model).correct,position+' corrected original math');
