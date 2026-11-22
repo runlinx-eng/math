@@ -38,11 +38,11 @@ export class SpatialScene {
   constructor(host,space,callbacks={}) {
     this.host=host;this.space=space;this.network=space.layout==='network';this.networkVersion=space.networkVersion||48;this.defaultNetworkVersion=space.defaultNetworkVersion||GLOBAL_VERSION;this.networkView=this.network?(space.networkView||'map'):null;this.callbacks=callbacks;this.selected=null;this.hovered=null;this.previewKey=null;this.hoverThemeId=null;this.hoverMapKey=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.traceMode='direct';this.traceResult=null;this.edgeDisplay='outline';this.filter='all';this.gradeStageId='all';this.gradeStageIds=new Set();this.dirty=true;this.labels=[];this.relations=[];this.relationMode='off';this.taskWorkspaceActive=false;this.activeTargetKey=null;this.showAllNodes=this.network;this.explorationTrail=[];
     this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0xf5f4ef,1);
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));this.renderer.setClearColor(0x081520,0);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
     host.prepend(this.renderer.domElement);this.canvas=this.renderer.domElement;
     this.canvas.tabIndex=0;this.canvas.setAttribute('aria-label','三维数学空间。方向键平移，加减键缩放；也可以使用查找定位知识。');
-    this.scene=new THREE.Scene();this.scene.fog=new THREE.FogExp2(0xf5f4ef,.00016);
+    this.scene=new THREE.Scene();this.scene.fog=new THREE.FogExp2(0x081520,.00016);
     this.camera=space.globalInfo?new THREE.OrthographicCamera(-800,800,600,-600,1,20000):new THREE.PerspectiveCamera(40,1,1,20000);this.camera.fov=40;this.camera.aspect=1;
     this.camera.position.set(370,260,1600);
     this.controls=new SpatialOrbitControls(this.camera,this.canvas);this.controls.allowTopDrag=this.network;
@@ -57,7 +57,7 @@ export class SpatialScene {
     this.scene.add(new THREE.HemisphereLight(0xffffff,0x8e9c91,2));
     const sun=new THREE.DirectionalLight(0xfff7e9,2.8);sun.position.set(-350,600,650);this.scene.add(sun);
     const fill=new THREE.DirectionalLight(0xd8e8ef,.75);fill.position.set(400,-100,-350);this.scene.add(fill);
-    const grid=new THREE.GridHelper(6000,60,0xc4cec8,0xd2d8d2);grid.position.y=-400;grid.material.transparent=true;grid.material.opacity=.045;this.scene.add(grid);
+    const grid=new THREE.GridHelper(6000,60,0x35515a,0x263d47);grid.position.y=-400;grid.material.transparent=true;grid.material.opacity=.032;this.scene.add(grid);
     this.pickables=[];this.nodeList=[...space.nodes.values()];this.viewTransition=null;
     this.overviewStructure=this.relationshipMap?buildOverviewStructure(space):{links:[],landmarks:[],nodeRoles:new Map(),stats:{selected:0}};
     this.structureMode='origin';this.focusDirection='both';this.focusDepth='1';this.focusView=null;
@@ -68,8 +68,8 @@ export class SpatialScene {
     this.nodeMesh.userData.kind='nodes';this.scene.add(this.nodeMesh);this.pickables.push(this.nodeMesh);
     // Tier 3: a clear double-ring light. Tier 2: only a quiet thin ring.
     // Neither ring changes coordinates, name labels or pointer hit targets.
-    this.progressMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.14,6,32),new THREE.MeshBasicMaterial({color:0x58c49b,transparent:true,opacity:.98,depthTest:false,depthWrite:false}),this.nodeList.length);
-    this.evidenceMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.22,6,32),new THREE.MeshBasicMaterial({color:0x87b7a5,transparent:true,opacity:.43,depthTest:false,depthWrite:false}),this.nodeList.length);
+    this.progressMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.14,6,32),new THREE.MeshBasicMaterial({color:0x78dbc1,transparent:true,opacity:.98,depthTest:false,depthWrite:false}),this.nodeList.length);
+    this.evidenceMesh=new THREE.InstancedMesh(new THREE.TorusGeometry(1,.22,6,32),new THREE.MeshBasicMaterial({color:0x91b9b3,transparent:true,opacity:.5,depthTest:false,depthWrite:false}),this.nodeList.length);
     this.progressMesh.renderOrder=3;this.evidenceMesh.renderOrder=2;
     this.scene.add(this.progressMesh,this.evidenceMesh);
     if(this.network){
@@ -102,7 +102,7 @@ export class SpatialScene {
       const makeEdges=(edges,soft)=>{
         const visible=edges.filter(e=>this.edgeCanLocate(e)&&this.edgeIsDisplayed(e)),a=new Float32Array(visible.length*6);visible.forEach((e,i)=>{a.set(space.nodes.get(e.prerequisiteId).position,i*6);a.set(space.nodes.get(e.topicId).position,i*6+3);});
         const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(a,3));
-        const material=soft?new THREE.LineDashedMaterial({color:0x82958b,transparent:true,opacity:.045,dashSize:7,gapSize:6,depthWrite:false}):new THREE.LineBasicMaterial({color:0x60776a,transparent:true,opacity:.20,depthWrite:false});
+        const material=soft?new THREE.LineDashedMaterial({color:0x6d939f,transparent:true,opacity:.05,dashSize:7,gapSize:6,depthWrite:false}):new THREE.LineBasicMaterial({color:0x557f8e,transparent:true,opacity:.22,depthWrite:false});
         const mesh=new THREE.LineSegments(g,material);mesh.userData.allEdges=edges;mesh.userData.edges=visible;if(soft)mesh.computeLineDistances();this.scene.add(mesh);return mesh;
       };
       this.networkEdges=makeEdges(space.atlas.edges.filter(e=>e.strength==='hard'),false);
@@ -161,7 +161,7 @@ export class SpatialScene {
       const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(lines,3));this.globalAxis.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x708979,transparent:true,opacity:.38})));
       this.globalAxisPoints=[{text:'沿关键关系向上',position:[x,info.ceiling+45,z]},{text:'起始层',position:[x,info.floor-32,z]}];
     }
-    this.halo=new THREE.Mesh(new THREE.TorusGeometry(1,.075,8,64),new THREE.MeshBasicMaterial({color:0x234c45,transparent:true,opacity:.85,depthTest:false}));this.halo.visible=false;this.halo.renderOrder=4;this.scene.add(this.halo);
+    this.halo=new THREE.Mesh(new THREE.TorusGeometry(1,.075,8,64),new THREE.MeshBasicMaterial({color:0xd7b685,transparent:true,opacity:.93,depthTest:false}));this.halo.visible=false;this.halo.renderOrder=4;this.scene.add(this.halo);
     this.labelLayer=document.createElement('div');this.labelLayer.className='space-labels';host.append(this.labelLayer);
     this.structureLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
     this.structureLayer.classList.add('overview-structure-lines');this.structureLayer.setAttribute('aria-hidden','true');this.labelLayer.prepend(this.structureLayer);
@@ -350,7 +350,7 @@ export class SpatialScene {
         const from=V(a.position),to=V(b.position),control=from.clone().lerp(to,.5);
         control.z+=Math.min(70,from.distanceTo(to)*.18);
         const incoming=link.to===next,soft=link.edges[0]?.strength==='soft';
-        this.hoverVisualLinks.push({from,to,control,color:incoming?0x985b2f:0x286f7c,
+        this.hoverVisualLinks.push({from,to,control,color:incoming?0xc99264:0x62adba,
           soft,arrow:!soft,fromKey:link.from,toKey:link.to,lit:false,hover:true});
       }
     }
@@ -554,7 +554,7 @@ export class SpatialScene {
     this.dirty=true;
   }
   paintObjects(){
-    const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0xf5f4ef),structureActive=this.structuralOverview,
+    const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(0x203843),structureActive=this.structuralOverview,
       taskWorkspace=this.taskWorkspaceActive,
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     // Keep the real graph legible beside a task without stealing focus from selected or source-related knowledge.
@@ -655,7 +655,7 @@ export class SpatialScene {
     }
     if(this.relationshipMap&&this.selected&&!this.guideFocus&&!this.localRelationshipFocus&&!this.traceResult){const shown=new Set(links.map(l=>l.from+'>'+l.to));const completed=personalRelations(this.space.atlas,null,this.litConnections||[],null).filter(l=>l.lit&&!shown.has(l.from+'>'+l.to)&&this.canLocate(this.space.byKey.get(l.from))&&this.canLocate(this.space.byKey.get(l.to)));this.progressBackground=completed.map(l=>({from:l.from,to:l.to}));if(completed.length){const positions=new Float32Array(completed.length*6);completed.forEach((l,i)=>{positions.set(this.space.byKey.get(l.from).position,i*6);positions.set(this.space.byKey.get(l.to).position,i*6+3);});const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));this.edgesGroup.add(new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0xb48b36,transparent:true,opacity:.55,depthWrite:false})));}}
     for(const l of links){const a=this.space.byKey.get(l.from),b=this.space.byKey.get(l.to);if(!this.canLocate(a)||!this.canLocate(b))continue;const v=V(a.position),w=V(b.position);const c=v.clone().lerp(w,.5);c.z+=Math.min(70,v.distanceTo(w)*.18);
-      const curve=new THREE.QuadraticBezierCurve3(v,c,w),before=this.traceMode==='before'||this.traceMode==='direct'&&l.to===this.selected,color=l.lit?0xb48b36:this.guideFocus?(l.guideCurrent?0x286f7c:0x76988a):this.relationMode==='off'?0x9ca99c:this.selected?(before?0x985b2f:0x286f7c):0xb3bcb3;
+      const curve=new THREE.QuadraticBezierCurve3(v,c,w),before=this.traceMode==='before'||this.traceMode==='direct'&&l.to===this.selected,color=l.lit?0xd1ad74:this.guideFocus?(l.guideCurrent?0x62adba:0x70969d):this.relationMode==='off'?0x6f8d96:this.selected?(before?0xc99264:0x62adba):0x536a76;
       const traced=this.relationshipMap&&!!this.traceResult,hop=traced?Math.min(this.traceResult.distances.get(a.id)??0,this.traceResult.distances.get(b.id)??0):0;
       // v53 focused view: a source-linked screen-space line, never a zoom-inflated 3D tube.
       if(this.relationshipMap&&this.selected){
@@ -716,7 +716,7 @@ export class SpatialScene {
       }
     }
     if(this.guideFocus)for(const p of guideEndpoints.values())
-      paths.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="6" fill="none" stroke="#33816f" stroke-width="1.8" opacity=".82"/>`);
+      paths.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="6" fill="none" stroke="#d7b685" stroke-width="1.8" opacity=".82"/>`);
     layer.innerHTML=paths.join('');
   }
   updateLabels(){
