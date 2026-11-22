@@ -117,7 +117,7 @@ async function runShard(shard,positionIds,createDesktopContext){
  try{
   origin=await createOrigin(root);
   browser=await chromium.launch({headless:true});browserVersion=browser.version();
-  bctx=await createDesktopContext(browser,{reducedMotion:'reduce',serviceWorkers:'allow',acceptDownloads:true});
+  bctx=await newDesktopContext(browser,{reducedMotion:'reduce',serviceWorkers:'allow',acceptDownloads:true});
   page=await bctx.newPage();page.setDefaultTimeout(25000);
   page.on('pageerror',e=>errors.push(stage+': '+String(e)));
   bctx.on('request',req=>{if(/^https?:/.test(req.url())&&!req.url().startsWith(origin.base))
