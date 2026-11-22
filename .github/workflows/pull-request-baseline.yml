@@ -78,7 +78,9 @@ jobs:
         if: steps.issue341_scope.outputs.selected == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python3 scripts/issue341-prepare-archived-inputs.py
+        run: |
+          python3 scripts/issue341-prepare-archived-inputs.py
+          python3 scripts/issue341-prepare-followup-126-inputs.py
       - name: Verify shared routing and proposed audit with preserved original Checks
         if: steps.issue341_scope.outputs.selected == 'true'
         run: node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-isolated-integration.test.mjs tests/issue341-audit-fixture-integration.test.mjs tests/issue341-learning-audit-injection.test.mjs
@@ -325,6 +327,7 @@ jobs:
             tests/issue341-inactive-shared-feedback.test.mjs
             tests/issue341-formal-source-routing.test.mjs
             tests/issue341-followup-126-staged-routing.test.mjs
+            tests/issue341-followup-126-original-inputs.test.mjs
             tests/p9-sequence-evidence-adapter.test.mjs
             tests/p9-counterexample-evidence-adapter.test.mjs
             tests/p9-fraction-evidence-adapter.test.mjs

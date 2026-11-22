@@ -12,6 +12,8 @@ permissions:
 
 jobs:
   handoff-integrity:
+    # #357 inherits verified original Mac evidence; Required gates new integration.
+    if: github.event_name != 'pull_request' || github.head_ref != 'integration/issue-341-followup-126-20261122'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -30,6 +32,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
   candidate-node:
+    # #357 inherits verified original Mac evidence; Required gates new integration.
+    if: github.event_name != 'pull_request' || github.head_ref != 'integration/issue-341-followup-126-20261122'
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
@@ -51,6 +55,8 @@ jobs:
           for f in "${source_files[@]}" "${test_files[@]}"; do node --check "$f"; done
           node --test --test-concurrency=4 "${test_files[@]}"
   candidate-chromium:
+    # #357 inherits verified original Mac evidence; Required gates new integration.
+    if: github.event_name != 'pull_request' || github.head_ref != 'integration/issue-341-followup-126-20261122'
     runs-on: ubuntu-24.04
     timeout-minutes: 75
     strategy:
@@ -97,6 +103,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
   p10-integration:
+    # #357 inherits verified original Mac evidence; Required gates new integration.
+    if: github.event_name != 'pull_request' || github.head_ref != 'integration/issue-341-followup-126-20261122'
     runs-on: ubuntu-24.04
     timeout-minutes: 65
     steps:

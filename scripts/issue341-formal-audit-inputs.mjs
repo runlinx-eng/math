@@ -11,11 +11,13 @@ export function loadIssue341FormalAuditInputs({legacyExampleFor,legacyRecordFor}
  requireExact(typeof legacyExampleFor==='function'&&typeof legacyRecordFor==='function','missing legacy providers');
  const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url),'utf8'));
  const candidates=manifest.tasks.filter(row=>row.adapter?.startsWith('issue341-'));
- requireExact(manifest.schema===ISSUE341_FORMAL_MANIFEST.schema&&manifest.tasks.length===1178&&
-  candidates.length===365&&JSON.stringify(candidates)===JSON.stringify(ISSUE341_FORMAL_MANIFEST.tasks),
+ requireExact(manifest.schema===ISSUE341_FORMAL_MANIFEST.schema&&manifest.tasks.length===1304&&
+  candidates.length===491&&JSON.stringify(candidates)===JSON.stringify(ISSUE341_FORMAL_MANIFEST.tasks),
   'official manifest and frozen browser snapshot differ');
- const sourceRows=JSON.parse(readFileSync(new URL('../verification/issue341-inputs/archived-checks-365.json',import.meta.url),'utf8')).rows;
- requireExact(Array.isArray(sourceRows)&&sourceRows.length===365,'missing original 365 full Check records');
+ const oldRows=JSON.parse(readFileSync(new URL('../verification/issue341-inputs/archived-checks-365.json',import.meta.url),'utf8')).rows;
+ const followupRows=JSON.parse(readFileSync(new URL('../verification/issue341-inputs/archived-checks-126.json',import.meta.url),'utf8')).rows;
+ const sourceRows=[...oldRows,...followupRows];
+ requireExact(Array.isArray(sourceRows)&&sourceRows.length===491,'missing original 491 full Check records');
  const byKey=new Map(candidates.map(row=>[key(row.sessionId,row.index),row]));
  const records=new Map();
  for(const row of sourceRows){
@@ -30,9 +32,9 @@ export function loadIssue341FormalAuditInputs({legacyExampleFor,legacyRecordFor}
    row.record.attempts.length>0,'full original Check unavailable '+id);
   records.set(id,row);
  }
- requireExact(records.size===365,'incomplete exact original records');
+ requireExact(records.size===491,'incomplete exact original records');
  const route=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
- requireExact(route.approvedPositions===365&&route.approvedFamilies===113,'wrong formal routing scope');
+ requireExact(route.approvedPositions===491&&route.approvedFamilies===148,'wrong formal routing scope');
  const original=context=>records.get(key(context?.sessionId,context?.index));
  const adapters=[...EVIDENCE_ADAPTERS,...route.adapters.map(adapter=>Object.freeze({...adapter,
   replay:(task,model,context)=>{

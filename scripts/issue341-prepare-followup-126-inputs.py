@@ -53,13 +53,10 @@ def from_frozen_commit(path):
 
 
 def extract():
-    require(git('rev-parse', EVIDENCE_COMMIT).decode().strip() == EVIDENCE_COMMIT,
-            'original immutable evidence commit unavailable')
-    assert git('rev-parse', EVIDENCE_COMMIT + ':' + ZIP_PATH).decode().strip() == EVIDENCE_BLOB
     data = from_frozen_commit(ZIP_PATH)
-    require(git('hash-object', '--stdin') if False else
+    require(git('rev-parse', EVIDENCE_COMMIT).decode().strip() == EVIDENCE_COMMIT and
             git('rev-parse', EVIDENCE_COMMIT + ':' + ZIP_PATH).decode().strip() == EVIDENCE_BLOB,
-            'immutable original ZIP Git blob changed')
+            'original immutable evidence identity changed')
     require(len(data) <= 32 * 1024 * 1024 and data[:2] == b'PK', 'invalid ZIP bytes')
     manifest_bytes = from_frozen_commit(MANIFEST_PATH)
     manifest = json.loads(manifest_bytes)
