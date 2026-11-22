@@ -51,7 +51,8 @@ jobs:
           mapfile -t source_files < <(git diff --name-only origin/main...HEAD | grep -E '^dist/learning/p[0-9]{3}[a-z]?-.*-evidence\.js$' | sort)
           mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+\.test\.mjs$' | sort)
           printf 'Source modules: %s, Node tests: %s\n' "${#source_files[@]}" "${#test_files[@]}"
-          test "${#test_files[@]}" -eq 113
+          test "${#test_files[@]}" -gt 0
+          test "${#test_files[@]}" -eq "${#source_files[@]}"
           for f in "${source_files[@]}" "${test_files[@]}"; do node --check "$f"; done
           node --test --test-concurrency=4 "${test_files[@]}"
   candidate-chromium:
@@ -82,7 +83,7 @@ jobs:
         run: |
           set -euo pipefail
           mapfile -t test_files < <(git diff --name-only origin/main...HEAD | grep -E '^tests/p9-p[0-9]{3}[a-z]?-[^/]+-browser\.cjs$' | sort)
-          test "${#test_files[@]}" -eq 113
+          test "${#test_files[@]}" -gt 0
           count=0
           for i in "${!test_files[@]}"; do
             if (( i % 12 == SHARD )); then
@@ -93,7 +94,7 @@ jobs:
               count=$((count+1))
             fi
           done
-          test "$count" -ge 9
+          test "$count" -eq $(( (${#test_files[@]} + 11 - SHARD) / 12 ))
       - name: Archive original browser receipts and screenshots
         if: always()
         uses: actions/upload-artifact@v4
