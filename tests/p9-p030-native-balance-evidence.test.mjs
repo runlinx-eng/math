@@ -31,7 +31,7 @@ for(const src of sources)test('P030 '+src.position+' independent relation, snaps
   ['wrong left beads',m=>m.left++],['wrong right beads',m=>m.right++],
   ['wrong final prediction',m=>m.guess=m.guess==='level'?'left':'level'],
   ['no release',m=>m.released=false],
-  ['wrong release relation',m=>m.runs[0].guess='right'],
+  ['wrong final release relation',m=>m.runs.at(-1).guess=m.runs.at(-1).guess==='level'?'left':'level'],
   ['forged release record',m=>m.runs[0].extra=1],
   ['fake action history',m=>m.history=[]]
  ]){
