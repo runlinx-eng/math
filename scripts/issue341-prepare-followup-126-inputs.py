@@ -19,7 +19,6 @@ EVIDENCE_BLOB = '899dfd61c78c5c0610afd409ef8ace3a32453920'
 FREEZE_BASE = 'docs/math-parallel/issue-341-handoff-126/'
 ZIP_PATH = FREEZE_BASE + 'pr-357-mac-check-records-126.zip'
 MANIFEST_PATH = FREEZE_BASE + 'manifest.json'
-ORIGINAL_HEAD = 'e65e8d1eac7ae775ffad7945846c03603661a6d8'
 OUT = ROOT / 'verification/issue341-inputs'
 FIXTURE = OUT / 'archived-checks-126.json'
 RECEIPT = OUT / 'preparation-receipt-126.json'
@@ -80,9 +79,15 @@ def extract():
             folder = 'followup-' + packet + '/'
             result_path = folder + 'results.json'
             expected.add(result_path)
+            receipt = json.loads(from_frozen_commit(FREEZE_BASE + 'receipts/' + packet + '.json'))
+            require(receipt.get('commit') == family['commit'] and
+                    receipt.get('state') == 'local-development-tested',
+                    'frozen original receipt provenance differs: ' + packet)
             results_bytes = archive.read(result_path)
+            require(sha256(results_bytes) == receipt['artifacts']['results.json'],
+                    'original results SHA256 differs from frozen Mac receipt: ' + packet)
             results = json.loads(results_bytes)
-            require(results.get('testedCheckoutSha') == ORIGINAL_HEAD and
+            require(results.get('testedCheckoutSha') == family['commit'] and
                     results.get('originalControls') is True and
                     results.get('seededLessonPositionOnly') is False and
                     results.get('errors') == [], 'not an original successful Chromium result: ' + packet)
@@ -109,6 +114,8 @@ def extract():
                 member = folder + session_id + '-' + str(index) + '-correct-check-decoded.json'
                 expected.add(member)
                 member_bytes = archive.read(member)
+                require(sha256(member_bytes) == receipt['artifacts'][Path(member).name],
+                        'original Check SHA256 differs from frozen Mac receipt: ' + label)
                 state = json.loads(member_bytes)
                 require(state.get('schema') == 2, 'unexpected original storage schema ' + label)
                 lesson = state.get('lessons', {}).get(session_id)
@@ -132,7 +139,7 @@ def extract():
                                     'model': model, 'record': record,
                                     'provenance': {
                                         'commit': EVIDENCE_COMMIT, 'blob': EVIDENCE_BLOB,
-                                        'originalHead': ORIGINAL_HEAD, 'member': member,
+                                        'originalHead': family['commit'], 'member': member,
                                         'memberSha256': sha256(member_bytes),
                                         'modelRecordSha256': digest,
                                         'transportOnly': True, 'freshMathOrBrowserReplay': False}}
@@ -142,7 +149,7 @@ def extract():
     ordered = [originals[pos['原生题位']] for family in records for pos in family['positions']]
     fixture = {'schema': 'issue-341-archived-original-check-fixtures/1',
                'sourceCommit': EVIDENCE_COMMIT, 'sourceBlob': EVIDENCE_BLOB,
-               'originalHead': ORIGINAL_HEAD,
+               'originalPerFamilyHead': True,
                'requiredScope': {'families': 35, 'positions': 126},
                'method': 'Original immutable Mac Check snapshots, no simulation or rerun',
                'rows': ordered}
