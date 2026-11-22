@@ -1,12 +1,14 @@
-<!-- issue341-main-merge-20261122:begin -->
-## 2026-11-22 当前主线合并：365道已入 main；新 main Required 运行中，Fallback 成功
+<!-- issue341-final-main-a1178-20261122:begin -->
+## 2026-11-22 最新最终交接：365 道正式 main 验收完成，未部署
 
-已获用户单独授权，[#354](https://github.com/runlinx-eng/math/pull/354) 以 squash 合入 main，main HEAD [`8214f570fc1e408ee1fb3308e73907bf659874e4`](https://github.com/runlinx-eng/math/commit/8214f570fc1e408ee1fb3308e73907bf659874e4)。main 正式 manifest 实测 **1178/1996**，准确增加本批 113 家族365道；新B126完全不参与。原 #351 隔离PR已标记 superseded 关闭（不是再次合并）。
+[PR #354](https://github.com/runlinx-eng/math/pull/354) 已按用户授权将本批 **113 家族/365 道**正式合入 main，原始 main 合并commit [`8214f570`](https://github.com/runlinx-eng/math/commit/8214f570fc1e408ee1fb3308e73907bf659874e4)。首轮新main Required发现实际CI数据恢复入口缺失（不是数学失败）；[PR #355](https://github.com/runlinx-eng/math/pull/355) 仅补上“存在 #341 正式清单时恢复已验证的原始完整 Check”条件，经过独立PR CI通过后已合入。**当前 main 最终 HEAD [`a45eaf17b824a7e5109d0a91a126ccd9934b446e`](https://github.com/runlinx-eng/math/commit/a45eaf17b824a7e5109d0a91a126ccd9934b446e)**。
 
-新 main [P9 Fallback #44963802810](https://github.com/runlinx-eng/math/actions/runs/44963802810) **success**；[Required #44963802916](https://github.com/runlinx-eng/math/actions/runs/44963802916) 此刻仍 in_progress，成功前不宣布新main门禁全部通过。此前 PR #354 HEAD 六项相关 CI 全success继续保留为原工程集成证据。
+该准确main HEAD对应 **[Required #44964430830](https://github.com/runlinx-eng/math/actions/runs/44964430830) completed/success** 和 **[P9 Fallback #44964430748](https://github.com/runlinx-eng/math/actions/runs/44964430748) completed/success**，包含原件恢复/指纹校验及现成 A–E 和来源核对；原PR HEAD的P8/Overview/P9六项亦已成功，未替代合并后检查。main官方manifest和现有A–E为 **A1178/1996 = 原813 + 本批365**，新增题位113家族，逐题冻结身份365/365一致。B线新增126道始终排后不触碰，原B308数学/负例/Check/Artifact复用，没有额外298道Python普查或重做数学。
 
-**生产未部署，VPS仅手动workflow_dispatch+confirm_deploy**。已在原365行JSON/CSV更新main合并状态与待决Required，保留既有原数学/Check/Artifact引用，不增加老B308重测与额外Python普查；下一批B126继续排后。等Required终态后只需在本台账完成状态更新，不再新增审计项目。
-<!-- issue341-main-merge-20261122:end -->
+**状态已落到本目录365行 JSON/CSV：** `formalStrictA=GRANTED_ON_MAIN`、`publicNewFormalA=1`、main合并及新main Required/Fallback=success。独立人工审批已由用户取消且#352关闭，历史pending语句仅属当时进度。#351已被#354完整取代并关闭，不重复合并。
+
+**尚未部署**：VPS工作流仅能手动workflow_dispatch并明确confirm_deploy，用户本次没有授予部署授权；`publicProductionActive=false`。不擅自启动部署，不再追加审计；后续单独处理B线排队的126道。
+<!-- issue341-final-main-a1178-20261122:end -->
 
 <!-- issue341-ci-final-20261122:begin -->
 ## 最新完成状态（2026-11-22）：本批365道正式集成分支CI已通过
