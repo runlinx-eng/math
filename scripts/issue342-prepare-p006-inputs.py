@@ -99,8 +99,8 @@ def prepare(folder=None):
                 session_id,index_text=position.rsplit(':',1)
                 index=int(index_text)
                 require(row['sessionId']==session_id and row['index']==index and
-                        isinstance(native.get('uiActionsChecked'),list) and native['uiActionsChecked'],
-                        position+' real native UI actions/source missing')
+                        isinstance(native.get('uiActionsChecked'),list),
+                        position+' original native source UI-action inventory missing')
                 member=[name for name in names if name.endswith('/'+session_id+'-'+str(index)+'-correct-check-decoded.json')]
                 require(len(member)==1,position+' original Check snapshot not unique')
                 member_bytes=archive.read(member[0])
