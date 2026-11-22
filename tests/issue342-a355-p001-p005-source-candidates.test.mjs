@@ -26,7 +26,7 @@ test('A355 P001-P005 has 66 exact formal sources without colliding with the prev
  const positions=adapters.flatMap(x=>x.sources.map(source=>({source,family:x})));
  assert.equal(positions.length,66);
  const added=official.tasks.filter(x=>/^issue341-A-P00[1-5]/.test(x.adapter??''));
- assert.equal(official.tasks.length,1652);
+ assert.equal(official.tasks.length,1663);
  assert.equal(added.length,66);
  const previous=official.tasks.filter(x=>!/^issue341-A-P00[1-5]/.test(x.adapter??''));
  const old=new Set(previous.map(x=>key(x.sessionId,x.index)));
