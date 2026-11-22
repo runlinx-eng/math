@@ -84,6 +84,13 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   const focusBounds=await page.locator('#focus-card').boundingBox();
   check(!!focusBounds&&focusBounds.width>=1400&&focusBounds.height>=880,'source node opens a true full-screen knowledge page');
   await page.screenshot({path:path.join(out,'04-constellation-focus.png')});
+  // Wait for map motion to settle before capturing the user's exact camera pose.
+  await page.waitForFunction(()=>!mathSpace.motion().tween&&!mathSpace.motion().transition);
+  const cameraBeforeLesson=await snap();
+  const sameCameraPose=(a,b)=>a.position.length===3&&b.position.length===3&&a.target.length===3&&b.target.length===3&&
+    a.position.every((v,i)=>Math.abs(v-b.position[i])<1e-4)&&
+    a.target.every((v,i)=>Math.abs(v-b.target[i])<1e-4)&&
+    Math.abs(a.cameraZoom-b.cameraZoom)<1e-4;
   // Continue the actual user path: a real lesson opens as a centered, full-screen
   // reading workspace and can return to the exact same mathematical source node.
   await page.locator('#focus-card [data-action="open"]').click();
@@ -91,11 +98,14 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   const lessonBounds=await page.locator('#journey-surface').boundingBox();
   check(!!lessonBounds&&lessonBounds.width>=1400&&lessonBounds.height>=880,'real lesson opens in a full-screen learning theater');
   check(await page.locator('#journey-frame').isVisible(),'original runnable mathematical task iframe is preserved');
+  check(sameCameraPose(await snap(),cameraBeforeLesson),'entering the lesson does not move the 3D camera or target');
   await page.screenshot({path:path.join(out,'05-constellation-lesson.png')});
   await page.locator('#journey-surface [data-action="close-journey"]').click();
   await page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen===false);
-  check((await snap()).selected==='node:mt_WcfaSfVT33','return from lesson restores the original selected source concept');
-  check(JSON.stringify((await snap()).positions)===initial,'learning and return preserve exact source coordinates');
+  const afterLesson=await snap();
+  check(afterLesson.selected==='node:mt_WcfaSfVT33','return from lesson restores the original selected source concept');
+  check(sameCameraPose(afterLesson,cameraBeforeLesson),'return from lesson restores camera position, zoom and orbit target');
+  check(JSON.stringify(afterLesson.positions)===initial,'learning and return preserve exact source coordinates');
   await page.locator('#focus-card [data-action="deselect"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null&&mathSpace.snapshot().visibleNodes.length===537);
   check(JSON.stringify((await snap()).positions)===initial,'return restores exactly the same 3D coordinate data');
