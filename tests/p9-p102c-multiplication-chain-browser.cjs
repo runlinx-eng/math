@@ -148,7 +148,21 @@ const correctSteps = task => b13.solveSteps(task).filter(step => step.field === 
     }
     await page.goto(origin.base + 'learn.html#' + last.row.id);
     await page.waitForFunction(i => window.mathLesson?.snapshot()?.index === i, last.row.index);
-    await (await openControl(page, '[data-do="p3-retry"]')).click();
+    // The formal feedback adapter may finish a lazy load and re-render this
+    // optional details panel after we expand it. Re-open the actual UI control
+    // if it was detached, but never bypass visibility or a failed retry.
+    const retry=page.locator('[data-do="p3-retry"]');
+    let retried=false;
+    for(let attempt=0;attempt<4&&!retried;attempt++){
+      if(!(await retry.isVisible())){
+        const panel=page.locator('details.p3-followups');
+        if(!(await panel.evaluate(el=>el.open)))
+          await panel.locator(':scope > summary').click();
+      }
+      try{await retry.click({timeout:2500});retried=true;}
+      catch(error){if(attempt===3)throw error;}
+    }
+    assert.equal(retried,true,'retry was clicked through the real learning UI');
     ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
     ok(errors.length === 0, 'no errors');
     console.log('P102C_CHROMIUM_OK ' + JSON.stringify({testedCheckoutSha: sha, chromium: browserVersion, checks: checks.length, captures: observations.length}));

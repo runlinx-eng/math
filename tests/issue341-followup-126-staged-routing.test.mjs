@@ -4,6 +4,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {sessionTaskFor} from '../dist/learning/bridges.js';
+import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
+await ensureB39Ready();
 import {ISSUE341_FOLLOWUP_126_ADAPTERS} from '../dist/learning/issue341-followup-126-candidates.js';
 import {createIssue341Followup126StagedRouting} from '../dist/learning/issue341-followup-126-staged-routing.js';
 const official=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url),'utf8'));
