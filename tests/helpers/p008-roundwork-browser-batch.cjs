@@ -129,7 +129,10 @@ async function runShard(shard,positionIds){
    const original=model.initial(task);
    ok(model.inspect(task,wanted).correct,position+' original native correct example');
    ok(JSON.stringify(wanted)!==JSON.stringify(original),position+' expected original controls');
-   const nav=await page.goto(origin.base+'learn.html#'+sessionId);
+   const url=origin.base+'learn.html#'+sessionId;
+   // Same-session sibling positions do not trigger a network navigation.
+   // Reload the existing URL to observe an actual service-worker response.
+   const nav=page.url()===url?await page.reload():await page.goto(url);
    ok(nav?.fromServiceWorker()===true,position+' original lesson offline');
    await page.waitForFunction(id=>window.mathLesson?.snapshot()?.id===id,sessionId);
    const start=page.locator('[data-do="start"]');if(await start.isVisible())await start.click();
