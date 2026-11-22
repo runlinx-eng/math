@@ -12,6 +12,7 @@ import {ISSUE342_A_P001_P005_ADAPTERS} from '../dist/learning/issue342-a355-next
 import {ISSUE342_A_FIRST33_ADAPTERS} from '../dist/learning/issue342-a258-first33-candidates.js';
 import {ISSUE342_A_NEXT11_ADAPTERS} from '../dist/learning/issue342-a258-next11-candidates.js';
 import {ISSUE343_B39_FIRST4_ADAPTERS} from '../dist/learning/issue343-a214-b39-candidates.js';
+import {ISSUE343_NEXT95_ADAPTERS} from '../dist/learning/issue343-a214-next95-candidates.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 await ensureB39Ready();
 import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
@@ -26,9 +27,9 @@ const entry=s=>({sessionId:s.sessionId,index:s.index,type:s.type,nodeId:s.nodeId
 const only=(...tasks)=>({schema:official.schema,tasks});
 const context=s=>({sessionId:s.sessionId,index:s.index});
 
-test('all 854 frozen candidate positions exactly match official 1667 manifest and browser release snapshot',()=>{
- assert.equal(official.tasks.length,1667);
- assert.equal(ISSUE341_FORMAL_MANIFEST.tasks.length,854);
+test('all 949 frozen candidate positions exactly match official 1762 manifest and browser release snapshot',()=>{
+ assert.equal(official.tasks.length,1762);
+ assert.equal(ISSUE341_FORMAL_MANIFEST.tasks.length,949);
  assert.equal(ISSUE341_NORMALIZED_ADAPTERS.length,113);
  assert.equal(ISSUE342_A_P006_ADAPTERS.length,19);
  assert.equal(ISSUE341_FOLLOWUP_218_ADAPTERS.length,52);
@@ -37,13 +38,15 @@ test('all 854 frozen candidate positions exactly match official 1667 manifest an
  assert.equal(ISSUE342_A_FIRST33_ADAPTERS.reduce((n,f)=>n+f.sources.length,0),33);
  assert.equal(ISSUE342_A_NEXT11_ADAPTERS.length,5);
  assert.equal(ISSUE343_B39_FIRST4_ADAPTERS.length,4);
+ assert.equal(ISSUE343_NEXT95_ADAPTERS.length,21);
+ assert.equal(ISSUE343_NEXT95_ADAPTERS.reduce((n,f)=>n+f.sources.length,0),95);
  assert.equal(ISSUE342_A_NEXT11_ADAPTERS.reduce((n,f)=>n+f.sources.length,0),11);
- assert.equal(new Set(official.tasks.map(r=>JSON.stringify([r.sessionId,r.index]))).size,1667);
+ assert.equal(new Set(official.tasks.map(r=>JSON.stringify([r.sessionId,r.index]))).size,1762);
  const officialRows=official.tasks.filter(r=>r.adapter?.startsWith('issue341-'));
- assert.equal(officialRows.length,854);
+ assert.equal(officialRows.length,949);
  assert.deepEqual(officialRows,ISSUE341_FORMAL_MANIFEST.tasks);
- const frozen=[...ISSUE341_NORMALIZED_ADAPTERS,...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS,...ISSUE342_A_P006_ADAPTERS,...ISSUE342_A_P001_P005_ADAPTERS,...ISSUE342_A_FIRST33_ADAPTERS,...ISSUE342_A_NEXT11_ADAPTERS,...ISSUE343_B39_FIRST4_ADAPTERS].flatMap(f=>f.sources.map(s=>({family:f.id,source:s})));
- assert.equal(frozen.length,854);
+ const frozen=[...ISSUE341_NORMALIZED_ADAPTERS,...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS,...ISSUE342_A_P006_ADAPTERS,...ISSUE342_A_P001_P005_ADAPTERS,...ISSUE342_A_FIRST33_ADAPTERS,...ISSUE342_A_NEXT11_ADAPTERS,...ISSUE343_B39_FIRST4_ADAPTERS,...ISSUE343_NEXT95_ADAPTERS].flatMap(f=>f.sources.map(s=>({family:f.id,source:s})));
+ assert.equal(frozen.length,949);
  const byPosition=new Map(officialRows.map(r=>[JSON.stringify([r.sessionId,r.index]),r]));
  for(const {family,source} of frozen){
   const row=byPosition.get(JSON.stringify([source.sessionId,source.index]));
@@ -68,10 +71,10 @@ test('all 854 frozen candidate positions exactly match official 1667 manifest an
 
 test('formal runtime supports exact all839 frozen sources',()=>{
  const route=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
- assert.equal(route.approvedPositions,854);
- assert.equal(route.approvedFamilies,263);
- assert.equal(route.adapters.length,263);
- assert.equal(route.adapters.reduce((n,a)=>n+a.sources.length,0),854);
+ assert.equal(route.approvedPositions,949);
+ assert.equal(route.approvedFamilies,284);
+ assert.equal(route.adapters.length,284);
+ assert.equal(route.adapters.reduce((n,a)=>n+a.sources.length,0),949);
  for(const source of family.sources){
   const task=sessionTaskFor(source.sessionId,source.index);
   const selected=route.registry.resolve(task,context(source));
