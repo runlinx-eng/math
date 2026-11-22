@@ -18,7 +18,22 @@ async original=>{
    for(let i=0;i<tasks.length;i++){
     current=id+':'+i;const{t,m}=tasks[i];check((await snap()).index===i,current+' opens');
     if(i===0){await page.locator('[data-do="check"]').click();check(!(await snap()).summary.cases[i].complete,current+' empty work cannot complete');}
-    if(t.type==='x-counttrail'){for(let j=0;j<t.n;j++)await click('count-tap',`[data-index="${j}"]`);await field('total',t.n);if(t.rearrange){await field('prediction',t.n);await click('count-move');if(t.recount)for(let j=t.n-1;j>=0;j--)await click('count-tap',`[data-index="${j}"]`);}}
+     if(t.type==='x-counttrail'){
+      if(t.error){
+       check(await page.locator('[data-xfield="badStep"]').count()===0,current+' identifies error from recorded steps');
+       check(await page.locator('[data-xfield="total"]').count()===0,current+' has no redundant total field');
+       const repeat=t.error.findIndex((x,i)=>t.error.indexOf(x)!==i);
+       await click('count-error-step',`[data-index="${repeat}"]`);
+       check(await page.locator('[data-x="count-error-step"][aria-pressed="true"]').count()===1,current+' mistake selected');
+       check(await page.locator('[data-do="check"]').isDisabled(),current+' needs real bead recount before check');
+      }
+      for(let j=0;j<t.n;j++)await click('count-tap',`[data-index="${j}"]`);
+      if(t.error){
+       check(await page.locator('.b6-beads .b6-dot.selected').count()===t.n,current+' beads visibly counted');
+       check((await page.locator('.b6-beads + .quiet').innerText()).includes(`已数 ${t.n} 颗`),current+' count derived from taps');
+      }else await field('total',t.n);
+      if(t.rearrange){await field('prediction',t.n);await click('count-move');if(t.recount)for(let j=t.n-1;j>=0;j--)await click('count-tap',`[data-index="${j}"]`);}
+     }
     if(t.type==='x-paircounts')for(let j=0;j<Math.min(t.a,t.b);j++){await click('pair-a',`[data-index="${j}"]`);await click('pair-b',`[data-index="${j}"]`);}
     if(t.type==='x-onechange'){await field('guess',t.n+t.delta);await click('one-change');}
     if(t.type==='x-numberfaces'){for(let j=0;j<t.n;j++)await click('face-take',`[data-index="${j}"]`);if(!t.give)for(let j=0;j<t.n;j++)await click('face-dot',`[data-index="${j}"]`);}
@@ -32,6 +47,7 @@ async original=>{
     if(t.type==='x-teenbuild'){for(let j=0;j<10;j++)await click('teen-pick',`[data-index="${j}"]`);await click('teen-wrap');if(t.unpack){await click('teen-unpack');for(let j=0;j<10;j++)await click('teen-pick',`[data-index="${j}"]`);await click('teen-wrap');}}
     if(t.type==='x-numberwrite'){if(t.mode==='audio'){await page.locator('[data-b6="hear"]').click();await page.waitForFunction(({id,i})=>{const s=JSON.parse(localStorage.getItem('math-explorer-v2'));return(s.lessons[id]||s.daily.bridges[id]).models[i].heard>0;},{id,i});}for(const k of['hundreds','tens','ones'])for(let j=0;j<m[k];j++)await click('write-add',`[data-unit="${k}"][data-delta="1"]`);}
     for(const[k,v]of Object.entries(m))if(v!==null&&typeof v!=='object'&&typeof v!=='boolean')await field(k,v);
+     if(t.type==='x-counttrail'&&t.error)check(await page.locator('[data-do="check"]').isEnabled(),current+' recount ready for check');
     await page.locator('[data-do="check"]').click();check((await snap()).summary.cases[i].complete,current+' manipulation completes');
     check(await page.locator('#storage-warning').isHidden(),current+' records persist');
     if(['bundles:0','partswithin:2','powersteps:6','teenbuild:1','write100:0'].includes(current))await page.screenshot({path:root+current.replace(':','-')+'.png',fullPage:true});
