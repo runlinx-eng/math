@@ -82,6 +82,7 @@ jobs:
           python3 scripts/issue341-prepare-archived-inputs.py
           python3 scripts/issue341-prepare-followup-126-inputs.py
           python3 scripts/issue342-prepare-p006-inputs.py
+          python3 scripts/issue342-prepare-p001-p005-inputs.py
       - name: Verify shared routing and proposed audit with preserved original Checks
         if: steps.issue341_scope.outputs.selected == 'true'
         run: node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-isolated-integration.test.mjs tests/issue341-audit-fixture-integration.test.mjs tests/issue341-learning-audit-injection.test.mjs
