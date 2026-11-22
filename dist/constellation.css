@@ -1,0 +1,121 @@
+/* Original Constellation interface for Math Tree.
+   Built independently; no paid template code or third-party star textures. */
+html:has(body.constellation){background:#080b13;color-scheme:dark}
+body.constellation{--ink:#f0efea;--muted:#a8b3c1;--line:#324356;--paper:#141d2c;--shadow:0 28px 90px #0009;background:#080b13;color:#f0efea;color-scheme:dark;font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+body.constellation #space-app{inset:0!important;right:0!important;background:transparent;overflow:hidden}
+body.constellation #constellation-atmosphere{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
+body.constellation #space-canvas{inset:0!important;right:0!important;position:fixed!important;background:transparent!important;z-index:1}
+body.constellation #space-canvas canvas{background:transparent!important}
+body.constellation #space-canvas .space-labels{z-index:2}
+body.constellation .topbar{top:25px;left:4.2vw;right:4.2vw;z-index:96;gap:30px;align-items:center}
+body.constellation .brand{gap:13px}
+body.constellation .brand-mark{height:34px;width:34px;font-size:24px;line-height:1;background:none;border:1px solid #cbb48a66;color:#d8ba84;border-radius:50%;text-shadow:0 0 16px #c7a36d77}
+body.constellation .brand strong{font-size:19px;line-height:1.2;font-weight:520;letter-spacing:.16em;color:#f5f0e5}
+body.constellation .brand small{font-size:9px;letter-spacing:.19em;color:#a4a8af;margin-top:5px}
+body.constellation .primary-nav{display:flex;gap:35px;background:transparent;border:0;box-shadow:none;backdrop-filter:none}
+body.constellation .primary-nav button{padding:10px 2px 12px;color:#9daab8;font-size:12px;letter-spacing:.16em;background:transparent;border-bottom:1px solid transparent;border-radius:0}
+body.constellation .primary-nav button:hover{color:#faf4df}
+body.constellation .primary-nav button[aria-pressed=true]{border-bottom-color:#d9b87d;color:#f0ddbb;background:transparent}
+body.constellation .top-tools{background:transparent;backdrop-filter:none;border:0;box-shadow:none;gap:8px}
+body.constellation .top-tools button{padding:10px 12px;background:#121a29ae;color:#c3cbd0;border:1px solid #54647945;border-radius:7px;font-size:11px}
+body.constellation .top-tools button:hover{background:#1b2b3e;color:#f4dfba}
+body.constellation .top-tools .search-button{min-width:112px;text-align:left}
+body.constellation .top-tools .keycap{color:#8f9fab;border-color:#44576c}
+body.constellation .constellation-intro{position:fixed;z-index:7;left:clamp(26px,8vw,135px);bottom:clamp(150px,20vh,260px);width:min(510px,60vw);pointer-events:none;transition:opacity .35s}
+body.constellation .constellation-eyebrow{font-size:10px;font-weight:600;letter-spacing:.26em;color:#c9ae7f;margin:0 0 28px}
+body.constellation .constellation-intro h1{font-size:clamp(37px,4.1vw,70px);font-weight:390;line-height:1.18;letter-spacing:-.045em;color:#f8f6ef;margin:0 0 19px}
+body.constellation .constellation-intro h1 em{font-style:normal;color:#dfc49a;font-weight:350}
+body.constellation .constellation-lead{font-size:13px;line-height:1.9;color:#a6b1bd;margin:0 0 35px;letter-spacing:.03em}
+body.constellation .constellation-gesture{font-size:11px;letter-spacing:.12em;color:#bbc7cd;display:flex;align-items:center;gap:10px}
+body.constellation .constellation-gesture span{font-size:25px;font-weight:200;color:#d6b57e}
+body.constellation:is(.has-context-card,.has-journey,.has-task-surface,.has-explore-selection) .constellation-intro{opacity:0;visibility:hidden}
+body.constellation .space-label.theme{padding:8px 4px;border:0;background:transparent;box-shadow:none;color:#e4dfd3;font-size:19px;font-weight:440;letter-spacing:.15em;text-shadow:0 2px 16px #050712,0 0 24px #b9a57c66}
+body.constellation .space-label.theme small{color:#adb5bc;letter-spacing:.12em;text-shadow:0 2px 11px #050712}
+body.constellation .space-label.pack{background:#0e1623c9;color:#bac8ce;border:1px solid #647a8766;border-radius:15px;font-size:11px;letter-spacing:.06em;box-shadow:0 7px 32px #0008}
+body.constellation .space-label.node{background:#0c1422c9;color:#dce6eb;border:1px solid #596b7b70;border-radius:12px;font-size:11px;box-shadow:0 9px 28px #0007;text-shadow:none;line-height:1.4}
+body.constellation .space-label.node::before{border-color:#cca975;width:5px;height:5px}
+body.constellation .space-label.node:hover{background:#182b3b;color:#fff4de;border-color:#d6b983;box-shadow:0 4px 23px #dcb57835}
+body.constellation[data-world="network"][data-network-version="53"][data-map-focus="node"] .space-label.node{color:#d7e2e8;text-shadow:0 1px 5px #05070a;background:#0b1522e0}
+body.constellation[data-world="network"] .space-label.node.selected,
+body.constellation[data-world="network"][data-network-version="53"] .space-label.node.selected:not(.active-target):not(.preview-target){color:#ffefcd;background:#182233!important;border:1px solid #d5b276!important;box-shadow:0 0 0 4px #b88c4833,0 10px 25px #000b}
+body.constellation[data-world="network"] .space-label.node.active-target,
+body.constellation[data-world="network"].has-journey .space-label.node.selected{color:#fff0cb!important;background:#25323d!important;border:2px solid #e1bd80!important;box-shadow:0 0 22px #caa86e66!important}
+body.constellation[data-world="network"] .space-label.node.related{background:#142534;border:1px solid #6c9dab;color:#e2eced}
+body.constellation[data-world="network"] .space-label.node.hovered{background:#182d3d;color:#fff5e2;border-color:#d0b17e}
+body.constellation .place-indicator{top:auto;bottom:92px;left:clamp(24px,4.2vw,72px);color:#8d9cab;letter-spacing:.16em;font-size:10px}
+body.constellation .place-indicator b{color:#d4d5d2;font-weight:450}
+body.constellation .tool-rail{top:auto;left:auto;bottom:32px;right:clamp(20px,4.2vw,70px);display:flex;align-items:center;gap:2px;background:#0c1624b8;border:1px solid #61708052;border-radius:9px;padding:4px;box-shadow:0 15px 42px #0008;backdrop-filter:blur(16px)}
+body.constellation .tool-rail button{height:32px;width:auto;min-width:31px;padding:0 7px;font-size:10px;color:#aebcc4}
+body.constellation .tool-rail button:hover,body.constellation .tool-rail button[aria-pressed=true]{background:#233449;color:#f1d8a9}
+body.constellation .tool-rail .tool-divider{height:18px;width:1px;margin:0 3px;background:#52607177}
+body.constellation .tool-rail button[data-action="zoom"]{font-size:16px}
+body.constellation .bottom-bar{left:clamp(24px,4.2vw,72px);right:clamp(20px,4.2vw,70px);bottom:32px;z-index:55}
+body.constellation .overall-progress{color:#9da9b6;background:#0b1422bb;border:1px solid #52667a51;border-radius:5px;padding:8px 13px;font-size:10px}
+body.constellation .overall-progress b{color:#dfc6a2}
+body.constellation .overall-progress progress{accent-color:#b89b75}
+body.constellation .save-status{color:#a5b1bd}
+body.constellation .save-status button{color:#9eadba}
+body.constellation .save-status button:hover{color:#f0d6a8}
+body.constellation .lens-indicator{display:none}
+body.constellation #network-guide{position:fixed;top:118px;left:clamp(20px,4.2vw,70px);right:auto;width:190px!important;border:1px solid #5d71804d;border-radius:9px;background:#0c1523cd;box-shadow:0 18px 40px #0007;max-height:55dvh;overflow:hidden;padding:0 12px!important;backdrop-filter:blur(15px);z-index:40}
+body.constellation #network-guide:not(.constellation-open)>:not(.observation-heading){display:none!important}
+body.constellation #network-guide.constellation-open{width:min(295px,calc(100vw - 40px))!important;overflow-y:auto;padding-bottom:14px!important}
+body.constellation #network-guide .observation-heading{display:flex;align-items:center;gap:7px;min-height:46px;justify-content:space-between}
+body.constellation #network-guide .observation-heading strong{font-size:11px;color:#c8d4d8;white-space:nowrap}
+body.constellation #network-guide .observation-heading>span{display:none}
+body.constellation #network-guide #constellation-tools-toggle{display:inline-flex!important;align-items:center;justify-content:center;background:transparent;padding:6px 0;color:#dec49b;border:0;font-size:10px;white-space:nowrap}
+body.constellation #network-guide .observation-heading [data-action="toggle-observation"]{display:none!important}
+body.constellation #network-guide button:not(#constellation-tools-toggle){background:#162739;color:#d1d9dd;border:1px solid #475a68;border-radius:6px}
+body.constellation #network-guide button[aria-pressed="true"]{border-color:#bc9d70;color:#f3deba;background:#2a3440}
+body.constellation #network-guide p,body.constellation #network-guide small{color:#a6b7c3}
+body.constellation #network-guide strong{color:#ece0cb}
+body.constellation .overview-structure-controls{background:#0b1521df;border:1px solid #53657a66;border-radius:8px}
+body.constellation .overview-structure-controls button{background:#1b2737;color:#c3cdd2}
+body.constellation .overview-structure-controls button[aria-pressed=true]{background:#4b4240;color:#f0d5a9}
+body.constellation .popover,body.constellation .help-popover,body.constellation .menu-popover{color:#e9e9e5;background:#0f1929f3;border:1px solid #516174;box-shadow:0 25px 80px #000b}
+body.constellation .popover input{background:#162335;border-color:#516376;color:#f3f4ef}
+body.constellation .popover p,body.constellation .popover small{color:#a8b6c6}
+body.constellation .popover button{color:#d0dce0}
+body.constellation .popover button:hover{background:#233146}
+body.constellation .search-result:hover{background:#202d40}
+body.constellation .search-result small{color:#94a3af}
+body.constellation .loading{background:#090c14;color:#d8c9aa}
+body.constellation #focus-card{position:fixed!important;inset:0!important;left:0!important;right:0!important;top:0!important;bottom:0!important;width:100vw!important;max-width:none!important;max-height:100dvh!important;min-height:100dvh;background:radial-gradient(ellipse at 86% 30%,#28344a,#0b101c 58%,#070b13 100%)!important;border:0!important;border-radius:0!important;color:#eff0e9!important;padding:clamp(110px,13vh,170px) max(7vw,calc((100vw - 950px)/2)) 90px!important;overflow:auto!important;overscroll-behavior:contain;z-index:100!important;box-shadow:none!important;animation:constellation-reveal .42s ease-out}
+body.constellation #focus-card .focus-sticky{position:static!important;background:transparent!important;border:0!important;padding:0 0 25px!important}
+body.constellation #focus-card .focus-heading{display:flex;align-items:center;gap:18px;border-bottom:1px solid #65718466;padding:0 0 18px}
+body.constellation #focus-card .overline{font-size:11px;color:#c7ac80;letter-spacing:.22em}
+body.constellation #focus-card h2,body.constellation[data-network-version="53"] #focus-card[data-kind="node"] h2{position:static;background:transparent;font-size:clamp(38px,6vw,80px)!important;line-height:1.2;font-weight:360;letter-spacing:-.03em;color:#f9f3e9!important;margin:30px 0!important}
+body.constellation #focus-card p,body.constellation #focus-card .quiet{color:#aebac8!important;line-height:1.85}
+body.constellation #focus-card .network-concept{color:#d1d9d8!important;font-size:16px;line-height:1.9;max-width:750px}
+body.constellation #focus-card .focus-actions{display:flex;gap:12px;margin:25px 0 42px}
+body.constellation #focus-card button:not(.primary-button){background:#1a2739;color:#d3dce1;border:1px solid #64768b70;border-radius:7px}
+body.constellation #focus-card button:hover{border-color:#d4b585}
+body.constellation #focus-card .primary-button{background:#e9c68e!important;color:#101925!important;border:1px solid #e9c68e!important;padding:13px 24px;border-radius:7px;font-weight:600;font-size:14px}
+body.constellation #focus-card .focus-section-nav{background:transparent;position:static;border-bottom:1px solid #51627466;padding:8px 0}
+body.constellation #focus-card .focus-section-nav button{padding:10px 15px}
+body.constellation #focus-card .network-relations h3,body.constellation #focus-card .focus-context-section h3{font-size:12px;font-weight:650;letter-spacing:.13em;color:#d9ba8b}
+body.constellation #focus-card .network-relation,body.constellation #focus-card .relation-button,body.constellation #focus-card .focus-filter,body.constellation #focus-card .grade-node-position{background:#121f2e!important;color:#d3dcd9!important;border:1px solid #51647777;border-radius:8px}
+body.constellation #focus-card .network-relation small,body.constellation #focus-card .relation-reason{color:#9eb2bd}
+body.constellation #focus-card .network-focus-key .before{color:#d4a574}
+body.constellation #focus-card .network-focus-key .after{color:#8fc4d0}
+body.constellation #focus-card .focus-heading .plain-button{font-size:20px;background:transparent!important;border:1px solid #708093!important;color:#f0e8d6!important;border-radius:50%;height:39px;min-width:39px}
+body.constellation.has-context-card .topbar,body.constellation.has-journey .topbar{visibility:hidden;pointer-events:none}
+body.constellation.has-context-card .tool-rail,body.constellation.has-context-card #network-guide,body.constellation.has-context-card .bottom-bar,body.constellation.has-context-card .place-indicator{visibility:hidden;pointer-events:none}
+body.constellation .journey-surface,body.constellation.has-journey #journey-surface{position:fixed!important;inset:0!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100vw!important;height:100dvh!important;max-height:none!important;transform:none!important;border:0!important;border-radius:0!important;background:#0a101b!important;box-shadow:none!important;padding:clamp(20px,3vh,35px) clamp(20px,4vw,68px) clamp(18px,3vh,30px)!important;display:flex!important;flex-direction:column;gap:20px;z-index:109!important;overflow:hidden}
+body.constellation .journey-surface[hidden]{display:none!important}
+body.constellation .journey-surface>header{flex:none;display:flex;align-items:center;justify-content:space-between;width:min(100%,970px);margin:0 auto;background:transparent!important;color:#e4dccb!important;border-bottom:1px solid #4c5c6c88;padding:10px 0 18px;letter-spacing:.1em;font-size:12px}
+body.constellation .journey-surface>header button{background:transparent;color:#ddbf92;padding:11px;border:1px solid #586878;border-radius:6px;font-size:12px}
+body.constellation .journey-surface iframe{flex:1;min-height:0;width:min(100%,970px);height:100%;max-width:970px;margin:0 auto;background:#f8f7f2;border:0;border-radius:12px;box-shadow:0 15px 80px #0008}
+body.constellation.has-journey .tool-rail,body.constellation.has-journey #network-guide,body.constellation.has-journey .place-indicator,body.constellation.has-journey .bottom-bar,body.constellation.has-journey #overview-structure-controls{display:none!important}
+body.constellation .learning-hub,body.constellation .utility-drawer{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;background:#0c1421!important;border:0!important;border-radius:0!important;color:#e8ebed;z-index:106!important;padding:clamp(50px,9vh,120px) clamp(16px,8vw,130px)}
+body.constellation .learning-hub>header,body.constellation .utility-drawer>header{background:transparent;color:#f5e3c4;border-bottom:1px solid #495f6c}
+body.constellation .learning-hub-content{max-width:980px;margin:auto}
+body.constellation .learning-hub button,body.constellation .utility-drawer button{background:#18293b;color:#e3e4e3;border:1px solid #3d5265}
+body.constellation .utility-drawer iframe{max-width:980px;width:100%;margin:auto;background:#f7f5ee;border-radius:10px}
+body.constellation .toast{background:#253346;color:#f4dfbd;border:1px solid #9c8666}
+body.constellation .warning{background:#372d2b;color:#f0d7ae;border-color:#a48062}
+body.constellation .space-label:focus-visible,body.constellation button:focus-visible,body.constellation input:focus-visible{outline:2px solid #e9c38e!important;outline-offset:3px}
+@keyframes constellation-reveal{from{opacity:.1;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){body.constellation .topbar{left:18px;right:18px;top:17px;gap:12px}body.constellation .brand small{display:none}body.constellation .brand strong{font-size:16px}body.constellation .top-tools{gap:3px}body.constellation .top-tools button{padding:8px;font-size:10px}body.constellation .primary-nav{gap:12px}body.constellation .primary-nav button{font-size:11px}body.constellation .constellation-intro{bottom:125px;left:6vw;width:min(450px,76vw)}body.constellation .constellation-intro h1{font-size:clamp(31px,5vw,54px)}body.constellation #network-guide{top:92px;left:18px}body.constellation .tool-rail{bottom:16px;right:18px}body.constellation .bottom-bar{bottom:17px;left:18px;right:18px}}
+@media(max-width:600px){body.constellation .topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}body.constellation .brand strong{font-size:15px}body.constellation .topbar .primary-nav{order:3;width:100%;justify-content:center}body.constellation .top-tools button{padding:7px}body.constellation .top-tools .search-button{min-width:40px}body.constellation .constellation-intro{bottom:170px;width:85vw;left:6vw}body.constellation .constellation-intro h1{font-size:37px}body.constellation #network-guide{top:110px;width:170px!important}body.constellation .tool-rail{left:12px;right:12px;bottom:82px;flex-wrap:nowrap;overflow:auto;justify-content:center}body.constellation .tool-rail button{font-size:9px;min-width:27px;padding:0 4px}body.constellation .bottom-bar{bottom:15px}body.constellation .bottom-bar .overall-progress{font-size:9px}body.constellation .bottom-bar .save-status{display:none}body.constellation #focus-card{padding:85px 24px 35px!important}body.constellation #focus-card h2{font-size:38px!important}body.constellation #focus-card .focus-actions{flex-wrap:wrap}body.constellation .journey-surface{padding:12px!important;gap:11px}body.constellation .journey-surface>header{padding-bottom:8px}body.constellation .journey-surface iframe{border-radius:6px}}
+@media(prefers-reduced-motion:reduce){body.constellation .constellation-intro,body.constellation #focus-card{animation:none!important;transition:none!important}}
