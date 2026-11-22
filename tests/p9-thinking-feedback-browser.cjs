@@ -138,6 +138,60 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   check(await page.locator('#thinking-feedback').count()===0,'modifying counterexample removes stale claim immediately');
   await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='argument38');
   check(await page.locator('#thinking-feedback').count()===0,'modified counterexample does not recover a stale hint');
+
+  // Second cross-course pilot: real native Check, correction and reload.
+  // Existing general34:2/3 MP.8 already have strict replay; do not duplicate.
+  const openFresh=async id=>{
+    await page.goto(base+'learn.html#'+id);
+    await page.evaluate(()=>localStorage.removeItem('math-explorer-v2'));
+    await page.reload();
+    await page.waitForFunction(expected=>window.mathLesson?.snapshot()?.id===expected,id);
+  };
+  await openFresh('sense38');
+  check(await page.locator('#thinking-feedback').count()===0,'MP.1 cannot award a method before the first Check');
+  await action('r38-card',{index:'wrong'});await submit();
+  check(await page.locator('#thinking-feedback').count()===0,'MP.1 wrong card cannot receive method feedback');
+  await action('r38-undo');await solve();await submit();
+  check((await view()).includes('知道原来3颗')&&(await view()).includes('想找现在一共几颗'),
+    'MP.1 feedback describes selected known and asked cards');
+  check(await page.locator('#thinking-feedback [data-thinking-node-id="mt_WkKkb7W9Qd"]').count()===1,
+    'MP.1 uses the original thinking source ID');
+  await shot('03-reading-checked');
+  await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='sense38');
+  check((await view()).includes('已知'),'MP.1 saved current Check retains bounded feedback after reload');
+  await action('r38-undo');
+  check(await page.locator('#thinking-feedback').count()===0,'MP.1 editing invalidates older Check');
+  await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='sense38');
+  check(await page.locator('#thinking-feedback').count()===0,'MP.1 reload cannot revive stale feedback');
+  await action('r38-card',{index:'ask'});await submit();
+  check((await view()).includes('已知'),'MP.1 rechecking restores current source feedback');
+  await openFresh('tools39');
+  await field('method','mental');await field('answer','100');await submit();
+  check(await page.locator('#thinking-feedback').count()===0,
+    'MP.5 correct mental answer does not claim a calculator was used');
+  await field('method','calculator');await field('entry','25*4');await action('s39-run');await submit();
+  check((await view()).includes('计算器')&&(await view()).includes('25*4'),
+    'MP.5 actual calculator run receives bounded feedback');
+  check(await page.locator('#thinking-feedback [data-thinking-node-id="mt_d-WZC2OyMB"]').count()===1,
+    'MP.5 uses the original thinking source ID');
+  await shot('04-calculator-checked');
+  await field('entry','25*5');
+  check(await page.locator('#thinking-feedback').count()===0,'MP.5 editing invalidates the previous run claim');
+  await submit();
+  check(await page.locator('#thinking-feedback').count()===0,'MP.5 wrong current expression cannot earn method feedback');
+  await field('entry','25*4');await action('s39-run');await submit();
+  check((await view()).includes('25*4'),'MP.5 corrected real execution and Check restore feedback');
+  await page.reload();await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='tools39');
+  check((await view()).includes('25*4'),'MP.5 current saved calculator run survives reload');
+  await next();
+  check((await page.evaluate(()=>mathLesson.snapshot())).index===1,'MP.5 advanced to second native question');
+  await field('method','calculator');await field('entry','167*3');await action('s39-run');
+  await field('answer','501');await submit();
+  check((await view()).includes('167*3'),'MP.5 second source task requires its own calculator action');
+  const p9state=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
+  const lesson=p9state.lessons.tools39;
+  check(lesson.cases[0].attempts.length===4&&lesson.cases[1].attempts.length===1&&
+        !('thinkingScore' in lesson),'MP.5 old submitted attempts retained with no thinking score');
   check(errors.length===0&&remote.length===0,'no page errors or remote calls during local learning flow');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,snapshots,childTrial:false,independentMathReview:false},null,2));
   console.log('P9_THINKING_FEEDBACK_BROWSER_OK '+JSON.stringify({checks:checks.length,errors,remote}));

@@ -76,7 +76,7 @@ import {fractionOperationsBinding,replayFractionOperationsEvidence} from './frac
 import {fractionCaseBinding,replayFractionCaseEvidence} from './fractioncase-evidence.js';
 import {divisionBinding,replayDivisionEvidence} from './division-evidence.js';
 import {sameFractionBinding,replaySameFractionEvidence} from './samefraction-evidence.js';
-import {isEvidenceContext,latestSubmissionMatches} from './evidence-contract.js';
+import {isEvidenceContext,latestSubmissionMatches,matchesNativeEvidenceTask} from './evidence-contract.js';
 import {EVIDENCE_ADAPTERS,createEvidenceAdapterRegistry} from './evidence-adapters.js';
 
 // Isolated, explicit composition. The application continues to call the two
@@ -376,6 +376,13 @@ export function thinkingGuide(task,context={}){
     const source=arrayBinding(task,context);
     return source?{type:task.type,summary:'想一想：这幅阵列怎样变化？（可选）',question:source.question}:null;
   }
+  const crossCourse=crossCourseThinkingKind(task,context);
+  if(crossCourse==='reading')
+    return {type:task.type,summary:'想一想：先分清已知和问题（可选）',
+      question:'故事里哪些数量已经知道？你想找的是什么？有没有暂时用不上的信息？'};
+  if(crossCourse==='calculator')
+    return {type:task.type,summary:'想一想：怎样选择并检查工具（可选）',
+      question:'可以先估一个结果范围；如果选择计算器，输入的每个数和运算符对得上题目吗？'};
   if(task?.type==='x-p34-sequence'){
     const source=sequenceBinding(task,context);
     return source?{type:task.type,summary:'想一想：怎样找出这一步的规律？（可选）',question:source.question}:null;
@@ -386,11 +393,85 @@ export function thinkingGuide(task,context={}){
 // for these inspected B38 lesson positions, never solely from task.type.
 const VERIFIED_REASONING={show38:[2],because38:[1,2],argument38:[0,2]};
 
+// Two narrowly reviewed cross-course thinking sources. This is not a generic
+// B38/B39 widget label: require the exact native task/source and its old prompt.
+function crossCourseThinkingKind(task,context={}){
+  if(task?.type==='x-r38-chain'&&context?.sessionId==='sense38'&&context.index===0&&
+     task.prompt==='原有3颗，又来4颗。先别算：知道什么，想找什么？'&&
+     task.cards?.map(card=>card.id).join(',')==='a,b,ask,wrong'&&
+     matchesNativeEvidenceTask(task,context,{type:'x-r38-chain',nodeId:'mt_WkKkb7W9Qd'}))
+    return 'reading';
+  const choice=context?.sessionId==='tools39'&&context.index===0?
+    {prompt:'25×4，你会怎样算？',display:'25×4',operands:[25,4]}:
+    context?.sessionId==='tools39'&&context.index===1?
+    {prompt:'换成167×3。你可以继续选自己的方法。',display:'167×3',operands:[167,3]}:null;
+  if(task?.type==='x-s39-choose'&&choice&&
+     task.prompt===choice.prompt&&task.display===choice.display&&
+     task.operator==='*'&&JSON.stringify(task.operands)===JSON.stringify(choice.operands)&&
+     matchesNativeEvidenceTask(task,context,{type:'x-s39-choose',nodeId:'mt_d-WZC2OyMB'}))
+    return 'calculator';
+  return null;
+}
+
+// Only genuine saved work whose latest Check equals its current model can
+// reach this function. Replay, native grading, and actual tool execution
+// remain separate mandatory gates.
+function crossCourseThinkingFeedback(task,model,record,context,attempts){
+  const kind=crossCourseThinkingKind(task,context);
+  if(!kind)return null;
+  try{
+    const handler=kind==='reading'?arguments38:null;
+    if(kind==='reading'){
+      if(!handler.valid(task,model)||!handler.inspect(task,model).correct||model.issue!=='')return null;
+    }else{
+      if(!validTask(task,model)||!inspectTask(task,model).correct||
+         model.method!=='calculator'||model.issue!=='')return null;
+      // Checking the last event matters: a previous calculator action must
+      // not relabel a later run performed while "mental" was selected.
+      const lastRunEvent=model.history.filter(event=>event.a==='run').at(-1);
+      const lastRun=model.board.runs.at(-1);
+      if(!lastRunEvent||lastRunEvent.c!=='calculator'||lastRunEvent.w!==model.entry||
+         !lastRun?.matched||lastRun.entry!==model.entry||lastRun.value===null)return null;
+    }
+    const details=[];
+    if(attempts.slice(0,-1).some(attempt=>{
+      try{
+        return kind==='reading'?
+          arguments38.valid(task,attempt.value)&&!arguments38.inspect(task,attempt.value).correct:
+          validTask(task,attempt.value)&&!inspectTask(task,attempt.value).correct;
+      }catch{return false;}
+    }))details.push('之前有未通过的提交；后来又检查了当前作品。');
+    if(record.support)details.push('你曾查看可选提示或比较反馈。');
+    if(kind==='reading'){
+      const selected=model.board.selected.map(id=>task.cards.find(card=>card.id===id)?.text);
+      if(selected.length!==3||selected.some(text=>!text))return null;
+      details.push('这里核对的是题目提供的卡片和真实排列，不评价自由解释或能否独立理解其他文字题。');
+      return {
+        title:'你刚才的办法',
+        observation:'你按顺序选择了“'+selected.join('”、“')+'”；检查核对了已知和要找的问题。',
+        connection:'下次遇到额外信息，试着指出哪些是已知条件，哪条信息暂时用不上。',
+        detail:details,
+        method:{nodeId:'mt_WkKkb7W9Qd',label:'读懂问题',code:'ccss-math:MP.1'}
+      };
+    }
+    details.push('这里只验证本题选择并运行了计算器；没有核验心算、笔算或是否选了最合适的工具。');
+    return {
+      title:'你刚才的办法',
+      observation:'这次计算 '+task.display+'，你选择计算器并实际输入“'+model.entry+'”运行，记录结果为 '+model.board.runs.at(-1).value+'；检查确认了输入与本题运算一致。',
+      connection:'下次可以先估算结果的范围，再检查计算器中的每个数字和运算符。',
+      detail:details,
+      method:{nodeId:'mt_d-WZC2OyMB',label:'选择合适的数学工具',code:'ccss-math:MP.5'}
+    };
+  }catch{return null;}
+}
+
 export function thinkingFeedback(task,model,record,context={}){
   // The pre-existing grid observation is context-free and remains outside the
   // strict source-bound adapters. Its original grading and snapshot gate stay.
   if((task?.type!=='grid'&&!isEvidenceContext(context))||!latestSubmissionMatches(model,record))return null;
   const attempts=record.attempts;
+  const crossCourse=crossCourseThinkingFeedback(task,model,record,context,attempts);
+  if(crossCourse)return crossCourse;
   if(task?.type==='x-wideboard'){
     const signed=signedOrderBinding(task,context);
     if(signed){

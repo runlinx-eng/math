@@ -213,3 +213,76 @@ test('MP.8 tables34 sequence uses only replay-checked native events and never la
   assert.equal(thinkingGuide(B34.structure34[3],{sessionId:'structure34',index:3})?.type,'x-s23-lines',
     'prior MP.7 guide remains bound to the original geometry position');
 });
+
+
+test('MP.1 reading feedback and optional guide require the original native task and replayed cards',()=>{
+  const task=A.sense38[0],context={sessionId:'sense38',index:0};
+  const before=arguments38.initial(task),done=arguments38.example(task);
+  assert.match(thinkingGuide(task,context)?.question,/已知|想找/);
+  assert.equal(thinkingFeedback(task,before,{attempts:[attempt(before)]},context),null);
+  arguments38.act(task,before,'r38-card',{index:'wrong'});
+  assert.equal(thinkingFeedback(task,before,{attempts:[attempt(before)]},context),null);
+  const note=thinkingFeedback(task,done,{attempts:[attempt(before),attempt(done)],support:true},context);
+  assert.equal(note?.method?.nodeId,'mt_WkKkb7W9Qd');
+  assert.equal(note.method.code,'ccss-math:MP.1');
+  assert.match(note.observation,/知道原来3颗.*知道后来又来4颗.*想找现在一共几颗/);
+  assert.match(note.detail.join(' '),/未通过的提交|可选提示/);
+  assert.doesNotMatch(JSON.stringify(note),/你已掌握|能力评分|独立理解其他文字题。/);
+  assert.equal(thinkingFeedback(task,done,{attempts:[]},context),null);
+  assert.equal(thinkingFeedback(task,done,{attempts:[attempt(before)]},context),null);
+  assert.equal(thinkingFeedback(task,done,{attempts:[attempt(done)]}),null);
+  assert.equal(thinkingGuide(task,{sessionId:'story38',index:2}),null);
+  const copied={...task,prompt:'另一道题'};
+  assert.equal(thinkingFeedback(copied,done,{attempts:[attempt(done)]},context),null);
+  const altered=structuredClone(done);arguments38.act(task,altered,'r38-undo');
+  assert.equal(thinkingFeedback(task,altered,{attempts:[attempt(done)]},context),null);
+  const forged=structuredClone(done);forged.board.selected.push('wrong');
+  assert.equal(thinkingFeedback(task,forged,{attempts:[attempt(forged)]},context),null);
+});
+
+test('MP.5 calculator method needs actual calculator-run event at each of two native positions',async()=>{
+  const {TASKS:S}=await import('../dist/learning/phase5/b39.js');
+  const tools39=await import('../dist/learning/phase5/b39-model.js');
+  const {registerB39Model}=await import('../dist/learning/phase4/engine.js');
+  registerB39Model(tools39);
+  const entries=[[0,'25*4','100'],[1,'167*3','501']];
+  for(const [index,expression,answer] of entries){
+    const task=S.tools39[index],context={sessionId:'tools39',index};
+    const m=tools39.initial(task);
+    m.method='calculator';m.entry=expression;
+    tools39.act(task,m,'s39-run');m.answer=answer;
+    assert.equal(tools39.inspect(task,m).correct,true);
+    assert.match(thinkingGuide(task,context)?.question,/计算器/);
+    const note=thinkingFeedback(task,m,{attempts:[attempt(m)]},context);
+    assert.equal(note?.method?.nodeId,'mt_d-WZC2OyMB');
+    assert.equal(note.method.code,'ccss-math:MP.5');
+    assert.match(note.observation,new RegExp(expression.replace('*','\\*')));
+    assert.match(note.detail.join(' '),/没有核验心算、笔算/);
+    assert.equal(thinkingFeedback(task,m,{attempts:[]},context),null);
+    assert.equal(thinkingFeedback(task,m,{attempts:[attempt(m)]},{sessionId:'tools39',index:99}),null);
+    const changed=structuredClone(m);changed.entry='25*5';
+    assert.equal(thinkingFeedback(task,changed,{attempts:[attempt(m)]},context),null);
+    const forged=structuredClone(m);forged.board.runs[0].matched=false;
+    assert.equal(thinkingFeedback(task,forged,{attempts:[attempt(forged)]},context),null);
+    const notRunAsCalculator=structuredClone(m);notRunAsCalculator.history[0].c='mental';
+    assert.equal(tools39.inspect(task,notRunAsCalculator).correct,true,
+      'original grading does not validate the method chosen at run time');
+    assert.equal(thinkingFeedback(task,notRunAsCalculator,{attempts:[attempt(notRunAsCalculator)]},context),null,
+      'bounded feedback must not infer calculator use from later method selection');
+    const mental=tools39.example(task);
+    assert.equal(mental.method,'mental');
+    assert.equal(thinkingFeedback(task,mental,{attempts:[attempt(mental)]},context),null);
+    const wrong=tools39.initial(task);wrong.method='calculator';wrong.entry='20*5';
+    tools39.act(task,wrong,'s39-run');wrong.answer=answer;
+    assert.equal(thinkingFeedback(task,wrong,{attempts:[attempt(wrong)]},context),null);
+    const changedTask={...task,prompt:'替换题干'};
+    assert.equal(thinkingGuide(changedTask,context),null);
+    assert.equal(thinkingFeedback(changedTask,m,{attempts:[attempt(m)]},context),null);
+  }
+  const source=JSON.parse((await import('node:fs')).readFileSync(
+    new URL('../docs/spatial-learning/thinking-source-map.json',import.meta.url)));
+  for(const [id,code] of [['mt_WkKkb7W9Qd','ccss-math:MP.1'],
+                          ['mt_d-WZC2OyMB','ccss-math:MP.5']]){
+    assert.equal(source.groups.find(g=>g.code===code)?.nodes.some(n=>n.id===id),true);
+  }
+});
