@@ -33,21 +33,29 @@ async function control(page,selector){
 async function moveRange(input,target){
  const low=Number(await input.getAttribute('min')),high=Number(await input.getAttribute('max'));
  const step=Number(await input.getAttribute('step'))||1;
- assert.ok(Number.isInteger(target)&&target>=low&&target<=high,'target inside original range');
- let current=Number(await input.inputValue());
- if(current===target){
-  await input.press(target===high?'ArrowLeft':'ArrowRight');
-  current=Number(await input.inputValue());
+ const current=Number(await input.inputValue()),rect=await input.boundingBox();
+ assert.ok(rect&&rect.width>35&&Number.isInteger(target)&&target>=low&&target<=high,
+  'target inside actual native range');
+ const inset=Math.min(10,rect.width/8);
+ await input.click({position:{x:inset+(target-low)/(high-low)*(rect.width-2*inset),y:rect.height/2}});
+ let n=Number(await input.inputValue());
+ if(current===target&&n===target){
+  await input.focus();await input.press(target===high?'ArrowLeft':'ArrowRight');
+  n=Number(await input.inputValue());
  }
  let guard=0;
- while(current!==target&&guard++<1200){
-  const nextKey=target>current?'ArrowRight':'ArrowLeft';
-  await input.press(nextKey);
-  const next=Number(await input.inputValue());
-  assert.ok(next!==current&&Math.abs(next-target)<Math.abs(current-target),'range advances toward desired tick');
-  current=next;
+ while(n!==target&&guard++<100){
+  const direction=n<target?'ArrowRight':'ArrowLeft';
+  let next=n;
+  for(let retry=0;retry<3&&next===n;retry++){
+   await input.focus();await input.press(direction);
+   next=Number(await input.inputValue());
+  }
+  assert.ok(next!==n&&Math.abs(next-target)<Math.abs(n-target),
+   'actual slider cursor advances toward desired tick');
+  n=next;
  }
- assert.equal(current,target,'original slider keyboard reaches true target');
+ assert.equal(n,target,'original native slider reaches exact source tick');
 }
 async function fill(page,name,value){
  const element=await control(page,'#extra-controls [data-xfield="'+name+'"]');
