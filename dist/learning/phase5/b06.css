@@ -19,3 +19,6 @@
 .b6-countonce-beads .b6-dot.selected{box-shadow:0 0 0 3px #e5c4a4;font-weight:700}
 .b6-countonce-beads .b6-dot.selected:disabled{opacity:1}
 .b6-countonce-beads .b6-dot:focus-visible{outline:3px solid #205d52;outline-offset:3px}
+@keyframes b6-puppet-count-tap{0%{transform:scale(.88)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
+.b6-countonce-beads .b6-puppet-bead.puppet-active{animation:b6-puppet-count-tap .42s ease-out}
+@media(prefers-reduced-motion:reduce){.b6-countonce-beads .b6-puppet-bead.puppet-active{animation:none}}

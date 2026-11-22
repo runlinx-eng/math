@@ -29,7 +29,10 @@ export function mountB06(root,t,getModel,{mutate,saveInk,help}){
     return;
    }
    const i=t.error[step],word=words[step]||String(step+1);
-   for(const bead of beads){const active=Number(bead.dataset.index)===i;bead.classList.toggle('puppet-active',active);if(active)bead.dataset.countWord=word;else delete bead.dataset.countWord;}
+   // Restart the actual pointing pulse even when the same bead is counted twice.
+   for(const bead of beads){bead.classList.remove('puppet-active');delete bead.dataset.countWord;}
+   const active=beads.find(bead=>Number(bead.dataset.index)===i);
+   if(active){void active.offsetWidth;active.classList.add('puppet-active');active.dataset.countWord=word;}
    status.textContent='小木偶数到'+word+'，指向珠 '+String.fromCharCode(65+i);
    step++;timer=setTimeout(tick,650);
   };
