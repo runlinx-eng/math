@@ -91,6 +91,12 @@ async function run(){
    reply=await page.reload();
    ok(reply?.fromServiceWorker()===true,row.id+' native index reloaded offline');
    await page.waitForFunction(i=>window.mathLesson?.snapshot()?.index===i,row.index);
+   // The source-gated router lazy-loads after native navigation; interact
+   // only after the exact formal guide has rendered.
+   const sourceGuide=page.locator('#thinking-guide');
+   await sourceGuide.waitFor({state:'attached',timeout:10000});
+   ok((await sourceGuide.textContent()).includes('哪些记录能帮助你核对这次结果？'),
+    row.id+' exact formal source guide is ready before native operations');
    const original=await page.evaluate(async({id,index})=>{
     const {sessionTaskFor}=await import('./learning/bridges.js');
     const {LESSONS}=await import('./learning/catalog.js');
