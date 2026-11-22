@@ -17,7 +17,11 @@ for(const src of sources)test(src.position+' original task, independent six-term
  assert.equal(binding(task,ctx)?.nodeId,src.nodeId);
  assert.equal(binding(task,{sessionId:'growing',index:-1}),null);
  assert.equal(binding({...task,prompt:task.prompt+'x'},ctx),null);
- const good=b05.example(task),raw=JSON.stringify(good);
+ const good=b05.example(task);
+ // The generic example helper writes a prediction even on non-tower tasks;
+ // the real native controls expose it only in tower mode.
+ if(!task.towers){good.prediction=null;good.committed=null;}
+ const raw=JSON.stringify(good);
  assert.equal(b05.inspect(task,good).correct,true);
  const proof=replay(task,good,ctx);
  assert.ok(proof);
