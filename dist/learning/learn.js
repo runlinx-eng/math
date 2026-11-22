@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261122-a355-p006-522-v1');
+registerClientRelease('math-explorer-20261122-issue341-formal-740-v1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -66,7 +66,7 @@ function ensureIssue341FormalRouting(sessionId){
  issue341RoutingPromise=import('./issue341-formal-source-routing.js')
   .then(({createIssue341ManifestGatedRouting})=>{
    const routing=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
-   if(routing.approvedPositions!==522||routing.approvedFamilies!==167)
+   if(routing.approvedPositions!==740||routing.approvedFamilies!==219)
     throw new Error('Issue341 manifest and frozen source mismatch');
    issue341FormalRouting=routing;
    if(a?.view==='task'&&hasIssue341FormalSession(id)&&!blocked)render();

@@ -11790,6 +11790,1968 @@
       "method": null
     },
     {
+      "sessionId": "solidSurface",
+      "index": 0,
+      "type": "x-a30-solid",
+      "nodeId": "mt_Sij9ByyHq6",
+      "adapter": "issue341-B218-p086m",
+      "taskHash": "b12960f77dff3c1471cb18cf98d497c17b8a6cdb478c2750b935d856cbcde93e",
+      "method": null
+    },
+    {
+      "sessionId": "solidSurface",
+      "index": 2,
+      "type": "x-a30-solid",
+      "nodeId": "mt_Sij9ByyHq6",
+      "adapter": "issue341-B218-p086m",
+      "taskHash": "135458801b6c73fe3e3d3e7986a091a148f7ca04dd4d6c3a28175a6b965764ae",
+      "method": null
+    },
+    {
+      "sessionId": "graph39",
+      "index": 0,
+      "type": "x-s39-graph",
+      "nodeId": "mt_Yw27nweoTj",
+      "adapter": "issue341-B218-p088r",
+      "taskHash": "1eec6cf40609b87aa267170a6e66026b4c4a54c948bb7293129a55f6da427635",
+      "method": null
+    },
+    {
+      "sessionId": "graph39",
+      "index": 3,
+      "type": "x-s39-graph",
+      "nodeId": "mt_Yw27nweoTj",
+      "adapter": "issue341-B218-p088r",
+      "taskHash": "9f6a367322f7bd237cb87e0030a157912d8597777f052efd2d11be0686a23e3b",
+      "method": null
+    },
+    {
+      "sessionId": "allowedrange",
+      "index": 2,
+      "type": "x-allowedrange",
+      "nodeId": "mt_i2F1nWxJjv",
+      "adapter": "issue341-B218-p091r",
+      "taskHash": "23e057bedce800d7efbfe66f9c4945d45b0f9679eeece2d3e5ae8ec967e200cb",
+      "method": null
+    },
+    {
+      "sessionId": "allowedrange",
+      "index": 3,
+      "type": "x-allowedrange",
+      "nodeId": "mt_i2F1nWxJjv",
+      "adapter": "issue341-B218-p091r",
+      "taskHash": "9f32760d348ca1a918870a17c30dbf9c17fe38f3cfc75d10e93b719380f7d735",
+      "method": null
+    },
+    {
+      "sessionId": "allowedrange",
+      "index": 4,
+      "type": "x-allowedrange",
+      "nodeId": "mt_i2F1nWxJjv",
+      "adapter": "issue341-B218-p091r",
+      "taskHash": "0abdd2469d1f616c43e723d9e09edd7d85af8cd672c9be2488a098fbd11f6110",
+      "method": null
+    },
+    {
+      "sessionId": "shapemerge",
+      "index": 0,
+      "type": "x-s23-tile",
+      "nodeId": "mt_MqqR7VUoz1",
+      "adapter": "issue341-B218-p092t",
+      "taskHash": "5e1473b68cfbe06cbd1ca1cf64b396f6c517c94d7b6386395bbbafd02753dbb3",
+      "method": null
+    },
+    {
+      "sessionId": "shapemerge",
+      "index": 1,
+      "type": "x-s23-tile",
+      "nodeId": "mt_MqqR7VUoz1",
+      "adapter": "issue341-B218-p092t",
+      "taskHash": "c9650c46872601ffff9be6acbefb60e5cb9cf2fb53ed4ed6a2fafb25dc12a207",
+      "method": null
+    },
+    {
+      "sessionId": "shapemerge",
+      "index": 2,
+      "type": "x-s23-tile",
+      "nodeId": "mt_MqqR7VUoz1",
+      "adapter": "issue341-B218-p092t",
+      "taskHash": "47b13df8ec9ca9ec60b727bc97e9154367b3ee1ea7692440228f3d45c76b3b0d",
+      "method": null
+    },
+    {
+      "sessionId": "shapemerge",
+      "index": 3,
+      "type": "x-s23-tile",
+      "nodeId": "mt_MqqR7VUoz1",
+      "adapter": "issue341-B218-p092t",
+      "taskHash": "589413fb5749de2e81ad8f20c62333e3751bcb032c58d4004ef9997f90c0b612",
+      "method": null
+    },
+    {
+      "sessionId": "nets",
+      "index": 0,
+      "type": "x-net",
+      "nodeId": "mt_vnJEztczji",
+      "adapter": "issue341-B218-p093n",
+      "taskHash": "f42bbc7b3e31a495fe4f7e1c1539c77cffc900990b6c37e66f5652f0c484a8da",
+      "method": null
+    },
+    {
+      "sessionId": "nets",
+      "index": 1,
+      "type": "x-net",
+      "nodeId": "mt_vnJEztczji",
+      "adapter": "issue341-B218-p093n",
+      "taskHash": "aeb0bb16299d8bc9d23d820709d9943a8e7ff9d8841aece32d59643fa422f143",
+      "method": null
+    },
+    {
+      "sessionId": "nets",
+      "index": 2,
+      "type": "x-net",
+      "nodeId": "mt_vnJEztczji",
+      "adapter": "issue341-B218-p093n",
+      "taskHash": "2cfb329225ce1150813fa0e19c180026ca618189dbb57dff0b2ab9fa16346970",
+      "method": null
+    },
+    {
+      "sessionId": "foldprism",
+      "index": 0,
+      "type": "x-net",
+      "nodeId": "mt_REwgr0d_ss",
+      "adapter": "issue341-B218-p093n",
+      "taskHash": "7384afd56f0a567fa6d2f41a0351e02219544190817c26dcce7e2985bfd610ce",
+      "method": null
+    },
+    {
+      "sessionId": "crossparts",
+      "index": 3,
+      "type": "x-net",
+      "nodeId": "mt_nRksLqt-iR",
+      "adapter": "issue341-B218-p093n",
+      "taskHash": "2bbbc9a0ca791d88f67f7da61e23d607937a325fd44ece4a1fa540ddf806ce05",
+      "method": null
+    },
+    {
+      "sessionId": "decimaldivide",
+      "index": 0,
+      "type": "x-decimaldivide",
+      "nodeId": "mt_lU-2aTRB9f",
+      "adapter": "issue341-B218-p094d",
+      "taskHash": "1fd54779ec0ab39e68ba14f3f0b5f89fd8e33608d9c9e0b0ae0408fad65cbcad",
+      "method": null
+    },
+    {
+      "sessionId": "decimaldivide",
+      "index": 1,
+      "type": "x-decimaldivide",
+      "nodeId": "mt_lU-2aTRB9f",
+      "adapter": "issue341-B218-p094d",
+      "taskHash": "62191b1624669ac8c4417939e82fb1114e31d7a716d985c6260667b3089b8310",
+      "method": null
+    },
+    {
+      "sessionId": "decimaldivide",
+      "index": 2,
+      "type": "x-decimaldivide",
+      "nodeId": "mt_lU-2aTRB9f",
+      "adapter": "issue341-B218-p094d",
+      "taskHash": "22bb363e5c240751d9b2528888c62137f7c5f7df2f024489e58091c5caf5ce84",
+      "method": null
+    },
+    {
+      "sessionId": "fractionfour",
+      "index": 16,
+      "type": "x-decimaldivide",
+      "nodeId": "mt_gNUE4B3vuk",
+      "adapter": "issue341-B218-p094d",
+      "taskHash": "4b5f695a3a534cef56059aeea855f4821c9a6cb730a33e33dfd9c5e9e6fc722e",
+      "method": null
+    },
+    {
+      "sessionId": "cupmeasure",
+      "index": 2,
+      "type": "x-m31-meter",
+      "nodeId": "mt_4lp_b5Pzik",
+      "adapter": "issue341-B218-p095m",
+      "taskHash": "4784d46c91843578f9cc5d4499a13cba87b2c6b725577cb5bff9d4a0e99aa310",
+      "method": null
+    },
+    {
+      "sessionId": "measureliquid",
+      "index": 0,
+      "type": "x-m31-meter",
+      "nodeId": "mt_-af65bxfdp",
+      "adapter": "issue341-B218-p095m",
+      "taskHash": "946cc31504c0620dcbf3caeea004fa2d970a7a378e2a94f941d2e3ccc56dd7cd",
+      "method": null
+    },
+    {
+      "sessionId": "measureliquid",
+      "index": 1,
+      "type": "x-m31-meter",
+      "nodeId": "mt_-af65bxfdp",
+      "adapter": "issue341-B218-p095m",
+      "taskHash": "f82c7e41f56a18fecc1e57ffc647ee93701b0196b6492052f547eb341574cff2",
+      "method": null
+    },
+    {
+      "sessionId": "regroupadd",
+      "index": 2,
+      "type": "x-subgroups",
+      "nodeId": "mt_T76hKqXf0z",
+      "adapter": "issue341-B218-p096s",
+      "taskHash": "7c4a6de5df2c93a0ffdc3c8eded0690f7970382bd4e87a22883d4a48d5ecc460",
+      "method": null
+    },
+    {
+      "sessionId": "sharewholes",
+      "index": 0,
+      "type": "x-wholeshare",
+      "nodeId": "mt_4Km38F4L-6",
+      "adapter": "issue341-B218-p096w",
+      "taskHash": "46762e377a10ad2c597376e3957194fda38afd7a40bb6bd2c52b278173601c47",
+      "method": null
+    },
+    {
+      "sessionId": "sharewholes",
+      "index": 1,
+      "type": "x-wholeshare",
+      "nodeId": "mt_4Km38F4L-6",
+      "adapter": "issue341-B218-p096w",
+      "taskHash": "14df910d580247bfa418be8e751c8beabbb1cf4a1add22a16aacbf7ecc3a8071",
+      "method": null
+    },
+    {
+      "sessionId": "sharewholes",
+      "index": 2,
+      "type": "x-wholeshare",
+      "nodeId": "mt_4Km38F4L-6",
+      "adapter": "issue341-B218-p096w",
+      "taskHash": "adda570f60bcf2155d3921173f10bf8db596d0eee784bad3fe5bdfb0d0865622",
+      "method": null
+    },
+    {
+      "sessionId": "translateamount",
+      "index": 0,
+      "type": "x-wholeshare",
+      "nodeId": "mt_3VmBdlAeOZ",
+      "adapter": "issue341-B218-p096w",
+      "taskHash": "21c33177d54b7652b5b7bb52019e507b493335a634bdc0398ca645004802fefc",
+      "method": null
+    },
+    {
+      "sessionId": "tenpieces",
+      "index": 2,
+      "type": "x-wholeshare",
+      "nodeId": "mt_YzM5goBctT",
+      "adapter": "issue341-B218-p096w",
+      "taskHash": "ed2697d0737daf0ed9a380f967baa2bf168ad4a49b274da1d373c7b874e70f4c",
+      "method": null
+    },
+    {
+      "sessionId": "reason34",
+      "index": 2,
+      "type": "x-wholeshare",
+      "nodeId": "mt_iyovKgZC1q",
+      "adapter": "issue341-B218-p096w",
+      "taskHash": "21c33177d54b7652b5b7bb52019e507b493335a634bdc0398ca645004802fefc",
+      "method": null
+    },
+    {
+      "sessionId": "powerblocks",
+      "index": 4,
+      "type": "x-powerchain",
+      "nodeId": "mt_hCVPYlF-7Y",
+      "adapter": "issue341-B218-p097c",
+      "taskHash": "995681037a87078aef27e5bfc967fd74d1d55dfaf52ff7c8092453d6b854478c",
+      "method": null
+    },
+    {
+      "sessionId": "powerblocks",
+      "index": 5,
+      "type": "x-powerchain",
+      "nodeId": "mt_hCVPYlF-7Y",
+      "adapter": "issue341-B218-p097c",
+      "taskHash": "1b75b1b2adc9070279892408f9a437d429a657083604205b22617d77054600bf",
+      "method": null
+    },
+    {
+      "sessionId": "powerblocks",
+      "index": 6,
+      "type": "x-powerchain",
+      "nodeId": "mt_hCVPYlF-7Y",
+      "adapter": "issue341-B218-p097c",
+      "taskHash": "5b90691d38a7ef2e1a3a703ff1107d4d885c34d138636fe219f10edefa6bbf70",
+      "method": null
+    },
+    {
+      "sessionId": "powerblocks",
+      "index": 7,
+      "type": "x-powerchain",
+      "nodeId": "mt_hCVPYlF-7Y",
+      "adapter": "issue341-B218-p097c",
+      "taskHash": "b1f897357d7c6736c63897fa94c6fba4e7cccc9fb810cbc4c44ab6573a3809e4",
+      "method": null
+    },
+    {
+      "sessionId": "powerblocks",
+      "index": 8,
+      "type": "x-rootwindow",
+      "nodeId": "mt_hCVPYlF-7Y",
+      "adapter": "issue341-B218-p097r",
+      "taskHash": "214564ebe0fdcb60a7b822a54c12b498b4a738023f3e2737f7885d5fa2514d10",
+      "method": null
+    },
+    {
+      "sessionId": "plot36",
+      "index": 0,
+      "type": "x-f36-plot",
+      "nodeId": "mt_-3udyo6VyB",
+      "adapter": "issue341-B218-p098p",
+      "taskHash": "139ac557b035860387eb5db2e25ccb02655583db2786f4ff5460929df30ec55f",
+      "method": null
+    },
+    {
+      "sessionId": "quadratic36",
+      "index": 0,
+      "type": "x-f36-plot",
+      "nodeId": "mt_GZuoYaDdWd",
+      "adapter": "issue341-B218-p098p",
+      "taskHash": "628dbe45e9d82d984a049a95e1fe04a39ce2c7ed0070b158e00c63a838f92f4a",
+      "method": null
+    },
+    {
+      "sessionId": "quadratic36",
+      "index": 2,
+      "type": "x-f36-plot",
+      "nodeId": "mt_GZuoYaDdWd",
+      "adapter": "issue341-B218-p098p",
+      "taskHash": "b9c69b762412c340305b658862f703414bc93b3a371ac0875007e661bcc6c3f6",
+      "method": null
+    },
+    {
+      "sessionId": "quadratic36",
+      "index": 1,
+      "type": "x-f36-live",
+      "nodeId": "mt_GZuoYaDdWd",
+      "adapter": "issue341-B218-p098v",
+      "taskHash": "b34f8ea1c53fe868d343e9c50644751d4ebcc2e75726e5c8cd26f3d85a3b6d80",
+      "method": null
+    },
+    {
+      "sessionId": "comparecap",
+      "index": 0,
+      "type": "x-m31-compare",
+      "nodeId": "mt_zkFbMLpu3U",
+      "adapter": "issue341-B218-p099c",
+      "taskHash": "492f803439179b59e9ffa89d1df2fe8978bd6da6f0aef922d0ec71580c8e7c18",
+      "method": null
+    },
+    {
+      "sessionId": "comparecap",
+      "index": 1,
+      "type": "x-m31-compare",
+      "nodeId": "mt_zkFbMLpu3U",
+      "adapter": "issue341-B218-p099c",
+      "taskHash": "2c0aff0e6e26d96545ef754722004d28f73e70096abe5586d418b65d3e1d8ff0",
+      "method": null
+    },
+    {
+      "sessionId": "indirectmass",
+      "index": 0,
+      "type": "x-m31-balance",
+      "nodeId": "mt_bnwHo5wfCD",
+      "adapter": "issue341-B218-p099b",
+      "taskHash": "925193940e9b50cc117549768649d5ca55addc296df16e9d1d831e1bc85553e8",
+      "method": null
+    },
+    {
+      "sessionId": "indirectmass",
+      "index": 2,
+      "type": "x-m31-balance",
+      "nodeId": "mt_bnwHo5wfCD",
+      "adapter": "issue341-B218-p099b",
+      "taskHash": "d547e62fcc1ad259fd6de601579b45246f669ee70249537db6e7e0bf5016f611",
+      "method": null
+    },
+    {
+      "sessionId": "boxsummary",
+      "index": 1,
+      "type": "x-boxsummary",
+      "nodeId": "mt_8VjmxR1yfw",
+      "adapter": "issue341-B218-p100b",
+      "taskHash": "199c0b9d306a18117039cefeb5d1b81e6c9a666ff8c83759c32265585c520577",
+      "method": null
+    },
+    {
+      "sessionId": "fractionvolume",
+      "index": 3,
+      "type": "x-m31-product",
+      "nodeId": "mt_IlDaxVr60U",
+      "adapter": "issue341-B218-p100v",
+      "taskHash": "20cd22353a7b014e7ff80546231b87ca894c7b8ea9386abd2cbd9e395ca804f6",
+      "method": null
+    },
+    {
+      "sessionId": "sidesfold",
+      "index": 1,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_sBcRdUfAzV",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "0663a7b8366d5f9507c13778751eed40fedc9d8ba5383ac7d4aded97079ebc6e",
+      "method": null
+    },
+    {
+      "sessionId": "shapeaxes",
+      "index": 0,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_hRZyKvz1KN",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "7f7826e579de7751b92858c16f2cdf5cb7dabee7be17aaf599788d4e693d13bb",
+      "method": null
+    },
+    {
+      "sessionId": "shapeaxes",
+      "index": 1,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_hRZyKvz1KN",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "13e6024f703f11632dea0ce3de77c22465fc583efecaad223bed91d34098dff0",
+      "method": null
+    },
+    {
+      "sessionId": "shapeaxes",
+      "index": 2,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_hRZyKvz1KN",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "b6fe903511b28ad38f4723e4a25ec650c1710e27b1b6d98751c8a93bc418f045",
+      "method": null
+    },
+    {
+      "sessionId": "shapeaxes",
+      "index": 3,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_hRZyKvz1KN",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "662e3cb60d463c26ad8a712bd592394e41ad19fac97b9cc67aa6c1973f1e5d14",
+      "method": null
+    },
+    {
+      "sessionId": "shapeaxes",
+      "index": 4,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_hRZyKvz1KN",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "d5cde1835b557739d2d03ade17948dc6493a4e58cc0b278dfa5717aa8509c073",
+      "method": null
+    },
+    {
+      "sessionId": "shapeaxes",
+      "index": 5,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_hRZyKvz1KN",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "b82fe006b52eb48dfcd7519fd42340c4078ce77e6086f3a6683af6a0df66e102",
+      "method": null
+    },
+    {
+      "sessionId": "shapeaxes",
+      "index": 6,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_hRZyKvz1KN",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "ddc7dea76eb327490f6f4ecb4a6b57e9d553d94e9dcd094d3baf0aea6c98f098",
+      "method": null
+    },
+    {
+      "sessionId": "geometrynotation",
+      "index": 1,
+      "type": "x-s23-symmetry",
+      "nodeId": "mt_WtIFJSCQIT",
+      "adapter": "issue341-B218-p101a",
+      "taskHash": "af207f5cb81ffdd295365845ad6e09086149d689823007ce4b5c70564a430e4b",
+      "method": null
+    },
+    {
+      "sessionId": "turnsym",
+      "index": 0,
+      "type": "x-p24-spin",
+      "nodeId": "mt_NM5I3yN-Q6",
+      "adapter": "issue341-B218-p101s",
+      "taskHash": "af2d9f7a67e72beeb017ef38da9794067475abdfd2787492879239691668e3f6",
+      "method": null
+    },
+    {
+      "sessionId": "turnsym",
+      "index": 1,
+      "type": "x-p24-spin",
+      "nodeId": "mt_NM5I3yN-Q6",
+      "adapter": "issue341-B218-p101s",
+      "taskHash": "581db9aa2035473a4628d56b096086fd0ae470efd72de16e7434952bda68ace3",
+      "method": null
+    },
+    {
+      "sessionId": "turnsym",
+      "index": 2,
+      "type": "x-p24-spin",
+      "nodeId": "mt_NM5I3yN-Q6",
+      "adapter": "issue341-B218-p101s",
+      "taskHash": "523af51fb09f8bff1f44d4d5093b99edb72f0bbf56c35884a28d5318c28c6f9c",
+      "method": null
+    },
+    {
+      "sessionId": "patternfloor",
+      "index": 2,
+      "type": "x-p24-frieze",
+      "nodeId": "mt_61Nhj8W78f",
+      "adapter": "issue341-B218-p101f",
+      "taskHash": "c4fbd3c4e84f77c338faa746ceb82a4c7a3a453a8c20a87ef7b2af4aaca47305",
+      "method": null
+    },
+    {
+      "sessionId": "structurebridge",
+      "index": 1,
+      "type": "x-lawtiles",
+      "nodeId": "mt_hImiKNiaNh",
+      "adapter": "issue341-B218-p102l",
+      "taskHash": "fb49c413f9d627c1f7c49d5441505d13a28e99ecdfa29206526603a2ab2d4937",
+      "method": null
+    },
+    {
+      "sessionId": "trace34",
+      "index": 0,
+      "type": "x-p34-program",
+      "nodeId": "mt_zQfWqImxva",
+      "adapter": "issue341-B218-p103t",
+      "taskHash": "0dc393d18025bc6b94aa12ccf20c6641a404506f792377b8d0a4b2bb550cd136",
+      "method": null
+    },
+    {
+      "sessionId": "trace34",
+      "index": 1,
+      "type": "x-p34-program",
+      "nodeId": "mt_zQfWqImxva",
+      "adapter": "issue341-B218-p103t",
+      "taskHash": "174fc76cca3b87849dd95c0cd6ca427401c42106d9f731beb643fe5e9be9a7d9",
+      "method": null
+    },
+    {
+      "sessionId": "trace34",
+      "index": 2,
+      "type": "x-p34-program",
+      "nodeId": "mt_zQfWqImxva",
+      "adapter": "issue341-B218-p103t",
+      "taskHash": "3e76d246e5e966c5a55cae2327b0df6a9f886df2c9bab9a3d134866d889d7ce1",
+      "method": null
+    },
+    {
+      "sessionId": "generate34",
+      "index": 0,
+      "type": "x-p34-program",
+      "nodeId": "mt_QeKWt4BZn3",
+      "adapter": "issue341-B218-p103t",
+      "taskHash": "f089f2b20b5e4067ab79da7f1ed61acef080127c9c6c564c38022d7f8536f92a",
+      "method": null
+    },
+    {
+      "sessionId": "generate34",
+      "index": 1,
+      "type": "x-p34-program",
+      "nodeId": "mt_QeKWt4BZn3",
+      "adapter": "issue341-B218-p103t",
+      "taskHash": "6fee96e3bae0412e7fbde8a9e0d3816af0b96630a245f6d2fe2ffdae39b6d0b6",
+      "method": null
+    },
+    {
+      "sessionId": "design34",
+      "index": 0,
+      "type": "x-p34-program",
+      "nodeId": "mt_nx4a3kH-59",
+      "adapter": "issue341-B218-p103t",
+      "taskHash": "3cbd5146577df2cb9b773c430ca53039a285bd431b1ea77faf7b0ec77b397c8c",
+      "method": null
+    },
+    {
+      "sessionId": "design34",
+      "index": 1,
+      "type": "x-p34-program",
+      "nodeId": "mt_nx4a3kH-59",
+      "adapter": "issue341-B218-p103t",
+      "taskHash": "e30f6370df100ab654f2776554a988537838729d67e5304050b82d488318d4fe",
+      "method": null
+    },
+    {
+      "sessionId": "toolchoice",
+      "index": 3,
+      "type": "x-toolwork",
+      "nodeId": "mt_zMEvtigoM3",
+      "adapter": "issue341-B218-p104t",
+      "taskHash": "4682de9d44be426e09691a8af01e52966d35e1bf4886eb442eb648225957895d",
+      "method": null
+    },
+    {
+      "sessionId": "toolchoice",
+      "index": 4,
+      "type": "x-toolwork",
+      "nodeId": "mt_zMEvtigoM3",
+      "adapter": "issue341-B218-p104t",
+      "taskHash": "59c5db26e7baf11d9781316e7df8677e5a15d1f3c243c379ae13a314edf491ae",
+      "method": null
+    },
+    {
+      "sessionId": "strategy39",
+      "index": 3,
+      "type": "x-toolwork",
+      "nodeId": "mt_mQcWGh02no",
+      "adapter": "issue341-B218-p104t",
+      "taskHash": "59c5db26e7baf11d9781316e7df8677e5a15d1f3c243c379ae13a314edf491ae",
+      "method": null
+    },
+    {
+      "sessionId": "strategy39",
+      "index": 4,
+      "type": "x-toolwork",
+      "nodeId": "mt_mQcWGh02no",
+      "adapter": "issue341-B218-p104t",
+      "taskHash": "f737425d54111adc53d3a5b1525b5cfa9ade58ff320f70ef0075cf48167f808b",
+      "method": null
+    },
+    {
+      "sessionId": "strategy39",
+      "index": 0,
+      "type": "x-s39-choose",
+      "nodeId": "mt_mQcWGh02no",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "a6d2783245da097ec131ef1aaa320dbe598b1c977c304f1c51597acddaedba87",
+      "method": null
+    },
+    {
+      "sessionId": "strategy39",
+      "index": 1,
+      "type": "x-s39-choose",
+      "nodeId": "mt_mQcWGh02no",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "a21a29e89f3a1fb2f593b1ca1ceea56b14b97e5725220d0651f2b6add84103ac",
+      "method": null
+    },
+    {
+      "sessionId": "tools39",
+      "index": 0,
+      "type": "x-s39-choose",
+      "nodeId": "mt_d-WZC2OyMB",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "fa6b43a9ccdea6eece97c3492431860b9c076d1e5861ee7d49545023d77dd04b",
+      "method": null
+    },
+    {
+      "sessionId": "tools39",
+      "index": 1,
+      "type": "x-s39-choose",
+      "nodeId": "mt_d-WZC2OyMB",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "606e1840f80bdc176ac1f18c9d2cc4aa8488817671e52074ba0d7a9925c57321",
+      "method": null
+    },
+    {
+      "sessionId": "tools39",
+      "index": 3,
+      "type": "x-s39-choose",
+      "nodeId": "mt_d-WZC2OyMB",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "cc0185f5827d90f88b2eb7a63c9ae11554d07b3ad388965200ae67a7581292a2",
+      "method": null
+    },
+    {
+      "sessionId": "representations39",
+      "index": 0,
+      "type": "x-s39-choose",
+      "nodeId": "mt_IwEOCN6bL1",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "85159bc5608b3058f7bc19700e70dcce79f68f9fb8fa3d6ffa9fc80eb741e6d5",
+      "method": null
+    },
+    {
+      "sessionId": "representations39",
+      "index": 1,
+      "type": "x-s39-choose",
+      "nodeId": "mt_IwEOCN6bL1",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "1cc67cbfc45888779d8bf220c4a8fe55f299b8c926405e60d54649ffc8571d14",
+      "method": null
+    },
+    {
+      "sessionId": "calculator39",
+      "index": 1,
+      "type": "x-s39-choose",
+      "nodeId": "mt_ish_uH8vZe",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "904850a48d6cd3c9724a9e4d8e8a3c7b5dbd8e01fbdeacc2f71aa94c0203751a",
+      "method": null
+    },
+    {
+      "sessionId": "calculator39",
+      "index": 2,
+      "type": "x-s39-choose",
+      "nodeId": "mt_ish_uH8vZe",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "952964456a23217670aa72436d9b738c2ccb6f6d955f4b8444088bcf1e9530f7",
+      "method": null
+    },
+    {
+      "sessionId": "factorlab",
+      "index": 1,
+      "type": "x-numbersearch",
+      "nodeId": "mt_FHIAv6dfhU",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "1059544ba30ec89c353645515c8fd54552ceccb0faf812265188c804efe9ebd8",
+      "method": null
+    },
+    {
+      "sessionId": "factorlab",
+      "index": 2,
+      "type": "x-numbersearch",
+      "nodeId": "mt_FHIAv6dfhU",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "e5f3772c2487d4cfb59358741b66387335378400a6f665401779a74fceaa5bfb",
+      "method": null
+    },
+    {
+      "sessionId": "factorlab",
+      "index": 3,
+      "type": "x-numbersearch",
+      "nodeId": "mt_FHIAv6dfhU",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "cc13d1d2080f9219f621c0bf8ca7e6a2058661f9aee784d09b0dfaedb59a455c",
+      "method": null
+    },
+    {
+      "sessionId": "factorlab",
+      "index": 4,
+      "type": "x-numbersearch",
+      "nodeId": "mt_FHIAv6dfhU",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "e4a4001b24868e59ca72d6fea3a12e22c7f5ac7d36fb04f0aa2477840a629144",
+      "method": null
+    },
+    {
+      "sessionId": "factorlab",
+      "index": 5,
+      "type": "x-numbersearch",
+      "nodeId": "mt_FHIAv6dfhU",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "4526b0722685c5892f349f5f9b9381a888ce5a78cae28a287cbb8e00f755135f",
+      "method": null
+    },
+    {
+      "sessionId": "factoruse",
+      "index": 0,
+      "type": "x-numbersearch",
+      "nodeId": "mt_0Wg5F97osg",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "2c1dc1f951fbda257d3d4732f963d3b0f6779fcc4aaa0d4f48a4cc9119dd1e14",
+      "method": null
+    },
+    {
+      "sessionId": "factoruse",
+      "index": 1,
+      "type": "x-numbersearch",
+      "nodeId": "mt_0Wg5F97osg",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "433a0b699133acce99150cd7b6f1b8b1e4a1bafffb62d5ee9a816f735c3a3b22",
+      "method": null
+    },
+    {
+      "sessionId": "factoruse",
+      "index": 2,
+      "type": "x-numbersearch",
+      "nodeId": "mt_0Wg5F97osg",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "b2cf5e6017938716085388effdc6bab66bbacfa0c4692b8a0ad826dced05b308",
+      "method": null
+    },
+    {
+      "sessionId": "primetest",
+      "index": 3,
+      "type": "x-numbersearch",
+      "nodeId": "mt_y1XCVsIelg",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "34955aa89254a8d5ea7e3e6afcb040e58fed2a9728fc03aa0883c622baaca85e",
+      "method": null
+    },
+    {
+      "sessionId": "squarecube",
+      "index": 2,
+      "type": "x-numbersearch",
+      "nodeId": "mt_gxCIASSezX",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "2d51e87b365d04a58e006687e47fade6b22054b9790debd46864fe193e675ca0",
+      "method": null
+    },
+    {
+      "sessionId": "term38",
+      "index": 1,
+      "type": "x-numbersearch",
+      "nodeId": "mt_xfwv0M83mJ",
+      "adapter": "issue341-B218-p105n",
+      "taskHash": "1059544ba30ec89c353645515c8fd54552ceccb0faf812265188c804efe9ebd8",
+      "method": null
+    },
+    {
+      "sessionId": "factorcode",
+      "index": 1,
+      "type": "x-factorcode",
+      "nodeId": "mt_bZC-wqWX7Y",
+      "adapter": "issue341-B218-p105c",
+      "taskHash": "b24cacb73fa68511e1c44a0b91ddecc421257472e72de46a97d9da9eaeb8e75f",
+      "method": null
+    },
+    {
+      "sessionId": "factorcode",
+      "index": 3,
+      "type": "x-factorcode",
+      "nodeId": "mt_bZC-wqWX7Y",
+      "adapter": "issue341-B218-p105c",
+      "taskHash": "0f6c07e7d4c6abdc38b48afc8421a1f6601b2e9caff31fe69ad23b658fe4fe1e",
+      "method": null
+    },
+    {
+      "sessionId": "primeforest",
+      "index": 0,
+      "type": "x-factorforest",
+      "nodeId": "mt_xhoOWnhtHq",
+      "adapter": "issue341-B218-p105f",
+      "taskHash": "326da521788da4dfe125e17792594d55d078d9951820abe672b2039d2f14fdf0",
+      "method": null
+    },
+    {
+      "sessionId": "primeforest",
+      "index": 1,
+      "type": "x-factorforest",
+      "nodeId": "mt_xhoOWnhtHq",
+      "adapter": "issue341-B218-p105f",
+      "taskHash": "032d0b96e9d44c88c597b7a4455dfc1c73c581ef1ec6a2cf73de5f8eb4b33afb",
+      "method": null
+    },
+    {
+      "sessionId": "primeforest",
+      "index": 2,
+      "type": "x-factorforest",
+      "nodeId": "mt_xhoOWnhtHq",
+      "adapter": "issue341-B218-p105f",
+      "taskHash": "559c007cb78d9200f45d26936a901e2e5498df6a3e4805ffe3ed9e61fa4e42c2",
+      "method": null
+    },
+    {
+      "sessionId": "primeforest",
+      "index": 3,
+      "type": "x-factorforest",
+      "nodeId": "mt_xhoOWnhtHq",
+      "adapter": "issue341-B218-p105f",
+      "taskHash": "d410f55f5cf01bc9da789deb59477793e63ff81863655d35831fe2c12cab8917",
+      "method": null
+    },
+    {
+      "sessionId": "partswithin",
+      "index": 2,
+      "type": "x-partbuild",
+      "nodeId": "mt_BK5xwkrD5C",
+      "adapter": "issue341-B218-p106p",
+      "taskHash": "dcc8018242bd2d64b108672982a1c4bc0775184243cc103610d9df4949feede4",
+      "method": null
+    },
+    {
+      "sessionId": "precisefractions",
+      "index": 0,
+      "type": "x-fractiontalk",
+      "nodeId": "mt_HY8Yycu_rz",
+      "adapter": "issue341-B218-p106n",
+      "taskHash": "b745e0c23434ec260c393cf8ad64808f374e3893cb1a7d3eee296f8e13b8249c",
+      "method": null
+    },
+    {
+      "sessionId": "precisefractions",
+      "index": 2,
+      "type": "x-fractiontalk",
+      "nodeId": "mt_HY8Yycu_rz",
+      "adapter": "issue341-B218-p106n",
+      "taskHash": "baaea912bc6b72df66c81fb193e4515f777edfeb4c85f31ac8438995fd372020",
+      "method": null
+    },
+    {
+      "sessionId": "remainders",
+      "index": 3,
+      "type": "x-planproduct",
+      "nodeId": "mt_p-nbe0w_lf",
+      "adapter": "issue341-B218-p107p",
+      "taskHash": "a226434c8efd9bc80ba6b7cb9489e68cdf3235fb2b0f3cd509968befcc5ff17f",
+      "method": null
+    },
+    {
+      "sessionId": "remainders",
+      "index": 4,
+      "type": "x-planproduct",
+      "nodeId": "mt_p-nbe0w_lf",
+      "adapter": "issue341-B218-p107p",
+      "taskHash": "0893576e1c69162ff67758968d1750c9dd63d49f2c236d2a56887d6d04642574",
+      "method": null
+    },
+    {
+      "sessionId": "factoruse",
+      "index": 4,
+      "type": "x-planproduct",
+      "nodeId": "mt_0Wg5F97osg",
+      "adapter": "issue341-B218-p107p",
+      "taskHash": "ac8fd2af6c812a0e5e7ed5c64f08053405d4f793118d07323c2b89570455f5d0",
+      "method": null
+    },
+    {
+      "sessionId": "representationmap",
+      "index": 0,
+      "type": "x-algebrabar",
+      "nodeId": "mt_9KmVWCuh5_",
+      "adapter": "issue341-B218-p109b",
+      "taskHash": "03a0cf7da68af78dfd306b686916d31eddd1be02bb13728eca6c601b4fbd1cc0",
+      "method": null
+    },
+    {
+      "sessionId": "twostep35",
+      "index": 0,
+      "type": "x-algebrabar",
+      "nodeId": "mt_anAe11HAEH",
+      "adapter": "issue341-B218-p109b",
+      "taskHash": "8c1a38b5eaf8295d25c760e6a3bc24bec9be21745504a866e57f4a2e4578b0df",
+      "method": null
+    },
+    {
+      "sessionId": "twostep35",
+      "index": 2,
+      "type": "x-algebrabar",
+      "nodeId": "mt_anAe11HAEH",
+      "adapter": "issue341-B218-p109b",
+      "taskHash": "ce18a6cce31f97c4ec68109394c17e64cb54bfe9eaccb82a3cb58e7fd3bf11db",
+      "method": null
+    },
+    {
+      "sessionId": "writing35",
+      "index": 1,
+      "type": "x-algebrabar",
+      "nodeId": "mt_i9rJbuFO3p",
+      "adapter": "issue341-B218-p109b",
+      "taskHash": "e1dc4ab36d317fb22109e31881e877077a42a5d98b84d1f498279652588b45d5",
+      "method": null
+    },
+    {
+      "sessionId": "writing35",
+      "index": 2,
+      "type": "x-a35-sort",
+      "nodeId": "mt_i9rJbuFO3p",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "a6404c98f13455e6887094f66466fb5fbd1efc3b099cbe57749fdf231a85682a",
+      "method": null
+    },
+    {
+      "sessionId": "notation35",
+      "index": 0,
+      "type": "x-a35-sort",
+      "nodeId": "mt_KwdjWEmMNo",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "722620a6a371d7d3781fca6b6e2e6aa97f8280cb3785c975f75506822c8fe7bb",
+      "method": null
+    },
+    {
+      "sessionId": "notation35",
+      "index": 1,
+      "type": "x-a35-sort",
+      "nodeId": "mt_KwdjWEmMNo",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "9b3046d6f8256e4b88e88522750c38b6a59f75fe35add2c653002e4d1bedee57",
+      "method": null
+    },
+    {
+      "sessionId": "words35",
+      "index": 0,
+      "type": "x-a35-sort",
+      "nodeId": "mt_g_fkAqmz72",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "319b19f581397c7c2934a9daf3fdba1de43853e29347800ba67ff8d78336e6c1",
+      "method": null
+    },
+    {
+      "sessionId": "words35",
+      "index": 1,
+      "type": "x-a35-sort",
+      "nodeId": "mt_g_fkAqmz72",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "23a0e831baa78517b8578571b2e1197e0a4aa37394c7bcb9cdc8f343e912bc04",
+      "method": null
+    },
+    {
+      "sessionId": "words35",
+      "index": 2,
+      "type": "x-a35-sort",
+      "nodeId": "mt_g_fkAqmz72",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "ef6a8d8e8075d885110636f4d21b4a42ed0b0d3541d5e7befe90c6dc90aea9d9",
+      "method": null
+    },
+    {
+      "sessionId": "terms35",
+      "index": 0,
+      "type": "x-a35-sort",
+      "nodeId": "mt_nNNVrLqPW3",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "bc6cbd02e0840868672010246bfdda39af464ab7e80d21aaccf25a5c0abd4349",
+      "method": null
+    },
+    {
+      "sessionId": "terms35",
+      "index": 1,
+      "type": "x-a35-sort",
+      "nodeId": "mt_nNNVrLqPW3",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "bb6ff64d08824aec18d70251f5231121dc4271424976eea893c5b911ca15251e",
+      "method": null
+    },
+    {
+      "sessionId": "terms35",
+      "index": 2,
+      "type": "x-a35-sort",
+      "nodeId": "mt_nNNVrLqPW3",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "f2c29444683e3b30601ce76cbfab6ddbc9a262420bb93ff3df2de638838b0728",
+      "method": null
+    },
+    {
+      "sessionId": "linear36",
+      "index": 2,
+      "type": "x-a35-sort",
+      "nodeId": "mt_WBdHkc2HTf",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "2f5e25238d15e0bb563633ca505547c3e57d2a0c3fd3c4adc280601eab0b9aa2",
+      "method": null
+    },
+    {
+      "sessionId": "rearrange36",
+      "index": 0,
+      "type": "x-a35-sort",
+      "nodeId": "mt_3qrCtdoVAU",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "f99047124f05de2a1456dd20fb11dd0709d5bb49d8f8bbdd389df953398610cb",
+      "method": null
+    },
+    {
+      "sessionId": "advancedWords38",
+      "index": 1,
+      "type": "x-a35-sort",
+      "nodeId": "mt_3rTIyJDw7-",
+      "adapter": "issue341-B218-p109a",
+      "taskHash": "623d808e41977720b3995b893c41781a87ccd8191e6eed67e3e4a9bdb2043aca",
+      "method": null
+    },
+    {
+      "sessionId": "plot36",
+      "index": 1,
+      "type": "x-f36-form",
+      "nodeId": "mt_-3udyo6VyB",
+      "adapter": "issue341-B218-p109f",
+      "taskHash": "92f26d9061a486b290e77cdc8b0106859079a3d9a326c0e7af9a846220c0e6cd",
+      "method": null
+    },
+    {
+      "sessionId": "rearrange36",
+      "index": 1,
+      "type": "x-f36-form",
+      "nodeId": "mt_3qrCtdoVAU",
+      "adapter": "issue341-B218-p109f",
+      "taskHash": "df025886dc2e247d139b98de32de582c1314f24cdcff6d1dd18e45534d6181dc",
+      "method": null
+    },
+    {
+      "sessionId": "rearrange36",
+      "index": 2,
+      "type": "x-f36-form",
+      "nodeId": "mt_3qrCtdoVAU",
+      "adapter": "issue341-B218-p109f",
+      "taskHash": "1b4297b6e0a2a1580f91f4f2990ac8024275128b9e434cb31f0f7f56ae919f9d",
+      "method": null
+    },
+    {
+      "sessionId": "rearrange36",
+      "index": 3,
+      "type": "x-f36-form",
+      "nodeId": "mt_3qrCtdoVAU",
+      "adapter": "issue341-B218-p109f",
+      "taskHash": "2029c13f6ca017a85f03f8d017e6f13f21c0e70d6d09f25f4de56e239f26a400",
+      "method": null
+    },
+    {
+      "sessionId": "statwords",
+      "index": 0,
+      "type": "x-statcentre",
+      "nodeId": "mt_fmm-P17Vka",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "16c55c5295f0f19b94bae151a0a0dc42766f9a2ffe4c101ba0c39f80f8719e71",
+      "method": null
+    },
+    {
+      "sessionId": "statwords",
+      "index": 1,
+      "type": "x-statcentre",
+      "nodeId": "mt_fmm-P17Vka",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "992c688aa55f9364094830c1eb1621ae6d59fd1d84acbaa10109c747d74ba897",
+      "method": null
+    },
+    {
+      "sessionId": "meanbalance",
+      "index": 0,
+      "type": "x-statcentre",
+      "nodeId": "mt_Cg8VPguS_V",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "7cd0762e78e1e0e4a74a8df33f19d3e00207116f566e39ea1170ed663bcf3dc2",
+      "method": null
+    },
+    {
+      "sessionId": "meanbalance",
+      "index": 1,
+      "type": "x-statcentre",
+      "nodeId": "mt_Cg8VPguS_V",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "2bbc697cf68f741137706e3a296b607be68b2326fc7b57fd6ad047f4a9641570",
+      "method": null
+    },
+    {
+      "sessionId": "meanbalance",
+      "index": 2,
+      "type": "x-statcentre",
+      "nodeId": "mt_Cg8VPguS_V",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "f102506b895645588b5209c2818e196acde91ad638c9e4db968df79e4786137e",
+      "method": null
+    },
+    {
+      "sessionId": "averagestory",
+      "index": 0,
+      "type": "x-statcentre",
+      "nodeId": "mt_XSXnTQoQ4l",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "fa6e053fba8619b9cf0f9f8ff7114a2780370f85974842c8e3f5eb67e944fc01",
+      "method": null
+    },
+    {
+      "sessionId": "averagestory",
+      "index": 1,
+      "type": "x-statcentre",
+      "nodeId": "mt_XSXnTQoQ4l",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "f71713eb257cd5a096c9502f5e254138d1ed02d283539af99c89cc7db6510291",
+      "method": null
+    },
+    {
+      "sessionId": "quartiles",
+      "index": 0,
+      "type": "x-statcentre",
+      "nodeId": "mt_KCS9GbZgU_",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "3dfe6fe3d9e229436705c20c3806ae82c6af4d5f9d55055ce296cd9a0ab4960f",
+      "method": null
+    },
+    {
+      "sessionId": "quartiles",
+      "index": 1,
+      "type": "x-statcentre",
+      "nodeId": "mt_KCS9GbZgU_",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "dbdb7a49fc1807fc1ff0bc2d1dc917b9b451bbe22aadd502349e7f2f360663a4",
+      "method": null
+    },
+    {
+      "sessionId": "quartiles",
+      "index": 2,
+      "type": "x-statcentre",
+      "nodeId": "mt_KCS9GbZgU_",
+      "adapter": "issue341-B218-p110c",
+      "taskHash": "fcc08a037977aaf0e3075f75895a8a259288188b4d2084129a21705ba11a71f7",
+      "method": null
+    },
+    {
+      "sessionId": "meandistance",
+      "index": 2,
+      "type": "x-distribution",
+      "nodeId": "mt_ZfpeI1CFyP",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "04c772ee94c7ee5394f6175dc346a89a1bff3f3246b1cfb46eb74bd5551a3c0a",
+      "method": null
+    },
+    {
+      "sessionId": "averagestory",
+      "index": 2,
+      "type": "x-distribution",
+      "nodeId": "mt_XSXnTQoQ4l",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "cad364947b111c05617ec302ba7597fec3e5efe4b7f99cdc5258bf338de46ad3",
+      "method": null
+    },
+    {
+      "sessionId": "distributionlook",
+      "index": 0,
+      "type": "x-distribution",
+      "nodeId": "mt_OwYms2tB1L",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "4092e65b294b8f0897eaf23d913bb2c6040cc3ce75c37edb949b67d599ce0a85",
+      "method": null
+    },
+    {
+      "sessionId": "distributionlook",
+      "index": 1,
+      "type": "x-distribution",
+      "nodeId": "mt_OwYms2tB1L",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "9d620117f16fd1290cbb6d3fd2ef255f32378d4db8709b9c6c91b5466dda6948",
+      "method": null
+    },
+    {
+      "sessionId": "digitalsets",
+      "index": 2,
+      "type": "x-distribution",
+      "nodeId": "mt_mn765HbXi1",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "4f74fc5ab103cb2cfe11d2230a491bab1b29d553e51ff8d0b790923d073fceb0",
+      "method": null
+    },
+    {
+      "sessionId": "comparepeople",
+      "index": 0,
+      "type": "x-distribution",
+      "nodeId": "mt_km4V6d5IAh",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "d780c35776afa45e6e13bad1d0bbbdbf7541e2e055eed5d3059c2d0c70ad2218",
+      "method": null
+    },
+    {
+      "sessionId": "comparepeople",
+      "index": 2,
+      "type": "x-distribution",
+      "nodeId": "mt_km4V6d5IAh",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "9d9f1b50f15f3cdfc3943728f9b613a163774ea4025ff62c69b07d3f93b99d01",
+      "method": null
+    },
+    {
+      "sessionId": "comparegap",
+      "index": 0,
+      "type": "x-distribution",
+      "nodeId": "mt_A2hKhHXgL5",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "e3e0c9cec74b96ea3f7dd76f956d9e5fd95db7e97c7c65112ffcff0ffe676acf",
+      "method": null
+    },
+    {
+      "sessionId": "comparegap",
+      "index": 1,
+      "type": "x-distribution",
+      "nodeId": "mt_A2hKhHXgL5",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "1916e9ffa811cded6c1e8899d6f289eb9de4b44243342bf81ef225e22c27bf8c",
+      "method": null
+    },
+    {
+      "sessionId": "comparegap",
+      "index": 2,
+      "type": "x-distribution",
+      "nodeId": "mt_A2hKhHXgL5",
+      "adapter": "issue341-B218-p110d",
+      "taskHash": "2a819f16f73aee32bfd9f29f3d5eda9bcf789fa71d227a1ff99b43ab7205e171",
+      "method": null
+    },
+    {
+      "sessionId": "distributionlook",
+      "index": 2,
+      "type": "x-mediarepair",
+      "nodeId": "mt_OwYms2tB1L",
+      "adapter": "issue341-B218-p110m",
+      "taskHash": "f601a4a476a14799ddc035c51547d19789cc080ae206cc412d1ab9531567019d",
+      "method": null
+    },
+    {
+      "sessionId": "medialens",
+      "index": 0,
+      "type": "x-mediarepair",
+      "nodeId": "mt_8IsaoMPvod",
+      "adapter": "issue341-B218-p110m",
+      "taskHash": "6aaecdf6231d4c0df7d221aae3d497ec720cc315188bc107d9a2a102062bda64",
+      "method": null
+    },
+    {
+      "sessionId": "medialens",
+      "index": 1,
+      "type": "x-mediarepair",
+      "nodeId": "mt_8IsaoMPvod",
+      "adapter": "issue341-B218-p110m",
+      "taskHash": "0297aa938fffd127738d640a41342a73200abfd9c037fece1f106e20777a1c3d",
+      "method": null
+    },
+    {
+      "sessionId": "medialens",
+      "index": 2,
+      "type": "x-mediarepair",
+      "nodeId": "mt_8IsaoMPvod",
+      "adapter": "issue341-B218-p110m",
+      "taskHash": "b668c88d0b023d7a8d0ec55755cd299b375e970eeca5a7c44e6dab337d3e131c",
+      "method": null
+    },
+    {
+      "sessionId": "comparepeople",
+      "index": 1,
+      "type": "x-mediarepair",
+      "nodeId": "mt_km4V6d5IAh",
+      "adapter": "issue341-B218-p110m",
+      "taskHash": "3704e261ddd938f1103fc0e51f4f6daf0afa392a40f1a89745313f30210c2dfb",
+      "method": null
+    },
+    {
+      "sessionId": "writing35",
+      "index": 0,
+      "type": "x-a35-build",
+      "nodeId": "mt_i9rJbuFO3p",
+      "adapter": "issue341-B218-p111a",
+      "taskHash": "147200509f080903b5b87f76d10715d71bec0cf40055b8a21285cece3e6dbe48",
+      "method": null
+    },
+    {
+      "sessionId": "advancedPlan38",
+      "index": 2,
+      "type": "x-a35-build",
+      "nodeId": "mt_FieL-vVTI_",
+      "adapter": "issue341-B218-p111a",
+      "taskHash": "147200509f080903b5b87f76d10715d71bec0cf40055b8a21285cece3e6dbe48",
+      "method": null
+    },
+    {
+      "sessionId": "systems35",
+      "index": 0,
+      "type": "x-a35-plot",
+      "nodeId": "mt_mqgu72aCMz",
+      "adapter": "issue341-B218-p111g",
+      "taskHash": "6429e2364204c5df1f8f4a4d1977267a584b3c48cc976eeb8d9818c299590112",
+      "method": null
+    },
+    {
+      "sessionId": "systems35",
+      "index": 1,
+      "type": "x-a35-plot",
+      "nodeId": "mt_mqgu72aCMz",
+      "adapter": "issue341-B218-p111g",
+      "taskHash": "699f59fdd61c75c87a42be25dcddeba2578e462d3dc3c3f3ae8c1530c9e1aafb",
+      "method": null
+    },
+    {
+      "sessionId": "chanceorder",
+      "index": 1,
+      "type": "x-p22-order",
+      "nodeId": "mt_UcGn2hjhYU",
+      "adapter": "issue341-B218-p112b",
+      "taskHash": "e32656ecc9f522a5126f9ff1c540874f859177c96672a976a47a4d9c29b4d36e",
+      "method": null
+    },
+    {
+      "sessionId": "chancesets",
+      "index": 0,
+      "type": "x-p22-venn",
+      "nodeId": "mt_1YwOCMMwD8",
+      "adapter": "issue341-B218-p112v",
+      "taskHash": "b49927fb4621037c49b99fb8a0a4149707e5a785f793849cbeba669659fcfb57",
+      "method": null
+    },
+    {
+      "sessionId": "chancesets",
+      "index": 2,
+      "type": "x-p22-venn",
+      "nodeId": "mt_1YwOCMMwD8",
+      "adapter": "issue341-B218-p112v",
+      "taskHash": "e7ea2195297e493121a259059504afdfac9a84d41f0c4e3b4d03279e5d557fc9",
+      "method": null
+    },
+    {
+      "sessionId": "chancevenn",
+      "index": 0,
+      "type": "x-p22-venn",
+      "nodeId": "mt_eSv_w46u6H",
+      "adapter": "issue341-B218-p112v",
+      "taskHash": "0b16cf75043c9ccbe4ef39c3d302148d2fe621b1d6051d1d491b3dd8a2b661e3",
+      "method": null
+    },
+    {
+      "sessionId": "chancevenn",
+      "index": 1,
+      "type": "x-p22-venn",
+      "nodeId": "mt_eSv_w46u6H",
+      "adapter": "issue341-B218-p112v",
+      "taskHash": "4e8366b3764b934ee67237984c34460e27907bb95075a333cc939134720081f6",
+      "method": null
+    },
+    {
+      "sessionId": "chancevenn",
+      "index": 2,
+      "type": "x-p22-venn",
+      "nodeId": "mt_eSv_w46u6H",
+      "adapter": "issue341-B218-p112v",
+      "taskHash": "c30031bd7fc613825777db36c18a9ee4c762300d61ebc4b8eec8b8b30fe524f3",
+      "method": null
+    },
+    {
+      "sessionId": "shift10",
+      "index": 0,
+      "type": "x-pvshift",
+      "nodeId": "mt_kw7xmp68rU",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "a0bfe750d6e635f194e00d80d3b7de61482c1558dad3a1a7a3c816e03ea2af4c",
+      "method": null
+    },
+    {
+      "sessionId": "shift10",
+      "index": 1,
+      "type": "x-pvshift",
+      "nodeId": "mt_kw7xmp68rU",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "b7778525c8f055a3a9c84ba906bc80ee56cab3bb5ec905160baaff49b764313b",
+      "method": null
+    },
+    {
+      "sessionId": "shift10",
+      "index": 2,
+      "type": "x-pvshift",
+      "nodeId": "mt_kw7xmp68rU",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "e301a9ecaec55c05728f9a7c45855e538cce7ee07e1074b7058ed090905bf1f4",
+      "method": null
+    },
+    {
+      "sessionId": "shift10",
+      "index": 3,
+      "type": "x-pvshift",
+      "nodeId": "mt_kw7xmp68rU",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "1ce037951f0c9911dfb2b68f8304ca7c8a2416188c3f329a440be02037f16bac",
+      "method": null
+    },
+    {
+      "sessionId": "twoproblems",
+      "index": 0,
+      "type": "x-pvshift",
+      "nodeId": "mt_kJGCjnuelW",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "66417539a37a5bdf5d2b5bfb584643dfd1921136576d971261c3b496b5c9e0a5",
+      "method": null
+    },
+    {
+      "sessionId": "twoproblems",
+      "index": 1,
+      "type": "x-pvshift",
+      "nodeId": "mt_kJGCjnuelW",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "fb221d652d4d79115b3ec2a4536965f35a4820134d1f52e6a377db0b4bf9b15e",
+      "method": null
+    },
+    {
+      "sessionId": "shift100",
+      "index": 0,
+      "type": "x-pvshift",
+      "nodeId": "mt_izien3ZX51",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "5e335d920e302127b52d6d760169ba8ecd47d3563fe14690ebc936ab4711abc1",
+      "method": null
+    },
+    {
+      "sessionId": "shift100",
+      "index": 1,
+      "type": "x-pvshift",
+      "nodeId": "mt_izien3ZX51",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "db0349aeb7c806409d06991bc1371d2958e9e50ca540038c04b23d4323ae95b0",
+      "method": null
+    },
+    {
+      "sessionId": "shift100",
+      "index": 2,
+      "type": "x-pvshift",
+      "nodeId": "mt_izien3ZX51",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "0f3218350a5c5a0e3a4211d88095966b905cbf7137bf6d08e257174748b17a7b",
+      "method": null
+    },
+    {
+      "sessionId": "shift100",
+      "index": 3,
+      "type": "x-pvshift",
+      "nodeId": "mt_izien3ZX51",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "b310eb3ab48ff4ba6b9d48f820187e49cab9368898ff9377db0a1b560ba6bc68",
+      "method": null
+    },
+    {
+      "sessionId": "shift100",
+      "index": 4,
+      "type": "x-pvshift",
+      "nodeId": "mt_izien3ZX51",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "daa00e2fc926348d5ddac163f6155ae229013f28aef540393c7e63509e1460dd",
+      "method": null
+    },
+    {
+      "sessionId": "shift100",
+      "index": 5,
+      "type": "x-pvshift",
+      "nodeId": "mt_izien3ZX51",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "78d39bf0fa53fabe84740da6463f2f2073f9d0e912f57ab48c1343d1800cfdbd",
+      "method": null
+    },
+    {
+      "sessionId": "structure34",
+      "index": 0,
+      "type": "x-pvshift",
+      "nodeId": "mt_FAXjFkgG6X",
+      "adapter": "issue341-B218-p113s",
+      "taskHash": "0f3218350a5c5a0e3a4211d88095966b905cbf7137bf6d08e257174748b17a7b",
+      "method": null
+    },
+    {
+      "sessionId": "solidnames",
+      "index": 0,
+      "type": "x-g27-sort",
+      "nodeId": "mt_Qcp2d_kuta",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "1e55df9b67792c2aa22ab8b39290b4bd6ef4be18eaeae72694b411065cf8bf49",
+      "method": null
+    },
+    {
+      "sessionId": "solidnames",
+      "index": 1,
+      "type": "x-g27-sort",
+      "nodeId": "mt_Qcp2d_kuta",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "f5019fb4c762ccb8a630d25d9fac01d4406bba4bc55ad9f3595e9c1b17273bf2",
+      "method": null
+    },
+    {
+      "sessionId": "solidnames",
+      "index": 2,
+      "type": "x-g27-sort",
+      "nodeId": "mt_Qcp2d_kuta",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "c65082e42d6da76504b6eb7d5311c0ec35646d4affb682db05471cf82c200f10",
+      "method": null
+    },
+    {
+      "sessionId": "flatcorners",
+      "index": 0,
+      "type": "x-g27-sort",
+      "nodeId": "mt_yGv8doDAmp",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "b1283fe0acc1fabd73526f2803c3a0018ee66d9c8f6d3cf6fb9c08a09345eb54",
+      "method": null
+    },
+    {
+      "sessionId": "flatcorners",
+      "index": 1,
+      "type": "x-g27-sort",
+      "nodeId": "mt_yGv8doDAmp",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "604e3c0fba659070846b36c53184664328f99dcadd6bd123630d950175ff885f",
+      "method": null
+    },
+    {
+      "sessionId": "flatcorners",
+      "index": 2,
+      "type": "x-g27-sort",
+      "nodeId": "mt_yGv8doDAmp",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "5ef75fc0f4ff855f88e05ad4a346c5689d47c58a8b2b2979ee0405f8b947e1f8",
+      "method": null
+    },
+    {
+      "sessionId": "flatvsolid",
+      "index": 0,
+      "type": "x-g27-sort",
+      "nodeId": "mt_mnEVZNkX3p",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "795702deb01c182a82a3ff1c50d764177b41c04e89e93c582fefbeded4f967a0",
+      "method": null
+    },
+    {
+      "sessionId": "flatvsolid",
+      "index": 1,
+      "type": "x-g27-sort",
+      "nodeId": "mt_mnEVZNkX3p",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "35a3d801f56d2b4e83fe7c20b369b24a52637cefe9f23d747d7f654cacd7194b",
+      "method": null
+    },
+    {
+      "sessionId": "flatvsolid",
+      "index": 2,
+      "type": "x-g27-sort",
+      "nodeId": "mt_mnEVZNkX3p",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "1a0c3b8c69e8acdb3861a2d4f50d09b1586e4b01490239edae7745685735a5f5",
+      "method": null
+    },
+    {
+      "sessionId": "solidstack",
+      "index": 2,
+      "type": "x-g27-sort",
+      "nodeId": "mt_QNxFnxikCN",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "41c2c9ac94d848a8183f4c7b7895bd0c29ed2652b293fa8486e1861b72d54c0a",
+      "method": null
+    },
+    {
+      "sessionId": "solidsort",
+      "index": 0,
+      "type": "x-g27-sort",
+      "nodeId": "mt_fEuoBYw6bU",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "12edd5f4dfff95290ebe4d51a8956f35af4163d5d13b3f8bef36c2bd80b4649c",
+      "method": null
+    },
+    {
+      "sessionId": "solidsort",
+      "index": 1,
+      "type": "x-g27-sort",
+      "nodeId": "mt_fEuoBYw6bU",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "fa0df059ab71b105791920a1c905e99cf7f1ab1abdf89bf0488a670a8de5371f",
+      "method": null
+    },
+    {
+      "sessionId": "solidsort",
+      "index": 2,
+      "type": "x-g27-sort",
+      "nodeId": "mt_fEuoBYw6bU",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "f8f5f3526f7ee1fad52a4d3d904fd3b6463c7e719ba1b90ddecd02bbe248087c",
+      "method": null
+    },
+    {
+      "sessionId": "solidpictures",
+      "index": 0,
+      "type": "x-g27-sort",
+      "nodeId": "mt_wUSbRt3-qw",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "b3809674faf7acab07c47cf6da1adfbf2bbb84af9bac6c412566e7b70ab3d499",
+      "method": null
+    },
+    {
+      "sessionId": "solidpictures",
+      "index": 1,
+      "type": "x-g27-sort",
+      "nodeId": "mt_wUSbRt3-qw",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "66eb9234d27106d55befebb8cd348ba5553d570ff6529ca25b099d4f5e2a05dd",
+      "method": null
+    },
+    {
+      "sessionId": "solidpictures",
+      "index": 2,
+      "type": "x-g27-sort",
+      "nodeId": "mt_wUSbRt3-qw",
+      "adapter": "issue341-B218-p114s",
+      "taskHash": "b449fce1dad2f3c7a10d43aaed499a24a1f24b195d5eb720aa9d843ecb3f223f",
+      "method": null
+    },
+    {
+      "sessionId": "flatcorners",
+      "index": 3,
+      "type": "x-g27-face",
+      "nodeId": "mt_yGv8doDAmp",
+      "adapter": "issue341-B218-p114f",
+      "taskHash": "b16185895f54c9e1b22d01ba339c3d35e6da14f0d64785fd802c736aae4dbf8a",
+      "method": null
+    },
+    {
+      "sessionId": "solidfaces",
+      "index": 0,
+      "type": "x-g27-face",
+      "nodeId": "mt_UooUHC_V7U",
+      "adapter": "issue341-B218-p114f",
+      "taskHash": "429cc1f5a10adcd516b9f428a736f30ed6a42f4cb86fe3cc92a04b5b2195f8fe",
+      "method": null
+    },
+    {
+      "sessionId": "solidfaces",
+      "index": 1,
+      "type": "x-g27-face",
+      "nodeId": "mt_UooUHC_V7U",
+      "adapter": "issue341-B218-p114f",
+      "taskHash": "28706f79909a7c064cbfe37e4b9f034484162474413d7a255f8f893cba56efc0",
+      "method": null
+    },
+    {
+      "sessionId": "solidfaces",
+      "index": 2,
+      "type": "x-g27-face",
+      "nodeId": "mt_UooUHC_V7U",
+      "adapter": "issue341-B218-p114f",
+      "taskHash": "0e29d53281c7a025432d2973c76a3abb41f6bdd98ff332f2b8a628d7b78d2ec3",
+      "method": null
+    },
+    {
+      "sessionId": "crossparts",
+      "index": 2,
+      "type": "x-g27-cut",
+      "nodeId": "mt_nRksLqt-iR",
+      "adapter": "issue341-B218-p114c",
+      "taskHash": "c610a9b7bb64904498f16883c13153f465d7ea341dc9fe04c1fea1d7edb6cdea",
+      "method": null
+    },
+    {
+      "sessionId": "prismslices",
+      "index": 0,
+      "type": "x-g27-cut",
+      "nodeId": "mt_h02-C8PRrj",
+      "adapter": "issue341-B218-p114c",
+      "taskHash": "a25f80b4ce7785562916c04fba8d0179faa0bcf8eec0e6a978f7807671a5e3c0",
+      "method": null
+    },
+    {
+      "sessionId": "prismslices",
+      "index": 1,
+      "type": "x-g27-cut",
+      "nodeId": "mt_h02-C8PRrj",
+      "adapter": "issue341-B218-p114c",
+      "taskHash": "622e0fd5b30cdac43b4cf409e0b8819f6d7703541a324536885718737739e48d",
+      "method": null
+    },
+    {
+      "sessionId": "prismslices",
+      "index": 2,
+      "type": "x-g27-cut",
+      "nodeId": "mt_h02-C8PRrj",
+      "adapter": "issue341-B218-p114c",
+      "taskHash": "b03867e9d22883977531187df457f3d25d9ce9b34fc90f012e632d2466d7b5a8",
+      "method": null
+    },
+    {
+      "sessionId": "pointbuild",
+      "index": 0,
+      "type": "x-p24-grid",
+      "nodeId": "mt_i5_HnoFOYw",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "0ba7ff37a93d039608fe8c61be23910c6db795a01e8a0353de23b87639e7d90f",
+      "method": null
+    },
+    {
+      "sessionId": "pointbuild",
+      "index": 1,
+      "type": "x-p24-grid",
+      "nodeId": "mt_i5_HnoFOYw",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "261471586246a19595c3fff883730187033f78105907fbc69c972bee6401c160",
+      "method": null
+    },
+    {
+      "sessionId": "pointbuild",
+      "index": 2,
+      "type": "x-p24-grid",
+      "nodeId": "mt_i5_HnoFOYw",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "26f0865e339077f011a88d8cce0b4fb3e0d376f74787dfdddd4cf05d0bde03e9",
+      "method": null
+    },
+    {
+      "sessionId": "pointaxes",
+      "index": 0,
+      "type": "x-p24-grid",
+      "nodeId": "mt_oDlduFnemk",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "c3b3e1d71e872611634915dcf5da9d94b12eb99648d5a0d707c74d82b98aecb0",
+      "method": null
+    },
+    {
+      "sessionId": "pointaxes",
+      "index": 1,
+      "type": "x-p24-grid",
+      "nodeId": "mt_oDlduFnemk",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "c5c254dc112767ec7e4a6bbe9a0887b7b1db13ec99a85da13e518ed2e5f7053a",
+      "method": null
+    },
+    {
+      "sessionId": "pointaxes",
+      "index": 2,
+      "type": "x-p24-grid",
+      "nodeId": "mt_oDlduFnemk",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "ba39ec664b80769f388127c25044a59b9b0ca960168d0e911b0e4d3b4efba50e",
+      "method": null
+    },
+    {
+      "sessionId": "pointdistance",
+      "index": 0,
+      "type": "x-p24-grid",
+      "nodeId": "mt_h7zVgCDVmx",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "cd43f31da42ff261d50ecf45050036db836281ec81967f2f8d301dd06d02a824",
+      "method": null
+    },
+    {
+      "sessionId": "pointstory",
+      "index": 0,
+      "type": "x-p24-grid",
+      "nodeId": "mt_snlqRCiA1R",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "10a837fa383bb4d5ca2ab88b3f88373a787419608d983bc908080f26c32cf380",
+      "method": null
+    },
+    {
+      "sessionId": "pointstory",
+      "index": 1,
+      "type": "x-p24-grid",
+      "nodeId": "mt_snlqRCiA1R",
+      "adapter": "issue341-B218-p115g",
+      "taskHash": "d7741a4c44d48e4fe5a691d6e5263d1277f77618547be1756c04f9f9db8a1fcc",
+      "method": null
+    },
+    {
+      "sessionId": "geometrylab",
+      "index": 3,
+      "type": "x-p24-studio",
+      "nodeId": "mt_RdfzwInyAj",
+      "adapter": "issue341-B218-p115s",
+      "taskHash": "35fdfaebdb96347e8d5e9f10d633f74b3067f95db3dcd87ea4a19935dd546739",
+      "method": null
+    },
+    {
+      "sessionId": "patternfloor",
+      "index": 0,
+      "type": "x-p24-fan",
+      "nodeId": "mt_61Nhj8W78f",
+      "adapter": "issue341-B218-p115f",
+      "taskHash": "67cf90d194df985310dd7ad5f28d58a080ddeb85c43c503a8d7851377a7ee2e3",
+      "method": null
+    },
+    {
+      "sessionId": "patternfloor",
+      "index": 1,
+      "type": "x-p24-tiles",
+      "nodeId": "mt_61Nhj8W78f",
+      "adapter": "issue341-B218-p115t",
+      "taskHash": "ec3e1b37bc41d0293310b06029f030ede413bb9b422e9db74069e52c49ab7911",
+      "method": null
+    },
+    {
+      "sessionId": "chartfamilies",
+      "index": 0,
+      "type": "x-histbuild",
+      "nodeId": "mt_eKJG-0eC6D",
+      "adapter": "issue341-B218-p116h",
+      "taskHash": "508c6fa707bc9ae0d01974cac53b50181d85755e11747016a5da870c3ee3c054",
+      "method": null
+    },
+    {
+      "sessionId": "histogram",
+      "index": 0,
+      "type": "x-histbuild",
+      "nodeId": "mt_oderfUBZPw",
+      "adapter": "issue341-B218-p116h",
+      "taskHash": "2a10eccb3b0274ca55006910ca5fd4d910164e1b787386e4273528513d371937",
+      "method": null
+    },
+    {
+      "sessionId": "histogram",
+      "index": 2,
+      "type": "x-histbuild",
+      "nodeId": "mt_oderfUBZPw",
+      "adapter": "issue341-B218-p116h",
+      "taskHash": "36e4f9439846ce2c09173245dba048f6dfb07624b4875959414e4f08db8693cf",
+      "method": null
+    },
+    {
+      "sessionId": "chartfamilies",
+      "index": 1,
+      "type": "x-piesector",
+      "nodeId": "mt_eKJG-0eC6D",
+      "adapter": "issue341-B218-p116p",
+      "taskHash": "df7fdb1c32984df97bed621eceaffe5d42fa038efae6a7ac3053c3fc53b00616",
+      "method": null
+    },
+    {
+      "sessionId": "piepieces",
+      "index": 1,
+      "type": "x-piesector",
+      "nodeId": "mt_bESTSBB0wK",
+      "adapter": "issue341-B218-p116p",
+      "taskHash": "16f097d56008b86956e36c9e8fa5bb5c077cde1b8162bb9b8108c594d25809a8",
+      "method": null
+    },
+    {
+      "sessionId": "piepieces",
+      "index": 3,
+      "type": "x-piesector",
+      "nodeId": "mt_bESTSBB0wK",
+      "adapter": "issue341-B218-p116p",
+      "taskHash": "f7233854cc20113d83e66631b13d49b24c911488b5bfafe5c718c6ab31744a9e",
+      "method": null
+    },
+    {
+      "sessionId": "timeorcategory",
+      "index": 1,
+      "type": "x-timeplot",
+      "nodeId": "mt_ChjMU2GDJa",
+      "adapter": "issue341-B218-p116t",
+      "taskHash": "52bd14122cd049fcf5c2762b11f0426c23a59208f8ae6593a0572d019f9c78aa",
+      "method": null
+    },
+    {
+      "sessionId": "timeorcategory",
+      "index": 2,
+      "type": "x-timeplot",
+      "nodeId": "mt_ChjMU2GDJa",
+      "adapter": "issue341-B218-p116t",
+      "taskHash": "a94a5dec308400fd968d2a165e828531686cc6f047c0292c8598112c5bcaeaae",
+      "method": null
+    },
+    {
+      "sessionId": "timebuilder",
+      "index": 0,
+      "type": "x-timeplot",
+      "nodeId": "mt_HlNSurPVDp",
+      "adapter": "issue341-B218-p116t",
+      "taskHash": "855a3e2a5f45acae5d171b053cf04b45aeee5166a6050bd22c4ff828e8567a75",
+      "method": null
+    },
+    {
+      "sessionId": "timebuilder",
+      "index": 1,
+      "type": "x-timeplot",
+      "nodeId": "mt_HlNSurPVDp",
+      "adapter": "issue341-B218-p116t",
+      "taskHash": "b464f6e140fc3796fa1264b2c8e9771e44c9c2ed1a4c9d1e5f3881ed4c702ab8",
+      "method": null
+    },
+    {
+      "sessionId": "timebuilder",
+      "index": 2,
+      "type": "x-timeplot",
+      "nodeId": "mt_HlNSurPVDp",
+      "adapter": "issue341-B218-p116t",
+      "taskHash": "1a426cad60963ba5303c2eb7c931b9559c80951f4d7dffd3ff278eafbc55389f",
+      "method": null
+    },
+    {
+      "sessionId": "fractiondots",
+      "index": 2,
+      "type": "x-dotdraw",
+      "nodeId": "mt_IHipFGTFEY",
+      "adapter": "issue341-B218-p116d",
+      "taskHash": "3873e521e51855f69df548b45580bf627d70d3bdd27ec34378142830502ad1c1",
+      "method": null
+    },
+    {
       "sessionId": "categoryuse",
       "index": 0,
       "type": "x-datacount",
