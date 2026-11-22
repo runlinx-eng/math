@@ -56,7 +56,8 @@ def main():
   official=json.loads((ROOT/'docs/spatial-learning/evidence-review-manifest.json').read_bytes())
   rows_by_position={r['sessionId']+':'+str(r['index']):r for r in official['tasks']}
   require(official.get('schema')=='math-evidence-reviewed-sources/1','formal schema mismatch')
-  require(len(official['tasks'])==1667 and len(rows_by_position)==1667,'official 1667 unique sources expected')
+  require(len(official['tasks']) in (1667,1762) and len(rows_by_position)==len(official['tasks']),
+   'official main/next95 source snapshot must have 1667 or 1762 unique sources')
   with zipfile.ZipFile(io.BytesIO(raw)) as z:
    members=z.infolist()
    require(len(members)==1261 and len({m.filename for m in members})==1261,'archive member count/uniqueness drift')
