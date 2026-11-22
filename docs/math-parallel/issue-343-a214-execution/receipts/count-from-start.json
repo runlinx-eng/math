@@ -1,0 +1,64 @@
+{
+  "family": "count-from-start",
+  "head": "44cbc8efc3a378be593c88bc31455497749b35c8",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "countsteps:0",
+      "sessionId": "countsteps",
+      "index": 0,
+      "nodeId": "mt_PpWSHA-0kv",
+      "type": "x-countsteps",
+      "taskHash": "9790d91b5b36d7a36e08065ff226e436b95312eb388caa7e30c02c04f6ba7ecc",
+      "run": "count-from-start-original",
+      "checkPath": "count-from-start-original/countsteps-0-correct-check-decoded.json",
+      "checkSha256": "736e2a1fb4d8cb3e62d8c0c834a667615d58825efa12ef8fd43075353a6c4d68",
+      "restoredIdentical": true,
+      "screenshotPath": "count-from-start-original/countsteps-0-correct.png",
+      "screenshotSha256": "18380573152fa66c52cb1c7cbf7ce97cd12d3e9aa2d4a8a512f44d63f5254391"
+    },
+    {
+      "position": "countsteps:1",
+      "sessionId": "countsteps",
+      "index": 1,
+      "nodeId": "mt_PpWSHA-0kv",
+      "type": "x-countsteps",
+      "taskHash": "0194568c6f8e75171114055c1a246ba71f87f1435531617524859caf6a7b40e8",
+      "run": "count-from-start-original",
+      "checkPath": "count-from-start-original/countsteps-1-correct-check-decoded.json",
+      "checkSha256": "20fa9bcc6b7b00e18657472fa1b7e34fba5c3c6cee59214b37f6421951a4f11e",
+      "restoredIdentical": true,
+      "screenshotPath": "count-from-start-original/countsteps-1-correct.png",
+      "screenshotSha256": "1095195e7a6f619eab11427709f35d2c55bef7ca3a3557966c68f558d2c0ffff"
+    },
+    {
+      "position": "countsteps:2",
+      "sessionId": "countsteps",
+      "index": 2,
+      "nodeId": "mt_PpWSHA-0kv",
+      "type": "x-countsteps",
+      "taskHash": "2577d7d15ac40cf8c10bfe55fba8b5474c43fe002dcc0382b252dd694e51ee21",
+      "run": "count-from-start-original",
+      "checkPath": "count-from-start-original/countsteps-2-correct-check-decoded.json",
+      "checkSha256": "b596cd69824850742260c967d561f005e58c0f4d9d281fdfdab3945a3d0a435a",
+      "restoredIdentical": true,
+      "screenshotPath": "count-from-start-original/countsteps-2-correct.png",
+      "screenshotSha256": "e93e7a2640fe85bbe8a349dfefb7789b4fa2ead024361064b23ec5b8cc05d6bf"
+    },
+    {
+      "position": "swapadd:1",
+      "sessionId": "swapadd",
+      "index": 1,
+      "nodeId": "mt_QCgbiVrwnp",
+      "type": "x-countsteps",
+      "taskHash": "eae0b9a69869300a9fe10f6989b1565b2c61da56145b30be00b069011641d6c5",
+      "run": "count-from-start-original",
+      "checkPath": "count-from-start-original/swapadd-1-correct-check-decoded.json",
+      "checkSha256": "3f1bf0dfd872a475ea1f688f7b52aa06bceac64bb3eff30344416e2a5d54b726",
+      "restoredIdentical": true,
+      "screenshotPath": "count-from-start-original/swapadd-1-correct.png",
+      "screenshotSha256": "924794b0e098583d4ee9f54e0225cf481947e43b99445642f4a8957f1c619b57"
+    }
+  ]
+}

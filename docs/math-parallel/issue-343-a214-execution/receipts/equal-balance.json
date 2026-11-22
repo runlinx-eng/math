@@ -1,0 +1,22 @@
+{
+  "family": "equal-balance",
+  "head": "51304359c890f1a2c4691c56a1fa7d469fdc83ff",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "communicate38:0",
+      "sessionId": "communicate38",
+      "index": 0,
+      "nodeId": "mt_TMoHjMhRS2",
+      "type": "x-balance",
+      "taskHash": "23b489d4ffd0e44f95012b6e3868e234549400f9bc21a1cd441b3b6111e5edaa",
+      "run": "equal-balance-original",
+      "checkPath": "equal-balance-original/communicate38-0-correct-check-decoded.json",
+      "checkSha256": "d2e6909fc300f87793f03b531bad8a8ebbaac85810596e6a6a85a3f8773cd893",
+      "restoredIdentical": true,
+      "screenshotPath": "equal-balance-original/communicate38-0-correct.png",
+      "screenshotSha256": "1162249258d072a4560604dad93a85cb373f6eb2c29dd3bc9391b85a30a03903"
+    }
+  ]
+}

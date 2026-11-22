@@ -1,0 +1,50 @@
+{
+  "family": "discrete-bundles",
+  "head": "dfe3cbe6866ad758c77aea9d40c2efbc4abb29a0",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "bundles:0",
+      "sessionId": "bundles",
+      "index": 0,
+      "nodeId": "mt_0ZDouU664X",
+      "type": "x-bundlecount",
+      "taskHash": "d8c5dab3fa542a6ddfea3239910893b8cffa4972a496beeb4729621dd3db4d5e",
+      "run": "discrete-bundles-original",
+      "checkPath": "discrete-bundles-original/bundles-0-correct-check-decoded.json",
+      "checkSha256": "0daa7da348aed0500dadddb8a52060f7919f62400763c498249bc2c02f5ff560",
+      "restoredIdentical": true,
+      "screenshotPath": "discrete-bundles-original/bundles-0-correct.png",
+      "screenshotSha256": "9391077fb983bcb9217867d7e837fd5d11cb2295e41fb0eede710ea28cd3be84"
+    },
+    {
+      "position": "bundles:1",
+      "sessionId": "bundles",
+      "index": 1,
+      "nodeId": "mt_0ZDouU664X",
+      "type": "x-bundlecount",
+      "taskHash": "b592082618ae2ae7c7c069400faee9c1b47f4fc58ca8b63c41158767d8fabf73",
+      "run": "discrete-bundles-original",
+      "checkPath": "discrete-bundles-original/bundles-1-correct-check-decoded.json",
+      "checkSha256": "04a7043c66ec8dc59e9e3896f611503c0d3f96b0825ddd3dfdf33bb4417d7813",
+      "restoredIdentical": true,
+      "screenshotPath": "discrete-bundles-original/bundles-1-correct.png",
+      "screenshotSha256": "237d94e58ac5dea4a55ece89d8a380d21cac72081aa180e337323e1f169e0d9c"
+    },
+    {
+      "position": "bundles:2",
+      "sessionId": "bundles",
+      "index": 2,
+      "nodeId": "mt_0ZDouU664X",
+      "type": "x-bundlecount",
+      "taskHash": "6c82bdd6a13f8200060158bf2e2a95b17072cdf366f2cce8a39b77c42b0d1a82",
+      "run": "discrete-bundles-original",
+      "checkPath": "discrete-bundles-original/bundles-2-correct-check-decoded.json",
+      "checkSha256": "3f7ed968ca5da3151af45b64b7aa7549d8921b58b7ab12863d8570269e639caa",
+      "restoredIdentical": true,
+      "screenshotPath": "discrete-bundles-original/bundles-2-correct.png",
+      "screenshotSha256": "09f96e971f7d7f5e174585af754726a6750aefa15b5e0ecfc192f5aefad90038"
+    }
+  ]
+}

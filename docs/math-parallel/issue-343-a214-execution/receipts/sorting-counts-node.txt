@@ -1,0 +1,12 @@
+✔ sortobjects:0 checks every assignment, frequency and applicable sort (6.679ms)
+✔ sortobjects:1 checks every assignment, frequency and applicable sort (0.140084ms)
+✔ sortdata:0 checks every assignment, frequency and applicable sort (0.134917ms)
+✔ sortdata:1 checks every assignment, frequency and applicable sort (0.095625ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149.073

@@ -1,0 +1,11 @@
+✔ decpercent:0 validates the native work and rejects counterexamples (6.800083ms)
+✔ decpercent:1 validates the native work and rejects counterexamples (0.162291ms)
+✔ decpercent:2 validates the native work and rejects counterexamples (0.112792ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.431084

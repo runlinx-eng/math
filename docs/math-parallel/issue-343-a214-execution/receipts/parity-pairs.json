@@ -1,0 +1,64 @@
+{
+  "family": "parity-pairs",
+  "head": "0fb4b127fdd12e93d34ba007aef5e6d3b74b0f56",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "parity:0",
+      "sessionId": "parity",
+      "index": 0,
+      "nodeId": "mt_hniI4E-OCE",
+      "type": "x-pvpair",
+      "taskHash": "07c2ea036d8a01f6ed3c2629291d060562296d999f9615a15adc433d9524580e",
+      "run": "parity-pairs-original",
+      "checkPath": "parity-pairs-original/parity-0-correct-check-decoded.json",
+      "checkSha256": "912dc579435b0e6c4dfa593055fe636425064e7bbca6840a34f78286e2b0872f",
+      "restoredIdentical": true,
+      "screenshotPath": "parity-pairs-original/parity-0-correct.png",
+      "screenshotSha256": "7fbfc1c0532b7bff066c7a28eacc741af8bea1a82809b583bbf805d7a5bb3a79"
+    },
+    {
+      "position": "parity:1",
+      "sessionId": "parity",
+      "index": 1,
+      "nodeId": "mt_hniI4E-OCE",
+      "type": "x-pvpair",
+      "taskHash": "53572aa8bfa755cc2033bcb441fcec3046aac1679c8a95fb5906fa0793722250",
+      "run": "parity-pairs-original",
+      "checkPath": "parity-pairs-original/parity-1-correct-check-decoded.json",
+      "checkSha256": "b7abd3329e0bf7fe9581d89bfa520828dcdc4f270a6169b62e77a4c59761dd9f",
+      "restoredIdentical": true,
+      "screenshotPath": "parity-pairs-original/parity-1-correct.png",
+      "screenshotSha256": "9963a236ee1a53fd5296c3cc19ba88c1fa158a0c46fdbdcce4fa01048c4cfb2e"
+    },
+    {
+      "position": "parity:3",
+      "sessionId": "parity",
+      "index": 3,
+      "nodeId": "mt_hniI4E-OCE",
+      "type": "x-pvpair",
+      "taskHash": "c8003abc0a68d1162ef9ef5c42cec0bcf8dc9ed9e17e8314ed6414cf727ff8bc",
+      "run": "parity-pairs-original",
+      "checkPath": "parity-pairs-original/parity-3-correct-check-decoded.json",
+      "checkSha256": "dcbe29b75b555f8c4cfc28b55ca59e268940c53186b9a00345cfd13fa6426617",
+      "restoredIdentical": true,
+      "screenshotPath": "parity-pairs-original/parity-3-correct.png",
+      "screenshotSha256": "db54fa90942861c5a7b13ccf0514199303eb7fb77266c303347c5d20b77aa62f"
+    },
+    {
+      "position": "evenhalves:0",
+      "sessionId": "evenhalves",
+      "index": 0,
+      "nodeId": "mt_0u4KLbvBa1",
+      "type": "x-pvpair",
+      "taskHash": "e3435486cadde365e59bba6520fb38abcc1f88d0471cae499f531de65409db4c",
+      "run": "parity-pairs-original",
+      "checkPath": "parity-pairs-original/evenhalves-0-correct-check-decoded.json",
+      "checkSha256": "6a4eb756fb54e81dc348e6f84cfb54a2a4e3dd2d20fd7fda38efdbcd4932fbf1",
+      "restoredIdentical": true,
+      "screenshotPath": "parity-pairs-original/evenhalves-0-correct.png",
+      "screenshotSha256": "3aea2648c9c07403e6d48f0695df302cb0c52eb10cb2489c2c68c9f3da88c751"
+    }
+  ]
+}

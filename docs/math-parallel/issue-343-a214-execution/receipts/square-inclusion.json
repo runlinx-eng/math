@@ -1,0 +1,22 @@
+{
+  "family": "square-inclusion",
+  "head": "14650756246953f217220e22e565ddfee9c9ce17",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "structure39:2",
+      "sessionId": "structure39",
+      "index": 2,
+      "nodeId": "mt__Itf4aQZUj",
+      "type": "x-s23-quad",
+      "taskHash": "59c85cf7b19f96f967978b44a4e829775825dcc91967bffcf28040ca30f39689",
+      "run": "square-inclusion-original",
+      "checkPath": "square-inclusion-original/structure39-2-correct-check-decoded.json",
+      "checkSha256": "1516198755f140375507983cbba1b35a81b672f5bed8dc15c734d7612288ac0a",
+      "restoredIdentical": true,
+      "screenshotPath": "square-inclusion-original/structure39-2-correct.png",
+      "screenshotSha256": "b411aeffdbaac4bee2d14976503ce5117c4f1f107a193e7980f2d6d7bd60958d"
+    }
+  ]
+}

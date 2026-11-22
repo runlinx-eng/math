@@ -1,0 +1,102 @@
+From dfe3cbe6866ad758c77aea9d40c2efbc4abb29a0 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Sun, 22 Nov 2026 15:20:55 +0800
+Subject: [PATCH] Verify discrete-bundles for exact #343 positions
+
+---
+ .../a214-discrete-bundles-evidence.js         | 48 +++++++++++++++++++
+ tests/p9-a214-discrete-bundles.test.mjs       | 30 ++++++++++++
+ 2 files changed, 78 insertions(+)
+ create mode 100644 dist/learning/a214-discrete-bundles-evidence.js
+ create mode 100644 tests/p9-a214-discrete-bundles.test.mjs
+
+diff --git a/dist/learning/a214-discrete-bundles-evidence.js b/dist/learning/a214-discrete-bundles-evidence.js
+new file mode 100644
+index 0000000..8f21667
+--- /dev/null
++++ b/dist/learning/a214-discrete-bundles-evidence.js
+@@ -0,0 +1,48 @@
++// B-line development candidate for the exact #343 source positions below.
++import * as original from './phase5/b06-model.js';
++import {
++  hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask
++} from './evidence-contract.js';
++
++export const SOURCES = Object.freeze([
++  Object.freeze({sessionId: 'bundles', index: 0, nodeId: 'mt_0ZDouU664X',
++    type: 'x-bundlecount', taskHash: 'd8c5dab3fa542a6ddfea3239910893b8cffa4972a496beeb4729621dd3db4d5e'}),
++  Object.freeze({sessionId: 'bundles', index: 1, nodeId: 'mt_0ZDouU664X',
++    type: 'x-bundlecount', taskHash: 'b592082618ae2ae7c7c069400faee9c1b47f4fc58ca8b63c41158767d8fabf73'}),
++  Object.freeze({sessionId: 'bundles', index: 2, nodeId: 'mt_0ZDouU664X',
++    type: 'x-bundlecount', taskHash: '6c82bdd6a13f8200060158bf2e2a95b17072cdf366f2cce8a39b77c42b0d1a82'}),
++]);
++
++function sourceFor(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const source = SOURCES.find(row => row.sessionId === context.sessionId && row.index === context.index);
++  return source && matchesNativeEvidenceTask(task, context, source) ? source : null;
++}
++
++export function binding(task, context) {
++  const source = sourceFor(task, context);
++  return source ? {nodeId: source.nodeId, method: null, question: '核对完整组、未分入的物品和总数量。'} : null;
++}
++
++export function submitted(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replay(task, model, context) : null;
++}
++
++export function replay(task, model, context) {
++  try {
++    const source = sourceFor(task, context);
++    if (!source || !hasExactKeys(model, Object.keys(original.initial(task))) ||
++        !original.valid(task, model) || !original.inspect(task, model).correct) return null;
++    const used = new Set(model.groups.flat());
++    const loose = Array.from({length: task.n}, (_, i) => i).filter(i => !used.has(i));
++    if (used.size !== model.groups.length * task.size || loose.length >= task.size ||
++        model.groupsCount !== model.groups.length || model.remainder !== loose.length ||
++        model.total !== used.size + loose.length || model.why !== (task.reason ? 'units' : '')) return null;
++    // The native Repeat control requires at least one existing group.
++    return {...source, method: null, firstManuallyWrappedGroup: [...model.groups[0]],
++      groups: structuredClone(model.groups), loose, total: model.total,
++      numberOfGroups: model.groups.length, groupSize: task.size};
++  } catch {
++    return null;
++  }
++}
+diff --git a/tests/p9-a214-discrete-bundles.test.mjs b/tests/p9-a214-discrete-bundles.test.mjs
+new file mode 100644
+index 0000000..aae97c5
+--- /dev/null
++++ b/tests/p9-a214-discrete-bundles.test.mjs
+@@ -0,0 +1,30 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as original from '../dist/learning/phase5/b06-model.js';
++import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
++import {SOURCES, binding, replay, submitted} from '../dist/learning/a214-discrete-bundles-evidence.js';
++
++for (const source of SOURCES) {
++  test(source.sessionId + ':' + source.index + ' validates the native work and rejects counterexamples', () => {
++    const task = sessionTaskFor(source.sessionId, source.index);
++    assert.equal(taskFingerprint(task), source.taskHash);
++    assert.equal(binding(task, source)?.nodeId, source.nodeId);
++    assert.equal(binding({...task, prompt: task.prompt + '。'}, source), null);
++    assert.equal(binding(task, {...source, index: String(source.index)}), null);
++    const result = model => replay(task, model, source);
++
++    const good = original.example(task);
++    if (!task.reason) good.why = '';
++    assert.equal(result(good)?.firstManuallyWrappedGroup.length, task.size);
++    assert.equal(result(good)?.loose.length, task.n % task.size);
++    assert.equal(result(good)?.numberOfGroups, Math.floor(task.n / task.size));
++    const wrong = {...good, remainder: task.n};
++    const duplicate = structuredClone(good);
++    duplicate.groups[1][0] = duplicate.groups[0][0];
++    assert.equal(result(duplicate), null);
++    assert.equal(result(wrong), null);
++    assert.equal(submitted(task, good, {attempts: [{value: wrong}]}, source), null);
++    assert.ok(submitted(task, good, {attempts: [{value: wrong}, {value: structuredClone(good)}]}, source));
++  });
++}

@@ -1,0 +1,12 @@
+✔ countsteps:0 validates the native work and rejects counterexamples (6.955417ms)
+✔ countsteps:1 validates the native work and rejects counterexamples (0.223834ms)
+✔ countsteps:2 validates the native work and rejects counterexamples (0.125583ms)
+✔ swapadd:1 validates the native work and rejects counterexamples (0.115042ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.258083

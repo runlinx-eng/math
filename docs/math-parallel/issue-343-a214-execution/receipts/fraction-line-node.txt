@@ -1,0 +1,17 @@
+✔ amounts:2 validates the native work and rejects counterexamples (5.888667ms)
+✔ fractionline:0 validates the native work and rejects counterexamples (0.123084ms)
+✔ fractionline:1 validates the native work and rejects counterexamples (0.0895ms)
+✔ fractionline:2 validates the native work and rejects counterexamples (0.065375ms)
+✔ fractionline:3 validates the native work and rejects counterexamples (0.072917ms)
+✔ fractionline:4 validates the native work and rejects counterexamples (0.055708ms)
+✔ hundredths:1 validates the native work and rejects counterexamples (0.06725ms)
+✔ hundredths:2 validates the native work and rejects counterexamples (0.07175ms)
+✔ hundredths:3 validates the native work and rejects counterexamples (0.081417ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 146.890334

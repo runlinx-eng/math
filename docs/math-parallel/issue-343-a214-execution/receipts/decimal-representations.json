@@ -1,0 +1,50 @@
+{
+  "family": "decimal-representations",
+  "head": "87e5e682cc14d58e4b1bad5534bf490c71de8aa8",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "decpercent:0",
+      "sessionId": "decpercent",
+      "index": 0,
+      "nodeId": "mt_W17Kbwm0-u",
+      "type": "x-decvalue",
+      "taskHash": "ecd849f6fda3561602351a54f1fec424837c621137a10b581e2c12528cd18820",
+      "run": "decimal-representations-original",
+      "checkPath": "decimal-representations-original/decpercent-0-correct-check-decoded.json",
+      "checkSha256": "cc62df11fc8dcac1368a1847fcb26d7ec9b4fb75bdc517f30eba346d2b2d9bd0",
+      "restoredIdentical": true,
+      "screenshotPath": "decimal-representations-original/decpercent-0-correct.png",
+      "screenshotSha256": "98a30dccba70c20ff22937acd480d8e5a75ee1cc23ae7df20c7bdd281f35762b"
+    },
+    {
+      "position": "decpercent:1",
+      "sessionId": "decpercent",
+      "index": 1,
+      "nodeId": "mt_W17Kbwm0-u",
+      "type": "x-decvalue",
+      "taskHash": "05a01113578a310e1689008617587252cc94b96b21f71f7a66ed81f87a806db2",
+      "run": "decimal-representations-original",
+      "checkPath": "decimal-representations-original/decpercent-1-correct-check-decoded.json",
+      "checkSha256": "a4239efad702b1c1e8d4484d72d9170c5b9e207cf3ba9df4a024966867857243",
+      "restoredIdentical": true,
+      "screenshotPath": "decimal-representations-original/decpercent-1-correct.png",
+      "screenshotSha256": "8c5e5469ed36c470a7b5df5d6a2ecb3cedd9c490118d2df2c4a16a787ea66933"
+    },
+    {
+      "position": "decpercent:2",
+      "sessionId": "decpercent",
+      "index": 2,
+      "nodeId": "mt_W17Kbwm0-u",
+      "type": "x-decvalue",
+      "taskHash": "20468f697c823661266b00ed8af96730d799f99c9a1521e60a0f87b1c7496dc2",
+      "run": "decimal-representations-original",
+      "checkPath": "decimal-representations-original/decpercent-2-correct-check-decoded.json",
+      "checkSha256": "ad08473aba1255bbd038a647151a2c39976bd5d1375fabb313b2a6a3f0619f85",
+      "restoredIdentical": true,
+      "screenshotPath": "decimal-representations-original/decpercent-2-correct.png",
+      "screenshotSha256": "ca86b4259909983e539f05d2343e19b03258fca262b9d3608c9f35f981e863be"
+    }
+  ]
+}

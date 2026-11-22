@@ -1,0 +1,50 @@
+{
+  "family": "distance-zero",
+  "head": "4f61937db3ea378be70f2753ffe60b259e57aefa",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "distancezero:0",
+      "sessionId": "distancezero",
+      "index": 0,
+      "nodeId": "mt_RWUY7_IXvw",
+      "type": "x-zerodistance",
+      "taskHash": "3838cae7e5635fbed829bb460433fd5edb3cef5c5fe500642b09e042b91ade0c",
+      "run": "distance-zero-original",
+      "checkPath": "distance-zero-original/distancezero-0-correct-check-decoded.json",
+      "checkSha256": "cbc595043d6a9f97bfc15b219673c0c6e4f8d7d599c179956a08ce968062c861",
+      "restoredIdentical": true,
+      "screenshotPath": "distance-zero-original/distancezero-0-correct.png",
+      "screenshotSha256": "d26149ca36fa5a2264f5507fa1746bd3f7d450645d0607f306c3c95de2a727be"
+    },
+    {
+      "position": "distancezero:1",
+      "sessionId": "distancezero",
+      "index": 1,
+      "nodeId": "mt_RWUY7_IXvw",
+      "type": "x-zerodistance",
+      "taskHash": "952aa5c352416dcf5c0664157aa55b00f6809d9d3b33e7cf327086d799dc2155",
+      "run": "distance-zero-original",
+      "checkPath": "distance-zero-original/distancezero-1-correct-check-decoded.json",
+      "checkSha256": "cf3a403cbb5b89060d5d4283feb0905c750778667f484e92adab62ab441f79fa",
+      "restoredIdentical": true,
+      "screenshotPath": "distance-zero-original/distancezero-1-correct.png",
+      "screenshotSha256": "7639f8c91e946d2edac0b26b41287b2737694a2cf573f230dec2963a09bd439d"
+    },
+    {
+      "position": "distancezero:2",
+      "sessionId": "distancezero",
+      "index": 2,
+      "nodeId": "mt_RWUY7_IXvw",
+      "type": "x-zerodistance",
+      "taskHash": "9d0c3e7ba961ac5266ec9ad29ed3f520f9579aa88ce7bfe24483a58c1daa77e1",
+      "run": "distance-zero-original",
+      "checkPath": "distance-zero-original/distancezero-2-correct-check-decoded.json",
+      "checkSha256": "010fd9cfa2f5f9b1459e6d88ccffb1ad13460cb780fa4f7221277c59444721e8",
+      "restoredIdentical": true,
+      "screenshotPath": "distance-zero-original/distancezero-2-correct.png",
+      "screenshotSha256": "9d90c96a17a79459b75c75fdade35490acefb7853fdf7ecf5adc6e97692e1266"
+    }
+  ]
+}

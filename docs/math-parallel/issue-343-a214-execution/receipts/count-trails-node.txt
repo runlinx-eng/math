@@ -1,0 +1,15 @@
+✔ countonce:0 preserves identity, counting error and applicable recount (6.759209ms)
+✔ countonce:1 preserves identity, counting error and applicable recount (0.223042ms)
+✔ lastcount:0 preserves identity, counting error and applicable recount (0.156125ms)
+✔ lastcount:1 preserves identity, counting error and applicable recount (0.234167ms)
+✔ lastcount:2 preserves identity, counting error and applicable recount (0.131708ms)
+✔ counttwenty:0 preserves identity, counting error and applicable recount (0.125125ms)
+✔ counttwenty:1 preserves identity, counting error and applicable recount (0.096ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149.409125

@@ -1,0 +1,39 @@
+✔ countline:1 checks each stored adjacent stop, including an undone wrong entry (6.102583ms)
+✔ countline:2 checks each stored adjacent stop, including an undone wrong entry (0.163958ms)
+✔ skipbasic:0 checks each stored adjacent stop, including an undone wrong entry (0.117583ms)
+✔ skipbasic:1 checks each stored adjacent stop, including an undone wrong entry (0.0765ms)
+✔ skipbasic:2 checks each stored adjacent stop, including an undone wrong entry (0.079541ms)
+✔ skipthree:0 checks each stored adjacent stop, including an undone wrong entry (0.073916ms)
+✔ skipthree:1 checks each stored adjacent stop, including an undone wrong entry (0.077958ms)
+✔ anytens:0 checks each stored adjacent stop, including an undone wrong entry (0.090833ms)
+✔ anytens:1 checks each stored adjacent stop, including an undone wrong entry (0.077709ms)
+✔ withinthousand:0 checks each stored adjacent stop, including an undone wrong entry (0.101334ms)
+✔ withinthousand:1 checks each stored adjacent stop, including an undone wrong entry (0.090958ms)
+✔ withinthousand:2 checks each stored adjacent stop, including an undone wrong entry (0.060208ms)
+✔ withinthousand:4 checks each stored adjacent stop, including an undone wrong entry (0.055375ms)
+✔ skipfour:0 checks each stored adjacent stop, including an undone wrong entry (0.052667ms)
+✔ skipfour:1 checks each stored adjacent stop, including an undone wrong entry (0.062625ms)
+✔ skipfour:2 checks each stored adjacent stop, including an undone wrong entry (0.072333ms)
+✔ skipfour:3 checks each stored adjacent stop, including an undone wrong entry (0.060208ms)
+✔ skipbig:0 checks each stored adjacent stop, including an undone wrong entry (0.040542ms)
+✔ skipbig:1 checks each stored adjacent stop, including an undone wrong entry (0.047542ms)
+✔ skipbig:3 checks each stored adjacent stop, including an undone wrong entry (0.066792ms)
+✔ skipbig:4 checks each stored adjacent stop, including an undone wrong entry (0.045709ms)
+✔ powersteps:3 checks each stored adjacent stop, including an undone wrong entry (0.053958ms)
+✔ powersteps:4 checks each stored adjacent stop, including an undone wrong entry (0.042625ms)
+✔ powersteps:5 checks each stored adjacent stop, including an undone wrong entry (0.047958ms)
+✔ read120:0 checks each stored adjacent stop, including an undone wrong entry (0.069958ms)
+✔ withinthousand:3 checks each stored adjacent stop, including an undone wrong entry (0.043625ms)
+✔ skipbig:2 checks each stored adjacent stop, including an undone wrong entry (0.047459ms)
+✔ powersteps:0 checks each stored adjacent stop, including an undone wrong entry (0.042417ms)
+✔ powersteps:1 checks each stored adjacent stop, including an undone wrong entry (0.038625ms)
+✔ powersteps:2 checks each stored adjacent stop, including an undone wrong entry (0.037833ms)
+✔ powersteps:6 checks each stored adjacent stop, including an undone wrong entry (0.036125ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 152.466709

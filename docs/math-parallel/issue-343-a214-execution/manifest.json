@@ -1,0 +1,618 @@
+{
+  "schema": "math-issue343-a214-development-handoff/1",
+  "issue": 343,
+  "baseline": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "baselineManifestSha256": "928e44398f73764f711fe991b1c607488dde3167ae7da7acf07f9882e6fe2178",
+  "formalNativeA": 1663,
+  "allNativePositions": 1996,
+  "handoffPositions": 214,
+  "candidateLocalPass": 99,
+  "closedRetainedClass": 115,
+  "remainingAssessment": 0,
+  "strictAGranted": 0,
+  "families": [
+    {
+      "family": "affine-rulejump",
+      "branch": "work/b/a214-affine-rulejump",
+      "sha": "55f835e0ae6ed9024e281bff4715a04da5d5ee6d",
+      "files": [
+        "dist/learning/a214-affine-rulejump-evidence.js",
+        "tests/p9-a214-affine-rulejump.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/affine-rulejump.patch",
+      "patchSha256": "14ce5b719b484b5020dfe89c784d5a0154f66c6bad822019769df455f097ca0b",
+      "receipt": "receipts/affine-rulejump.json",
+      "receiptSha256": "19b9ae8d7e92abad8952a78c970291cc865447a1c5d9f61beb11342eee7822b7",
+      "nativeRuns": [
+        "affine-original",
+        "affine-nth35-original"
+      ],
+      "supportedObservation": "从等差数列首项、公差独立推出第 n 项，重放实际保存的规则和试算。"
+    },
+    {
+      "family": "hundredths-construction",
+      "branch": "work/b/a214-hundredths-construction",
+      "sha": "f861ae1882d8e56e20bfa9098c13bea282696930",
+      "files": [
+        "dist/learning/a214-hundredths-construction-evidence.js",
+        "tests/p9-a214-hundredths-construction.test.mjs"
+      ],
+      "nodePass": 2,
+      "preflight": "PASS",
+      "browserPass": 2,
+      "patch": "patches/hundredths-construction.patch",
+      "patchSha256": "3452db06c543a7d75ed401d0fd9463419c1400cf2551f88dc9030f9918be6983",
+      "receipt": "receipts/hundredths-construction.json",
+      "receiptSha256": "2aefed3eaf9a7e50723799af9a04d0f5f475991bb70f276a52ce43f5fcf3dce3",
+      "nativeRuns": [
+        "hundredths-original"
+      ],
+      "supportedObservation": "重放原控件的整行和单格，确认 30/100＋4/100 或 20/100＋7/100。"
+    },
+    {
+      "family": "integer-walk",
+      "branch": "work/b/a214-integer-walk",
+      "sha": "85bb6b5b29ab60ba22ac25297fdaa91b015a5879",
+      "files": [
+        "dist/learning/a214-integer-walk-evidence.js",
+        "tests/p9-a214-integer-walk.test.mjs"
+      ],
+      "nodePass": 31,
+      "preflight": "PASS",
+      "browserPass": 31,
+      "patch": "patches/integer-walk.patch",
+      "patchSha256": "f01e6c12cbfc0a9c0429f589980b437f029e9b5089b32f1fde4ef71b24abc772",
+      "receipt": "receipts/integer-walk.json",
+      "receiptSha256": "5d420a35e83c29b58fa0ba5ae126792e5d0176ced0e1c6b2f02fa47cd3a34f55",
+      "nativeRuns": [
+        "integer-walk-original",
+        "integer-walk-final-stop-original"
+      ],
+      "supportedObservation": "按原记录逐站复核常数步长和方向，撤销的站点另见首错 Check。"
+    },
+    {
+      "family": "count-trails",
+      "branch": "work/b/a214-count-trails",
+      "sha": "747cfd9c32bfff22f43bb3c36b7dc529819c12d1",
+      "files": [
+        "dist/learning/a214-count-trails-evidence.js",
+        "tests/p9-a214-count-trails.test.mjs"
+      ],
+      "nodePass": 7,
+      "preflight": "PASS",
+      "browserPass": 7,
+      "patch": "patches/count-trails.patch",
+      "patchSha256": "4d3d05eab60dfbccdb1b43933e1111f297f75972c998d671649dd83f762d722d",
+      "receipt": "receipts/count-trails.json",
+      "receiptSha256": "efc67012cc6347595e45326537348cce763d6658db2cfd81b57206ff3a725b13",
+      "nativeRuns": [
+        "count-trails-original",
+        "count-twenty-original"
+      ],
+      "supportedObservation": "复核每颗珠子的实际保留序号、重复处及适用的换位置重数。"
+    },
+    {
+      "family": "square-inclusion",
+      "branch": "work/b/a214-square-inclusion",
+      "sha": "14650756246953f217220e22e565ddfee9c9ce17",
+      "files": [
+        "dist/learning/a214-square-inclusion-evidence.js",
+        "tests/p9-a214-square-inclusion.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/square-inclusion.patch",
+      "patchSha256": "6f85864909f9331355bf5605c34e70642aed7d4feb48e20a89de1be2e220ffb0",
+      "receipt": "receipts/square-inclusion.json",
+      "receiptSha256": "7ed4d005e6a9765925aa63a504480b2819c57c7035377f1f6b7b8183d6ca1090",
+      "nativeRuns": [
+        "square-inclusion-original"
+      ],
+      "supportedObservation": "复用同题数学回放，以独立来源和 Check 核对四边、直角与正方形包含关系。"
+    },
+    {
+      "family": "quadrilateral-nesting",
+      "branch": "work/b/a214-quadrilateral-nesting",
+      "sha": "fbc493327260812cc7a85e8267ab339eea37a746",
+      "files": [
+        "dist/learning/a214-quadrilateral-nesting-evidence.js",
+        "tests/p9-a214-quadrilateral-nesting.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/quadrilateral-nesting.patch",
+      "patchSha256": "f1667719f18489684fc4f98ebf90d6ff5813f0426fb8ba03fd25fc8de480a6fa",
+      "receipt": "receipts/quadrilateral-nesting.json",
+      "receiptSha256": "c7873fee30092a1b3d02e1f4c8bce13730a6ff7b1b07d86ef8c8a96b85eb6224",
+      "nativeRuns": [
+        "quadrilateral-nesting-original"
+      ],
+      "supportedObservation": "复用四边形几何核算，以该原生位置的排序事件验证准确放入嵌套区域。"
+    },
+    {
+      "family": "angle-estimate",
+      "branch": "work/b/a214-angle-estimate",
+      "sha": "aaed413e60e290b5f14414b08a2fe8b8cae9dd6f",
+      "files": [
+        "dist/learning/a214-angle-estimate-evidence.js",
+        "tests/p9-a214-angle-estimate.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/angle-estimate.patch",
+      "patchSha256": "584436f89a338f9b865538fb685c2bc56a433b8789f0b4b95e6d3ca0fbd222e2",
+      "receipt": "receipts/angle-estimate.json",
+      "receiptSha256": "3db0471164afce2192f9c6cacdc48cf0919ae128484750d9f8ac04a99f87dc9f",
+      "nativeRuns": [
+        "angle-estimate-original"
+      ],
+      "supportedObservation": "复用角度数学回放，使用本题的估计、揭示、订正并核对 130° 大于直角。"
+    },
+    {
+      "family": "protractor",
+      "branch": "work/b/a214-protractor",
+      "sha": "e88ba1190900e384a9768e2f2c63ff0cef821414",
+      "files": [
+        "dist/learning/a214-protractor-evidence.js",
+        "tests/p9-a214-protractor.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/protractor.patch",
+      "patchSha256": "377b12fd57fb1ebb26390f2810bf1ea40b8b40ca2577ca4daad273daca8a3014",
+      "receipt": "receipts/protractor.json",
+      "receiptSha256": "93267fd546a108f4c9e122d8cfec634ca0d07fc97810f451cdf54641c915b986",
+      "nativeRuns": [
+        "protractor-original"
+      ],
+      "supportedObservation": "重放量角器位置与方向，核对同一角实际对准后记录的 130°。"
+    },
+    {
+      "family": "fraction-line",
+      "branch": "work/b/a214-fraction-line",
+      "sha": "c26e458c159375642d14449fb40e20458abb700e",
+      "files": [
+        "dist/learning/a214-fraction-line-evidence.js",
+        "tests/p9-a214-fraction-line.test.mjs"
+      ],
+      "nodePass": 9,
+      "preflight": "PASS",
+      "browserPass": 9,
+      "patch": "patches/fraction-line.patch",
+      "patchSha256": "da914b92d614e53c72fbf570cfbaf8b5ee3e8700518b685ee8d569002a545226",
+      "receipt": "receipts/fraction-line.json",
+      "receiptSha256": "91235fd5206f9f0a373fd00e1f026603fa640db969cb1cbeea02e50a409d1554",
+      "nativeRuns": [
+        "fraction-line-original"
+      ],
+      "supportedObservation": "按每段等长重建保留的跳跃，区分右端为 1 和右端为 1/10。"
+    },
+    {
+      "family": "scaling",
+      "branch": "work/b/a214-scaling",
+      "sha": "82039b14f2ebb5f01e8811fc963cca0c4cb0ae21",
+      "files": [
+        "dist/learning/a214-scaling-evidence.js",
+        "tests/p9-a214-scaling.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/scaling.patch",
+      "patchSha256": "3a8dfb436c0e5261028783cf4d147e2590b279d353067168b0eaef148775f64c",
+      "receipt": "receipts/scaling.json",
+      "receiptSha256": "08453e935481fe002854a603982258636713d9afd480fd72028915ae37d732fd",
+      "nativeRuns": [
+        "scaling-original"
+      ],
+      "supportedObservation": "复核原保存的预测与倍数试验，按倍数同 1 的大小得出原长度的缩放。"
+    },
+    {
+      "family": "distance-zero",
+      "branch": "work/b/a214-distance-zero",
+      "sha": "4f61937db3ea378be70f2753ffe60b259e57aefa",
+      "files": [
+        "dist/learning/a214-distance-zero-evidence.js",
+        "tests/p9-a214-distance-zero.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/distance-zero.patch",
+      "patchSha256": "7ffb4f7adf7c84a1067f63db9541bb6146c112c66c08c4757effa6c5da58ea0c",
+      "receipt": "receipts/distance-zero.json",
+      "receiptSha256": "3430b1ac955969f05fe409399abb1c8eaf9d0e21f195aa3895f8d54bc1676a21",
+      "nativeRuns": [
+        "distance-zero-original"
+      ],
+      "supportedObservation": "按实际描出的有符号位置求到零距离，复核方向、距离非负和比较。"
+    },
+    {
+      "family": "equal-balance",
+      "branch": "work/b/a214-equal-balance",
+      "sha": "51304359c890f1a2c4691c56a1fa7d469fdc83ff",
+      "files": [
+        "dist/learning/a214-equal-balance-evidence.js",
+        "tests/p9-a214-equal-balance.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/equal-balance.patch",
+      "patchSha256": "c693fb2c55c7f7e537e4152dc717b65f23f34d892639c82277969dded2c72f09",
+      "receipt": "receipts/equal-balance.json",
+      "receiptSha256": "5f91f1c257890b7ca75c99324acd4ea7fcb25b153e9ebf35923e9707e5fd9542",
+      "nativeRuns": [
+        "equal-balance-original"
+      ],
+      "supportedObservation": "复用天平的独立数学回放，核对本题实际释放记录、5＝2＋3 与等号。"
+    },
+    {
+      "family": "standard-form",
+      "branch": "work/b/a214-standard-form",
+      "sha": "7209f253f30a02bf830d1771baad229117d82c02",
+      "files": [
+        "dist/learning/a214-standard-form-evidence.js",
+        "tests/p9-a214-standard-form.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/standard-form.patch",
+      "patchSha256": "f7a3283d2ae0ee08099df9df304abb35fb59be6ec87dea698eb369e734f827ae",
+      "receipt": "receipts/standard-form.json",
+      "receiptSha256": "f3dac397efa7e75cc30764f010515261fc32909f55a40970dbbe5223f10af54c",
+      "nativeRuns": [
+        "standard-form-original"
+      ],
+      "supportedObservation": "逐张按科学记数法精确还原数值，重放卡片选取和移除。"
+    },
+    {
+      "family": "parity-pairs",
+      "branch": "work/b/a214-parity-pairs",
+      "sha": "0fb4b127fdd12e93d34ba007aef5e6d3b74b0f56",
+      "files": [
+        "dist/learning/a214-parity-pairs-evidence.js",
+        "tests/p9-a214-parity-pairs.test.mjs"
+      ],
+      "nodePass": 4,
+      "preflight": "PASS",
+      "browserPass": 4,
+      "patch": "patches/parity-pairs.patch",
+      "patchSha256": "acf6f6fcc7d532f56ac94701af6a9037c0b0a5047e732c5078b52fb5c4ada30f",
+      "receipt": "receipts/parity-pairs.json",
+      "receiptSha256": "69b05507b1b6f2ade6f9678c07791cc1d0b1e8a70a4c6e2708ccb9ac1676dc9d",
+      "nativeRuns": [
+        "parity-pairs-original"
+      ],
+      "supportedObservation": "复核实际保留的不同物品配对、余数，以及适用的相等两部分。"
+    },
+    {
+      "family": "paired-counts",
+      "branch": "work/b/a214-paired-counts",
+      "sha": "bf8c66fdfcc4fe23ba74b8c11c7e356945644f0f",
+      "files": [
+        "dist/learning/a214-paired-counts-evidence.js",
+        "tests/p9-a214-paired-counts.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/paired-counts.patch",
+      "patchSha256": "f025cc6dc7ee15b656f72e3812186756d5574525659ab6f4ecc402941492d691",
+      "receipt": "receipts/paired-counts.json",
+      "receiptSha256": "ae8b0d4c903d499bc7f81e9e19939396155dd3214c7ca05e2c1566bbd4bbbb54",
+      "nativeRuns": [
+        "paired-counts-original"
+      ],
+      "supportedObservation": "复核两组物品身份的一一对应、剩余与两组多少关系。"
+    },
+    {
+      "family": "chance-draws",
+      "branch": "work/b/a214-chance-draws",
+      "sha": "fdc8d0413eb089fc5bc7c9bec5663cd5b3929e06",
+      "files": [
+        "dist/learning/a214-chance-draws-evidence.js",
+        "tests/p9-a214-chance-draws.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/chance-draws.patch",
+      "patchSha256": "0ec58395a149ad2f0d11b41018e7c3e4ae62aae2042bb77cd70840001b947533",
+      "receipt": "receipts/chance-draws.json",
+      "receiptSha256": "90240b410656b92e8816211f6efec78e3984b9a8e971e71e841c47296d821299",
+      "nativeRuns": [
+        "chance-draws-original"
+      ],
+      "supportedObservation": "从原模拟实际结果重算频数，对照首个锁定的预测。"
+    },
+    {
+      "family": "chance-spinner",
+      "branch": "work/b/a214-chance-spinner",
+      "sha": "e0dfe0a1929a1860970165d1b3880d690eafa681",
+      "files": [
+        "dist/learning/a214-chance-spinner-evidence.js",
+        "tests/p9-a214-chance-spinner.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/chance-spinner.patch",
+      "patchSha256": "e8f3adb8de8a3e806d2fe0791cdb8b13e33c6a2212e21b8c3f1a40bcc36b7e8f",
+      "receipt": "receipts/chance-spinner.json",
+      "receiptSha256": "0c4b572b123cd062f0f8e8d1922870559a87821a074f550a49e4accd95083bab",
+      "nativeRuns": [
+        "chance-spinner-original"
+      ],
+      "supportedObservation": "以记录的等大扇区份数确定理论机会，保留预测和各轮频数。"
+    },
+    {
+      "family": "chance-simulation",
+      "branch": "work/b/a214-chance-simulation",
+      "sha": "26fe8a48c82eb6f334e28fea9d0c410de657dbbd",
+      "files": [
+        "dist/learning/a214-chance-simulation-evidence.js",
+        "tests/p9-a214-chance-simulation.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/chance-simulation.patch",
+      "patchSha256": "8ea7304c11d296cbc313d0b775eb4e9fc83ca6e84760181738b3c433881e4708",
+      "receipt": "receipts/chance-simulation.json",
+      "receiptSha256": "1d243940f836ce2742edd93e406b2472e129cd2061342ccd31e7c8119529faf7",
+      "nativeRuns": [
+        "chance-simulation-original"
+      ],
+      "supportedObservation": "由原模拟的命中次数与轮数计算比例，同时核对题面反例的距离。"
+    },
+    {
+      "family": "count-from-start",
+      "branch": "work/b/a214-count-from-start",
+      "sha": "44cbc8efc3a378be593c88bc31455497749b35c8",
+      "files": [
+        "dist/learning/a214-count-from-start-evidence.js",
+        "tests/p9-a214-count-from-start.test.mjs"
+      ],
+      "nodePass": 4,
+      "preflight": "PASS",
+      "browserPass": 4,
+      "patch": "patches/count-from-start.patch",
+      "patchSha256": "9d580abc5f98a983a62d334668a3e1dbcfb1e34c6b64ec643291b0d966a9d198",
+      "receipt": "receipts/count-from-start.json",
+      "receiptSha256": "bd400efc162d54f0127eda54bb85bb9b5ecf184359ce2a70411f07ec040e2441",
+      "nativeRuns": [
+        "count-from-start-original"
+      ],
+      "supportedObservation": "区分加法从较大数接数和减法从整体倒数，核对保留的邻站及原记录。"
+    },
+    {
+      "family": "sorting-counts",
+      "branch": "work/b/a214-sorting-counts",
+      "sha": "3c863ac7e6d35f608ba79135237fe0d7d1c45d23",
+      "files": [
+        "dist/learning/a214-sorting-counts-evidence.js",
+        "tests/p9-a214-sorting-counts.test.mjs"
+      ],
+      "nodePass": 4,
+      "preflight": "PASS",
+      "browserPass": 4,
+      "patch": "patches/sorting-counts.patch",
+      "patchSha256": "879185bcfa7b4275291dc539e4cc436a7255d82d71dc46e328637a1e93e1b28a",
+      "receipt": "receipts/sorting-counts.json",
+      "receiptSha256": "18f4fb9dc5f6c339908f1aacd8f2179e4a89557f2e9de914d961898aa612c795",
+      "nativeRuns": [
+        "sorting-counts-original"
+      ],
+      "supportedObservation": "逐个物品核对保存的类别和频数，并允许相同频数并列。"
+    },
+    {
+      "family": "parity-argument",
+      "branch": "work/b/a214-parity-argument",
+      "sha": "6c169e2635e4d75e8a6196d36a3a223099bd84d4",
+      "files": [
+        "dist/learning/a214-parity-argument-evidence.js",
+        "tests/p9-a214-parity-argument.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/parity-argument.patch",
+      "patchSha256": "e835678fffa4cf19f1f83b9d8c705abdb4f3635714af346fd1b46e92c14b30da",
+      "receipt": "receipts/parity-argument.json",
+      "receiptSha256": "3262db18ee474206e07dacb55395c8e0164ed6c8691460b5c496b45e6286cf0a",
+      "nativeRuns": [
+        "parity-argument-original"
+      ],
+      "supportedObservation": "复核配对示例、所选给定论证步骤和确有一个落单的反例。"
+    },
+    {
+      "family": "discrete-bundles",
+      "branch": "work/b/a214-discrete-bundles",
+      "sha": "dfe3cbe6866ad758c77aea9d40c2efbc4abb29a0",
+      "files": [
+        "dist/learning/a214-discrete-bundles-evidence.js",
+        "tests/p9-a214-discrete-bundles.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/discrete-bundles.patch",
+      "patchSha256": "46d1f2448ef646139a113ae9ea9d183bbafe834c3f9dae1537fb33b4e33260ed",
+      "receipt": "receipts/discrete-bundles.json",
+      "receiptSha256": "4c4cda52ea941e6982f7b374c88857113c12261b19879745b2b8227ba6a939f7",
+      "nativeRuns": [
+        "discrete-bundles-original"
+      ],
+      "supportedObservation": "首组确由原选取绑定，核对所有组身份互斥、余数和组数，不推断后续各组手动完成。"
+    },
+    {
+      "family": "decimal-representations",
+      "branch": "work/b/a214-decimal-representations",
+      "sha": "87e5e682cc14d58e4b1bad5534bf490c71de8aa8",
+      "files": [
+        "dist/learning/a214-decimal-representations-evidence.js",
+        "tests/p9-a214-decimal-representations.test.mjs"
+      ],
+      "nodePass": 3,
+      "preflight": "PASS",
+      "browserPass": 3,
+      "patch": "patches/decimal-representations.patch",
+      "patchSha256": "fa50e9abe4366ff2c23d9474d2f014dabbc87b9ee82777a65b5c2769a615ee3c",
+      "receipt": "receipts/decimal-representations.json",
+      "receiptSha256": "4d3360207e6e7c436de7de19a5b9dd2be6ae08e449d50e64a4bd727382f212fc",
+      "nativeRuns": [
+        "decimal-representations-original"
+      ],
+      "supportedObservation": "按完整单位格和百分格复算数量，精确核对分数、小数、百分数和每位数字。"
+    },
+    {
+      "family": "pond-estimate",
+      "branch": "work/b/a214-pond-estimate",
+      "sha": "18df1d7b8ddf87736f08cbf64848613ffbaccb31",
+      "files": [
+        "dist/learning/a214-pond-estimate-evidence.js",
+        "tests/p9-a214-pond-estimate.test.mjs"
+      ],
+      "nodePass": 1,
+      "preflight": "PASS",
+      "browserPass": 1,
+      "patch": "patches/pond-estimate.patch",
+      "patchSha256": "5c941b8ff122d41cfc223b9e9cebd62ee6a94610d8c24ba5d826b797a290a014",
+      "receipt": "receipts/pond-estimate.json",
+      "receiptSha256": "5a4f42951e8196b8759a1172a205e5455efedd57ca2ca73ecdc018c3b2712b6e",
+      "nativeRuns": [
+        "pond-estimate-original"
+      ],
+      "supportedObservation": "按固定多边形与格子的相交面积核对半格阈值，数得估计 18 平方厘米。"
+    },
+    {
+      "family": "integer-card-axis",
+      "branch": "work/b/a214-integer-card-axis",
+      "sha": "733183dd65bd4307ac848d82baa718c66987d467",
+      "files": [
+        "dist/learning/a214-integer-card-axis-evidence.js",
+        "tests/p9-a214-integer-card-axis.test.mjs"
+      ],
+      "nodePass": 5,
+      "preflight": "PASS",
+      "browserPass": 5,
+      "patch": "patches/integer-card-axis.patch",
+      "patchSha256": "d9b9bde924a60e1abcc26a25002e666335d82fb46b9e5e2a8b3a3e3b00f88c2d",
+      "receipt": "receipts/integer-card-axis.json",
+      "receiptSha256": "456e2bb585f3a5163a49e58e1e25cde05c4cd103986d4c9daeced1293ec285a4",
+      "nativeRuns": [
+        "integer-card-axis-original",
+        "integer-card-axis-faces120-original",
+        "integer-card-axis-screen1000-original"
+      ],
+      "supportedObservation": "核对原生卡片保留的排列和每张卡的已设置坐标，不推断滑杆经过的位置。"
+    }
+  ],
+  "packets": {
+    "P001": {
+      "CLOSED_RETAINED_CLASS": 2
+    },
+    "P002": {
+      "CLOSED_RETAINED_CLASS": 45,
+      "CANDIDATE_LOCAL_PASS": 9
+    },
+    "P003": {
+      "CLOSED_RETAINED_CLASS": 3,
+      "CANDIDATE_LOCAL_PASS": 32
+    },
+    "P004": {
+      "CANDIDATE_LOCAL_PASS": 2
+    },
+    "P005": {
+      "CANDIDATE_LOCAL_PASS": 2
+    },
+    "P012": {
+      "CLOSED_RETAINED_CLASS": 13
+    },
+    "P014": {
+      "CLOSED_RETAINED_CLASS": 2
+    },
+    "P015": {
+      "CLOSED_RETAINED_CLASS": 12,
+      "CANDIDATE_LOCAL_PASS": 5
+    },
+    "P016": {
+      "CANDIDATE_LOCAL_PASS": 6
+    },
+    "P017": {
+      "CLOSED_RETAINED_CLASS": 9,
+      "CANDIDATE_LOCAL_PASS": 3
+    },
+    "P018": {
+      "CANDIDATE_LOCAL_PASS": 7
+    },
+    "P019": {
+      "CLOSED_RETAINED_CLASS": 5
+    },
+    "P020": {
+      "CLOSED_RETAINED_CLASS": 6
+    },
+    "P021": {
+      "CLOSED_RETAINED_CLASS": 4,
+      "CANDIDATE_LOCAL_PASS": 9
+    },
+    "P022": {
+      "CANDIDATE_LOCAL_PASS": 8,
+      "CLOSED_RETAINED_CLASS": 3
+    },
+    "P023": {
+      "CLOSED_RETAINED_CLASS": 1
+    },
+    "P024": {
+      "CANDIDATE_LOCAL_PASS": 3,
+      "CLOSED_RETAINED_CLASS": 5
+    },
+    "P026": {
+      "CANDIDATE_LOCAL_PASS": 4,
+      "CLOSED_RETAINED_CLASS": 2
+    },
+    "P027": {
+      "CANDIDATE_LOCAL_PASS": 3
+    },
+    "P029": {
+      "CLOSED_RETAINED_CLASS": 3,
+      "CANDIDATE_LOCAL_PASS": 1
+    },
+    "P030": {
+      "CANDIDATE_LOCAL_PASS": 1
+    },
+    "P032": {
+      "CANDIDATE_LOCAL_PASS": 4
+    }
+  },
+  "retainedByClass": {
+    "D": 43,
+    "C": 31,
+    "B": 37,
+    "E": 4
+  },
+  "originalArchive": {
+    "path": "originals/native-chromium.zip",
+    "sha256": "8406bf77515db4ed3a33b25d7d540a02cbe46f50f886c4ae9e95198a478a4716",
+    "bytes": 10827844,
+    "members": 1261,
+    "crc": "PASS",
+    "memberSha256": "originals/file-sha256.json",
+    "syntheticOnly": true
+  },
+  "candidateBundle": {
+    "path": "candidates.bundle",
+    "sha256": "164975b19335ad7da127019722d5d812801e86bf3f214b0f55f42d5fcc5b5bc9"
+  },
+  "formalProjectCi": "NOT_RUN",
+  "nativeBackupImportThroughFileChooser": "NOT_RUN"
+}

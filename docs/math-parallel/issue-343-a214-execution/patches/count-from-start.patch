@@ -1,0 +1,147 @@
+From 44cbc8efc3a378be593c88bc31455497749b35c8 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Sun, 22 Nov 2026 15:15:31 +0800
+Subject: [PATCH] Verify count-from-start for exact #343 source positions
+
+---
+ .../a214-count-from-start-evidence.js         | 82 +++++++++++++++++++
+ tests/p9-a214-count-from-start.test.mjs       | 41 ++++++++++
+ 2 files changed, 123 insertions(+)
+ create mode 100644 dist/learning/a214-count-from-start-evidence.js
+ create mode 100644 tests/p9-a214-count-from-start.test.mjs
+
+diff --git a/dist/learning/a214-count-from-start-evidence.js b/dist/learning/a214-count-from-start-evidence.js
+new file mode 100644
+index 0000000..6b532d9
+--- /dev/null
++++ b/dist/learning/a214-count-from-start-evidence.js
+@@ -0,0 +1,82 @@
++// B-line development candidate for the exact #343 source positions below.
++import * as original from './phase5/b10-model.js';
++import {
++  hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence
++} from './evidence-contract.js';
++
++export const SOURCES = Object.freeze([
++  Object.freeze({sessionId: 'countsteps', index: 0, nodeId: 'mt_PpWSHA-0kv',
++    type: 'x-countsteps', taskHash: '9790d91b5b36d7a36e08065ff226e436b95312eb388caa7e30c02c04f6ba7ecc'}),
++  Object.freeze({sessionId: 'countsteps', index: 1, nodeId: 'mt_PpWSHA-0kv',
++    type: 'x-countsteps', taskHash: '0194568c6f8e75171114055c1a246ba71f87f1435531617524859caf6a7b40e8'}),
++  Object.freeze({sessionId: 'countsteps', index: 2, nodeId: 'mt_PpWSHA-0kv',
++    type: 'x-countsteps', taskHash: '2577d7d15ac40cf8c10bfe55fba8b5474c43fe002dcc0382b252dd694e51ee21'}),
++  Object.freeze({sessionId: 'swapadd', index: 1, nodeId: 'mt_QCgbiVrwnp',
++    type: 'x-countsteps', taskHash: 'eae0b9a69869300a9fe10f6989b1565b2c61da56145b30be00b069011641d6c5'}),
++]);
++
++function sourceFor(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const source = SOURCES.find(row => row.sessionId === context.sessionId && row.index === context.index);
++  return source && matchesNativeEvidenceTask(task, context, source) ? source : null;
++}
++
++export function binding(task, context) {
++  const source = sourceFor(task, context);
++  return source ? {nodeId: source.nodeId, method: null, question: '从本题要求的起点出发，核对每次加一或减一。'} : null;
++}
++
++export function submitted(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replay(task, model, context) : null;
++}
++
++function consistentWithPops(saved, recorded) {
++  if (!Array.isArray(saved) || saved.length > 40 || !saved.every(n => Number.isInteger(n) && n >= 0 && n <= 40)) return false;
++  if (saved.length === 40 && saved.at(-1) !== recorded.at(-1)) return false;
++  let wanted = saved.length - 1;
++  for (let i = recorded.length - 1; i >= 0 && wanted >= 0; i--) {
++    if (saved[wanted] === recorded[i]) wanted--;
++  }
++  return wanted < 0;
++}
++
++export function replay(task, model, context) {
++  try {
++    const source = sourceFor(task, context);
++    if (!source || !hasExactKeys(model, Object.keys(original.initial(task))) ||
++        !original.valid(task, model) || !original.inspect(task, model).correct ||
++        model.issue !== '' || model.next !== '') return null;
++
++    let enteredStart = '';
++    let recordedSteps = [];
++    const rounds = [];
++    for (const event of model.history) {
++      if (hasExactKeys(event, ['action', 'start', 'hops'])) {
++        if (event.action !== 'start' || typeof event.start !== 'string' || event.start.length > 2000 ||
++            !consistentWithPops(event.hops, recordedSteps)) return null;
++        rounds.push({start: enteredStart, recordedSteps, retainedBeforeChange: [...event.hops]});
++        enteredStart = event.start;
++        recordedSteps = [];
++      } else {
++        if (!hasExactKeys(event, ['start', 'next']) || event.start !== enteredStart ||
++            original.num(event.start) === null) return null;
++        const value = original.num(event.next);
++        if (value === null || value < 0 || value > 40) return null;
++        recordedSteps.push(value);
++      }
++    }
++
++    const addition = task.op === '+';
++    const start = addition ? Math.max(task.a, task.b) : task.a;
++    const count = addition ? Math.min(task.a, task.b) : task.b;
++    const direction = addition ? 1 : -1;
++    const retained = Array.from({length: count}, (_, i) => start + direction * (i + 1));
++    if (model.start !== enteredStart || original.num(enteredStart) !== start ||
++        !sameEvidence(model.hops, retained) || !consistentWithPops(retained, recordedSteps) ||
++        !original.equation(model.equation, task.a, task.b, task.op, start + direction * count)) return null;
++    return {...source, method: null, start, direction, retained, previousRounds: rounds,
++      recordedSteps, explicitUndoRecorded: false, equation: model.equation};
++  } catch {
++    return null;
++  }
++}
+diff --git a/tests/p9-a214-count-from-start.test.mjs b/tests/p9-a214-count-from-start.test.mjs
+new file mode 100644
+index 0000000..e09440e
+--- /dev/null
++++ b/tests/p9-a214-count-from-start.test.mjs
+@@ -0,0 +1,41 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as original from '../dist/learning/phase5/b10-model.js';
++import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
++import {SOURCES, binding, replay, submitted} from '../dist/learning/a214-count-from-start-evidence.js';
++
++for (const source of SOURCES) {
++  test(source.sessionId + ':' + source.index + ' validates the native work and rejects counterexamples', () => {
++    const task = sessionTaskFor(source.sessionId, source.index);
++    assert.equal(taskFingerprint(task), source.taskHash);
++    assert.equal(binding(task, source)?.nodeId, source.nodeId);
++    assert.equal(binding({...task, prompt: task.prompt + '。'}, source), null);
++    assert.equal(binding(task, {...source, index: String(source.index)}), null);
++    const result = model => replay(task, model, source);
++
++    const good = original.initial(task);
++    const [start, count, direction] = task.op === '+' ? [Math.max(task.a, task.b), Math.min(task.a, task.b), 1] : [task.a, task.b, -1];
++    good.start = String(start);
++    original.field(task, good, 'start');
++    const enter = n => {
++      good.next = String(n);
++      original.act(task, good, 'steps-next');
++    };
++    enter(start);
++    const wrong = structuredClone(good);
++    original.act(task, good, 'steps-undo');
++    for (let i = 1; i <= count; i++) enter(start + i * direction);
++    good.equation = task.a + task.op + task.b + '=' + (start + direction * count);
++    const proof = result(good);
++    assert.deepEqual(proof?.retained, good.hops);
++    assert.equal(proof?.recordedSteps[0], start);
++    assert.equal(proof?.explicitUndoRecorded, false);
++    const forged = {...good, history: good.history.slice(0, 2)};
++    assert.equal(original.inspect(task, forged).correct, true);
++    assert.equal(result(forged), null);
++    assert.equal(result(wrong), null);
++    assert.equal(submitted(task, good, {attempts: [{value: wrong}]}, source), null);
++    assert.ok(submitted(task, good, {attempts: [{value: wrong}, {value: structuredClone(good)}]}, source));
++  });
++}

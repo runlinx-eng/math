@@ -1,0 +1,197 @@
+From 85bb6b5b29ab60ba22ac25297fdaa91b015a5879 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Sun, 22 Nov 2026 15:00:59 +0800
+Subject: [PATCH] Verify saved native integer walks for #343
+
+---
+ dist/learning/a214-integer-walk-evidence.js | 117 ++++++++++++++++++++
+ tests/p9-a214-integer-walk.test.mjs         |  56 ++++++++++
+ 2 files changed, 173 insertions(+)
+ create mode 100644 dist/learning/a214-integer-walk-evidence.js
+ create mode 100644 tests/p9-a214-integer-walk.test.mjs
+
+diff --git a/dist/learning/a214-integer-walk-evidence.js b/dist/learning/a214-integer-walk-evidence.js
+new file mode 100644
+index 0000000..f6370fe
+--- /dev/null
++++ b/dist/learning/a214-integer-walk-evidence.js
+@@ -0,0 +1,117 @@
++// #343: the native counting task keeps the ordered stops that survive Undo.
++import * as original from './phase5/b06-model.js';
++import {
++  hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask
++} from './evidence-contract.js';
++
++export const INTEGER_WALK_SOURCES = Object.freeze([
++  Object.freeze({sessionId: 'countline', index: 1, nodeId: 'mt_M5PPDJStGm',
++    type: 'x-countwalk', taskHash: '68cd7ee44d5fb86fcd41eccc27c082b332818f0430110264d801b3a7fa766ee2'}),
++  Object.freeze({sessionId: 'countline', index: 2, nodeId: 'mt_M5PPDJStGm',
++    type: 'x-countwalk', taskHash: 'f1a2579c528d2c1828be8acd78fcf2b8ec272c0b6789a3bcc67a56209afdf107'}),
++  Object.freeze({sessionId: 'skipbasic', index: 0, nodeId: 'mt_nvdpxAJTBG',
++    type: 'x-countwalk', taskHash: 'e46b3e467b9f1d9c451185f62a5dc6db7f470278cb321f95eb556a7b285ec518'}),
++  Object.freeze({sessionId: 'skipbasic', index: 1, nodeId: 'mt_nvdpxAJTBG',
++    type: 'x-countwalk', taskHash: '06b31be5654962d0fb5604f3f0415834cf9ca69da78e949b0ab41f48ec258836'}),
++  Object.freeze({sessionId: 'skipbasic', index: 2, nodeId: 'mt_nvdpxAJTBG',
++    type: 'x-countwalk', taskHash: 'ae1176d9fa4450da9a48174d65b70b2ea4f944299aa44b705595c06b36941388'}),
++  Object.freeze({sessionId: 'skipthree', index: 0, nodeId: 'mt_aHAM29nidj',
++    type: 'x-countwalk', taskHash: '5261e9ea43dd4b03bb4041e4fff0ade4f5986b41ed1356dc51e924a882cf9e60'}),
++  Object.freeze({sessionId: 'skipthree', index: 1, nodeId: 'mt_aHAM29nidj',
++    type: 'x-countwalk', taskHash: '875a1f6cf54e51cf49fe6d1dd3232943f15f57c3198b04b4e25a3fd4d9f8a0aa'}),
++  Object.freeze({sessionId: 'anytens', index: 0, nodeId: 'mt_OkSJfrmFb_',
++    type: 'x-countwalk', taskHash: '7d69a755a16973b81cf2589b22c98a5b0479256c149a49f941c0abece8499b23'}),
++  Object.freeze({sessionId: 'anytens', index: 1, nodeId: 'mt_OkSJfrmFb_',
++    type: 'x-countwalk', taskHash: '582c88ca5ee8825f78f7c8e9fbcd175254c10a43d33928a8bf2f36d5249902ab'}),
++  Object.freeze({sessionId: 'withinthousand', index: 0, nodeId: 'mt_M2v1A9OEuM',
++    type: 'x-countwalk', taskHash: 'afc72955b0438a21575794b9cb78d0f53d58117a9c2c98e41f4bb2e1512a7d10'}),
++  Object.freeze({sessionId: 'withinthousand', index: 1, nodeId: 'mt_M2v1A9OEuM',
++    type: 'x-countwalk', taskHash: 'b178b2545b6e993c20e1b6adc49429975f6ff6b4aa61790314c89b8fe9b58598'}),
++  Object.freeze({sessionId: 'withinthousand', index: 2, nodeId: 'mt_M2v1A9OEuM',
++    type: 'x-countwalk', taskHash: '711fbe9ab83044e5b10b633ee0588cb6cb277826a49f6157595ce99a54984b7a'}),
++  Object.freeze({sessionId: 'withinthousand', index: 4, nodeId: 'mt_M2v1A9OEuM',
++    type: 'x-countwalk', taskHash: '504cb5236fbd90d6673a5393bb952e39d5f38137578a944a2487694ece2c82d5'}),
++  Object.freeze({sessionId: 'skipfour', index: 0, nodeId: 'mt_IzQvs7k_sE',
++    type: 'x-countwalk', taskHash: 'a145d60d395ad94cfdd85b13cb56c69afe81ca3046e072b3d63b85120fe33916'}),
++  Object.freeze({sessionId: 'skipfour', index: 1, nodeId: 'mt_IzQvs7k_sE',
++    type: 'x-countwalk', taskHash: 'a8beafbc4540ffd1d4e027ea685c69ab07d107e715e76ad23bfe9b9c187239cc'}),
++  Object.freeze({sessionId: 'skipfour', index: 2, nodeId: 'mt_IzQvs7k_sE',
++    type: 'x-countwalk', taskHash: '88d412a094cb5b9187701a9802170dd9fba3645bf972cb17a0929a3f92e99f13'}),
++  Object.freeze({sessionId: 'skipfour', index: 3, nodeId: 'mt_IzQvs7k_sE',
++    type: 'x-countwalk', taskHash: 'f8264b3071e18c6ede0b75a676bb7effa944293d6ff3a1e3348db1dd1b73832e'}),
++  Object.freeze({sessionId: 'skipbig', index: 0, nodeId: 'mt_7rJM8eWUfw',
++    type: 'x-countwalk', taskHash: '442e0544fa7f2c114e9dc68e1d42d16fe5cbfb98cca22c00470fe49af93d90f1'}),
++  Object.freeze({sessionId: 'skipbig', index: 1, nodeId: 'mt_7rJM8eWUfw',
++    type: 'x-countwalk', taskHash: 'bb4ec5814f3ac54916625c9a8802628764e6c3771b0f2cbe896d2ff1300e76d2'}),
++  Object.freeze({sessionId: 'skipbig', index: 3, nodeId: 'mt_7rJM8eWUfw',
++    type: 'x-countwalk', taskHash: 'dc4c76a022ff74be8ac8de9a426c5e4d67a5141f3291fb754013cc7c777dff46'}),
++  Object.freeze({sessionId: 'skipbig', index: 4, nodeId: 'mt_7rJM8eWUfw',
++    type: 'x-countwalk', taskHash: '34e3371669375b95ed534ec5811f117e7a5a912df5546aaf6dd87349ec7d2662'}),
++  Object.freeze({sessionId: 'powersteps', index: 3, nodeId: 'mt_tAtMET4EIU',
++    type: 'x-countwalk', taskHash: '9a93bda205bcceca62519bf03f093e1987b8d27550c3c5d32451a88c75c9bce3'}),
++  Object.freeze({sessionId: 'powersteps', index: 4, nodeId: 'mt_tAtMET4EIU',
++    type: 'x-countwalk', taskHash: 'd561c41b33f499f42ea828f13942942234bbd839936f3802c920ec0b49395b7a'}),
++  Object.freeze({sessionId: 'powersteps', index: 5, nodeId: 'mt_tAtMET4EIU',
++    type: 'x-countwalk', taskHash: '7615c0dbc93c4d869419453a8090c90898c47a7e23da009b48ebe9383dc8575e'}),
++  Object.freeze({sessionId: 'read120', index: 0, nodeId: 'mt_XV0B4kWwqL',
++    type: 'x-countwalk', taskHash: '216ec369efa3a97aceae34a74989108595aa362edc497531bdbad16903a0eb2b'}),
++  Object.freeze({sessionId: 'withinthousand', index: 3, nodeId: 'mt_M2v1A9OEuM',
++    type: 'x-countwalk', taskHash: '2d4482d44559af67e29ac8ca1e1a728958be1f9133bf37b02fa64e8c4aea13a8'}),
++  Object.freeze({sessionId: 'skipbig', index: 2, nodeId: 'mt_7rJM8eWUfw',
++    type: 'x-countwalk', taskHash: '26b1d1d5af8653dc91b6b746cfe9c2780c8dc7b4745ee7c84d205f89d686714f'}),
++  Object.freeze({sessionId: 'powersteps', index: 0, nodeId: 'mt_tAtMET4EIU',
++    type: 'x-countwalk', taskHash: '76fe1a2270e7381615ff236eb7676077ef825aee0ad881a303f4b41651f035a9'}),
++  Object.freeze({sessionId: 'powersteps', index: 1, nodeId: 'mt_tAtMET4EIU',
++    type: 'x-countwalk', taskHash: 'fe954caf6861d41fcc1ac201f8a35830a322e5da318911af9bfb88dc389b9c4d'}),
++  Object.freeze({sessionId: 'powersteps', index: 2, nodeId: 'mt_tAtMET4EIU',
++    type: 'x-countwalk', taskHash: 'a679c257cb0858fdcf7b03153b09d9c8dd6c37331d525f2d3356c377ac3cbf35'}),
++  Object.freeze({sessionId: 'powersteps', index: 6, nodeId: 'mt_tAtMET4EIU',
++    type: 'x-countwalk', taskHash: '80079760b77412ab0ab37502a94ba8cf29860116a283b3fd3813aa583bd0a233'}),
++]);
++
++const modelKeys = ['hops', 'next', 'step', 'why'];
++function sourceFor(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const source = INTEGER_WALK_SOURCES.find(row =>
++    row.sessionId === context.sessionId && row.index === context.index);
++  return source && matchesNativeEvidenceTask(task, context, source) ? source : null;
++}
++
++export function integerWalkBinding(task, context = {}) {
++  const source = sourceFor(task, context);
++  return source ? {
++    nodeId: source.nodeId, method: null,
++    question: '从起点开始，每两个相邻记录相差多少？检查方向和步长是否一直相同。'
++  } : null;
++}
++
++export function replayIntegerWalkEvidence(task, model, context = {}) {
++  try {
++    const source = sourceFor(task, context);
++    if (!source || !hasExactKeys(model, modelKeys) || !original.valid(task, model) ||
++        model.next !== null || model.step !== (task.infer ? task.step : null)) return null;
++    const reason = task.reason ? (task.reason === 'ones' ? 'ones' : 'carry') : '';
++    if (model.why !== reason || model.hops.length !== task.count) return null;
++    const stations = [task.start, ...model.hops];
++    const steps = [];
++    for (const [index, destination] of model.hops.entries()) {
++      const origin = stations[index];
++      const delta = destination - origin;
++      if (!Number.isSafeInteger(destination) || delta !== task.step) return null;
++      steps.push({origin, destination, delta});
++    }
++    if (!original.inspect(task, model).correct) return null;
++    return {
++      nodeId: source.nodeId, taskHash: source.taskHash, method: null, stations, steps,
++      step: task.step, enteredStep: task.infer ? model.step : null,
++      selectedReason: task.reason ? model.why : null,
++      sourceRetainsUndoneStops: false
++    };
++  } catch {
++    return null;
++  }
++}
++
++export function submittedIntegerWalkEvidence(task, model, record, context = {}) {
++  return latestSubmissionMatches(model, record) ? replayIntegerWalkEvidence(task, model, context) : null;
++}
+diff --git a/tests/p9-a214-integer-walk.test.mjs b/tests/p9-a214-integer-walk.test.mjs
+new file mode 100644
+index 0000000..a617a8e
+--- /dev/null
++++ b/tests/p9-a214-integer-walk.test.mjs
+@@ -0,0 +1,56 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import {readFileSync} from 'node:fs';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as original from '../dist/learning/phase5/b06-model.js';
++import {
++  INTEGER_WALK_SOURCES, integerWalkBinding, replayIntegerWalkEvidence, submittedIntegerWalkEvidence
++} from '../dist/learning/a214-integer-walk-evidence.js';
++import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
++
++const manifest = JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json', import.meta.url)));
++const official = new Set(manifest.tasks.map(row => row.sessionId + ':' + row.index));
++
++for (const source of INTEGER_WALK_SOURCES) {
++  const position = source.sessionId + ':' + source.index;
++  test(position + ' checks each stored adjacent stop, including an undone wrong entry', () => {
++    const task = sessionTaskFor(source.sessionId, source.index);
++    assert.equal(taskFingerprint(task), source.taskHash);
++    assert.equal(integerWalkBinding(task, source)?.nodeId, source.nodeId);
++    assert.equal(integerWalkBinding({...task, start: task.start + 1}, source), null);
++    assert.equal(integerWalkBinding(task, {...source, sessionId: 'link-' + source.sessionId}), null);
++    assert.ok(!official.has(position));
++
++    const model = original.initial(task);
++    if (task.infer) model.step = task.step;
++    if (task.reason) model.why = task.reason === 'ones' ? 'ones' : 'carry';
++    model.next = task.start + task.step + 1;
++    original.act(task, model, 'walk-hop');
++    const wrong = structuredClone(model);
++    assert.equal(original.inspect(task, wrong).correct, false);
++    assert.equal(replayIntegerWalkEvidence(task, wrong, source), null);
++    original.act(task, model, 'walk-undo');
++    for (let i = 1; i <= task.count; i++) {
++      model.next = task.start + i * task.step;
++      original.act(task, model, 'walk-hop');
++    }
++    const record = {attempts: [{value: wrong}, {value: structuredClone(model)}]};
++    const proof = submittedIntegerWalkEvidence(task, model, record, source);
++    assert.ok(proof);
++    assert.equal(proof.steps.length, task.count);
++    assert.equal(proof.stations.at(-1), task.start + task.count * task.step);
++    assert.equal(proof.sourceRetainsUndoneStops, false);
++    assert.equal(submittedIntegerWalkEvidence(task, model, {attempts: record.attempts.slice(0, 1)}, source), null);
++
++    const endpointOnly = {...model, hops: model.hops.slice(-1), next: model.hops.at(-1)};
++    assert.equal(replayIntegerWalkEvidence(task, endpointOnly, source), null);
++    if (task.count > 1) {
++      const wrongPath = structuredClone(model);
++      wrongPath.hops[0] += 1;
++      assert.equal(replayIntegerWalkEvidence(task, wrongPath, source), null);
++    }
++    const hidden = task.infer ? {...model, next: model.hops.at(-1)} : {...model, step: task.step};
++    assert.equal(original.inspect(task, hidden).correct, true);
++    assert.equal(replayIntegerWalkEvidence(task, hidden, source), null);
++  });
++}

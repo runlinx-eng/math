@@ -1,0 +1,78 @@
+{
+  "family": "integer-card-axis",
+  "head": "733183dd65bd4307ac848d82baa718c66987d467",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "compare100:2",
+      "sessionId": "compare100",
+      "index": 2,
+      "nodeId": "mt_U0waNfD8PB",
+      "type": "x-pvorder",
+      "taskHash": "c27d9167816cc41f1dbe08e4fee247f668fe660da9b506192a3237532a739d3d",
+      "run": "integer-card-axis-original",
+      "checkPath": "integer-card-axis-original/compare100-2-correct-check-decoded.json",
+      "checkSha256": "9060827170f780a6d64e0d3a5fa63e24d4a617c02da2b36972e4ca505ffb2281",
+      "restoredIdentical": true,
+      "screenshotPath": "integer-card-axis-original/compare100-2-correct.png",
+      "screenshotSha256": "be7a611a2aee7aa4a2435924a472385c6cb0cc3b1faf271dd42b0a14aa90751a"
+    },
+    {
+      "position": "faces120:2",
+      "sessionId": "faces120",
+      "index": 2,
+      "nodeId": "mt_QguIGVMB1o",
+      "type": "x-pvorder",
+      "taskHash": "a6c9156f510b5074ded9e6717e218692f37d8a710fbcf7bdcdc721188eea9266",
+      "run": "integer-card-axis-faces120-original",
+      "checkPath": "integer-card-axis-faces120-original/faces120-2-correct-check-decoded.json",
+      "checkSha256": "7959c1d5f2c249c54cfde1290703ac71d4210d0caaa41f03675a960c2f1f44c8",
+      "restoredIdentical": true,
+      "screenshotPath": "integer-card-axis-faces120-original/faces120-2-correct.png",
+      "screenshotSha256": "09b80e9711608002b298e0d0079affcdeb5f8ccf5530ba526011467028ae7fca"
+    },
+    {
+      "position": "hundreds:1",
+      "sessionId": "hundreds",
+      "index": 1,
+      "nodeId": "mt_R2ccrI-nKD",
+      "type": "x-pvorder",
+      "taskHash": "38aa247e84dea0589b01cc690af9dd484ca9e4071313a9af75a895ff697447c8",
+      "run": "integer-card-axis-original",
+      "checkPath": "integer-card-axis-original/hundreds-1-correct-check-decoded.json",
+      "checkSha256": "f27be79881d887ad4f199510938c20bc4c1eaf9d3417e5b7f7531b5ea4413e8e",
+      "restoredIdentical": true,
+      "screenshotPath": "integer-card-axis-original/hundreds-1-correct.png",
+      "screenshotSha256": "1093eab85fafe7db5de2540ad232c8f9bd8d79cb256f908bb1ecd6c13f9b046f"
+    },
+    {
+      "position": "compare1000:5",
+      "sessionId": "compare1000",
+      "index": 5,
+      "nodeId": "mt_AQcVRBddko",
+      "type": "x-pvorder",
+      "taskHash": "e64d9eefdec8991e6603be1e00b3055ec0af5d2180b94b9b52f02d941ee3469f",
+      "run": "integer-card-axis-original",
+      "checkPath": "integer-card-axis-original/compare1000-5-correct-check-decoded.json",
+      "checkSha256": "a860589b6566e867b607fc42d9726463bcee25691bf294da3263c905348002d6",
+      "restoredIdentical": true,
+      "screenshotPath": "integer-card-axis-original/compare1000-5-correct.png",
+      "screenshotSha256": "c727764c67b761252e9fb22d3e413e8d312f12a5ff37de369c9e80e10d82b3ad"
+    },
+    {
+      "position": "screen1000:1",
+      "sessionId": "screen1000",
+      "index": 1,
+      "nodeId": "mt_HczwO1sr-y",
+      "type": "x-pvorder",
+      "taskHash": "79ed9d484a397be01031e7f85ba9388574fa742749b405f1de09e78e9296b8b8",
+      "run": "integer-card-axis-screen1000-original",
+      "checkPath": "integer-card-axis-screen1000-original/screen1000-1-correct-check-decoded.json",
+      "checkSha256": "a5ef010bbc622d30f129169deebc78cadad95b5605fb267cf3ef089e20ce4c2d",
+      "restoredIdentical": true,
+      "screenshotPath": "integer-card-axis-screen1000-original/screen1000-1-correct.png",
+      "screenshotSha256": "f09484bc2c0e2c45f96cda91388059982fb8e2eee35154cf1efcf290d4fac3f2"
+    }
+  ]
+}

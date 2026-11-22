@@ -1,0 +1,22 @@
+{
+  "family": "standard-form",
+  "head": "7209f253f30a02bf830d1771baad229117d82c02",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "standardform:3",
+      "sessionId": "standardform",
+      "index": 3,
+      "nodeId": "mt_bO-njVOige",
+      "type": "x-wideboard",
+      "taskHash": "514d38d96b57dcfd28fe0e707997ecd5987e84b4e3a23583389f34015aa5952b",
+      "run": "standard-form-original",
+      "checkPath": "standard-form-original/standardform-3-correct-check-decoded.json",
+      "checkSha256": "35dbdbb50fbd372790d098be2655207944d04a66ca90cebb61e4fd40b6e772ee",
+      "restoredIdentical": true,
+      "screenshotPath": "standard-form-original/standardform-3-correct.png",
+      "screenshotSha256": "e8622ff0ee0fee29fdcb108bcfd6c4f0ed24236b309c3b1ffc51b1d73cee76e2"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+✔ fairness:0 validates the native work and rejects counterexamples (6.028875ms)
+✔ fairness:1 validates the native work and rejects counterexamples (0.204125ms)
+✔ fairness:2 validates the native work and rejects counterexamples (0.151625ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149.700125

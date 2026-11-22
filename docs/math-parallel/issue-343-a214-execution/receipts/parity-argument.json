@@ -1,0 +1,22 @@
+{
+  "family": "parity-argument",
+  "head": "6c169e2635e4d75e8a6196d36a3a223099bd84d4",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "justify:2",
+      "sessionId": "justify",
+      "index": 2,
+      "nodeId": "mt_pyMD_SIiYO",
+      "type": "x-proof",
+      "taskHash": "dfad28c0ad11aa560cb442e69cd7bbf18ff5f5a0ca6bcae0e45c8abef160c50a",
+      "run": "parity-argument-original",
+      "checkPath": "parity-argument-original/justify-2-correct-check-decoded.json",
+      "checkSha256": "2c94f2c39490357475c2049aba0e119abb2c7149e75041d4faa6a3a2d03f2bd1",
+      "restoredIdentical": true,
+      "screenshotPath": "parity-argument-original/justify-2-correct.png",
+      "screenshotSha256": "433aac6516c1072673fc4191189f8eab398b6b55ae37f80fd278d8c14bcde7be"
+    }
+  ]
+}

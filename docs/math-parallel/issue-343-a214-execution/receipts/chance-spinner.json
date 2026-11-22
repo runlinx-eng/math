@@ -1,0 +1,50 @@
+{
+  "family": "chance-spinner",
+  "head": "e0dfe0a1929a1860970165d1b3880d690eafa681",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "fairness:0",
+      "sessionId": "fairness",
+      "index": 0,
+      "nodeId": "mt_xSgAgg9Ej_",
+      "type": "x-spinner",
+      "taskHash": "1977145df39c24419037863370e6c9c8882f30f96808ef130afaba6179c308b8",
+      "run": "chance-spinner-original",
+      "checkPath": "chance-spinner-original/fairness-0-correct-check-decoded.json",
+      "checkSha256": "75284f6cc88e15b20b6e4d819007d516c3ebfc95e9ced6c4ea571cb48ff45622",
+      "restoredIdentical": true,
+      "screenshotPath": "chance-spinner-original/fairness-0-correct.png",
+      "screenshotSha256": "d3585928058689b9a7d28c182955a2b80e5956345dcf73bac1f82710dd307fac"
+    },
+    {
+      "position": "fairness:1",
+      "sessionId": "fairness",
+      "index": 1,
+      "nodeId": "mt_xSgAgg9Ej_",
+      "type": "x-spinner",
+      "taskHash": "c5d39de9e53b5fb99013518654d96dc2e4a92e8c84e0318e8cf82692e31fbda2",
+      "run": "chance-spinner-original",
+      "checkPath": "chance-spinner-original/fairness-1-correct-check-decoded.json",
+      "checkSha256": "16e217cee09f989541ea354f704c6223ca3f3cee32e777aa520377d77885f3e3",
+      "restoredIdentical": true,
+      "screenshotPath": "chance-spinner-original/fairness-1-correct.png",
+      "screenshotSha256": "cb4093778da68e43f02d6e70fda6ad95e87f91db374a5d68333a6521ea2c3805"
+    },
+    {
+      "position": "fairness:2",
+      "sessionId": "fairness",
+      "index": 2,
+      "nodeId": "mt_xSgAgg9Ej_",
+      "type": "x-spinner",
+      "taskHash": "066463b0ac5eac270363b3dd66ef8c3d61b82ac9a5e0f08d186b228fee7e4975",
+      "run": "chance-spinner-original",
+      "checkPath": "chance-spinner-original/fairness-2-correct-check-decoded.json",
+      "checkSha256": "c9ced84750e3b25fcc71142e3eaac19bdcfcdc997fbe28a23fdae81dca8bdb12",
+      "restoredIdentical": true,
+      "screenshotPath": "chance-spinner-original/fairness-2-correct.png",
+      "screenshotSha256": "11d7b0e3b1a15fd11928dcfa63cc3a74034cfe144bcd0ded7294ed1bf2a3ea6c"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "family": "scaling",
+  "head": "82039b14f2ebb5f01e8811fc963cca0c4cb0ae21",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "scale:0",
+      "sessionId": "scale",
+      "index": 0,
+      "nodeId": "mt_VKW8lOcFaw",
+      "type": "x-scale",
+      "taskHash": "6a74d660e756bd155c86a9803e05b72e000a0908a519f44b6d0d697493cd6587",
+      "run": "scaling-original",
+      "checkPath": "scaling-original/scale-0-correct-check-decoded.json",
+      "checkSha256": "6441e974e1e0f0ab84d9aad66e7d1356e9b3d2857c23e5658da7f32f98f45e70",
+      "restoredIdentical": true,
+      "screenshotPath": "scaling-original/scale-0-correct.png",
+      "screenshotSha256": "5f42699bf7985cf158a1d9749c7fc7c48a01c103550ce38f3935ce1c3cc75cae"
+    },
+    {
+      "position": "scale:1",
+      "sessionId": "scale",
+      "index": 1,
+      "nodeId": "mt_VKW8lOcFaw",
+      "type": "x-scale",
+      "taskHash": "4f6a0bea3bdb30f4ca37d1ddd1c5c3bea6245efe3e7de9bff7917fb3f487e660",
+      "run": "scaling-original",
+      "checkPath": "scaling-original/scale-1-correct-check-decoded.json",
+      "checkSha256": "0a9546665881e3e1c775ed6bef519a5f2fd4c9eb41e12b148779736b877fe616",
+      "restoredIdentical": true,
+      "screenshotPath": "scaling-original/scale-1-correct.png",
+      "screenshotSha256": "da65eea0b382fb59d529b8d18f499e9cbb035bad8b4af4ae609b3c6ef009f932"
+    },
+    {
+      "position": "scale:2",
+      "sessionId": "scale",
+      "index": 2,
+      "nodeId": "mt_VKW8lOcFaw",
+      "type": "x-scale",
+      "taskHash": "b2c351a3942c8be35dd7b64dcec8ff4f1bd4b2455ef6a021053995cd14bcb82c",
+      "run": "scaling-original",
+      "checkPath": "scaling-original/scale-2-correct-check-decoded.json",
+      "checkSha256": "4f1470e126aa1107346fe833973f7d65135d2c744a4acef6e2c3612d70a8bb11",
+      "restoredIdentical": true,
+      "screenshotPath": "scaling-original/scale-2-correct.png",
+      "screenshotSha256": "0d9dfa58aea734c0c699e6aed3105b20819701a7bf8e9dc6b0691db20281b67f"
+    }
+  ]
+}

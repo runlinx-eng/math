@@ -1,0 +1,22 @@
+{
+  "family": "pond-estimate",
+  "head": "18df1d7b8ddf87736f08cbf64848613ffbaccb31",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "boundary:2",
+      "sessionId": "boundary",
+      "index": 2,
+      "nodeId": "mt_eiB3-6pu6a",
+      "type": "x-pond",
+      "taskHash": "d80cc0ef8f36ff31c095994d4fa7b74444399fa46008f31e99f1de63f779f231",
+      "run": "pond-estimate-original",
+      "checkPath": "pond-estimate-original/boundary-2-correct-check-decoded.json",
+      "checkSha256": "50bc14539d1f3923d2206eb2e0688d074e676c4b2ed2862c2e4bd7280ffa315d",
+      "restoredIdentical": true,
+      "screenshotPath": "pond-estimate-original/boundary-2-correct.png",
+      "screenshotSha256": "90b095fc06c7eb8c7934bb8bcf7c1e9aabcaa3d21f9df9c03080f259c0412cc3"
+    }
+  ]
+}

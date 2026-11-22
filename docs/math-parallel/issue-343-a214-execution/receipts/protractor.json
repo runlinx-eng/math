@@ -1,0 +1,22 @@
+{
+  "family": "protractor",
+  "head": "e88ba1190900e384a9768e2f2c63ff0cef821414",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "representations39:3",
+      "sessionId": "representations39",
+      "index": 3,
+      "nodeId": "mt_IwEOCN6bL1",
+      "type": "x-g25-protractor",
+      "taskHash": "22361ebcab22ac8165f67ff67a8c8d3221ff90efe1140fed0e872c139beebc9a",
+      "run": "protractor-original",
+      "checkPath": "protractor-original/representations39-3-correct-check-decoded.json",
+      "checkSha256": "76697233f36e4086f3d32b6137bd747a6022ed6aec84b856896be889171fcf85",
+      "restoredIdentical": true,
+      "screenshotPath": "protractor-original/representations39-3-correct.png",
+      "screenshotSha256": "fe4961284f41a03a929bb811e3c9250b4f68105f2736a6c1618a44d67cfafabe"
+    }
+  ]
+}

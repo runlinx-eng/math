@@ -1,0 +1,22 @@
+{
+  "family": "quadrilateral-nesting",
+  "head": "fbc493327260812cc7a85e8267ab339eea37a746",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "structure39:3",
+      "sessionId": "structure39",
+      "index": 3,
+      "nodeId": "mt__Itf4aQZUj",
+      "type": "x-s23-nest",
+      "taskHash": "31cc0267773b61a7cff693870b0b13c4d69a68449f2b8113f5085c291b69c117",
+      "run": "quadrilateral-nesting-original",
+      "checkPath": "quadrilateral-nesting-original/structure39-3-correct-check-decoded.json",
+      "checkSha256": "0871401c7ef092a3c4ac59f0380e1eae995fb7e0a9a9b581c5aab476fbb68b59",
+      "restoredIdentical": true,
+      "screenshotPath": "quadrilateral-nesting-original/structure39-3-correct.png",
+      "screenshotSha256": "f7db6163855dd5c61e844b3e06a44188afe245a0ade907eef7bb90e74b46eac6"
+    }
+  ]
+}

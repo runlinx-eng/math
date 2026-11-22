@@ -1,0 +1,50 @@
+{
+  "family": "chance-draws",
+  "head": "fdc8d0413eb089fc5bc7c9bec5663cd5b3929e06",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "chance:0",
+      "sessionId": "chance",
+      "index": 0,
+      "nodeId": "mt_J4j7d3iAfg",
+      "type": "x-experiment",
+      "taskHash": "e0a3dca00d434e0ba5e0a83b32177172e4270a122571ea75e56dfb42fd9f4d4a",
+      "run": "chance-draws-original",
+      "checkPath": "chance-draws-original/chance-0-correct-check-decoded.json",
+      "checkSha256": "67a0ebbcf6bf84d07acc21b5319e68155641fe8b1f22331d9c3a30a5da215e4e",
+      "restoredIdentical": true,
+      "screenshotPath": "chance-draws-original/chance-0-correct.png",
+      "screenshotSha256": "8e0ffde6f78cce7d92b853366ce4d96a72552254eb054a55ba7707ffd7ec8b69"
+    },
+    {
+      "position": "chance:1",
+      "sessionId": "chance",
+      "index": 1,
+      "nodeId": "mt_J4j7d3iAfg",
+      "type": "x-experiment",
+      "taskHash": "ce40613bee900ad156d6686e16523026773bb5b987131a9b01140e291cf5dd32",
+      "run": "chance-draws-original",
+      "checkPath": "chance-draws-original/chance-1-correct-check-decoded.json",
+      "checkSha256": "0139ba2f47080e62231abdbce44494fefd3da8e10a3ac94fa1c3a134eb846b05",
+      "restoredIdentical": true,
+      "screenshotPath": "chance-draws-original/chance-1-correct.png",
+      "screenshotSha256": "4745132c994623196d2737fb1c0ef3e6e01ddfab588e78ff157b9a129af882d3"
+    },
+    {
+      "position": "chance:2",
+      "sessionId": "chance",
+      "index": 2,
+      "nodeId": "mt_J4j7d3iAfg",
+      "type": "x-experiment",
+      "taskHash": "52c9dedb5897134256c50f549a5d9ef2359b840fb94f5df1ef75388d2fda12ad",
+      "run": "chance-draws-original",
+      "checkPath": "chance-draws-original/chance-2-correct-check-decoded.json",
+      "checkSha256": "edd9cae757f10a96fd5ee351eec765274a02b7cb1001ce509403d6e2e22f5aa2",
+      "restoredIdentical": true,
+      "screenshotPath": "chance-draws-original/chance-2-correct.png",
+      "screenshotSha256": "71b83f6866039fd3daeccad4786deea0e946d89d6f8c649dc7ea2b5ff653da74"
+    }
+  ]
+}

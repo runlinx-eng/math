@@ -1,0 +1,56 @@
+{
+  "family": "affine-rulejump",
+  "head": "55f835e0ae6ed9024e281bff4715a04da5d5ee6d",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "percentpatterns:1",
+      "sessionId": "percentpatterns",
+      "index": 1,
+      "nodeId": "mt_jCy07DyBNU",
+      "type": "x-rulejump",
+      "taskHash": "afae6461733258b1cdfe37054e106266776e758701ff9f2b2bc10096f41b1beb",
+      "firstTerm": 5,
+      "difference": 4,
+      "run": "affine-original",
+      "checkPath": "affine-original/percentpatterns-1-correct-check-decoded.json",
+      "checkSha256": "68720598cfa0911a757440e72bfd5fdd7512693317430228b602cb9f22126363",
+      "restoredIdentical": true,
+      "screenshotPath": "affine-original/percentpatterns-1-correct.png",
+      "screenshotSha256": "ccc452b9577314e052b7e32efb887f387859cd1bdeb33131abced788e8f6e08c"
+    },
+    {
+      "position": "nth35:0",
+      "sessionId": "nth35",
+      "index": 0,
+      "nodeId": "mt_HRKzwEQJgO",
+      "type": "x-rulejump",
+      "taskHash": "b8fb655b62abbb717600bae74f71ecfca675d039be693445a564eb5720432457",
+      "firstTerm": 3,
+      "difference": 4,
+      "run": "affine-nth35-original",
+      "checkPath": "affine-nth35-original/nth35-0-correct-check-decoded.json",
+      "checkSha256": "db1eae12b77376d696d2413c368d4b41bef8456d444b945d8d68ac80fc440559",
+      "restoredIdentical": true,
+      "screenshotPath": "affine-nth35-original/nth35-0-correct.png",
+      "screenshotSha256": "c6311edc47b184aebb79d0b0e5e9af9601c80fa2392402cc1ea8b6efb5d24ed7"
+    },
+    {
+      "position": "nth35:2",
+      "sessionId": "nth35",
+      "index": 2,
+      "nodeId": "mt_HRKzwEQJgO",
+      "type": "x-rulejump",
+      "taskHash": "7c9a001937058f9c208ba2d7635b560ca126fc000b8241d3a5dc51162ea451b4",
+      "firstTerm": 4,
+      "difference": 3,
+      "run": "affine-nth35-original",
+      "checkPath": "affine-nth35-original/nth35-2-correct-check-decoded.json",
+      "checkSha256": "6f6a3c97fff0b0c25c0a39511e6b21ba4d42a1476dcbd4b030a7a642a51d89a5",
+      "restoredIdentical": true,
+      "screenshotPath": "affine-nth35-original/nth35-2-correct.png",
+      "screenshotSha256": "d585bac74182c74427c0701a12c04d269053c11e5c38b1520d786a9a1e39f2ab"
+    }
+  ]
+}

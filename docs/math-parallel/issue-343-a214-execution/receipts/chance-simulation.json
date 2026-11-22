@@ -1,0 +1,22 @@
+{
+  "family": "chance-simulation",
+  "head": "26fe8a48c82eb6f334e28fea9d0c410de657dbbd",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "simulation:0",
+      "sessionId": "simulation",
+      "index": 0,
+      "nodeId": "mt_8DT3LXwwH-",
+      "type": "x-simulation",
+      "taskHash": "e15c769162ac92cb757ff3de5b8916624beb514a89da9b39ad71fc45ad5abaa1",
+      "run": "chance-simulation-original",
+      "checkPath": "chance-simulation-original/simulation-0-correct-check-decoded.json",
+      "checkSha256": "eb68ba02459aea65df9df4110627fc732b6b1e5a22eb7054ec39329819e709ae",
+      "restoredIdentical": true,
+      "screenshotPath": "chance-simulation-original/simulation-0-correct.png",
+      "screenshotSha256": "4021cf3b0802fd25a427f2a401680b4bbe21d0e027305a88a23217b1b00d7379"
+    }
+  ]
+}

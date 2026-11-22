@@ -1,0 +1,104 @@
+From 26fe8a48c82eb6f334e28fea9d0c410de657dbbd Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Sun, 22 Nov 2026 15:15:30 +0800
+Subject: [PATCH] Verify chance-simulation for exact #343 source positions
+
+---
+ .../a214-chance-simulation-evidence.js        | 51 +++++++++++++++++++
+ tests/p9-a214-chance-simulation.test.mjs      | 29 +++++++++++
+ 2 files changed, 80 insertions(+)
+ create mode 100644 dist/learning/a214-chance-simulation-evidence.js
+ create mode 100644 tests/p9-a214-chance-simulation.test.mjs
+
+diff --git a/dist/learning/a214-chance-simulation-evidence.js b/dist/learning/a214-chance-simulation-evidence.js
+new file mode 100644
+index 0000000..58bcd81
+--- /dev/null
++++ b/dist/learning/a214-chance-simulation-evidence.js
+@@ -0,0 +1,51 @@
++// B-line development candidate for the exact #343 source positions below.
++import * as original from './phase4/b04-model.js';
++import {
++  hasExactKeys, isEvidenceContext, latestSubmissionMatches, matchesNativeEvidenceTask
++} from './evidence-contract.js';
++
++export const SOURCES = Object.freeze([
++  Object.freeze({sessionId: 'simulation', index: 0, nodeId: 'mt_8DT3LXwwH-',
++    type: 'x-simulation', taskHash: 'e15c769162ac92cb757ff3de5b8916624beb514a89da9b39ad71fc45ad5abaa1'}),
++]);
++
++function sourceFor(task, context) {
++  if (!isEvidenceContext(context)) return null;
++  const source = SOURCES.find(row => row.sessionId === context.sessionId && row.index === context.index);
++  return source && matchesNativeEvidenceTask(task, context, source) ? source : null;
++}
++
++export function binding(task, context) {
++  const source = sourceFor(task, context);
++  return source ? {nodeId: source.nodeId, method: null, question: '比较模拟中的比例，分清通常趋势与每轮保证。'} : null;
++}
++
++export function submitted(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replay(task, model, context) : null;
++}
++
++export function replay(task, model, context) {
++  try {
++    const source = sourceFor(task, context);
++    if (!source || !hasExactKeys(model, Object.keys(original.initial(task))) ||
++        !original.valid(task, model) || !original.inspect(task, model).correct ||
++        !['10', '100', '1000'].includes(model.sample)) return null;
++    const sampleSizes = [10, 100, 1000];
++    const roundCounts = new Map(sampleSizes.map(n => [n, 0]));
++    const rounds = [];
++    for (const run of model.runs) {
++      if (!hasExactKeys(run, ['n', 'seed', 'hits']) ||
++          !roundCounts.has(run.n) || !Number.isInteger(run.hits) || run.hits < 0 || run.hits > run.n) return null;
++      roundCounts.set(run.n, roundCounts.get(run.n) + 1);
++      rounds.push({frequency: [run.hits, run.n], distanceFromOneSixth: [Math.abs(6 * run.hits - run.n), 6 * run.n]});
++    }
++    if (sampleSizes.some(n => roundCounts.get(n) !== 5) || model.trend !== 'usually' || model.guarantee !== 'no') return null;
++    // The original activity shows this illustrative counterexample separately from simulated rounds.
++    const hypotheticalDistances = [[2, 10], [220, 1000]].map(([hits, n]) =>
++      [Math.abs(6 * hits - n), 6 * n]);
++    return {...source, method: null, rounds, hypotheticalDistances, selectedTrend: model.trend,
++      selectedGuarantee: model.guarantee};
++  } catch {
++    return null;
++  }
++}
+diff --git a/tests/p9-a214-chance-simulation.test.mjs b/tests/p9-a214-chance-simulation.test.mjs
+new file mode 100644
+index 0000000..cb28b20
+--- /dev/null
++++ b/tests/p9-a214-chance-simulation.test.mjs
+@@ -0,0 +1,29 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import * as original from '../dist/learning/phase4/b04-model.js';
++import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
++import {SOURCES, binding, replay, submitted} from '../dist/learning/a214-chance-simulation-evidence.js';
++
++for (const source of SOURCES) {
++  test(source.sessionId + ':' + source.index + ' validates the native work and rejects counterexamples', () => {
++    const task = sessionTaskFor(source.sessionId, source.index);
++    assert.equal(taskFingerprint(task), source.taskHash);
++    assert.equal(binding(task, source)?.nodeId, source.nodeId);
++    assert.equal(binding({...task, prompt: task.prompt + '。'}, source), null);
++    assert.equal(binding(task, {...source, index: String(source.index)}), null);
++    const result = model => replay(task, model, source);
++
++    const good = original.example(task);
++    const proof = result(good);
++    assert.equal(proof?.rounds.length, 15);
++    assert.deepEqual(proof?.hypotheticalDistances, [[2, 60], [320, 6000]]);
++    const wrong = {...good, guarantee: 'yes'};
++    const forged = structuredClone(good);
++    forged.runs[0].hits = (forged.runs[0].hits + 1) % (forged.runs[0].n + 1);
++    assert.equal(result(forged), null);
++    assert.equal(result(wrong), null);
++    assert.equal(submitted(task, good, {attempts: [{value: wrong}]}, source), null);
++    assert.ok(submitted(task, good, {attempts: [{value: wrong}, {value: structuredClone(good)}]}, source));
++  });
++}

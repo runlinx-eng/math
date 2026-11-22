@@ -1,0 +1,80 @@
+From aaed413e60e290b5f14414b08a2fe8b8cae9dd6f Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Sun, 22 Nov 2026 15:06:30 +0800
+Subject: [PATCH] Verify native angle-estimate evidence for #343
+
+---
+ dist/learning/a214-angle-estimate-evidence.js | 31 +++++++++++++++++++
+ tests/p9-a214-angle-estimate.test.mjs         | 25 +++++++++++++++
+ 2 files changed, 56 insertions(+)
+ create mode 100644 dist/learning/a214-angle-estimate-evidence.js
+ create mode 100644 tests/p9-a214-angle-estimate.test.mjs
+
+diff --git a/dist/learning/a214-angle-estimate-evidence.js b/dist/learning/a214-angle-estimate-evidence.js
+new file mode 100644
+index 0000000..4635c72
+--- /dev/null
++++ b/dist/learning/a214-angle-estimate-evidence.js
+@@ -0,0 +1,31 @@
++// #343: qualify the same replay mathematics at a separate, exact native source.
++import {sessionTaskFor} from './bridges.js';
++import {latestSubmissionMatches, matchesNativeEvidenceTask, sameEvidence} from './evidence-contract.js';
++import {replayAngleEstimateEvidence} from './p005f-native-angle-estimates-evidence.js';
++
++export const SOURCE = Object.freeze({
++  sessionId: 'representations39', index: 2, nodeId: 'mt_IwEOCN6bL1', type: 'x-g25-estimate',
++  taskHash: '2e95b28676442bc8fc86c1bdfdeec5cfb3cff4d88efa1c546acbf6dfa3e06e35'
++});
++const mathReference = Object.freeze({sessionId: 'angleestimate', index: 0});
++
++export function binding(task, context) {
++  if (context?.sessionId !== SOURCE.sessionId || context.index !== SOURCE.index ||
++      !matchesNativeEvidenceTask(task, context, SOURCE)) return null;
++  const referenceTask = sessionTaskFor(mathReference.sessionId, mathReference.index);
++  if (!sameEvidence(task, referenceTask)) return null;
++  return {nodeId: SOURCE.nodeId, method: null};
++}
++
++export function replay(task, model, context) {
++  if (!binding(task, context)) return null;
++  const referenceTask = sessionTaskFor(mathReference.sessionId, mathReference.index);
++  // Reuse the deterministic replay only. Work and Check come from the B39 position.
++  const verified = replayAngleEstimateEvidence(referenceTask, model, mathReference);
++  if (!verified) return null;
++  return {...verified, ...SOURCE, method: null};
++}
++
++export function submitted(task, model, record, context) {
++  return latestSubmissionMatches(model, record) ? replay(task, model, context) : null;
++}
+diff --git a/tests/p9-a214-angle-estimate.test.mjs b/tests/p9-a214-angle-estimate.test.mjs
+new file mode 100644
+index 0000000..dc7126c
+--- /dev/null
++++ b/tests/p9-a214-angle-estimate.test.mjs
+@@ -0,0 +1,25 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import {sessionTaskFor} from '../dist/learning/bridges.js';
++import {prepareSessionRuntime} from '../dist/learning/phase4/async-batches.js';
++import * as native from '../dist/learning/phase5/b25-model.js';
++import {taskFingerprint} from '../scripts/audit-evidence-expansion.mjs';
++import {SOURCE, replay, submitted} from '../dist/learning/a214-angle-estimate-evidence.js';
++
++test('representations39:2 has its own runtime source and submission identity', async () => {
++  await prepareSessionRuntime(SOURCE.sessionId);
++  const task = sessionTaskFor(SOURCE.sessionId, SOURCE.index);
++  assert.equal(taskFingerprint(task), SOURCE.taskHash);
++  const model = native.example(task);
++  const record = {attempts: [{value: structuredClone(model)}]};
++  const proof = submitted(task, model, record, SOURCE);
++  assert.equal(proof?.nodeId, SOURCE.nodeId);
++  assert.equal(proof?.sessionId, SOURCE.sessionId);
++  assert.equal(proof?.index, SOURCE.index);
++  assert.equal(proof?.method, null);
++  assert.equal(replay(task, model, {sessionId: 'angleestimate', index: 0}), null);
++  assert.equal(replay(task, model, {...SOURCE, index: 1}), null);
++  assert.equal(replay({...task, prompt: task.prompt + '。'}, model, SOURCE), null);
++  assert.equal(replay(task, {...model, history: []}, SOURCE), null);
++  assert.equal(submitted(task, model, {attempts: [{value: native.initial(task)}]}, SOURCE), null);
++});

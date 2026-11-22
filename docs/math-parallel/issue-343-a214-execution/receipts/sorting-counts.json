@@ -1,0 +1,64 @@
+{
+  "family": "sorting-counts",
+  "head": "3c863ac7e6d35f608ba79135237fe0d7d1c45d23",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "sortobjects:0",
+      "sessionId": "sortobjects",
+      "index": 0,
+      "nodeId": "mt_xppl18avyY",
+      "type": "x-sort",
+      "taskHash": "c8a781d39071b017e318f795a1eaabc0ac7ef29bdf85581597ea48184989d783",
+      "run": "sorting-counts-original",
+      "checkPath": "sorting-counts-original/sortobjects-0-correct-check-decoded.json",
+      "checkSha256": "ee08207a58da208d8c282aa3c2002d7947fcd4523798b41b6f089187898c6a1d",
+      "restoredIdentical": true,
+      "screenshotPath": "sorting-counts-original/sortobjects-0-correct.png",
+      "screenshotSha256": "c49544109b33acd70ff8a53d7f31ed750de5a65443980a56e6bf00db1e778bc1"
+    },
+    {
+      "position": "sortobjects:1",
+      "sessionId": "sortobjects",
+      "index": 1,
+      "nodeId": "mt_xppl18avyY",
+      "type": "x-sort",
+      "taskHash": "47fe1026e62f2fc593bd4ac40e5d0ef96e4b86322de25ed5036984c25bed6ad3",
+      "run": "sorting-counts-original",
+      "checkPath": "sorting-counts-original/sortobjects-1-correct-check-decoded.json",
+      "checkSha256": "a55e95d10b05b9e2a169dba75f01fc6d51bbfd5ad7e051f67a24edefa772a349",
+      "restoredIdentical": true,
+      "screenshotPath": "sorting-counts-original/sortobjects-1-correct.png",
+      "screenshotSha256": "e330596f0308b4ec4e4a9d62a784553b8a846b6b0a1cb37cc3d8012bcad03103"
+    },
+    {
+      "position": "sortdata:0",
+      "sessionId": "sortdata",
+      "index": 0,
+      "nodeId": "mt_ylXdiVRAYv",
+      "type": "x-sort",
+      "taskHash": "f7950a474e0344d3b45f537c6118a0fe903d5ee2d0d94176955d9a1bc4973de6",
+      "run": "sorting-counts-original",
+      "checkPath": "sorting-counts-original/sortdata-0-correct-check-decoded.json",
+      "checkSha256": "b960f649cb92a65795be7f8b9624130fd4574067f775b2a64ff1006f8f621bc5",
+      "restoredIdentical": true,
+      "screenshotPath": "sorting-counts-original/sortdata-0-correct.png",
+      "screenshotSha256": "16f8ca84ebbb56c3ab8a54547252c353352db9c4d2bbe5a9a0a87b8068bfef82"
+    },
+    {
+      "position": "sortdata:1",
+      "sessionId": "sortdata",
+      "index": 1,
+      "nodeId": "mt_ylXdiVRAYv",
+      "type": "x-sort",
+      "taskHash": "9e4af28268243cc6e761b35bbfe84226736a7c640d7a00ef756f3480f2d29661",
+      "run": "sorting-counts-original",
+      "checkPath": "sorting-counts-original/sortdata-1-correct-check-decoded.json",
+      "checkSha256": "c4193fec4bb397faacd08fa246b0c2171e3b0bf2b11b8e61fb4b771d0b8d1ad6",
+      "restoredIdentical": true,
+      "screenshotPath": "sorting-counts-original/sortdata-1-correct.png",
+      "screenshotSha256": "6d1fc8af3cb956f58bc95261fede2d602dcab9b99fa84f7f21e6873c99d9dc73"
+    }
+  ]
+}

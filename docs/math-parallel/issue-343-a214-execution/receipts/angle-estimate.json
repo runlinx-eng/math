@@ -1,0 +1,22 @@
+{
+  "family": "angle-estimate",
+  "head": "aaed413e60e290b5f14414b08a2fe8b8cae9dd6f",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "representations39:2",
+      "sessionId": "representations39",
+      "index": 2,
+      "nodeId": "mt_IwEOCN6bL1",
+      "type": "x-g25-estimate",
+      "taskHash": "2e95b28676442bc8fc86c1bdfdeec5cfb3cff4d88efa1c546acbf6dfa3e06e35",
+      "run": "angle-estimate-original",
+      "checkPath": "angle-estimate-original/representations39-2-correct-check-decoded.json",
+      "checkSha256": "0c2aca8c90b0d01612913c446e9b4f2603e2d40a631f36f6d4480cf25728befc",
+      "restoredIdentical": true,
+      "screenshotPath": "angle-estimate-original/representations39-2-correct.png",
+      "screenshotSha256": "c06542d03acea53b0a1971d44a60934b3e272f326779f7e0261dbb8b59035030"
+    }
+  ]
+}

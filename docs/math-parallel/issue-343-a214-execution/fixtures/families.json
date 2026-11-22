@@ -1,0 +1,177 @@
+{
+  "affine-rulejump": {
+    "sources": "AFFINE_RULE_SOURCES",
+    "submitted": "submittedAffineRulejumpEvidence",
+    "fixture": "affine-browser.cjs",
+    "runs": [
+      "affine-original",
+      "affine-nth35-original"
+    ],
+    "proof": "从等差数列首项、公差独立推出第 n 项，重放实际保存的规则和试算。"
+  },
+  "hundredths-construction": {
+    "sources": "HUNDREDTHS_SOURCES",
+    "submitted": "submittedHundredthsConstructionEvidence",
+    "fixture": "hundredths-browser.cjs",
+    "runs": [
+      "hundredths-original"
+    ],
+    "proof": "重放原控件的整行和单格，确认 30/100＋4/100 或 20/100＋7/100。"
+  },
+  "integer-walk": {
+    "sources": "INTEGER_WALK_SOURCES",
+    "submitted": "submittedIntegerWalkEvidence",
+    "fixture": "integer-walk-browser.cjs",
+    "runs": [
+      "integer-walk-original",
+      "integer-walk-final-stop-original"
+    ],
+    "proof": "按原记录逐站复核常数步长和方向，撤销的站点另见首错 Check。"
+  },
+  "count-trails": {
+    "sources": "COUNT_TRAIL_SOURCES",
+    "submitted": "submittedCountTrailEvidence",
+    "fixture": "count-trails-browser.cjs",
+    "runs": [
+      "count-trails-original",
+      "count-twenty-original"
+    ],
+    "proof": "复核每颗珠子的实际保留序号、重复处及适用的换位置重数。"
+  },
+  "square-inclusion": {
+    "single": true,
+    "fixture": "geometry-browser.cjs",
+    "runs": [
+      "square-inclusion-original"
+    ],
+    "proof": "复用同题数学回放，以独立来源和 Check 核对四边、直角与正方形包含关系。"
+  },
+  "quadrilateral-nesting": {
+    "single": true,
+    "fixture": "geometry-browser.cjs",
+    "runs": [
+      "quadrilateral-nesting-original"
+    ],
+    "proof": "复用四边形几何核算，以该原生位置的排序事件验证准确放入嵌套区域。"
+  },
+  "angle-estimate": {
+    "single": true,
+    "fixture": "geometry-browser.cjs",
+    "runs": [
+      "angle-estimate-original"
+    ],
+    "proof": "复用角度数学回放，使用本题的估计、揭示、订正并核对 130° 大于直角。"
+  },
+  "protractor": {
+    "single": true,
+    "fixture": "geometry-browser.cjs",
+    "runs": [
+      "protractor-original"
+    ],
+    "proof": "重放量角器位置与方向，核对同一角实际对准后记录的 130°。"
+  },
+  "fraction-line": {
+    "runs": [
+      "fraction-line-original"
+    ],
+    "proof": "按每段等长重建保留的跳跃，区分右端为 1 和右端为 1/10。"
+  },
+  "scaling": {
+    "runs": [
+      "scaling-original"
+    ],
+    "proof": "复核原保存的预测与倍数试验，按倍数同 1 的大小得出原长度的缩放。"
+  },
+  "distance-zero": {
+    "runs": [
+      "distance-zero-original"
+    ],
+    "proof": "按实际描出的有符号位置求到零距离，复核方向、距离非负和比较。"
+  },
+  "equal-balance": {
+    "runs": [
+      "equal-balance-original"
+    ],
+    "proof": "复用天平的独立数学回放，核对本题实际释放记录、5＝2＋3 与等号。"
+  },
+  "standard-form": {
+    "runs": [
+      "standard-form-original"
+    ],
+    "proof": "逐张按科学记数法精确还原数值，重放卡片选取和移除。"
+  },
+  "parity-pairs": {
+    "runs": [
+      "parity-pairs-original"
+    ],
+    "proof": "复核实际保留的不同物品配对、余数，以及适用的相等两部分。"
+  },
+  "paired-counts": {
+    "runs": [
+      "paired-counts-original"
+    ],
+    "proof": "复核两组物品身份的一一对应、剩余与两组多少关系。"
+  },
+  "chance-draws": {
+    "runs": [
+      "chance-draws-original"
+    ],
+    "proof": "从原模拟实际结果重算频数，对照首个锁定的预测。"
+  },
+  "chance-spinner": {
+    "runs": [
+      "chance-spinner-original"
+    ],
+    "proof": "以记录的等大扇区份数确定理论机会，保留预测和各轮频数。"
+  },
+  "chance-simulation": {
+    "runs": [
+      "chance-simulation-original"
+    ],
+    "proof": "由原模拟的命中次数与轮数计算比例，同时核对题面反例的距离。"
+  },
+  "count-from-start": {
+    "runs": [
+      "count-from-start-original"
+    ],
+    "proof": "区分加法从较大数接数和减法从整体倒数，核对保留的邻站及原记录。"
+  },
+  "sorting-counts": {
+    "runs": [
+      "sorting-counts-original"
+    ],
+    "proof": "逐个物品核对保存的类别和频数，并允许相同频数并列。"
+  },
+  "parity-argument": {
+    "runs": [
+      "parity-argument-original"
+    ],
+    "proof": "复核配对示例、所选给定论证步骤和确有一个落单的反例。"
+  },
+  "discrete-bundles": {
+    "runs": [
+      "discrete-bundles-original"
+    ],
+    "proof": "首组确由原选取绑定，核对所有组身份互斥、余数和组数，不推断后续各组手动完成。"
+  },
+  "decimal-representations": {
+    "runs": [
+      "decimal-representations-original"
+    ],
+    "proof": "按完整单位格和百分格复算数量，精确核对分数、小数、百分数和每位数字。"
+  },
+  "pond-estimate": {
+    "runs": [
+      "pond-estimate-original"
+    ],
+    "proof": "按固定多边形与格子的相交面积核对半格阈值，数得估计 18 平方厘米。"
+  },
+  "integer-card-axis": {
+    "runs": [
+      "integer-card-axis-original",
+      "integer-card-axis-faces120-original",
+      "integer-card-axis-screen1000-original"
+    ],
+    "proof": "核对原生卡片保留的排列和每张卡的已设置坐标，不推断滑杆经过的位置。"
+  }
+}

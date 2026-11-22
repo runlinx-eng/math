@@ -1,0 +1,36 @@
+{
+  "family": "hundredths-construction",
+  "head": "f861ae1882d8e56e20bfa9098c13bea282696930",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "tenthtohundred:1",
+      "sessionId": "tenthtohundred",
+      "index": 1,
+      "nodeId": "mt_NaqEP8xDhZ",
+      "type": "x-hundredcombine",
+      "taskHash": "811a8c85c40c091b23c2bc80c6287a8d5dd8c1731659587f029f599779faed31",
+      "run": "hundredths-original",
+      "checkPath": "hundredths-original/tenthtohundred-1-correct-check-decoded.json",
+      "checkSha256": "de686cd028774943381033b5c630c89bde4bc7c6d7588ce75a534b819120ee99",
+      "restoredIdentical": true,
+      "screenshotPath": "hundredths-original/tenthtohundred-1-correct.png",
+      "screenshotSha256": "5a7cb64771b89c7b37058e22a0e52bb3b6c136271255da0d365a42a27bb15b31"
+    },
+    {
+      "position": "tenthtohundred:3",
+      "sessionId": "tenthtohundred",
+      "index": 3,
+      "nodeId": "mt_NaqEP8xDhZ",
+      "type": "x-hundredcombine",
+      "taskHash": "49124ec79b9295e04ab9e4e409bbc6611fad28e582aa081f559635ada104f803",
+      "run": "hundredths-original",
+      "checkPath": "hundredths-original/tenthtohundred-3-correct-check-decoded.json",
+      "checkSha256": "97e28e514dd3c82aefe0410c14b51425280e0273a8e0a27938eec9b8f1174634",
+      "restoredIdentical": true,
+      "screenshotPath": "hundredths-original/tenthtohundred-3-correct.png",
+      "screenshotSha256": "72c9ce4b8d38676e891e4d06e0b77e4b98842a04ea77bef03a29f1db9c7e9c27"
+    }
+  ]
+}

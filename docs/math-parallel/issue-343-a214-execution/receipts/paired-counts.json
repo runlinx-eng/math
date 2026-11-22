@@ -1,0 +1,50 @@
+{
+  "family": "paired-counts",
+  "head": "bf8c66fdfcc4fe23ba74b8c11c7e356945644f0f",
+  "parent": "1e9d270d7243b3519fabcfbe7f05f66f82cada73",
+  "chromium": "141.0.7390.37",
+  "checks": [
+    {
+      "position": "paircounts:0",
+      "sessionId": "paircounts",
+      "index": 0,
+      "nodeId": "mt__h7hvT4tEb",
+      "type": "x-paircounts",
+      "taskHash": "7703f232a546d7bb3804fd7ccbf0cdc9c7cedd12ba054a974016d22e0eb287bf",
+      "run": "paired-counts-original",
+      "checkPath": "paired-counts-original/paircounts-0-correct-check-decoded.json",
+      "checkSha256": "6539cef137c49e9ae7022e8248fcc50a2335af20d9db6d6e6a85d8181751bb29",
+      "restoredIdentical": true,
+      "screenshotPath": "paired-counts-original/paircounts-0-correct.png",
+      "screenshotSha256": "7bcb094e2fabd2bd9636dbefc47dc23fd26f9ca037e4110a0bd96ed8051216ba"
+    },
+    {
+      "position": "paircounts:1",
+      "sessionId": "paircounts",
+      "index": 1,
+      "nodeId": "mt__h7hvT4tEb",
+      "type": "x-paircounts",
+      "taskHash": "bfee3c4fd68273a61ea3113554899534c1ef320455248fe1bc4e90e2e52859c0",
+      "run": "paired-counts-original",
+      "checkPath": "paired-counts-original/paircounts-1-correct-check-decoded.json",
+      "checkSha256": "ba285f3b7df7076d40f664282b2cda3b25d61789bac1873768d9e3cdac921f90",
+      "restoredIdentical": true,
+      "screenshotPath": "paired-counts-original/paircounts-1-correct.png",
+      "screenshotSha256": "f5988e70504d9da174a5082cfe2c35726ced3f898f186941a32e227c99d54cbc"
+    },
+    {
+      "position": "paircounts:2",
+      "sessionId": "paircounts",
+      "index": 2,
+      "nodeId": "mt__h7hvT4tEb",
+      "type": "x-paircounts",
+      "taskHash": "de90c44b0150a720adbc6d7ac80a56178ef039aba77e85519603a9a4a0bfc057",
+      "run": "paired-counts-original",
+      "checkPath": "paired-counts-original/paircounts-2-correct-check-decoded.json",
+      "checkSha256": "38d6c3b215476aedcb126d8d640b055f37ba1f1fbae2b6e458eb469a0da415ac",
+      "restoredIdentical": true,
+      "screenshotPath": "paired-counts-original/paircounts-2-correct.png",
+      "screenshotSha256": "8c48113730d21de0a3a34df9772cd18feeed9c969bb500ff430caaeeb2151580"
+    }
+  ]
+}

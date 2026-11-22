@@ -1,0 +1,13 @@
+✔ compare100:2 validates the native work and rejects counterexamples (6.449083ms)
+✔ faces120:2 validates the native work and rejects counterexamples (0.135ms)
+✔ hundreds:1 validates the native work and rejects counterexamples (0.100625ms)
+✔ compare1000:5 validates the native work and rejects counterexamples (0.074042ms)
+✔ screen1000:1 validates the native work and rejects counterexamples (0.079459ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.374708
