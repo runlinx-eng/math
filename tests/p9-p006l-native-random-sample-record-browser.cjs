@@ -51,6 +51,9 @@ async function run(){
   await page.locator('#main [data-do="export"]').first().waitFor();
   await warmAndStop(page,origin,release,ok,stage);
   const reveal=async loc=>{
+   // The native lesson state can commit before its original control DOM is mounted.
+   // Wait for the real original field, then retain the strict unique-control assertion.
+   await loc.waitFor({state:'attached'});
    assert.equal(await loc.count(),1,stage+': exactly one original control');
    for(let j=0;j<10&&!(await loc.isVisible());j++){
     const parent=loc.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
