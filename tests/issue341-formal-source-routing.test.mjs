@@ -7,6 +7,7 @@ import {EVIDENCE_ADAPTERS} from '../dist/learning/evidence-adapters.js';
 import {ISSUE341_NORMALIZED_ADAPTERS} from '../dist/learning/issue341-candidate-feedback.js';
 import {ISSUE341_FOLLOWUP_126_ADAPTERS} from '../dist/learning/issue341-followup-126-candidates.js';
 import {ISSUE341_FOLLOWUP_218_ADAPTERS} from '../dist/learning/issue341-followup-218-candidates.js';
+import {ISSUE342_A_P006_ADAPTERS} from '../dist/learning/issue342-a355-p006-candidates.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 await ensureB39Ready();
 import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
@@ -21,16 +22,17 @@ const entry=s=>({sessionId:s.sessionId,index:s.index,type:s.type,nodeId:s.nodeId
 const only=(...tasks)=>({schema:official.schema,tasks});
 const context=s=>({sessionId:s.sessionId,index:s.index});
 
-test('all 709 frozen candidate positions exactly match official 1522 manifest and browser release snapshot',()=>{
- assert.equal(official.tasks.length,1522);
- assert.equal(ISSUE341_FORMAL_MANIFEST.tasks.length,709);
+test('all 740 frozen candidate positions exactly match official 1553 manifest and browser release snapshot',()=>{
+ assert.equal(official.tasks.length,1553);
+ assert.equal(ISSUE341_FORMAL_MANIFEST.tasks.length,740);
  assert.equal(ISSUE341_NORMALIZED_ADAPTERS.length,113);
- assert.equal(new Set(official.tasks.map(r=>JSON.stringify([r.sessionId,r.index]))).size,1522);
+ assert.equal(ISSUE342_A_P006_ADAPTERS.length,19);
+ assert.equal(new Set(official.tasks.map(r=>JSON.stringify([r.sessionId,r.index]))).size,1553);
  const officialRows=official.tasks.filter(r=>r.adapter?.startsWith('issue341-'));
- assert.equal(officialRows.length,709);
+ assert.equal(officialRows.length,740);
  assert.deepEqual(officialRows,ISSUE341_FORMAL_MANIFEST.tasks);
- const frozen=[...ISSUE341_NORMALIZED_ADAPTERS,...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS].flatMap(f=>f.sources.map(s=>({family:f.id,source:s})));
- assert.equal(frozen.length,709);
+ const frozen=[...ISSUE341_NORMALIZED_ADAPTERS,...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS,...ISSUE342_A_P006_ADAPTERS].flatMap(f=>f.sources.map(s=>({family:f.id,source:s})));
+ assert.equal(frozen.length,740);
  const byPosition=new Map(officialRows.map(r=>[JSON.stringify([r.sessionId,r.index]),r]));
  for(const {family,source} of frozen){
   const row=byPosition.get(JSON.stringify([source.sessionId,source.index]));
@@ -55,10 +57,10 @@ test('all 709 frozen candidate positions exactly match official 1522 manifest an
 
 test('formal runtime supports exact all709 registration',()=>{
  const route=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
- assert.equal(route.approvedPositions,709);
- assert.equal(route.approvedFamilies,200);
- assert.equal(route.adapters.length,200);
- assert.equal(route.adapters.reduce((n,a)=>n+a.sources.length,0),709);
+ assert.equal(route.approvedPositions,740);
+ assert.equal(route.approvedFamilies,219);
+ assert.equal(route.adapters.length,219);
+ assert.equal(route.adapters.reduce((n,a)=>n+a.sources.length,0),740);
  for(const source of family.sources){
   const task=sessionTaskFor(source.sessionId,source.index);
   const selected=route.registry.resolve(task,context(source));

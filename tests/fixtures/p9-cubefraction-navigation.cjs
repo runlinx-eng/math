@@ -859,7 +859,7 @@ module.exports={
     }
   ],
   "sourceHashes": {
-    "dist/learning/learn.js": "2001363393616c4593c2be434bd971bf8ed15224ca5354bacce4f3689b8a808d",
+    "dist/learning/learn.js": "3adda1eae1758c93c3703fb554e78de58710b9a4c777afa6bb5f28cdfac0742f",
     "dist/learning/phase5/b13-model.js": "d5a146c466ac846dd555f833823453252f1268e6be4f4d1d845ad07c7c434cb3",
     "dist/learning/phase5/b13-view.js": "1cece24dc00f47b3d54bb1e0405d5f05270e625cd23841872cf38c96c024b6a8",
     "dist/learning/phase5/b14-model.js": "9fe453c590a81e350fcd6f9988bc44ff27727fc5c51991363db803116c8a3ea4",

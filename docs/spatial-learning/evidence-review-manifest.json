@@ -13750,6 +13750,285 @@
       "adapter": "issue341-B218-p116d",
       "taskHash": "3873e521e51855f69df548b45580bf627d70d3bdd27ec34378142830502ad1c1",
       "method": null
+    },
+    {
+      "sessionId": "categoryuse",
+      "index": 0,
+      "type": "x-datacount",
+      "nodeId": "mt_1VSfm9yiLn",
+      "adapter": "issue341-A-P006A",
+      "taskHash": "945aa122537d0193ef311aadb9b1d47bd5c3bbe22f472c19163977e69b117fbe",
+      "method": null
+    },
+    {
+      "sessionId": "categoryuse",
+      "index": 1,
+      "type": "x-datacount",
+      "nodeId": "mt_1VSfm9yiLn",
+      "adapter": "issue341-A-P006B",
+      "taskHash": "7986284102490a6eaaf5e3b5f2ca3be505ccfaac91feadc0c305e48fb590c680",
+      "method": null
+    },
+    {
+      "sessionId": "categoryuse",
+      "index": 2,
+      "type": "x-datacount",
+      "nodeId": "mt_1VSfm9yiLn",
+      "adapter": "issue341-A-P006B",
+      "taskHash": "d8a566016199a413177b13dc23eace3957cbecb5415167a162cd35eff31eb313",
+      "method": null
+    },
+    {
+      "sessionId": "playgroundstudy",
+      "index": 1,
+      "type": "x-datacount",
+      "nodeId": "mt_kxeuXm6EyC",
+      "adapter": "issue341-A-P006C",
+      "taskHash": "f0a5bb49744b71e2999b4cd02a6ccdad8687c20e8531100e31c3f3539c9b5be9",
+      "method": null
+    },
+    {
+      "sessionId": "measurestory",
+      "index": 0,
+      "type": "x-datacount",
+      "nodeId": "mt_6gpryAnpoZ",
+      "adapter": "issue341-A-P006C",
+      "taskHash": "ed4ec76e97c65506709940aafd84b7adabba2cd9f05558ffc2f88f3ece5be500",
+      "method": null
+    },
+    {
+      "sessionId": "ownstudy",
+      "index": 2,
+      "type": "x-datacount",
+      "nodeId": "mt_Y6JmLjnfRP",
+      "adapter": "issue341-A-P006C",
+      "taskHash": "42fae338a6579eb8eb924ba776d3a156ec5ca5c4ee324b74ec0413b70f4a2e41",
+      "method": null
+    },
+    {
+      "sessionId": "digitalstudy",
+      "index": 2,
+      "type": "x-datacount",
+      "nodeId": "mt_yrvYKSwSRZ",
+      "adapter": "issue341-A-P006D",
+      "taskHash": "772d795d586bc5e00f1eb0a20be87e5bccca909c46f6de2a622907030cbf01df",
+      "method": null
+    },
+    {
+      "sessionId": "checkrecords",
+      "index": 2,
+      "type": "x-datacount",
+      "nodeId": "mt_QHT16CrFO-",
+      "adapter": "issue341-A-P006D",
+      "taskHash": "387c9a4156b40d7e2143b716ccca795f815afcf18585996be6c2cf8c462a65e4",
+      "method": null
+    },
+    {
+      "sessionId": "studyplan",
+      "index": 0,
+      "type": "x-dataplan",
+      "nodeId": "mt_SHVyE1CLUa",
+      "adapter": "issue341-A-P006E",
+      "taskHash": "83f28a380491d9683372faf466c71c0ab8adf6e38ec691e4c473025ce70a22e6",
+      "method": null
+    },
+    {
+      "sessionId": "betterquestion",
+      "index": 0,
+      "type": "x-dataplan",
+      "nodeId": "mt_O-U263ukg1",
+      "adapter": "issue341-A-P006E",
+      "taskHash": "429d00abd6312dc3106e56cccf4a4cb7da38f8a7edb5a288464abe0a349211f6",
+      "method": null
+    },
+    {
+      "sessionId": "studyplan",
+      "index": 2,
+      "type": "x-dataplan",
+      "nodeId": "mt_SHVyE1CLUa",
+      "adapter": "issue341-A-P006F",
+      "taskHash": "d961dacf687bbe09a860c314838adc89cc1ef382fdec40ffd6ab8aefe3f1d40e",
+      "method": null
+    },
+    {
+      "sessionId": "betterquestion",
+      "index": 2,
+      "type": "x-dataplan",
+      "nodeId": "mt_O-U263ukg1",
+      "adapter": "issue341-A-P006F",
+      "taskHash": "ad6950d2c3c35cde3e202def61672215e16a15be8fd195b8db019fc89dada00c",
+      "method": null
+    },
+    {
+      "sessionId": "digitalstudy",
+      "index": 1,
+      "type": "x-dataplan",
+      "nodeId": "mt_yrvYKSwSRZ",
+      "adapter": "issue341-A-P006G",
+      "taskHash": "8a6ab9dade6db9c69df3522079c61190e5fddba7940162181553db02d582dc53",
+      "method": null
+    },
+    {
+      "sessionId": "ownstudy",
+      "index": 1,
+      "type": "x-dataplan",
+      "nodeId": "mt_Y6JmLjnfRP",
+      "adapter": "issue341-A-P006G",
+      "taskHash": "24d52fec334e5c24456dbbcdfddeba1a645863b650bee50527c68fec6fe8eedb",
+      "method": null
+    },
+    {
+      "sessionId": "playgroundstudy",
+      "index": 2,
+      "type": "x-dataplan",
+      "nodeId": "mt_kxeuXm6EyC",
+      "adapter": "issue341-A-P006H",
+      "taskHash": "b982e6b2e7953fae44e694ed685f14442047ae9b20178cd1a8151e8b85b8d414",
+      "method": null
+    },
+    {
+      "sessionId": "studyplan",
+      "index": 1,
+      "type": "x-datastudio",
+      "nodeId": "mt_SHVyE1CLUa",
+      "adapter": "issue341-A-P006I",
+      "taskHash": "676bf2641fedbcc8df28921b43eea110f63ea07c7841c09e3374bd4928d22d51",
+      "method": null
+    },
+    {
+      "sessionId": "betterquestion",
+      "index": 1,
+      "type": "x-datastudio",
+      "nodeId": "mt_O-U263ukg1",
+      "adapter": "issue341-A-P006I",
+      "taskHash": "e53e0ff845065f9b5d80d0081102da7be09277257801ac5e6226b17b21ab3fd2",
+      "method": null
+    },
+    {
+      "sessionId": "playgroundstudy",
+      "index": 0,
+      "type": "x-datastudio",
+      "nodeId": "mt_kxeuXm6EyC",
+      "adapter": "issue341-A-P006J",
+      "taskHash": "271fc40982890e7b261ed64bf00b387dd8f4071d13db5098186b47ebe1ecadff",
+      "method": null
+    },
+    {
+      "sessionId": "digitalstudy",
+      "index": 0,
+      "type": "x-datastudio",
+      "nodeId": "mt_yrvYKSwSRZ",
+      "adapter": "issue341-A-P006K",
+      "taskHash": "24880cc3f5a04a8aff18ef85c521710c9423eb288a26ca4f95fcc285a00f9643",
+      "method": null
+    },
+    {
+      "sessionId": "ownstudy",
+      "index": 0,
+      "type": "x-datastudio",
+      "nodeId": "mt_Y6JmLjnfRP",
+      "adapter": "issue341-A-P006K",
+      "taskHash": "b4978e3896ff692b60f981377649494f13771bb8da24015e78985648fc6be32d",
+      "method": null
+    },
+    {
+      "sessionId": "fairdraw",
+      "index": 0,
+      "type": "x-samplelab",
+      "nodeId": "mt_4zgPzc6yu5",
+      "adapter": "issue341-A-P006L",
+      "taskHash": "8fe9d888f53692c0c592ffe2b36e2f9d74ecc152349581edb5bb2948286f8da3",
+      "method": null
+    },
+    {
+      "sessionId": "fairdraw",
+      "index": 2,
+      "type": "x-samplelab",
+      "nodeId": "mt_4zgPzc6yu5",
+      "adapter": "issue341-A-P006L",
+      "taskHash": "e8ce0a04fca7daf066aebf3c2fd0e35cbca1c7299b8b494f96d0fe724087b38b",
+      "method": null
+    },
+    {
+      "sessionId": "fairdraw",
+      "index": 1,
+      "type": "x-samplelab",
+      "nodeId": "mt_4zgPzc6yu5",
+      "adapter": "issue341-A-P006M",
+      "taskHash": "852bacf9fa85cb2853d9bcbb39f3c83135bbb5b8cc431e297dd55bd05143e321",
+      "method": null
+    },
+    {
+      "sessionId": "samplevary",
+      "index": 0,
+      "type": "x-samplelab",
+      "nodeId": "mt_x7V1qrkiqH",
+      "adapter": "issue341-A-P006N",
+      "taskHash": "66b47f1c9c7dd633e5538f40852a8bd12561d5a077633717a5f01cf03b3bb546",
+      "method": null
+    },
+    {
+      "sessionId": "samplevary",
+      "index": 1,
+      "type": "x-samplelab",
+      "nodeId": "mt_x7V1qrkiqH",
+      "adapter": "issue341-A-P006O",
+      "taskHash": "0a01bd8e8dd95df5a801bc216e7d0d60d3f19c5dcbe5d94c135b958604e6896a",
+      "method": null
+    },
+    {
+      "sessionId": "samplevary",
+      "index": 2,
+      "type": "x-samplelab",
+      "nodeId": "mt_x7V1qrkiqH",
+      "adapter": "issue341-A-P006P",
+      "taskHash": "2a09fa4bc4b0a85e4f7855b02ccc9e7ed8f7140e0e81a4e25b36d37cd9311b3e",
+      "method": null
+    },
+    {
+      "sessionId": "samplevary",
+      "index": 3,
+      "type": "x-samplelab",
+      "nodeId": "mt_x7V1qrkiqH",
+      "adapter": "issue341-A-P006Q",
+      "taskHash": "3d675ec15ac349231bfff6609b098091f56c56506d9cb20c83b3546e35c03fc7",
+      "method": null
+    },
+    {
+      "sessionId": "statquestions",
+      "index": 1,
+      "type": "x-questionbuild",
+      "nodeId": "mt_iykH2P5oFq",
+      "adapter": "issue341-A-P006R",
+      "taskHash": "1f654a820c65fc8586140e4977c599093e869fdc8ee54a1fdbb7265dd83f7bd3",
+      "method": null
+    },
+    {
+      "sessionId": "statquestions",
+      "index": 2,
+      "type": "x-questionbuild",
+      "nodeId": "mt_iykH2P5oFq",
+      "adapter": "issue341-A-P006R",
+      "taskHash": "eb954fa3f8aead15a7e41265af49424e2dfb61a178e180c078069d32825a34a7",
+      "method": null
+    },
+    {
+      "sessionId": "survey",
+      "index": 0,
+      "type": "survey",
+      "nodeId": "mt_ebQURBOsM5",
+      "adapter": "issue341-A-P006S",
+      "taskHash": "b408662903dcf4427dbd62cde33a67aed44713215040dfe2e1a315ed6d040712",
+      "method": null
+    },
+    {
+      "sessionId": "survey",
+      "index": 1,
+      "type": "survey",
+      "nodeId": "mt_ebQURBOsM5",
+      "adapter": "issue341-A-P006S",
+      "taskHash": "62e70fbba828146520ab23b8f3e59738ddde922ff980cc3b79af83e2ce892595",
+      "method": null
     }
   ]
 }
