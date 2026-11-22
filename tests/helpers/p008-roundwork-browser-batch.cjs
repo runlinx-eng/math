@@ -85,7 +85,7 @@ async function seedPositionOnly(page,sessionId,index){
   return {sessionId,index,noSeededAttempts:true};
  },{sessionId,index});
 }
-async function runShard(shard,positionIds){
+async function runShard(shard,positionIds,createDesktopContext){
  const output=path.join(root,'verification/p9-p008-'+shard+'-roundwork');
  fs.mkdirSync(output,{recursive:true});
  const logs=[],errors=[],screenshots=[],positionResults=[];
@@ -108,7 +108,7 @@ async function runShard(shard,positionIds){
  try{
   origin=await createOrigin(root);
   browser=await chromium.launch({headless:true});browserVersion=browser.version();
-  bctx=await newDesktopContext(browser,{reducedMotion:'reduce',serviceWorkers:'allow',acceptDownloads:true});
+  bctx=await createDesktopContext(browser,{reducedMotion:'reduce',serviceWorkers:'allow',acceptDownloads:true});
   page=await bctx.newPage();page.setDefaultTimeout(25000);
   page.on('pageerror',e=>errors.push(stage+': '+String(e)));
   bctx.on('request',req=>{if(/^https?:/.test(req.url())&&!req.url().startsWith(origin.base))
