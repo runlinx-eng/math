@@ -31,7 +31,7 @@ const count=(n,prompt,opts={})=>({type:'x-counttrail',n,prompt,...opts});
 const walk=(start,step,count,prompt,opts={})=>({type:'x-countwalk',start,step,count,prompt,...opts});
 const write=(n,mode,prompt,opts={})=>({type:'x-numberwrite',n,mode,prompt,audio:mode==='audio'?`learning/phase5/audio/n${n}.wav`:null,...opts});
 export const TASKS={
- countonce:[count(7,'每点一颗就给它一个序号。试着不漏、不重复地数完，再记总数。',{layout:'scatter'}),count(6,'小木偶数到一颗时重复了。指出出错的那一步，再亲自正确数一次。',{error:[0,1,2,2,3,4,5],layout:'circle'})],
+ countonce:[count(7,'每点一颗就给它一个序号。试着不漏、不重复地数完，再记总数。',{layout:'scatter'}),count(6,'看小木偶怎样数珠子，找出重复数的那颗，再自己正确数一遍。',{error:[0,1,2,2,3,4,5],layout:'circle'})],
  lastcount:[count(7,'先数一遍。挪动前猜还剩几个，再挪开看看。',{rearrange:true,layout:'line'}),count(6,'先数一次。换个起点再数，把两次总数对起来。',{rearrange:true,recount:true,layout:'circle'}),count(5,'小木偶从“三”开始给五颗珠子报数。最后喊“七”，总数就一定是七吗？',{crooked:true,layout:'line'})],
  counttwenty:[count(20,'这排有多少颗？每颗只数一次。',{layout:'line'}),count(9,'散开的也要数全。先把数过的标出来，再给总数。',{layout:'scatter'}),{type:'x-numberfaces',n:13,pool:20,give:true,prompt:'从二十颗中正好取出十三颗，放入小盘，再写下数量。'}],
  paircounts:[{type:'x-paircounts',a:5,b:6,spread:true,prompt:'上面看起来长，下面挤在一起。点上面一颗，再点下面一颗，配完后比较。'},{type:'x-paircounts',a:4,b:4,prompt:'换成两排不同摆法。配完后看看是否一样多。'},{type:'x-paircounts',a:8,b:3,c:5,prompt:'先配对前两组，再和第三组一起找最多、最少。'}],

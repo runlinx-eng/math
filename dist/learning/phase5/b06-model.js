@@ -60,7 +60,7 @@ case'x-numberwrite':ok=amount(m)===t.n&&m.numeral===String(t.n)&&m.word===cn(t.n
 export function act(t,m,action,d={}){const i=Number(d.index);switch(action){
 case'count-tap':{
  const a=m.moved&&t.recount?m.again:m.taps;
- if(int(i,0,t.n-1)&&a.length<(t.error?t.n:t.n*3)&&(!t.error||!a.includes(i))){
+ if(int(i,0,t.n-1)&&(!t.error||m.badStep!==null)&&a.length<(t.error?t.n:t.n*3)&&(!t.error||!a.includes(i))){
   a.push(i);
   if(t.error)m.total=a.length;
  }
@@ -72,7 +72,11 @@ case'count-undo':{
  if(t.error)m.total=a.length||null;
  break;
 }
-case'count-error-step':if(t.error&&int(i,0,t.error.length-1))m.badStep=i+1;break;
+case'count-error-bead':if(t.error&&m.badStep===null&&int(i,0,t.n-1)){
+ const repeated=t.error.findIndex((x,j)=>t.error.indexOf(x)!==j);
+ m.badStep=repeated>=0&&t.error[repeated]===i?repeated+1:t.error.indexOf(i)+1;
+}break;
+case'count-error-back':if(t.error)m.badStep=null;break;
 case'count-move':if(full(m.taps,t.n)&&m.total!==null&&m.prediction!==null&&!m.moved){m.before=m.total;m.moved=true;}break;
 case'count-reset':if(t.error){m.taps=[];m.total=null;}else Object.assign(m,initial(t));break;
 case'pair-a':if(int(i,0,t.a-1)&&!m.pairs.some(p=>p[0]===i))m.pending=i;break;

@@ -10,9 +10,15 @@ const line=(min,max,marks)=>{const span=Math.max(1,max-min);return`<svg class="b
 export function visual(t,m){switch(t.type){
 case'x-counttrail':{
  const taps=m.moved&&t.recount?m.again:m.taps;
- const trail=t.error?`<div class="b6-error-trail" role="group" aria-label="小木偶的记录，选择重复的一步">小木偶的记录：${t.error.map((x,i)=>b('count-error-step',`${i+1} → 珠 ${String.fromCharCode(65+x)}`,`data-index="${i}" class="b6-trail-step" aria-pressed="${m.badStep===i+1}" aria-label="小木偶第 ${i+1} 步，珠 ${String.fromCharCode(65+x)}${m.badStep===i+1?'，已选择':''}"`)).join('')}</div>`:'';
- const beads=Array.from({length:t.n},(_,i)=>dot(i,'count-tap',taps.includes(i),`${t.error?String.fromCharCode(65+i):'●'}${taps.includes(i)?' · '+taps.map((x,j)=>x===i?j+1:null).filter(Boolean).join(','):''}`,m.moved&&!t.recount||t.error&&taps.includes(i)?'disabled':'')).join('');
- return`${trail}${t.crooked?'<p>小木偶的序号：3 → 4 → 5 → 6 → 7</p>':''}<div class="b6-beads ${m.moved?'scatter':t.layout}"${t.error?' role="group" aria-label="重新数珠子"':''}>${beads}</div><p class="quiet">${t.error?'已数 '+taps.length+' 颗':taps.length+' 次标记'}${m.moved?' · 位置已换过':''}${m.before!==null?' · 第一次记录 '+m.before:''}</p>`;
+ if(t.error){
+  const letter=i=>String.fromCharCode(65+i),choosing=m.badStep===null;
+  const beads=Array.from({length:t.n},(_,i)=>choosing
+   ?b('count-error-bead',letter(i),`data-index="${i}" class="b6-dot b6-puppet-bead" aria-label="珠 ${letter(i)}" disabled`)
+   :dot(i,'count-tap',taps.includes(i),`${letter(i)}${taps.includes(i)?' · '+(taps.indexOf(i)+1):''}`,taps.includes(i)?'disabled':'')).join('');
+  return`<div class="b6-countonce-step"><p class="b6-task-step"${choosing?' data-b6="puppet-title"':''}>${choosing?'① 看小木偶数数':'③ 自己重新数一次'}</p>${choosing?'<p class="b6-puppet-status" role="status" aria-live="polite" data-b6="puppet-status">点击开始数，观察每次指向的珠子。</p>':`<p class="quiet">你选了珠 ${letter(t.error[m.badStep-1])}，现在每颗只数一次。</p>`}<div class="b6-beads ${t.layout} b6-countonce-beads" role="group" aria-label="${choosing?'小木偶数珠子':'自己重新数珠子'}">${beads}</div>${choosing?'':`<p class="quiet">已数 ${taps.length} 颗</p>`}</div>`;
+ }
+ const beads=Array.from({length:t.n},(_,i)=>dot(i,'count-tap',taps.includes(i),taps.includes(i)?'● · '+taps.map((x,j)=>x===i?j+1:null).filter(Boolean).join(','):'●',m.moved&&!t.recount?'disabled':'')).join('');
+ return`${t.crooked?'<p>小木偶的序号：3 → 4 → 5 → 6 → 7</p>':''}<div class="b6-beads ${m.moved?'scatter':t.layout}">${beads}</div><p class="quiet">${taps.length} 次标记${m.moved?' · 位置已换过':''}${m.before!==null?' · 第一次记录 '+m.before:''}</p>`;
 }
 case'x-paircounts':return`<div class="b6-pairs"><div class="b6-pair-row ${t.spread?'spread':''}"><b>①</b>${Array.from({length:t.a},(_,i)=>dot(i,'pair-a',m.pairs.some(p=>p[0]===i)||m.pending===i,m.pairs.some(p=>p[0]===i)?String(m.pairs.findIndex(p=>p[0]===i)+1):'●',m.pairs.some(p=>p[0]===i)?'disabled':'')).join('')}</div><div class="b6-pair-row"><b>②</b>${Array.from({length:t.b},(_,i)=>dot(i,'pair-b',m.pairs.some(p=>p[1]===i),m.pairs.some(p=>p[1]===i)?String(m.pairs.findIndex(p=>p[1]===i)+1):'●',m.pairs.some(p=>p[1]===i)?'disabled':'')).join('')}</div>${t.c?`<div class="b6-pair-row"><b>③</b>${dots(t.c)}</div>`:''}</div><p>相同序号是一对。${m.pending===null?'先点第一排，再找第二排的伙伴。':'已选第一排，现在点第二排。'}</p>`;
 case'x-onechange':return`<div class="b6-tray">${dots(t.n+(m.changed?t.delta:0))}</div>${m.changed?`<p>原来的猜测：${m.committed} · ${t.delta>0?'放进':'拿走'}了一颗</p>`:'<p class="quiet">先留下猜测，再改变数量。</p>'}`;
@@ -29,7 +35,10 @@ case'x-teenbuild':return`${m.bundle.length?units(0,1,0):''}<div class="b6-pool">
 case'x-numberwrite':return`${t.mode==='objects'?`<div class="b6-tray">${t.n?dots(t.n):'空盘'}</div>`:t.mode==='word'||m.textHelp?`<div class="b6-number-label">${cn(t.n)}</div>`:t.mode==='symbol'||t.mode==='label'?`<div class="b6-number-label">${t.n}</div>`:`<p class="b6-audio-status">${m.heard?'听过了，可以再听':'点播放，听这个数'}</p>`}<div class="b6-tray">${amount(m)?units(m.hundreds,m.tens,m.ones):'把数量摆到这里'}</div>`;
 default:return'';}}
 export function controls(t,m){switch(t.type){
-case'x-counttrail':return`<div class="choice-line">${t.error?b('count-reset','重新数','class="b6-recount-primary"'):''}${b('count-undo','撤回一次')}${t.error?'':b('count-reset','重新数')}</div>${t.error?'':n('total','第一次的总数',m.total,m.moved?'disabled':'')}${t.rearrange?`${n('prediction','挪动后会有几个',m.prediction,m.moved?'disabled':'')}${b('count-move','把位置打散',m.moved?'disabled':'')}${n('after','换位置后有几个',m.after)}`:''}${t.error||t.crooked||t.rearrange?why(m,t.error?'twice':t.crooked?'start':'same'):''}`;
+case'x-counttrail':{
+ if(t.error)return m.badStep===null?'<div class="choice-line"><button type="button" data-b6="puppet-start">开始数</button></div>':`<div class="choice-line">${b('count-error-back','换一颗')}${b('count-reset','重新数')}</div>${m.taps.length===t.n?why(m,'twice'):''}`;
+ return`<div class="choice-line">${b('count-undo','撤回一次')}${b('count-reset','重新数')}</div>${n('total','第一次的总数',m.total,m.moved?'disabled':'')}${t.rearrange?`${n('prediction','挪动后会有几个',m.prediction,m.moved?'disabled':'')}${b('count-move','把位置打散',m.moved?'disabled':'')}${n('after','换位置后有几个',m.after)}`:''}${t.crooked||t.rearrange?why(m,t.crooked?'start':'same'):''}`;
+}
 case'x-paircounts':return`${b('pair-undo','撤回一对')}${group(n('a','第一组有几个',m.a)+n('b','第二组有几个',m.b)+select('relation','第一组比第二组',m.relation,[['more','多'],['fewer','少'],['equal','一样多']]))}${t.c?group(select('most','最多的一组',m.most,[['0','①'],['1','②'],['2','③']])+select('least','最少的一组',m.least,[['0','①'],['1','②'],['2','③']])):''}`;
 case'x-onechange':return`${n('guess','先猜会有几个',m.guess,m.changed?'disabled':'')}${b('one-change',t.delta>0?'放入一颗':'拿走一颗',m.changed?'disabled':'')}${group(n('total','现在的总数',m.total)+select('why','它是原来数量的',m.why,[['next','后一个数'],['previous','前一个数'],['same','同一个数']]))}`;
 case'x-numberfaces':return`${!t.give?range('mark','把点放到数轴上',m.mark,0,20):''}${n('numeral','写成数字',m.numeral)}${t.neighbors?group(n('before','前一个数',m.before)+n('after','后一个数',m.after)):''}`;

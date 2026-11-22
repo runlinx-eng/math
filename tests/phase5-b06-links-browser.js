@@ -17,20 +17,36 @@ async original=>{
    await page.goto(base+'learn.html#'+id);await page.waitForFunction(id=>window.mathLesson?.snapshot().id===id,id);check(!(await snap()).summary.completed,id+' begins incomplete');if(await page.locator('[data-do="start"]').count())await page.locator('[data-do="start"]').click();
    for(let i=0;i<tasks.length;i++){
     current=id+':'+i;const{t,m}=tasks[i];check((await snap()).index===i,current+' opens');
-    if(i===0){await page.locator('[data-do="check"]').click();check(!(await snap()).summary.cases[i].complete,current+' empty work cannot complete');}
+    if(i===0&&!(t.type==='x-counttrail'&&t.error)){await page.locator('[data-do="check"]').click();check(!(await snap()).summary.cases[i].complete,current+' empty work cannot complete');}
      if(t.type==='x-counttrail'){
       if(t.error){
-       check(await page.locator('[data-xfield="badStep"]').count()===0,current+' identifies error from recorded steps');
-       check(await page.locator('[data-xfield="total"]').count()===0,current+' has no redundant total field');
-       const repeat=t.error.findIndex((x,i)=>t.error.indexOf(x)!==i);
-       await click('count-error-step',`[data-index="${repeat}"]`);
-       check(await page.locator('[data-x="count-error-step"][aria-pressed="true"]').count()===1,current+' mistake selected');
-       check(await page.locator('[data-do="check"]').isDisabled(),current+' needs real bead recount before check');
+       check(await page.locator('[data-xfield="badStep"],[data-xfield="total"]').count()===0,current+' has no redundant numeric fields');
+       check(await page.locator('[data-x="count-error-step"]').count()===0,current+' no longer shows the recorded steps as choices');
+       check(await page.locator('[data-x="count-tap"]').count()===0,current+' recount is not shown before observation');
+       check(await page.locator('[data-x="count-error-bead"]').first().isDisabled(),current+' cannot choose before watching');
+       check(await page.locator('[data-do="check"]').isDisabled(),current+' check requires the whole activity');
+       await page.evaluate(()=>{
+        window.__b6ObservedSteps=[];
+        const status=document.querySelector('[data-b6="puppet-status"]');
+        new MutationObserver(()=>{
+         if(status.textContent.startsWith('小木偶数到'))window.__b6ObservedSteps.push({text:status.textContent,bead:document.querySelector('.b6-puppet-bead.puppet-active')?.dataset.index});
+        }).observe(status,{childList:true,subtree:true,characterData:true});
+       });
+       await page.locator('[data-b6="puppet-start"]').click();
+       await page.waitForFunction(()=>[...document.querySelectorAll('[data-x="count-error-bead"]')].length===6&&[...document.querySelectorAll('[data-x="count-error-bead"]')].every(el=>!el.disabled),null,{timeout:10000});
+       const seen=await page.evaluate(()=>window.__b6ObservedSteps);
+       check(seen.length===t.error.length&&seen.every((record,i)=>record.bead===String(t.error[i])),current+' puppet visibly counts every step including C twice');
+       check((await page.locator('[data-b6="puppet-status"]').innerText()).includes('哪颗珠子'),current+' finished demonstration invites error identification');
+       await click('count-error-bead',`[data-index="${t.error[t.error.findIndex((x,i)=>t.error.indexOf(x)!==i)]}"]`);
+       check(await page.locator('[data-x="count-error-bead"]').count()===0,current+' self recount replaces error selection');
+       check(await page.locator('[data-x="count-tap"]').count()===t.n,current+' self recount uses the same beads');
+       check(await page.locator('[data-do="check"]').isDisabled(),current+' no check before real recount');
       }
       for(let j=0;j<t.n;j++)await click('count-tap',`[data-index="${j}"]`);
       if(t.error){
-       check(await page.locator('.b6-beads .b6-dot.selected').count()===t.n,current+' beads visibly counted');
-       check((await page.locator('.b6-beads + .quiet').innerText()).includes(`已数 ${t.n} 颗`),current+' count derived from taps');
+       check(await page.locator('.b6-countonce-beads .b6-dot.selected').count()===t.n,current+' beads visibly counted once');
+       check(await page.locator('.b6-countonce-beads [data-index="2"]').isDisabled(),current+' C cannot be counted again during self recount');
+       check((await page.locator('.b6-countonce-beads + .quiet').innerText()).includes(`已数 ${t.n} 颗`),current+' count derived from taps');
       }else await field('total',t.n);
       if(t.rearrange){await field('prediction',t.n);await click('count-move');if(t.recount)for(let j=t.n-1;j>=0;j--)await click('count-tap',`[data-index="${j}"]`);}
      }

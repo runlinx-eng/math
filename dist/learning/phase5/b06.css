@@ -3,17 +3,19 @@
 .b6-ten-frame{display:grid;grid-template-columns:repeat(5,45px);gap:4px}.b6-ten-frame span{width:45px;height:45px;display:grid;place-items:center;background:#faf6e9;border:1px solid #b4a78e;font-size:31px;color:var(--orange)}.b6-flash.domino>div .b6-static-dots{display:grid;grid-template-columns:repeat(2,27px);gap:15px}.b6-beads.line:has(>button:nth-child(15)){flex-wrap:nowrap;gap:4px;max-width:100%}.b6-beads.line:has(>button:nth-child(15)) .b6-dot{min-width:28px;min-height:32px;font-size:12px;padding:2px}.b6-equation{font-size:24px;letter-spacing:.08em}
 .b6-lab .field:has(select){display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:15px 0}.b6-lab select{width:520px;max-width:100%;min-height:42px}.b6-lab #extra-controls{min-width:0}
 
-/* Countonce: recorded steps are selectable cards; the orange circles only count beads. */
-.b6-error-trail{align-items:center;border-bottom:1px solid #dce4dd;padding:0 0 14px;margin-bottom:10px}
-.b6-error-trail .b6-trail-step{display:inline-flex;align-items:center;gap:7px;background:#fffdfa;color:#28584d;border:1.5px solid #91b5a7;padding:6px 10px;border-radius:8px;font:inherit;min-height:40px;white-space:nowrap;cursor:pointer;box-shadow:0 1px 0 #d6e2d9}
-.b6-error-trail .b6-trail-step::before{content:"";display:inline-block;flex:none;width:10px;height:10px;border:1.5px solid currentColor;border-radius:50%}
-.b6-error-trail .b6-trail-step:hover{background:#edf6f0;border-color:#28735f}
-.b6-error-trail .b6-trail-step[aria-pressed="true"]{background:#205d52;color:#fff;border:2px solid #205d52;padding:5.5px 9.5px;box-shadow:0 0 0 2px #c6ded2;font-weight:700}
-.b6-error-trail .b6-trail-step[aria-pressed="true"]::before{background:#fff;box-shadow:inset 0 0 0 2px #205d52}
-.b6-error-trail .b6-trail-step[aria-pressed="true"]:hover{background:#205d52}
-.b6-error-trail .b6-trail-step:focus-visible{outline:3px solid #205d52;outline-offset:3px}
-.b6-error-trail + .b6-beads .b6-dot{cursor:pointer}
-.b6-error-trail + .b6-beads .b6-dot.selected{box-shadow:0 0 0 2px #fff8ed,0 0 0 4px #b56a39;font-weight:700}
-.b6-error-trail + .b6-beads .b6-dot:disabled{opacity:1;cursor:default}
-.b6-error-trail + .b6-beads .b6-dot:focus-visible{outline:3px solid #205d52;outline-offset:3px}
-.b6-recount-primary{background:#e5efe9;border-color:#91b6a5;font-weight:600}
+
+/* One set of six beads, used in sequence: puppet demonstration, error selection, self recount. */
+.b6-countonce-step{min-width:0}
+.b6-task-step{font-weight:700;margin:8px 0}
+.b6-puppet-status{min-height:1.6em;color:#385f55;margin:10px 0}
+.b6-countonce-beads{gap:18px;min-height:95px;padding:12px 0}
+.b6-countonce-beads .b6-dot{display:inline-grid;place-items:center;position:relative;min-width:46px;min-height:46px}
+.b6-countonce-beads .b6-puppet-bead{background:#fffdfa;color:#855939;border:2px solid #a9855c}
+.b6-countonce-beads .b6-puppet-bead:disabled{opacity:1;cursor:default}
+.b6-countonce-beads .b6-puppet-bead:not(:disabled){cursor:pointer}
+.b6-countonce-beads .b6-puppet-bead:not(:disabled):hover{background:#fff0d4;border-color:#9f6036}
+.b6-countonce-beads .b6-puppet-bead.puppet-active{background:#205d52;color:#fff;border-color:#205d52;box-shadow:0 0 0 4px #c6ded2}
+.b6-countonce-beads .b6-puppet-bead.puppet-active::after{content:"数到 " attr(data-count-word);position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);white-space:nowrap;border-radius:7px;background:#205d52;color:#fff;font-size:13px;padding:3px 8px}
+.b6-countonce-beads .b6-dot.selected{box-shadow:0 0 0 3px #e5c4a4;font-weight:700}
+.b6-countonce-beads .b6-dot.selected:disabled{opacity:1}
+.b6-countonce-beads .b6-dot:focus-visible{outline:3px solid #205d52;outline-offset:3px}
