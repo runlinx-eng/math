@@ -2,26 +2,28 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f5f4ef"><title>数学探索 · 在一个空间里</title>
-  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="space.css">
+  <meta name="theme-color" content="#080b13"><title>数学树 · 探索知识星空</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="space.css"><link rel="stylesheet" href="constellation.css">
   <link rel="preload" href="data/atlas.json" as="fetch" crossorigin="anonymous">
   <link rel="modulepreload" href="vendor/three/three.module.min.js">
   <link rel="modulepreload" href="learning/catalog.js">
   <link rel="stylesheet" href="learning/question.css"><link rel="stylesheet" href="grade-distribution.css"><script type="module" src="space.js"></script>
 </head>
-<body>
+<body class="constellation">
   <main id="space-app" class="space-app" aria-label="数学探索三维空间">
+    <canvas id="constellation-atmosphere" aria-hidden="true"></canvas>
     <div id="space-canvas"></div>
     <svg id="work-tethers" class="work-tethers" aria-hidden="true"></svg>
     <div id="workspaces" class="workspaces"></div>
     <aside id="focus-card" class="focus-card" aria-label="选中对象" hidden></aside>
+    <section class="constellation-intro" aria-label="数学知识星空简介"><p class="constellation-eyebrow">THE ATLAS OF MATHEMATICS · 数学星图</p><h1>让好奇心，<br><em>带你走进数学。</em></h1><p class="constellation-lead">每一颗发光的星，都是一个可以继续探索的知识点。</p><div class="constellation-gesture"><span aria-hidden="true">↔</span> 拖动星空，选择一颗知识星</div></section>
     <aside id="learning-map-context" class="learning-map-context" aria-label="当前学习的真实数学关系" hidden></aside>
     <aside id="guide-panel" class="guide-panel" aria-label="发现数学知识之间的联系" hidden></aside>
     <div id="guide-cues" class="guide-cues" aria-label="地图上的下一处" hidden></div>
   </main>
   <section id="journey-surface" class="journey-surface" aria-label="学习操作现场" hidden><header><span>学习现场</span><button type="button" data-action="close-journey">返回知识空间 ×</button></header><iframe id="journey-frame" title="分一份，换个名字 · 操作现场" src="about:blank"></iframe></section>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span><strong>数学探索</strong><small>在一个空间里，慢慢发现</small></span></div>
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span><strong>数学树</strong><small>THE MATHEMATICS ATLAS</small></span></div>
     <nav class="primary-nav" aria-label="主要功能">
       <button type="button" data-action="nav-explore" data-surface="explore" aria-pressed="true">探索</button>
       <button type="button" data-action="nav-learn" data-surface="learn" aria-pressed="false">学习</button>
@@ -52,7 +54,7 @@
     <button type="button" data-action="help" aria-label="查看空间操作方法">操作</button>
   </aside>
   <aside id="network-guide" class="network-guide network-only" aria-label="3D知识关系全景观察工具">
-    <div class="observation-heading"><strong>观察工具</strong><span>不改变知识坐标</span><button type="button" id="observation-task-toggle" data-action="toggle-observation" aria-controls="network-guide" aria-expanded="false" hidden>展开工具</button></div>
+    <div class="observation-heading"><strong>观察工具</strong><span>不改变知识坐标</span><button type="button" id="constellation-tools-toggle" aria-controls="network-guide" aria-expanded="false" title="展开或收起观察工具">展开工具 ＋</button><button type="button" id="observation-task-toggle" data-action="toggle-observation" aria-controls="network-guide" aria-expanded="false" hidden>展开工具</button></div>
     <section id="grade-map-filter" class="grade-map-filter" aria-label="在原有三维关系全景按学段突出知识点">
       <strong>学段观察</strong>
       <div role="group" aria-label="小学学段筛选">
@@ -116,6 +118,6 @@
   <section id="utility-drawer" class="utility-drawer" aria-label="记录与依据" hidden><header><strong id="utility-title"></strong><button type="button" data-action="close-utility" class="plain-button">返回知识空间 ×</button></header><div id="trail-node-context" class="trail-node-context" role="region" aria-label="当前知识的学习足迹" aria-live="polite" hidden></div><iframe id="utility-frame" title="学习记录与备份" src="about:blank"></iframe></section>
   <div id="storage-warning" class="warning" role="alert" hidden></div><div id="toast" class="toast" role="status" hidden></div>
   <div id="loading" class="loading"><p>正在展开同一个数学空间…</p></div><input id="import-file" type="file" accept="application/json,.json" hidden>
-  <noscript>需要启用 JavaScript 才能打开三维空间。</noscript>
+  <noscript>需要启用 JavaScript 才能打开三维空间。</noscript><script type="module" src="constellation-sky.js"></script>
 </body>
 </html>
