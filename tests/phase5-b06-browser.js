@@ -25,11 +25,17 @@ async original=>{
        const repeat=t.error.findIndex((x,i)=>t.error.indexOf(x)!==i);
        await click('count-error-step',`[data-index="${repeat}"]`);
        check(await page.locator('[data-x="count-error-step"][aria-pressed="true"]').count()===1,current+' mistake selected');
+       const chosen=page.locator('[data-x="count-error-step"][aria-pressed="true"]'),unselected=page.locator('[data-x="count-error-step"][aria-pressed="false"]').first();
+       const chosenColor=await chosen.evaluate(e=>getComputedStyle(e).backgroundColor),plainColor=await unselected.evaluate(e=>getComputedStyle(e).backgroundColor);
+       check(chosenColor!==plainColor,current+' selected record differs visibly');
+       check(await unselected.evaluate(e=>getComputedStyle(e).cursor)==='pointer',current+' record controls appear clickable');
        check(await page.locator('[data-do="check"]').isDisabled(),current+' needs real bead recount before check');
       }
       for(let j=0;j<t.n;j++)await click('count-tap',`[data-index="${j}"]`);
       if(t.error){
        check(await page.locator('.b6-beads .b6-dot.selected').count()===t.n,current+' beads visibly counted');
+       check(await page.locator('.b6-beads [data-index="2"]').isDisabled(),current+' C cannot be counted again');
+       check(await page.locator('.b6-error-trail [data-index="3"]').isEnabled(),current+' record step four stays independently selectable');
        check((await page.locator('.b6-beads + .quiet').innerText()).includes(`已数 ${t.n} 颗`),current+' count derived from taps');
       }else await field('total',t.n);
       if(t.rearrange){await field('prediction',t.n);await click('count-move');if(t.recount)for(let j=t.n-1;j>=0;j--)await click('count-tap',`[data-index="${j}"]`);}

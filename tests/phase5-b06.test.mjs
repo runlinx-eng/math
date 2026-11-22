@@ -10,6 +10,8 @@ test('countonce repeated bead uses direct selection, unique taps and derived tot
  const t=TASKS.countonce[1],m=b.initial(t);
  const html=renderB06(t,m);
  assert.match(html,/data-x="count-error-step"/);
+ assert.match(html,/role="group" aria-label="小木偶的记录，选择重复的一步"/);
+ assert.match(html,/role="group" aria-label="重新数珠子"/);
  assert.doesNotMatch(html,/data-xfield="badStep"/);
  assert.doesNotMatch(html,/data-xfield="total"/);
  b.act(t,m,'count-error-step',{index:2});
@@ -20,6 +22,7 @@ test('countonce repeated bead uses direct selection, unique taps and derived tot
  assert.equal(b.inspect(t,m).correct,false,'first C is not the repeated step');
  b.act(t,m,'count-error-step',{index:3});
  assert.equal(m.badStep,4);
+ assert.match(renderB06(t,m),/aria-pressed="true" aria-label="小木偶第 4 步，珠 C，已选择"/);
  assert.equal(b.inspect(t,m).correct,true);
  b.act(t,m,'count-tap',{index:2});
  assert.deepEqual(m.taps,[0,1,2,3,4,5],'same bead cannot be counted twice');
