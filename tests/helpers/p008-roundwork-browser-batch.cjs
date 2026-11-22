@@ -33,14 +33,32 @@ async function moveRange(el,target){
  const step=Number(await el.getAttribute('step'))||1;
  assert.ok(Number.isInteger(target)&&Number.isInteger(min)&&Number.isInteger(max)&&
   max>min&&target>=min&&target<=max,'original slider limits');
+ // Exact-source feedback is loaded asynchronously and can rerender the
+ // native range after its initial visibility check. Reacquire its actual
+ // geometry rather than inventing a model value or dispatching fake events.
+ let rect=null;
+ for(let attempt=0;attempt<8;attempt++){
+  try{
+   await el.waitFor({state:'visible',timeout:4000});
+   await el.scrollIntoViewIfNeeded({timeout:4000});
+   rect=await el.boundingBox();
+   if(rect&&rect.width>35&&rect.height>0)break;
+  }catch(_){rect=null;}
+  await new Promise(resolve=>setTimeout(resolve,150));
+ }
+ assert.ok(rect&&rect.width>0&&rect.height>0,
+  'original range control has visible geometry: '+JSON.stringify(rect));
  const original=Number(await el.inputValue());
- // A real pointer click on the native range is faster and less prone to focus
- // loss than 700 browser-key events across rerendered lesson controls.
- const rect=await el.boundingBox();
- assert.ok(rect&&rect.width>35&&rect.height>0,'original range control has visible geometry');
- const inset=Math.min(10,rect.width/8);
- const px=inset+(target-min)/(max-min)*(rect.width-2*inset);
- await el.click({position:{x:px,y:rect.height/2}});
+ if(rect.width>35){
+  const inset=Math.min(10,rect.width/8);
+  const px=inset+(target-min)/(max-min)*(rect.width-2*inset);
+  await el.click({position:{x:px,y:rect.height/2}});
+ }else{
+  // A narrow but genuinely visible native range still accepts trusted
+  // keyboard gestures. Never use evaluate() to create synthetic input.
+  await el.focus();
+  await el.press(Math.abs(target-min)<=Math.abs(max-target)?'Home':'End');
+ }
  let pos=Number(await el.inputValue());
  if(original===target&&pos===target){
   // The native touched flag requires an actual changed input event; don't
@@ -52,7 +70,7 @@ async function moveRange(el,target){
   pos=moved;
  }
  let actions=0;
- while(pos!==target&&actions++<100){
+ while(pos!==target&&actions++<Math.ceil((max-min)/step)+2){
   const key=pos<target?'ArrowRight':'ArrowLeft';
   let next=pos;
   for(let retry=0;retry<3&&next===pos;retry++){
