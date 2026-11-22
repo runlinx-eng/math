@@ -53,7 +53,6 @@ export function mountB06(root,t,getModel,{mutate,saveInk,help}){
  root.addEventListener('input',reasonChange);
  root.addEventListener('change',reasonChange);
  root.addEventListener('click',click);
- root.addEventListener('click',click);
  const pad=root.querySelector('#b6-ink');
  const point=e=>{const r=pad.getBoundingClientRect();return[Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];};
  const redraw=()=>poly?.setAttribute('points',stroke.map(p=>`${p[0]*600},${p[1]*180}`).join(' '));
