@@ -84,11 +84,23 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   const focusBounds=await page.locator('#focus-card').boundingBox();
   check(!!focusBounds&&focusBounds.width>=1400&&focusBounds.height>=880,'source node opens a true full-screen knowledge page');
   await page.screenshot({path:path.join(out,'04-constellation-focus.png')});
+  // Continue the actual user path: a real lesson opens as a centered, full-screen
+  // reading workspace and can return to the exact same mathematical source node.
+  await page.locator('#focus-card [data-action="open"]').click();
+  await page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen===true);
+  const lessonBounds=await page.locator('#journey-surface').boundingBox();
+  check(!!lessonBounds&&lessonBounds.width>=1400&&lessonBounds.height>=880,'real lesson opens in a full-screen learning theater');
+  check(await page.locator('#journey-frame').isVisible(),'original runnable mathematical task iframe is preserved');
+  await page.screenshot({path:path.join(out,'05-constellation-lesson.png')});
+  await page.locator('#journey-surface [data-action="close-journey"]').click();
+  await page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen===false);
+  check((await snap()).selected==='node:mt_WcfaSfVT33','return from lesson restores the original selected source concept');
+  check(JSON.stringify((await snap()).positions)===initial,'learning and return preserve exact source coordinates');
   await page.locator('#focus-card [data-action="deselect"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null&&mathSpace.snapshot().visibleNodes.length===537);
   check(JSON.stringify((await snap()).positions)===initial,'return restores exactly the same 3D coordinate data');
   check(errors.length===0,'no browser runtime errors');
-  await page.screenshot({path:path.join(out,'05-return-overview.png')});
+  await page.screenshot({path:path.join(out,'06-return-overview.png')});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
  }catch(err){
