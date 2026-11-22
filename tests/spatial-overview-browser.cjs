@@ -39,6 +39,10 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   check(await page.locator('.space-label.node.structure-landmark:visible').count()>=1,'the structure offers named source-node anchors');
 
   const initial=JSON.stringify(full.positions);
+  const themeBackground=await page.locator('.space-label.theme:visible').first().evaluate(el=>getComputedStyle(el).backgroundColor);
+  check(themeBackground==='rgba(0, 0, 0, 0)','constellation theme labels never inherit legacy white cards');
+  const brandBackground=await page.locator('.topbar .brand').evaluate(el=>getComputedStyle(el).backgroundColor);
+  check(brandBackground==='rgba(0, 0, 0, 0)','constellation brand is not a legacy white box');
   await page.screenshot({path:path.join(out,'01-overview.png')});
   for(const role of ['origin','fork','join']){
     await page.locator('[data-action="overview-structure"][data-structure="'+role+'"]').click();
@@ -111,6 +115,18 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   check(JSON.stringify((await snap()).positions)===initial,'return restores exactly the same 3D coordinate data');
   check(errors.length===0,'no browser runtime errors');
   await page.screenshot({path:path.join(out,'06-return-overview.png')});
+  for(const [width,height,label] of [[1140,900,'compact'],[390,844,'mobile']]){
+   await page.setViewportSize({width,height});
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   const fit=await page.evaluate(()=>{
+    const a=document.querySelector('.tool-rail').getBoundingClientRect();
+    const b=document.querySelector('.overall-progress').getBoundingClientRect();
+    const overlap=a.left<b.right-2&&a.right>b.left+2&&a.top<b.bottom-2&&a.bottom>b.top+2;
+    return a.left>=-1&&a.right<=innerWidth+1&&!overlap;
+   });
+   check(fit,'camera controls stay within '+label+' viewport and clear of progress');
+   await page.screenshot({path:path.join(out,'07-constellation-'+label+'.png')});
+  }
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
  }catch(err){
