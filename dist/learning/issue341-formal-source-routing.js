@@ -10,11 +10,13 @@ import {ISSUE342_A_P006_ADAPTERS} from './issue342-a355-p006-candidates.js';
 import {ISSUE342_A_P001_P005_ADAPTERS} from './issue342-a355-next-66-candidates.js';
 import {ISSUE342_A_FIRST33_ADAPTERS} from './issue342-a258-first33-candidates.js';
 import {ISSUE342_A_NEXT11_ADAPTERS} from './issue342-a258-next11-candidates.js';
+import {ISSUE343_B39_FIRST4_ADAPTERS} from './issue343-a214-b39-candidates.js';
 
 const allFrozenCandidates=Object.freeze([...ISSUE341_NORMALIZED_ADAPTERS,
  ...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS,
  ...ISSUE342_A_P006_ADAPTERS,...ISSUE342_A_P001_P005_ADAPTERS,
- ...ISSUE342_A_FIRST33_ADAPTERS,...ISSUE342_A_NEXT11_ADAPTERS]);
+ ...ISSUE342_A_FIRST33_ADAPTERS,...ISSUE342_A_NEXT11_ADAPTERS,
+ ...ISSUE343_B39_FIRST4_ADAPTERS]);
 const sourceKey=(sessionId,index)=>JSON.stringify([sessionId,index]);
 
 export function createIssue341ManifestGatedRouting(formalManifest){
