@@ -123,8 +123,10 @@ def main():
              'wrong-then-correct original Check missing '+key)
      caps=[cap for cap in results.get('captures',[]) if cap.get('phase')==phase and
         cap.get('attempts',0)>=2 and
-        (cap.get('position',key)==key or
-          (cap.get('id')==ss and cap.get('index')==int(idx)))]
+        (cap.get('position')==key or
+          (cap.get('id')==ss and cap.get('index')==int(idx)) or
+          (cap.get('position') is None and cap.get('id') is None and
+           len([x for x in names if M.search(x)])==1))]
      require(len(caps)>=1,'original Chromium correct-Check capture missing '+key)
      match=[(h,n) for k,h,n in normalized if k==key]
      if match:
