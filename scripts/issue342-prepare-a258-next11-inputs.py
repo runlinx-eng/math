@@ -27,7 +27,7 @@ ARTIFACTS = (
 )
 EXPECTED={'issue341-A-P030B':3,'issue341-A-P034G':3,'issue341-A-P038U':3,
           'issue341-A-P052C':1,'issue341-A-P056M':1}
-MEMBER=re.compile(r'/([A-Za-z0-9_]+)-(\\d+)-correct-check-decoded\\.json$')
+MEMBER=re.compile(r'/([A-Za-z0-9_]+)-([0-9]+)-correct-check-decoded[.]json$')
 def require(ok,description):
  if not ok:raise ValueError('A258 next11 original Check: '+description)
 def sha(raw):return hashlib.sha256(raw).hexdigest()
@@ -61,7 +61,7 @@ def main():
     require(len(names)==len(set(names)) and z.testzip() is None,'duplicate/CRC ZIP '+str(artifact_id))
     require(len(names)<500 and sum(x.file_size for x in z.infolist())<12000000 and
             all(not name.startswith('/') and '..' not in Path(name).parts and
-                    '\\\\' not in name for name in names),'unsafe ZIP member '+str(artifact_id))
+                    chr(92) not in name for name in names),'unsafe ZIP member '+str(artifact_id))
     results=[n for n in names if n.endswith('/results.json')]
     require(len(results)==1,'missing/ambiguous original Chromium results')
     result=json.loads(z.read(results[0]))
@@ -110,11 +110,11 @@ def main():
   fixture={'schema':'issue342-a258-next11-original-Check/1',
            'source':'five immutable original GitHub CI Chromium artifacts',
            'rows':[records[row['sessionId']+':'+str(row['index'])] for row in listed]}
-  content=compact(fixture)+b'\\n'
+  content=compact(fixture)+bytes([10])
   FIXTURE.write_bytes(content)
   RECEIPT.write_bytes(compact({'schema':'issue342-a258-next11-input-receipt/1',
    'status':'PASS','originalCheckRecords':11,'families':5,'originalTestsRerun':0,
-   'originalRecordsPublished':False,'artifacts':receipts,'fixtureSha256':sha(content)})+b'\\n')
+   'originalRecordsPublished':False,'artifacts':receipts,'fixtureSha256':sha(content)})+bytes([10]))
   print('A258_NEXT11_ORIGINAL_CHECKS_OK '+json.dumps({'positions':11,
     'families':5,'zipArtifacts':5,'newChecksGenerated':0,'sha256':sha(content)}))
  except Exception:
