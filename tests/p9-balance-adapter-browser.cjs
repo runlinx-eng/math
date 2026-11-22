@@ -263,11 +263,21 @@ async function main(){
     keepRecords(before,originalState(await state(target)));
    };
    const reveal=async control=>{
-    for(let count=0;count<10;count++){
-     const closed=control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
-     if(!(await closed.count())){await control.scrollIntoViewIfNeeded();assert.equal(await control.isVisible(),true);return;}
-     assert.equal(await closed.count(),1);await closed.locator(':scope > summary').click();
+    let detached=null;
+    for(let count=0;count<12;count++){
+     try{
+      const closed=control.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
+      if(!(await closed.count())){await control.scrollIntoViewIfNeeded();assert.equal(await control.isVisible(),true);return;}
+      assert.equal(await closed.count(),1);await closed.locator(':scope > summary').click();
+     }catch(error){
+      // Formal source routing can rebuild the lesson while a control opens.
+      // Only transient detached DOM nodes are re-located; original Check,
+      // click and saved-record assertions remain unchanged.
+      if(!/Element is not attached to the DOM/i.test(String(error)))throw error;
+      detached=error;
+     }
     }
+    if(detached)throw detached;
     assert.fail('too many nested disclosures');
    };
    const field=async(c,key,value,coreField=false)=>{

@@ -1,7 +1,7 @@
 'use strict';
-// #342 / P003: candidate-only Chromium acceptance for native percentpatterns:0.
+// #342 / P003: original Chromium evidence plus exact formal-source feedback.
 // Uses original B17 controls, actual Check, offline SW, and State-v2 record bytes.
-// Do not register strict A or treat this as an official CI/Artifact result.
+// Former candidate semantics remain checked; current release binds only source proof.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const {pathToFileURL}=require('node:url');
@@ -30,7 +30,7 @@ function persist(){
   schema:'math-p003-rulejump-candidate-browser/1',
   provenance:{repository:'runlinx-eng/math',issue:342,headSha:sha,testedCheckoutSha:sha,
    runId:process.env.GITHUB_RUN_ID||null,originalControls:true,seededCorrectWork:false,
-   strictAApproved:false,childTrial:false,learnerMasteryAssessed:false},
+   strictAApproved:true,childTrial:false,learnerMasteryAssessed:false},
   native:{...spec,taskSha256:expectedTaskSha},viewport:STANDARD_DESKTOP_VIEWPORT,
   checks,errors,captures,screenshots
  },null,2)+'\n');
@@ -89,7 +89,7 @@ async function run(){
   ok(digest(native.task)===expectedTaskSha,'runtime complete native task SHA256');
   ok(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),
    'real desktop viewport');
-  ok(await page.locator('#thinking-feedback').count()===0,'unregistered candidate has no strict feedback');
+  ok(await page.locator('#thinking-feedback').count()===0,'unsubmitted original lesson has no strict feedback');
   const reveal=async loc=>{
    assert.equal(await loc.count(),1,stage+': exactly one original control');
    for(let tries=0;tries<10&&!(await loc.isVisible());tries++){
@@ -144,7 +144,7 @@ async function run(){
   const alternate=await snap('alternative-check');
   ok(alternate.attempts.length===2,'alternative Check retained after incomplete one');
   // Original grading remains in Chromium; strict candidate validation uses
-  // the genuine captured native task and model in Node, outside the released SW.
+  // the genuine captured native task and model in Node.
   const nativeCorrect=await page.evaluate(async m=>{
    const {sessionTaskFor}=await import('./learning/bridges.js');
    const original=await import('./learning/phase5/b17-model.js');
@@ -155,6 +155,7 @@ async function run(){
     {sessionId:spec.id,index:spec.index})};
   ok(alternateProof.nativeCorrect===true,'original grader allows equivalent times-25 rule');
   ok(alternateProof.candidate===null,'candidate rejects an unobserved times-100 / divide-4 method');
+  ok(await page.locator('#thinking-feedback').count()===0,'native-correct alternate strategy is not falsely strict-A supported');
   stage='canonical-correction';
   await fill('multiplier','100');await fill('offset','0');await fill('divisor','4');
   await act('rule');
@@ -184,7 +185,7 @@ async function run(){
    'does not claim hidden mental strategy or learning mastery');
   ok(!proof.staleAccepted&&!proof.forgedAccepted&&!proof.otherIndexAccepted,
    'reject stale Check, forged event, and other source position');
-  ok(await page.locator('#thinking-feedback').count()===0,'candidate cannot appear as approved strict A');
+  ok(await page.locator('#thinking-feedback').isVisible(),'canonical source-bound Check earns strict feedback');
   await page.screenshot({path:path.join(out,'canonical-correct.png'),fullPage:false});
   screenshots.push('canonical-correct.png');
   stage='offline-reload';
@@ -209,7 +210,7 @@ async function run(){
   ok(errors.length===0,'no browser exceptions or external requests');
   persist();
   console.log('P003_RULEJUMP_EQUIVALENT_CANDIDATE_BROWSER_OK '+JSON.stringify({
-   sha,checks:checks.length,sourceSha:expectedTaskSha,strictAApproved:false}));
+   sha,checks:checks.length,sourceSha:expectedTaskSha,strictAApproved:true}));
  }catch(error){
   errors.push(stage+': '+String(error));
   await page?.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});

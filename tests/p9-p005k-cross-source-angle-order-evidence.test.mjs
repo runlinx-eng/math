@@ -80,6 +80,6 @@ test('P005k actual wrong-to-correct with undo, reset and no-op rejection',()=>{
  native.act(task,undoEmpty,'g25-undo');
  for(let i=0;i<4;i++)native.act(task,undoEmpty,'g25-test',{index:i});
  for(const i of [1,3,2,0])native.act(task,undoEmpty,'g25-choose',{index:i});
- 
+
  assert.equal(replay(task,undoEmpty,ctx),null);
 });

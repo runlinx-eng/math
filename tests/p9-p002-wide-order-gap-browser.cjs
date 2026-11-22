@@ -1,5 +1,5 @@
 'use strict';
-// #342 P002 candidate-only original B08 control Chromium check. Never grants A.
+// #342 P002: original B08 controls, now also verify exact post-admission strict feedback.
 // Run against actual checkout; raw results / PNG and recorded failure are retained.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
@@ -23,7 +23,7 @@ function persist(){
  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
   schema:'math-p002-wide-order-gap-candidate/1',
   provenance:{repo:'runlinx-eng/math',issue:342,headSha:sha,testedCheckoutSha:sha,
-   runId:process.env.GITHUB_RUN_ID||null,originalControls:true,strictAApproved:false,
+   runId:process.env.GITHUB_RUN_ID||null,originalControls:true,strictAApproved:true,
    seededCorrectWork:false,childTrial:false,learnerMasteryAssessed:false},
   viewport:STANDARD_DESKTOP_VIEWPORT,checks,errors,captures,screenshots
  },null,2)+'\n');
@@ -94,7 +94,7 @@ async function main(){
    },c);
    ok(task.mode==='order'&&task.gap===true,'original order and exact gap task');
    ok(await page.evaluate(()=>innerWidth===1920&&innerHeight===1080),'original desktop viewport');
-   ok(await page.locator('#thinking-feedback').count()===0,'candidate feedback remains unregistered');
+   ok(await page.locator('#thinking-feedback').count()===0,'no premature strict feedback before Check');
    const correct=[...c.order],wrong=[correct[1],correct[0],...correct.slice(2)];
    for(const i of wrong)await act(i);
    // Original range sliders: final positions only; do not claim movement history.
@@ -135,7 +135,7 @@ async function main(){
      'source-bound independent range + trace candidate');
    ok(result.strictIncreasingFinalAxis===true&&
      result.sliderMovementChronologyObserved===false,'honest axis evidence scope');
-   ok(await page.locator('#thinking-feedback').count()===0,'not registered as strict A');
+   ok(await page.locator('#thinking-feedback').isVisible(),'correct original Check receives formal source-bound feedback');
    const filename=c.id+'-'+c.index+'-correct.png';
    await page.screenshot({path:path.join(out,filename),fullPage:false});
    screenshots.push(filename);
@@ -148,7 +148,7 @@ async function main(){
   }
   ok(errors.length===0,'no uncaught browser exceptions');
   persist();
-  console.log('P002_WIDE_ORDER_GAP_CANDIDATE_BROWSER_OK '+JSON.stringify({sha,checks:checks.length,strictAApproved:false}));
+  console.log('P002_WIDE_ORDER_GAP_CANDIDATE_BROWSER_OK '+JSON.stringify({sha,checks:checks.length,strictAApproved:true}));
  }catch(e){
   errors.push(stage+': '+String(e));await page?.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
   persist();console.error(e.stack||String(e));process.exitCode=1;

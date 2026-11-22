@@ -17,7 +17,7 @@ const evt=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.G
 const provenance={repo:'runlinx-eng/math',issue:342,sha,testedCheckoutSha:sha,runId:process.env.GITHUB_RUN_ID||null,
  runAttempt:Number(process.env.GITHUB_RUN_ATTEMPT||0),workflowRunId:process.env.GITHUB_RUN_ID||null,
  workflowAttempt:process.env.GITHUB_RUN_ATTEMPT||null,headSha:evt?.pull_request?.head?.sha||sha,
- originalControls:true,seededCorrectWork:false,seededLessonPositionOnly:true,strictAApproved:false,
+ originalControls:true,seededCorrectWork:false,seededLessonPositionOnly:true,strictAApproved:true,
  childTrial:false,masteryInferred:false};
 const ok=(v,message)=>{assert.ok(v,message);checks.push(message);};
 function write(){
@@ -25,7 +25,7 @@ function write(){
  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({
   schema:'math-math-p9-gridarea-perimeter-contrast-candidate/1',provenance,viewport:STANDARD_DESKTOP_VIEWPORT,
   proofContracts:['math','correction','persistence','negative','backup'],
-  strictAApproved:false,
+  strictAApproved:true,
   checks,errors,captures,screenshots
  },null,2)+'\n');
 }
@@ -131,14 +131,13 @@ async function run(){
    ok(accepted.attempts.length===2&&accepted.attempts[0].value.perimeter===String(row.length-1)&&
     accepted.attempts[1].value.perimeter===String(row.length),
     row.id+' correction and both Check attempts persisted');
-   // Released SW deliberately excludes this candidate; replay the exact
-   // browser-captured native task, model and Check bytes in the Node runner.
+   // Check the exact browser-captured native task, model and attempts independently.
    const proof=candidate.submittedGridareaPerimeterContrastEvidence(
     nativeTask,accepted.model,accepted.record,{sessionId:row.id,index:row.index});
    ok(proof?.perimeterCentimeters===row.length&&proof.areaSquareCentimeters===12&&proof.exteriorUnitEdgesVerified===row.length&&
      proof.runs.length===row.count&&proof.runs.reduce((n,r)=>n+r.length,0)===row.length,
      row.id+' independent exterior units equal actual run lengths');
-   ok(await page.locator('#thinking-feedback').count()===0,row.id+' candidate is not registered in shared feedback');
+   ok(await page.locator('#thinking-feedback').isVisible(),row.id+' approved source Check receives strict feedback');
    label=row.id+'-'+row.index+'-correct';
    const png=label+'.png';await page.screenshot({path:path.join(out,png),fullPage:false});screenshots.push(png);
    const reply=await page.reload();
@@ -147,7 +146,7 @@ async function run(){
    const persisted=await snap(row,'offline-reload');
    assert.deepEqual(persisted.model,accepted.model);
    assert.deepEqual(persisted.record,accepted.record);
-   ok(await page.locator('#thinking-feedback').count()===0,row.id+' candidate remains unregistered after reload');
+   ok(await page.locator('#thinking-feedback').isVisible(),row.id+' source-bound feedback survives offline reload');
   }
   const last=rows.at(-1),beforeRetry=await snap(last,'before-retry');
   await action('[data-do="p3-retry"]');
@@ -177,7 +176,7 @@ async function run(){
   ok(await restorePage.evaluate(()=>localStorage.getItem('math-explorer-v2'))===restored,'bad import leaves all records unchanged');
   ok(errors.length===0,'no browser exceptions or external calls');
   write();console.log('P9_GRIDAREA_PERIMETER_CONTRAST_CANDIDATE_BROWSER_OK '+JSON.stringify({
-   sha,checks:checks.length,rows:rows.length,captures:captures.length,viewport:STANDARD_DESKTOP_VIEWPORT,strictAApproved:false}));
+   sha,checks:checks.length,rows:rows.length,captures:captures.length,viewport:STANDARD_DESKTOP_VIEWPORT,strictAApproved:true}));
  }catch(e){
   errors.push(label+': '+String(e));await page?.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
   write();console.error(e.stack||String(e));process.exitCode=1;
