@@ -71,3 +71,19 @@ test('live persistence cannot resurrect removed bookmarks or erase another surfa
  assert.equal(evidenceSummary(out.activities.fair).kinds[0].status,'supported');
  assert.equal(out.activities.fair.evidence['construct:0'].attempts.length,1);
 });
+
+test('P11 cosmic map palette is scoped; real map actions and source topology remain intact',()=>{
+ const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+ const style=fs.readFileSync(new URL('../dist/space.css',import.meta.url),'utf8');
+ const scene=fs.readFileSync(new URL('../dist/spatial-scene.js',import.meta.url),'utf8');
+ assert.match(html,/<body class="cosmos">/);
+ assert.match(html,/data-action="nav-explore"[\s\S]*data-action="nav-learn"[\s\S]*data-action="nav-trail"/);
+ for(const action of ['overview','search','mode','zoom','network-view'])assert.ok(html.includes('data-action="'+action+'"'),action+' remains');
+ assert.match(style,/body\.cosmos\[data-world="network"\] \.space-label\.node\.active-target/);
+ assert.match(style,/body\.cosmos\[data-world="network"\] \.space-label:focus-visible/);
+ assert.match(style,/body\.cosmos \.space-label\.node\[data-progress="tier-3"\]/);
+ assert.match(style,/body\.cosmos #focus-card button\.primary-button/);
+ assert.match(scene,/setClearColor\(0x081520,0\)/);
+ assert.match(scene,/new THREE\.FogExp2\(0x081520/);
+ assert.match(scene,/new THREE\.Color\(0x203843\)/);
+});
