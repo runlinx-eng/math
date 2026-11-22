@@ -189,9 +189,9 @@ const check=(condition,message)=>{if(!condition)throw Error(message);checks.push
   await field('answer','501');await submit();
   check((await view()).includes('167*3'),'MP.5 second source task requires its own calculator action');
   const p9state=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
-  const lesson=p9state.lessons.tools39;
-  check(lesson.cases[0].attempts.length===4&&lesson.cases[1].attempts.length===1&&
-        !('thinkingScore' in lesson),'MP.5 old submitted attempts retained with no thinking score');
+  const toolLesson=p9state.lessons.tools39;
+  check(toolLesson.cases[0].attempts.length===4&&toolLesson.cases[1].attempts.length===1&&
+        !('thinkingScore' in toolLesson),'MP.5 old submitted attempts retained with no thinking score');
   check(errors.length===0&&remote.length===0,'no page errors or remote calls during local learning flow');
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,remote,snapshots,childTrial:false,independentMathReview:false},null,2));
   console.log('P9_THINKING_FEEDBACK_BROWSER_OK '+JSON.stringify({checks:checks.length,errors,remote}));
