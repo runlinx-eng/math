@@ -73,9 +73,12 @@ async function seedPositionOnly(page,sessionId,index){
   const raw=localStorage.getItem('math-explorer-v2');
   if(!raw)throw Error('original State-v2 missing');
   const state=JSON.parse(unpackText(raw)),lesson=state.lessons?.[sessionId];
-  if(!lesson||!Array.isArray(lesson.models)||!Array.isArray(lesson.cases)||
-     !lesson.models[index]||lesson.cases[index]?.attempts?.length)
-   throw Error('prior model or Check missing / position already checked: '+sessionId+':'+index);
+  // Native lesson.models and lesson.cases are keyed objects initialized lazily.
+  // Select only the index; the original lesson runtime creates the blank model.
+  if(!lesson||!lesson.models||typeof lesson.models!=='object'||
+     !lesson.cases||typeof lesson.cases!=='object'||
+     lesson.cases[index]?.attempts?.length)
+   throw Error('original lesson missing or position already checked: '+sessionId+':'+index);
   lesson.index=index;
   lesson.view='task';
   localStorage.setItem('math-explorer-v2',packText(JSON.stringify(state)));
