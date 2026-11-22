@@ -146,7 +146,10 @@ async function run(){
    const persisted=await snap(row,'offline-reload');
    assert.deepEqual(persisted.model,accepted.model);
    assert.deepEqual(persisted.record,accepted.record);
-   ok(await page.locator('#thinking-feedback').isVisible(),row.id+' source-bound feedback survives offline reload');
+   // Source adapter is asynchronously imported after navigation; wait for the
+   // real formal rerender rather than inspecting the first intermediate frame.
+   await page.locator('#thinking-feedback').waitFor({state:'visible',timeout:10000});
+   ok(true,row.id+' source-bound feedback survives offline reload');
   }
   const last=rows.at(-1),beforeRetry=await snap(last,'before-retry');
   await action('[data-do="p3-retry"]');
