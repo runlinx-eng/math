@@ -243,8 +243,10 @@ test('MP.1 reading feedback and optional guide require the original native task 
 test('MP.5 calculator method needs actual calculator-run event at each of two native positions',async()=>{
   const {TASKS:S}=await import('../dist/learning/phase5/b39.js');
   const tools39=await import('../dist/learning/phase5/b39-model.js');
-  const {registerB39Model}=await import('../dist/learning/phase4/engine.js');
-  registerB39Model(tools39);
+  // B39 is lazy: load the real catalog tasks and original model together,
+  // as the product does, before checking native source identity.
+  const {ensureB39Ready}=await import('../dist/learning/phase4/async-batches.js');
+  await ensureB39Ready();
   const entries=[[0,'25*4','100'],[1,'167*3','501']];
   for(const [index,expression,answer] of entries){
     const task=S.tools39[index],context={sessionId:'tools39',index};
