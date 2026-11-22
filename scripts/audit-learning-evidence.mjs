@@ -243,15 +243,15 @@ const inputs=loadIssue341FormalAuditInputs({
 const {summary,rows,byType,byFamily,unknown,risk,report}=await auditLearningEvidence(inputs);
 const nativeA=rows.filter(row=>row.kind==='native'&&row.evidenceLevel==='A');
 const added=nativeA.filter(row=>row.evidenceAdapter?.startsWith('issue341-'));
-if(nativeA.length!==1304||added.length!==491||
- new Set(added.map(row=>row.sessionId+':'+row.index)).size!==491)
- throw Error('Formal #341 A-E classification did not verify 491 exact original Checks');
+if(nativeA.length!==1522||added.length!==709||
+ new Set(added.map(row=>row.sessionId+':'+row.index)).size!==709)
+ throw Error('Formal #341 A-E classification did not verify 709 exact original Checks');
 delete summary.classificationScope;
 delete summary.formalStrictAGranted;
 summary.caution=summary.caution.replace(
  /^Explicit injected-registry simulation only; no formal A grant\. /,
  'Formal #341 sources use restored original Check/submitted contracts. ');
-report.splice(0,3,'# 正式数学证据分类：原813 + 新增491（仅原生）','',
+report.splice(0,3,'# 正式数学证据分类：原813 + 新增709（仅原生）','',
  '复用原始完整 Check 记录与准确来源，不代表学生掌握或新增方法标签。');
 mkdirSync(out,{recursive:true});
 write('tasks.json',{schema:summary.schema,rows});

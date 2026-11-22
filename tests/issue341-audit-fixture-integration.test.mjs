@@ -69,12 +69,12 @@ test('proposed113-family/365-position audit accepts archived full Check records 
  }
  assert.ok(JSON.stringify(fixtures.rows)===evidenceBefore,'audit must not mutate preserved evidence');
  assert.equal(read('../docs/spatial-learning/evidence-review-manifest.json'),officialBefore);
- assert.equal(JSON.parse(officialBefore).tasks.length,1304);
+ assert.equal(JSON.parse(officialBefore).tasks.length,1522);
  assert.match(report.summary.caution,/never grants A classification/);
  console.log('ISSUE341_PROPOSED_AUDIT '+JSON.stringify({
   status:'PASS_PROPOSED_CONTRACT_SIMULATION_NOT_FORMAL_APPROVAL',...report.summary,
   originalArtifactRun:fixtures.sourceRun,originalArtifactHead:fixtures.sourceHead,
-  formalStrictAGranted:0,officialManifestTasks:1304
+  formalStrictAGranted:0,officialManifestTasks:1522
  }));
 });
 

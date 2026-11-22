@@ -66,7 +66,7 @@ function ensureIssue341FormalRouting(sessionId){
  issue341RoutingPromise=import('./issue341-formal-source-routing.js')
   .then(({createIssue341ManifestGatedRouting})=>{
    const routing=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
-   if(routing.approvedPositions!==491||routing.approvedFamilies!==148)
+   if(routing.approvedPositions!==709||routing.approvedFamilies!==200)
     throw new Error('Issue341 manifest and frozen source mismatch');
    issue341FormalRouting=routing;
    if(a?.view==='task'&&hasIssue341FormalSession(id)&&!blocked)render();
