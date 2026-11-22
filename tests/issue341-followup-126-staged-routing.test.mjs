@@ -20,7 +20,7 @@ test('35 candidates bind exactly 126 unique new native positions without modifyi
  assert.equal(official.tasks.length,1663);
  const old=new Set(official.tasks.filter(s=>!s.adapter.startsWith('issue341-B126-'))
   .map(s=>JSON.stringify([s.sessionId,s.index])));
- assert.equal(old.size,1537);
+ assert.equal(old.size,official.tasks.length-frozen.length);
  assert.equal(official.tasks.filter(s=>s.adapter.startsWith('issue341-B126-')).length,126);
  const next=new Set();
  for(const {f,s} of frozen){
