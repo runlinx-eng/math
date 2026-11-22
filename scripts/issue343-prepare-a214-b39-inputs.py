@@ -65,6 +65,7 @@ def main():
    require(sum(m.file_size for m in members)<60000000,'archive expanded size bound exceeded')
    require(z.testzip() is None,'original archive CRC mismatch')
    verified=[]
+   exports={}
    for family,sid,index,node,kind,hash_,candidate_sha,check_sha,suffix in SOURCES:
     position=sid+':'+str(index)
     formal=rows_by_position.get(position)
@@ -100,6 +101,7 @@ def main():
     exported=json.loads(z.read(folder+'native-state-v2.json'))
     require(exported.get('version')==2 and exported.get('app')=='math-explorer',
       'not a genuine native State-v2 export '+position)
+    exports[family]=compact(exported)+b'\n'
     exported_lesson=exported['state']['lessons'][sid]
     require(exported_lesson['models'][str(index)]==model and exported_lesson['cases'][str(index)]==record,
       'native export did not preserve Check '+position)
@@ -110,6 +112,8 @@ def main():
        'candidateHead':candidate_sha,'archiveSha256':ARCHIVE_SHA,'member':checked}})
   content=compact({'schema':'issue343-a214-b39-original-Check/1','rows':verified})+b'\n'
   FIXTURE.write_bytes(content)
+  for family,data in exports.items():
+   (OUT/('b39-original-export-'+family+'.json')).write_bytes(data)
   RECEIPT.write_bytes(compact({'schema':'issue343-a214-b39-readonly-receipt/1',
     'status':'PASS','positions':[r['source']['position'] for r in verified],
     'archiveSha256':ARCHIVE_SHA,'fixtureSha256':sha(content),
@@ -118,5 +122,7 @@ def main():
  except Exception:
   FIXTURE.unlink(missing_ok=True)
   RECEIPT.unlink(missing_ok=True)
+  for family,*_ in SOURCES:
+   (OUT/('b39-original-export-'+family+'.json')).unlink(missing_ok=True)
   raise
 if __name__=='__main__': main()
