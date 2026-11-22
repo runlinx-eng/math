@@ -64,6 +64,13 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
    await page.screenshot({path:path.join(out,'02-optional-shells.png')});
    await shells.click();await page.waitForFunction(()=>!mathSpace.snapshot().overviewShellsVisible);
   }else check(await shells.isHidden(),'no shell is drawn when grouping fails conservative evidence checks');
+  // The Constellation observation controls are collapsed until requested.
+  // Exercise actual UI disclosure; never bypass disabled/hidden controls.
+  const observation=page.locator('#constellation-tools-toggle');
+  check(await observation.isVisible(),'observation disclosure is visible');
+  check(await page.locator('[data-action="edge-display"][data-edge-display="all"]').isHidden(),'secondary controls start collapsed');
+  await observation.click();
+  check(await page.locator('[data-action="edge-display"][data-edge-display="all"]').isVisible(),'explicit disclosure shows source-edge choices');
   await page.locator('[data-action="edge-display"][data-edge-display="all"]').click();
   check((await snap()).backgroundEdges===1080,'complete 808 hard plus 272 soft domain edges remain queryable');
   await page.locator('[data-action="edge-display"][data-edge-display="outline"]').click();
@@ -74,11 +81,14 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   const focused=await snap();check(focused.visibleNodes.length===537&&focused.backgroundEdgesVisible,'selection highlights local links without hiding any panorama knowledge');
   check(JSON.stringify(focused.positions)===initial,'focus and outline toggle never change source coordinates');
   check(await page.locator('[data-action="overview-shells"]').isHidden(),'group preview does not compete with focused exploration');
-  await page.locator('#local-overview-exit').click();
+  const focusBounds=await page.locator('#focus-card').boundingBox();
+  check(!!focusBounds&&focusBounds.width>=1400&&focusBounds.height>=880,'source node opens a true full-screen knowledge page');
+  await page.screenshot({path:path.join(out,'04-constellation-focus.png')});
+  await page.locator('#focus-card [data-action="deselect"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null&&mathSpace.snapshot().visibleNodes.length===537);
   check(JSON.stringify((await snap()).positions)===initial,'return restores exactly the same 3D coordinate data');
   check(errors.length===0,'no browser runtime errors');
-  await page.screenshot({path:path.join(out,'04-return-overview.png')});
+  await page.screenshot({path:path.join(out,'05-return-overview.png')});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
  }catch(err){
