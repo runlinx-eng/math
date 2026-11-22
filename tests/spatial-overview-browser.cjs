@@ -39,6 +39,10 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   check(await page.locator('.space-label.node.structure-landmark:visible').count()>=1,'the structure offers named source-node anchors');
 
   const initial=JSON.stringify(full.positions);
+  const themeBackground=await page.locator('.space-label.theme:visible').first().evaluate(el=>getComputedStyle(el).backgroundColor);
+  check(themeBackground==='rgba(0, 0, 0, 0)','constellation theme labels never inherit legacy white cards');
+  const brandBackground=await page.locator('.topbar .brand').evaluate(el=>getComputedStyle(el).backgroundColor);
+  check(brandBackground==='rgba(0, 0, 0, 0)','constellation brand is not a legacy white box');
   await page.screenshot({path:path.join(out,'01-overview.png')});
   for(const role of ['origin','fork','join']){
     await page.locator('[data-action="overview-structure"][data-structure="'+role+'"]').click();
@@ -64,6 +68,13 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
    await page.screenshot({path:path.join(out,'02-optional-shells.png')});
    await shells.click();await page.waitForFunction(()=>!mathSpace.snapshot().overviewShellsVisible);
   }else check(await shells.isHidden(),'no shell is drawn when grouping fails conservative evidence checks');
+  // The Constellation observation controls are collapsed until requested.
+  // Exercise actual UI disclosure; never bypass disabled/hidden controls.
+  const observation=page.locator('#constellation-tools-toggle');
+  check(await observation.isVisible(),'observation disclosure is visible');
+  check(await page.locator('[data-action="edge-display"][data-edge-display="all"]').isHidden(),'secondary controls start collapsed');
+  await observation.click();
+  check(await page.locator('[data-action="edge-display"][data-edge-display="all"]').isVisible(),'explicit disclosure shows source-edge choices');
   await page.locator('[data-action="edge-display"][data-edge-display="all"]').click();
   check((await snap()).backgroundEdges===1080,'complete 808 hard plus 272 soft domain edges remain queryable');
   await page.locator('[data-action="edge-display"][data-edge-display="outline"]').click();
@@ -74,11 +85,48 @@ const checks=[],errors=[],check=(condition,label)=>{if(!condition)throw Error(la
   const focused=await snap();check(focused.visibleNodes.length===537&&focused.backgroundEdgesVisible,'selection highlights local links without hiding any panorama knowledge');
   check(JSON.stringify(focused.positions)===initial,'focus and outline toggle never change source coordinates');
   check(await page.locator('[data-action="overview-shells"]').isHidden(),'group preview does not compete with focused exploration');
-  await page.locator('#local-overview-exit').click();
+  const focusBounds=await page.locator('#focus-card').boundingBox();
+  check(!!focusBounds&&focusBounds.width>=1400&&focusBounds.height>=880,'source node opens a true full-screen knowledge page');
+  await page.screenshot({path:path.join(out,'04-constellation-focus.png')});
+  // Wait for map motion to settle before capturing the user's exact camera pose.
+  await page.waitForFunction(()=>!mathSpace.motion().tween&&!mathSpace.motion().transition);
+  const cameraBeforeLesson=await snap();
+  const sameCameraPose=(a,b)=>a.position.length===3&&b.position.length===3&&a.target.length===3&&b.target.length===3&&
+    a.position.every((v,i)=>Math.abs(v-b.position[i])<1e-4)&&
+    a.target.every((v,i)=>Math.abs(v-b.target[i])<1e-4)&&
+    Math.abs(a.cameraZoom-b.cameraZoom)<1e-4;
+  // Continue the actual user path: a real lesson opens as a centered, full-screen
+  // reading workspace and can return to the exact same mathematical source node.
+  await page.locator('#focus-card [data-action="open"]').click();
+  await page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen===true);
+  const lessonBounds=await page.locator('#journey-surface').boundingBox();
+  check(!!lessonBounds&&lessonBounds.width>=1400&&lessonBounds.height>=880,'real lesson opens in a full-screen learning theater');
+  check(await page.locator('#journey-frame').isVisible(),'original runnable mathematical task iframe is preserved');
+  check(sameCameraPose(await snap(),cameraBeforeLesson),'entering the lesson does not move the 3D camera or target');
+  await page.screenshot({path:path.join(out,'05-constellation-lesson.png')});
+  await page.locator('#journey-surface [data-action="close-journey"]').click();
+  await page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen===false);
+  const afterLesson=await snap();
+  check(afterLesson.selected==='node:mt_WcfaSfVT33','return from lesson restores the original selected source concept');
+  check(sameCameraPose(afterLesson,cameraBeforeLesson),'return from lesson restores camera position, zoom and orbit target');
+  check(JSON.stringify(afterLesson.positions)===initial,'learning and return preserve exact source coordinates');
+  await page.locator('#focus-card [data-action="deselect"]').click();
   await page.waitForFunction(()=>mathSpace.snapshot().selected===null&&mathSpace.snapshot().visibleNodes.length===537);
   check(JSON.stringify((await snap()).positions)===initial,'return restores exactly the same 3D coordinate data');
   check(errors.length===0,'no browser runtime errors');
-  await page.screenshot({path:path.join(out,'04-return-overview.png')});
+  await page.screenshot({path:path.join(out,'06-return-overview.png')});
+  for(const [width,height,label] of [[1140,900,'compact'],[390,844,'mobile']]){
+   await page.setViewportSize({width,height});
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   const fit=await page.evaluate(()=>{
+    const a=document.querySelector('.tool-rail').getBoundingClientRect();
+    const b=document.querySelector('.overall-progress').getBoundingClientRect();
+    const overlap=a.left<b.right-2&&a.right>b.left+2&&a.top<b.bottom-2&&a.bottom>b.top+2;
+    return a.left>=-1&&a.right<=innerWidth+1&&!overlap;
+   });
+   check(fit,'camera controls stay within '+label+' viewport and clear of progress');
+   await page.screenshot({path:path.join(out,'07-constellation-'+label+'.png')});
+  }
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,childTrial:false},null,2));
   console.log(JSON.stringify({passed:checks.length,errors}));
  }catch(err){

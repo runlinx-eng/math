@@ -71,3 +71,26 @@ test('live persistence cannot resurrect removed bookmarks or erase another surfa
  assert.equal(evidenceSummary(out.activities.fair).kinds[0].status,'supported');
  assert.equal(out.activities.fair.evidence['construct:0'].attempts.length,1);
 });
+
+
+test('P11 original Constellation keeps the real math map and full-screen learning',()=>{
+ const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+ const css=fs.readFileSync(new URL('../dist/constellation.css',import.meta.url),'utf8');
+ const sky=fs.readFileSync(new URL('../dist/constellation-sky.js',import.meta.url),'utf8');
+ const renderer=fs.readFileSync(new URL('../dist/spatial-scene.js',import.meta.url),'utf8');
+ assert.match(html,/<body class="constellation">/);
+ assert.match(html,/id="constellation-atmosphere" aria-hidden="true"/);
+ assert.match(html,/id="constellation-tools-toggle"[^>]*aria-expanded="false"/);
+ assert.match(html,/class="constellation-intro"/);
+ for(const act of ['nav-explore','nav-learn','nav-trail','overview','search','mode','zoom','close-journey'])
+  assert.ok(html.includes('data-action="'+act+'"'),act+' remains');
+ assert.match(css,/body\.constellation #focus-card/);
+ assert.match(css,/body\.constellation\.has-journey #journey-surface/);
+ assert.match(css,/body\.constellation #space-app\{[^}]*right:0!important/);
+ assert.match(css,/body\.constellation #network-guide\.constellation-open/);
+ assert.match(renderer,/setClearColor\(0x080b13,0\)/);
+ assert.match(renderer,/this\.nodeMesh=new THREE\.InstancedMesh/);
+ assert.match(renderer,/this\.space\.byKey\.get\(this\.selected\)/);
+ assert.match(sky,/math nodes or hit targets/);
+ assert.doesNotMatch(sky,/nodeList\.push|atlas\.edges\.push|\.pickables\.push|space\.nodes\.set/);
+});
