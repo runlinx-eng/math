@@ -52,25 +52,37 @@ async function main(){
    const target=selector.startsWith('[data-x="m28-mark"]')||
     selector.startsWith('[data-x="m28-unmark"]')
      ?'#extra-controls button'+selector:selector;
-   const loc=page.locator(target);assert.equal(await loc.count(),1,target);
-   // A delayed formal-route import can replace the original disclosure.
-   // Re-resolve only a DOM-detached scroll; never repeat the genuine click.
-   let positioned=false;
+   let transient=null;
    for(let attempt=0;attempt<8;attempt++){
-    for(let depth=0;depth<8&&!await loc.isVisible();depth++){
-     const closed=loc.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
-     assert.equal(await closed.count(),1,selector+' has one outermost closed disclosure');
-     await closed.locator(':scope > summary').click();
-    }
-    assert.equal(await loc.isVisible(),true,selector+' must be reachable');
+    const loc=page.locator(target);assert.equal(await loc.count(),1,target);
     try{
-     await loc.scrollIntoViewIfNeeded();positioned=true;break;
+     // Formal feedback can rebuild/re-close disclosures even after an
+     // earlier scroll succeeded. Open only the actual visible summaries.
+     for(let depth=0;depth<8;depth++){
+      const closed=loc.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
+      const count=await closed.count();
+      if(!count)break;
+      assert.equal(count,1,selector+' has one outermost closed disclosure');
+      await closed.locator(':scope > summary').click();
+     }
+     assert.equal(await loc.isVisible(),true,selector+' must be reachable');
+     await loc.scrollIntoViewIfNeeded({timeout:2500});
+     await loc.click({timeout:2500});
+     return;
     }catch(error){
-     if(!/Element is not attached to the DOM/i.test(String(error)))throw error;
+     const detail=String(error);
+     // Retry only a pre-dispatch actionability failure. Do not replay a
+     // user click that might already have mutated the dot plot or State-v2.
+     const beforeClick=!/performing click action|click done/i.test(detail);
+     const detached=/Element is not attached to the DOM/i.test(detail);
+     const hiddenOrUnstable=/Timeout \d+ms exceeded/i.test(detail)&&
+      /element is not visible|element is not stable|element was detached from the DOM|waiting for element to be visible, enabled and stable/i.test(detail);
+     if(!beforeClick||!(detached||hiddenOrUnstable))throw error;
+     transient=error;
+     await page.waitForTimeout(100);
     }
    }
-   assert.equal(positioned,true,selector+' must stabilize after source-route rendering');
-   await loc.click();
+   throw transient||new Error('original control did not become actionable: '+selector);
   };
   const field=async(name,value)=>{const loc=page.locator('[data-xfield="'+name+'"]');assert.equal(await loc.count(),1,name);await loc.fill(String(value));};
   const captureNow=async(phase,row)=>{const item=await capture(page,out,key(row),row,phase);captures.push({
