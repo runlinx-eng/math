@@ -227,7 +227,7 @@ test('MP.1 reading feedback and optional guide require the original native task 
   assert.equal(note.method.code,'ccss-math:MP.1');
   assert.match(note.observation,/知道原来3颗.*知道后来又来4颗.*想找现在一共几颗/);
   assert.match(note.detail.join(' '),/未通过的提交|可选提示/);
-  assert.doesNotMatch(JSON.stringify(note),/你已掌握|能力评分|独立理解其他文字题。/);
+  assert.doesNotMatch(JSON.stringify(note),/你已掌握|能力评分|已经证明独立理解/);
   assert.equal(thinkingFeedback(task,done,{attempts:[]},context),null);
   assert.equal(thinkingFeedback(task,done,{attempts:[attempt(before)]},context),null);
   assert.equal(thinkingFeedback(task,done,{attempts:[attempt(done)]}),null);
