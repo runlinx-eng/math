@@ -18,6 +18,14 @@ const ok = (v, l) => { assert.ok(v, l); checks.push(l); };
 const ordered = v => Array.isArray(v) ? v.map(ordered) : (v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,ordered(v[k])])) : v);
 
 async function openControl(page, sel) {
+  // A cold offline session can finish its async source/layout render after
+  // mathLesson is registered. Wait for the actual original control, never
+  // generate a substitute or skip any Check/submission assertion.
+  await page.waitForFunction(q=>{
+    const choices=[q,q.replace('#extra-controls ', '#extra-visual '),
+      q.replace('#extra-controls ', '')];
+    return choices.some(selector=>document.querySelectorAll(selector).length===1);
+  },sel,{timeout:15000});
   let c = page.locator(sel);
   if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', '#extra-visual '));
   if (!(await c.count())) c = page.locator(sel.replace('#extra-controls ', ''));
