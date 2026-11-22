@@ -8,8 +8,6 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const button=(act,label,attrs='')=>'<button type="button" data-do="'+act+'" '+attrs+'>'+esc(label)+'</button>';
 export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySessionId=null}){
   if(!host||!record)return;
-  const openDetails=['p3-followups','p3-application','p3-review'].filter(cls=>host.querySelector('details.'+cls)?.open);
-  const commit=html=>{host.innerHTML=html;for(const cls of openDetails){const el=host.querySelector('details.'+cls);if(el)el.open=true;}};
   const flow=workflowFor(atlas,id,record),stage=learningStage(record,currentSubmission(record));
   const latest=flow.latestCheck==='none'?'尚未提交检查':flow.latestCheck==='correct'?'最近一次操作通过检查':'最近一次操作需要修改';
   const proof=flow.attempts===0?'尚无当前任务的提交记录':flow.independent?'有首次独立正确的操作证据':flow.usedSupport?'本任务使用过提示或支持，不属于首次独立正确':flow.retried?'有重试记录，不属于首次独立正确':'有操作记录，尚无首次独立正确证据';
@@ -33,7 +31,7 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySession
     (stage==='reflect'?button('restart','重新做这组任务'):'')+routes+'</div></details>'+applicationHTML;
 
   if(flow.attempts===0){
-    commit('<p class="p3-evidence p3-before-check" role="status">尚未提交检查，检查记录会在提交作品后出现。</p>'+other);
+    host.innerHTML='<p class="p3-evidence p3-before-check" role="status">尚未提交检查，检查记录会在提交作品后出现。</p>'+other;
     return;
   }
   const evidence='<div class="p3-evidence" role="status"><p><strong>最近一次检查：</strong>'+esc(latest)+'</p>'+
@@ -47,5 +45,5 @@ export function renderP3Flow(host,{atlas,id,record,embedded=false,primarySession
   // show a second summary of the same evidence beside the child's next action.
   const compact=stage==='reflect'?'':passed?'<details class="p3-review"><summary>查看这次的检查记录</summary>'+evidence+'</details>':evidence;
   const retry=!passed?'<div class="p3-retry">'+button('p3-retry','重新尝试本题')+'</div>':'';
-  commit(compact+retry+other);
+  host.innerHTML=compact+retry+other;
 }

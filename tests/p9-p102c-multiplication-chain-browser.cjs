@@ -151,16 +151,24 @@ const correctSteps = task => b13.solveSteps(task).filter(step => step.field === 
     // The formal feedback adapter may finish a lazy load and re-render this
     // optional details panel after we expand it. Re-open the actual UI control
     // if it was detached, but never bypass visibility or a failed retry.
-    const retry=page.locator('[data-do="p3-retry"]');
+    const retry=page.locator('details.p3-followups [data-do="p3-retry"]');
     let retried=false;
-    for(let attempt=0;attempt<4&&!retried;attempt++){
-      if(!(await retry.isVisible())){
-        const panel=page.locator('details.p3-followups');
-        if(!(await panel.evaluate(el=>el.open)))
-          await panel.locator(':scope > summary').click();
-      }
-      try{await retry.click({timeout:2500});retried=true;}
-      catch(error){if(attempt===3)throw error;}
+    for(let attempt=0;attempt<5&&!retried;attempt++){
+      // Both native <details> ancestors must be opened through their real
+      // summaries; opening the inner panel alone leaves it invisible.
+      const support=page.locator('details#learning-support');
+      if(!(await support.evaluate(el=>el.open)))
+        await support.locator(':scope > summary').click({timeout:2500});
+      const panel=page.locator('details.p3-followups');
+      if(!(await panel.evaluate(el=>el.open)))
+        await panel.locator(':scope > summary').click({timeout:2500});
+      try{
+        if(!(await retry.isVisible()))throw Error('Real retry control not visible');
+        // A source-feedback render can replace the DOM between visibility and
+        // click; force only skips animation stability, never a hidden element.
+        await retry.click({timeout:2500,force:true});
+        retried=true;
+      }catch(error){if(attempt===4)throw error;}
     }
     assert.equal(retried,true,'retry was clicked through the real learning UI');
     ok(proof(last.row, await observe(page, last.row, 'retry')) === null, 'retry');
