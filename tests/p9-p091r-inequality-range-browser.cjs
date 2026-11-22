@@ -98,6 +98,10 @@ async function run() {
         ok((await page.goto(origin.base + 'learn.html#' + row.id))?.fromServiceWorker() === true, row.id + ' offline');
         await page.waitForFunction(() => window.mathLesson);
         const start = page.locator('[data-do="start"]'); if (await start.isVisible()) await start.click();
+        // The existing index-0 source is formally reviewed. Let its real
+        // on-page guide appear before genuine prerequisite actions so that
+        // lazy formal routing cannot replace live controls during a Check.
+        await page.locator('#thinking-guide').waitFor({state:'visible'});
         lastSid = row.id; cur = 0;
       }
       while (cur < row.index) {

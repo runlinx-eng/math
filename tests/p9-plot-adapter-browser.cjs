@@ -48,22 +48,30 @@ async function main(){
   context.on('request',req=>{if(/^https?:/.test(req.url())&&!req.url().startsWith(origin.base))errors.push('external '+req.url());});
   const shot=async suffix=>{const file=label+'-'+suffix+'.png';await page.screenshot({path:path.join(out,file),fullPage:false});screenshots.push(file);};
   const click=async(selector)=>{
-   // B28 intentionally renders the same add-point action in the SVG axis
-   // and in the accessible, disclosed button row. Choose the original
-   // button control explicitly rather than ambiguously matching both.
+   // Prefer the original accessible button over duplicate SVG controls.
    const target=selector.startsWith('[data-x="m28-mark"]')||
     selector.startsWith('[data-x="m28-unmark"]')
      ?'#extra-controls button'+selector:selector;
    const loc=page.locator(target);assert.equal(await loc.count(),1,target);
-   // The shared P3 Retry and the dot controls live in original disclosure
-   // elements. Open their actual ancestor summaries before the genuine click.
-   for(let depth=0;depth<8&&!await loc.isVisible();depth++){
-    const closed=loc.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
-    assert.equal(await closed.count(),1,selector+' has one outermost closed disclosure');
-    await closed.locator(':scope > summary').click();
+   // A delayed formal-route import can replace the original disclosure.
+   // Re-resolve only a DOM-detached scroll; never repeat the genuine click.
+   let positioned=false;
+   for(let attempt=0;attempt<8;attempt++){
+    for(let depth=0;depth<8&&!await loc.isVisible();depth++){
+     const closed=loc.locator('xpath=ancestor::details[not(@open) and not(ancestor::details[not(@open)])]');
+     assert.equal(await closed.count(),1,selector+' has one outermost closed disclosure');
+     await closed.locator(':scope > summary').click();
+    }
+    assert.equal(await loc.isVisible(),true,selector+' must be reachable');
+    try{
+     await loc.scrollIntoViewIfNeeded();positioned=true;break;
+    }catch(error){
+     if(!/Element is not attached to the DOM/i.test(String(error)))throw error;
+    }
    }
-   assert.equal(await loc.isVisible(),true,selector+' must be reachable');
-   await loc.scrollIntoViewIfNeeded();await loc.click();};
+   assert.equal(positioned,true,selector+' must stabilize after source-route rendering');
+   await loc.click();
+  };
   const field=async(name,value)=>{const loc=page.locator('[data-xfield="'+name+'"]');assert.equal(await loc.count(),1,name);await loc.fill(String(value));};
   const captureNow=async(phase,row)=>{const item=await capture(page,out,key(row),row,phase);captures.push({
    id:row.id,index:row.index,phase,storage:item.storage,attempts:item.attempts.length,
