@@ -83,6 +83,7 @@ jobs:
           python3 scripts/issue341-prepare-followup-126-inputs.py
           python3 scripts/issue342-prepare-p006-inputs.py
           python3 scripts/issue342-prepare-p001-p005-inputs.py
+          python3 scripts/issue342-prepare-a258-first33-inputs.py
           if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
             python3 scripts/issue341-prepare-followup-218-inputs.py
           fi

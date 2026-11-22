@@ -191,8 +191,8 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   legacyExampleFor:fixtureFor,legacyRecordFor:oneCheckFor
  });
  const result=auditEvidenceExpansion(inputs),out=resolve(root,'verification/learning-evidence-audit');
- if(result.summary.reviewedTasks!==1619||result.summary.boundTasks!==1619||
-    result.summary.families!==EVIDENCE_ADAPTERS.length+250||
+ if(result.summary.reviewedTasks!==1652||result.summary.boundTasks!==1652||
+    result.summary.families!==EVIDENCE_ADAPTERS.length+254||
     result.defects.length||result.summary.bridgeBindings)
   throw Error('Formal source/Check expansion failed: '+JSON.stringify({
    summary:result.summary,firstDefects:result.defects.slice(0,10)
@@ -200,7 +200,7 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  mkdirSync(out,{recursive:true});
  writeFileSync(resolve(out,'expansion-candidates.json'),JSON.stringify(result,null,2)+'\n');
  const lines=['# 数学证据扩展与来源核对','',
-  '本批806道只使用冻结来源和原始完整 Check/submitted 证据，不推断儿童掌握或新增方法标签。','',
+  '本批839道只使用冻结来源和原始完整 Check/submitted 证据，不推断儿童掌握或新增方法标签。','',
   '| 家族 | 同类型原生题 | 已绑定 | 未绑定 | 未绑定但样例可回放 | 未验证/不同契约 |',
   '| --- | ---: | ---: | ---: | ---: | ---: |',
   ...result.families.map(f=>`| ${f.id} | ${f.nativeTasks} | ${f.boundTasks} | ${f.unboundTasks} | ${f.exampleReplayableUnbound} | ${f.unverifiedUnbound} |`),'',

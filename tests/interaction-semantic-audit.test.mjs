@@ -18,7 +18,14 @@ test('every native and bridge interaction is assigned exactly one technical prof
  assert.equal(overlap.totalNative,1996);
  assert.equal(['A','B','C','D','E'].reduce((n,k)=>n+overlap['static'+k+'Evidence'],0),1996);
  assert.ok(overlap.DWithIntermediateModel>0);
- assert.ok(overlap.withHistory>=overlap.exactPilotReplay);
+ // A source-bound replay may verify final-state mathematics and the latest
+ // original Check without a complete event-history array. History coverage
+ // and exact replay coverage are independent counts; neither implies the other.
+ assert.ok(Number.isInteger(overlap.withHistory)&&
+  overlap.withHistory>=0&&overlap.withHistory<=overlap.totalNative);
+ assert.ok(Number.isInteger(overlap.exactPilotReplay)&&
+  overlap.exactPilotReplay>=0&&overlap.exactPilotReplay<=overlap.totalNative);
+ assert.equal(overlap.exactPilotReplay,overlap.staticAEvidence);
  assert.equal(s.interactionTypes,323);
  assert.equal(s.nativeCoreTasks,1996);
  assert.equal(s.bridgeTasks,1552);

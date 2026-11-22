@@ -9,6 +9,7 @@ import {ISSUE341_FOLLOWUP_126_ADAPTERS} from '../dist/learning/issue341-followup
 import {ISSUE342_A_P006_ADAPTERS} from '../dist/learning/issue342-a355-p006-candidates.js';
 import {ISSUE341_FOLLOWUP_218_ADAPTERS} from '../dist/learning/issue341-followup-218-candidates.js';
 import {ISSUE342_A_P001_P005_ADAPTERS} from '../dist/learning/issue342-a355-next-66-candidates.js';
+import {ISSUE342_A_FIRST33_ADAPTERS} from '../dist/learning/issue342-a258-first33-candidates.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 await ensureB39Ready();
 import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
@@ -23,19 +24,21 @@ const entry=s=>({sessionId:s.sessionId,index:s.index,type:s.type,nodeId:s.nodeId
 const only=(...tasks)=>({schema:official.schema,tasks});
 const context=s=>({sessionId:s.sessionId,index:s.index});
 
-test('all 806 frozen candidate positions exactly match official 1619 manifest and browser release snapshot',()=>{
- assert.equal(official.tasks.length,1619);
- assert.equal(ISSUE341_FORMAL_MANIFEST.tasks.length,806);
+test('all 839 frozen candidate positions exactly match official 1652 manifest and browser release snapshot',()=>{
+ assert.equal(official.tasks.length,1652);
+ assert.equal(ISSUE341_FORMAL_MANIFEST.tasks.length,839);
  assert.equal(ISSUE341_NORMALIZED_ADAPTERS.length,113);
  assert.equal(ISSUE342_A_P006_ADAPTERS.length,19);
  assert.equal(ISSUE341_FOLLOWUP_218_ADAPTERS.length,52);
  assert.equal(ISSUE342_A_P001_P005_ADAPTERS.length,31);
- assert.equal(new Set(official.tasks.map(r=>JSON.stringify([r.sessionId,r.index]))).size,1619);
+ assert.equal(ISSUE342_A_FIRST33_ADAPTERS.length,4);
+ assert.equal(ISSUE342_A_FIRST33_ADAPTERS.reduce((n,f)=>n+f.sources.length,0),33);
+ assert.equal(new Set(official.tasks.map(r=>JSON.stringify([r.sessionId,r.index]))).size,1652);
  const officialRows=official.tasks.filter(r=>r.adapter?.startsWith('issue341-'));
- assert.equal(officialRows.length,806);
+ assert.equal(officialRows.length,839);
  assert.deepEqual(officialRows,ISSUE341_FORMAL_MANIFEST.tasks);
- const frozen=[...ISSUE341_NORMALIZED_ADAPTERS,...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS,...ISSUE342_A_P006_ADAPTERS,...ISSUE342_A_P001_P005_ADAPTERS].flatMap(f=>f.sources.map(s=>({family:f.id,source:s})));
- assert.equal(frozen.length,806);
+ const frozen=[...ISSUE341_NORMALIZED_ADAPTERS,...ISSUE341_FOLLOWUP_126_ADAPTERS,...ISSUE341_FOLLOWUP_218_ADAPTERS,...ISSUE342_A_P006_ADAPTERS,...ISSUE342_A_P001_P005_ADAPTERS,...ISSUE342_A_FIRST33_ADAPTERS].flatMap(f=>f.sources.map(s=>({family:f.id,source:s})));
+ assert.equal(frozen.length,839);
  const byPosition=new Map(officialRows.map(r=>[JSON.stringify([r.sessionId,r.index]),r]));
  for(const {family,source} of frozen){
   const row=byPosition.get(JSON.stringify([source.sessionId,source.index]));
@@ -58,12 +61,12 @@ test('all 806 frozen candidate positions exactly match official 1619 manifest an
  assert.match(read('../dist/sw.js'),/issue341-formal-source-routing.js/);
 });
 
-test('formal runtime supports exact all588 registration',()=>{
+test('formal runtime supports exact all839 frozen sources',()=>{
  const route=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
- assert.equal(route.approvedPositions,806);
- assert.equal(route.approvedFamilies,250);
- assert.equal(route.adapters.length,250);
- assert.equal(route.adapters.reduce((n,a)=>n+a.sources.length,0),806);
+ assert.equal(route.approvedPositions,839);
+ assert.equal(route.approvedFamilies,254);
+ assert.equal(route.adapters.length,254);
+ assert.equal(route.adapters.reduce((n,a)=>n+a.sources.length,0),839);
  for(const source of family.sources){
   const task=sessionTaskFor(source.sessionId,source.index);
   const selected=route.registry.resolve(task,context(source));
@@ -101,4 +104,32 @@ test('malformed hashes, types, adapters, methods and duplicate sources refuse cl
  assert.throws(()=>createIssue341ManifestGatedRouting(only(good,{...good})),/Duplicate/);
  assert.throws(()=>createIssue341ManifestGatedRouting(only({...good,sessionId:'unknown-native-source'})),/frozen original/);
  assert.equal(createIssue341ManifestGatedRouting(only()).approvedPositions,0);
+});
+
+
+test('A258 33 source-locked new bindings reject sibling, wrong hash and altered original task',()=>{
+ const all=ISSUE342_A_FIRST33_ADAPTERS.flatMap(f=>f.sources.map(s=>({f,s})));
+ const sourcePositions=new Set(all.map(({s})=>s.position));
+ assert.equal(sourcePositions.size,33);
+ const route=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
+ for(const {f,s} of all){
+  const task=sessionTaskFor(s.sessionId,s.index),ctx=context(s);
+  const resolved=route.registry.resolve(task,ctx);
+  assert.equal(resolved.status,'matched',s.position);
+  assert.equal(resolved.match.adapter.id,f.id,s.position);
+  assert.equal(resolved.match.binding.candidateSource.taskHash,s.taskHash,s.position);
+  assert.equal(resolved.match.binding.strictAApproved,true,s.position);
+  const bad={...task,prompt:(task.prompt||'')+' forged'};
+  assert.equal(route.registry.resolve(bad,ctx).status,'unbound',s.position+' forged task');
+  const isolated=createIssue341ManifestGatedRouting(only({...s,adapter:f.id,method:null}));
+  assert.equal(isolated.approvedPositions,1);
+  assert.equal(isolated.approvedFamilies,1);
+  assert.equal(isolated.registry.resolve(task,ctx).status,'matched');
+  const sibling=f.sources.find(row=>row.position!==s.position);
+  if(sibling){
+   const otherTask=sessionTaskFor(sibling.sessionId,sibling.index);
+   assert.equal(isolated.registry.resolve(otherTask,context(sibling)).status,'unbound',
+    'no same-family sibling auto-approved '+sibling.position);
+  }
+ }
 });

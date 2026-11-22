@@ -11,8 +11,8 @@ export function loadIssue341FormalAuditInputs({legacyExampleFor,legacyRecordFor}
  requireExact(typeof legacyExampleFor==='function'&&typeof legacyRecordFor==='function','missing legacy providers');
  const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidence-review-manifest.json',import.meta.url),'utf8'));
  const candidates=manifest.tasks.filter(row=>row.adapter?.startsWith('issue341-'));
- requireExact(manifest.schema===ISSUE341_FORMAL_MANIFEST.schema&&manifest.tasks.length===1619&&
-  candidates.length===806&&JSON.stringify(candidates)===JSON.stringify(ISSUE341_FORMAL_MANIFEST.tasks),
+ requireExact(manifest.schema===ISSUE341_FORMAL_MANIFEST.schema&&manifest.tasks.length===1652&&
+  candidates.length===839&&JSON.stringify(candidates)===JSON.stringify(ISSUE341_FORMAL_MANIFEST.tasks),
   'official manifest and frozen browser snapshot differ');
  const oldRows=JSON.parse(readFileSync(new URL('../verification/issue341-inputs/archived-checks-365.json',import.meta.url),'utf8')).rows;
  const followupRows=JSON.parse(readFileSync(new URL('../verification/issue341-inputs/archived-checks-126.json',import.meta.url),'utf8')).rows;
@@ -34,8 +34,13 @@ export function loadIssue341FormalAuditInputs({legacyExampleFor,legacyRecordFor}
   Array.isArray(row.record?.attempts)&&row.record.attempts.length>0&&
   JSON.stringify(row.record.attempts.at(-1).value)===JSON.stringify(row.model),
   'B218 original Check source record failed integrity '+row?.source?.position);
- const sourceRows=[...oldRows,...followupRows,...p006Rows,...next66Rows,...b218Rows];
- requireExact(sourceRows.length===806,'missing full 806 authentic original Check records');
+ const a258Rows=JSON.parse(readFileSync(new URL('../verification/issue341-inputs/archived-checks-a258-first33.json',import.meta.url),'utf8')).rows;
+ requireExact(Array.isArray(a258Rows)&&a258Rows.length===33&&
+  new Set(a258Rows.map(row=>row.familyId)).size===4&&
+  new Set(a258Rows.map(row=>row.source?.position)).size===33,
+  'A258 exact 33 original CI correct-Check records and four math families missing');
+ const sourceRows=[...oldRows,...followupRows,...p006Rows,...next66Rows,...b218Rows,...a258Rows];
+ requireExact(sourceRows.length===839,'missing full 839 authentic original Check records');
  const byKey=new Map(candidates.map(row=>[key(row.sessionId,row.index),row]));
  const records=new Map();
  for(const row of sourceRows){
@@ -50,7 +55,19 @@ export function loadIssue341FormalAuditInputs({legacyExampleFor,legacyRecordFor}
    row.record.attempts.length>0,'full original Check unavailable '+id);
   records.set(id,row);
  }
- requireExact(records.size===806,'incomplete exact original records');
+ requireExact(records.size===839,'incomplete exact original records');
+ for(const row of a258Rows){
+  const identity=key(row.source.sessionId,row.source.index);
+  requireExact(row.provenance?.transportOnly===true&&
+   row.provenance?.freshMathOrBrowserReplay===false&&
+   row.provenance?.originalControls===true&&
+   /^[a-f0-9]{64}$/.test(row.provenance?.memberSha256??'')&&
+   /^[a-f0-9]{64}$/.test(row.provenance?.modelRecordSha256??'')&&
+   Array.isArray(row.record?.attempts)&&row.record.attempts.length===2&&
+   JSON.stringify(row.record.attempts[0].value)!==JSON.stringify(row.model)&&
+   JSON.stringify(row.record.attempts[1].value)===JSON.stringify(row.model),
+   'A258 authentic original wrong-correct Check missing '+identity);
+ }
  for(const row of next66Rows){
   const identity=key(row.source.sessionId,row.source.index);
   requireExact(row.provenance?.transportOnly===true&&row.provenance?.freshMathematicalEvaluation===false&&
@@ -73,7 +90,7 @@ export function loadIssue341FormalAuditInputs({legacyExampleFor,legacyRecordFor}
    'P006 true wrong-correct archived Check record unavailable '+identity);
  }
  const route=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
- requireExact(route.approvedPositions===806&&route.approvedFamilies===250,'wrong formal routing scope');
+ requireExact(route.approvedPositions===839&&route.approvedFamilies===254,'wrong formal routing scope');
  const original=context=>records.get(key(context?.sessionId,context?.index));
  const adapters=[...EVIDENCE_ADAPTERS,...route.adapters.map(adapter=>Object.freeze({...adapter,
   replay:(task,model,context)=>{

@@ -20,17 +20,17 @@ const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?
  Object.fromEntries(Object.keys(v).sort((a,b)=>a.localeCompare(b,'en')).map(k=>[k,stable(v[k])])):v;
 const fullHash=task=>createHash('sha256').update(JSON.stringify(stable(task))).digest('hex');
 const key=(sessionId,index)=>JSON.stringify([sessionId,index]);
-test('A355 P001-P005 has 66 exact formal sources without colliding with the previous 1553',()=>{
+test('A355 P001-P005 has 66 exact formal sources without colliding with the previous 1586',()=>{
  assert.equal(adapters.length,31);
  assert.deepEqual([a.length,b.length,c.length,d.length,e.length,f.length],[3,7,6,1,7,7]);
  const positions=adapters.flatMap(x=>x.sources.map(source=>({source,family:x})));
  assert.equal(positions.length,66);
  const added=official.tasks.filter(x=>/^issue341-A-P00[1-5]/.test(x.adapter??''));
- assert.equal(official.tasks.length,1619);
+ assert.equal(official.tasks.length,1652);
  assert.equal(added.length,66);
  const previous=official.tasks.filter(x=>!/^issue341-A-P00[1-5]/.test(x.adapter??''));
  const old=new Set(previous.map(x=>key(x.sessionId,x.index)));
- assert.equal(old.size,1553,'existing main sources remain distinct');
+ assert.equal(old.size,1586,'existing main sources remain distinct');
  const formalByPosition=new Map(added.map(x=>[key(x.sessionId,x.index),x]));
  assert.equal(formalByPosition.size,66,'all newly admitted positions remain unique');
  const seen=new Set();
