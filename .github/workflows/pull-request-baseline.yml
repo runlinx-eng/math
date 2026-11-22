@@ -81,9 +81,16 @@ jobs:
         run: |
           python3 scripts/issue341-prepare-archived-inputs.py
           python3 scripts/issue341-prepare-followup-126-inputs.py
+          if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
+            python3 scripts/issue341-prepare-followup-218-inputs.py
+          fi
       - name: Verify shared routing and proposed audit with preserved original Checks
         if: steps.issue341_scope.outputs.selected == 'true'
-        run: node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-isolated-integration.test.mjs tests/issue341-audit-fixture-integration.test.mjs tests/issue341-learning-audit-injection.test.mjs
+        run: |
+          node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-isolated-integration.test.mjs tests/issue341-audit-fixture-integration.test.mjs tests/issue341-learning-audit-injection.test.mjs
+          if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
+            node --test tests/issue341-followup-218-staged-routing.test.mjs tests/issue341-followup-218-original-inputs.test.mjs
+          fi
 
       - name: Plan safe Node test scope from actual changed files
         id: node_scope
