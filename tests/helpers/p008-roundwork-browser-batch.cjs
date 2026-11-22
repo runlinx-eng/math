@@ -95,13 +95,13 @@ async function persistedField(page,key){
   const snap=window.mathLesson?.snapshot();
   const m=state.lessons?.[snap?.id]?.models?.[snap?.index];
   const value=key.split('.').reduce((o,k)=>o?.[k],m);
-  const touched=/^steps\\.\\d+\\.mark$/.test(key)?
+  const touched=/^steps[.][0-9]+[.]mark$/.test(key)?
    m?.steps?.[Number(key.split('.')[1])]?.touched:null;
   return {value,touched};
  },key);
 }
 async function field(page,key,value){
- const target=String(value),isMark=/^steps\\.\\d+\\.mark$/.test(key);
+ const target=String(value),isMark=/^steps[.][0-9]+[.]mark$/.test(key);
  for(let attempt=0;attempt<4;attempt++){
   const el=await control(page,'#extra-controls [data-xfield="'+key+'"]');
   if(await el.getAttribute('type')==='range')await moveRange(el,Number(value));
