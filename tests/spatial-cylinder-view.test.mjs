@@ -1,0 +1,21 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {buildCylinderSpace,CYLINDER_VERSION,CYLINDER_VIEW_KEY} from '../dist/spatial-cylinder-view.js';
+import {buildRelationshipSpace,RELATIONSHIP_VERSION} from '../dist/spatial-relationship.js';
+import {restoreNetworkCoordinates} from '../dist/spatial-global.js';
+import {parseView,LAYOUT_VERSION} from '../dist/spatial-model.js';
+const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
+const grade=JSON.parse(fs.readFileSync(new URL('../dist/data/grade-panorama-lite.json',import.meta.url)));
+test('v54 opt-in uses all real nodes and stable positions, preserving v53 and source',()=>{
+ const source=JSON.stringify(atlas),old=buildRelationshipSpace(atlas),before=JSON.stringify([...old.relationshipPositions]),world=buildCylinderSpace(atlas,grade);
+ assert.equal(RELATIONSHIP_VERSION,53);assert.equal(CYLINDER_VERSION,54);assert.equal(CYLINDER_VIEW_KEY,'math-explorer-network-cylinder-view-v1');
+ assert.equal(old.relationshipIds.size,537);assert.equal(world.relationshipIds.size,587);assert.equal(world.networkVersion,54);assert.equal(JSON.stringify(atlas),source);
+ assert.equal(JSON.stringify([...buildRelationshipSpace(atlas).relationshipPositions]),before);
+ for(const e of atlas.edges)assert.ok(world.nodes.get(e.topicId).position[1]>world.nodes.get(e.prerequisiteId).position[1]);
+ const position=[...world.nodes.values()].map(n=>n.position);
+ restoreNetworkCoordinates(world,54,'map',null);restoreNetworkCoordinates(world,54,'relations','node:'+atlas.nodes[0].id);
+ assert.ok([...world.nodes.values()].every((n,i)=>n.position===position[i]));
+ const raw={version:LAYOUT_VERSION,networkVersion:54,networkView:'oblique',position:[100,150,1000],target:[0,0,0],selected:'node:'+atlas.nodes[0].id,panels:[],cameraZoom:1,edgeDisplay:'outline',traceMode:'direct',overviewFilterVersion:1,structureMode:'off'};
+ assert.equal(parseView(raw,world).networkVersion,54);assert.equal(parseView(raw,world).structureMode,'off');assert.equal(parseView(raw,old).networkVersion,undefined);
+});

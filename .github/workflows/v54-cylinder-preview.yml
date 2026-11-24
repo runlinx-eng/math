@@ -1,0 +1,45 @@
+name: v54 cylinder visual preview
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'dist/spatial-cylinder*.js'
+      - 'scripts/verify_spatial_cylinder.cjs'
+      - '.github/workflows/v54-cylinder-preview.yml'
+permissions:
+  contents: read
+jobs:
+  cylinder-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify actual source layout
+        run: node --test tests/spatial-cylinder.test.mjs tests/spatial-cylinder-view.test.mjs
+      - name: Verify offline release pins
+        run: node scripts/ci-release-sync.mjs check
+      - name: Install existing browser toolchain
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+      - name: Real Chromium screenshots and v54 interactions
+        run: |
+          python3 scripts/server.py > /tmp/v54-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:43827/health >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/verify_spatial_cylinder.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v54-cylinder-preview-${{ github.event.pull_request.head.sha }}
+          path: verification/spatial-cylinder-v54
+          if-no-files-found: warn
