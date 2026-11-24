@@ -7,7 +7,7 @@ const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cyli
 const release='math-explorer-20261124-cylinder-v54-preview1';
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const ready=async(page,version,count)=>{
- await page.waitForFunction(({version,count})=>{const s=window.mathSpace?.snapshot();return s?.networkVersion===version&&s?.visibleNodes.length===count&&document.querySelector('#space-app')?.classList.contains('ready');},{version,count},{timeout:45000});
+ await page.waitForFunction(({version,count})=>{const loading=document.querySelector('#loading');if(loading&&!loading.hidden&&loading.querySelector('h1'))throw Error('Map startup failed: '+loading.innerText);const s=window.mathSpace?.snapshot();return s?.networkVersion===version&&s?.visibleNodes.length===count&&document.querySelector('#space-app')?.classList.contains('ready');},{version,count},{timeout:45000});
  return page.evaluate(()=>window.mathSpace.snapshot());
 };
 (async()=>{

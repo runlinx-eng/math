@@ -3,7 +3,7 @@ export function createCylinderVisuals(THREE,space,nodeList){
  const layout=space.cylinderLayout,group=new THREE.Group(),offset=space.cylinderOffset,scale=layout.diagnostics.radialScale;
  group.name='v54-cylinder-visuals';
  const V=a=>new THREE.Vector3(...a);
- const c=document.createElement('canvas');c.width=c.height=64;const ctx=c.getContext('2d'),g=ctx.createRadialGradient(32,32,0,32,32);
+ const c=document.createElement('canvas');c.width=c.height=64;const ctx=c.getContext('2d'),g=ctx.createRadialGradient(32,32,0,32,32,32);
  g.addColorStop(0,'rgba(255,255,255,.9)');g.addColorStop(.24,'rgba(255,255,255,.54)');g.addColorStop(.58,'rgba(255,255,255,.10)');g.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
  const texture=new THREE.CanvasTexture(c);
  const glowMesh=new THREE.InstancedMesh(new THREE.PlaneGeometry(2,2),new THREE.MeshBasicMaterial({map:texture,color:0xffffff,transparent:true,opacity:.43,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}),nodeList.length);
