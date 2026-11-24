@@ -26,14 +26,28 @@
   canvas {
     position: fixed; inset: 0; width: 100%; height: 100%;
     cursor: grab;
+    transition: filter 0.24s ease, opacity 0.24s ease;
   }
   canvas:active { cursor: grabbing; }
+  body.learn-fg canvas {
+    filter: brightness(0.46) blur(2.6px) saturate(0.82);
+  }
+  body.learn-fg .sidebar,
+  body.learn-fg .bottom-hud {
+    filter: brightness(0.55) blur(1.4px);
+    opacity: 0.45;
+    transition: filter 0.24s ease, opacity 0.24s ease;
+  }
+  body.learn-fg .sidebar:hover {
+    filter: none; opacity: 0.96;
+  }
 
   /* Left Control Panel (matches user's app style) */
   .sidebar {
     position: fixed; top: 22px; left: 24px; width: 236px;
     z-index: 10; pointer-events: auto;
     display: flex; flex-direction: column; gap: 16px;
+    transition: filter 0.24s ease, opacity 0.24s ease;
   }
   .brand h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.5px; }
   .brand .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
@@ -155,12 +169,262 @@
   .insp-links .post { color: #ffd085; }
   .insp-links .think { color: #d5b4ff; }
   .insp-hint { font-size: 11px; color: var(--muted); margin-top: 8px; }
+  .insp-cta {
+    margin-top: 10px; width: 100%; padding: 9px 14px; border-radius: 10px;
+    border: none; cursor: pointer; font-size: 13px; font-weight: 600;
+    background: #eef3ff; color: #0b101d; transition: all 0.16s ease;
+  }
+  .insp-cta:hover { background: #ffffff; transform: translateY(-1px); }
+  body.learn-open .inspector {
+    right: auto; left: 276px; bottom: 64px;
+  }
+
+  /* Focus Hint Pill when 3D is dimmed behind Learning Panel */
+  .bg-focus-badge {
+    position: fixed; left: 276px; top: 22px;
+    z-index: 11; padding: 6px 13px; border-radius: 999px;
+    background: rgba(12, 16, 28, 0.78); border: 1px solid rgba(255,255,255,0.16);
+    color: #c8d5ee; font-size: 12px; backdrop-filter: blur(8px);
+    pointer-events: none; opacity: 0; transition: opacity 0.22s ease;
+  }
+  body.learn-fg .bg-focus-badge { opacity: 0.94; }
+
+  /* =========================================================
+     Right Learning Panel: 3-Layer Fixed Shell + 4-Beat Flow
+     ========================================================= */
+  .learn-panel {
+    position: fixed; top: 18px; right: 20px; bottom: 18px;
+    width: min(560px, calc(100vw - 320px)); min-width: 390px;
+    z-index: 30; display: flex; flex-direction: column;
+    background: rgba(13, 18, 30, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 22px;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.68), 0 0 0 1px rgba(120, 165, 255, 0.08);
+    backdrop-filter: blur(22px);
+    transform: translateX(calc(100% + 40px));
+    opacity: 0; pointer-events: none;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, border-color 0.2s ease;
+    overflow: hidden;
+  }
+  body.learn-open .learn-panel {
+    transform: translateX(0); opacity: 1; pointer-events: auto;
+  }
+  body.learn-open.learn-bg .learn-panel {
+    opacity: 0.64; border-color: rgba(255,255,255,0.08);
+    filter: saturate(0.72);
+  }
+  body.learn-open.learn-bg .learn-panel:hover {
+    opacity: 0.86;
+  }
+  .top-bar { transition: right 0.26s ease; }
+  body.learn-open .top-bar {
+    right: calc(min(560px, calc(100vw - 320px)) + 36px);
+  }
+
+  /* Layer 1: Sticky Top Shell */
+  .lp-top {
+    flex-shrink: 0; padding: 14px 18px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+    background: rgba(18, 24, 40, 0.78);
+  }
+  .lp-top-row { display: flex; align-items: center; gap: 9px; }
+  .lp-title { font-size: 16px; font-weight: 600; color: #fff; }
+  .lp-grade {
+    font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    background: rgba(255,255,255,0.08); color: #c4d0e6;
+  }
+  .lp-qdots { display: flex; align-items: center; gap: 5px; margin-left: 4px; }
+  .lp-qdot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(255,255,255,0.18); transition: all 0.2s;
+  }
+  .lp-qdot.done { background: #5ee6a0; }
+  .lp-qdot.now { background: #82b8ff; width: 18px; border-radius: 999px; }
+  .lp-top-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .lp-mini-btn {
+    padding: 5px 10px; border-radius: 999px; font-size: 11.5px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11);
+    color: #cfd8ea; cursor: pointer; transition: all 0.15s;
+  }
+  .lp-mini-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .lp-mini-btn.saved { border-color: rgba(255,210,110,0.55); color: #ffe39e; background: rgba(255,200,90,0.14); }
+  .lp-close {
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05); color: #cfd8ea; cursor: pointer; font-size: 15px;
+    display: grid; place-items: center;
+  }
+  .lp-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+  /* 4-Beat Unified Flow Rail */
+  .lp-flow {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+    margin-top: 11px;
+  }
+  .lp-beat {
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 5px 6px; border-radius: 8px; font-size: 11.5px;
+    color: #7c88a1; background: rgba(255,255,255,0.03);
+    border: 1px solid transparent; transition: all 0.18s;
+  }
+  .lp-beat.active {
+    color: #eaf2ff; background: rgba(78, 140, 255, 0.20);
+    border-color: rgba(110, 175, 255, 0.44); font-weight: 500;
+  }
+  .lp-beat.done {
+    color: #7de8b2; background: rgba(65, 200, 130, 0.11);
+  }
+
+  /* Layer 2: Fluid Main Stage (Single Scroll Region) */
+  .lp-stage {
+    flex: 1; overflow-y: auto; padding: 18px 20px 20px;
+    display: flex; flex-direction: column; gap: 15px;
+  }
+  .lp-prompt { font-size: 15.5px; line-height: 1.55; color: #f2f6ff; font-weight: 500; }
+  .lp-prompt-sub { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .lp-guess-box {
+    padding: 12px 14px; border-radius: 14px;
+    background: rgba(120, 165, 255, 0.09); border: 1px solid rgba(120, 165, 255, 0.28);
+  }
+  .lp-guess-title { font-size: 12.5px; color: #cfe2ff; margin-bottom: 9px; }
+  .lp-guess-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lp-guess-chip {
+    padding: 6px 14px; border-radius: 999px; font-size: 13px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    color: #dce6f8; cursor: pointer; transition: all 0.15s;
+  }
+  .lp-guess-chip:hover { background: rgba(255,255,255,0.12); }
+  .lp-guess-chip.picked {
+    background: #eef3ff; color: #0c1220; border-color: transparent; font-weight: 600;
+  }
+
+  /* Manipulative Stage (#work) */
+  .lp-work {
+    padding: 16px; border-radius: 16px;
+    background: rgba(8, 12, 22, 0.72); border: 1px solid rgba(255,255,255,0.10);
+    display: flex; flex-direction: column; gap: 14px;
+    transition: opacity 0.18s ease;
+  }
+  .lp-work.locked { opacity: 0.42; pointer-events: none; }
+  .frac-row-label {
+    display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px;
+  }
+  .frac-bar {
+    display: flex; height: 46px; border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.03);
+  }
+  .frac-cell {
+    flex: 1; border-right: 1px solid rgba(255,255,255,0.16);
+    display: grid; place-items: center; font-size: 12px; color: rgba(255,255,255,0.55);
+    cursor: pointer; transition: background 0.15s ease;
+  }
+  .frac-cell:last-child { border-right: none; }
+  .frac-cell.ref-on { background: rgba(94, 203, 255, 0.36); color: #e8f8ff; cursor: default; }
+  .frac-cell.user-on { background: rgba(78, 140, 255, 0.68); color: #fff; font-weight: 600; }
+  .frac-cell:not(.ref-on):hover { background: rgba(78, 140, 255, 0.24); }
+  .split-bar { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+
+  /* Area Grid Manipulative */
+  .grid-board {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    max-width: 248px; margin: 0 auto; width: 100%;
+  }
+  .grid-tile {
+    aspect-ratio: 1; border-radius: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+    cursor: pointer; transition: all 0.14s ease;
+    display: grid; place-items: center; font-size: 12px; color: rgba(255,255,255,0.35);
+  }
+  .grid-tile:hover { background: rgba(94, 203, 255, 0.16); }
+  .grid-tile.on {
+    background: rgba(94, 203, 255, 0.58); border-color: #8ee0ff; color: #fff; font-weight: 600;
+    box-shadow: 0 0 14px rgba(94, 203, 255, 0.35);
+  }
+
+  /* On-Demand Check Feedback Card */
+  .lp-feedback {
+    padding: 12px 14px; border-radius: 14px; font-size: 13px; line-height: 1.55;
+    display: none;
+  }
+  .lp-feedback.visible { display: block; }
+  .lp-feedback.ok {
+    background: rgba(52, 205, 130, 0.12); border: 1px solid rgba(85, 225, 155, 0.38); color: #d5f9e6;
+  }
+  .lp-feedback.err {
+    background: rgba(245, 125, 130, 0.12); border: 1px solid rgba(245, 135, 145, 0.38); color: #ffd9dc;
+  }
+  .lp-feedback-title { font-weight: 600; margin-bottom: 3px; }
+
+  /* On-Demand Beat 4 Discovery Card */
+  .lp-reflect {
+    padding: 13px 14px; border-radius: 14px;
+    background: rgba(167, 139, 250, 0.10); border: 1px solid rgba(167, 139, 250, 0.32);
+    display: none; flex-direction: column; gap: 9px;
+  }
+  .lp-reflect.visible { display: flex; }
+  .lp-reflect textarea {
+    width: 100%; min-height: 62px; resize: vertical; border-radius: 10px;
+    background: rgba(8, 12, 22, 0.72); border: 1px solid rgba(255,255,255,0.14);
+    color: #eef3ff; padding: 9px 11px; font-size: 13px; font-family: inherit;
+    outline: none;
+  }
+  .lp-reflect textarea:focus { border-color: rgba(167, 139, 250, 0.65); }
+  .lp-quick-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .lp-quick-chip {
+    font-size: 11.5px; padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    color: #d6dff2; cursor: pointer;
+  }
+  .lp-quick-chip:hover { background: rgba(255,255,255,0.14); }
+
+  /* Layer 3: Sticky Bottom Command Dock */
+  .lp-dock {
+    position: relative; flex-shrink: 0; padding: 12px 18px;
+    border-top: 1px solid rgba(255,255,255,0.09);
+    background: rgba(16, 22, 36, 0.94);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .lp-more-btn {
+    padding: 8px 13px; border-radius: 10px; font-size: 12.5px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    color: #cfd8ea; cursor: pointer; transition: all 0.15s;
+  }
+  .lp-more-btn:hover, .lp-more-btn.open { background: rgba(255,255,255,0.13); color: #fff; }
+  .lp-primary-btn {
+    padding: 9px 22px; border-radius: 12px; font-size: 13.5px; font-weight: 600;
+    border: none; cursor: pointer; background: #eef3ff; color: #0a101d;
+    transition: all 0.16s ease; min-width: 152px;
+  }
+  .lp-primary-btn:hover:not(:disabled) { background: #ffffff; transform: translateY(-1px); }
+  .lp-primary-btn:disabled {
+    background: rgba(255,255,255,0.09); color: rgba(255,255,255,0.38); cursor: not-allowed;
+  }
+  .lp-primary-btn.pass-btn { background: #6ce8a9; color: #072215; }
+  .lp-primary-btn.pass-btn:hover { background: #8bf3bd; }
+
+  /* Upward More Drawer */
+  .lp-drawer {
+    position: absolute; left: 16px; right: 16px; bottom: 64px;
+    background: rgba(14, 19, 32, 0.97); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px; padding: 14px 16px;
+    box-shadow: 0 -16px 40px rgba(0,0,0,0.62);
+    display: none; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto;
+  }
+  .lp-drawer.open { display: flex; }
+  .lp-drawer-sec { font-size: 12px; color: #cbd6eb; line-height: 1.5; }
+  .lp-drawer-sec h4 { font-size: 11px; color: var(--muted); margin-bottom: 5px; font-weight: 500; }
+  .lp-rel-chip {
+    display: inline-block; margin: 2px 6px 2px 0; padding: 3px 9px; border-radius: 999px;
+    background: rgba(124,226,255,0.12); border: 1px solid rgba(124,226,255,0.3);
+    color: #a6ecff; font-size: 11.5px; cursor: pointer;
+  }
+  .lp-rel-chip:hover { background: rgba(124,226,255,0.24); }
 
   /* Bottom HUD */
   .bottom-hud {
     position: fixed; left: 24px; right: 24px; bottom: 18px;
     display: flex; align-items: center; justify-content: space-between;
     z-index: 10; pointer-events: none; font-size: 12px; color: var(--muted);
+    transition: filter 0.24s ease, opacity 0.24s ease;
   }
   .hud-pill {
     pointer-events: auto;
@@ -243,8 +507,64 @@
     <div class="coord-box"><div class="coord-k">R 径向层级</div><div class="coord-v" id="inspR">0.0</div></div>
   </div>
   <div class="insp-links" id="inspLinks"></div>
+  <button class="insp-cta" id="inspStartBtn" style="display:none;">开始学习这个概念 →</button>
   <div class="insp-hint" id="inspHint">点击节点锁定完整上游前置链 · 点击空白处解除</div>
 </div>
+
+<!-- Background Focus Hint -->
+<div class="bg-focus-badge">3D 空间已退为背景 · 点击左侧任意处可切回查前置</div>
+
+<!-- Right Learning Panel (3-Layer Fixed Shell + 4-Beat Unified Flow) -->
+<section class="learn-panel" id="learnPanel" aria-label="学习工作台">
+  <!-- Layer 1: Sticky Top Shell -->
+  <header class="lp-top">
+    <div class="lp-top-row">
+      <span class="dot" id="lpDot"></span>
+      <span class="lp-title" id="lpTitle">分数的基本性质</span>
+      <span class="lp-grade" id="lpGrade">5—6年级</span>
+      <div class="lp-qdots" id="lpQdots"></div>
+      <div class="lp-top-actions">
+        <button class="lp-mini-btn" id="lpLaterBtn">留到下次</button>
+        <button class="lp-close" id="lpCloseBtn" title="收起学习面板">×</button>
+      </div>
+    </div>
+    <div class="lp-flow" id="lpFlow">
+      <div class="lp-beat" data-beat="1">① 看清问题</div>
+      <div class="lp-beat" data-beat="2">② 动手尝试</div>
+      <div class="lp-beat" data-beat="3">③ 检查验证</div>
+      <div class="lp-beat" data-beat="4">④ 记下发现</div>
+    </div>
+  </header>
+
+  <!-- Layer 2: Fluid Main Stage -->
+  <div class="lp-stage" id="lpStage">
+    <div>
+      <div class="lp-prompt" id="lpPrompt"></div>
+      <div class="lp-prompt-sub" id="lpPromptSub"></div>
+    </div>
+    <div class="lp-guess-box" id="lpGuessBox" style="display:none;">
+      <div class="lp-guess-title" id="lpGuessTitle">先凭直觉猜一下（确认后解锁下方教具）：</div>
+      <div class="lp-guess-opts" id="lpGuessOpts"></div>
+    </div>
+    <div class="lp-work" id="lpWork"></div>
+    <div class="lp-feedback" id="lpFeedback">
+      <div class="lp-feedback-title" id="lpFeedbackTitle"></div>
+      <div id="lpFeedbackBody"></div>
+    </div>
+    <div class="lp-reflect" id="lpReflect">
+      <div style="font-size:12.5px;color:#dfd4ff;font-weight:500;">用一句话记下你刚才的发现（保存后点亮 3D 节点足迹环）：</div>
+      <div class="lp-quick-chips" id="lpQuickChips"></div>
+      <textarea id="lpReflectInput" placeholder="写下你的想法，或点上方短句快速填入…"></textarea>
+    </div>
+  </div>
+
+  <!-- Layer 3: Sticky Bottom Command Dock -->
+  <footer class="lp-dock">
+    <div class="lp-drawer" id="lpDrawer"></div>
+    <button class="lp-more-btn" id="lpMoreBtn">☰ 更多</button>
+    <button class="lp-primary-btn" id="lpPrimaryBtn">动手试试后再检查</button>
+  </footer>
+</section>
 
 <!-- Bottom HUD -->
 <div class="bottom-hud">
@@ -978,6 +1298,9 @@
   // Mouse Orbit / Zoom / Hover / Click
   let isDragging = false, dragMoved = false, lastX = 0, lastY = 0, mouseX = -999, mouseY = -999;
   canvas.addEventListener('mousedown', e => {
+    if (learnState.open && learnState.focus === 'learn') {
+      setFocusLayer('space');
+    }
     isDragging = true; dragMoved = false; lastX = e.clientX; lastY = e.clientY;
   });
   window.addEventListener('mousemove', e => {
@@ -1041,6 +1364,7 @@
         return `<div style="margin-top:3px;"><span style="color:${t.color};">● ${t.name}</span> → <span style="color:#fff;">${sName}</span></div>`;
       }).join('');
       document.getElementById('inspLinks').innerHTML = `<div><b>5 大主题首站入口：</b></div>${entries}`;
+      document.getElementById('inspStartBtn').style.display = 'none';
       document.getElementById('inspHint').textContent = '点击任意主题首站节点开始沿主线向上探索';
       inspEl.classList.add('visible');
       return;
@@ -1073,8 +1397,22 @@
       html += `<div style="color:#9cc2ff;margin-top:4px;"><b>已锁定完整上游前置链：</b>共 ${state.lockedUpstream.size} 个前置节点</div>`;
     }
     document.getElementById('inspLinks').innerHTML = html;
+    const startBtn = document.getElementById('inspStartBtn');
+    if (!n.isThinking) {
+      startBtn.style.display = 'block';
+      startBtn.dataset.nodeId = String(activeId);
+      if (learnState.open && learnState.nodeId === activeId) {
+        startBtn.textContent = '回到正在学习的这个概念 →';
+      } else if (learnState.open && learnState.nodeId !== activeId) {
+        startBtn.textContent = '切换去学这个概念 →';
+      } else {
+        startBtn.textContent = n.hasFootprint ? '继续学习这个概念 →' : '开始学习这个概念 →';
+      }
+    } else {
+      startBtn.style.display = 'none';
+    }
     document.getElementById('inspHint').textContent = state.lockedId === activeId
-      ? '已锁定焦点 · 点击空白处或再次点击该节点解除'
+      ? '已锁定焦点 · 点上方按钮进入右侧学习工作台'
       : '点击节点锁定完整上游前置链';
     inspEl.classList.add('visible');
   }
@@ -1551,6 +1889,413 @@
     }
 
   }
+
+  // =========================================================
+  // 7. 学习面板框架（三层固定壳 + 四拍统一流程 + 前景/背景滤镜）
+  // =========================================================
+  const learnState = {
+    open: false,
+    focus: 'space', // 'learn' | 'space'
+    nodeId: -1,
+    qIndex: 0,
+    questions: [],
+    beat: 1,        // 1: 看清问题, 2: 动手尝试, 3: 检查验证, 4: 记下发现
+    guessPicked: null,
+    guessConfirmed: false,
+    fracDenom: 6,
+    fracShaded: new Set(),
+    gridCells: new Set(),
+    checkedResult: null, // null | { ok, title, body }
+    attempts: [],
+    savedForLater: false,
+    drawerOpen: false,
+    noteSaved: false
+  };
+
+  const learnPanelEl = document.getElementById('learnPanel');
+  const lpFlowEl = document.getElementById('lpFlow');
+  const lpPromptEl = document.getElementById('lpPrompt');
+  const lpPromptSubEl = document.getElementById('lpPromptSub');
+  const lpGuessBoxEl = document.getElementById('lpGuessBox');
+  const lpGuessOptsEl = document.getElementById('lpGuessOpts');
+  const lpWorkEl = document.getElementById('lpWork');
+  const lpFeedbackEl = document.getElementById('lpFeedback');
+  const lpReflectEl = document.getElementById('lpReflect');
+  const lpReflectInput = document.getElementById('lpReflectInput');
+  const lpPrimaryBtn = document.getElementById('lpPrimaryBtn');
+  const lpMoreBtn = document.getElementById('lpMoreBtn');
+  const lpDrawerEl = document.getElementById('lpDrawer');
+  const lpLaterBtn = document.getElementById('lpLaterBtn');
+
+  function setFocusLayer(layer) {
+    learnState.focus = layer;
+    document.body.classList.toggle('learn-open', learnState.open);
+    document.body.classList.toggle('learn-fg', learnState.open && layer === 'learn');
+    document.body.classList.toggle('learn-bg', learnState.open && layer === 'space');
+  }
+
+  function buildQuestionsForNode(n) {
+    const targetName = n.label;
+    return [
+      {
+        type: 'fraction',
+        needsGuess: false,
+        prompt: `用下面的分数纸带，拼出和 1/2 长度完全一样的等值分数（对应「${targetName}」）。`,
+        sub: '先选分成几等份，再点选涂色格；改动作品时旧反馈会立刻失效。',
+        refNum: 1, refDen: 2,
+        hint: '把 1/2 的每一份再平均分成同样多的小份，涂色份数与总份数同步翻倍。',
+        chips: ['分子分母同时乘 3，总长度不变', '分成 6 份时涂 3 份刚好和 1/2 对齐']
+      },
+      {
+        type: 'grid',
+        needsGuess: true,
+        guessTitle: '先留一个猜想：要在 4×4 方格里拼出面积为 6 个单位的图形，最少需要点亮几格？',
+        guessOptions: ['4 格', '6 格', '8 格'],
+        prompt: `动手验证你的猜想：在 4×4 方格板上构造一个面积恰好为 6 个单位的连续图形（对应「${targetName}」）。`,
+        sub: '确认猜想后下方教具自动解锁，点击格子即可摆出你想要的形状。',
+        targetArea: 6,
+        hint: '无论摆成长方形 2×3、L 形还是阶梯形，只要恰好点亮 6 个单位方格，面积就是 6。',
+        chips: ['形状可以不同，但单位方格数相同面积就相等', '先猜再验证能更快发现规律']
+      }
+    ];
+  }
+
+  function loadQuestion(idx) {
+    learnState.qIndex = idx;
+    const q = learnState.questions[idx];
+    learnState.beat = 1;
+    learnState.guessPicked = null;
+    learnState.guessConfirmed = !q.needsGuess;
+    learnState.fracDenom = 6;
+    learnState.fracShaded = new Set();
+    learnState.gridCells = new Set();
+    learnState.checkedResult = null;
+    learnState.noteSaved = false;
+    lpReflectInput.value = '';
+    renderLearningPanel();
+  }
+
+  function openLearningForNode(nodeId) {
+    const n = nodes[nodeId];
+    if (!n || n.isThinking) return;
+    const isSame = learnState.open && learnState.nodeId === nodeId;
+    learnState.open = true;
+    state.lockedId = nodeId;
+    state.lockedUpstream = getUpstreamChain(nodeId);
+    if (!isSame) {
+      learnState.nodeId = nodeId;
+      learnState.questions = buildQuestionsForNode(n);
+      learnState.attempts = [];
+      learnState.savedForLater = false;
+      learnState.drawerOpen = false;
+      loadQuestion(0);
+    }
+    setFocusLayer('learn');
+    updateInspector();
+  }
+
+  function invalidateOldFeedback() {
+    if (learnState.checkedResult) {
+      learnState.checkedResult = null;
+      learnState.beat = 2;
+    }
+  }
+
+  function renderLearningPanel() {
+    if (!learnState.open || learnState.nodeId < 0) return;
+    const n = nodes[learnState.nodeId];
+    const q = learnState.questions[learnState.qIndex];
+    const color = THEMES[n.theme].color;
+
+    // Layer 1: Top Shell
+    document.getElementById('lpDot').style.background = color;
+    document.getElementById('lpDot').style.boxShadow = `0 0 8px ${color}`;
+    document.getElementById('lpTitle').textContent = n.label;
+    document.getElementById('lpGrade').textContent = GRADE_NAMES[n.grade];
+    lpLaterBtn.classList.toggle('saved', learnState.savedForLater);
+    lpLaterBtn.textContent = learnState.savedForLater ? '✓ 已留到下次' : '留到下次';
+
+    const qdotsEl = document.getElementById('lpQdots');
+    qdotsEl.innerHTML = learnState.questions.map((_, i) => {
+      const cls = i < learnState.qIndex ? 'done' : (i === learnState.qIndex ? 'now' : '');
+      return `<span class="lp-qdot ${cls}"></span>`;
+    }).join('');
+
+    // 4-Beat Flow Rail
+    lpFlowEl.querySelectorAll('.lp-beat').forEach(el => {
+      const b = Number(el.dataset.beat);
+      el.classList.toggle('active', b === learnState.beat);
+      el.classList.toggle('done', b < learnState.beat);
+    });
+
+    // Layer 2: Prompt & Optional Guess Box
+    lpPromptEl.textContent = q.prompt;
+    lpPromptSubEl.textContent = q.sub;
+    if (q.needsGuess && !learnState.guessConfirmed) {
+      lpGuessBoxEl.style.display = 'block';
+      document.getElementById('lpGuessTitle').textContent = q.guessTitle;
+      lpGuessOptsEl.innerHTML = q.guessOptions.map(opt =>
+        `<button class="lp-guess-chip ${learnState.guessPicked === opt ? 'picked' : ''}" data-guess="${opt}">${opt}</button>`
+      ).join('');
+      lpGuessOptsEl.querySelectorAll('.lp-guess-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          learnState.guessPicked = btn.dataset.guess;
+          renderLearningPanel();
+        });
+      });
+    } else {
+      lpGuessBoxEl.style.display = 'none';
+    }
+
+    // Manipulative (#work)
+    lpWorkEl.classList.toggle('locked', !learnState.guessConfirmed);
+    if (q.type === 'fraction') {
+      const den = learnState.fracDenom;
+      const shadedCount = learnState.fracShaded.size;
+      let html = `<div><div class="frac-row-label"><span>参考纸带</span><span>${q.refNum} / ${q.refDen}</span></div><div class="frac-bar">`;
+      for (let i = 0; i < q.refDen; i++) {
+        html += `<div class="frac-cell ${i < q.refNum ? 'ref-on' : ''}">${i < q.refNum ? '1/2' : ''}</div>`;
+      }
+      html += `</div></div>`;
+      html += `<div class="split-bar"><span>你的纸带分成：</span>`;
+      [2, 4, 6, 8].forEach(d => {
+        html += `<button class="pill ${den === d ? 'active' : ''}" data-den="${d}">${d} 等份</button>`;
+      });
+      html += `<span style="margin-left:auto;color:#dce7fa;">已涂 ${shadedCount} / ${den}</span></div>`;
+      html += `<div class="frac-bar">`;
+      for (let i = 0; i < den; i++) {
+        const on = learnState.fracShaded.has(i);
+        html += `<div class="frac-cell ${on ? 'user-on' : ''}" data-fcell="${i}">${on ? `1/${den}` : ''}</div>`;
+      }
+      html += `</div>`;
+      lpWorkEl.innerHTML = html;
+      lpWorkEl.querySelectorAll('[data-den]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          learnState.fracDenom = Number(btn.dataset.den);
+          learnState.fracShaded.clear();
+          invalidateOldFeedback();
+          learnState.beat = 1;
+          renderLearningPanel();
+        });
+      });
+      lpWorkEl.querySelectorAll('[data-fcell]').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const idx = Number(cell.dataset.fcell);
+          if (learnState.fracShaded.has(idx)) learnState.fracShaded.delete(idx);
+          else learnState.fracShaded.add(idx);
+          invalidateOldFeedback();
+          learnState.beat = learnState.fracShaded.size > 0 ? 2 : 1;
+          renderLearningPanel();
+        });
+      });
+    } else {
+      const cnt = learnState.gridCells.size;
+      let html = `<div class="frac-row-label"><span>${learnState.guessPicked ? `你的猜想：${learnState.guessPicked}` : '点击方格点亮或取消'}</span><span style="color:#9ee3ff;">当前面积：${cnt} / ${q.targetArea} 格</span></div><div class="grid-board">`;
+      for (let i = 0; i < 16; i++) {
+        const on = learnState.gridCells.has(i);
+        html += `<div class="grid-tile ${on ? 'on' : ''}" data-gcell="${i}">${on ? '1' : ''}</div>`;
+      }
+      html += `</div>`;
+      lpWorkEl.innerHTML = html;
+      lpWorkEl.querySelectorAll('[data-gcell]').forEach(tile => {
+        tile.addEventListener('click', () => {
+          const idx = Number(tile.dataset.gcell);
+          if (learnState.gridCells.has(idx)) learnState.gridCells.delete(idx);
+          else learnState.gridCells.add(idx);
+          invalidateOldFeedback();
+          learnState.beat = learnState.gridCells.size > 0 ? 2 : 1;
+          renderLearningPanel();
+        });
+      });
+    }
+
+    // On-Demand Check Feedback
+    if (learnState.checkedResult) {
+      lpFeedbackEl.className = `lp-feedback visible ${learnState.checkedResult.ok ? 'ok' : 'err'}`;
+      document.getElementById('lpFeedbackTitle').textContent = learnState.checkedResult.title;
+      document.getElementById('lpFeedbackBody').textContent = learnState.checkedResult.body;
+    } else {
+      lpFeedbackEl.className = 'lp-feedback';
+    }
+
+    // On-Demand Beat 4 Discovery Reflection
+    const showReflect = learnState.beat === 4;
+    lpReflectEl.classList.toggle('visible', showReflect);
+    if (showReflect) {
+      const chipsEl = document.getElementById('lpQuickChips');
+      chipsEl.innerHTML = q.chips.map(c => `<button class="lp-quick-chip" data-chip="${c}">+ ${c}</button>`).join('');
+      chipsEl.querySelectorAll('.lp-quick-chip').forEach(b => {
+        b.addEventListener('click', () => {
+          lpReflectInput.value = b.dataset.chip;
+          learnState.noteSaved = false;
+          updatePrimaryButton();
+        });
+      });
+    }
+
+    // More Drawer content
+    lpMoreBtn.classList.toggle('open', learnState.drawerOpen);
+    lpDrawerEl.classList.toggle('open', learnState.drawerOpen);
+    if (learnState.drawerOpen) {
+      const attHtml = learnState.attempts.length
+        ? learnState.attempts.slice(-4).reverse().map(a => `<div>• ${a}</div>`).join('')
+        : '<div style="color:#7c88a1;">还没有提交检查记录</div>';
+      const preChips = n.inEdges.slice(0, 5).map(id =>
+        `<span class="lp-rel-chip" data-peek="${id}">${nodes[id].label}</span>`
+      ).join('') || '<span style="color:#7c88a1;">无直接前置</span>';
+      lpDrawerEl.innerHTML = `
+        <div class="lp-drawer-sec"><h4>可选想一想</h4><div>${q.hint}</div></div>
+        <div class="lp-drawer-sec"><h4>历史尝试 (${learnState.attempts.length})</h4>${attHtml}</div>
+        <div class="lp-drawer-sec"><h4>点击切回 3D 前景查看前置</h4><div>${preChips}</div></div>
+      `;
+      lpDrawerEl.querySelectorAll('[data-peek]').forEach(ch => {
+        ch.addEventListener('click', () => {
+          const pid = Number(ch.dataset.peek);
+          learnState.drawerOpen = false;
+          state.lockedId = pid;
+          state.lockedUpstream = getUpstreamChain(pid);
+          setFocusLayer('space');
+          updateInspector();
+          renderLearningPanel();
+        });
+      });
+    }
+
+    updatePrimaryButton();
+  }
+
+  function updatePrimaryButton() {
+    const q = learnState.questions[learnState.qIndex];
+    lpPrimaryBtn.classList.remove('pass-btn');
+    lpPrimaryBtn.disabled = false;
+
+    if (q.needsGuess && !learnState.guessConfirmed) {
+      lpPrimaryBtn.textContent = learnState.guessPicked ? '确认猜想并解锁教具' : '先点选一个猜想';
+      lpPrimaryBtn.disabled = !learnState.guessPicked;
+      return;
+    }
+    if (learnState.beat === 1) {
+      lpPrimaryBtn.textContent = '动手试试后再检查';
+      lpPrimaryBtn.disabled = true;
+    } else if (learnState.beat === 2) {
+      lpPrimaryBtn.textContent = '检查我的作品';
+    } else if (learnState.beat === 3) {
+      if (learnState.checkedResult?.ok) {
+        lpPrimaryBtn.textContent = '记下我的发现 →';
+        lpPrimaryBtn.classList.add('pass-btn');
+      } else {
+        lpPrimaryBtn.textContent = '修改作品后再检查';
+        lpPrimaryBtn.disabled = true;
+      }
+    } else if (learnState.beat === 4) {
+      const hasText = lpReflectInput.value.trim().length > 0;
+      if (hasText && !learnState.noteSaved) {
+        lpPrimaryBtn.textContent = '保存这条发现';
+        lpPrimaryBtn.classList.add('pass-btn');
+      } else if (learnState.qIndex < learnState.questions.length - 1) {
+        lpPrimaryBtn.textContent = '继续下一题 →';
+        lpPrimaryBtn.classList.add('pass-btn');
+      } else {
+        lpPrimaryBtn.textContent = '完成并返回 3D 空间';
+        lpPrimaryBtn.classList.add('pass-btn');
+      }
+    }
+  }
+
+  // Single Primary CTA state transitions
+  lpPrimaryBtn.addEventListener('click', () => {
+    const q = learnState.questions[learnState.qIndex];
+    const n = nodes[learnState.nodeId];
+    if (q.needsGuess && !learnState.guessConfirmed) {
+      learnState.guessConfirmed = true;
+      renderLearningPanel();
+      return;
+    }
+    if (learnState.beat === 2) {
+      let ok = false, title = '', body = '', summary = '';
+      if (q.type === 'fraction') {
+        const num = learnState.fracShaded.size, den = learnState.fracDenom;
+        ok = num * q.refDen === q.refNum * den && den !== q.refDen;
+        if (ok) {
+          title = `验证通过：${num}/${den} 与 1/2 长度完全相等`;
+          body = `你把纸带分成 ${den} 等份并涂了 ${num} 份，比例和 1/2 严格一致。`;
+        } else if (den === q.refDen && num === q.refNum) {
+          title = '再换一种分法试试';
+          body = '1/2 和原参考条分法相同，试着切换成 4、6 或 8 等份拼出新的等值分数。';
+        } else {
+          title = `还没对齐：当前是 ${num}/${den}`;
+          body = `对照上方 1/2 纸带看看，${num}/${den} ${num / den < 0.5 ? '偏短了一点' : '偏长了一点'}；直接改动格子再重新检查。`;
+        }
+        summary = `第 1 题：${num}/${den}（${ok ? '通过' : '待修改'}）`;
+      } else {
+        const cnt = learnState.gridCells.size;
+        ok = cnt === q.targetArea;
+        if (ok) {
+          title = `验证通过：面积正好是 ${cnt} 个单位方格`;
+          body = `你先猜了「${learnState.guessPicked}」，动手构造后确认了恰好需要 ${cnt} 个单位方格。`;
+        } else {
+          title = `面积还不一致：当前点亮了 ${cnt} 格`;
+          body = `目标是 ${q.targetArea} 格，现在${cnt < q.targetArea ? `还差 ${q.targetArea - cnt} 格` : `多了 ${cnt - q.targetArea} 格`}，直接点击方格调整。`;
+        }
+        summary = `第 2 题：面积 ${cnt} 格（${ok ? '通过' : '待修改'}）`;
+      }
+      learnState.attempts.push(summary);
+      learnState.checkedResult = { ok, title, body };
+      learnState.beat = 3;
+      renderLearningPanel();
+      return;
+    }
+    if (learnState.beat === 3 && learnState.checkedResult?.ok) {
+      learnState.beat = 4;
+      renderLearningPanel();
+      return;
+    }
+    if (learnState.beat === 4) {
+      const hasText = lpReflectInput.value.trim().length > 0;
+      if (hasText && !learnState.noteSaved) {
+        learnState.noteSaved = true;
+        n.hasFootprint = true; // Light up real footprint ring on 3D node!
+        learnState.attempts.push(`保存发现：${lpReflectInput.value.trim().slice(0, 22)}`);
+        renderLearningPanel();
+        return;
+      }
+      if (learnState.qIndex < learnState.questions.length - 1) {
+        loadQuestion(learnState.qIndex + 1);
+      } else {
+        n.hasFootprint = true;
+        learnState.open = false;
+        setFocusLayer('space');
+        updateInspector();
+      }
+    }
+  });
+
+  // Panel & Inspector wiring
+  document.getElementById('inspStartBtn').addEventListener('click', e => {
+    const id = Number(e.currentTarget.dataset.nodeId);
+    if (Number.isFinite(id) && id >= 0) openLearningForNode(id);
+  });
+  learnPanelEl.addEventListener('mousedown', () => {
+    if (learnState.open && learnState.focus !== 'learn') setFocusLayer('learn');
+  });
+  document.getElementById('lpCloseBtn').addEventListener('click', () => {
+    learnState.open = false;
+    learnState.drawerOpen = false;
+    setFocusLayer('space');
+    updateInspector();
+  });
+  lpLaterBtn.addEventListener('click', () => {
+    learnState.savedForLater = !learnState.savedForLater;
+    renderLearningPanel();
+  });
+  lpMoreBtn.addEventListener('click', () => {
+    learnState.drawerOpen = !learnState.drawerOpen;
+    renderLearningPanel();
+  });
+  lpReflectInput.addEventListener('input', () => {
+    learnState.noteSaved = false;
+    updatePrimaryButton();
+  });
 
   requestAnimationFrame(render);
 })();
