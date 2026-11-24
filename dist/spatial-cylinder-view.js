@@ -15,6 +15,17 @@ export function buildCylinderSpace(atlas,grade){
  space.relationshipIds=new Set(layout.nodes.map(n=>n.id));
  space.relationshipScaffold=new Set([...layout.spines.flatMap(s=>s.edges),...layout.bridges].map(e=>e.prerequisiteId+'>'+e.topicId));
  space.cylinderSpineIds=new Set(layout.spines.flatMap(s=>s.nodeIds));space.cylinderRoots=new Set(layout.diagnostics.roots);
+ // Two quiet real milestone labels per principal path, distributed by
+ // actual height rather than by synthetic names or graph rearrangement.
+ space.cylinderMilestoneIds=new Set();
+ for(const s of layout.spines.filter(s=>s.index===0)){
+   const ids=s.nodeIds,base=space.cylinderById.get(ids[0]).y,tip=space.cylinderById.get(ids.at(-1)).y;
+   for(const part of [.32,.82]){
+     const target=base+(tip-base)*part;
+     const id=ids.reduce((best,id)=>Math.abs(space.cylinderById.get(id).y-target)<Math.abs(space.cylinderById.get(best).y-target)?id:best,ids[0]);
+     space.cylinderMilestoneIds.add(id);
+   }
+ }
  for(const n of space.nodes.values()){
    const p=space.cylinderById.get(n.id);n.position=[p.position[0],p.y-offset,p.position[2]];
    n.color=p.thinking?'#e4dcff':PALETTE[n.themeId];

@@ -1393,3 +1393,33 @@ body[data-network-version="54"] .cylinder-reference-note{margin:4px 0 0;line-hei
 body[data-network-version="54"][data-map-focus="overview"] :is(.place-indicator,.space-intro){display:none}
 body[data-world="network"][data-network-version="54"] .tool-rail button[data-action="network-view"]{white-space:nowrap}
 @media(min-width:761px){body[data-world="network"][data-network-version="54"] #network-guide{top:112px}}
+
+/* v54 composition 4: actual atlas labels and contextual exploration cards.
+   Learning workspaces, v53 and mathematical activities retain their existing UI. */
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone{background:transparent;border:0;border-radius:0;box-shadow:none;min-height:21px;padding:2px 4px;gap:0;color:#aebed9;font-size:11px;line-height:17px;text-shadow:0 1px 4px #080d18,0 0 5px #080d18;font-weight:500;white-space:nowrap}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:17px}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone::before,body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone .activity-glyph{display:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.active-target):is(.selected,.hovered,.preview-target){background:#182743;border:1px solid #7da8e9;color:#eef4ff;box-shadow:0 0 0 1px #7da8e94d,0 0 12px #6ba3ff35;text-shadow:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.active-target){text-shadow:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.selected):not(.active-target):not(.hovered):not(.preview-target) .activity-glyph{display:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.selected):not(.active-target):not(.hovered):not(.preview-target){gap:4px}
+body[data-world="network"][data-network-version="54"] .label-tethers path{stroke:#748aaf;opacity:.25}
+body[data-world="network"][data-network-version="54"] #focus-card{background:#0e1523f5;border-color:#36435e;color:#dce7f8;scrollbar-color:#40516c transparent}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.focus-sticky,.focus-section-nav){background:#0e1523;border-color:#2e3b52}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.theme-overview-counts,.theme-pack-choice,.grade-node-position,.focus-filter,.grade-distribution,.relation-preview,.next-idea){background:#151f31;border-color:#2d3c56;color:#ccd8ee;box-shadow:none}
+body[data-world="network"][data-network-version="54"] #focus-card .theme-pack-choice{border-left-color:var(--object-color)}
+body[data-world="network"][data-network-version="54"] #focus-card .theme-pack-choice:hover{background:#1c2b46;border-color:#6988bf;border-left-color:var(--object-color)}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.theme-pack-title,.theme-overview-counts strong){color:#e5efff}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.theme-pack-question,.theme-pack-meta,.theme-thinking-count,.theme-overview-counts,.grade-node-stage-tag){color:#a8b9d5}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.grade-node-stage-tag,.focus-section-nav button,.focus-filter-button,.grade-stage-choice,.relation-button){background:#1a263a;color:#bfcfe8;border-color:#3c4e6c}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.grade-node-stage-tag[data-role="main"],.grade-stage-choice[aria-pressed="true"],.focus-filter-button[aria-pressed="true"],.focus-section-nav button[aria-pressed="true"]){background:#253e65;color:#e5efff;border-color:#6d92d0}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.grade-node-stage-tag[data-role="extension"],.grade-node-stage-tag[data-role="transition"]){background:#263349;color:#e3d3aa}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.focus-section-nav button,.focus-filter-button,.grade-stage-choice,.relation-button):hover{background:#263c60;color:#f0f5ff;border-color:#7295d0}
+body[data-world="network"][data-network-version="54"] #focus-card .grade-node-unresolved{background:#332c23;color:#f0ce93!important}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.network-relation,.focus-context-section,.relationship-key,.theme-overview-guide,.theme-overview-footnote){border-color:#2e3b52}
+body[data-world="network"][data-network-version="54"] #focus-card .network-relation:has(.relation-button:hover){background:#18243a}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.before,.relation-caption.before){color:#f3bb84}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.after,.relation-caption.after){color:#7ecdee}
+body[data-world="network"][data-network-version="54"] #focus-card :is(summary,.concept-explanation,.status-text,.relation-heading,.activity-glyph){color:#a9bfdf}
+body[data-world="network"][data-network-version="54"] #local-overview-exit{background:#17243a;border-color:#5c749e;color:#e4efff;box-shadow:0 4px 16px #0005}
+body[data-world="network"][data-network-version="54"] #local-overview-exit:hover{background:#243b5a}

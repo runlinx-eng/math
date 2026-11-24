@@ -4,13 +4,13 @@ export function createCylinderVisuals(THREE,space,nodeList){
  group.name='v54-cylinder-visuals';
  const V=a=>new THREE.Vector3(...a);
  const c=document.createElement('canvas');c.width=c.height=64;const ctx=c.getContext('2d'),g=ctx.createRadialGradient(32,32,0,32,32,32);
- g.addColorStop(0,'rgba(255,255,255,.9)');g.addColorStop(.24,'rgba(255,255,255,.54)');g.addColorStop(.58,'rgba(255,255,255,.10)');g.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
+ g.addColorStop(0,'rgba(255,255,255,.9)');g.addColorStop(.24,'rgba(255,255,255,.62)');g.addColorStop(.58,'rgba(255,255,255,.14)');g.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
  const texture=new THREE.CanvasTexture(c);
- const glowMesh=new THREE.InstancedMesh(new THREE.PlaneGeometry(2,2),new THREE.MeshBasicMaterial({map:texture,color:0xffffff,transparent:true,opacity:.36,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}),nodeList.length);
+ const glowMesh=new THREE.InstancedMesh(new THREE.PlaneGeometry(2,2),new THREE.MeshBasicMaterial({map:texture,color:0xffffff,transparent:true,opacity:.47,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}),nodeList.length);
  const diamond=new THREE.PlaneGeometry(1.42,1.42);diamond.rotateZ(Math.PI/4);
  const thinkingMesh=new THREE.InstancedMesh(diamond,new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide,fog:false}),nodeList.length);
  glowMesh.frustumCulled=false;thinkingMesh.frustumCulled=false;glowMesh.renderOrder=1;group.add(glowMesh,thinkingMesh);
- const milestoneMesh=new THREE.InstancedMesh(new THREE.RingGeometry(.83,1,32),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.72,depthWrite:false,side:THREE.DoubleSide,fog:false}),nodeList.length);
+ const milestoneMesh=new THREE.InstancedMesh(new THREE.RingGeometry(.78,1,32),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.80,depthWrite:false,side:THREE.DoubleSide,fog:false}),nodeList.length);
  milestoneMesh.frustumCulled=false;milestoneMesh.renderOrder=2;group.add(milestoneMesh);
  const guides=new THREE.Group();guides.name='decorative-cylinder-guides';group.add(guides);
  const line=(points,color,opacity,dashed=false)=>{
@@ -78,7 +78,7 @@ export function createCylinderVisuals(THREE,space,nodeList){
    const m=line(curve.getPoints(12),color,bridge?.21:.78,soft);m.name=bridge?'real-entry-bridge':'real-spine-edge';m.userData.edge={...e};accents.add(m);
    const pieces=[{mesh:m,opacity:bridge?.21:.78}];
    if(!soft){
-     for(const [radius,opacity] of [[1.5,bridge?.10:.48],[4.0,bridge?.035:.14]]){
+     for(const [radius,opacity] of [[1.85,bridge?.10:.58],[4.8,bridge?.035:.19]]){
        const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,12,radius,5,false),new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
        accents.add(tube);pieces.push({mesh:tube,opacity});
      }
@@ -105,12 +105,12 @@ export function createCylinderVisuals(THREE,space,nodeList){
    }
    const right=scene.basis().right;right.y=0;right.normalize();
    const px=Math.max(.001,scene.globalScale()),showRefs=scene.networkView!=='map'&&!scene.selected&&!scene.guideFocus&&!task;
-   for(const obj of guides.children)if(obj.userData.stage)obj.material.opacity=filtered?(obj.userData.stage===scene.gradeStageId?.29:.06):.14;
+   for(const obj of guides.children)if(obj.userData.stage)obj.material.opacity=filtered?(obj.userData.stage===scene.gradeStageId?.32:.06):.18;
    for(const {ref,sprite} of labels){
      sprite.visible=showRefs;
      sprite.position.copy(right).multiplyScalar(ref.r+8);sprite.position.y=ref.y-offset;
      sprite.scale.set(144/px,20/px,1);
-     sprite.material.opacity=filtered?(ref.id===scene.gradeStageId?.90:.25):.56;
+     sprite.material.opacity=filtered?(ref.id===scene.gradeStageId?.94:.30):.73;
    }
    guides.visible=!scene.guideFocus;flow.visible=!focus&&!filtered&&!task&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
  }

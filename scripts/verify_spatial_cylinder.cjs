@@ -6,8 +6,13 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261124-cylinder-v54-preview3';
+const release='math-explorer-20261124-cylinder-v54-preview4';
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
+const darkCard=async(page,selector)=>{
+ const el=page.locator(selector).first();await el.waitFor({state:'visible'});
+ const rgb=await el.evaluate(n=>getComputedStyle(n).backgroundColor.match(/[\d.]+/g).slice(0,3).map(Number));
+ assert.ok(rgb.length===3&&rgb.every(v=>v<80),selector+' must have a dark readable surface: '+rgb);
+};
 const ready=async(page,version,count)=>{
  await page.waitForFunction(({version,count})=>{const loading=document.querySelector('#loading');if(loading&&!loading.hidden&&loading.querySelector('h1'))throw Error('Map startup failed: '+loading.innerText);const s=window.mathSpace?.snapshot();return s?.networkVersion===version&&s?.visibleNodes.length===count&&document.querySelector('#space-app')?.classList.contains('ready');},{version,count},{timeout:45000});
  return page.evaluate(()=>window.mathSpace.snapshot());
@@ -36,6 +41,9 @@ const ready=async(page,version,count)=>{
        await page.goto(url(54));let first=await ready(page,54,587);
        const metadata=await page.evaluate(()=>window.mathSpace.cylinder());assert.equal(metadata.thinking.length,50);assert.equal(metadata.bridgeCount,5);assert.equal(metadata.sectors.length,5);assert.equal(metadata.thinkingCount,50);assert.deepEqual(metadata.domainCounts,{numbers:274,measure:88,data:65,space:76,patterns:34});
        assert.equal(first.counts.edges,1223);assert.equal(first.counts.nodes,587);
+       await page.locator('.space-label.cylinder-milestone:visible').first().waitFor();
+       const milestoneKeys=await page.locator('.space-label.cylinder-milestone:visible').evaluateAll(labels=>labels.map(el=>el.dataset.key.slice(5)));
+       assert.ok(milestoneKeys.length<=10&&milestoneKeys.every(id=>metadata.milestones.includes(id)));
        await page.screenshot({path:path.join(dir,width+'x'+height+'-overview.png')});
        {
          const camera=s=>({position:s.position,target:s.target,cameraZoom:s.cameraZoom});
@@ -50,6 +58,8 @@ const ready=async(page,version,count)=>{
          await page.waitForFunction(()=>window.mathSpace.snapshot().selected==='theme:numbers');
          const theme=await page.evaluate(()=>window.mathSpace.snapshot());assert.deepEqual(theme.positions,before.positions);assert.deepEqual(camera(theme),camera(before));assert.equal(theme.visibleNodes.length,587);
          await page.mouse.move(width-8,height-8);
+         await darkCard(page,'#focus-card .focus-sticky');await darkCard(page,'#focus-card .theme-pack-choice');
+         assert.match(await page.locator('#focus-card .theme-thinking-count').innerText(),/在中央思维轴核/);
          await page.screenshot({path:path.join(dir,'1920x1080-theme-numbers.png')});
          await page.locator('#network-legend [data-id="numbers"]').click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected);
          await page.mouse.move(width-8,height-8);
@@ -70,6 +80,7 @@ const ready=async(page,version,count)=>{
          await ready(page,54,587);
          await page.waitForFunction(id=>window.mathSpace.snapshot().selected==='node:'+id,id);
          assert.deepEqual((await page.evaluate(()=>window.mathSpace.snapshot())).positions,before.positions);
+         await darkCard(page,'#focus-card .focus-sticky');await darkCard(page,'#focus-card .grade-node-position');await darkCard(page,'#focus-card .focus-filter');
          await page.screenshot({path:path.join(dir,'1920x1080-focus.png')});
          await page.goto(url(54));await ready(page,54,587);
          await page.waitForFunction(async release=>{const c=navigator.serviceWorker.controller;if(!c||c.state!=='activated')return false;const cache=await caches.open(release);return !!(await cache.match(new URL('./spatial-cylinder-visuals.js',location.href)));},release,{timeout:90000});
