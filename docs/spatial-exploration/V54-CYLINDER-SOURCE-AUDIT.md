@@ -126,3 +126,139 @@ Y 轴约束覆盖全部 1,223 条内部源边，包括 143 条思维相关边。
 #379/#380 均仍为独立 Draft，触碰 space.js、spatial-scene.js、learn.html 等共享文件；#381 只增加视觉资料，不自动作为运行时代码。不要将旧 Draft 的整套星图和全屏学习方案直接叠加到本任务。现行 v53 规则及坐标必须保持。
 
 本环境通过 GitHub 连接器可读写，Node 与 Chromium 二进制存在，但 git ls-remote https://github.com/runlinx-eng/math.git HEAD 因 DNS 无法解析，且没有完整本地 checkout / gh。没有执行真实本地 Node/Chromium，也没有截图，未修改 dist、源数据、状态或测试门禁。本轮仅更新审计文档与已确认的实施细则。下一步在本地完整 checkout 接续 A 线 feat/spatial-cylinder-v54-20261124，先实现可独立 Node 测试的 v54 坐标生成器（4.1–4.4 与全部真实边不变量），验证算法后再接入 Three.js 运行界面；B 线从最新 main 单独建立工作区。若 main 前进，先核对新增变更与源数据指纹，再安全同步 A 线，不能重做或丢弃已确认的审计。集中实现并定向验收，不把 GitHub 写入或审计计算冒充完整应用测试。本轮不合并、不部署。
+
+## 7. A 线第一阶段：独立坐标生成器（2026-11-24）
+
+新增 `dist/spatial-cylinder.js`，仅作为独立纯函数，不接入现有 v53 场景、入口、SW 或学习存储；新增 `tests/spatial-cylinder.test.mjs`。用冻结的真实 atlas 和 grade 数据直接运行同一生成器及断言（GitHub 连接器读取完整 blob，JS 隔离执行环境，不是本地 Node 或 Chromium），结果如下：
+
+```json
+{
+  "checks": 174501,
+  "roots": 19,
+  "depth": 27,
+  "sectors": [
+    {
+      "theme": "numbers",
+      "width": 109.11
+    },
+    {
+      "theme": "measure",
+      "width": 61.84
+    },
+    {
+      "theme": "data",
+      "width": 53.15
+    },
+    {
+      "theme": "space",
+      "width": 57.47
+    },
+    {
+      "theme": "patterns",
+      "width": 38.44
+    }
+  ],
+  "spines": [
+    {
+      "theme": "numbers",
+      "root": "一一对应地数",
+      "edgeCount": 24,
+      "coverage": 262,
+      "newCoverage": 262,
+      "weight": 22.7
+    },
+    {
+      "theme": "numbers",
+      "root": "正数与负数",
+      "edgeCount": 2,
+      "coverage": 5,
+      "newCoverage": 3,
+      "weight": 2
+    },
+    {
+      "theme": "numbers",
+      "root": "比例推理的语言",
+      "edgeCount": 4,
+      "coverage": 13,
+      "newCoverage": 2,
+      "weight": 4
+    },
+    {
+      "theme": "measure",
+      "root": "物体有哪些可测量的量",
+      "edgeCount": 13,
+      "coverage": 56,
+      "newCoverage": 56,
+      "weight": 11.7
+    },
+    {
+      "theme": "data",
+      "root": "统计分析的语言",
+      "edgeCount": 6,
+      "coverage": 25,
+      "newCoverage": 25,
+      "weight": 5.35
+    },
+    {
+      "theme": "space",
+      "root": "平面图形",
+      "edgeCount": 15,
+      "coverage": 66,
+      "newCoverage": 66,
+      "weight": 13.7
+    },
+    {
+      "theme": "patterns",
+      "root": "找出重复的部分",
+      "edgeCount": 3,
+      "coverage": 4,
+      "newCoverage": 4,
+      "weight": 1.7
+    }
+  ],
+  "bridges": [
+    {
+      "from": "合起来就是加法",
+      "to": "寻找加法中的未知数",
+      "strength": "hard"
+    },
+    {
+      "from": "图案与排列规律",
+      "to": "找出重复的部分",
+      "strength": "hard"
+    },
+    {
+      "from": "运算顺序",
+      "to": "使用简单公式",
+      "strength": "hard"
+    },
+    {
+      "from": "认识加号、减号与等号",
+      "to": "等号表示什么",
+      "strength": "hard"
+    },
+    {
+      "from": "两步应用题",
+      "to": "求未知数",
+      "strength": "hard"
+    }
+  ],
+  "spacing": {
+    "rounds": 60,
+    "radialScale": 1.12,
+    "minimumCenterDistance": 14.777788754938353,
+    "minimumClearance": 0.2341741555778647,
+    "collisions": 0
+  },
+  "extension": {
+    "total": 61,
+    "aboveStage3Anchor": 58
+  },
+  "bounds": {
+    "radius": 488.2544097836044,
+    "height": 576
+  }
+}
+```
+
+逐对间距检查 587×586/2 = 171,991 对，使用本轮算法定义的几何节点半径及 7 世界单位安全距离；这是三维几何检查，不等于透视投影/标签无重叠或视觉验收。初始 Y 与最终 Y 分列；顶冠统计以第三学段初始软锚 Y=200 为参照，不代表全部小学节点均在其下方。下一步在完整 checkout 运行 Node 测试和预检，再接入 v54 专属场景/版本切换，完成真实 Chromium 多视口和离线回归。当前无完整本地 checkout，未运行 Node 项目测试、Chromium 或完整 CI；不改 v53、源数据、main、学习面板及备份。
