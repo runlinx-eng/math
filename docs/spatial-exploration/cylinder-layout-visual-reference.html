@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>数学探索 · 3D 圆柱星盘排布预览 (layout=54)</title>
+<style>
+  :root {
+    --bg: #07090f;
+    --panel: rgba(14, 18, 28, 0.78);
+    --border: rgba(255, 255, 255, 0.11);
+    --text: #e8edf7;
+    --muted: #8b95ab;
+    --pill-bg: rgba(255, 255, 255, 0.06);
+    --pill-active-bg: #eef2fa;
+    --pill-active-text: #0b0e17;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100%; height: 100%; overflow: hidden;
+    background: radial-gradient(circle at 56% 52%, #111728 0%, #07090f 68%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Noto Sans SC", sans-serif;
+    user-select: none;
+  }
+  canvas {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    cursor: grab;
+    transition: filter 0.24s ease, opacity 0.24s ease;
+  }
+  canvas:active { cursor: grabbing; }
+  body.learn-fg canvas {
+    filter: brightness(0.46) blur(2.6px) saturate(0.82);
+  }
+  body.learn-fg .sidebar,
+  body.learn-fg .bottom-hud {
+    filter: brightness(0.55) blur(1.4px);
+    opacity: 0.45;
+    transition: filter 0.24s ease, opacity 0.24s ease;
+  }
+  body.learn-fg .sidebar:hover {
+    filter: none; opacity: 0.96;
+  }
+
+  /* Left Control Panel (matches user's app style) */
+  .sidebar {
+    position: fixed; top: 22px; left: 24px; width: 236px;
+    z-index: 10; pointer-events: auto;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: filter 0.24s ease, opacity 0.24s ease;
+  }
+  .brand h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.5px; }
+  .brand .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .section-label {
+    font-size: 11px; color: var(--muted); letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+  .theme-list { display: flex; flex-direction: column; gap: 6px; }
+  .theme-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 5px 9px; border-radius: 999px; cursor: pointer;
+    font-size: 13px; color: #d5dceb;
+    border: 1px solid transparent;
+    transition: all 0.16s ease;
+  }
+  .theme-item:hover { background: rgba(255,255,255,0.06); }
+  .theme-item.active {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.22);
+    color: #fff;
+  }
+  .theme-item.dimmed { opacity: 0.42; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .theme-count {
+    margin-left: auto; font-size: 11px; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    padding: 5px 11px; border-radius: 999px; font-size: 12px;
+    background: var(--pill-bg); color: #cbd4e6;
+    border: 1px solid var(--border); cursor: pointer;
+    transition: all 0.16s ease;
+  }
+  .pill:hover { background: rgba(255,255,255,0.12); }
+  .pill.active {
+    background: var(--pill-active-bg); color: var(--pill-active-text);
+    border-color: transparent; font-weight: 500;
+  }
+
+  .toggle-list { display: flex; flex-direction: column; gap: 6px; }
+  .toggle-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 10px; border-radius: 10px; font-size: 12px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: #cfd8ea; cursor: pointer; transition: all 0.15s;
+  }
+  .toggle-btn:hover { background: rgba(255,255,255,0.08); }
+  .toggle-btn.on { border-color: rgba(110, 175, 255, 0.48); background: rgba(65, 130, 255, 0.14); color: #fff; }
+  .toggle-badge {
+    font-size: 10px; padding: 1px 6px; border-radius: 999px;
+    background: rgba(255,255,255,0.1);
+  }
+  .toggle-btn.on .toggle-badge { background: rgba(110, 175, 255, 0.32); color: #dcebff; }
+
+  /* Top-right mode switcher */
+  .top-bar {
+    position: fixed; top: 20px; right: 24px; z-index: 10;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .segmented {
+    display: flex; padding: 3px; border-radius: 999px;
+    background: var(--panel); border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .seg-btn {
+    padding: 6px 14px; border-radius: 999px; font-size: 12px;
+    color: #b7c2d9; cursor: pointer; transition: all 0.18s ease;
+    border: none; background: transparent;
+  }
+  .seg-btn.active {
+    background: var(--pill-active-bg); color: var(--pill-active-text); font-weight: 500;
+  }
+  .action-btn {
+    padding: 7px 13px; border-radius: 999px; font-size: 12px;
+    background: var(--panel); color: #d5dceb;
+    border: 1px solid var(--border); cursor: pointer;
+    backdrop-filter: blur(12px);
+  }
+  .action-btn:hover { background: rgba(255,255,255,0.12); }
+
+  /* Hover / Selected Inspector Card */
+  .inspector {
+    position: fixed; right: 24px; bottom: 68px; width: 296px;
+    z-index: 12; pointer-events: auto;
+    background: rgba(12, 16, 26, 0.88);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 16px; padding: 14px 16px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 18px 42px rgba(0,0,0,0.52);
+    display: none;
+  }
+  .inspector.visible { display: block; }
+  .insp-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .insp-title { font-size: 15px; font-weight: 600; color: #fff; }
+  .insp-tag {
+    margin-left: auto; font-size: 11px; padding: 2px 8px;
+    border-radius: 999px; background: rgba(255,255,255,0.09); color: #cbd5ea;
+  }
+  .insp-meta {
+    font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 10px;
+  }
+  .insp-coords {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    margin-bottom: 10px;
+  }
+  .coord-box {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px; padding: 5px 7px; text-align: center;
+  }
+  .coord-k { font-size: 10px; color: var(--muted); }
+  .coord-v { font-size: 12px; font-variant-numeric: tabular-nums; color: #e6eefc; margin-top: 2px; }
+  .insp-links { font-size: 12px; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; }
+  .insp-links b { color: #dce7fa; font-weight: 500; }
+  .insp-links .pre { color: #7ce2ff; }
+  .insp-links .post { color: #ffd085; }
+  .insp-links .think { color: #d5b4ff; }
+  .insp-hint { font-size: 11px; color: var(--muted); margin-top: 8px; }
+  .insp-cta {
+    margin-top: 10px; width: 100%; padding: 9px 14px; border-radius: 10px;
+    border: none; cursor: pointer; font-size: 13px; font-weight: 600;
+    background: #eef3ff; color: #0b101d; transition: all 0.16s ease;
+  }
+  .insp-cta:hover { background: #ffffff; transform: translateY(-1px); }
+  body.learn-open .inspector {
+    right: auto; left: 276px; bottom: 64px;
+  }
+
+  /* Focus Hint Pill when 3D is dimmed behind Learning Panel */
+  .bg-focus-badge {
+    position: fixed; left: 276px; top: 22px;
+    z-index: 11; padding: 6px 13px; border-radius: 999px;
+    background: rgba(12, 16, 28, 0.78); border: 1px solid rgba(255,255,255,0.16);
+    color: #c8d5ee; font-size: 12px; backdrop-filter: blur(8px);
+    pointer-events: none; opacity: 0; transition: opacity 0.22s ease;
+  }
+  body.learn-fg .bg-focus-badge { opacity: 0.94; }
+
+  /* =========================================================
+     Right Learning Panel: 3-Layer Fixed Shell + 4-Beat Flow
+     ========================================================= */
+  .learn-panel {
+    position: fixed; top: 18px; right: 20px; bottom: 18px;
+    width: min(560px, calc(100vw - 320px)); min-width: 390px;
+    z-index: 30; display: flex; flex-direction: column;
+    background: rgba(13, 18, 30, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 22px;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.68), 0 0 0 1px rgba(120, 165, 255, 0.08);
+    backdrop-filter: blur(22px);
+    transform: translateX(calc(100% + 40px));
+    opacity: 0; pointer-events: none;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, border-color 0.2s ease;
+    overflow: hidden;
+  }
+  body.learn-open .learn-panel {
+    transform: translateX(0); opacity: 1; pointer-events: auto;
+  }
+  body.learn-open.learn-bg .learn-panel {
+    opacity: 0.64; border-color: rgba(255,255,255,0.08);
+    filter: saturate(0.72);
+  }
+  body.learn-open.learn-bg .learn-panel:hover {
+    opacity: 0.86;
+  }
+  .top-bar { transition: right 0.26s ease; }
+  body.learn-open .top-bar {
+    right: calc(min(560px, calc(100vw - 320px)) + 36px);
+  }
+
+  /* Layer 1: Sticky Top Shell */
+  .lp-top {
+    flex-shrink: 0; padding: 14px 18px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+    background: rgba(18, 24, 40, 0.78);
+  }
+  .lp-top-row { display: flex; align-items: center; gap: 9px; }
+  .lp-title { font-size: 16px; font-weight: 600; color: #fff; }
+  .lp-grade {
+    font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    background: rgba(255,255,255,0.08); color: #c4d0e6;
+  }
+  .lp-qdots { display: flex; align-items: center; gap: 5px; margin-left: 4px; }
+  .lp-qdot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(255,255,255,0.18); transition: all 0.2s;
+  }
+  .lp-qdot.done { background: #5ee6a0; }
+  .lp-qdot.now { background: #82b8ff; width: 18px; border-radius: 999px; }
+  .lp-top-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .lp-mini-btn {
+    padding: 5px 10px; border-radius: 999px; font-size: 11.5px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11);
+    color: #cfd8ea; cursor: pointer; transition: all 0.15s;
+  }
+  .lp-mini-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .lp-mini-btn.saved { border-color: rgba(255,210,110,0.55); color: #ffe39e; background: rgba(255,200,90,0.14); }
+  .lp-close {
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05); color: #cfd8ea; cursor: pointer; font-size: 15px;
+    display: grid; place-items: center;
+  }
+  .lp-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+  /* 4-Beat Unified Flow Rail */
+  .lp-flow {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+    margin-top: 11px;
+  }
+  .lp-beat {
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 5px 6px; border-radius: 8px; font-size: 11.5px;
+    color: #7c88a1; background: rgba(255,255,255,0.03);
+    border: 1px solid transparent; transition: all 0.18s;
+  }
+  .lp-beat.active {
+    color: #eaf2ff; background: rgba(78, 140, 255, 0.20);
+    border-color: rgba(110, 175, 255, 0.44); font-weight: 500;
+  }
+  .lp-beat.done {
+    color: #7de8b2; background: rgba(65, 200, 130, 0.11);
+  }
+
+  /* Layer 2: Fluid Main Stage (Single Scroll Region) */
+  .lp-stage {
+    flex: 1; overflow-y: auto; padding: 18px 20px 20px;
+    display: flex; flex-direction: column; gap: 15px;
+  }
+  .lp-prompt { font-size: 15.5px; line-height: 1.55; color: #f2f6ff; font-weight: 500; }
+  .lp-prompt-sub { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .lp-guess-box {
+    padding: 12px 14px; border-radius: 14px;
+    background: rgba(120, 165, 255, 0.09); border: 1px solid rgba(120, 165, 255, 0.28);
+  }
+  .lp-guess-title { font-size: 12.5px; color: #cfe2ff; margin-bottom: 9px; }
+  .lp-guess-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lp-guess-chip {
+    padding: 6px 14px; border-radius: 999px; font-size: 13px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    color: #dce6f8; cursor: pointer; transition: all 0.15s;
+  }
+  .lp-guess-chip:hover { background: rgba(255,255,255,0.12); }
+  .lp-guess-chip.picked {
+    background: #eef3ff; color: #0c1220; border-color: transparent; font-weight: 600;
+  }
+
+  /* Manipulative Stage (#work) */
+  .lp-work {
+    padding: 16px; border-radius: 16px;
+    background: rgba(8, 12, 22, 0.72); border: 1px solid rgba(255,255,255,0.10);
+    display: flex; flex-direction: column; gap: 14px;
+    transition: opacity 0.18s ease;
+  }
+  .lp-work.locked { opacity: 0.42; pointer-events: none; }
+  .frac-row-label {
+    display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px;
+  }
+  .frac-bar {
+    display: flex; height: 46px; border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.03);
+  }
+  .frac-cell {
+    flex: 1; border-right: 1px solid rgba(255,255,255,0.16);
+    display: grid; place-items: center; font-size: 12px; color: rgba(255,255,255,0.55);
+    cursor: pointer; transition: background 0.15s ease;
+  }
+  .frac-cell:last-child { border-right: none; }
+  .frac-cell.ref-on { background: rgba(94, 203, 255, 0.36); color: #e8f8ff; cursor: default; }
+  .frac-cell.user-on { background: rgba(78, 140, 255, 0.68); color: #fff; font-weight: 600; }
+  .frac-cell:not(.ref-on):hover { background: rgba(78, 140, 255, 0.24); }
+  .split-bar { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+
+  /* Area Grid Manipulative */
+  .grid-board {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    max-width: 248px; margin: 0 auto; width: 100%;
+  }
+  .grid-tile {
+    aspect-ratio: 1; border-radius: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+    cursor: pointer; transition: all 0.14s ease;
+    display: grid; place-items: center; font-size: 12px; color: rgba(255,255,255,0.35);
+  }
+  .grid-tile:hover { background: rgba(94, 203, 255, 0.16); }
+  .grid-tile.on {
+    background: rgba(94, 203, 255, 0.58); border-color: #8ee0ff; color: #fff; font-weight: 600;
+    box-shadow: 0 0 14px rgba(94, 203, 255, 0.35);
+  }
+
+  /* On-Demand Check Feedback Card */
+  .lp-feedback {
+    padding: 12px 14px; border-radius: 14px; font-size: 13px; line-height: 1.55;
+    display: none;
+  }
+  .lp-feedback.visible { display: block; }
+  .lp-feedback.ok {
+    background: rgba(52, 205, 130, 0.12); border: 1px solid rgba(85, 225, 155, 0.38); color: #d5f9e6;
+  }
+  .lp-feedback.err {
+    background: rgba(245, 125, 130, 0.12); border: 1px solid rgba(245, 135, 145, 0.38); color: #ffd9dc;
+  }
+  .lp-feedback-title { font-weight: 600; margin-bottom: 3px; }
+
+  /* On-Demand Beat 4 Discovery Card */
+  .lp-reflect {
+    padding: 13px 14px; border-radius: 14px;
+    background: rgba(167, 139, 250, 0.10); border: 1px solid rgba(167, 139, 250, 0.32);
+    display: none; flex-direction: column; gap: 9px;
+  }
+  .lp-reflect.visible { display: flex; }
+  .lp-reflect textarea {
+    width: 100%; min-height: 62px; resize: vertical; border-radius: 10px;
+    background: rgba(8, 12, 22, 0.72); border: 1px solid rgba(255,255,255,0.14);
+    color: #eef3ff; padding: 9px 11px; font-size: 13px; font-family: inherit;
+    outline: none;
+  }
+  .lp-reflect textarea:focus { border-color: rgba(167, 139, 250, 0.65); }
+  .lp-quick-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .lp-quick-chip {
+    font-size: 11.5px; padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    color: #d6dff2; cursor: pointer;
+  }
+  .lp-quick-chip:hover { background: rgba(255,255,255,0.14); }
+
+  /* Layer 3: Sticky Bottom Command Dock */
+  .lp-dock {
+    position: relative; flex-shrink: 0; padding: 12px 18px;
+    border-top: 1px solid rgba(255,255,255,0.09);
+    background: rgba(16, 22, 36, 0.94);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .lp-more-btn {
+    padding: 8px 13px; border-radius: 10px; font-size: 12.5px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    color: #cfd8ea; cursor: pointer; transition: all 0.15s;
+  }
+  .lp-more-btn:hover, .lp-more-btn.open { background: rgba(255,255,255,0.13); color: #fff; }
+  .lp-primary-btn {
+    padding: 9px 22px; border-radius: 12px; font-size: 13.5px; font-weight: 600;
+    border: none; cursor: pointer; background: #eef3ff; color: #0a101d;
+    transition: all 0.16s ease; min-width: 152px;
+  }
+  .lp-primary-btn:hover:not(:disabled) { background: #ffffff; transform: translateY(-1px); }
+  .lp-primary-btn:disabled {
+    background: rgba(255,255,255,0.09); color: rgba(255,255,255,0.38); cursor: not-allowed;
+  }
+  .lp-primary-btn.pass-btn { background: #6ce8a9; color: #072215; }
+  .lp-primary-btn.pass-btn:hover { background: #8bf3bd; }
+
+  /* Upward More Drawer */
+  .lp-drawer {
+    position: absolute; left: 16px; right: 16px; bottom: 64px;
+    background: rgba(14, 19, 32, 0.97); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px; padding: 14px 16px;
+    box-shadow: 0 -16px 40px rgba(0,0,0,0.62);
+    display: none; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto;
+  }
+  .lp-drawer.open { display: flex; }
+  .lp-drawer-sec { font-size: 12px; color: #cbd6eb; line-height: 1.5; }
+  .lp-drawer-sec h4 { font-size: 11px; color: var(--muted); margin-bottom: 5px; font-weight: 500; }
+  .lp-rel-chip {
+    display: inline-block; margin: 2px 6px 2px 0; padding: 3px 9px; border-radius: 999px;
+    background: rgba(124,226,255,0.12); border: 1px solid rgba(124,226,255,0.3);
+    color: #a6ecff; font-size: 11.5px; cursor: pointer;
+  }
+  .lp-rel-chip:hover { background: rgba(124,226,255,0.24); }
+
+  /* Bottom HUD */
+  .bottom-hud {
+    position: fixed; left: 24px; right: 24px; bottom: 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 10; pointer-events: none; font-size: 12px; color: var(--muted);
+    transition: filter 0.24s ease, opacity 0.24s ease;
+  }
+  .hud-pill {
+    pointer-events: auto;
+    padding: 6px 12px; border-radius: 999px;
+    background: var(--panel); border: 1px solid var(--border);
+    backdrop-filter: blur(10px); color: #c7d1e6;
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+
+<!-- Left Sidebar -->
+<aside class="sidebar">
+  <div class="brand">
+    <h1>数学探索</h1>
+    <div class="sub">视觉方向参考（模拟图谱）· 537 概念 · 50 思维 · 1,223 边</div>
+  </div>
+
+  <div>
+    <div class="section-label">主题 · 点击聚焦（留影不重排）</div>
+    <div class="theme-list" id="themeList"></div>
+  </div>
+
+  <div>
+    <div class="section-label">学段观察</div>
+    <div class="pill-row" id="gradePills">
+      <button class="pill active" data-grade="-1">全部</button>
+      <button class="pill" data-grade="0">1—2年级</button>
+      <button class="pill" data-grade="1">3—4年级</button>
+      <button class="pill" data-grade="2">5—6年级</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">视图选项</div>
+    <div class="toggle-list">
+      <button class="toggle-btn on" id="btnSpines">
+        <span>5 主题引导主线</span><span class="toggle-badge">开</span>
+      </button>
+      <button class="toggle-btn on" id="btnThinking">
+        <span>50 思维中轴</span><span class="toggle-badge">开</span>
+      </button>
+      <button class="toggle-btn" id="btnCrossEdges">
+        <span>全景跨主题弧线</span><span class="toggle-badge">关</span>
+      </button>
+      <button class="toggle-btn on" id="btnRings">
+        <span>学段柱面参考环</span><span class="toggle-badge">开</span>
+      </button>
+      <button class="toggle-btn" id="btnAutoRotate">
+        <span>缓慢公转</span><span class="toggle-badge">关</span>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- Top-right Layout Comparison Switcher -->
+<div class="top-bar">
+  <div class="segmented">
+    <button class="seg-btn active" id="modeCylinder">圆柱星盘 (layout=54)</button>
+    <button class="seg-btn" id="modeHairball">对比：原力导向团块 (layout=53)</button>
+  </div>
+  <button class="action-btn" id="btnOrigin" style="border-color:rgba(255,214,120,0.45);color:#ffe4a3;">✦ 回到起点</button>
+  <button class="action-btn" id="btnResetCam">重置视角</button>
+</div>
+
+<!-- Hover / Selected Node Inspector -->
+<div class="inspector" id="inspector">
+  <div class="insp-head">
+    <span class="dot" id="inspDot"></span>
+    <span class="insp-title" id="inspTitle">概念名称</span>
+    <span class="insp-tag" id="inspTag">5—6年级</span>
+  </div>
+  <div class="insp-meta" id="inspMeta"></div>
+  <div class="insp-coords">
+    <div class="coord-box"><div class="coord-k">Y 认知海拔</div><div class="coord-v" id="inspY">0.0</div></div>
+    <div class="coord-box"><div class="coord-k">θ 扇区方位</div><div class="coord-v" id="inspTheta">0°</div></div>
+    <div class="coord-box"><div class="coord-k">R 径向层级</div><div class="coord-v" id="inspR">0.0</div></div>
+  </div>
+  <div class="insp-links" id="inspLinks"></div>
+  <button class="insp-cta" id="inspStartBtn" style="display:none;">开始学习这个概念 →</button>
+  <div class="insp-hint" id="inspHint">点击节点锁定完整上游前置链 · 点击空白处解除</div>
+</div>
+
+<!-- Background Focus Hint -->
+<div class="bg-focus-badge">3D 空间已退为背景 · 点击左侧任意处可切回查前置</div>
+
+<!-- Right Learning Panel (3-Layer Fixed Shell + 4-Beat Unified Flow) -->
+<section class="learn-panel" id="learnPanel" aria-label="学习工作台">
+  <!-- Layer 1: Sticky Top Shell -->
+  <header class="lp-top">
+    <div class="lp-top-row">
+      <span class="dot" id="lpDot"></span>
+      <span class="lp-title" id="lpTitle">分数的基本性质</span>
+      <span class="lp-grade" id="lpGrade">5—6年级</span>
+      <div class="lp-qdots" id="lpQdots"></div>
+      <div class="lp-top-actions">
+        <button class="lp-mini-btn" id="lpLaterBtn">留到下次</button>
+        <button class="lp-close" id="lpCloseBtn" title="收起学习面板">×</button>
+      </div>
+    </div>
+    <div class="lp-flow" id="lpFlow">
+      <div class="lp-beat" data-beat="1">① 看清问题</div>
+      <div class="lp-beat" data-beat="2">② 动手尝试</div>
+      <div class="lp-beat" data-beat="3">③ 检查验证</div>
+      <div class="lp-beat" data-beat="4">④ 记下发现</div>
+    </div>
+  </header>
+
+  <!-- Layer 2: Fluid Main Stage -->
+  <div class="lp-stage" id="lpStage">
+    <div>
+      <div class="lp-prompt" id="lpPrompt"></div>
+      <div class="lp-prompt-sub" id="lpPromptSub"></div>
+    </div>
+    <div class="lp-guess-box" id="lpGuessBox" style="display:none;">
+      <div class="lp-guess-title" id="lpGuessTitle">先凭直觉猜一下（确认后解锁下方教具）：</div>
+      <div class="lp-guess-opts" id="lpGuessOpts"></div>
+    </div>
+    <div class="lp-work" id="lpWork"></div>
+    <div class="lp-feedback" id="lpFeedback">
+      <div class="lp-feedback-title" id="lpFeedbackTitle"></div>
+      <div id="lpFeedbackBody"></div>
+    </div>
+    <div class="lp-reflect" id="lpReflect">
+      <div style="font-size:12.5px;color:#dfd4ff;font-weight:500;">用一句话记下你刚才的发现（保存后点亮 3D 节点足迹环）：</div>
+      <div class="lp-quick-chips" id="lpQuickChips"></div>
+      <textarea id="lpReflectInput" placeholder="写下你的想法，或点上方短句快速填入…"></textarea>
+    </div>
+  </div>
+
+  <!-- Layer 3: Sticky Bottom Command Dock -->
+  <footer class="lp-dock">
+    <div class="lp-drawer" id="lpDrawer"></div>
+    <button class="lp-more-btn" id="lpMoreBtn">☰ 更多</button>
+    <button class="lp-primary-btn" id="lpPrimaryBtn">动手试试后再检查</button>
+  </footer>
+</section>
+
+<!-- Bottom HUD -->
+<div class="bottom-hud">
+  <div class="hud-pill" id="perfBadge">算法耗时: -- ms</div>
+  <div>拖动旋转 · 滚轮缩放 · 悬停预览 1 跳前置 · 点击锁定完整前置链</div>
+  <div class="hud-pill" id="countBadge">587 节点 · 1,223 边</div>
+</div>
+
+<script>
+(() => {
+  // =========================================================
+  // 1. 配置常量（严格对应技术方案 CYLINDER_LAYOUT_CONFIG）
+  // =========================================================
+  const CYLINDER_LAYOUT_CONFIG = {
+    height: 120,
+    gradeBands: [[-54, -22], [-14, 18], [26, 58]],
+    minDagDeltaY: 2.4,
+    sectorGapDeg: 10,
+    barycenterIters: 6,
+    coneScale: [0.82, 1.18],
+    coreRadius: [4, 14],
+    domainRadius: [26, 62],
+    relaxIters: 30,
+    nodePadding: 4.0,
+    relaxWeights: { theta: 0.65, r: 0.30, y: 0.05, maxDriftY: 0.8 }
+  };
+
+  const THEMES = [
+    { id: 0, name: '数与运算',       color: '#4e8cff', glow: 'rgba(78,140,255,0.45)', count: 162 },
+    { id: 1, name: '图形与空间',     color: '#5ecbff', glow: 'rgba(94,203,255,0.45)', count: 118 },
+    { id: 2, name: '测量与生活中的量', color: '#f26d85', glow: 'rgba(242,109,133,0.45)', count: 96 },
+    { id: 3, name: '规律与推理',     color: '#a78bfa', glow: 'rgba(167,139,250,0.45)', count: 89 },
+    { id: 4, name: '数据与可能性',   color: '#f5c451', glow: 'rgba(245,196,81,0.45)', count: 72 }
+  ];
+  const THINKING_COLOR = '#e2d9ff';
+  const GRADE_NAMES = ['1—2年级', '3—4年级', '5—6年级'];
+
+  const SAMPLE_CONCEPTS = [
+    ['自然数与十进制', '加减法意义', '表内乘法', '有余数除法', '小数初步认识', '分数的基本性质', '通分与约分', '比与比例', '百分数应用', '运算律与简便计算', '质数与合数', '最大公因数与最小公倍数'],
+    ['立体图形辨认', '平面图形特征', '线段射线与直线', '角的度量', '平行与垂直', '三角形内角和', '轴对称与平移', '圆的周长与面积', '长方体表面积', '圆柱与圆锥', '图形的放大与缩小', '数对与位置'],
+    ['人民币换算', '时分秒与经过时间', '长度单位米与厘米', '质量单位克与千克', '周长的测量', '面积单位换算', '体积与容积', '速度时间路程', '单价数量总价', '比例尺与地图', '不规则物体测量', '公顷与平方千米'],
+    ['找规律填数', '周期现象', '简单逻辑推理', '植树问题', '鸡兔同笼', '搭配与组合', '等量代换', '用字母表示数', '简易方程', '鸽巢原理', '数形结合规律', '最优策略与统筹'],
+    ['分类与整理', '象形统计图', '条形统计图', '折线统计图', '复式统计表', '平均数的意义', '扇形统计图', '可能性大小', '公平游戏规则', '中位数感知', '数据预测趋势', '抽样与估计']
+  ];
+  const THINKING_NAMES = [
+    '数形结合', '转化与化归', '分类讨论', '模型思想', '符号意识', '几何直观', '空间观念', '量感建立',
+    '归纳推理', '演绎推理', '类比迁移', '抽象概括', '逆向思考', '对应思想', '极限初探', '集合观念',
+    '函数雏形', '统计观念', '随机意识', '优化策略', '不变量意识', '单位意识', '估算与数感', '结构化思维',
+    '有序枚举', '反证意识', '假设法', '画图策略', '列表策略', '倒推法', '消元思想', '代换思想',
+    '对称思维', '分解与组合', '整体视角', '边界检验', '举反例意识', '模式识别', '变与不变', '等积变形',
+    '割补转化', '维度意识', '比例思维', '相对与绝对', '条件充分性', '因果链条', '实验验证', '数据论证',
+    '误差与近似', '系统建模'
+  ];
+
+  // Deterministic PRNG (Mulberry32) so layout & graph are 100% reproducible
+  function mulberry32(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // =========================================================
+  // 2. 生成 587 节点 + 1,223 条前置边的模拟数学知识图谱
+  // =========================================================
+  function generateSimulatedGraph() {
+    const rand = mulberry32(20261122);
+    const nodes = [];
+    const edges = [];
+    const edgeSet = new Set();
+
+    let idCounter = 0;
+    const byThemeGrade = Array.from({ length: 5 }, () => [[], [], []]);
+
+    // 537 Domain nodes
+    THEMES.forEach((theme, tIdx) => {
+      const nCount = theme.count;
+      // Grade distribution: ~25% G1-2, ~35% G3-4, ~40% G5-6
+      const g0 = Math.round(nCount * 0.25);
+      const g1 = Math.round(nCount * 0.35);
+      for (let i = 0; i < nCount; i++) {
+        const grade = i < g0 ? 0 : (i < g0 + g1 ? 1 : 2);
+        const baseNames = SAMPLE_CONCEPTS[tIdx];
+        const base = baseNames[i % baseNames.length];
+        const variant = Math.floor(i / baseNames.length);
+        const label = variant === 0 ? base : `${base} · 进阶${variant}`;
+        const node = {
+          id: idCounter++,
+          isThinking: false,
+          theme: tIdx,
+          grade,
+          label,
+          cluster: i % 4,
+          hasFootprint: rand() < 0.22,
+          inEdges: [],
+          outEdges: [],
+          thinkLinks: []
+        };
+        nodes.push(node);
+        byThemeGrade[tIdx][grade].push(node);
+      }
+    });
+
+    // 50 Thinking nodes
+    for (let i = 0; i < 50; i++) {
+      nodes.push({
+        id: idCounter++,
+        isThinking: true,
+        theme: -1,
+        grade: -1,
+        label: THINKING_NAMES[i],
+        cluster: 0,
+        hasFootprint: rand() < 0.3,
+        inEdges: [],
+        outEdges: [],
+        thinkLinks: []
+      });
+    }
+
+    function addEdge(u, v, type) {
+      if (u.id === v.id) return false;
+      const key = `${u.id}->${v.id}`;
+      if (edgeSet.has(key)) return false;
+      edgeSet.add(key);
+      const e = { source: u.id, target: v.id, type, isBackEdge: false };
+      edges.push(e);
+      if (type === 'think') {
+        u.thinkLinks.push(v.id);
+        v.thinkLinks.push(u.id);
+      } else {
+        u.outEdges.push(v.id);
+        v.inEdges.push(u.id);
+      }
+      return true;
+    }
+
+    // 1) Intra-theme DAG edges (~780 edges)
+    for (let t = 0; t < 5; t++) {
+      const gLists = byThemeGrade[t];
+      const allT = [...gLists[0], ...gLists[1], ...gLists[2]];
+      // Ensure every non-root grade node has at least 1 prerequisite in same/lower grade
+      for (let idx = 3; idx < allT.length; idx++) {
+        const v = allT[idx];
+        const maxParents = v.grade === 0 ? 1 : (rand() < 0.45 ? 2 : 1);
+        for (let p = 0; p < maxParents; p++) {
+          // Prefer earlier node in same cluster or previous grade
+          const lookback = Math.max(1, Math.floor(idx * (0.25 + rand() * 0.65)));
+          const candIdx = Math.max(0, idx - 1 - Math.floor(rand() * lookback));
+          const u = allT[candIdx];
+          if (u.grade <= v.grade) addEdge(u, v, 'intra');
+        }
+      }
+    }
+
+    // 2) Cross-theme realistic bridges (~210 edges, weighted towards realistic pairs)
+    // Realistic strong coupling: (0 数与运算 - 2 测量), (0 - 3 规律), (1 图形 - 2 测量), (3 - 4 数据), (0 - 4)
+    const crossPairs = [
+      [0, 2, 0.28], [0, 3, 0.24], [1, 2, 0.22], [3, 4, 0.14], [0, 4, 0.08], [1, 3, 0.04]
+    ];
+    let crossTarget = 215;
+    let guard = 0;
+    while (crossTarget > 0 && guard++ < 5000) {
+      let r = rand(), acc = 0, pair = crossPairs[0];
+      for (const cp of crossPairs) { acc += cp[2]; if (r <= acc) { pair = cp; break; } }
+      const [tA, tB] = rand() < 0.5 ? [pair[0], pair[1]] : [pair[1], pair[0]];
+      const gU = Math.floor(rand() * 2); // mostly G1-2 or G3-4 as prerequisite
+      const gV = Math.min(2, gU + (rand() < 0.65 ? 1 : 0));
+      const listU = byThemeGrade[tA][gU];
+      const listV = byThemeGrade[tB][gV];
+      const u = listU[Math.floor(rand() * listU.length)];
+      const v = listV[Math.floor(rand() * listV.length)];
+      if (addEdge(u, v, 'cross')) crossTarget--;
+    }
+
+    // 3) Concept <-> Thinking links up to exact 1,223 total edges
+    const thinkingNodes = nodes.filter(n => n.isThinking);
+    const domainNodes = nodes.filter(n => !n.isThinking);
+    // Give each thinking node 3-6 domain anchors
+    thinkingNodes.forEach((tn, idx) => {
+      const spanAll = idx < 18; // 18 broad cross-theme thinking nodes, 32 more theme-focused
+      const primaryTheme = idx % 5;
+      const k = 3 + (idx % 3);
+      for (let j = 0; j < k && edges.length < 1223; j++) {
+        const targetTheme = spanAll ? (idx + j) % 5 : (j < 2 ? primaryTheme : (primaryTheme + 1) % 5);
+        const pool = domainNodes.filter(d => d.theme === targetTheme);
+        const dn = pool[Math.floor(rand() * pool.length)];
+        addEdge(dn, tn, 'think');
+      }
+    });
+    // Fill any remaining edges to hit exact 1,223
+    while (edges.length < 1223) {
+      const t = Math.floor(rand() * 5);
+      const listU = byThemeGrade[t][Math.floor(rand() * 2)];
+      const listV = byThemeGrade[t][Math.min(2, 1 + Math.floor(rand() * 2))];
+      const u = listU[Math.floor(rand() * listU.length)];
+      const v = listV[Math.floor(rand() * listV.length)];
+      if (u.grade <= v.grade && u.id < v.id) addEdge(u, v, 'intra');
+    }
+
+    return { nodes, edges };
+  }
+
+  // =========================================================
+  // 3. 确定性五步圆柱星盘布局算法 (layout=54)
+  // =========================================================
+  function computeCylinderLayout(nodes, edges, cfg) {
+    const t0 = performance.now();
+    const domNodes = nodes.filter(n => !n.isThinking);
+    const thinkNodes = nodes.filter(n => n.isThinking);
+
+    // --- Step 1: 预处理（去环 + 最长路径深度 + 枢纽度） ---
+    const inDeg = new Int32Array(nodes.length);
+    const dagOut = Array.from({ length: nodes.length }, () => []);
+    edges.forEach(e => {
+      if (e.type === 'think') return;
+      dagOut[e.source].push(e);
+      inDeg[e.target]++;
+    });
+
+    // Kahn topo sort
+    const queue = [];
+    const topoOrder = [];
+    const remIn = Int32Array.from(inDeg);
+    domNodes.forEach(n => { if (remIn[n.id] === 0) queue.push(n.id); });
+    while (queue.length) {
+      const u = queue.shift();
+      topoOrder.push(u);
+      for (const e of dagOut[u]) {
+        remIn[e.target]--;
+        if (remIn[e.target] === 0) queue.push(e.target);
+      }
+    }
+    // Defensive cycle fallback
+    if (topoOrder.length < domNodes.length) {
+      const seen = new Set(topoOrder);
+      domNodes.forEach(n => { if (!seen.has(n.id)) topoOrder.push(n.id); });
+      const posInTopo = new Int32Array(nodes.length);
+      topoOrder.forEach((id, i) => { posInTopo[id] = i; });
+      edges.forEach(e => {
+        if (e.type !== 'think' && posInTopo[e.source] >= posInTopo[e.target]) e.isBackEdge = true;
+      });
+    }
+
+    // Longest-path topoDepth
+    const depth = new Float32Array(nodes.length);
+    topoOrder.forEach(u => {
+      for (const e of dagOut[u]) {
+        if (e.isBackEdge) continue;
+        if (depth[u] + 1 > depth[e.target]) depth[e.target] = depth[u] + 1;
+      }
+    });
+
+    // Log-compressed hubScore
+    const rawHub = new Float32Array(nodes.length);
+    let maxRawHub = 1e-6;
+    domNodes.forEach(n => {
+      let crossDeg = 0;
+      n.inEdges.forEach(u => { if (nodes[u].theme !== n.theme) crossDeg++; });
+      n.outEdges.forEach(v => { if (nodes[v].theme !== n.theme) crossDeg++; });
+      const r = Math.log(1 + 1.5 * n.outEdges.length + 0.5 * n.inEdges.length + 2.0 * crossDeg);
+      rawHub[n.id] = r;
+      if (r > maxRawHub) maxRawHub = r;
+    });
+    nodes.forEach(n => {
+      n.topoDepth = depth[n.id];
+      n.hubScore = n.isThinking ? 0.85 : Math.min(1, Math.max(0, rawHub[n.id] / maxRawHub));
+      n.visRadius = n.isThinking ? 1.35 : (0.85 + n.hubScore * 1.05);
+    });
+
+    // --- Step 2: Y 轴（学段软锚定 + DAG 防倒挂松弛） ---
+    const maxDepthByGrade = [1, 1, 1];
+    domNodes.forEach(n => {
+      if (n.topoDepth > maxDepthByGrade[n.grade]) maxDepthByGrade[n.grade] = n.topoDepth;
+    });
+    const Y = new Float32Array(nodes.length);
+    domNodes.forEach(n => {
+      const [yMin, yMax] = cfg.gradeBands[n.grade];
+      const norm = n.topoDepth / maxDepthByGrade[n.grade];
+      Y[n.id] = yMin + norm * (yMax - yMin);
+    });
+
+    // DAG monotonic relaxation (3 passes)
+    for (let pass = 0; pass < 3; pass++) {
+      for (const u of topoOrder) {
+        for (const e of dagOut[u]) {
+          if (e.isBackEdge) continue;
+          const minY = Y[u] + cfg.minDagDeltaY;
+          if (Y[e.target] < minY) Y[e.target] = minY;
+        }
+      }
+    }
+    // Gentle top compression if slightly above +H/2
+    let maxY = 60, minY = -60;
+    domNodes.forEach(n => { if (Y[n.id] > maxY) maxY = Y[n.id]; if (Y[n.id] < minY) minY = Y[n.id]; });
+    const halfH = cfg.height / 2;
+    if (maxY > halfH) {
+      domNodes.forEach(n => {
+        if (Y[n.id] > 0) Y[n.id] = (Y[n.id] / maxY) * halfH;
+      });
+    }
+
+    // Thinking nodes Y: median of connected domain nodes
+    thinkNodes.forEach((tn, idx) => {
+      if (tn.thinkLinks.length === 0) {
+        Y[tn.id] = -45 + (idx / thinkNodes.length) * 90;
+      } else {
+        const ys = tn.thinkLinks.map(id => Y[id]).sort((a, b) => a - b);
+        Y[tn.id] = ys[Math.floor(ys.length / 2)];
+      }
+    });
+
+    // --- Step 3: θ 方位角（12 种扇区排列择优 + 重心迭代） ---
+    const W = Array.from({ length: 5 }, () => new Float32Array(5));
+    edges.forEach(e => {
+      if (e.type !== 'cross') return;
+      const a = nodes[e.source].theme, b = nodes[e.target].theme;
+      if (a >= 0 && b >= 0 && a !== b) { W[a][b]++; W[b][a]++; }
+    });
+    // Generate all 24 permutations fixing theme 0 at slot 0 (12 unique up to reversal)
+    const perms = [];
+    function permute(arr, l) {
+      if (l === arr.length) { perms.push([0, ...arr]); return; }
+      for (let i = l; i < arr.length; i++) {
+        [arr[l], arr[i]] = [arr[i], arr[l]];
+        permute(arr, l + 1);
+        [arr[l], arr[i]] = [arr[i], arr[l]];
+      }
+    }
+    permute([1, 2, 3, 4], 0);
+    let bestPerm = perms[0], bestCost = Infinity;
+    for (const p of perms) {
+      let cost = 0;
+      for (let i = 0; i < 5; i++) {
+        for (let j = i + 1; j < 5; j++) {
+          const ringDist = Math.min(j - i, 5 - (j - i));
+          cost += W[p[i]][p[j]] * ringDist;
+        }
+      }
+      if (cost < bestCost) { bestCost = cost; bestPerm = p; }
+    }
+
+    // Allocate angular spans with 10° corridor gaps
+    const gapRad = (cfg.sectorGapDeg * Math.PI) / 180;
+    const availRad = 2 * Math.PI - 5 * gapRad;
+    const sectorBounds = new Array(5);
+    let curAngle = -Math.PI / 2;
+    bestPerm.forEach(tId => {
+      const count = THEMES[tId].count;
+      const span = availRad * (0.3 / 5 + 0.7 * (count / domNodes.length));
+      sectorBounds[tId] = { start: curAngle, end: curAngle + span, mid: curAngle + span / 2 };
+      curAngle += span + gapRad;
+    });
+
+    // Initial deterministic theta inside sector (grouped by cluster)
+    const Theta = new Float32Array(nodes.length);
+    for (let t = 0; t < 5; t++) {
+      const list = domNodes.filter(n => n.theme === t).sort((a, b) => (a.cluster - b.cluster) || (a.id - b.id));
+      const { start, end } = sectorBounds[t];
+      const pad = 0.04;
+      list.forEach((n, idx) => {
+        const frac = list.length > 1 ? idx / (list.length - 1) : 0.5;
+        Theta[n.id] = start + pad + frac * (end - start - 2 * pad);
+      });
+    }
+
+    // Helper: circular mean angle
+    function circularMean(angles) {
+      let sx = 0, sy = 0;
+      for (const a of angles) { sx += Math.cos(a); sy += Math.sin(a); }
+      return Math.atan2(sy, sx);
+    }
+    // Helper: bring target angle near ref angle
+    function nearestAngle(target, ref) {
+      let diff = target - ref;
+      while (diff > Math.PI) diff -= 2 * Math.PI;
+      while (diff < -Math.PI) diff += 2 * Math.PI;
+      return ref + diff;
+    }
+
+    // 6-round barycenter iteration
+    for (let iter = 0; iter < cfg.barycenterIters; iter++) {
+      const order = iter % 2 === 0 ? topoOrder : [...topoOrder].reverse();
+      for (const id of order) {
+        const n = nodes[id];
+        const intra = [], cross = [];
+        for (const u of n.inEdges) {
+          if (nodes[u].theme === n.theme) intra.push(Theta[u]);
+          else cross.push(Theta[u]);
+        }
+        for (const v of n.outEdges) {
+          if (nodes[v].theme === n.theme) intra.push(Theta[v]);
+          else cross.push(Theta[v]);
+        }
+        const cur = Theta[id];
+        const mIntra = intra.length ? nearestAngle(circularMean(intra), cur) : cur;
+        const mCross = cross.length ? nearestAngle(circularMean(cross), cur) : cur;
+        let next = 0.35 * cur + 0.55 * mIntra + 0.10 * mCross;
+        const { start, end } = sectorBounds[n.theme];
+        Theta[id] = Math.max(start + 0.03, Math.min(end - 0.03, next));
+      }
+    }
+
+    // Thinking nodes theta: circular mean of linked domain nodes
+    thinkNodes.forEach((tn, idx) => {
+      if (tn.thinkLinks.length === 0) {
+        Theta[tn.id] = (idx / thinkNodes.length) * Math.PI * 2;
+      } else {
+        Theta[tn.id] = circularMean(tn.thinkLinks.map(id => Theta[id]));
+      }
+    });
+
+    // --- Step 4: R 径向分层（微倒锥 + 中轴熵） ---
+    const R = new Float32Array(nodes.length);
+    const [coneMin, coneMax] = cfg.coneScale;
+    const [rSpine, rOuter] = cfg.domainRadius;
+    const [rCoreMin, rCoreMax] = cfg.coreRadius;
+
+    function coneScale(y) {
+      const ty = Math.max(0, Math.min(1, (y + halfH) / cfg.height));
+      return coneMin + (coneMax - coneMin) * ty;
+    }
+
+    domNodes.forEach(n => {
+      const s = coneScale(Y[n.id]);
+      const invHub = Math.max(0, 1 - n.hubScore);
+      R[n.id] = s * (rSpine + Math.pow(invHub, 1.15) * (rOuter - rSpine));
+    });
+
+    thinkNodes.forEach(tn => {
+      const counts = [0, 0, 0, 0, 0];
+      tn.thinkLinks.forEach(id => { const t = nodes[id].theme; if (t >= 0) counts[t]++; });
+      const total = tn.thinkLinks.length || 1;
+      let entropy = 0;
+      for (const c of counts) {
+        if (c > 0) { const p = c / total; entropy -= p * Math.log(p); }
+      }
+      const normEntropy = entropy / Math.log(5);
+      R[tn.id] = rCoreMin + (1 - normEntropy) * (rCoreMax - rCoreMin);
+    });
+
+    // --- Step 4.5: 提取 5 条主题引导主线 (Weighted Longest-Path DAG Spine) ---
+    const spines = Array.from({ length: 5 }, () => []);
+    const spineEdgeKeys = new Set();
+    for (let t = 0; t < 5; t++) {
+      const dp = new Float32Array(nodes.length);
+      const prev = new Int32Array(nodes.length).fill(-1);
+      const themeTopo = topoOrder.filter(id => nodes[id].theme === t);
+      themeTopo.forEach(u => {
+        if (dp[u] === 0) dp[u] = 0.5 + nodes[u].hubScore;
+        for (const e of dagOut[u]) {
+          if (e.isBackEdge || e.type !== 'intra') continue;
+          const v = e.target;
+          const cand = dp[u] + 1.0 + 0.85 * nodes[u].hubScore + 0.85 * nodes[v].hubScore;
+          if (cand > dp[v]) { dp[v] = cand; prev[v] = u; }
+        }
+      });
+      let bestEnd = -1, bestScore = -1;
+      for (const id of themeTopo) {
+        const bonus = nodes[id].grade === 2 ? 4.0 : 0;
+        if (dp[id] + bonus > bestScore) { bestScore = dp[id] + bonus; bestEnd = id; }
+      }
+      const path = [];
+      let cur = bestEnd;
+      while (cur !== -1) { path.push(cur); cur = prev[cur]; }
+      path.reverse();
+      spines[t] = path;
+      const midTheta = sectorBounds[t].mid;
+      path.forEach((id, idx) => {
+        nodes[id].isSpine = true;
+        nodes[id].spineOrder = idx;
+        Theta[id] = 0.72 * midTheta + 0.28 * Theta[id];
+        R[id] = coneScale(Y[id]) * (rSpine + 3.0);
+        if (idx > 0) spineEdgeKeys.add(`${path[idx - 1]}->${id}`);
+      });
+    }
+
+    // --- Step 5: 圆柱保结构防重叠松弛（30 轮） ---
+    const origY = Float32Array.from(Y);
+    const bucketSize = 6.5;
+    const { theta: wT, r: wR, y: wY, maxDriftY } = cfg.relaxWeights;
+
+    for (let iter = 0; iter < cfg.relaxIters; iter++) {
+      const eta = 0.6 - (0.45 * iter) / cfg.relaxIters;
+      const buckets = new Map();
+      for (let i = 0; i < nodes.length; i++) {
+        const b = Math.floor(Y[i] / bucketSize);
+        if (!buckets.has(b)) buckets.set(b, []);
+        buckets.get(b).push(i);
+      }
+
+      for (const [bKey, list] of buckets.entries()) {
+        const neighbors = [...list, ...(buckets.get(bKey + 1) || [])];
+        for (let aIdx = 0; aIdx < list.length; aIdx++) {
+          const i = list[aIdx];
+          const xi = R[i] * Math.cos(Theta[i]), zi = R[i] * Math.sin(Theta[i]), yi = Y[i];
+          for (let bIdx = aIdx + 1; bIdx < neighbors.length; bIdx++) {
+            const j = neighbors[bIdx];
+            if (i === j) continue;
+            const xj = R[j] * Math.cos(Theta[j]), zj = R[j] * Math.sin(Theta[j]), yj = Y[j];
+            const dx = xj - xi, dy = yj - yi, dz = zj - zi;
+            const distSq = dx * dx + dy * dy + dz * dz;
+            const minDist = nodes[i].visRadius + nodes[j].visRadius + cfg.nodePadding;
+            if (distSq < minDist * minDist) {
+              const dist = Math.sqrt(distSq) || 0.01;
+              const overlap = minDist - dist;
+              // Project push into cylindrical directions
+              let dTheta = Theta[j] - Theta[i];
+              while (dTheta > Math.PI) dTheta -= 2 * Math.PI;
+              while (dTheta < -Math.PI) dTheta += 2 * Math.PI;
+              const signT = dTheta >= 0 ? 1 : -1;
+              const signR = R[j] >= R[i] ? 1 : -1;
+              const signY = dy >= 0 ? 1 : -1;
+
+              const pushT = eta * wT * overlap * 0.5 / Math.max(8, (R[i] + R[j]) * 0.5);
+              const pushR = eta * wR * overlap * 0.5;
+              const pushY = eta * wY * overlap * 0.5;
+
+              Theta[i] -= signT * pushT; Theta[j] += signT * pushT;
+              R[i] -= signR * pushR;     R[j] += signR * pushR;
+              Y[i] -= signY * pushY;     Y[j] += signY * pushY;
+            }
+          }
+        }
+      }
+
+      // Clamp back into structural bounds
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        Y[i] = Math.max(origY[i] - maxDriftY, Math.min(origY[i] + maxDriftY, Y[i]));
+        if (n.isThinking) {
+          R[i] = Math.max(rCoreMin, Math.min(rCoreMax, R[i]));
+        } else {
+          const { start, end } = sectorBounds[n.theme];
+          Theta[i] = Math.max(start + 0.02, Math.min(end - 0.02, Theta[i]));
+          const s = coneScale(Y[i]);
+          R[i] = Math.max(rSpine * s, Math.min(rOuter * s, R[i]));
+        }
+      }
+    }
+
+    // Store cylinder coordinates + generate a simulated "layout=53 hairball" for live A/B comparison
+    const rand53 = mulberry32(5353);
+    nodes.forEach(n => {
+      const i = n.id;
+      n.cyl = {
+        x: R[i] * Math.cos(Theta[i]),
+        y: Y[i],
+        z: R[i] * Math.sin(Theta[i]),
+        R: R[i],
+        theta: Theta[i],
+        Y: Y[i]
+      };
+      // Simulated loose force-directed cloud (layout=53 comparison)
+      const baseAngle = n.isThinking ? rand53() * Math.PI * 2 : (n.theme / 5) * Math.PI * 2 + (rand53() - 0.5) * 1.7;
+      const rad = n.isThinking ? rand53() * 20 : 8 + Math.pow(rand53(), 1.35) * 44;
+      const yy = (rand53() - 0.5) * 76 + (n.theme === 0 ? 14 : (n.theme === 1 ? -18 : 0));
+      n.old = { x: rad * Math.cos(baseAngle), y: yy, z: rad * Math.sin(baseAngle) };
+      // Current animated position
+      n.pos = { x: n.cyl.x, y: n.cyl.y, z: n.cyl.z };
+    });
+
+    const elapsedMs = (performance.now() - t0).toFixed(1);
+    return { sectorBounds, bestPerm, spines, spineEdgeKeys, elapsedMs };
+  }
+
+  // =========================================================
+  // 4. 初始化图谱与交互状态
+  // =========================================================
+  const { nodes, edges } = generateSimulatedGraph();
+  const { sectorBounds, spines, spineEdgeKeys, elapsedMs } = computeCylinderLayout(nodes, edges, CYLINDER_LAYOUT_CONFIG);
+  document.getElementById('perfBadge').textContent = `圆柱算法耗时: ${elapsedMs} ms`;
+
+  // Precompute full upstream ancestor set for click-lock mode
+  function getUpstreamChain(startId) {
+    const visited = new Set();
+    const stack = [...nodes[startId].inEdges];
+    while (stack.length) {
+      const u = stack.pop();
+      if (!visited.has(u)) {
+        visited.add(u);
+        for (const p of nodes[u].inEdges) stack.push(p);
+      }
+    }
+    return visited;
+  }
+
+  const ORIGIN_ID = -2;
+  const ORIGIN_POS = { x: 0, y: -67, z: 0 };
+  const spineStarts = new Set(spines.map(p => p[0]).filter(id => id !== undefined));
+
+  const state = {
+    mode: 'cylinder',        // 'cylinder' | 'hairball'
+    morph: 1.0,              // 1 = cylinder, 0 = hairball
+    selectedTheme: -1,       // -1 = all
+    selectedGrade: -1,       // -1 = all, 0/1/2
+    showSpines: true,
+    showThinking: true,
+    showCrossEdges: false,
+    showRings: true,
+    autoRotate: false,
+    hoverId: -1,
+    lockedId: -1,
+    lockedUpstream: new Set(),
+    // Orbit camera
+    yaw: 0.52,
+    pitch: 0.26,
+    dist: 242,
+    targetY: 0,
+    camAnim: null
+  };
+
+  // Build left sidebar theme list
+  const themeListEl = document.getElementById('themeList');
+  THEMES.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'theme-item';
+    el.dataset.theme = t.id;
+    el.innerHTML = `<span class="dot" style="background:${t.color};box-shadow:0 0 8px ${t.color}"></span><span>${t.name}</span><span class="theme-count">${t.count}</span>`;
+    el.addEventListener('click', () => {
+      state.selectedTheme = (state.selectedTheme === t.id) ? -1 : t.id;
+      updateThemeUI();
+    });
+    themeListEl.appendChild(el);
+  });
+  function updateThemeUI() {
+    document.querySelectorAll('.theme-item').forEach(el => {
+      const id = Number(el.dataset.theme);
+      el.classList.toggle('active', state.selectedTheme === id);
+      el.classList.toggle('dimmed', state.selectedTheme !== -1 && state.selectedTheme !== id);
+    });
+  }
+
+  // Grade pills
+  document.querySelectorAll('#gradePills .pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.selectedGrade = Number(btn.dataset.grade);
+      document.querySelectorAll('#gradePills .pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // View toggles
+  function bindToggle(id, key) {
+    const btn = document.getElementById(id);
+    btn.addEventListener('click', () => {
+      state[key] = !state[key];
+      btn.classList.toggle('on', state[key]);
+      btn.querySelector('.toggle-badge').textContent = state[key] ? '开' : '关';
+    });
+  }
+  bindToggle('btnSpines', 'showSpines');
+  bindToggle('btnThinking', 'showThinking');
+  bindToggle('btnCrossEdges', 'showCrossEdges');
+  bindToggle('btnRings', 'showRings');
+  bindToggle('btnAutoRotate', 'autoRotate');
+
+  // Layout comparison mode buttons
+  const modeCylBtn = document.getElementById('modeCylinder');
+  const modeHairBtn = document.getElementById('modeHairball');
+  modeCylBtn.addEventListener('click', () => {
+    state.mode = 'cylinder';
+    modeCylBtn.classList.add('active');
+    modeHairBtn.classList.remove('active');
+  });
+  modeHairBtn.addEventListener('click', () => {
+    state.mode = 'hairball';
+    modeHairBtn.classList.add('active');
+    modeCylBtn.classList.remove('active');
+  });
+  document.getElementById('btnOrigin').addEventListener('click', () => {
+    state.mode = 'cylinder';
+    modeCylBtn.classList.add('active');
+    modeHairBtn.classList.remove('active');
+    state.selectedTheme = -1; state.selectedGrade = -1;
+    state.lockedId = ORIGIN_ID; state.lockedUpstream.clear();
+    state.camAnim = { pitch: 0.34, dist: 210, targetY: -26 };
+    updateThemeUI();
+    document.querySelectorAll('#gradePills .pill').forEach((b, i) => b.classList.toggle('active', i === 0));
+    updateInspector();
+  });
+  document.getElementById('btnResetCam').addEventListener('click', () => {
+    state.camAnim = { pitch: 0.26, dist: 242, targetY: 0 };
+    state.yaw = 0.52;
+    state.selectedTheme = -1; state.selectedGrade = -1;
+    state.lockedId = -1; state.lockedUpstream.clear();
+    updateThemeUI();
+    document.querySelectorAll('#gradePills .pill').forEach((b, i) => b.classList.toggle('active', i === 0));
+    updateInspector();
+  });
+
+  // =========================================================
+  // 5. 纯 Canvas 3D 透视投影、弧线渲染与交互拾取
+  // =========================================================
+  const canvas = document.getElementById('scene');
+  const ctx = canvas.getContext('2d');
+  let W_px = 0, H_px = 0, DPR = 1;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W_px = window.innerWidth;
+    H_px = window.innerHeight;
+    canvas.width = W_px * DPR;
+    canvas.height = H_px * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function project(x, y, z) {
+    const cy = Math.cos(state.yaw), sy = Math.sin(state.yaw);
+    const cp = Math.cos(state.pitch), sp = Math.sin(state.pitch);
+    // Rotate around Y (yaw)
+    const x1 = x * cy - z * sy;
+    const z1 = x * sy + z * cy;
+    // Rotate around X (pitch)
+    const y2 = (y - state.targetY) * cp - z1 * sp;
+    const z2 = (y - state.targetY) * sp + z1 * cp;
+    const dz = state.dist + z2;
+    if (!Number.isFinite(dz) || dz < 8) return null;
+    const fov = Math.min(W_px, H_px) * 0.90;
+    const scale = fov / dz;
+    const screenX = W_px * 0.57 + x1 * scale;
+    const screenY = H_px * 0.51 - y2 * scale;
+    if (!Number.isFinite(screenX) || !Number.isFinite(screenY)) return null;
+    return { sx: screenX, sy: screenY, scale, depth: dz };
+  }
+
+  // Mouse Orbit / Zoom / Hover / Click
+  let isDragging = false, dragMoved = false, lastX = 0, lastY = 0, mouseX = -999, mouseY = -999;
+  canvas.addEventListener('mousedown', e => {
+    if (learnState.open && learnState.focus === 'learn') {
+      setFocusLayer('space');
+    }
+    isDragging = true; dragMoved = false; lastX = e.clientX; lastY = e.clientY;
+  });
+  window.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    if (isDragging) {
+      state.camAnim = null;
+      const dx = e.clientX - lastX, dy = e.clientY - lastY;
+      if (Math.abs(dx) + Math.abs(dy) > 2) dragMoved = true;
+      state.yaw += dx * 0.006;
+      state.pitch = Math.max(-1.25, Math.min(1.25, state.pitch + dy * 0.006));
+      lastX = e.clientX; lastY = e.clientY;
+    }
+  });
+  window.addEventListener('mouseup', () => {
+    if (isDragging && !dragMoved) {
+      if (state.hoverId === ORIGIN_ID) {
+        state.lockedId = state.lockedId === ORIGIN_ID ? -1 : ORIGIN_ID;
+        state.lockedUpstream.clear();
+      } else if (state.hoverId !== -1) {
+        if (state.lockedId === state.hoverId) {
+          state.lockedId = -1;
+          state.lockedUpstream.clear();
+        } else {
+          state.lockedId = state.hoverId;
+          state.lockedUpstream = getUpstreamChain(state.lockedId);
+        }
+      } else {
+        state.lockedId = -1;
+        state.lockedUpstream.clear();
+      }
+      updateInspector();
+    }
+    isDragging = false;
+  });
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    state.camAnim = null;
+    state.dist = Math.max(75, Math.min(360, state.dist + e.deltaY * 0.14));
+  }, { passive: false });
+
+  // Inspector UI updater
+  const inspEl = document.getElementById('inspector');
+  function updateInspector() {
+    const activeId = state.lockedId !== -1 ? state.lockedId : state.hoverId;
+    if (activeId === -1) {
+      inspEl.classList.remove('visible');
+      return;
+    }
+    if (activeId === ORIGIN_ID) {
+      document.getElementById('inspDot').style.background = '#ffe08a';
+      document.getElementById('inspDot').style.boxShadow = '0 0 12px #ffe08a';
+      document.getElementById('inspTitle').textContent = '起点 · 数学出发';
+      document.getElementById('inspTag').textContent = '共同原点';
+      document.getElementById('inspMeta').textContent = '全图谱统一出发原点，由此分岔出 5 大主题的 1—2 年级首站入口。';
+      document.getElementById('inspY').textContent = '-67.0';
+      document.getElementById('inspTheta').textContent = '中心轴';
+      document.getElementById('inspR').textContent = '0.0';
+      const entries = THEMES.map((t, idx) => {
+        const sid = spines[idx][0];
+        const sName = sid !== undefined ? nodes[sid].label : '—';
+        return `<div style="margin-top:3px;"><span style="color:${t.color};">● ${t.name}</span> → <span style="color:#fff;">${sName}</span></div>`;
+      }).join('');
+      document.getElementById('inspLinks').innerHTML = `<div><b>5 大主题首站入口：</b></div>${entries}`;
+      document.getElementById('inspStartBtn').style.display = 'none';
+      document.getElementById('inspHint').textContent = '点击任意主题首站节点开始沿主线向上探索';
+      inspEl.classList.add('visible');
+      return;
+    }
+    const n = nodes[activeId];
+    const color = n.isThinking ? THINKING_COLOR : THEMES[n.theme].color;
+    document.getElementById('inspDot').style.background = color;
+    document.getElementById('inspDot').style.boxShadow = `0 0 10px ${color}`;
+    document.getElementById('inspTitle').textContent = n.label;
+    document.getElementById('inspTag').textContent = n.isThinking ? '数学思维中轴' : GRADE_NAMES[n.grade];
+    document.getElementById('inspMeta').textContent = n.isThinking
+      ? `跨领域思维节点 · 关联 ${n.thinkLinks.length} 个核心数学概念`
+      : `${THEMES[n.theme].name} · 拓扑深度 ${n.topoDepth} · 枢纽度 ${(n.hubScore * 100).toFixed(0)}%${n.hasFootprint ? ' · 已有学习足迹' : ''}`;
+
+    const deg = (((n.cyl.theta * 180) / Math.PI) % 360 + 360) % 360;
+    document.getElementById('inspY').textContent = n.cyl.Y.toFixed(1);
+    document.getElementById('inspTheta').textContent = `${deg.toFixed(0)}°`;
+    document.getElementById('inspR').textContent = n.cyl.R.toFixed(1);
+
+    const preNames = n.inEdges.slice(0, 3).map(id => nodes[id].label).join('、') || '无（基础起点）';
+    const postNames = n.outEdges.slice(0, 3).map(id => nodes[id].label).join('、') || '无（顶层应用）';
+    const thinkNames = n.thinkLinks.slice(0, 3).map(id => nodes[id].label).join('、');
+
+    let html = `<div class="pre"><b>直接前置 (${n.inEdges.length})：</b>${preNames}${n.inEdges.length > 3 ? '…' : ''}</div>`;
+    html += `<div class="post"><b>直接后继 (${n.outEdges.length})：</b>${postNames}${n.outEdges.length > 3 ? '…' : ''}</div>`;
+    if (thinkNames) {
+      html += `<div class="think"><b>${n.isThinking ? '支撑概念' : '关联思维'} (${n.thinkLinks.length})：</b>${thinkNames}${n.thinkLinks.length > 3 ? '…' : ''}</div>`;
+    }
+    if (state.lockedId === activeId && !n.isThinking) {
+      html += `<div style="color:#9cc2ff;margin-top:4px;"><b>已锁定完整上游前置链：</b>共 ${state.lockedUpstream.size} 个前置节点</div>`;
+    }
+    document.getElementById('inspLinks').innerHTML = html;
+    const startBtn = document.getElementById('inspStartBtn');
+    if (!n.isThinking) {
+      startBtn.style.display = 'block';
+      startBtn.dataset.nodeId = String(activeId);
+      if (learnState.open && learnState.nodeId === activeId) {
+        startBtn.textContent = '回到正在学习的这个概念 →';
+      } else if (learnState.open && learnState.nodeId !== activeId) {
+        startBtn.textContent = '切换去学这个概念 →';
+      } else {
+        startBtn.textContent = n.hasFootprint ? '继续学习这个概念 →' : '开始学习这个概念 →';
+      }
+    } else {
+      startBtn.style.display = 'none';
+    }
+    document.getElementById('inspHint').textContent = state.lockedId === activeId
+      ? '已锁定焦点 · 点上方按钮进入右侧学习工作台'
+      : '点击节点锁定完整上游前置链';
+    inspEl.classList.add('visible');
+  }
+
+  // =========================================================
+  // 6. 主渲染循环
+  // =========================================================
+  function isNodeFilteredIn(n) {
+    if (n.isThinking) return state.showThinking && state.selectedTheme === -1 && state.selectedGrade === -1;
+    if (state.selectedTheme !== -1 && n.theme !== state.selectedTheme) return false;
+    if (state.selectedGrade !== -1 && n.grade !== state.selectedGrade) return false;
+    return true;
+  }
+
+  function drawGuideRings() {
+    if (!state.showRings || state.morph < 0.25) return;
+    const alpha = 0.14 * state.morph;
+    const levels = [
+      { y: -38, r: 53, label: '1—2年级基准层' },
+      { y: 2,   r: 62, label: '3—4年级基准层' },
+      { y: 42,  r: 72, label: '5—6年级基准层' }
+    ];
+    ctx.save();
+    levels.forEach((lv, idx) => {
+      const highlight = state.selectedGrade === idx;
+      ctx.beginPath();
+      const segs = 72;
+      for (let s = 0; s <= segs; s++) {
+        const a = (s / segs) * Math.PI * 2;
+        const p = project(lv.r * Math.cos(a), lv.y, lv.r * Math.sin(a));
+        if (!p) continue;
+        if (s === 0) ctx.moveTo(p.sx, p.sy);
+        else ctx.lineTo(p.sx, p.sy);
+      }
+      ctx.strokeStyle = highlight ? `rgba(190, 220, 255, ${alpha * 2.4})` : `rgba(140, 165, 210, ${alpha})`;
+      ctx.lineWidth = highlight ? 1.2 : 0.7;
+      ctx.setLineDash([4, 5]);
+      ctx.stroke();
+
+      // Subtle grade stratum label on right rim (clear of left sidebar)
+      const pLbl = project(lv.r + 5, lv.y, 0);
+      if (pLbl) {
+        ctx.setLineDash([]);
+        ctx.font = '11px -apple-system, sans-serif';
+        ctx.fillStyle = highlight ? 'rgba(225,240,255,0.9)' : 'rgba(155,170,200,0.48)';
+        ctx.fillText(lv.label, pLbl.sx + 6, pLbl.sy + 4);
+      }
+    });
+    // Central thinking axis guide
+    if (state.showThinking) {
+      const pBot = project(0, -56, 0), pTop = project(0, 60, 0);
+      if (pBot && pTop) {
+        ctx.beginPath();
+        ctx.moveTo(pBot.sx, pBot.sy);
+        ctx.lineTo(pTop.sx, pTop.sy);
+        ctx.strokeStyle = `rgba(210, 190, 255, ${alpha * 1.4})`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 6]);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function render(now) {
+    requestAnimationFrame(render);
+    // Smooth morph between cylinder (layout=54) and hairball (layout=53)
+    const targetMorph = state.mode === 'cylinder' ? 1.0 : 0.0;
+    state.morph += (targetMorph - state.morph) * 0.1;
+    if (state.camAnim) {
+      state.pitch += (state.camAnim.pitch - state.pitch) * 0.1;
+      state.dist += (state.camAnim.dist - state.dist) * 0.1;
+      state.targetY += (state.camAnim.targetY - state.targetY) * 0.1;
+      if (Math.abs(state.camAnim.dist - state.dist) < 0.3 && Math.abs(state.camAnim.targetY - state.targetY) < 0.2) {
+        state.camAnim = null;
+      }
+    }
+    if (state.autoRotate && !isDragging) state.yaw += 0.0028;
+
+    const m = state.morph;
+    const projected = new Array(nodes.length);
+    const originProj = m > 0.2 ? project(ORIGIN_POS.x, ORIGIN_POS.y, ORIGIN_POS.z) : null;
+
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      n.pos.x = n.old.x + (n.cyl.x - n.old.x) * m;
+      n.pos.y = n.old.y + (n.cyl.y - n.old.y) * m;
+      n.pos.z = n.old.z + (n.cyl.z - n.old.z) * m;
+      projected[i] = project(n.pos.x, n.pos.y, n.pos.z);
+    }
+
+    // Screen-space hover picking (ignore while dragging)
+    if (!isDragging) {
+      let bestId = -1, bestDist = 15;
+      if (originProj) {
+        const dOrig = Math.hypot(originProj.sx - mouseX, originProj.sy - mouseY);
+        if (dOrig < 18) { bestDist = dOrig; bestId = ORIGIN_ID; }
+      }
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        if (n.isThinking && !state.showThinking) continue;
+        const p = projected[i];
+        if (!p) continue;
+        const d = Math.hypot(p.sx - mouseX, p.sy - mouseY);
+        if (d < bestDist) { bestDist = d; bestId = i; }
+      }
+      if (bestId !== state.hoverId) {
+        state.hoverId = bestId;
+        canvas.style.cursor = bestId !== -1 ? 'pointer' : 'grab';
+        if (state.lockedId === -1) updateInspector();
+      }
+    }
+
+    ctx.clearRect(0, 0, W_px, H_px);
+    drawGuideRings();
+
+    const activeId = state.lockedId !== -1 ? state.lockedId : state.hoverId;
+    const isOriginFocus = activeId === ORIGIN_ID;
+    const hasFocus = activeId !== -1;
+    const isFilterActive = state.selectedTheme !== -1 || state.selectedGrade !== -1;
+
+    // Build focus neighbor sets
+    const directPre = new Set();
+    const directPost = new Set();
+    const focusThink = new Set();
+    if (isOriginFocus) {
+      spineStarts.forEach(id => directPost.add(id));
+    } else if (hasFocus) {
+      const fn = nodes[activeId];
+      fn.inEdges.forEach(id => directPre.add(id));
+      fn.outEdges.forEach(id => directPost.add(id));
+      fn.thinkLinks.forEach(id => focusThink.add(id));
+    }
+
+    // 1) Draw Edges (Layered visibility + curved routing)
+    const pulsePhase = (now * 0.0012) % 1;
+    for (let eIdx = 0; eIdx < edges.length; eIdx++) {
+      const e = edges[eIdx];
+      const u = nodes[e.source], v = nodes[e.target];
+      if ((u.isThinking || v.isThinking) && !state.showThinking) continue;
+      const p1 = projected[e.source], p2 = projected[e.target];
+      if (!p1 || !p2) continue;
+
+      let alpha = 0;
+      let strokeColor = 'rgba(145, 170, 220, 1)';
+      let lineWidth = 0.8;
+      let animatePulse = false;
+
+      if (hasFocus) {
+        const isLockedChain = state.lockedId !== -1 && (
+          (e.target === state.lockedId && state.lockedUpstream.has(e.source)) ||
+          (state.lockedUpstream.has(e.target) && state.lockedUpstream.has(e.source))
+        );
+        const isDirectPre = e.target === activeId && e.type !== 'think';
+        const isDirectPost = e.source === activeId && e.type !== 'think';
+        const isThinkRel = e.type === 'think' && (e.source === activeId || e.target === activeId);
+
+        if (isDirectPre || isLockedChain) {
+          alpha = isDirectPre ? 0.85 : 0.58;
+          strokeColor = '#7ce2ff';
+          lineWidth = isDirectPre ? 1.8 : 1.25;
+          animatePulse = true;
+        } else if (isDirectPost) {
+          alpha = 0.72;
+          strokeColor = '#ffd085';
+          lineWidth = 1.5;
+          animatePulse = true;
+        } else if (isThinkRel) {
+          alpha = 0.68;
+          strokeColor = '#d5b4ff';
+          lineWidth = 1.3;
+          animatePulse = true;
+        } else {
+          alpha = e.type === 'intra' ? 0.025 : 0;
+        }
+      } else {
+        const uIn = isNodeFilteredIn(u), vIn = isNodeFilteredIn(v);
+        if (e.type === 'intra') {
+          if (isFilterActive) alpha = (uIn && vIn) ? 0.26 : (uIn || vIn ? 0.03 : 0.012);
+          else alpha = (u.hubScore > 0.42 || v.hubScore > 0.42) ? 0.075 : 0.028;
+          strokeColor = THEMES[u.theme].color;
+        } else if (e.type === 'cross') {
+          if (state.showCrossEdges) alpha = (isFilterActive && !(uIn && vIn)) ? 0.02 : 0.14;
+          else alpha = 0;
+          strokeColor = '#9eb4df';
+        } else if (e.type === 'think') {
+          alpha = 0; // Hidden in default panorama per channel rules
+        }
+      }
+
+      if (alpha <= 0.005) continue;
+
+      // Compute 3D curved control point (outward arc for cylinder mode)
+      const mx = (u.pos.x + v.pos.x) * 0.5;
+      const my = (u.pos.y + v.pos.y) * 0.5;
+      const mz = (u.pos.z + v.pos.z) * 0.5;
+      let cx = mx, cy = my, cz = mz;
+      if (m > 0.1) {
+        const mr = Math.hypot(mx, mz) || 1;
+        const bulge = e.type === 'cross' ? 1.24 : (e.type === 'intra' ? 1.08 : 0.85);
+        cx = (mx / mr) * mr * (1 + (bulge - 1) * m);
+        cz = (mz / mr) * mr * (1 + (bulge - 1) * m);
+      }
+      const pc = project(cx, cy, cz);
+      if (!pc) continue;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = lineWidth;
+      if (e.type === 'cross' && !hasFocus) ctx.setLineDash([3, 4]);
+      ctx.beginPath();
+      ctx.moveTo(p1.sx, p1.sy);
+      ctx.quadraticCurveTo(pc.sx, pc.sy, p2.sx, p2.sy);
+      ctx.stroke();
+
+      // Animated directional pulse dot along active prerequisite/dependent edges
+      if (animatePulse) {
+        const t = pulsePhase;
+        const inv = 1 - t;
+        const px = inv * inv * p1.sx + 2 * inv * t * pc.sx + t * t * p2.sx;
+        const py = inv * inv * p1.sy + 2 * inv * t * pc.sy + t * t * p2.sy;
+        ctx.globalAlpha = 0.95;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // 1.4) Draw Unified Root Origin & 5 Launch Root Arcs to each theme's 1st milestone
+    if (originProj && m > 0.2) {
+      const launchPhase = (now * 0.0009) % 1;
+      const breath = 0.5 + 0.5 * Math.sin(now * 0.0032);
+      spines.forEach((path, tIdx) => {
+        if (!path.length) return;
+        const startNode = nodes[path[0]];
+        const pEnd = projected[path[0]];
+        if (!pEnd) return;
+        const pc = project(startNode.pos.x * 0.55, ORIGIN_POS.y + 3, startNode.pos.z * 0.55);
+        if (!pc) return;
+        const dimmed = (state.selectedTheme !== -1 && state.selectedTheme !== tIdx) || (hasFocus && !isOriginFocus);
+        const a = dimmed ? 0.10 : (isOriginFocus ? 0.92 : 0.62);
+        ctx.save();
+        ctx.globalAlpha = a * m;
+        ctx.strokeStyle = THEMES[tIdx].color;
+        ctx.lineWidth = isOriginFocus ? 2.2 : 1.5;
+        ctx.beginPath();
+        ctx.moveTo(originProj.sx, originProj.sy);
+        ctx.quadraticCurveTo(pc.sx, pc.sy, pEnd.sx, pEnd.sy);
+        ctx.stroke();
+        if (!dimmed) {
+          const t = launchPhase, inv = 1 - t;
+          const bx = inv * inv * originProj.sx + 2 * inv * t * pc.sx + t * t * pEnd.sx;
+          const by = inv * inv * originProj.sy + 2 * inv * t * pc.sy + t * t * pEnd.sy;
+          ctx.globalAlpha = 0.95 * m;
+          ctx.fillStyle = '#fff3cc';
+          ctx.beginPath();
+          ctx.arc(bx, by, 2.3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+
+      // Draw the glowing Origin beacon at (0, -67, 0)
+      ctx.save();
+      const origAlpha = (hasFocus && !isOriginFocus) ? 0.35 : 1.0;
+      ctx.globalAlpha = origAlpha * m;
+      const rGlow = (18 + breath * 8) * Math.min(1.2, originProj.scale * 0.36);
+      const grad = ctx.createRadialGradient(originProj.sx, originProj.sy, 2, originProj.sx, originProj.sy, rGlow);
+      grad.addColorStop(0, 'rgba(255, 232, 160, 0.95)');
+      grad.addColorStop(0.45, 'rgba(255, 200, 90, 0.32)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(originProj.sx, originProj.sy, rGlow, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = isOriginFocus ? '#ffffff' : 'rgba(255, 224, 138, 0.78)';
+      ctx.lineWidth = isOriginFocus ? 2 : 1.3;
+      ctx.beginPath();
+      ctx.arc(originProj.sx, originProj.sy, 7 + breath * 3, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = '#fff9e6';
+      ctx.beginPath();
+      ctx.arc(originProj.sx, originProj.sy, 4.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.font = '600 12px -apple-system, sans-serif';
+      ctx.fillStyle = '#ffe9ad';
+      ctx.textAlign = 'center';
+      ctx.fillText('✦ 起点 · 数学出发', originProj.sx, originProj.sy + 23);
+      ctx.restore();
+    }
+
+    // 1.5) Draw 5 Theme Guiding Spines (Glowing backbone highway + upward flow pulse)
+    if (state.showSpines && m > 0.2) {
+      const spinePhase = (now * 0.00055) % 1;
+      spines.forEach((path, tIdx) => {
+        if (path.length < 2) return;
+        const pts = path.map(id => projected[id]).filter(Boolean);
+        if (pts.length < 2) return;
+        const themeDim = (state.selectedTheme !== -1 && state.selectedTheme !== tIdx) || (hasFocus && !isOriginFocus);
+        const baseAlpha = themeDim ? 0.14 : (state.selectedTheme === tIdx ? 0.92 : 0.72);
+        const color = THEMES[tIdx].color;
+
+        ctx.save();
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        function traceSpine() {
+          ctx.beginPath();
+          ctx.moveTo(pts[0].sx, pts[0].sy);
+          for (let k = 1; k < pts.length - 1; k++) {
+            const mx = (pts[k].sx + pts[k + 1].sx) * 0.5;
+            const my = (pts[k].sy + pts[k + 1].sy) * 0.5;
+            ctx.quadraticCurveTo(pts[k].sx, pts[k].sy, mx, my);
+          }
+          ctx.lineTo(pts[pts.length - 1].sx, pts[pts.length - 1].sy);
+        }
+        traceSpine();
+        ctx.globalAlpha = baseAlpha * 0.25 * m;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = state.selectedTheme === tIdx ? 7.5 : 5.5;
+        ctx.stroke();
+        traceSpine();
+        ctx.globalAlpha = baseAlpha * m;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = state.selectedTheme === tIdx ? 2.4 : 1.8;
+        ctx.stroke();
+
+        if (!themeDim) {
+          const segF = spinePhase * (pts.length - 1);
+          const idx = Math.min(pts.length - 2, Math.floor(segF));
+          const frac = segF - idx;
+          const bx = pts[idx].sx + (pts[idx + 1].sx - pts[idx].sx) * frac;
+          const by = pts[idx].sy + (pts[idx + 1].sy - pts[idx].sy) * frac;
+          ctx.globalAlpha = 0.95 * m;
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(bx, by, 2.6, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+    }
+
+    // 2) Depth-sort and draw nodes back-to-front
+    const drawList = [];
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].isThinking && !state.showThinking) continue;
+      if (projected[i]) drawList.push(i);
+    }
+    drawList.sort((a, b) => projected[b].depth - projected[a].depth);
+
+    for (const i of drawList) {
+      const n = nodes[i];
+      const p = projected[i];
+      const baseR = Math.max(1.2, n.visRadius * p.scale * 0.56);
+      const color = n.isThinking ? THINKING_COLOR : THEMES[n.theme].color;
+
+      let alpha = 0.88;
+      let ringColor = null;
+
+      if (hasFocus) {
+        if (i === activeId) {
+          alpha = 1.0; ringColor = '#ffffff';
+        } else if (directPre.has(i) || (state.lockedId !== -1 && state.lockedUpstream.has(i))) {
+          alpha = 0.96; ringColor = '#7ce2ff';
+        } else if (directPost.has(i)) {
+          alpha = 0.92; ringColor = '#ffd085';
+        } else if (focusThink.has(i)) {
+          alpha = 0.95; ringColor = '#d5b4ff';
+        } else {
+          alpha = 0.11;
+        }
+      } else if (isFilterActive) {
+        alpha = isNodeFilteredIn(n) ? 0.95 : 0.11;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      // Subtle glow for bright nodes
+      if (alpha > 0.5) {
+        const grad = ctx.createRadialGradient(p.sx, p.sy, baseR * 0.15, p.sx, p.sy, baseR * 2.1);
+        grad.addColorStop(0, color);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, baseR * 2.1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Shape distinction: diamond for 50 thinking nodes, sphere for 537 domain nodes
+      ctx.fillStyle = color;
+      if (n.isThinking) {
+        const s = baseR * 1.18;
+        ctx.beginPath();
+        ctx.moveTo(p.sx, p.sy - s);
+        ctx.lineTo(p.sx + s, p.sy);
+        ctx.lineTo(p.sx, p.sy + s);
+        ctx.lineTo(p.sx - s, p.sy);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, baseR, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Learning footprint halo (channel 4 decoupled from coordinates)
+      if (n.hasFootprint && alpha > 0.4 && !ringColor) {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.50)';
+        ctx.lineWidth = 0.85;
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, baseR + 1.8, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Spine milestone double-ring anchor
+      if (n.isSpine && state.showSpines && m > 0.3 && !ringColor && alpha > 0.45) {
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = alpha * 0.82;
+        ctx.lineWidth = 1.05;
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, baseR + 2.2, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Active focus ring
+      if (ringColor) {
+        ctx.strokeStyle = ringColor;
+        ctx.lineWidth = i === activeId ? 1.8 : 1.15;
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, baseR + 2.5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // LOD / Focus / Theme-Spine milestone label (keep ~6-8 spaced milestones readable)
+      const spineLen = n.isSpine ? spines[n.theme].length : 1;
+      const step = state.selectedTheme === n.theme ? Math.max(2, Math.floor(spineLen / 7)) : Math.max(3, Math.floor(spineLen / 4));
+      const isKeyMilestone = n.isSpine && (n.spineOrder === 0 || n.spineOrder === spineLen - 1 || n.spineOrder % step === 0);
+      const showSpineLabel = isKeyMilestone && state.showSpines && m > 0.45 && !hasFocus && (state.selectedTheme === n.theme || (state.selectedTheme === -1 && p.depth < state.dist + 16));
+      if (i === activeId || (hasFocus && (directPre.has(i) || directPost.has(i) || focusThink.has(i)) && baseR > 2.2)) {
+        ctx.font = i === activeId ? '600 12.5px -apple-system, sans-serif' : '11px -apple-system, sans-serif';
+        ctx.fillStyle = i === activeId ? '#ffffff' : 'rgba(225, 235, 252, 0.88)';
+        ctx.fillText(n.label, p.sx + baseR + 6, p.sy + 4);
+      } else if (showSpineLabel) {
+        ctx.font = state.selectedTheme === n.theme ? '500 11.5px -apple-system, sans-serif' : '10.5px -apple-system, sans-serif';
+        ctx.fillStyle = state.selectedTheme === n.theme ? 'rgba(240, 246, 255, 0.92)' : 'rgba(215, 226, 245, 0.65)';
+        ctx.fillText(n.label, p.sx + baseR + 6, p.sy + 3.5);
+      }
+      ctx.restore();
+    }
+
+    // 3) Draw 5 Theme Sector Anchor Labels on top rim in cylinder mode
+    if (m > 0.45 && !hasFocus) {
+      ctx.save();
+      ctx.globalAlpha = 0.88 * m;
+      THEMES.forEach(t => {
+        const mid = sectorBounds[t.id].mid;
+        const p = project(72 * Math.cos(mid), 52, 72 * Math.sin(mid));
+        if (!p) return;
+        const dim = state.selectedTheme !== -1 && state.selectedTheme !== t.id;
+        ctx.globalAlpha = dim ? 0.22 : 0.92;
+        ctx.fillStyle = t.color;
+        ctx.beginPath();
+        ctx.arc(p.sx - 8, p.sy - 3, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.font = '500 12.5px -apple-system, sans-serif';
+        ctx.fillStyle = '#e8eefb';
+        ctx.fillText(t.name, p.sx, p.sy + 1);
+      });
+      ctx.restore();
+    }
+
+  }
+
+  // =========================================================
+  // 7. 学习面板框架（三层固定壳 + 四拍统一流程 + 前景/背景滤镜）
+  // =========================================================
+  const learnState = {
+    open: false,
+    focus: 'space', // 'learn' | 'space'
+    nodeId: -1,
+    qIndex: 0,
+    questions: [],
+    beat: 1,        // 1: 看清问题, 2: 动手尝试, 3: 检查验证, 4: 记下发现
+    guessPicked: null,
+    guessConfirmed: false,
+    fracDenom: 6,
+    fracShaded: new Set(),
+    gridCells: new Set(),
+    checkedResult: null, // null | { ok, title, body }
+    attempts: [],
+    savedForLater: false,
+    drawerOpen: false,
+    noteSaved: false
+  };
+
+  const learnPanelEl = document.getElementById('learnPanel');
+  const lpFlowEl = document.getElementById('lpFlow');
+  const lpPromptEl = document.getElementById('lpPrompt');
+  const lpPromptSubEl = document.getElementById('lpPromptSub');
+  const lpGuessBoxEl = document.getElementById('lpGuessBox');
+  const lpGuessOptsEl = document.getElementById('lpGuessOpts');
+  const lpWorkEl = document.getElementById('lpWork');
+  const lpFeedbackEl = document.getElementById('lpFeedback');
+  const lpReflectEl = document.getElementById('lpReflect');
+  const lpReflectInput = document.getElementById('lpReflectInput');
+  const lpPrimaryBtn = document.getElementById('lpPrimaryBtn');
+  const lpMoreBtn = document.getElementById('lpMoreBtn');
+  const lpDrawerEl = document.getElementById('lpDrawer');
+  const lpLaterBtn = document.getElementById('lpLaterBtn');
+
+  function setFocusLayer(layer) {
+    learnState.focus = layer;
+    document.body.classList.toggle('learn-open', learnState.open);
+    document.body.classList.toggle('learn-fg', learnState.open && layer === 'learn');
+    document.body.classList.toggle('learn-bg', learnState.open && layer === 'space');
+  }
+
+  function buildQuestionsForNode(n) {
+    const targetName = n.label;
+    return [
+      {
+        type: 'fraction',
+        needsGuess: false,
+        prompt: `用下面的分数纸带，拼出和 1/2 长度完全一样的等值分数（对应「${targetName}」）。`,
+        sub: '先选分成几等份，再点选涂色格；改动作品时旧反馈会立刻失效。',
+        refNum: 1, refDen: 2,
+        hint: '把 1/2 的每一份再平均分成同样多的小份，涂色份数与总份数同步翻倍。',
+        chips: ['分子分母同时乘 3，总长度不变', '分成 6 份时涂 3 份刚好和 1/2 对齐']
+      },
+      {
+        type: 'grid',
+        needsGuess: true,
+        guessTitle: '先留一个猜想：要在 4×4 方格里拼出面积为 6 个单位的图形，最少需要点亮几格？',
+        guessOptions: ['4 格', '6 格', '8 格'],
+        prompt: `动手验证你的猜想：在 4×4 方格板上构造一个面积恰好为 6 个单位的连续图形（对应「${targetName}」）。`,
+        sub: '确认猜想后下方教具自动解锁，点击格子即可摆出你想要的形状。',
+        targetArea: 6,
+        hint: '无论摆成长方形 2×3、L 形还是阶梯形，只要恰好点亮 6 个单位方格，面积就是 6。',
+        chips: ['形状可以不同，但单位方格数相同面积就相等', '先猜再验证能更快发现规律']
+      }
+    ];
+  }
+
+  function loadQuestion(idx) {
+    learnState.qIndex = idx;
+    const q = learnState.questions[idx];
+    learnState.beat = 1;
+    learnState.guessPicked = null;
+    learnState.guessConfirmed = !q.needsGuess;
+    learnState.fracDenom = 6;
+    learnState.fracShaded = new Set();
+    learnState.gridCells = new Set();
+    learnState.checkedResult = null;
+    learnState.noteSaved = false;
+    lpReflectInput.value = '';
+    renderLearningPanel();
+  }
+
+  function openLearningForNode(nodeId) {
+    const n = nodes[nodeId];
+    if (!n || n.isThinking) return;
+    const isSame = learnState.open && learnState.nodeId === nodeId;
+    learnState.open = true;
+    state.lockedId = nodeId;
+    state.lockedUpstream = getUpstreamChain(nodeId);
+    if (!isSame) {
+      learnState.nodeId = nodeId;
+      learnState.questions = buildQuestionsForNode(n);
+      learnState.attempts = [];
+      learnState.savedForLater = false;
+      learnState.drawerOpen = false;
+      loadQuestion(0);
+    }
+    setFocusLayer('learn');
+    updateInspector();
+  }
+
+  function invalidateOldFeedback() {
+    if (learnState.checkedResult) {
+      learnState.checkedResult = null;
+      learnState.beat = 2;
+    }
+  }
+
+  function renderLearningPanel() {
+    if (!learnState.open || learnState.nodeId < 0) return;
+    const n = nodes[learnState.nodeId];
+    const q = learnState.questions[learnState.qIndex];
+    const color = THEMES[n.theme].color;
+
+    // Layer 1: Top Shell
+    document.getElementById('lpDot').style.background = color;
+    document.getElementById('lpDot').style.boxShadow = `0 0 8px ${color}`;
+    document.getElementById('lpTitle').textContent = n.label;
+    document.getElementById('lpGrade').textContent = GRADE_NAMES[n.grade];
+    lpLaterBtn.classList.toggle('saved', learnState.savedForLater);
+    lpLaterBtn.textContent = learnState.savedForLater ? '✓ 已留到下次' : '留到下次';
+
+    const qdotsEl = document.getElementById('lpQdots');
+    qdotsEl.innerHTML = learnState.questions.map((_, i) => {
+      const cls = i < learnState.qIndex ? 'done' : (i === learnState.qIndex ? 'now' : '');
+      return `<span class="lp-qdot ${cls}"></span>`;
+    }).join('');
+
+    // 4-Beat Flow Rail
+    lpFlowEl.querySelectorAll('.lp-beat').forEach(el => {
+      const b = Number(el.dataset.beat);
+      el.classList.toggle('active', b === learnState.beat);
+      el.classList.toggle('done', b < learnState.beat);
+    });
+
+    // Layer 2: Prompt & Optional Guess Box
+    lpPromptEl.textContent = q.prompt;
+    lpPromptSubEl.textContent = q.sub;
+    if (q.needsGuess && !learnState.guessConfirmed) {
+      lpGuessBoxEl.style.display = 'block';
+      document.getElementById('lpGuessTitle').textContent = q.guessTitle;
+      lpGuessOptsEl.innerHTML = q.guessOptions.map(opt =>
+        `<button class="lp-guess-chip ${learnState.guessPicked === opt ? 'picked' : ''}" data-guess="${opt}">${opt}</button>`
+      ).join('');
+      lpGuessOptsEl.querySelectorAll('.lp-guess-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          learnState.guessPicked = btn.dataset.guess;
+          renderLearningPanel();
+        });
+      });
+    } else {
+      lpGuessBoxEl.style.display = 'none';
+    }
+
+    // Manipulative (#work)
+    lpWorkEl.classList.toggle('locked', !learnState.guessConfirmed);
+    if (q.type === 'fraction') {
+      const den = learnState.fracDenom;
+      const shadedCount = learnState.fracShaded.size;
+      let html = `<div><div class="frac-row-label"><span>参考纸带</span><span>${q.refNum} / ${q.refDen}</span></div><div class="frac-bar">`;
+      for (let i = 0; i < q.refDen; i++) {
+        html += `<div class="frac-cell ${i < q.refNum ? 'ref-on' : ''}">${i < q.refNum ? '1/2' : ''}</div>`;
+      }
+      html += `</div></div>`;
+      html += `<div class="split-bar"><span>你的纸带分成：</span>`;
+      [2, 4, 6, 8].forEach(d => {
+        html += `<button class="pill ${den === d ? 'active' : ''}" data-den="${d}">${d} 等份</button>`;
+      });
+      html += `<span style="margin-left:auto;color:#dce7fa;">已涂 ${shadedCount} / ${den}</span></div>`;
+      html += `<div class="frac-bar">`;
+      for (let i = 0; i < den; i++) {
+        const on = learnState.fracShaded.has(i);
+        html += `<div class="frac-cell ${on ? 'user-on' : ''}" data-fcell="${i}">${on ? `1/${den}` : ''}</div>`;
+      }
+      html += `</div>`;
+      lpWorkEl.innerHTML = html;
+      lpWorkEl.querySelectorAll('[data-den]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          learnState.fracDenom = Number(btn.dataset.den);
+          learnState.fracShaded.clear();
+          invalidateOldFeedback();
+          learnState.beat = 1;
+          renderLearningPanel();
+        });
+      });
+      lpWorkEl.querySelectorAll('[data-fcell]').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const idx = Number(cell.dataset.fcell);
+          if (learnState.fracShaded.has(idx)) learnState.fracShaded.delete(idx);
+          else learnState.fracShaded.add(idx);
+          invalidateOldFeedback();
+          learnState.beat = learnState.fracShaded.size > 0 ? 2 : 1;
+          renderLearningPanel();
+        });
+      });
+    } else {
+      const cnt = learnState.gridCells.size;
+      let html = `<div class="frac-row-label"><span>${learnState.guessPicked ? `你的猜想：${learnState.guessPicked}` : '点击方格点亮或取消'}</span><span style="color:#9ee3ff;">当前面积：${cnt} / ${q.targetArea} 格</span></div><div class="grid-board">`;
+      for (let i = 0; i < 16; i++) {
+        const on = learnState.gridCells.has(i);
+        html += `<div class="grid-tile ${on ? 'on' : ''}" data-gcell="${i}">${on ? '1' : ''}</div>`;
+      }
+      html += `</div>`;
+      lpWorkEl.innerHTML = html;
+      lpWorkEl.querySelectorAll('[data-gcell]').forEach(tile => {
+        tile.addEventListener('click', () => {
+          const idx = Number(tile.dataset.gcell);
+          if (learnState.gridCells.has(idx)) learnState.gridCells.delete(idx);
+          else learnState.gridCells.add(idx);
+          invalidateOldFeedback();
+          learnState.beat = learnState.gridCells.size > 0 ? 2 : 1;
+          renderLearningPanel();
+        });
+      });
+    }
+
+    // On-Demand Check Feedback
+    if (learnState.checkedResult) {
+      lpFeedbackEl.className = `lp-feedback visible ${learnState.checkedResult.ok ? 'ok' : 'err'}`;
+      document.getElementById('lpFeedbackTitle').textContent = learnState.checkedResult.title;
+      document.getElementById('lpFeedbackBody').textContent = learnState.checkedResult.body;
+    } else {
+      lpFeedbackEl.className = 'lp-feedback';
+    }
+
+    // On-Demand Beat 4 Discovery Reflection
+    const showReflect = learnState.beat === 4;
+    lpReflectEl.classList.toggle('visible', showReflect);
+    if (showReflect) {
+      const chipsEl = document.getElementById('lpQuickChips');
+      chipsEl.innerHTML = q.chips.map(c => `<button class="lp-quick-chip" data-chip="${c}">+ ${c}</button>`).join('');
+      chipsEl.querySelectorAll('.lp-quick-chip').forEach(b => {
+        b.addEventListener('click', () => {
+          lpReflectInput.value = b.dataset.chip;
+          learnState.noteSaved = false;
+          updatePrimaryButton();
+        });
+      });
+    }
+
+    // More Drawer content
+    lpMoreBtn.classList.toggle('open', learnState.drawerOpen);
+    lpDrawerEl.classList.toggle('open', learnState.drawerOpen);
+    if (learnState.drawerOpen) {
+      const attHtml = learnState.attempts.length
+        ? learnState.attempts.slice(-4).reverse().map(a => `<div>• ${a}</div>`).join('')
+        : '<div style="color:#7c88a1;">还没有提交检查记录</div>';
+      const preChips = n.inEdges.slice(0, 5).map(id =>
+        `<span class="lp-rel-chip" data-peek="${id}">${nodes[id].label}</span>`
+      ).join('') || '<span style="color:#7c88a1;">无直接前置</span>';
+      lpDrawerEl.innerHTML = `
+        <div class="lp-drawer-sec"><h4>可选想一想</h4><div>${q.hint}</div></div>
+        <div class="lp-drawer-sec"><h4>历史尝试 (${learnState.attempts.length})</h4>${attHtml}</div>
+        <div class="lp-drawer-sec"><h4>点击切回 3D 前景查看前置</h4><div>${preChips}</div></div>
+      `;
+      lpDrawerEl.querySelectorAll('[data-peek]').forEach(ch => {
+        ch.addEventListener('click', () => {
+          const pid = Number(ch.dataset.peek);
+          learnState.drawerOpen = false;
+          state.lockedId = pid;
+          state.lockedUpstream = getUpstreamChain(pid);
+          setFocusLayer('space');
+          updateInspector();
+          renderLearningPanel();
+        });
+      });
+    }
+
+    updatePrimaryButton();
+  }
+
+  function updatePrimaryButton() {
+    const q = learnState.questions[learnState.qIndex];
+    lpPrimaryBtn.classList.remove('pass-btn');
+    lpPrimaryBtn.disabled = false;
+
+    if (q.needsGuess && !learnState.guessConfirmed) {
+      lpPrimaryBtn.textContent = learnState.guessPicked ? '确认猜想并解锁教具' : '先点选一个猜想';
+      lpPrimaryBtn.disabled = !learnState.guessPicked;
+      return;
+    }
+    if (learnState.beat === 1) {
+      lpPrimaryBtn.textContent = '动手试试后再检查';
+      lpPrimaryBtn.disabled = true;
+    } else if (learnState.beat === 2) {
+      lpPrimaryBtn.textContent = '检查我的作品';
+    } else if (learnState.beat === 3) {
+      if (learnState.checkedResult?.ok) {
+        lpPrimaryBtn.textContent = '记下我的发现 →';
+        lpPrimaryBtn.classList.add('pass-btn');
+      } else {
+        lpPrimaryBtn.textContent = '修改作品后再检查';
+        lpPrimaryBtn.disabled = true;
+      }
+    } else if (learnState.beat === 4) {
+      const hasText = lpReflectInput.value.trim().length > 0;
+      if (hasText && !learnState.noteSaved) {
+        lpPrimaryBtn.textContent = '保存这条发现';
+        lpPrimaryBtn.classList.add('pass-btn');
+      } else if (learnState.qIndex < learnState.questions.length - 1) {
+        lpPrimaryBtn.textContent = '继续下一题 →';
+        lpPrimaryBtn.classList.add('pass-btn');
+      } else {
+        lpPrimaryBtn.textContent = '完成并返回 3D 空间';
+        lpPrimaryBtn.classList.add('pass-btn');
+      }
+    }
+  }
+
+  // Single Primary CTA state transitions
+  lpPrimaryBtn.addEventListener('click', () => {
+    const q = learnState.questions[learnState.qIndex];
+    const n = nodes[learnState.nodeId];
+    if (q.needsGuess && !learnState.guessConfirmed) {
+      learnState.guessConfirmed = true;
+      renderLearningPanel();
+      return;
+    }
+    if (learnState.beat === 2) {
+      let ok = false, title = '', body = '', summary = '';
+      if (q.type === 'fraction') {
+        const num = learnState.fracShaded.size, den = learnState.fracDenom;
+        ok = num * q.refDen === q.refNum * den && den !== q.refDen;
+        if (ok) {
+          title = `验证通过：${num}/${den} 与 1/2 长度完全相等`;
+          body = `你把纸带分成 ${den} 等份并涂了 ${num} 份，比例和 1/2 严格一致。`;
+        } else if (den === q.refDen && num === q.refNum) {
+          title = '再换一种分法试试';
+          body = '1/2 和原参考条分法相同，试着切换成 4、6 或 8 等份拼出新的等值分数。';
+        } else {
+          title = `还没对齐：当前是 ${num}/${den}`;
+          body = `对照上方 1/2 纸带看看，${num}/${den} ${num / den < 0.5 ? '偏短了一点' : '偏长了一点'}；直接改动格子再重新检查。`;
+        }
+        summary = `第 1 题：${num}/${den}（${ok ? '通过' : '待修改'}）`;
+      } else {
+        const cnt = learnState.gridCells.size;
+        ok = cnt === q.targetArea;
+        if (ok) {
+          title = `验证通过：面积正好是 ${cnt} 个单位方格`;
+          body = `你先猜了「${learnState.guessPicked}」，动手构造后确认了恰好需要 ${cnt} 个单位方格。`;
+        } else {
+          title = `面积还不一致：当前点亮了 ${cnt} 格`;
+          body = `目标是 ${q.targetArea} 格，现在${cnt < q.targetArea ? `还差 ${q.targetArea - cnt} 格` : `多了 ${cnt - q.targetArea} 格`}，直接点击方格调整。`;
+        }
+        summary = `第 2 题：面积 ${cnt} 格（${ok ? '通过' : '待修改'}）`;
+      }
+      learnState.attempts.push(summary);
+      learnState.checkedResult = { ok, title, body };
+      learnState.beat = 3;
+      renderLearningPanel();
+      return;
+    }
+    if (learnState.beat === 3 && learnState.checkedResult?.ok) {
+      learnState.beat = 4;
+      renderLearningPanel();
+      return;
+    }
+    if (learnState.beat === 4) {
+      const hasText = lpReflectInput.value.trim().length > 0;
+      if (hasText && !learnState.noteSaved) {
+        learnState.noteSaved = true;
+        n.hasFootprint = true; // Light up real footprint ring on 3D node!
+        learnState.attempts.push(`保存发现：${lpReflectInput.value.trim().slice(0, 22)}`);
+        renderLearningPanel();
+        return;
+      }
+      if (learnState.qIndex < learnState.questions.length - 1) {
+        loadQuestion(learnState.qIndex + 1);
+      } else {
+        n.hasFootprint = true;
+        learnState.open = false;
+        setFocusLayer('space');
+        updateInspector();
+      }
+    }
+  });
+
+  // Panel & Inspector wiring
+  document.getElementById('inspStartBtn').addEventListener('click', e => {
+    const id = Number(e.currentTarget.dataset.nodeId);
+    if (Number.isFinite(id) && id >= 0) openLearningForNode(id);
+  });
+  learnPanelEl.addEventListener('mousedown', () => {
+    if (learnState.open && learnState.focus !== 'learn') setFocusLayer('learn');
+  });
+  document.getElementById('lpCloseBtn').addEventListener('click', () => {
+    learnState.open = false;
+    learnState.drawerOpen = false;
+    setFocusLayer('space');
+    updateInspector();
+  });
+  lpLaterBtn.addEventListener('click', () => {
+    learnState.savedForLater = !learnState.savedForLater;
+    renderLearningPanel();
+  });
+  lpMoreBtn.addEventListener('click', () => {
+    learnState.drawerOpen = !learnState.drawerOpen;
+    renderLearningPanel();
+  });
+  lpReflectInput.addEventListener('input', () => {
+    learnState.noteSaved = false;
+    updatePrimaryButton();
+  });
+
+  requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
