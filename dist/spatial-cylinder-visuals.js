@@ -37,10 +37,10 @@ export function createCylinderVisuals(THREE,space,nodeList){
  });
  for(const s of layout.sectors){
    const color=space.themes.get(s.themeId).color;
-   guides.add(line(arc(205*scale,0,s.start,s.end),color,.12,true));
+   const base=line(arc(205*scale,0,s.start,s.end),color,.12,true);base.userData.layer='rings';guides.add(base);
    for(const ref of layerRefs){
      const m=line(arc(ref.r,ref.y,s.start,s.end),0xa0b2d5,.14,true);
-     m.userData.stage=ref.id;guides.add(m);
+     m.userData.stage=ref.id;m.userData.layer='rings';guides.add(m);
    }
  }
  const labels=[];
@@ -53,8 +53,8 @@ export function createCylinderVisuals(THREE,space,nodeList){
    const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map,transparent:true,opacity:.56,depthWrite:false,depthTest:false,fog:false}));
    sprite.center.set(0,.5);sprite.renderOrder=3;guides.add(sprite);labels.push({ref,sprite,width:canvas.width/2});
  }
- guides.add(line([new THREE.Vector3(0,coreBottom-offset,0),new THREE.Vector3(0,coreTop-offset,0)],0xc6b5ff,.36,true));
- for(const y of [coreBottom,(coreBottom+coreTop)/2,coreTop])guides.add(line(arc(coreR,y,0,Math.PI*2),0xc6b5ff,.18,true));
+ const axis=line([new THREE.Vector3(0,coreBottom-offset,0),new THREE.Vector3(0,coreTop-offset,0)],0xc6b5ff,.36,true);axis.userData.layer='thinking';guides.add(axis);
+ for(const y of [coreBottom,(coreBottom+coreTop)/2,coreTop]){const ring=line(arc(coreR,y,0,Math.PI*2),0xc6b5ff,.18,true);ring.userData.layer='thinking';guides.add(ring);}
  let seed=54017;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
  const stars=[];for(let i=0;i<420;i++){const a=random()*Math.PI*2,r=720+random()*1050,y=(random()-.5)*2200;stars.push(Math.cos(a)*r,y,Math.sin(a)*r);}
  const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(stars,3));
@@ -105,6 +105,7 @@ export function createCylinderVisuals(THREE,space,nodeList){
  const flow=new THREE.Points(fg,new THREE.PointsMaterial({map:texture,vertexColors:true,size:12,sizeAttenuation:false,transparent:true,opacity:.85,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));flow.frustumCulled=false;flow.renderOrder=2;group.add(flow);
  function setEmphasis(scene){
    const focus=!!(scene.selected||scene.hoverMapKey||scene.hoverThemeId||scene.cylinderThemeFilter||scene.guideFocus),filtered=scene.gradeStageId!=='all',task=scene.taskWorkspaceActive;
+   const options=scene.cylinderOptions;accents.visible=options.spines;milestoneMesh.visible=options.spines;
    const selected=space.byKey.get(scene.selected),theme=scene.hoverThemeId||(selected?.kind==='theme'?selected.id:!selected&&!scene.hoverMapKey?scene.cylinderThemeFilter:null);
    for(const rec of records){
      const e=rec.edge,hit=!filtered||scene.gradeStageIds.has(e.prerequisiteId)&&scene.gradeStageIds.has(e.topicId);
@@ -113,8 +114,8 @@ export function createCylinderVisuals(THREE,space,nodeList){
      for(const {mesh,opacity} of rec.pieces)mesh.material.opacity=opacity*factor;
    }
    const screenRight=scene.basis().right,right=screenRight.clone();right.y=0;right.normalize();
-   const px=Math.max(.001,scene.globalScale()),showRefs=scene.networkView!=='map'&&!scene.selected&&!scene.guideFocus&&!task;
-   for(const obj of guides.children)if(obj.userData.stage)obj.material.opacity=filtered?(obj.userData.stage===scene.gradeStageId?.32:.06):.18;
+   const px=Math.max(.001,scene.globalScale()),showRefs=options.rings&&scene.networkView!=='map'&&!scene.selected&&!scene.guideFocus&&!task;
+   for(const obj of guides.children){if(obj.userData.layer)obj.visible=options[obj.userData.layer];if(obj.userData.stage)obj.material.opacity=filtered?(obj.userData.stage===scene.gradeStageId?.32:.06):.18;}
    for(const {ref,sprite,width} of labels){
      sprite.position.copy(right).multiplyScalar(ref.r+8);sprite.position.y=ref.y-offset;
      const anchor=scene.project(sprite.position.toArray()),placed=cylinderReferenceLabelPlacement(anchor,scene.width,scene.height,width);
@@ -123,12 +124,12 @@ export function createCylinderVisuals(THREE,space,nodeList){
      sprite.scale.set(placed.width/px,20/px,1);
      sprite.material.opacity=filtered?(ref.id===scene.gradeStageId?.94:.30):.73;
    }
-   guides.visible=!scene.guideFocus;flow.visible=!focus&&!filtered&&!task&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+   guides.visible=!scene.guideFocus;flow.visible=options.spines&&!focus&&!filtered&&!task&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
  }
  function move(time){if(!flow.visible)return;for(let i=0;i<paths.length;i++){
    const p=paths[i];let at=((time*.000115+p.phase)%1)*p.total,e=p.segments[0];
    for(const seg of p.segments){e=seg;if(at<=seg.length)break;at-=seg.length;}
    e.curve.getPointAt(Math.max(0,Math.min(1,at/Math.max(e.length,1e-6)))).toArray(fp,i*3);
  }fg.attributes.position.needsUpdate=true;}
- return {group,glowMesh,thinkingMesh,milestoneMesh,flow,setEmphasis,move,edgeCount:records.length,bridgeCount:records.filter(r=>r.bridge).length};
+ return {group,glowMesh,thinkingMesh,milestoneMesh,flow,accents,guides,setEmphasis,move,edgeCount:records.length,bridgeCount:records.filter(r=>r.bridge).length};
 }

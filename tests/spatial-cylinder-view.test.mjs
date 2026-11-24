@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {buildCylinderSpace,CYLINDER_VERSION,CYLINDER_VIEW_KEY} from '../dist/spatial-cylinder-view.js';
 import {buildRelationshipSpace,RELATIONSHIP_VERSION} from '../dist/spatial-relationship.js';
 import {restoreNetworkCoordinates} from '../dist/spatial-global.js';
-import {parseView,LAYOUT_VERSION} from '../dist/spatial-model.js';
+import {parseView,LAYOUT_VERSION,cylinderObservation} from '../dist/spatial-model.js';
 import {cylinderReferenceLabelPlacement} from '../dist/spatial-cylinder-visuals.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const grade=JSON.parse(fs.readFileSync(new URL('../dist/data/grade-panorama-lite.json',import.meta.url)));
@@ -30,4 +30,9 @@ test('v54 reference text fits at either screen edge without changing source coor
  assert.equal(cylinderReferenceLabelPlacement({x:3,y:500,visible:true},934,1348,104).x,12);
  assert.equal(cylinderReferenceLabelPlacement({x:1000,y:500,visible:true},934,1348,104).visible,false);
  assert.equal(cylinderReferenceLabelPlacement({x:500,y:500,visible:true},1920,1080,104).x,500);
+});
+
+test('v54 observation switches are independent booleans and orbit is opt-in on every visit',()=>{
+ assert.deepEqual(cylinderObservation(),{spines:true,thinking:true,crossEdges:false,rings:true,orbit:false});
+ assert.deepEqual(cylinderObservation({spines:false,thinking:'false',crossEdges:true,rings:false,orbit:true}),{spines:false,thinking:true,crossEdges:true,rings:false,orbit:false});
 });

@@ -1448,3 +1448,37 @@ body[data-world="network"][data-network-version="54"] #local-overview-exit:hover
 body[data-network-version="54"] #cylinder-theme-directory{display:block;padding:7px 8px;margin:6px 0;font-size:12px;text-align:left;border-radius:7px}
 body[data-network-version="54"] #cylinder-theme-directory[hidden]{display:none!important}
 body[data-network-version="54"] #network-legend:has([aria-pressed="true"]) button:not([aria-pressed="true"]):not(:hover){opacity:.48}
+
+/* v54 observation and compact inspection: the real map stays the main surface. */
+body[data-network-version="54"] .cylinder-observation-switches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin:6px 0 9px}
+body[data-network-version="54"] .cylinder-option{min-height:30px;padding:5px 6px;background:#141e30;border:1px solid #35445e;border-radius:6px;color:#9eafca;font-size:11px;text-align:left;line-height:1.35}
+body[data-network-version="54"] .cylinder-option[aria-pressed="true"]{background:#233754;border-color:#6b90c5;color:#e3eeff}
+body[data-network-version="54"] .cylinder-option:disabled{opacity:.42;cursor:default}
+body[data-network-version="54"] .tool-rail [data-action="cylinder-origin"]{width:auto;min-width:46px;padding:3px 6px;color:#ffe0a0;white-space:normal;line-height:1.2}
+body[data-network-version="54"] #cylinder-entry-nav,body[data-network-version="54"] #cylinder-hover-inspector{position:fixed;right:24px;bottom:106px;width:min(310px,calc(100vw - 32px));padding:12px 14px;background:#10192af2;border:1px solid #3c4c68;border-radius:12px;box-shadow:0 12px 30px #0005;color:#dce7f8;z-index:12;max-height:calc(100dvh - 220px);overflow:auto}
+body[data-network-version="54"] #cylinder-entry-nav header{display:flex;align-items:center;justify-content:space-between}
+body[data-network-version="54"] #cylinder-entry-nav header button{padding:4px 10px}
+body[data-network-version="54"] #cylinder-entry-nav p{font-size:11px;color:#a4b4d0;line-height:1.5;margin:3px 0 8px}
+body[data-network-version="54"] .cylinder-entry-choice{display:flex;align-items:center;gap:9px;width:100%;padding:8px 6px;min-height:44px;color:#e2ebff;background:transparent;border-top:1px solid #ffffff14;font-size:12px;text-align:left}
+body[data-network-version="54"] .cylinder-entry-choice:hover{background:#20314b}
+body[data-network-version="54"] .cylinder-entry-choice i{width:7px;height:7px;border-radius:50%;background:var(--object-color);box-shadow:0 0 7px var(--object-color);flex:none}
+body[data-network-version="54"] .cylinder-entry-choice span:nth-child(2){flex:1;line-height:1.4}
+body[data-network-version="54"] .cylinder-entry-choice small{display:block;color:#9fafd0;font-size:10px}
+body[data-network-version="54"] #cylinder-hover-inspector{pointer-events:none;width:min(254px,calc(100vw - 32px));font-size:12px;bottom:96px}
+body[data-network-version="54"] #cylinder-hover-inspector strong{font-size:14px}
+body[data-network-version="54"] #cylinder-hover-inspector small{color:#9bacc6;display:block;margin-top:5px;font-size:10px}
+body[data-network-version="54"] .cylinder-inspection-stage{font-size:11px;margin:6px 0;color:#b7c8e0}
+body[data-network-version="54"] .cylinder-inspection-counts{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;font-variant-numeric:tabular-nums}
+body[data-network-version="54"] .cylinder-inspection-counts span{padding:5px 7px;background:#ffffff09;border:1px solid #ffffff0d;border-radius:6px}
+body[data-network-version="54"] .cylinder-inspection-counts .before,body[data-world="network"][data-network-version="54"] #focus-card .network-focus-key .before{color:#7ce2ff}
+body[data-network-version="54"] .cylinder-inspection-counts .after,body[data-world="network"][data-network-version="54"] #focus-card .network-focus-key .after{color:#ffd085}
+body[data-network-version="54"] .cylinder-inspection-counts .thinking{color:#d5b4ff}
+body[data-network-version="54"] .cylinder-compact-inspection{display:grid;gap:6px}
+body[data-network-version="54"] .cylinder-compact-inspection>.primary-button{width:100%;min-height:44px;margin:6px 0 0}
+body[data-network-version="54"] #cylinder-node-details>summary{font-size:12px;padding:10px 0 4px;border-top:1px solid #35425a;margin-top:9px;cursor:pointer}
+body[data-network-version="54"] #cylinder-node-details .focus-actions{margin:6px 0}
+.spatial-focus-links .cylinder-link-flow{stroke-dasharray:5 95;stroke-dashoffset:0;animation:cylinder-direction-flow 2.6s linear infinite}
+@keyframes cylinder-direction-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-100}}
+@media(prefers-reduced-motion:reduce){.spatial-focus-links .cylinder-link-flow{display:none;animation:none}}
+@media(max-aspect-ratio:9/10){body[data-network-version="54"] #cylinder-entry-nav,body[data-network-version="54"] #cylinder-hover-inspector{right:16px;bottom:146px}}
+@media(max-width:620px){body[data-network-version="54"] #cylinder-entry-nav{right:12px;bottom:148px}body[data-network-version="54"] #cylinder-hover-inspector{right:12px;bottom:108px}body[data-network-version="54"] .tool-rail [data-action="cylinder-origin"]{min-width:38px;font-size:9px}}
