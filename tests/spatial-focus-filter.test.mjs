@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {buildFocusFilter} from '../dist/spatial-focus-filter.js';
+import {buildFocusFilter,buildCylinderLock} from '../dist/spatial-focus-filter.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const ids=new Set(atlas.nodes.filter(n=>n.domainId!=='thinking').map(n=>n.id));
 const ROOT='mt_WcfaSfVT33';
@@ -73,4 +73,31 @@ test('unknown selected IDs do not invent coordinates or nodes',()=>{
  const unlocated=buildFocusFilter(atlas,ids,thinking.id,'both','all');
  assert.equal(unlocated.ids.size,0);assert.equal(unlocated.links.length,0);
  assert.ok(unlocated.distances instanceof Map);assert.equal(unlocated.distances.size,0);
+});
+
+test('v54 lock follows directed hard ancestors, direct soft/after links only',()=>{
+ const edges=[
+ {prerequisiteId:'A',topicId:'B',strength:'hard'},
+ {prerequisiteId:'B',topicId:'C',strength:'hard'},
+ {prerequisiteId:'C',topicId:'D',strength:'hard'},
+ {prerequisiteId:'E',topicId:'D',strength:'soft'},
+ {prerequisiteId:'F',topicId:'E',strength:'hard'},
+ {prerequisiteId:'D',topicId:'G',strength:'hard'},
+ {prerequisiteId:'G',topicId:'H',strength:'hard'},
+ {prerequisiteId:'X',topicId:'C',strength:'soft'}];
+ const view=buildCylinderLock({edges},new Set('ABCDEFGHX'.split('')),'D');
+ assert.deepEqual([...view.ids].sort(),['A','B','C','D','E','G']);
+ assert.deepEqual(view.links,edges.slice(0,4).concat(edges[5]));
+ assert.equal(view.distances.get('A'),3);
+});
+test('v54 full upstream lock equals real hard ancestors plus direct source neighbors for all 587 nodes',()=>{
+ const all=new Set(atlas.nodes.map(n=>n.id));
+ for(const node of atlas.nodes){
+   const ancestors=new Set([node.id]),pending=[node.id];
+   for(let i=0;i<pending.length;i++)for(const e of atlas.edges)if(e.strength==='hard'&&e.topicId===pending[i]&&!ancestors.has(e.prerequisiteId)){ancestors.add(e.prerequisiteId);pending.push(e.prerequisiteId);}
+   const expected=atlas.edges.filter(e=>e.prerequisiteId===node.id||e.topicId===node.id||e.strength==='hard'&&ancestors.has(e.prerequisiteId)&&ancestors.has(e.topicId));
+   const view=buildCylinderLock(atlas,all,node.id);
+   assert.deepEqual(view.links,expected);
+   assert.deepEqual(view.ids,new Set([node.id,...expected.flatMap(e=>[e.prerequisiteId,e.topicId])]));
+ }
 });

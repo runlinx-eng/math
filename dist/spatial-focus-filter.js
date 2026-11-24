@@ -32,3 +32,25 @@ export function buildFocusFilter(atlas,domainIds,selected,direction='both',depth
   const links=source.filter(e=>reachable.has(e.prerequisiteId)&&reachable.has(e.topicId));
   return {ids:reachable,links,distances,counts:{nodes:reachable.size,edges:links.length,hidden:ids.size-reachable.size}};
 }
+
+// v54 ordinary exploration lock: follow only directed hard prerequisites
+// transitively; retain all original direct relations (including soft/thinking)
+// without promoting a direct association to a multi-step prerequisite.
+export function buildCylinderLock(atlas,domainIds,selected){
+ const ids=domainIds instanceof Set?domainIds:new Set(domainIds);
+ if(!ids.has(selected))return {ids:new Set(),links:[],distances:new Map(),counts:{nodes:0,edges:0,hidden:0}};
+ const source=atlas.edges.filter(e=>ids.has(e.prerequisiteId)&&ids.has(e.topicId)),backward=new Map();
+ for(const e of source)if(e.strength==='hard'){
+   if(!backward.has(e.topicId))backward.set(e.topicId,[]);
+   backward.get(e.topicId).push(e);
+ }
+ const distances=new Map([[selected,0]]),queue=[selected];
+ for(let i=0;i<queue.length;i++)for(const e of backward.get(queue[i])||[]){
+   const id=e.prerequisiteId;if(!distances.has(id)){distances.set(id,distances.get(queue[i])+1);queue.push(id);}
+ }
+ const ancestors=new Set(queue);
+ const links=source.filter(e=>e.prerequisiteId===selected||e.topicId===selected||e.strength==='hard'&&ancestors.has(e.prerequisiteId)&&ancestors.has(e.topicId));
+ for(const e of links)for(const id of [e.prerequisiteId,e.topicId])if(!distances.has(id))distances.set(id,1);
+ const reachable=new Set(distances.keys());
+ return {ids:reachable,links,distances,counts:{nodes:reachable.size,edges:links.length,hidden:ids.size-reachable.size}};
+}

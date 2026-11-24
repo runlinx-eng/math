@@ -6,7 +6,8 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261124-cylinder-v54-preview5';
+const release='math-explorer-20261124-cylinder-v54-preview6';
+const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
  const el=page.locator(selector).first();await el.waitFor({state:'visible'});
@@ -55,15 +56,23 @@ const ready=async(page,version,count)=>{
          await page.locator('.cylinder-extra-tools summary').click();
          assert.deepEqual(await page.locator('#network-legend .cylinder-theme-count').allTextContents(),await page.locator('#network-legend [data-id]').evaluateAll((buttons,counts)=>buttons.map(b=>String(counts[b.dataset.id])),metadata.domainCounts));
          await page.locator('#network-legend [data-id="numbers"]').click();
-         await page.waitForFunction(()=>window.mathSpace.snapshot().selected==='theme:numbers');
-         const theme=await page.evaluate(()=>window.mathSpace.snapshot());assert.deepEqual(theme.positions,before.positions);assert.deepEqual(camera(theme),camera(before));assert.equal(theme.visibleNodes.length,587);
+         await page.waitForFunction(()=>window.mathSpace.snapshot().cylinderThemeFilter==='numbers');
+         const theme=await page.evaluate(()=>window.mathSpace.snapshot());assert.deepEqual(theme.positions,before.positions);assert.deepEqual(camera(theme),camera(before));assert.equal(theme.visibleNodes.length,587);assert.equal(theme.selected,null);
          await page.mouse.move(width-8,height-8);
+         assert.equal(await page.locator('#focus-card').isVisible(),false);
+         await page.screenshot({path:path.join(dir,'1920x1080-theme-numbers.png')});
+         await page.locator('#grade-map-filter [data-action="grade-map-stage"][data-stage="stage-1"]').click();
+         await page.waitForFunction(()=>window.mathSpace.snapshot().gradeStageFilter==='stage-1');
+         const combined=await page.evaluate(()=>window.mathSpace.snapshot());assert.equal(combined.cylinderThemeFilter,'numbers');assert.equal(combined.selected,null);assert.deepEqual(combined.positions,before.positions);assert.deepEqual(camera(combined),camera(before));
+         await page.screenshot({path:path.join(dir,'1920x1080-theme-stage.png')});
+         // Explicit secondary directory action preserves the real theme hierarchy.
+         await page.locator('.cylinder-extra-tools summary').click();
+         await page.locator('#cylinder-theme-directory').click();
          await darkCard(page,'#focus-card .focus-sticky');await darkCard(page,'#focus-card .theme-pack-choice');
          assert.match(await page.locator('#focus-card .theme-thinking-count').innerText(),/在中央思维轴核/);
-         await page.screenshot({path:path.join(dir,'1920x1080-theme-numbers.png')});
-         await page.locator('#network-legend [data-id="numbers"]').click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected);
+         await page.locator('#network-legend [data-id="numbers"]').click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected&&!window.mathSpace.snapshot().cylinderThemeFilter);
+         await page.locator('.cylinder-extra-tools summary').click();
          await page.mouse.move(width-8,height-8);
-         await page.locator('#grade-map-filter [data-action="grade-map-stage"][data-stage="stage-1"]').click();
          await page.waitForFunction(()=>window.mathSpace.snapshot().gradeStageFilter==='stage-1');
          const filtered=await page.evaluate(()=>window.mathSpace.snapshot());
          assert.equal(filtered.visibleNodes.length,587);assert.deepEqual(filtered.positions,before.positions);assert.deepEqual(camera(filtered),camera(before));
@@ -75,11 +84,24 @@ const ready=async(page,version,count)=>{
          await page.screenshot({path:path.join(dir,'1920x1080-top.png')});
          await page.locator('[data-action="network-view"][data-view="oblique"]').click();
          await page.waitForFunction(()=>window.mathSpace.snapshot().networkView==='oblique'&&!window.mathSpace.motion().tween);
-         const id=metadata.spines[0].rootId;
+         // Pick a real node with more than one hard prerequisite hop and
+         // compare the actual rendered lock against independent source traversal.
+         const lockFor=id=>{const ancestors=new Set([id]),queue=[id];for(let i=0;i<queue.length;i++)for(const e of atlas.edges)if(e.strength==='hard'&&e.topicId===queue[i]&&!ancestors.has(e.prerequisiteId)){ancestors.add(e.prerequisiteId);queue.push(e.prerequisiteId);}return {ancestors,edges:atlas.edges.filter(e=>e.prerequisiteId===id||e.topicId===id||e.strength==='hard'&&ancestors.has(e.prerequisiteId)&&ancestors.has(e.topicId))};};
+         const id=metadata.milestones.find(id=>lockFor(id).ancestors.size>3)||metadata.spines[0].rootId;
          await page.goto(base+'/index.html?world=network&layout=54#space/node/'+id);
          await ready(page,54,587);
-         await page.waitForFunction(id=>window.mathSpace.snapshot().selected==='node:'+id,id);
-         assert.deepEqual((await page.evaluate(()=>window.mathSpace.snapshot())).positions,before.positions);
+         await page.waitForFunction(id=>window.mathSpace.snapshot().selected==='node:'+id&&window.mathSpace.snapshot().cylinderLocked,id);
+         const locked=await page.evaluate(()=>window.mathSpace.snapshot());
+         assert.deepEqual(locked.positions,before.positions);
+         const keys=es=>es.map(e=>e.from+'>'+e.to+':'+e.strength).sort();
+         assert.deepEqual(keys(locked.focusFilterEdges),keys(lockFor(id).edges.map(e=>({from:e.prerequisiteId,to:e.topicId,strength:e.strength}))));
+         const lockedCamera=camera(locked);
+         await page.locator('#focus-card [data-action="deselect"]').click();
+         await page.waitForFunction(()=>!window.mathSpace.snapshot().selected);
+         assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),lockedCamera);
+         // Re-enter and preserve existing detailed card checks.
+         await page.goto(base+'/index.html?world=network&layout=54#space/node/'+id);
+         await page.waitForFunction(id=>window.mathSpace?.snapshot().selected==='node:'+id&&window.mathSpace.snapshot().cylinderLocked,id);
          await darkCard(page,'#focus-card .focus-sticky');await darkCard(page,'#focus-card .grade-node-position');await darkCard(page,'#focus-card .focus-filter');
          await page.screenshot({path:path.join(dir,'1920x1080-focus.png')});
          await page.goto(url(54));await ready(page,54,587);

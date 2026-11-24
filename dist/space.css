@@ -1443,3 +1443,8 @@ body[data-world="network"][data-network-version="54"] #local-overview-exit:hover
  body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #cylinder-core-key{grid-area:core;align-self:start;min-width:0}
  body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .cylinder-extra-tools{grid-area:more;min-width:0}
 }
+
+/* v54: one-click observation is separate from explicit knowledge-group browsing. */
+body[data-network-version="54"] #cylinder-theme-directory{display:block;padding:7px 8px;margin:6px 0;font-size:12px;text-align:left;border-radius:7px}
+body[data-network-version="54"] #cylinder-theme-directory[hidden]{display:none!important}
+body[data-network-version="54"] #network-legend:has([aria-pressed="true"]) button:not([aria-pressed="true"]):not(:hover){opacity:.48}
