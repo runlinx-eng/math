@@ -1,4 +1,11 @@
 // v54 only: decorative guides are not mathematical edges or pick targets.
+// Reference labels have fixed pixel sizes. Clamp the near-edge annotation,
+// never the actual curriculum ring or any mathematical node.
+export function cylinderReferenceLabelPlacement(anchor,viewportWidth,viewportHeight,labelWidth){
+ const width=Math.min(labelWidth,Math.max(1,viewportWidth-24));
+ const x=Math.max(12,Math.min(viewportWidth-12-width,anchor.x));
+ return {x,width,visible:anchor.visible&&anchor.x>=-32&&anchor.x<=viewportWidth+32&&anchor.y>=12&&anchor.y<=viewportHeight-12};
+}
 export function createCylinderVisuals(THREE,space,nodeList){
  const layout=space.cylinderLayout,group=new THREE.Group(),offset=space.cylinderOffset,scale=layout.diagnostics.radialScale;
  group.name='v54-cylinder-visuals';
@@ -38,11 +45,13 @@ export function createCylinderVisuals(THREE,space,nodeList){
  }
  const labels=[];
  for(const ref of layerRefs){
-   const canvas=document.createElement('canvas');canvas.width=288;canvas.height=40;
-   const context=canvas.getContext('2d');context.font='22px sans-serif';context.textBaseline='middle';context.fillStyle='#b8c7e0';context.fillText(ref.label,2,20);
+   const canvas=document.createElement('canvas');canvas.height=40;
+   const context=canvas.getContext('2d');context.font='22px sans-serif';
+   canvas.width=Math.ceil(context.measureText(ref.label).width)+8;
+   context.font='22px sans-serif';context.textBaseline='middle';context.fillStyle='#b8c7e0';context.fillText(ref.label,4,20);
    const map=new THREE.CanvasTexture(canvas);map.colorSpace=THREE.SRGBColorSpace;
    const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map,transparent:true,opacity:.56,depthWrite:false,depthTest:false,fog:false}));
-   sprite.center.set(0,.5);sprite.renderOrder=3;guides.add(sprite);labels.push({ref,sprite});
+   sprite.center.set(0,.5);sprite.renderOrder=3;guides.add(sprite);labels.push({ref,sprite,width:canvas.width/2});
  }
  guides.add(line([new THREE.Vector3(0,coreBottom-offset,0),new THREE.Vector3(0,coreTop-offset,0)],0xc6b5ff,.36,true));
  for(const y of [coreBottom,(coreBottom+coreTop)/2,coreTop])guides.add(line(arc(coreR,y,0,Math.PI*2),0xc6b5ff,.18,true));
@@ -103,13 +112,15 @@ export function createCylinderVisuals(THREE,space,nodeList){
      const factor=(hit?1:.14)*(focus?(theme&&themeHit?.75:.24):1)*(task?.54:1);
      for(const {mesh,opacity} of rec.pieces)mesh.material.opacity=opacity*factor;
    }
-   const right=scene.basis().right;right.y=0;right.normalize();
+   const screenRight=scene.basis().right,right=screenRight.clone();right.y=0;right.normalize();
    const px=Math.max(.001,scene.globalScale()),showRefs=scene.networkView!=='map'&&!scene.selected&&!scene.guideFocus&&!task;
    for(const obj of guides.children)if(obj.userData.stage)obj.material.opacity=filtered?(obj.userData.stage===scene.gradeStageId?.32:.06):.18;
-   for(const {ref,sprite} of labels){
-     sprite.visible=showRefs;
+   for(const {ref,sprite,width} of labels){
      sprite.position.copy(right).multiplyScalar(ref.r+8);sprite.position.y=ref.y-offset;
-     sprite.scale.set(144/px,20/px,1);
+     const anchor=scene.project(sprite.position.toArray()),placed=cylinderReferenceLabelPlacement(anchor,scene.width,scene.height,width);
+     sprite.visible=showRefs&&placed.visible;
+     sprite.position.addScaledVector(screenRight,(placed.x-anchor.x)/px);
+     sprite.scale.set(placed.width/px,20/px,1);
      sprite.material.opacity=filtered?(ref.id===scene.gradeStageId?.94:.30):.73;
    }
    guides.visible=!scene.guideFocus;flow.visible=!focus&&!filtered&&!task&&!matchMedia('(prefers-reduced-motion: reduce)').matches;

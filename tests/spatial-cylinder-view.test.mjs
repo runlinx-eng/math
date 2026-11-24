@@ -5,6 +5,7 @@ import {buildCylinderSpace,CYLINDER_VERSION,CYLINDER_VIEW_KEY} from '../dist/spa
 import {buildRelationshipSpace,RELATIONSHIP_VERSION} from '../dist/spatial-relationship.js';
 import {restoreNetworkCoordinates} from '../dist/spatial-global.js';
 import {parseView,LAYOUT_VERSION} from '../dist/spatial-model.js';
+import {cylinderReferenceLabelPlacement} from '../dist/spatial-cylinder-visuals.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const grade=JSON.parse(fs.readFileSync(new URL('../dist/data/grade-panorama-lite.json',import.meta.url)));
 test('v54 opt-in uses all real nodes and stable positions, preserving v53 and source',()=>{
@@ -21,4 +22,12 @@ test('v54 opt-in uses all real nodes and stable positions, preserving v53 and so
  assert.ok([...world.nodes.values()].every((n,i)=>n.position===position[i]));
  const raw={version:LAYOUT_VERSION,networkVersion:54,networkView:'oblique',position:[100,150,1000],target:[0,0,0],selected:'node:'+atlas.nodes[0].id,panels:[],cameraZoom:1,edgeDisplay:'outline',traceMode:'direct',overviewFilterVersion:1,structureMode:'off'};
  assert.equal(parseView(raw,world).networkVersion,54);assert.equal(parseView(raw,world).structureMode,'off');assert.equal(parseView(raw,old).networkVersion,undefined);
+});
+
+test('v54 reference text fits at either screen edge without changing source coordinates',()=>{
+ const nearRight={x:920,y:500,visible:true},p=cylinderReferenceLabelPlacement(nearRight,934,1348,104);
+ assert.equal(p.visible,true);assert.ok(p.x>=12&&p.x+p.width<=934-12);assert.equal(nearRight.x,920);
+ assert.equal(cylinderReferenceLabelPlacement({x:3,y:500,visible:true},934,1348,104).x,12);
+ assert.equal(cylinderReferenceLabelPlacement({x:1000,y:500,visible:true},934,1348,104).visible,false);
+ assert.equal(cylinderReferenceLabelPlacement({x:500,y:500,visible:true},1920,1080,104).x,500);
 });

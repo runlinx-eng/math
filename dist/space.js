@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261124-cylinder-v54-preview4';
+const RELEASE='math-explorer-20261124-cylinder-v54-preview5';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -107,7 +107,7 @@ function refreshLearning(){renderedDay=dayKey();if(scene){const daily=dailySumma
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveView,250);}
 function captureView(){const v=scene.snapshot();if(scene.global){v.traceScroll=Math.max(0,Math.min(100000,$('#focus-card').scrollTop||0));const focused=document.activeElement?.closest?.('[data-preview-key]');if(focused)v.traceFocused=focused.dataset.previewKey;}return v;}
 function restoreFocus(view){const card=$('#focus-card');if(!card.hidden&&Number.isFinite(view?.traceScroll))card.scrollTop=view.traceScroll;if(view?.traceFocused){const target=[...card.querySelectorAll('[data-preview-key] [data-action="choose"]')].find(el=>el.closest('[data-preview-key]').dataset.previewKey===view.traceFocused);target?.focus({preventScroll:true});}}
-function saveView(){if(!scene)return;const view={version:LAYOUT_VERSION,...captureView(),...(scene.cylinderMap?{cylinderComposition:3}:{}),selectedGradeStage,activePanel,journeyOpen,journeySuspended,sessionId:activeSessionId,questionId:activeQuestionId,panels:[...panels.values()].map(p=>({id:p.id,anchor:p.anchor,minimized:p.minimized,tab:p.tab,expanded:p.expanded}))};try{writeStored(RELATIONSHIP_VIEW_KEY,JSON.stringify(view));}catch{warning('观察位置暂时无法保存，学习记录仍按原来的方式保存。');}}
+function saveView(){if(!scene)return;const view={version:LAYOUT_VERSION,...captureView(),...(scene.cylinderMap?{cylinderComposition:4}:{}),selectedGradeStage,activePanel,journeyOpen,journeySuspended,sessionId:activeSessionId,questionId:activeQuestionId,panels:[...panels.values()].map(p=>({id:p.id,anchor:p.anchor,minimized:p.minimized,tab:p.tab,expanded:p.expanded}))};try{writeStored(RELATIONSHIP_VIEW_KEY,JSON.stringify(view));}catch{warning('观察位置暂时无法保存，学习记录仍按原来的方式保存。');}}
 function remember(){if(!scene)return;const view=captureView();if(visits.length&&JSON.stringify(visits.at(-1))===JSON.stringify(view))return;visits.push(view);if(visits.length>30)visits.shift();$('#back-button').disabled=false;}
 function recordGuide(step,active){return mutateLearning(s=>{s.daily.guide={id:GUIDE_ID,step,active,updatedAt:now()};});}
 function guideThemeId(){return space.nodes.get(guideSteps[1]?.anchor)?.themeId||null;}
@@ -1291,7 +1291,7 @@ async function boot(){try {
   if(guideSteps.length&&learning.daily.guide?.active&&scene.relationshipMap&&!showQuestionEntry&&!showUnfinishedEntry&&!explicitOverview){if(journeyOpen)guideSuspended=true;else if(!routeKey||routeKey===stored?.selected)activateGuide(learning.daily.guide.step,{record:false,animate:false,fit:!stored||stored.networkVersion!==chosenNetworkVersion||stored.selected!=='node:'+guideSteps[learning.daily.guide.step].anchor});}
   // Never refit while navigating; repair only an unreadably distant saved view
   // once at startup, after all saved route/guide selections have been restored.
-  if(stored&&!journeyOpen&&scene.relationshipMap){if(scene.cylinderMap&&!stored.selected&&!stored.panels.length){let composition;try{composition=JSON.parse(readStored(RELATIONSHIP_VIEW_KEY))?.cylinderComposition;}catch{}if(composition!==3)scene.fitGlobalView(false);else scene.recoverUnreadableSavedCamera();}else scene.recoverUnreadableSavedCamera();}
+  if(stored&&!journeyOpen&&scene.relationshipMap){if(scene.cylinderMap&&!stored.selected&&!stored.panels.length){let composition;try{composition=JSON.parse(readStored(RELATIONSHIP_VIEW_KEY))?.cylinderComposition;}catch{}if(composition!==4&&(composition!==3||scene.width>=621&&scene.height>=800&&scene.width/scene.height<=.9))scene.fitGlobalView(false);else scene.recoverUnreadableSavedCamera();}else scene.recoverUnreadableSavedCamera();}
   const allButton=$('[data-action="all-nodes"]');allButton.setAttribute('aria-pressed',String(scene.showAllNodes));allButton.textContent=scene.showAllNodes?'收起所有知识点':'展开所有知识点';
   refreshLearning();renderLocation();if(stored)restoreFocus(stored);restoreTaskSurface({initial:true});renderGradeMapFilter();$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();
   if(worldLayout==='network'&&scene.relationshipMap)ensureGradePanoramaData().then(()=>{renderGradeMapFilter();renderFocus();}).catch(error=>{$('#grade-map-filter-status').textContent='课程映射读取失败：'+error.message;});

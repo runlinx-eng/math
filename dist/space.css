@@ -1423,3 +1423,23 @@ body[data-world="network"][data-network-version="54"] #focus-card :is(.after,.re
 body[data-world="network"][data-network-version="54"] #focus-card :is(summary,.concept-explanation,.status-text,.relation-heading,.activity-glyph){color:#a9bfdf}
 body[data-world="network"][data-network-version="54"] #local-overview-exit{background:#17243a;border-color:#5c749e;color:#e4efff;box-shadow:0 4px 16px #0005}
 body[data-world="network"][data-network-version="54"] #local-overview-exit:hover{background:#243b5a}
+
+/* Tall desktop/tablet atlas: use the previously empty top area instead of
+   reserving a sidebar column across the whole height. This is v54 exploration
+   only; learning surfaces and the landscape/default v53 layout stay intact. */
+@media (min-width:621px) and (min-height:800px) and (max-aspect-ratio:9/10){
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide{
+   left:16px;right:16px;width:auto;display:grid;
+   grid-template-columns:minmax(150px,.85fr) minmax(0,1.65fr);
+   grid-template-areas:"title legend" "grade legend" "more core";
+   align-items:start;gap:7px 16px;max-height:min(230px,26dvh);padding:10px 12px;
+   background:#0b111db8;
+ }
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide :is(.observation-heading,#network-view-description){display:none}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #network-view-title{grid-area:title;min-height:0;height:auto;font-size:12px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #grade-map-filter{grid-area:grade;min-width:0}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend{grid-area:legend;grid-template-columns:repeat(2,minmax(0,1fr));align-self:center;gap:4px 10px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend button{font-size:12px;line-height:1.4;min-height:30px;padding:4px;white-space:normal}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #cylinder-core-key{grid-area:core;align-self:start;min-width:0}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .cylinder-extra-tools{grid-area:more;min-width:0}
+}

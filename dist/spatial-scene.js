@@ -493,6 +493,14 @@ export class SpatialScene {
   globalInsets(){
     const guide=document.querySelector('#network-guide')?.getBoundingClientRect(),footer=document.querySelector('.bottom-bar')?.getBoundingClientRect();
     const themeFocus=this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='theme';
+    // Tall v54 windows use a compact observation strip above the atlas.
+    // Reserve its measured height rather than a full-height left column.
+    // The horizontal bottom rail also needs to stay outside the overview.
+    if(this.cylinderMap&&this.width/this.height<=.9&&guide?.height>0&&guide.width>=this.width*.7){
+      const rail=document.querySelector('.tool-rail')?.getBoundingClientRect();
+      const railBottom=rail&&rail.width>rail.height*2&&rail.top>this.height*.5?this.height-rail.top+12:0;
+      return {left:42,right:42,top:Math.max(108,guide.bottom+18),bottom:Math.max(76,railBottom,this.height-(footer?.top||this.height-70)+10)};
+    }
     // P1-B uses a vertical observation sidebar; its bottom edge is NOT a
     // top inset for the 3D panorama. Reserve horizontal space instead.
     const sidebar=!!guide&&guide.width>0&&guide.height>0&&guide.width<this.width*.45;
