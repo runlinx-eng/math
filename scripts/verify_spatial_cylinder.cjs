@@ -6,13 +6,26 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261124-cylinder-v54-preview8';
+const release='math-explorer-20261125-cylinder-v54-preview9';
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
  const el=page.locator(selector).first();await el.waitFor({state:'visible'});
  const rgb=await el.evaluate(n=>getComputedStyle(n).backgroundColor.match(/[\d.]+/g).slice(0,3).map(Number));
  assert.ok(rgb.length===3&&rgb.every(v=>v<80),selector+' must have a dark readable surface: '+rgb);
+};
+// Test actual painted text/background rather than assuming the theme CSS wins.
+const assertLabelContrast=async(label)=>{
+ const colors=await label.evaluate(el=>{
+   const text=el.querySelector('span')||el;
+   return {foreground:getComputedStyle(text).color,background:getComputedStyle(el).backgroundColor};
+ });
+ const parse=s=>{const a=s.match(/[\d.]+/g)?.map(Number)||[];assert.ok(a.length>=3&&(a.length===3||a[3]===1),'label must have an opaque, measurable color: '+s);return a.slice(0,3);};
+ const lum=rgb=>rgb.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+ const a=lum(parse(colors.foreground)),b=lum(parse(colors.background));
+ const contrast=(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+ assert.ok(contrast>=4.5,'node label contrast must be >= 4.5: '+JSON.stringify(colors)+' ratio='+contrast);
+ return contrast;
 };
 const assertInspector=async(page,selector,id,lockedCount=null)=>{
  const card=page.locator(selector);await card.waitFor({state:'visible'});
@@ -100,8 +113,10 @@ const ready=async(page,version,count)=>{
          const edgeKeys=es=>es.map(e=>e.from+'>'+e.to+':'+e.soft).sort();
          assert.deepEqual(edgeKeys(preview.edges),edgeKeys(source.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,soft:e.strength==='soft'}))));
          await assertInspector(page,'#cylinder-hover-inspector',key.slice(5));
+         row.hoverLabelContrast=await assertLabelContrast(label);
           await page.screenshot({path:path.join(dir,'1920x1080-hover.png')});
          await label.click();await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key&&window.mathSpace.snapshot().cylinderLocked,key);
+         row.lockedLabelContrast=await assertLabelContrast(label);
          assert.equal(await page.locator('#cylinder-node-details').evaluate(el=>el.open),false);
          assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),camera(before));
          await label.click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected);
