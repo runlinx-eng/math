@@ -38,7 +38,7 @@ export function buildFocusFilter(atlas,domainIds,selected,direction='both',depth
 // without promoting a direct association to a multi-step prerequisite.
 export function buildCylinderLock(atlas,domainIds,selected){
  const ids=domainIds instanceof Set?domainIds:new Set(domainIds);
- if(!ids.has(selected))return {ids:new Set(),links:[],distances:new Map(),counts:{nodes:0,edges:0,hidden:0}};
+ if(!ids.has(selected))return {ids:new Set(),links:[],distances:new Map(),upstreamCount:0,counts:{nodes:0,edges:0,hidden:0}};
  const source=atlas.edges.filter(e=>ids.has(e.prerequisiteId)&&ids.has(e.topicId)),backward=new Map();
  for(const e of source)if(e.strength==='hard'){
    if(!backward.has(e.topicId))backward.set(e.topicId,[]);
@@ -52,5 +52,27 @@ export function buildCylinderLock(atlas,domainIds,selected){
  const links=source.filter(e=>e.prerequisiteId===selected||e.topicId===selected||e.strength==='hard'&&ancestors.has(e.prerequisiteId)&&ancestors.has(e.topicId));
  for(const e of links)for(const id of [e.prerequisiteId,e.topicId])if(!distances.has(id))distances.set(id,1);
  const reachable=new Set(distances.keys());
- return {ids:reachable,links,distances,counts:{nodes:reachable.size,edges:links.length,hidden:ids.size-reachable.size}};
+ return {ids:reachable,links,distances,upstreamCount:ancestors.size-1,counts:{nodes:reachable.size,edges:links.length,hidden:ids.size-reachable.size}};
+}
+
+// v54 compact inspection is a read-only summary of the same source graph.
+export function buildCylinderInspection(atlas,locatedIds,selected,locked=false){
+  const ids=locatedIds instanceof Set?locatedIds:new Set(locatedIds);
+  const thinkingIds=new Set(atlas.nodes.filter(n=>n.domainId==='thinking').map(n=>n.id));
+  const before=new Set(),after=new Set(),thinking=new Set();
+  let soft=0;
+  if(ids.has(selected))for(const e of atlas.edges){
+    if(!ids.has(e.prerequisiteId)||!ids.has(e.topicId))continue;
+    if(e.prerequisiteId!==selected&&e.topicId!==selected)continue;
+    const other=e.topicId===selected?e.prerequisiteId:e.topicId;
+    if(other===selected)continue;
+    if(e.strength==='hard'){
+      if(e.topicId===selected)before.add(other);
+      if(e.prerequisiteId===selected)after.add(other);
+    }
+    if(thinkingIds.has(selected)?!thinkingIds.has(other):thinkingIds.has(other))thinking.add(other);
+    if(e.strength==='soft')soft++;
+  }
+  const upstreamCount=locked?buildCylinderLock(atlas,ids,selected).upstreamCount:null;
+  return {before:[...before],after:[...after],thinking:[...thinking],soft,upstreamCount,thinkingNode:thinkingIds.has(selected)};
 }

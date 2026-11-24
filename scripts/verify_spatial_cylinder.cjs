@@ -6,13 +6,35 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261124-cylinder-v54-preview7';
+const release='math-explorer-20261124-cylinder-v54-preview8';
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
  const el=page.locator(selector).first();await el.waitFor({state:'visible'});
  const rgb=await el.evaluate(n=>getComputedStyle(n).backgroundColor.match(/[\d.]+/g).slice(0,3).map(Number));
  assert.ok(rgb.length===3&&rgb.every(v=>v<80),selector+' must have a dark readable surface: '+rgb);
+};
+const assertInspector=async(page,selector,id,lockedCount=null)=>{
+ const card=page.locator(selector);await card.waitFor({state:'visible'});
+ const thinking=new Set(atlas.nodes.filter(n=>n.domainId==='thinking').map(n=>n.id));
+ const direct=atlas.edges.filter(e=>e.prerequisiteId===id||e.topicId===id);
+ const unique=values=>[...new Set(values)];
+ const expected={
+   before:unique(direct.filter(e=>e.strength==='hard'&&e.topicId===id&&e.prerequisiteId!==id).map(e=>e.prerequisiteId)),
+   after:unique(direct.filter(e=>e.strength==='hard'&&e.prerequisiteId===id&&e.topicId!==id).map(e=>e.topicId)),
+   thinking:unique(direct.map(e=>e.topicId===id?e.prerequisiteId:e.topicId).filter(n=>n!==id&&thinking.has(n)!==thinking.has(id)))
+ };
+ for(const [kind,ids] of Object.entries(expected)){
+   const row=card.locator('[data-relation-kind="'+kind+'"]');
+   assert.equal(await row.getAttribute('data-relation-count'),String(ids.length));
+   const shown=await row.locator('[data-relation-id]').evaluateAll(els=>els.map(el=>({id:el.dataset.relationId,name:el.textContent.trim()})));
+   assert.deepEqual(shown.map(n=>n.id),ids.slice(0,3));assert.ok(shown.every(n=>n.name&&n.name!==n.id));
+ }
+ const upstream=card.locator('[data-upstream-count]');
+ if(lockedCount===null)assert.equal(await upstream.count(),0);
+ else {assert.equal(await upstream.getAttribute('data-upstream-count'),String(lockedCount));assert.ok(await upstream.isVisible());}
+ const bounds=await card.boundingBox(),viewport=page.viewportSize();
+ assert.ok(bounds&&bounds.x>=0&&bounds.y>=0&&bounds.x+bounds.width<=viewport.width+1&&bounds.y+bounds.height<=viewport.height+1,'inspection must stay in viewport');
 };
 const ready=async(page,version,count)=>{
  await page.waitForFunction(({version,count})=>{const loading=document.querySelector('#loading');if(loading&&!loading.hidden&&loading.querySelector('h1'))throw Error('Map startup failed: '+loading.innerText);const s=window.mathSpace?.snapshot();return s?.networkVersion===version&&s?.visibleNodes.length===count&&document.querySelector('#space-app')?.classList.contains('ready');},{version,count},{timeout:45000});
@@ -77,7 +99,8 @@ const ready=async(page,version,count)=>{
          const source=atlas.edges.filter(e=>e.prerequisiteId===key.slice(5)||e.topicId===key.slice(5));
          const edgeKeys=es=>es.map(e=>e.from+'>'+e.to+':'+e.soft).sort();
          assert.deepEqual(edgeKeys(preview.edges),edgeKeys(source.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,soft:e.strength==='soft'}))));
-         await page.screenshot({path:path.join(dir,'1920x1080-hover.png')});
+         await assertInspector(page,'#cylinder-hover-inspector',key.slice(5));
+          await page.screenshot({path:path.join(dir,'1920x1080-hover.png')});
          await label.click();await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key&&window.mathSpace.snapshot().cylinderLocked,key);
          assert.equal(await page.locator('#cylinder-node-details').evaluate(el=>el.open),false);
          assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),camera(before));
@@ -143,7 +166,9 @@ const ready=async(page,version,count)=>{
          await darkCard(page,'#focus-card .focus-sticky');
          assert.equal(await page.locator('#cylinder-node-details').evaluate(el=>el.open),false);
          assert.equal(await page.locator('#focus-card .primary-button:visible').count(),1);
-         await page.screenshot({path:path.join(dir,'1920x1080-focus.png')});
+         await assertInspector(page,'#focus-card',id,lockFor(id).ancestors.size-1);
+          row.inspectorNamesAndUpstream=true;
+          await page.screenshot({path:path.join(dir,'1920x1080-focus.png')});
          await page.locator('#cylinder-node-details summary').first().click();
          await darkCard(page,'#focus-card .grade-node-position');await darkCard(page,'#focus-card .focus-filter');
          await page.screenshot({path:path.join(dir,'1920x1080-focus-details.png')});

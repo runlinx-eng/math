@@ -1,10 +1,11 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261124-cylinder-v54-preview7';
+const RELEASE='math-explorer-20261124-cylinder-v54-preview8';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
 import {SpatialScene} from './spatial-scene.js';
 import {relationsFor,LAYOUT_VERSION,parseView,objectKey} from './spatial-model.js';
+import {buildCylinderInspection} from './spatial-focus-filter.js';
 import {buildRelationshipSpace,RELATIONSHIP_VERSION} from './spatial-relationship.js';
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
 import {makeKnowledgeNames} from './spatial-names.js';
@@ -279,12 +280,14 @@ function cylinderStageText(o){
   const stages=gradePanoramaData?.stages||[];
   return primary.map(id=>stages.find(stage=>stage.id===id)?.label).filter(Boolean).join('、')||'学段参见课程映射';
 }
-function cylinderInspection(o,relations){
-  const hard=relations.filter(l=>l.edges.some(e=>e.strength==='hard'));
-  const before=hard.filter(l=>l.to===o.key).length,after=hard.filter(l=>l.from===o.key).length;
-  const thinking=new Set(relations.map(l=>space.byKey.get(l.to===o.key?l.from:l.to)).filter(n=>n?.domainId==='thinking').map(n=>n.id)).size;
-  const soft=relations.reduce((n,l)=>n+l.edges.filter(e=>e.strength==='soft').length,0);
-  return `<p class="cylinder-inspection-stage">${esc(cylinderStageText(o))}</p><div class="cylinder-inspection-counts"><span class="before">前置 ${before}</span><span class="after">后继 ${after}</span><span class="thinking">思维 ${thinking}</span></div>${soft?`<small>另有 ${soft} 条直接辅助联系</small>`:''}`;
+function cylinderInspection(o,{locked=false}={}){
+  const data=buildCylinderInspection(space.atlas,space.relationshipIds,o.id,locked);
+  const names=(kind,label,ids)=>{
+    const shown=ids.slice(0,3).map(id=>{const node=space.byKey.get('node:'+id);return `<span data-relation-id="${esc(id)}">${esc(displayTitle(node)||node?.title||id)}</span>`;}).join('、');
+    return `<div class="cylinder-inspection-row ${kind}" data-relation-kind="${kind}" data-relation-count="${ids.length}"><b>${label} ${ids.length}</b><span class="cylinder-inspection-names">${shown||'无'}${ids.length>3?'…':''}</span></div>`;
+  };
+  const theme=space.themes.get(o.themeId)?.title;
+  return `<p class="cylinder-inspection-stage">${esc([o.domainId==='thinking'?null:theme,cylinderStageText(o)].filter(Boolean).join(' · '))}</p><div class="cylinder-inspection-counts">${names('before','直接前置',data.before)}${names('after','直接后继',data.after)}${names('thinking',data.thinkingNode?'关联概念':'关联思维',data.thinking)}</div>${data.soft?`<small class="cylinder-inspection-note">直接辅助联系 ${data.soft} 条，不计入完整前置链</small>`:''}${locked?`<small class="cylinder-upstream-count" data-upstream-count="${data.upstreamCount}">已锁定完整上游 · ${data.upstreamCount} 个关键前置知识</small>`:''}`;
 }
 function toggleCylinderTheme(id){
   if(!cylinderExplorer()||!space.themes.has(id))return;closeCylinderEntries();
@@ -396,7 +399,7 @@ function renderNetworkGuide(){
   document.body.dataset.networkView=mode;document.body.dataset.networkVersion=String(scene.networkVersion);document.body.dataset.mapFocus=scene.hoverMapKey?.split(':')[0]||(scene.hoverThemeId?'theme':scene.selected?.split(':')[0]||'overview');
   $('.tool-rail [data-action="front"]').textContent=scene.cylinderMap?'重置':'归位';if(scene.cylinderMap)$('.tool-rail [data-action="front"]').title='重置默认视角及观察筛选';
   $('#network-view-title').textContent=scene.localRelationshipFocus?'局部探索 · 从当前知识出发':current?(rotated?'自由视角 · 整张知识地图':mode==='map'?'顶视 · 知识分布':mode==='relations'?'侧视 · 基础到后续':'立体总览 · 整张知识地图'):'保存时的空间';
-  $('#network-view-description').textContent=scene.localRelationshipFocus?`当前知识、真实直接联系与走过的路径高亮（${Math.max(0,scene.explorationTrail.length-1)} 步）；其他知识仍以浅色保留在同一张图。点「全貌」取消选择，镜头不变；点「归位」主动重新取景。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
+  $('#network-view-description').textContent=scene.localRelationshipFocus?`当前知识、真实直接联系与走过的路径高亮（${Math.max(0,scene.explorationTrail.length-1)} 步）；其他知识仍以浅色保留在同一张图。点「全貌」取消选择，镜头不变；点「${scene.cylinderMap?'重置':'归位'}」主动重新取景。`:current?(rotated?'正在从不同角度观察同一张图。点顶视、侧视或立体总览可以回到对应视角。':scene.relationshipMap?(mode==='relations'?'关键基础在下，后续在上；辅助联系不决定高度。':'颜色表示主题，位置参考知识联系。数学思维可在搜索和联系中查看。'):mode==='map'?'五个主题、23 组内容。每个点的位置固定，连线连接真实关系。':mode==='relations'?'关键前项在下，后项在上；虚线辅助联系不决定高度。':'颜色分主题，聚集分内容，高度沿关键关系展开。转动查看同一张图。'):'已恢复旧记录的位置。点击顶视、侧视或立体总览，进入整体地图。';
   if(scene.cylinderMap&&!scene.selected){$('#network-view-title').textContent='圆柱星盘 · 587 个真实知识点';$('#network-view-description').textContent='五大领域围绕思维核心；真实前置由下向上，暗处知识仍保留原位。';}
   const versionToggle=$('[data-action="map-version"]');if(versionToggle)versionToggle.textContent=scene.cylinderMap?'返回旧版星图 v53':'体验圆柱星盘 v54';
   const activeTheme=space.byKey.get(scene.selected);
@@ -447,7 +450,7 @@ function renderNetworkGuide(){
       $('#network-view-description').textContent=`正在观察知识群 · ${hoverObject.nodeIds.filter(id=>space.relationshipIds.has(id)).length} 个地图知识点 · 点击查看详情`;
     }
   }else hoverTitle.removeAttribute('title');
-  if(scene.cylinderMap){const inspector=$('#cylinder-hover-inspector'),show=cylinderExplorer()&&!scene.selected&&hoverObject?.kind==='node';if(inspector){if(show&&inspector.dataset.key!==hoverObject.key){inspector.innerHTML='<strong>'+esc(displayTitle(hoverObject))+'</strong>'+cylinderInspection(hoverObject,relationsFor(space,hoverObject.key))+'<small>点击锁定真实前置链</small>';inspector.dataset.key=hoverObject.key;}inspector.hidden=!show;if(!show)delete inspector.dataset.key;}}
+  if(scene.cylinderMap){const inspector=$('#cylinder-hover-inspector'),show=cylinderExplorer()&&!scene.selected&&hoverObject?.kind==='node';if(inspector){if(show&&inspector.dataset.key!==hoverObject.key){inspector.innerHTML='<strong>'+esc(displayTitle(hoverObject))+'</strong>'+cylinderInspection(hoverObject)+'<small>点击锁定真实前置链</small>';inspector.dataset.key=hoverObject.key;}inspector.hidden=!show;if(!show)delete inspector.dataset.key;}}
   $('#network-edge-controls').hidden=!scene.relationshipMap;
   renderGradeMapFilter();
   const structureControls=$('#overview-structure-controls');
@@ -775,7 +778,7 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
   else body=`<p>${esc(o.description)}</p><p class="quiet">${o.children.length} 簇想法，点一个名字靠近。</p>`;
   if(o.kind==='pack'||o.kind==='theme')body+=renderGradeDistribution(o);
   const wasOpen=same&&!!card.querySelector('#cylinder-node-details[open]');
-  if(compactAction)body=`<div class="cylinder-compact-inspection">${cylinderInspection(o,relations)}${compactAction}</div><details id="cylinder-node-details" ${wasOpen?'open':''}><summary>更多知识详情与联系</summary>${body}</details>`;
+  if(compactAction)body=`<div class="cylinder-compact-inspection">${cylinderInspection(o,{locked:scene.cylinderLocked})}${compactAction}</div><details id="cylinder-node-details" ${wasOpen?'open':''}><summary>更多知识详情与联系</summary>${body}</details>`;
   const previouslyOpen=new Set([...card.querySelectorAll('.grade-stage-list[open],.grade-group-list[open]')].map(el=>el.classList.contains('grade-group-list')?'groups':el.dataset.stage));
   card.innerHTML=`<div class="focus-sticky"><div class="focus-heading"><span class="overline">${objectLevelLabel(o)}</span>${scene.canLocate(o)?button('focus-selected','聚焦所选','','plain-button'):''}${button('deselect','×','aria-label="取消选择，不移动镜头"','plain-button')}</div><h2>${esc(displayTitle(o))}</h2></div>${body}${relations.length&&!(scene.global&&o.kind==='node')?`<div class="relationship-key">${button('toggle-relations',scene.relationMode==='off'?'看看这里的联系':'收起联系',`aria-pressed="${scene.relationMode!=='off'}"`,'plain-button')}</div>`:''}`;card.hidden=false;card.dataset.currentKey=scene.selected;document.body.classList.add('has-context-card');
   if(same)for(const details of card.querySelectorAll('.grade-stage-list,.grade-group-list'))if(previouslyOpen.has(details.classList.contains('grade-group-list')?'groups':details.dataset.stage))details.open=true;

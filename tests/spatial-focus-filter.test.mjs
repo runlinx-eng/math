@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {buildFocusFilter,buildCylinderLock} from '../dist/spatial-focus-filter.js';
+import {buildFocusFilter,buildCylinderLock,buildCylinderInspection} from '../dist/spatial-focus-filter.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const ids=new Set(atlas.nodes.filter(n=>n.domainId!=='thinking').map(n=>n.id));
 const ROOT='mt_WcfaSfVT33';
@@ -98,6 +98,25 @@ test('v54 full upstream lock equals real hard ancestors plus direct source neigh
    const expected=atlas.edges.filter(e=>e.prerequisiteId===node.id||e.topicId===node.id||e.strength==='hard'&&ancestors.has(e.prerequisiteId)&&ancestors.has(e.topicId));
    const view=buildCylinderLock(atlas,all,node.id);
    assert.deepEqual(view.links,expected);
+   assert.equal(view.upstreamCount,ancestors.size-1);
    assert.deepEqual(view.ids,new Set([node.id,...expected.flatMap(e=>[e.prerequisiteId,e.topicId])]));
+ }
+});
+
+test('v54 inspector lists real direct neighbors and exact hard ancestors, never downstream/soft as upstream',()=>{
+ const all=new Set(atlas.nodes.map(n=>n.id)),thinking=new Set(atlas.nodes.filter(n=>n.domainId==='thinking').map(n=>n.id));
+ for(const node of atlas.nodes){
+   const direct=atlas.edges.filter(e=>e.prerequisiteId===node.id||e.topicId===node.id);
+   const hover=buildCylinderInspection(atlas,all,node.id);
+   const locked=buildCylinderInspection(atlas,all,node.id,true);
+   const unique=values=>[...new Set(values)];
+   assert.deepEqual(hover.before,unique(direct.filter(e=>e.strength==='hard'&&e.topicId===node.id&&e.prerequisiteId!==node.id).map(e=>e.prerequisiteId)));
+   assert.deepEqual(hover.after,unique(direct.filter(e=>e.strength==='hard'&&e.prerequisiteId===node.id&&e.topicId!==node.id).map(e=>e.topicId)));
+   assert.deepEqual(hover.thinking,unique(direct.map(e=>e.topicId===node.id?e.prerequisiteId:e.topicId).filter(id=>id!==node.id&&thinking.has(id)!==thinking.has(node.id))));
+   assert.equal(hover.soft,direct.filter(e=>e.strength==='soft'&&e.prerequisiteId!==e.topicId).length);
+   assert.equal(hover.upstreamCount,null);
+   const upstream=new Set([node.id]);let changed=true;
+   while(changed){changed=false;for(const e of atlas.edges)if(e.strength==='hard'&&upstream.has(e.topicId)&&!upstream.has(e.prerequisiteId)){upstream.add(e.prerequisiteId);changed=true;}}
+   assert.deepEqual(locked,{...hover,upstreamCount:upstream.size-1});
  }
 });

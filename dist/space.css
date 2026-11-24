@@ -1464,12 +1464,16 @@ body[data-network-version="54"] .cylinder-entry-choice:hover{background:#20314b}
 body[data-network-version="54"] .cylinder-entry-choice i{width:7px;height:7px;border-radius:50%;background:var(--object-color);box-shadow:0 0 7px var(--object-color);flex:none}
 body[data-network-version="54"] .cylinder-entry-choice span:nth-child(2){flex:1;line-height:1.4}
 body[data-network-version="54"] .cylinder-entry-choice small{display:block;color:#9fafd0;font-size:10px}
-body[data-network-version="54"] #cylinder-hover-inspector{pointer-events:none;width:min(254px,calc(100vw - 32px));font-size:12px;bottom:96px}
+body[data-network-version="54"] #cylinder-hover-inspector{pointer-events:none;width:clamp(285px,26.5vw,354px);max-width:calc(100vw - 32px);font-size:12px;bottom:94px}
 body[data-network-version="54"] #cylinder-hover-inspector strong{font-size:14px}
 body[data-network-version="54"] #cylinder-hover-inspector small{color:#9bacc6;display:block;margin-top:5px;font-size:10px}
 body[data-network-version="54"] .cylinder-inspection-stage{font-size:11px;margin:6px 0;color:#b7c8e0}
-body[data-network-version="54"] .cylinder-inspection-counts{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;font-variant-numeric:tabular-nums}
-body[data-network-version="54"] .cylinder-inspection-counts span{padding:5px 7px;background:#ffffff09;border:1px solid #ffffff0d;border-radius:6px}
+body[data-network-version="54"] .cylinder-inspection-counts{display:grid;gap:5px;font-size:12px;font-variant-numeric:tabular-nums}
+body[data-network-version="54"] .cylinder-inspection-row{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px;align-items:baseline;padding:5px 7px;background:#ffffff09;border:1px solid #ffffff0d;border-radius:6px;line-height:1.45}
+body[data-network-version="54"] .cylinder-inspection-row b{font-weight:500;white-space:nowrap}
+body[data-network-version="54"] .cylinder-inspection-names{color:#dce7f8;overflow-wrap:anywhere}
+body[data-network-version="54"] .cylinder-upstream-count{color:#9cc2ff;font-size:11px;line-height:1.45}
+body[data-network-version="54"] .cylinder-inspection-note{color:#9bacc6;font-size:10px;line-height:1.4}
 body[data-network-version="54"] .cylinder-inspection-counts .before,body[data-world="network"][data-network-version="54"] #focus-card .network-focus-key .before{color:#7ce2ff}
 body[data-network-version="54"] .cylinder-inspection-counts .after,body[data-world="network"][data-network-version="54"] #focus-card .network-focus-key .after{color:#ffd085}
 body[data-network-version="54"] .cylinder-inspection-counts .thinking{color:#d5b4ff}
@@ -1482,3 +1486,5 @@ body[data-network-version="54"] #cylinder-node-details .focus-actions{margin:6px
 @media(prefers-reduced-motion:reduce){.spatial-focus-links .cylinder-link-flow{display:none;animation:none}}
 @media(max-aspect-ratio:9/10){body[data-network-version="54"] #cylinder-entry-nav,body[data-network-version="54"] #cylinder-hover-inspector{right:16px;bottom:146px}}
 @media(max-width:620px){body[data-network-version="54"] #cylinder-entry-nav{right:12px;bottom:148px}body[data-network-version="54"] #cylinder-hover-inspector{right:12px;bottom:108px}body[data-network-version="54"] .tool-rail [data-action="cylinder-origin"]{min-width:38px;font-size:9px}}
+
+@media(max-width:800px){body[data-network-version="54"] #cylinder-hover-inspector{width:min(360px,calc(100vw - 24px),max(260px,45vw));right:12px}}
