@@ -19,30 +19,67 @@ export function createCylinderVisuals(THREE,space,nodeList){
    if(dashed)m.computeLineDistances();return m;
  };
  const arc=(r,y,a,b)=>Array.from({length:65},(_,i)=>{const t=a+(b-a)*i/64;return new THREE.Vector3(r*Math.cos(t),y-offset,r*Math.sin(t));});
- // Quiet segmented rims mark soft stage anchors, not prerequisites.
+ // Reference heights are real median displayed positions of the three
+ // curriculum anchor cohorts, never grade boundaries or prerequisite edges.
  const core=layout.nodes.filter(n=>n.thinking),coreR=Math.max(...core.map(n=>n.r))+9;
  const coreTop=Math.max(...core.map(n=>n.y)),coreBottom=Math.min(...core.map(n=>n.y));
+ const layerRefs=['stage-1','stage-2','stage-3'].map((id,i)=>{
+   const ys=layout.nodes.filter(n=>!n.thinking&&n.anchorStage===id).map(n=>n.y).sort((a,b)=>a-b);
+   const y=(ys[Math.floor((ys.length-1)/2)]+ys[Math.floor(ys.length/2)])/2;
+   return {id,y,r:(205+.15*y)*scale+8,label:['1—2年级参考层','3—4年级参考层','5—6年级参考层'][i]};
+ });
  for(const s of layout.sectors){
    const color=space.themes.get(s.themeId).color;
-   for(const y of [0,155,310])guides.add(line(arc((290+.065*y)*scale,y,s.start,s.end),color,y===0?.19:.075,true));
+   guides.add(line(arc(205*scale,0,s.start,s.end),color,.12,true));
+   for(const ref of layerRefs){
+     const m=line(arc(ref.r,ref.y,s.start,s.end),0xa0b2d5,.14,true);
+     m.userData.stage=ref.id;guides.add(m);
+   }
  }
- guides.add(line([new THREE.Vector3(0,coreBottom-offset,0),new THREE.Vector3(0,coreTop-offset,0)],0xc6b5ff,.30,true));
- for(const y of [coreBottom,(coreBottom+coreTop)/2,coreTop])guides.add(line(arc(coreR,y,0,Math.PI*2),0xc6b5ff,.13,true));
+ const labels=[];
+ for(const ref of layerRefs){
+   const canvas=document.createElement('canvas');canvas.width=288;canvas.height=40;
+   const context=canvas.getContext('2d');context.font='22px sans-serif';context.textBaseline='middle';context.fillStyle='#b8c7e0';context.fillText(ref.label,2,20);
+   const map=new THREE.CanvasTexture(canvas);map.colorSpace=THREE.SRGBColorSpace;
+   const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map,transparent:true,opacity:.56,depthWrite:false,depthTest:false,fog:false}));
+   sprite.center.set(0,.5);sprite.renderOrder=3;guides.add(sprite);labels.push({ref,sprite});
+ }
+ guides.add(line([new THREE.Vector3(0,coreBottom-offset,0),new THREE.Vector3(0,coreTop-offset,0)],0xc6b5ff,.36,true));
+ for(const y of [coreBottom,(coreBottom+coreTop)/2,coreTop])guides.add(line(arc(coreR,y,0,Math.PI*2),0xc6b5ff,.18,true));
  let seed=54017;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
  const stars=[];for(let i=0;i<420;i++){const a=random()*Math.PI*2,r=720+random()*1050,y=(random()-.5)*2200;stars.push(Math.cos(a)*r,y,Math.sin(a)*r);}
  const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(stars,3));
  const starField=new THREE.Points(sg,new THREE.PointsMaterial({color:0x7283b1,size:1.35,sizeAttenuation:false,transparent:true,opacity:.22,depthWrite:false,fog:false}));starField.name='decorative-background-stars';group.add(starField);
  const records=[],seen=new Set(),source=new Map(space.atlas.edges.map(e=>[e.prerequisiteId+'>'+e.topicId,e])),accents=new THREE.Group();group.add(accents);
+ // Round each real path segment using its neighboring real vertices.
+ // Control Y coordinates are exactly 1/3 and 2/3 of each segment; no
+ // extra connections or reversals are introduced. Curves meet source nodes.
+ const pathCurves=new Map();
+ const slope=(a,b)=>b.clone().sub(a).multiplyScalar(1/Math.max(b.y-a.y,.0001));
+ const limitedDelta=(v,dy)=>{v.y=0;return v.multiplyScalar(dy/3).clampLength(0,20);};
+ for(const sp of layout.spines){
+   const points=sp.nodeIds.map(id=>V(space.nodes.get(id).position));
+   sp.edges.forEach((e,i)=>{
+     const key=e.prerequisiteId+'>'+e.topicId;if(pathCurves.has(key))return;
+     const from=points[i],to=points[i+1],direct=slope(from,to),dy=to.y-from.y;
+     const first=i?slope(points[i-1],to):direct;
+     const last=i+2<points.length?slope(from,points[i+2]):direct;
+     const c1=from.clone().lerp(to,1/3).add(limitedDelta(first.clone().sub(direct),dy));
+     const c2=from.clone().lerp(to,2/3).add(limitedDelta(direct.clone().sub(last),dy));
+     pathCurves.set(key,new THREE.CubicBezierCurve3(from,c1,c2,to));
+   });
+ }
  function addEdge(e,bridge){
    const key=e.prerequisiteId+'>'+e.topicId,original=source.get(key);
    if(!original||original.strength!==e.strength)throw Error('v54 visual edge not in source: '+key);
    if(seen.has(key))return;seen.add(key);
    const a=space.nodes.get(e.prerequisiteId),b=space.nodes.get(e.topicId),color=bridge?0xbba4ff:b.color,soft=e.strength==='soft',from=V(a.position),to=V(b.position);
-   const m=line([from,to],color,bridge?.25:.78,soft);m.name=bridge?'real-entry-bridge':'real-spine-edge';m.userData.edge={...e};accents.add(m);
-   const pieces=[{mesh:m,opacity:bridge?.25:.78}];
-   if(!soft){const curve=new THREE.LineCurve3(from,to);
+   const curve=bridge?new THREE.LineCurve3(from,to):pathCurves.get(key)||new THREE.LineCurve3(from,to);
+   const m=line(curve.getPoints(12),color,bridge?.21:.78,soft);m.name=bridge?'real-entry-bridge':'real-spine-edge';m.userData.edge={...e};accents.add(m);
+   const pieces=[{mesh:m,opacity:bridge?.21:.78}];
+   if(!soft){
      for(const [radius,opacity] of [[1.5,bridge?.10:.48],[4.0,bridge?.035:.14]]){
-       const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,1,radius,5,false),new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
+       const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,12,radius,5,false),new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
        accents.add(tube);pieces.push({mesh:tube,opacity});
      }
    }records.push({edge:e,bridge,pieces});
@@ -51,7 +88,7 @@ export function createCylinderVisuals(THREE,space,nodeList){
  for(const s of layout.spines)for(const e of s.edges)addEdge(e,false);
  // Flow is on real hard edges; separate segments never draw synthetic bridges.
  const paths=layout.spines.flatMap((s,i)=>{
-   const segments=s.edges.filter(e=>e.strength==='hard').map(e=>{const a=V(space.nodes.get(e.prerequisiteId).position),b=V(space.nodes.get(e.topicId).position);return {a,b,length:a.distanceTo(b)};});
+   const segments=s.edges.filter(e=>e.strength==='hard').map(e=>{const curve=pathCurves.get(e.prerequisiteId+'>'+e.topicId);return {curve,length:curve.getLength()};});
    return segments.length?[{segments,total:segments.reduce((t,e)=>t+e.length,0),color:space.themes.get(s.themeId).color,phase:i*.173}]:[];
  });
  const fg=new THREE.BufferGeometry(),fp=new Float32Array(paths.length*3),fc=new Float32Array(paths.length*3);
@@ -66,12 +103,21 @@ export function createCylinderVisuals(THREE,space,nodeList){
      const factor=(hit?1:.14)*(focus?(theme&&themeHit?.75:.24):1)*(task?.54:1);
      for(const {mesh,opacity} of rec.pieces)mesh.material.opacity=opacity*factor;
    }
+   const right=scene.basis().right;right.y=0;right.normalize();
+   const px=Math.max(.001,scene.globalScale()),showRefs=scene.networkView!=='map'&&!scene.selected&&!scene.guideFocus&&!task;
+   for(const obj of guides.children)if(obj.userData.stage)obj.material.opacity=filtered?(obj.userData.stage===scene.gradeStageId?.29:.06):.14;
+   for(const {ref,sprite} of labels){
+     sprite.visible=showRefs;
+     sprite.position.copy(right).multiplyScalar(ref.r+8);sprite.position.y=ref.y-offset;
+     sprite.scale.set(144/px,20/px,1);
+     sprite.material.opacity=filtered?(ref.id===scene.gradeStageId?.90:.25):.56;
+   }
    guides.visible=!scene.guideFocus;flow.visible=!focus&&!filtered&&!task&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
  }
  function move(time){if(!flow.visible)return;for(let i=0;i<paths.length;i++){
    const p=paths[i];let at=((time*.000115+p.phase)%1)*p.total,e=p.segments[0];
    for(const seg of p.segments){e=seg;if(at<=seg.length)break;at-=seg.length;}
-   e.a.clone().lerp(e.b,Math.max(0,Math.min(1,at/Math.max(e.length,1e-6)))).toArray(fp,i*3);
+   e.curve.getPointAt(Math.max(0,Math.min(1,at/Math.max(e.length,1e-6)))).toArray(fp,i*3);
  }fg.attributes.position.needsUpdate=true;}
  return {group,glowMesh,thinkingMesh,milestoneMesh,flow,setEmphasis,move,edgeCount:records.length,bridgeCount:records.filter(r=>r.bridge).length};
 }

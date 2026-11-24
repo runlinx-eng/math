@@ -523,7 +523,7 @@ export class SpatialScene {
   fitGlobalView(animated=true,objects=null){
     const points=(objects||this.nodeList).filter(o=>this.canLocate(o)).map(o=>V(o.position));if(!points.length)return;
     const center=new THREE.Box3().setFromPoints(points).getCenter(new THREE.Vector3());
-    const dir=V(this.networkView==='map'?[0,1,.0001]:this.networkView==='relations'?[0,0,1]:this.cylinderMap?[.52,.27,1]:this.width/this.height<.9?[.45,.72,.9]:[.65,.5,1]).normalize();
+    const dir=V(this.networkView==='map'?[0,1,.0001]:this.networkView==='relations'?[0,0,1]:this.cylinderMap?[1,.26,-.27]:this.width/this.height<.9?[.45,.72,.9]:[.65,.5,1]).normalize();
     const right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),dir).normalize(),up=new THREE.Vector3().crossVectors(dir,right).normalize();
     const xs=points.map(p=>p.dot(right)),ys=points.map(p=>p.dot(up));
     const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
@@ -611,7 +611,7 @@ export class SpatialScene {
        let size=this.relationshipMap?filteredRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       const cp=this.cylinderMap?this.space.cylinderById.get(o.id):null;
       if(cp){const inspection=o.key===this.selected||o.key===this.activeTargetKey||o.key===this.hoverMapKey||o.key===this.previewKey,related=this.related?.has(o.key)||this.hoverRelatedKeys.has(o.key),dim=this.gradeStageId!=='all'&&!this.gradeStageIds.has(o.id)&&!inspection&&!related&&!this.guideFocus;
-        const spine=this.space.cylinderSpineIds.has(o.id),theme=selected?.kind==='theme'?selected.id:this.hoverThemeId,themeDim=theme&&(cp.thinking||cp.themeId!==theme),normal=cp.thinking?2.05:Math.min(2.5,1.1+cp.nodeRadius*.27)+(spine?.25:0),radius=inspection?5:related&&selected?3.3:dim||themeDim?1.2:this.space.cylinderRoots.has(o.id)?2.8:normal;
+        const spine=this.space.cylinderSpineIds.has(o.id),theme=selected?.kind==='theme'?selected.id:this.hoverThemeId,themeDim=theme&&(cp.thinking||cp.themeId!==theme),normal=cp.thinking?2.3:Math.min(2.5,1.1+cp.nodeRadius*.27)+(spine?.25:0),radius=inspection?5:related&&selected?3.3:dim||themeDim?1.2:this.space.cylinderRoots.has(o.id)?2.8:normal;
         size=radius/pixelsPerUnit;if(!dim&&(inspection||(!selected&&!this.hoverMapKey&&!this.hoverThemeId&&!this.guideFocus)))color.lerp(new THREE.Color(0xffffff),inspection?.36:.035);
       }
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);

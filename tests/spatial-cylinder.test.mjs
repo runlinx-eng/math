@@ -50,6 +50,8 @@ function verifyCylinderLayout(atlas,grade,build,assert){
   assert(height/diameter>1.2&&height/diameter<1.6,"upright cylindrical proportions");
   const horizontal=out.spines.flatMap(s=>s.edges).reduce((sum,e)=>{const a=ids.get(e.prerequisiteId),b=ids.get(e.topicId);return sum+Math.hypot(a.position[0]-b.position[0],a.position[2]-b.position[2]);},0);
   assert(horizontal<1200,"real spines follow continuous narrow backbones");
+  const domain=out.nodes.filter(n=>!n.thinking),percentileR=nodes=>{const radii=nodes.map(n=>n.r).sort((a,b)=>a-b);return radii[Math.floor(radii.length*.9)];};
+  assert(percentileR(domain.filter(n=>n.y>height*.66))>1.25*percentileR(domain.filter(n=>n.y<height*.33)),"upper crown expands above the base");
   assert(out.diagnostics.collisions===0,"zero unresolved collisions");
   for(let i=0;i<out.nodes.length;i++)for(let j=i+1;j<out.nodes.length;j++){
     const a=out.nodes[i],b=out.nodes[j],distance=Math.hypot(...a.position.map((x,k)=>x-b.position[k]));

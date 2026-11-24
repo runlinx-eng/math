@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261124-cylinder-v54-preview2';
+const RELEASE='math-explorer-20261124-cylinder-v54-preview3';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -107,7 +107,7 @@ function refreshLearning(){renderedDay=dayKey();if(scene){const daily=dailySumma
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveView,250);}
 function captureView(){const v=scene.snapshot();if(scene.global){v.traceScroll=Math.max(0,Math.min(100000,$('#focus-card').scrollTop||0));const focused=document.activeElement?.closest?.('[data-preview-key]');if(focused)v.traceFocused=focused.dataset.previewKey;}return v;}
 function restoreFocus(view){const card=$('#focus-card');if(!card.hidden&&Number.isFinite(view?.traceScroll))card.scrollTop=view.traceScroll;if(view?.traceFocused){const target=[...card.querySelectorAll('[data-preview-key] [data-action="choose"]')].find(el=>el.closest('[data-preview-key]').dataset.previewKey===view.traceFocused);target?.focus({preventScroll:true});}}
-function saveView(){if(!scene)return;const view={version:LAYOUT_VERSION,...captureView(),...(scene.cylinderMap?{cylinderComposition:2}:{}),selectedGradeStage,activePanel,journeyOpen,journeySuspended,sessionId:activeSessionId,questionId:activeQuestionId,panels:[...panels.values()].map(p=>({id:p.id,anchor:p.anchor,minimized:p.minimized,tab:p.tab,expanded:p.expanded}))};try{writeStored(RELATIONSHIP_VIEW_KEY,JSON.stringify(view));}catch{warning('观察位置暂时无法保存，学习记录仍按原来的方式保存。');}}
+function saveView(){if(!scene)return;const view={version:LAYOUT_VERSION,...captureView(),...(scene.cylinderMap?{cylinderComposition:3}:{}),selectedGradeStage,activePanel,journeyOpen,journeySuspended,sessionId:activeSessionId,questionId:activeQuestionId,panels:[...panels.values()].map(p=>({id:p.id,anchor:p.anchor,minimized:p.minimized,tab:p.tab,expanded:p.expanded}))};try{writeStored(RELATIONSHIP_VIEW_KEY,JSON.stringify(view));}catch{warning('观察位置暂时无法保存，学习记录仍按原来的方式保存。');}}
 function remember(){if(!scene)return;const view=captureView();if(visits.length&&JSON.stringify(visits.at(-1))===JSON.stringify(view))return;visits.push(view);if(visits.length>30)visits.shift();$('#back-button').disabled=false;}
 function recordGuide(step,active){return mutateLearning(s=>{s.daily.guide={id:GUIDE_ID,step,active,updatedAt:now()};});}
 function guideThemeId(){return space.nodes.get(guideSteps[1]?.anchor)?.themeId||null;}
@@ -342,7 +342,7 @@ function renderLocation(){renderNetworkGuide();renderLearningMapContext();render
 function renderNetworkGuide(){
   if(!scene||worldLayout!=='network')return;
   const mode=scene.networkView,current=scene.global,direction=scene.camera.position.clone().sub(scene.controls.target).normalize();
-  const expected=mode==='map'?[0,1,.0001]:mode==='relations'?[0,0,1]:scene.cylinderMap?[.52,.27,1]:[.65,.5,1],length=Math.hypot(...expected);
+  const expected=mode==='map'?[0,1,.0001]:mode==='relations'?[0,0,1]:scene.cylinderMap?[1,.26,-.27]:[.65,.5,1],length=Math.hypot(...expected);
   const rotated=current&&(direction.x*expected[0]+direction.y*expected[1]+direction.z*expected[2])/length<.99995;
   document.body.dataset.networkView=mode;document.body.dataset.networkVersion=String(scene.networkVersion);document.body.dataset.mapFocus=scene.hoverMapKey?.split(':')[0]||(scene.hoverThemeId?'theme':scene.selected?.split(':')[0]||'overview');
   $('.tool-rail [data-action="front"]').textContent='归位';
@@ -402,7 +402,7 @@ function renderNetworkGuide(){
   if(scene.relationshipMap){const shellButton=$('[data-action="overview-shells"]');if(shellButton){shellButton.hidden=!!scene.selected||!scene.overviewShells.length;shellButton.setAttribute('aria-pressed',String(scene.overviewShellsEnabled));shellButton.textContent=scene.overviewShellsEnabled?'隐藏知识群外壳':`试看知识群外壳 · ${scene.overviewShells.length}`;}for(const b of document.querySelectorAll('[data-action="edge-display"]'))b.setAttribute('aria-pressed',String(b.dataset.edgeDisplay===scene.edgeDisplay));$('#network-edge-hint').textContent=scene.edgeDisplay==='outline'?'只简化背景；选中后仍显示全部直接联系':scene.edgeDisplay==='critical'?'显示全部关键联系；辅助联系可在节点中查看':'显示关键与辅助联系';}
   for(const b of document.querySelectorAll('#network-legend [data-action="network-theme"]'))b.setAttribute('aria-pressed',String(scene.selected==='theme:'+b.dataset.id));
   const guide=learning.daily.guide,guideEntry=$('[data-action="guide-start"]');guideEntry.hidden=!guideSteps.length||guideVisible||journeyOpen;guideEntry.textContent=guide?.step>0&&guide.step<guideSteps.length-1?'继续发现知识的联系':'发现知识的联系';
-  for(const b of document.querySelectorAll('[data-action="network-view"]')){const match=b.dataset.view==='side'?'relations':b.dataset.view==='top'?'map':'oblique';b.setAttribute('aria-pressed',String(current&&!rotated&&match===mode));b.disabled=false;if(b.dataset.view==='oblique')b.textContent=scene.localRelationshipFocus?'立体视角':'立体总览';b.title='只转动镜头，知识点保持原位';}
+  for(const b of document.querySelectorAll('[data-action="network-view"]')){const match=b.dataset.view==='side'?'relations':b.dataset.view==='top'?'map':'oblique';b.setAttribute('aria-pressed',String(current&&!rotated&&match===mode));b.disabled=false;if(b.dataset.view==='oblique')b.textContent=scene.localRelationshipFocus?'立体视角':'立体总览';b.title='只转动镜头，知识点保持原位';if(scene.cylinderMap){const labels={top:'顶视',side:'侧视',oblique:'立体'};b.textContent=labels[b.dataset.view];b.title=labels[b.dataset.view]+' · 只转动镜头，知识点保持原位';}}
 }
 function networkRelations(o,relations){
   const fv=scene.localRelationshipFocus?scene.focusView:null;
@@ -1261,7 +1261,7 @@ async function boot(){try {
     canonical.searchParams.set('world','network');canonical.searchParams.set('layout',String(chosenNetworkVersion));history.replaceState(null,'',canonical.href);
   }
   worldLayout='network';document.body.dataset.world=worldLayout;
-  if(chosenNetworkVersion===54){const [{buildCylinderSpace,CYLINDER_VIEW_KEY},grade]=await Promise.all([import('./spatial-cylinder-view.js'),ensureGradePanoramaData()]);RELATIONSHIP_VIEW_KEY=CYLINDER_VIEW_KEY;space=buildCylinderSpace(atlas,grade);const tools=document.createElement('details');tools.className='cylinder-extra-tools';tools.innerHTML='<summary>更多视图选项</summary>';tools.append($('#network-edge-controls'),$('#overview-structure-controls'));$('#network-guide').append(tools);}else space=buildRelationshipSpace(atlas);
+  if(chosenNetworkVersion===54){const [{buildCylinderSpace,CYLINDER_VIEW_KEY},grade]=await Promise.all([import('./spatial-cylinder-view.js'),ensureGradePanoramaData()]);RELATIONSHIP_VIEW_KEY=CYLINDER_VIEW_KEY;space=buildCylinderSpace(atlas,grade);const tools=document.createElement('details');tools.className='cylinder-extra-tools';tools.innerHTML='<summary>更多视图选项</summary>';tools.append($('#network-edge-controls'),$('#overview-structure-controls'));const note=document.createElement('p');note.className='cylinder-reference-note';note.textContent='学段参考环取该学段领域节点的中位高度，并非固定分界。真实前置始终优先。';tools.append(note);$('#network-guide').append(tools);const coreKey=document.createElement('div');coreKey.id='cylinder-core-key';coreKey.innerHTML='<i aria-hidden="true"></i><span>数学思维轴核</span><small>'+space.cylinderThinkingCount+'</small>';$('#network-legend').after(coreKey);}else space=buildRelationshipSpace(atlas);
   space.defaultNetworkVersion=chosenNetworkVersion;space.knowledgeNames=makeKnowledgeNames(atlas);
   document.body.dataset.networkVersion=String(space.networkVersion);
   try{const stored=readStored(KEY);if(stored)await prepareStateForValidation(JSON.parse(stored));}
@@ -1291,7 +1291,7 @@ async function boot(){try {
   if(guideSteps.length&&learning.daily.guide?.active&&scene.relationshipMap&&!showQuestionEntry&&!showUnfinishedEntry&&!explicitOverview){if(journeyOpen)guideSuspended=true;else if(!routeKey||routeKey===stored?.selected)activateGuide(learning.daily.guide.step,{record:false,animate:false,fit:!stored||stored.networkVersion!==chosenNetworkVersion||stored.selected!=='node:'+guideSteps[learning.daily.guide.step].anchor});}
   // Never refit while navigating; repair only an unreadably distant saved view
   // once at startup, after all saved route/guide selections have been restored.
-  if(stored&&!journeyOpen&&scene.relationshipMap){if(scene.cylinderMap&&!stored.selected&&!stored.panels.length){let composition;try{composition=JSON.parse(readStored(RELATIONSHIP_VIEW_KEY))?.cylinderComposition;}catch{}if(composition!==2)scene.fitGlobalView(false);else scene.recoverUnreadableSavedCamera();}else scene.recoverUnreadableSavedCamera();}
+  if(stored&&!journeyOpen&&scene.relationshipMap){if(scene.cylinderMap&&!stored.selected&&!stored.panels.length){let composition;try{composition=JSON.parse(readStored(RELATIONSHIP_VIEW_KEY))?.cylinderComposition;}catch{}if(composition!==3)scene.fitGlobalView(false);else scene.recoverUnreadableSavedCamera();}else scene.recoverUnreadableSavedCamera();}
   const allButton=$('[data-action="all-nodes"]');allButton.setAttribute('aria-pressed',String(scene.showAllNodes));allButton.textContent=scene.showAllNodes?'收起所有知识点':'展开所有知识点';
   refreshLearning();renderLocation();if(stored)restoreFocus(stored);restoreTaskSurface({initial:true});renderGradeMapFilter();$('#loading').hidden=true;$('#space-app').classList.add('ready');offline();
   if(worldLayout==='network'&&scene.relationshipMap)ensureGradePanoramaData().then(()=>{renderGradeMapFilter();renderFocus();}).catch(error=>{$('#grade-map-filter-status').textContent='课程映射读取失败：'+error.message;});

@@ -161,7 +161,7 @@ export function buildCylinderLayout(atlas, grade) {
   const degree=id=>incoming.get(id).length+outgoing.get(id).length;
   const maxDegree=Math.max(1,...ids.map(degree));
   const pos=new Map(),seedAngles=new Map();
-  const bounds=(p)=>p.thinking?[18,62]:[120+.045*p.y,290+.065*p.y];
+  const bounds=(p)=>p.thinking?[18,62]:[95+.10*p.y,205+.15*p.y];
   // Pack-local initial order is independent of input row ordering.
   for(const l of lanes){
     const members=domain.filter(id=>laneById.get(id).id===l.id);
@@ -212,8 +212,8 @@ export function buildCylinderLayout(atlas, grade) {
   for(const sp of spines)for(const id of sp.nodeIds){
     if(spinePlaced.has(id))continue;spinePlaced.add(id);
     const p=pos.get(id),l=laneById.get(id),[lo,hi]=bounds(p);
-    p.theta=l.center+(hash("spine-angle:"+id)-.5)*(l.end-l.start)*.16;
-    p.r=lo+(hi-lo)*(.16+.08*hash("spine-radius:"+id));
+    p.theta=l.center+(l.end-l.start)*(.22*Math.sin(p.y/145+sp.index*1.2+hash(sp.themeId)*6.28)+(hash("spine-angle:"+id)-.5)*.09);
+    p.r=lo+(hi-lo)*(.21+.13*Math.sin(p.y/185+hash(sp.themeId)*6.28)+.07*hash("spine-radius:"+id));
   }
   const projectY=()=>{
     for(const id of order){

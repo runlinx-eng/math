@@ -1384,3 +1384,12 @@ body[data-network-version="54"] .bottom-bar .overall-progress progress{display:n
 body[data-network-version="54"] .bottom-bar .overall-progress b{color:#9eb6d6}
 body[data-network-version="54"] #space-canvas{background:radial-gradient(ellipse at 56% 48%,#11192b 0%,#0b101c 48%,#07090f 84%)}
 @media(max-width:760px){body[data-world="network"][data-network-version="54"] #network-guide{max-height:min(41dvh,310px);gap:5px}body[data-network-version="54"] #network-guide .network-legend button{min-height:25px;font-size:10px}}
+
+/* v54 composition 3: keep the axial core separate from the five domain counts. */
+body[data-world="network"][data-network-version="54"] #cylinder-core-key{display:flex;align-items:center;gap:8px;padding:6px 4px;border-top:1px solid #ffffff0d;color:#c8c2e5;font-size:12px}
+body[data-network-version="54"] #cylinder-core-key i{width:6px;height:6px;flex:none;transform:rotate(45deg);background:#e4dcff;box-shadow:0 0 8px #ddcdff9c}
+body[data-network-version="54"] #cylinder-core-key small{margin-left:auto;font-variant-numeric:tabular-nums;color:#b0a6d1}
+body[data-network-version="54"] .cylinder-reference-note{margin:4px 0 0;line-height:1.5;font-size:10px;color:#a3b2ca}
+body[data-network-version="54"][data-map-focus="overview"] :is(.place-indicator,.space-intro){display:none}
+body[data-world="network"][data-network-version="54"] .tool-rail button[data-action="network-view"]{white-space:nowrap}
+@media(min-width:761px){body[data-world="network"][data-network-version="54"] #network-guide{top:112px}}

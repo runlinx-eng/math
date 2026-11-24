@@ -17,7 +17,7 @@ export function buildCylinderSpace(atlas,grade){
  space.cylinderSpineIds=new Set(layout.spines.flatMap(s=>s.nodeIds));space.cylinderRoots=new Set(layout.diagnostics.roots);
  for(const n of space.nodes.values()){
    const p=space.cylinderById.get(n.id);n.position=[p.position[0],p.y-offset,p.position[2]];
-   n.color=p.thinking?'#d6defd':PALETTE[n.themeId];
+   n.color=p.thinking?'#e4dcff':PALETTE[n.themeId];
  }
  for(const p of space.packs.values()){
    const children=p.nodeIds.map(id=>space.nodes.get(id));p.position=[0,1,2].map(i=>children.reduce((s,n)=>s+n.position[i],0)/children.length);
@@ -27,7 +27,7 @@ export function buildCylinderSpace(atlas,grade){
    const sector=layout.sectors.find(s=>s.themeId===t.id),children=layout.nodes.filter(n=>!n.thinking&&n.themeId===t.id);
    // Decorative sector name, not a source node.
    const ys=children.map(n=>n.y).sort((a,b)=>a-b);
-   const r=Math.max(...children.map(n=>n.r))*.94,y=ys[Math.floor((ys.length-1)*.87)]+22-offset;
+   const r=Math.max(...children.map(n=>n.r))*.94,y=Math.min(2*offset-18,ys[Math.floor((ys.length-1)*.90)]+26)-offset;
    t.position=[Math.cos(sector.center)*r,y,Math.sin(sector.center)*r];t.color=PALETTE[t.id];
  }
  space.relationshipPositions=new Map(space.objects.map(o=>[o.key,[...o.position]]));
