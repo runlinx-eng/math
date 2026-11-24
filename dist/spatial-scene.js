@@ -523,7 +523,7 @@ export class SpatialScene {
   fitGlobalView(animated=true,objects=null){
     const points=(objects||this.nodeList).filter(o=>this.canLocate(o)).map(o=>V(o.position));if(!points.length)return;
     const center=new THREE.Box3().setFromPoints(points).getCenter(new THREE.Vector3());
-    const dir=V(this.networkView==='map'?[0,1,.0001]:this.networkView==='relations'?[0,0,1]:this.width/this.height<.9?[.45,.72,.9]:[.65,.5,1]).normalize();
+    const dir=V(this.networkView==='map'?[0,1,.0001]:this.networkView==='relations'?[0,0,1]:this.cylinderMap?[.52,.27,1]:this.width/this.height<.9?[.45,.72,.9]:[.65,.5,1]).normalize();
     const right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),dir).normalize(),up=new THREE.Vector3().crossVectors(dir,right).normalize();
     const xs=points.map(p=>p.dot(right)),ys=points.map(p=>p.dot(up));
     const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
@@ -531,7 +531,7 @@ export class SpatialScene {
     // Fit the projected point bounds, not the large annotation boxes. All views
     // use the same source coordinates; only the orthographic camera changes.
     const minSpan=this.guideFocus?85:this.localRelationshipFocus?110:160;
-    const pixels=Math.min((w-72)/Math.max(minSpan,maxX-minX),(h-56)/Math.max(minSpan,maxY-minY));
+    const pixels=Math.min((w-(this.cylinderMap?60:72))/Math.max(minSpan,maxX-minX),(h-(this.cylinderMap?94:56))/Math.max(minSpan,maxY-minY));
     const target=right.clone().multiplyScalar((minX+maxX)/2-(left-rightMargin)/(2*pixels)).addScaledVector(up,(minY+maxY)/2+(top-bottom)/(2*pixels)).addScaledVector(dir,center.dot(dir));
     const distance=2200,targetZoom=pixels*2*distance*Math.tan(Math.PI/9)/this.height;
     if(this.relationshipMap&&!objects){
@@ -548,9 +548,9 @@ export class SpatialScene {
     const available=new Set(topicIds);
     for(const {object,el}of this.labels){
       if(object.kind==='node'){const tier=stateFor(object.id).tier||1,name=this.network?(this.space.knowledgeNames?.get(object.id)||object.title):(routeStep(object.id)?.title||object.title);el.dataset.progress='tier-'+tier;el.classList.remove('has-evidence');el.setAttribute('aria-label',`${name}${available.has(object.id)?'，'+(['未学习','学习中','核心完成'][tier-1]):''}`);}
-      else {const ids=(object.kind==='pack'?object.nodeIds:this.nodeList.filter(n=>n.themeId===object.id).map(n=>n.id)).filter(id=>available.has(id)),completed=ids.filter(id=>stateFor(id).tier===3).length;
+      else {const ids=(object.kind==='pack'?object.nodeIds:this.nodeList.filter(n=>n.themeId===object.id&&(!this.cylinderMap||n.domainId!=='thinking')).map(n=>n.id)).filter(id=>available.has(id)),completed=ids.filter(id=>stateFor(id).tier===3).length;
         el.classList.remove('has-trail');el.classList.toggle('has-completion',completed>0);el.dataset.completed=String(completed);
-        if(object.kind==='theme')el.querySelector('small').innerHTML=ids.length?`<span>完成 ${completed} / ${ids.length}</span><progress max="${ids.length}" value="${completed}" aria-label="完成 ${completed} / ${ids.length}"></progress>`:`${object.children.length} 个分组`;
+        if(object.kind==='theme')el.querySelector('small').innerHTML=this.cylinderMap?`${this.space.cylinderDomainCounts[object.id]} 个领域知识点`:ids.length?`<span>完成 ${completed} / ${ids.length}</span><progress max="${ids.length}" value="${completed}" aria-label="完成 ${completed} / ${ids.length}"></progress>`:`${object.children.length} 个分组`;
         el.setAttribute('aria-label',`${object.title}${ids.length?'，完成 '+completed+' / '+ids.length:''}`);
       }
     }
@@ -571,7 +571,7 @@ export class SpatialScene {
       if(o.key===this.selected)return .95;
       if(this.guideFocus.visitedKeys?.has(o.key))return .65;
       return this.guideFocus.currentNodes.has(o.key)?.61:this.guideFocus.seenNodes.has(o.key)?.57:this.guideFocus.step===0?.70:.38;
-    }if(!selected)return 1;if(selected.kind==='theme')return o.themeId===selected.id||o.id===selected.id?1:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?(taskWorkspace?.72:.18):o.packId===selected.packId?.42:.18;};
+    }if(!selected)return 1;if(selected.kind==='theme')return (o.themeId===selected.id&&(!this.cylinderMap||o.domainId!=='thinking'))||o.id===selected.id?1:this.cylinderMap?.12:.35;if(selected.kind==='pack')return o.packId===selected.id||o.id===selected.id?1:.28;if(o.key===selected.key)return 1;if(this.related?.has(o.key)){const d=this.traceResult?.distances.get(o.id);return d?Math.max(.52,1-(d-1)*.07):1;}return this.relationshipMap?(taskWorkspace?.72:.18):o.packId===selected.packId?.42:.18;};
     this.visibleNodes=new Set();const pixelsPerUnit=this.relationshipMap?Math.max(.001,this.globalScale()):1;
     const cap=this.relationshipMap?Math.min(1,7/(5*pixelsPerUnit)):1;
     for(let i=0;i<this.nodeList.length;i++){
@@ -589,7 +589,7 @@ export class SpatialScene {
       // Hierarchy-specific, temporary node emphasis; no coordinate changes.
       const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
-        this.hoverThemeId?(o.themeId===this.hoverThemeId?.96:.10):null;
+        this.hoverThemeId?(o.themeId===this.hoverThemeId&&(!this.cylinderMap||o.domainId!=='thinking')?.96:.10):null;
       color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.74:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.tier===3?.92:.68)*focus)*(match?1:.16));
       // Stage coloring is a read-only overlay; selected and directly related nodes remain inspectable.
       if(this.relationshipMap&&this.gradeStageId!=='all'&&!this.guideFocus){
@@ -611,11 +611,11 @@ export class SpatialScene {
        let size=this.relationshipMap?filteredRadius/pixelsPerUnit:(this.global?5:this.network?4:3.2)*cap*(structureActive?(structuralNode?1.6:.65):1);
       const cp=this.cylinderMap?this.space.cylinderById.get(o.id):null;
       if(cp){const inspection=o.key===this.selected||o.key===this.activeTargetKey||o.key===this.hoverMapKey||o.key===this.previewKey,related=this.related?.has(o.key)||this.hoverRelatedKeys.has(o.key),dim=this.gradeStageId!=='all'&&!this.gradeStageIds.has(o.id)&&!inspection&&!related&&!this.guideFocus;
-        const normal=Math.min(2.55,1.15+cp.nodeRadius*.26)+(this.space.cylinderSpineIds.has(o.id)?.28:0),radius=inspection?5:related&&selected?3.3:dim?1.2:this.space.cylinderRoots.has(o.id)?3:normal;
-        size=radius/pixelsPerUnit;if(!dim&&(inspection||(!selected&&!this.hoverMapKey&&!this.hoverThemeId&&!this.guideFocus)))color.lerp(new THREE.Color(0xffffff),inspection?.36:.15);
+        const spine=this.space.cylinderSpineIds.has(o.id),theme=selected?.kind==='theme'?selected.id:this.hoverThemeId,themeDim=theme&&(cp.thinking||cp.themeId!==theme),normal=cp.thinking?2.05:Math.min(2.5,1.1+cp.nodeRadius*.27)+(spine?.25:0),radius=inspection?5:related&&selected?3.3:dim||themeDim?1.2:this.space.cylinderRoots.has(o.id)?2.8:normal;
+        size=radius/pixelsPerUnit;if(!dim&&(inspection||(!selected&&!this.hoverMapKey&&!this.hoverThemeId&&!this.guideFocus)))color.lerp(new THREE.Color(0xffffff),inspection?.36:.035);
       }
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
-      if(cp){const cv=this.cylinderVisuals;cv.thinkingMesh.setColorAt(i,color);if(cp.thinking){cv.thinkingMesh.setMatrixAt(i,transform.matrix);transform.scale.setScalar(0);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);}else{transform.scale.setScalar(0);transform.updateMatrix();cv.thinkingMesh.setMatrixAt(i,transform.matrix);}transform.scale.setScalar(size*level*2.85);transform.updateMatrix();cv.glowMesh.setMatrixAt(i,transform.matrix);cv.glowMesh.setColorAt(i,color);}
+      if(cp){const cv=this.cylinderVisuals;cv.thinkingMesh.setColorAt(i,color);if(cp.thinking){cv.thinkingMesh.setMatrixAt(i,transform.matrix);transform.scale.setScalar(0);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);}else{transform.scale.setScalar(0);transform.updateMatrix();cv.thinkingMesh.setMatrixAt(i,transform.matrix);}transform.scale.setScalar(size*level*2.85);transform.updateMatrix();cv.glowMesh.setMatrixAt(i,transform.matrix);cv.glowMesh.setColorAt(i,color);const spineVisible=this.space.cylinderSpineIds.has(o.id)&&(!selected||selected.kind==='theme'&&o.themeId===selected.id||selected.kind==='node'&&(o.key===this.selected||this.related?.has(o.key)))&&(!this.hoverThemeId||o.themeId===this.hoverThemeId)&&(this.gradeStageId==='all'||this.gradeStageIds.has(o.id));transform.scale.setScalar(spineVisible?(size+1.9/pixelsPerUnit)*level:0);transform.updateMatrix();cv.milestoneMesh.setMatrixAt(i,transform.matrix);cv.milestoneMesh.setColorAt(i,color);}
       transform.quaternion.copy(this.camera.quaternion);
       const tier=s.tier||1,ringSize=size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap),lit=tier===3&&match&&visible,working=tier===2&&match&&visible;
       transform.scale.setScalar(lit?ringSize*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -637,7 +637,7 @@ export class SpatialScene {
     if(this.network){this.sceneMarkers.instanceMatrix.needsUpdate=true;this.questionMarkers.instanceMatrix.needsUpdate=true;}
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
     this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
-    if(this.cylinderMap){const cv=this.cylinderVisuals;for(const m of [cv.glowMesh,cv.thinkingMesh]){m.instanceMatrix.needsUpdate=true;m.instanceColor.needsUpdate=true;}cv.setEmphasis(this);const filtered=this.gradeStageId!=='all',focus=!!(this.selected||this.hoverMapKey||this.hoverThemeId||this.guideFocus);this.networkEdges.material.color.set(0x8294bb);this.networkSoftEdges.material.color.set(0x879ac4);this.networkEdges.material.opacity=focus?.020:filtered?.017:this.edgeDisplay==='outline'?.070:.19;this.networkSoftEdges.material.opacity=focus?.008:filtered?.008:.065;}
+    if(this.cylinderMap){const cv=this.cylinderVisuals;for(const m of [cv.glowMesh,cv.thinkingMesh,cv.milestoneMesh]){m.instanceMatrix.needsUpdate=true;m.instanceColor.needsUpdate=true;}cv.setEmphasis(this);const filtered=this.gradeStageId!=='all',focus=!!(this.selected||this.hoverMapKey||this.hoverThemeId||this.guideFocus);this.networkEdges.material.color.set(0x8294bb);this.networkSoftEdges.material.color.set(0x879ac4);this.networkEdges.material.opacity=focus?.020:filtered?.017:this.edgeDisplay==='outline'?.032:.19;this.networkSoftEdges.material.opacity=focus?.008:filtered?.008:.065;}
   }
   rebuildRelations(){this.focusVisualLinks=[];this.focusView=this.localRelationshipFocus?
     buildFocusFilter(this.space.atlas,this.space.relationshipIds,this.selected.slice(5),this.focusDirection,this.focusDepth):null;
@@ -762,7 +762,7 @@ export class SpatialScene {
       if(this.global){
         const landmark=this.structuralOverview&&o.kind==='node'?this.overviewStructure.landmarks.find(a=>a.id===o.id&&(this.structureMode==='all'||this.structureMode===a.role)):null;
         if(landmark){show=true;priority=96;}
-        if(o.kind==='theme'){show=selected?.kind!=='node'&&selected?.kind!=='theme'&&scale<2.2;priority=this.relationshipMap?92:60;}
+        if(o.kind==='theme'){show=selected?.kind!=='node'&&selected?.kind!=='theme'&&scale<(this.cylinderMap?2.8:2.2);priority=this.relationshipMap?92:60;}
         else if(o.kind==='pack')show=selected?.kind==='theme'?o.themeId===selected.id:selected?.kind!=='node'&&(scale>(this.relationshipMap?1.65:1.15)||isSelected);
         else show=this.nodeVisible(o)&&(scale>2.5||related&&this.traceMode==='direct'||isSelected||o.key===this.hovered||o.key===this.previewKey||!!landmark);
         if(o.key===this.hovered||o.key===this.previewKey||isSelected)show=true;
@@ -855,9 +855,9 @@ export class SpatialScene {
       for(const role of OVERVIEW_ROLES)el.classList.toggle('structure-'+role,landmark?.role===role);
       const title=wantedTitle||o.title;
       const side=!this.global&&this.networkView==='relations'&&o.kind==='node',highlight=c.isSelected||o.key===this.hovered||o.key===this.previewKey;
-      const width=this.global?(landmark?Math.min(300,Math.max(210,title.length*14+45)):o.kind==='theme'?Math.min(230,Math.max(158,title.length*18+66)):o.kind==='pack'?Math.min(210,Math.max(110,title.length*12+20)):Math.min(highlight?240:200,Math.max(100,title.length*12+(highlight?63:34)))):side?Math.max(90,Math.min(185,this.project([240,0,0]).x-this.project([0,0,0]).x-12)):o.kind==='theme'?(this.width<600?146:194):Math.min(275,Math.max(112,title.length*(this.width<600?12:13)+44));
+      const width=this.cylinderMap&&o.kind==='theme'?Math.min(194,Math.max(92,title.length*13+18)):this.global?(landmark?Math.min(300,Math.max(210,title.length*14+45)):o.kind==='theme'?Math.min(230,Math.max(158,title.length*18+66)):o.kind==='pack'?Math.min(210,Math.max(110,title.length*12+20)):Math.min(highlight?240:200,Math.max(100,title.length*12+(highlight?63:34)))):side?Math.max(90,Math.min(185,this.project([240,0,0]).x-this.project([0,0,0]).x-12)):o.kind==='theme'?(this.width<600?146:194):Math.min(275,Math.max(112,title.length*(this.width<600?12:13)+44));
       el.classList.toggle('compact-activity',side&&width<135);el.style.width=`${width}px`;
-      const height=this.global?(o.kind==='node'?Math.max(30,12+Math.ceil(title.length/Math.max(1,Math.floor((width-(highlight?63:34))/12)))*17):30):o.kind==='theme'?68:side?(width<135?38+Math.ceil(title.length/Math.max(1,Math.floor((width-20)/12)))*17:Math.max(58,18+Math.ceil(title.length/Math.max(1,Math.floor((width-63)/12)))*17)):38;
+      const height=this.cylinderMap&&o.kind==='theme'?26:this.global?(o.kind==='node'?Math.max(30,12+Math.ceil(title.length/Math.max(1,Math.floor((width-(highlight?63:34))/12)))*17):30):o.kind==='theme'?68:side?(width<135?38+Math.ceil(title.length/Math.max(1,Math.floor((width-20)/12)))*17:Math.max(58,18+Math.ceil(title.length/Math.max(1,Math.floor((width-63)/12)))*17)):38;
       const rect=c.anchor||placeLabel({x:p.x,y:p.y,w:width,h:height,kind:this.global&&o.kind==='theme'?'global-theme':o.kind,viewport:{w:this.width,h:this.height,...(this.global?{top:this.globalInsets().top-14,bottom:78}:{})},occupied:rects});if(!rect)continue;
       const cx=rect.x+rect.w/2,cy=rect.y+rect.h/2;if(Math.hypot(cx-p.x,cy-p.y)>45)tethers.push(`<path d="M ${p.x} ${p.y} L ${cx} ${cy}"/>`);
       rects.push(rect);if(o.kind==='node')nodes++;

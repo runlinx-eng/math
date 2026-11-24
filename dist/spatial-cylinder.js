@@ -161,7 +161,7 @@ export function buildCylinderLayout(atlas, grade) {
   const degree=id=>incoming.get(id).length+outgoing.get(id).length;
   const maxDegree=Math.max(1,...ids.map(degree));
   const pos=new Map(),seedAngles=new Map();
-  const bounds=(p)=>p.thinking?[27,108]:[170+.075*p.y,435+.13*p.y];
+  const bounds=(p)=>p.thinking?[18,62]:[120+.045*p.y,290+.065*p.y];
   // Pack-local initial order is independent of input row ordering.
   for(const l of lanes){
     const members=domain.filter(id=>laneById.get(id).id===l.id);
@@ -172,7 +172,7 @@ export function buildCylinderLayout(atlas, grade) {
     }
   }
   for(const id of ids){
-    const n=nodes.get(id),think=isThinking(n),y=initialY.get(id),l=laneById.get(id);
+    const n=nodes.get(id),think=isThinking(n),y=initialY.get(id)*1.55+hash("height:"+id)*10,l=laneById.get(id);
     let theta=seedAngles.get(id);
     if(think){
       const neighbors=[...incoming.get(id).map(e=>e.prerequisiteId),...outgoing.get(id).map(e=>e.topicId)].filter(x=>!isThinking(nodes.get(x)));
@@ -206,6 +206,15 @@ export function buildCylinderLayout(atlas, grade) {
     }
     for(const [id,t] of next)pos.get(id).theta=t;
   }
+  // Actual path members follow a narrow radial/azimuth backbone before
+  // constrained relaxation. Shared vertices remain single real nodes.
+  const spinePlaced=new Set();
+  for(const sp of spines)for(const id of sp.nodeIds){
+    if(spinePlaced.has(id))continue;spinePlaced.add(id);
+    const p=pos.get(id),l=laneById.get(id),[lo,hi]=bounds(p);
+    p.theta=l.center+(hash("spine-angle:"+id)-.5)*(l.end-l.start)*.16;
+    p.r=lo+(hi-lo)*(.16+.08*hash("spine-radius:"+id));
+  }
   const projectY=()=>{
     for(const id of order){
       const p=pos.get(id);
@@ -217,8 +226,9 @@ export function buildCylinderLayout(atlas, grade) {
   const positions=ids.map(id=>pos.get(id));
   // Anisotropic constrained relaxation: angular 65%, radial 30%, Y 5%.
   // Project back to source DAG after every height adjustment.
+  projectY();
   let rounds=0;
-  for(;rounds<60;rounds++){
+  for(;rounds<100;rounds++){
     const xyz=positions.map(cart),deltas=positions.map(()=>[0,0,0]);let collisions=0;
     for(let i=0;i<positions.length;i++)for(let j=i+1;j<positions.length;j++){
       const a=positions[i],b=positions[j],u=xyz[i],v=xyz[j],want=required(a,b);
@@ -238,7 +248,7 @@ export function buildCylinderLayout(atlas, grade) {
       const p=positions[i],d=deltas[i],l=laneById.get(p.id);
       p.theta+=clamp(d[0]/Math.max(p.r,1),-.08,.08);
       if(l)p.theta=clamp(p.theta,l.start+.002,l.end-.002);
-      p.y=Math.max(0,p.y+clamp(d[2],-1.5,1.5));p.r+=clamp(d[1],-8,8);
+      p.y=Math.max(0,p.y+clamp(d[2],-4,4));p.r+=clamp(d[1],-8,8);
     }
     projectY();
     for(const p of positions){const [lo,hi]=bounds(p);p.r=clamp(p.r,lo,hi);}

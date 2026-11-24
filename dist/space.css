@@ -1361,3 +1361,26 @@ body[data-network-version="54"] .tool-divider{background:#34415a}
 body[data-network-version="54"] .loading{background:#090d18;color:#dce6fa}
 body[data-network-version="54"] :is(.focus-card,.popover,.network-guide) a{color:#9bc5ff}
 @media(max-width:760px){body[data-network-version="54"] #network-guide{width:min(184px,42vw);padding:8px;max-height:min(39dvh,290px)}body[data-network-version="54"] #network-guide .network-legend button{font-size:10px;min-height:25px}body[data-world="network"][data-network-version="54"] .space-label.theme{font-size:10px;padding:5px 6px}}
+
+/* v54 composition 2: quiet observation sidebar and plain crown labels. */
+body[data-world="network"][data-network-version="54"] #network-guide{background:#080d18b8;border-color:transparent;box-shadow:none;gap:9px;max-height:calc(100dvh - 200px);scrollbar-width:thin}
+body[data-network-version="54"] #network-guide .observation-heading>span{display:none}
+body[data-network-version="54"] #network-guide .network-legend button{display:flex;align-items:center;gap:7px;border-color:transparent;background:transparent;padding:5px 4px;min-height:30px;white-space:normal;font-weight:500}
+body[data-network-version="54"] #network-guide .network-legend button i{box-shadow:0 0 7px var(--object-color)}
+body[data-network-version="54"] #network-guide .network-legend .cylinder-theme-count{margin-left:auto;flex:none;color:#91a0ba;font-variant-numeric:tabular-nums}
+body[data-network-version="54"] #network-guide .network-legend button:is(:hover,[aria-pressed="true"]){background:#4f81dc25;border-color:#7eacff55}
+body[data-network-version="54"] #network-guide .network-legend button[aria-pressed="true"]{color:#fff}
+body[data-world="network"][data-network-version="54"] #network-guide #network-view-description{font-size:11px;min-height:32px;max-height:48px}
+body[data-network-version="54"] #network-guide .observation-subheading,
+body[data-network-version="54"] #network-guide .network-marker-key{display:none}
+body[data-world="network"][data-network-version="54"] #network-guide>details.cylinder-extra-tools{display:block!important;padding:6px 0;border-top:1px solid #ffffff12;color:#a6b8d2}
+body[data-network-version="54"] #network-guide .cylinder-extra-tools summary{font-size:12px;cursor:pointer;margin-bottom:4px}
+body[data-network-version="54"] #network-guide .cylinder-extra-tools:not([open])>*:not(summary){display:none!important}
+body[data-world="network"][data-network-version="54"] .space-label.theme{background:transparent;border:0;box-shadow:none;border-radius:0;min-height:26px;padding:3px 5px;font-size:13px;text-align:center;text-shadow:0 1px 6px #06090e,0 0 12px #06090e}
+body[data-world="network"][data-network-version="54"] .space-label.theme small{display:none}
+body[data-world="network"][data-network-version="54"] .space-label.theme:is(:hover,.hovered,.preview-theme-target){background:#14203b9c;border-radius:6px}
+body[data-network-version="54"] .bottom-bar .overall-progress{background:transparent;border:0;box-shadow:none;padding:4px 6px;color:#94a5c1}
+body[data-network-version="54"] .bottom-bar .overall-progress progress{display:none}
+body[data-network-version="54"] .bottom-bar .overall-progress b{color:#9eb6d6}
+body[data-network-version="54"] #space-canvas{background:radial-gradient(ellipse at 56% 48%,#11192b 0%,#0b101c 48%,#07090f 84%)}
+@media(max-width:760px){body[data-world="network"][data-network-version="54"] #network-guide{max-height:min(41dvh,310px);gap:5px}body[data-network-version="54"] #network-guide .network-legend button{min-height:25px;font-size:10px}}

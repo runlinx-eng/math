@@ -6,7 +6,7 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261124-cylinder-v54-preview1';
+const release='math-explorer-20261124-cylinder-v54-preview2';
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const ready=async(page,version,count)=>{
  await page.waitForFunction(({version,count})=>{const loading=document.querySelector('#loading');if(loading&&!loading.hidden&&loading.querySelector('h1'))throw Error('Map startup failed: '+loading.innerText);const s=window.mathSpace?.snapshot();return s?.networkVersion===version&&s?.visibleNodes.length===count&&document.querySelector('#space-app')?.classList.contains('ready');},{version,count},{timeout:45000});
@@ -34,12 +34,19 @@ const ready=async(page,version,count)=>{
      page.on('pageerror',e=>errors.push(e.message));const row={width,height,errors};results.push(row);
      try{
        await page.goto(url(54));let first=await ready(page,54,587);
-       const metadata=await page.evaluate(()=>window.mathSpace.cylinder());assert.equal(metadata.thinking.length,50);assert.equal(metadata.bridgeCount,5);assert.equal(metadata.sectors.length,5);
+       const metadata=await page.evaluate(()=>window.mathSpace.cylinder());assert.equal(metadata.thinking.length,50);assert.equal(metadata.bridgeCount,5);assert.equal(metadata.sectors.length,5);assert.equal(metadata.thinkingCount,50);assert.deepEqual(metadata.domainCounts,{numbers:274,measure:88,data:65,space:76,patterns:34});
        assert.equal(first.counts.edges,1223);assert.equal(first.counts.nodes,587);
        await page.screenshot({path:path.join(dir,width+'x'+height+'-overview.png')});
        {
          const camera=s=>({position:s.position,target:s.target,cameraZoom:s.cameraZoom});
          const before=await page.evaluate(()=>window.mathSpace.snapshot());
+         assert.equal(await page.locator('#continue-card').isVisible(),false);
+         assert.deepEqual(await page.locator('#network-legend .cylinder-theme-count').allTextContents(),await page.locator('#network-legend [data-id]').evaluateAll((buttons,counts)=>buttons.map(b=>String(counts[b.dataset.id])),metadata.domainCounts));
+         await page.locator('#network-legend [data-id="numbers"]').click();
+         await page.waitForFunction(()=>window.mathSpace.snapshot().selected==='theme:numbers');
+         const theme=await page.evaluate(()=>window.mathSpace.snapshot());assert.deepEqual(theme.positions,before.positions);assert.deepEqual(camera(theme),camera(before));assert.equal(theme.visibleNodes.length,587);
+         await page.locator('#network-legend [data-id="numbers"]').click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected);
+         await page.mouse.move(width-8,height-8);
          await page.locator('[data-action="grade-map-stage"][data-stage="stage-1"]').click();
          await page.waitForFunction(()=>window.mathSpace.snapshot().gradeStageFilter==='stage-1');
          const filtered=await page.evaluate(()=>window.mathSpace.snapshot());

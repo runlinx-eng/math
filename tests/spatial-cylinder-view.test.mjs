@@ -10,6 +10,7 @@ const grade=JSON.parse(fs.readFileSync(new URL('../dist/data/grade-panorama-lite
 test('v54 opt-in uses all real nodes and stable positions, preserving v53 and source',()=>{
  const source=JSON.stringify(atlas),old=buildRelationshipSpace(atlas),before=JSON.stringify([...old.relationshipPositions]),world=buildCylinderSpace(atlas,grade);
  assert.equal(RELATIONSHIP_VERSION,53);assert.equal(CYLINDER_VERSION,54);assert.equal(CYLINDER_VIEW_KEY,'math-explorer-network-cylinder-view-v1');
+ assert.deepEqual(world.cylinderDomainCounts,{numbers:274,measure:88,data:65,space:76,patterns:34});assert.equal(world.cylinderThinkingCount,50);
  assert.equal(old.relationshipIds.size,537);assert.equal(world.relationshipIds.size,587);assert.equal(world.networkVersion,54);assert.equal(JSON.stringify(atlas),source);
  assert.equal(JSON.stringify([...buildRelationshipSpace(atlas).relationshipPositions]),before);
  for(const e of atlas.edges)assert.ok(world.nodes.get(e.topicId).position[1]>world.nodes.get(e.prerequisiteId).position[1]);

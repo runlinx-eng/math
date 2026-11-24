@@ -45,6 +45,11 @@ function verifyCylinderLayout(atlas,grade,build,assert){
     assert(sourceEdges.has(edgeKey(e))&&src.get(e.topicId).themeId==="patterns"&&src.get(e.prerequisiteId).themeId!=="patterns"&&src.get(e.prerequisiteId).domainId!=="thinking","real cross-theme bridge");
     assert(!atlas.edges.some(x=>x.topicId===e.topicId&&src.get(x.prerequisiteId).themeId==="patterns"&&src.get(x.prerequisiteId).domainId!=="thinking"),"induced root target");
   }
+  const height=Math.max(...out.nodes.map(n=>n.y))-Math.min(...out.nodes.map(n=>n.y));
+  const diameter=2*Math.max(...out.nodes.map(n=>n.r));
+  assert(height/diameter>1.2&&height/diameter<1.6,"upright cylindrical proportions");
+  const horizontal=out.spines.flatMap(s=>s.edges).reduce((sum,e)=>{const a=ids.get(e.prerequisiteId),b=ids.get(e.topicId);return sum+Math.hypot(a.position[0]-b.position[0],a.position[2]-b.position[2]);},0);
+  assert(horizontal<1200,"real spines follow continuous narrow backbones");
   assert(out.diagnostics.collisions===0,"zero unresolved collisions");
   for(let i=0;i<out.nodes.length;i++)for(let j=i+1;j<out.nodes.length;j++){
     const a=out.nodes[i],b=out.nodes[j],distance=Math.hypot(...a.position.map((x,k)=>x-b.position[k]));
