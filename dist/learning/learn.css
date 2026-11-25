@@ -678,3 +678,9 @@ body.p03-focus #scene .execution-command #actions{
   overflow-wrap:anywhere;
 }
 #scene .stage-top #workbench-curriculum[hidden]{display:none}
+
+/* B36 numeric substitution: generic extra-controls selection backgrounds must
+   not leave the original white case text on a pale green button. */
+#extra-controls .f36-controls button[data-x="f36-case"][aria-pressed="true"]{
+  background:#315f55;color:#fff;border-color:#315f55;
+}
