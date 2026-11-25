@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261125-cylinder-workbench-ab-preview3';
+const RELEASE='math-explorer-20261125-cylinder-workbench-ab-preview4';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -1408,7 +1408,11 @@ async function boot(){try {
   if(stored)selectedGradeStage=GRADE_MAP_STAGES.includes(stored.selectedGradeStage)?stored.selectedGradeStage:'all';
   const route=location.hash.slice(1).split('/'),routeKey=route[0]==='space'&&route[1]&&route[2]?objectKey(route[1],route[2]):null,explicitOverview=route[0]==='atlas'&&!route[1];
   const due=pendingQuestions(learning)[0],last=learning.daily.continuation,sameDayActive=due&&stored?.journeyOpen&&stored.questionId===due.id&&last?.questionId===due.id&&dayKey(last.at)===dayKey();
-  const showQuestionEntry=!explicitOverview&&!!due&&!sameDayActive&&(!routeKey||routeKey===stored?.selected);
+  // A same-day reload of a paused native workbench is continuation of the
+  // current session, not a new learning visit. Keep pending questions available
+  // through their original entry; preserve next-day priority and explicit routes.
+  const sameDayPausedSession=stored?.journeyOpen&&stored.journeySuspended&&!!sessionMeta(stored.sessionId)&&last?.id===stored.sessionId&&(last.questionId??null)===(stored.questionId??null)&&dayKey(last.at)===dayKey();
+  const showQuestionEntry=!explicitOverview&&!!due&&!sameDayActive&&!sameDayPausedSession&&(!routeKey||routeKey===stored?.selected);
   if(stored){scene.restore(stored);activeRouteId=scene.learningRouteId;for(const p of stored.panels)openPanel(p.id,{...p,restore:true});activePanel=stored.activePanel;renderWorkspaceButtons();if(stored.journeyOpen&&!showQuestionEntry&&!explicitOverview&&(!routeKey||routeKey===stored.selected)){const selectedId=sessionMeta(stored.sessionId)?.topicId||space.byKey.get(stored.selected)?.id,lesson=lessonForTopic(selectedId);if(lesson)openLearningLesson(sessionMeta(stored.sessionId)?stored.sessionId:lesson,{restore:true,preserveSurface:true,questionId:learning.daily.questions.some(q=>q.id===stored.questionId&&!questionDone(q))?stored.questionId:null});else if(routeStep(selectedId))openJourney(routeStep(selectedId).step,{restore:true,preserveSurface:true});if(journeyOpen&&stored.journeySuspended)suspendJourney();
       // Restore both independent identities without restarting the child iframe.
       if(journeyOpen&&stored.selected!==scene.selected){

@@ -6,7 +6,7 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261125-cylinder-workbench-ab-preview3';
+const release='math-explorer-20261125-cylinder-workbench-ab-preview4';
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
