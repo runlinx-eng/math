@@ -45,3 +45,18 @@ export function placeGuideCue({x,y,w,h,viewport,occupied=[]}){
   options.sort((a,b)=>a.d-b.d||a.r.y-b.r.y||a.r.x-b.r.x);
   return options[0]?.r||null;
 }
+
+// v54 exploration: labels belong to a point, not a displaced card.
+// Preserve a real point's position and usable button target.
+export function placePointLabel({x,y,w,h,viewport,occupied=[],markers=[]}){
+  const gap=14,top=viewport.top??105,bottom=viewport.bottom??100,margin=12;
+  const positions=[[x+gap,y-h/2],[x-w-gap,y-h/2],[x+gap,y-h-5],[x-w-gap,y-h-5],
+    [x+gap,y+5],[x-w-gap,y+5],[x-w/2,y-h-gap],[x-w/2,y+gap]];
+  for(const [left,upper] of positions){
+    const r={x:left,y:upper,w,h};
+    if(r.x<margin||r.x+r.w>viewport.w-margin||r.y<top||r.y+r.h>viewport.h-bottom)continue;
+    if(occupied.some(o=>overlaps(r,o,5))||markers.some(o=>overlaps(r,o,2)))continue;
+    return r;
+  }
+  return null;
+}

@@ -1488,3 +1488,39 @@ body[data-network-version="54"] #cylinder-node-details .focus-actions{margin:6px
 @media(max-width:620px){body[data-network-version="54"] #cylinder-entry-nav{right:12px;bottom:148px}body[data-network-version="54"] #cylinder-hover-inspector{right:12px;bottom:108px}body[data-network-version="54"] .tool-rail [data-action="cylinder-origin"]{min-width:38px;font-size:9px}}
 
 @media(max-width:800px){body[data-network-version="54"] #cylinder-hover-inspector{width:min(360px,calc(100vw - 24px),max(260px,45vw));right:12px}}
+
+/* v54 ordinary exploration: the real WebGL point is the location; text is an annotation.
+   Retain button targets and keyboard-only focus. Do not restyle learning/guide/v53. */
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label{
+  display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;max-width:none;
+  min-height:0;padding:3px 4px;gap:0;border:0!important;border-radius:0;background:transparent!important;
+  box-shadow:none!important;outline:none!important;color:#aebed9!important;font-size:12px;line-height:16px;font-weight:500!important;
+  text-align:left;text-shadow:none;
+}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label[hidden]{display:none!important}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label::before,
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label .activity-glyph{display:none!important}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label>span{
+  display:block;min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:16px;color:inherit;
+  -webkit-text-stroke:2px #080d18;paint-order:stroke fill;
+}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label.cylinder-point-primary{
+  color:#f4f8ff!important;font-weight:700!important;
+}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label:focus-visible{
+  outline:2px solid #9cc7ff!important;outline-offset:1px;
+}
+body[data-world="network"][data-network-version="54"] .label-tethers path.cylinder-point-tether{stroke:#9aabc9;stroke-width:1;opacity:.55;stroke-dasharray:none}
+/* At Mac-sized tall desktop widths, the narrow sidebar leaves the upper
+   screen open for the atlas. Keep the existing compact strip on narrower screens. */
+@media(min-width:900px) and (min-height:800px) and (max-aspect-ratio:9/10){
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide{
+  display:flex;flex-direction:column;left:16px;right:auto;top:112px;width:min(188px,23vw);
+  max-height:calc(100dvh - 245px);gap:7px;padding:8px 9px;background:#080d1866;
+ }
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #network-view-title{display:none}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend{display:grid;grid-template-columns:1fr;align-self:stretch;gap:2px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend button{min-height:27px;padding:3px 4px;font-size:11px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide :is(#grade-map-filter,#cylinder-core-key,.cylinder-extra-tools){align-self:stretch}
+}
+

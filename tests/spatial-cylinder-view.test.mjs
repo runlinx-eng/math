@@ -6,6 +6,7 @@ import {buildRelationshipSpace,RELATIONSHIP_VERSION} from '../dist/spatial-relat
 import {restoreNetworkCoordinates} from '../dist/spatial-global.js';
 import {parseView,LAYOUT_VERSION,cylinderObservation} from '../dist/spatial-model.js';
 import {cylinderReferenceLabelPlacement} from '../dist/spatial-cylinder-visuals.js';
+import {placePointLabel,overlaps} from '../dist/spatial-labels.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const grade=JSON.parse(fs.readFileSync(new URL('../dist/data/grade-panorama-lite.json',import.meta.url)));
 test('v54 opt-in uses all real nodes and stable positions, preserving v53 and source',()=>{
@@ -35,4 +36,17 @@ test('v54 reference text fits at either screen edge without changing source coor
 test('v54 observation switches are independent booleans and orbit is opt-in on every visit',()=>{
  assert.deepEqual(cylinderObservation(),{spines:true,thinking:true,crossEdges:false,rings:true,orbit:false});
  assert.deepEqual(cylinderObservation({spines:false,thinking:'false',crossEdges:true,rings:false,orbit:true}),{spines:false,thinking:true,crossEdges:true,rings:false,orbit:false});
+});
+
+test('v54 point annotations stay beside their anchor, avoid markers and suppress collisions',()=>{
+ const viewport={w:1000,h:1200,top:100,bottom:80},point={x:450,y:500,w:110,h:28,viewport};
+ const marker={x:440,y:490,w:20,h:20};
+ const right=placePointLabel({...point,markers:[marker]});
+ assert.deepEqual(right,{x:464,y:486,w:110,h:28});assert.equal(overlaps(right,marker,2),false);
+ const left=placePointLabel({...point,markers:[marker],occupied:[right]});
+ assert.ok(left.x+left.w<point.x&&!overlaps(left,marker,2));
+ assert.equal(placePointLabel({...point,occupied:[{x:0,y:0,w:1000,h:1200}]}),null);
+ const edge=placePointLabel({...point,x:980});
+ assert.ok(edge.x>=12&&edge.x+edge.w<=988);
+ assert.equal(point.x,450);assert.equal(point.y,500);
 });

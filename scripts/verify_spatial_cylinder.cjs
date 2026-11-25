@@ -6,7 +6,7 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261125-cylinder-v54-preview9';
+const release='math-explorer-20261125-cylinder-v54-preview10';
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
@@ -14,18 +14,31 @@ const darkCard=async(page,selector)=>{
  const rgb=await el.evaluate(n=>getComputedStyle(n).backgroundColor.match(/[\d.]+/g).slice(0,3).map(Number));
  assert.ok(rgb.length===3&&rgb.every(v=>v<80),selector+' must have a dark readable surface: '+rgb);
 };
-// Test actual painted text/background rather than assuming the theme CSS wins.
+// Actual computed colors and geometry: local glyph/outline contrast, not an opaque card.
 const assertLabelContrast=async(label)=>{
  const colors=await label.evaluate(el=>{
-   const text=el.querySelector('span')||el;
-   return {foreground:getComputedStyle(text).color,background:getComputedStyle(el).backgroundColor};
+   const text=el.querySelector('span')||el,s=getComputedStyle(el),t=getComputedStyle(text);
+   return {foreground:t.color,background:s.backgroundColor,stroke:t.webkitTextStrokeColor,strokeWidth:t.webkitTextStrokeWidth,border:s.borderTopWidth,shadow:s.boxShadow};
  });
- const parse=s=>{const a=s.match(/[\d.]+/g)?.map(Number)||[];assert.ok(a.length>=3&&(a.length===3||a[3]===1),'label must have an opaque, measurable color: '+s);return a.slice(0,3);};
+ const parse=s=>{const a=s.match(/[\d.]+/g)?.map(Number)||[];assert.ok(a.length>=3&&(a.length===3||a[3]===1),'expected opaque text/stroke: '+s);return a.slice(0,3);};
  const lum=rgb=>rgb.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
- const a=lum(parse(colors.foreground)),b=lum(parse(colors.background));
- const contrast=(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
- assert.ok(contrast>=4.5,'node label contrast must be >= 4.5: '+JSON.stringify(colors)+' ratio='+contrast);
+ assert.equal(colors.background,'rgba(0, 0, 0, 0)');assert.equal(colors.border,'0px');assert.equal(colors.shadow,'none');
+ assert.ok(parseFloat(colors.strokeWidth)>=2);
+ const a=lum(parse(colors.foreground)),b=lum(parse(colors.stroke)),contrast=(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+ assert.ok(contrast>=4.5,'annotation glyph/outline contrast must be >= 4.5: '+JSON.stringify(colors));
  return contrast;
+};
+const assertPointFocus=async(page,key)=>{
+ await page.waitForFunction(key=>{const p=window.mathSpace.cylinder().presentation;return p.primaryPoint===key&&p.focusHalo&&document.querySelector('.cylinder-point-primary[data-key="'+key+'"]:not([hidden])');},key);
+ const check=await page.evaluate(key=>{
+   const canvas=document.querySelector('#space-canvas').getBoundingClientRect(),p=window.mathSpace.project(key),label=document.querySelector('.cylinder-point-primary[data-key="'+key+'"]'),r=label.getBoundingClientRect(),x=p.x+canvas.left,y=p.y+canvas.top;
+   return {primary:document.querySelectorAll('.cylinder-point-primary:not([hidden])').length,
+     gap:Math.hypot(Math.max(r.left-x,x-r.right,0),Math.max(r.top-y,y-r.bottom,0)),
+     halo:window.mathSpace.cylinder().presentation.focusHalo,position:window.mathSpace.snapshot().positions.find(o=>o.key===key).position,
+     labels:[...document.querySelectorAll('.cylinder-point-label:not([hidden])')].map(el=>{const s=getComputedStyle(el);return {background:s.backgroundColor,border:s.borderTopWidth};})};
+ },key);
+ assert.equal(check.primary,1);assert.ok(check.gap>=5&&check.gap<=22,'annotation must stay beside the actual point: '+check.gap);
+ assert.deepEqual(check.halo,check.position);assert.ok(check.labels.every(o=>o.background==='rgba(0, 0, 0, 0)'&&o.border==='0px'));
 };
 const assertInspector=async(page,selector,id,lockedCount=null)=>{
  const card=page.locator(selector);await card.waitFor({state:'visible'});
@@ -57,8 +70,8 @@ const ready=async(page,version,count)=>{
  fs.mkdirSync(dir,{recursive:true});const results=[];
  const browser=await chromium.launch({headless:true,...(process.env.MATH_BROWSER_EXECUTABLE?{executablePath:process.env.MATH_BROWSER_EXECUTABLE}:{}),args:['--use-gl=swiftshader','--enable-unsafe-swiftshader','--disable-crash-reporter']});
  try{
-   // Same viewport for reference and product, following #239. Smaller sizes
-   // are manual responsive previews, not new automated browser test contexts.
+   // Same standard viewport for reference and product, following #239.
+   // One in-context resize checks the reported tall Mac issue; no additional context or full matrix.
    if(process.env.MATH_V54_REFERENCE_HTML){
      const reference=path.resolve(process.env.MATH_V54_REFERENCE_HTML);
      const ctx=await newDesktopContext(browser,{reducedMotion:'reduce'});
@@ -114,9 +127,11 @@ const ready=async(page,version,count)=>{
          assert.deepEqual(edgeKeys(preview.edges),edgeKeys(source.map(e=>({from:'node:'+e.prerequisiteId,to:'node:'+e.topicId,soft:e.strength==='soft'}))));
          await assertInspector(page,'#cylinder-hover-inspector',key.slice(5));
          row.hoverLabelContrast=await assertLabelContrast(label);
+         await assertPointFocus(page,key);
           await page.screenshot({path:path.join(dir,'1920x1080-hover.png')});
          await label.click();await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key&&window.mathSpace.snapshot().cylinderLocked,key);
          row.lockedLabelContrast=await assertLabelContrast(label);
+         await assertPointFocus(page,key);row.pointFirstLabels=true;
          assert.equal(await page.locator('#cylinder-node-details').evaluate(el=>el.open),false);
          assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),camera(before));
          await label.click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected);
@@ -229,6 +244,16 @@ const ready=async(page,version,count)=>{
          await page.locator('[data-action="menu"]').click();
          await page.locator('[data-action="map-version"]').click();await ready(page,54,587);
          row.switch=true;row.ghosting=true;
+         // Same isolated desktop context: responsive screenshot at tall Mac proportions.
+         await page.setViewportSize({width:1000,height:1200});await page.locator('.tool-rail [data-action="front"]').click();
+         await page.waitForFunction(()=>!window.mathSpace.motion().tween&&!window.mathSpace.snapshot().selected);
+         const narrowGuide=await page.locator('#network-guide').boundingBox();assert.ok(narrowGuide.width<=220&&narrowGuide.x<40,'tall desktop must leave the upper atlas open');
+         await page.screenshot({path:path.join(dir,'1000x1200-overview.png')});
+         const narrowLabel=page.locator('.space-label.cylinder-milestone:visible').first(),narrowKey=await narrowLabel.getAttribute('data-key');
+         await narrowLabel.hover();await assertPointFocus(page,narrowKey);await assertLabelContrast(page.locator('.space-label[data-key="'+narrowKey+'"]'));
+         await page.screenshot({path:path.join(dir,'1000x1200-hover.png')});
+         await page.locator('.space-label[data-key="'+narrowKey+'"]').click();await assertPointFocus(page,narrowKey);
+         await page.screenshot({path:path.join(dir,'1000x1200-focus.png')});row.tallPointLabels=true;
        }
        assert.deepEqual(errors,[]);row.passed=true;
      }catch(e){row.failure=e.stack;await page.screenshot({path:path.join(dir,width+'x'+height+'-failure.png')}).catch(()=>{});throw e;}
