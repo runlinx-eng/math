@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
 const {observeBrowserDiagnostics}=require('./helpers/p9-browser-diagnostics.cjs');
+const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
 const fixture=require('./fixtures/p9-area-cases.cjs'),{cases,excludedCases,associatedCases}=fixture;
 const navigationFixture=require('./fixtures/p9-area-navigation.cjs'),{navigation}=navigationFixture;
 function orderedAreaTargets(){
@@ -41,6 +42,7 @@ async function main(){
  const {areaBinding,replayAreaEvidence:replay}=await import('../dist/learning/area-evidence.js');
  const {studyActionFocus}=await import('../dist/learning/workspace-flow.js');
  const taskFor=c=>sessionTasks(c.id)[c.index];
+ const auditExcludedFeedback=await createExcludedFeedbackAudit('area',excludedCases,taskFor);
  for(const c of [...cases,...excludedCases,...associatedCases])assert.equal(hash(taskFor(c)),c.taskHash);
  for(const spec of navigation){assert.deepEqual(taskFor(spec),spec.task);assert.equal(hash(spec.task),spec.taskHash);}
  for(const [file,expected]of Object.entries({...fixture.sourceFiles,...navigationFixture.sourceHashes}))assert.equal(digest(fs.readFileSync(path.join(root,file))),expected,file);
@@ -234,9 +236,9 @@ async function main(){
      assert.equal(p.construction.boundaryEdges.length,40);assert.equal(p.history.events.length,m.history.length);assert.deepEqual(m.answers,c.answers);
     }else assertMath(c,m,p);
    };
-   const restore=async(c,record,strict)=>{
+   const restore=async(c,record,expectDisplayedFeedback)=>{
     const beforeState=originalState(JSON.parse((await read()).text));await reload(c);const after=await saved(c.id);assert.deepEqual(after.models,record.models);assert.deepEqual(after.cases,record.cases);assert.deepEqual(after.notes,record.notes);assert.equal(after.draft,record.draft);keepRecords(beforeState,originalState(JSON.parse((await read()).text)));
-    ok((await hint.count()>0)===strict,label+' stopped-origin reload retains current feedback boundary');return after;
+    ok((await hint.count()>0)===expectDisplayedFeedback,label+' stopped-origin reload retains current feedback boundary');return after;
    };
    const retry=async(c,suffix)=>{
     const before=await saved(c.id),control=page.locator('[data-do="p3-retry"]');assert.equal(await control.count(),1);await reveal(control);await control.click();await wait(c);
@@ -381,9 +383,13 @@ async function main(){
    };
    const excludedShots=new Set(['gridarea:0','gridarea:1','triArea:0','circleArea:0','solidSurface:1','solidSurface:2']);
    const runExcluded=async c=>{
-    label=prefix+'-excluded-'+c.id+'-'+c.index;await open(c);await plan(c);const current=await check(c,true,'excluded-original-check');
-    ok(areaBinding(taskFor(c),c)===null&&replay(taskFor(c),current.model)===null&&await guide.count()===0&&await hint.count()===0,label+' answer/tool-only work remains outside strict construction coverage');
-    await restore(c,current.record,false);if(excludedShots.has(c.id+':'+c.index))await shot('ordinary-completion-stays-unbound');excluded.push({width,height,id:c.id,index:c.index,taskHash:c.taskHash,snapshot:current});
+    label=prefix+'-excluded-'+c.id+'-'+c.index;await open(c);
+    const initial=await saved(c.id);await auditExcludedFeedback(page,c,initial.models[c.index],initial.cases[c.index]??null);
+    await plan(c);const current=await check(c,true,'excluded-original-check');
+    ok(areaBinding(taskFor(c),c)===null&&replay(taskFor(c),current.model)===null,label+' stays outside the original area family construction coverage');
+    const otherFamily=await auditExcludedFeedback(page,c,current.model,current.record.cases[c.index]);
+    const reloaded=await restore(c,current.record,otherFamily.feedback);assert.deepEqual(await auditExcludedFeedback(page,c,reloaded.models[c.index],reloaded.cases[c.index]),otherFamily);
+    if(excludedShots.has(c.id+':'+c.index))await shot('ordinary-completion-stays-unbound');excluded.push({width,height,id:c.id,index:c.index,taskHash:c.taskHash,snapshot:current,otherFamily});
    };
    for(const c of orderedAreaTargets()){
     if(c.role==='native')await runNative(c);else if(c.role==='associated')await runAssociated(c);else await runExcluded(c);
@@ -455,7 +461,7 @@ async function main(){
   }
   ok(errors.length===0,'no browser runtime errors');ok(remote.length===0,'no external requests');
   ok(observations.length===17*2&&retries.length===17*2*2,'all 17 native sources retain five main checks and two real shared retries per viewport');
-  ok(isolated.length===44*2&&excluded.length===26*2,'all 44 associated and 26 excluded original sources remain unbound');
+  ok(isolated.length===44*2&&excluded.length===26*2,'all 44 associated and 26 excluded original sources remain outside strict area-family coverage');
   ok(boundaryRetries.length===42&&negativeObservations.length===42,'all 21 boundary scenarios per viewport begin with real current-position retry');
   ok(preparations.length===48&&navigationTransitions.length===124,'both viewports complete 24 real prerequisites and 62 real forward Next actions');
   ok(backups.length===2&&provenance.backupImportsCompleted===4,'two independent empty contexts receive four actual v2 file-input imports');
