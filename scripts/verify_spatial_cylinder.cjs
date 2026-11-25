@@ -6,7 +6,7 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261125-cylinder-workbench-ab-preview1';
+const release='math-explorer-20261125-cylinder-workbench-ab-preview2';
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
@@ -272,6 +272,36 @@ const ready=async(page,version,count)=>{
            await page.waitForFunction(id=>window.mathSpace?.snapshot().journeyOpen&&document.querySelector('#journey-frame').contentWindow.mathLesson?.snapshot()?.id===id,session,{timeout:60000});
          };
          const foreground=mode=>page.waitForFunction(mode=>document.body.dataset.workbenchForeground===mode,mode);
+         // A dark map and a light native lesson are separate color surfaces.
+         // Compare the computed CSS, not an assumed class or a golden pixel.
+         const foregroundStyles=()=>page.evaluate(()=>{
+           const get=s=>getComputedStyle(document.querySelector(s));
+           const context=document.querySelector('#learning-map-context');
+           const rgb=s=>{const a=s.match(/[\\d.]+/g)?.map(Number)||[];if(a.length!==3&&!(a.length===4&&a[3]===1))throw Error('Expected an opaque context color: '+s);return a.slice(0,3);};
+           const lum=s=>rgb(s).map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
+           const contrasts=[...context.querySelectorAll('.learning-map-title,.learning-map-eyebrow,.learning-map-neighbor span,.learning-map-neighbor strong,.learning-map-neighbor small,.learning-map-neighbor em,.learning-map-footer>span')].map(el=>{
+             const bg=el.closest('.learning-map-neighbor')||context,fg=getComputedStyle(el).color,background=getComputedStyle(bg).backgroundColor;
+             const a=lum(fg),b=lum(background);
+             return {role:el.className||el.tagName,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)};
+           });
+           return {filter:get('#space-canvas>canvas').filter,labels:Number(get('#space-canvas .space-labels').opacity),card:Number(get('#focus-card').opacity),lesson:Number(get('#journey-surface').opacity),contextBackground:get('#learning-map-context').backgroundColor,contrasts};
+         });
+         const assertLearningForeground=async()=>{
+           const actual=await foregroundStyles();
+           assert.match(actual.filter,/brightness\\(0?\\.64\\)/);
+           assert.match(actual.filter,/blur\\(0?\\.8px\\)/);
+           assert.equal(actual.labels,.62);assert.equal(actual.card,.76);assert.equal(actual.lesson,1);
+           assert.equal(actual.contextBackground,'rgb(255, 254, 249)');
+           assert.ok(actual.contrasts.length>=6&&actual.contrasts.every(item=>item.ratio>=4.5),'all context text must be readable: '+JSON.stringify(actual));
+           return actual;
+         };
+         const assertMapForeground=async()=>{
+           const actual=await foregroundStyles();
+           assert.equal(actual.filter,'none');assert.equal(actual.labels,1);assert.equal(actual.card,1);assert.equal(actual.lesson,.82);
+           assert.equal(actual.contextBackground,'rgb(255, 254, 249)');
+           assert.ok(actual.contrasts.every(item=>item.ratio>=4.5));
+           return actual;
+         };
          const lessonStage=stage=>workbench.locator('#scene').getAttribute('data-stage').then(value=>assert.equal(value,stage));
          const waitStage=stage=>page.waitForFunction(stage=>document.querySelector('#journey-frame').contentDocument?.querySelector('#scene')?.dataset.stage===stage,stage);
          const learner=async()=>JSON.parse(await learnerState()).lessons[session];
@@ -291,6 +321,8 @@ const ready=async(page,version,count)=>{
          assert.equal(await learningEntry.count(),1);
          const lockedBefore=await page.evaluate(()=>window.mathSpace.snapshot());
          await learningEntry.click();await waitLesson();await foreground('learn');
+         const learningStyles=await assertLearningForeground();
+         await page.screenshot({path:path.join(dir,'ab-v54-learning-foreground.png')});
          assert.equal(await workbench.locator('body').getAttribute('data-workbench-shell'),'fixed');
          assert.equal(await workbench.locator('#workbench-beats li').count(),4);
          assert.equal(await workbench.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
@@ -320,6 +352,7 @@ const ready=async(page,version,count)=>{
          await page.locator('#search-results [data-key="'+beforeKey+'"]').click();
          await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key,beforeKey);
          await foreground('map');await sameDocument();
+         const mapStyles=await assertMapForeground();
          const explored=await learnerState(),expected=JSON.parse(edited),actual=JSON.parse(explored);
          assert.ok(actual.visited[beforeId]);
          if(!Object.hasOwn(expected.visited,beforeId)){expected.visited[beforeId]=actual.visited[beforeId];expected.openedPacks[pack.id]??=actual.openedPacks[pack.id];}
@@ -328,6 +361,8 @@ const ready=async(page,version,count)=>{
          assert.equal(await workbench.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
          await page.screenshot({path:path.join(dir,'ab-v54-prerequisite.png')});
          await workbench.locator('#instruction').click();await foreground('learn');await sameDocument();await lessonStage('recheck');
+         const returnedStyles=await assertLearningForeground();
+         await page.screenshot({path:path.join(dir,'ab-v54-learning-return.png')});
          assert.equal(await learnerState(),explored);
          await pause.press('Enter');await paused();
          assert.equal(await learnerState(),explored);
@@ -351,6 +386,8 @@ const ready=async(page,version,count)=>{
            await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key,beforeKey);
            await compareOpened(explored);
            await resume.click();await foreground('learn');await waitStage('recheck');
+           const offlineStyles=await assertLearningForeground();
+           row.foregroundPresentation={learning:learningStyles,map:mapStyles,returned:returnedStyles,offline:offlineStyles};
            await check.click();await waitStage('passed');
            const corrected=await learner();
            assert.equal(corrected.cases[0].attempts.length,2);assert.deepEqual(corrected.cases[0].attempts[0],wrong);

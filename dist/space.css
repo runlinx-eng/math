@@ -1591,3 +1591,23 @@ body[data-world="network"].has-journey #workbench-later{
 }
 @media(pointer:coarse){body[data-world="network"].has-journey #workbench-later{min-height:44px}}
 @media(max-width:500px){body[data-world="network"].has-journey #workbench-later{font-size:11px;padding:5px 7px}}
+
+/* AB preview2: v54's dark atlas must not recolor the docked light lesson aid.
+   The two foregrounds change emphasis only, retaining hit targets and layout. */
+body[data-world="network"][data-network-version="54"].has-journey #journey-surface #learning-map-context{
+  background:#fffef9;color:#244c3f;box-shadow:none;
+  border-color:#d0dfd3;border-left-color:#4d866f;
+}
+body[data-world="network"][data-network-version="54"] #journey-surface #learning-map-context .learning-map-eyebrow{color:#456b57}
+body[data-world="network"][data-network-version="54"] #journey-surface #learning-map-context .learning-map-neighbor :is(span,small,em),
+body[data-world="network"][data-network-version="54"] #journey-surface #learning-map-context .learning-map-footer>span{color:#4c6557}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="learn"] #space-canvas>canvas{
+  filter:brightness(.64) saturate(.84) blur(.8px);
+}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="learn"] #space-canvas .space-labels{opacity:.62}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="learn"] #focus-card{opacity:.76}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="map"] #focus-card{opacity:1}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground] #focus-card{transition:opacity .24s ease}
+@media(prefers-reduced-motion:reduce){
+  body[data-world="network"][data-network-version="54"][data-workbench-foreground] #focus-card{transition:none}
+}
