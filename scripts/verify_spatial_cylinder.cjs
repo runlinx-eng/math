@@ -277,7 +277,7 @@ const ready=async(page,version,count)=>{
          const foregroundStyles=()=>page.evaluate(()=>{
            const get=s=>getComputedStyle(document.querySelector(s));
            const context=document.querySelector('#learning-map-context');
-           const rgb=s=>{const a=s.match(/[\\d.]+/g)?.map(Number)||[];if(a.length!==3&&!(a.length===4&&a[3]===1))throw Error('Expected an opaque context color: '+s);return a.slice(0,3);};
+           const rgb=s=>{const a=s.match(/[0-9.]+/g)?.map(Number)||[];if(a.length!==3&&!(a.length===4&&a[3]===1))throw Error('Expected an opaque context color: '+s);return a.slice(0,3);};
            const lum=s=>rgb(s).map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
            const contrasts=[...context.querySelectorAll('.learning-map-title,.learning-map-eyebrow,.learning-map-neighbor span,.learning-map-neighbor strong,.learning-map-neighbor small,.learning-map-neighbor em,.learning-map-footer>span')].map(el=>{
              const bg=el.closest('.learning-map-neighbor')||context,fg=getComputedStyle(el).color,background=getComputedStyle(bg).backgroundColor;
@@ -288,8 +288,8 @@ const ready=async(page,version,count)=>{
          });
          const assertLearningForeground=async()=>{
            const actual=await foregroundStyles();
-           assert.match(actual.filter,/brightness\\(0?\\.64\\)/);
-           assert.match(actual.filter,/blur\\(0?\\.8px\\)/);
+           assert.ok(actual.filter.split(' ').includes('brightness(0.64)'),actual.filter);
+           assert.ok(actual.filter.split(' ').includes('blur(0.8px)'),actual.filter);
            assert.equal(actual.labels,.62);assert.equal(actual.card,.76);assert.equal(actual.lesson,1);
            assert.equal(actual.contextBackground,'rgb(255, 254, 249)');
            assert.ok(actual.contrasts.length>=6&&actual.contrasts.every(item=>item.ratio>=4.5),'all context text must be readable: '+JSON.stringify(actual));
