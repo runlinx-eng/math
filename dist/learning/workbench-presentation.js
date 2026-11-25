@@ -109,7 +109,7 @@ export function closeWorkbenchDrawer(doc){
   const stage=doc.getElementById('workbench-stage');if(stage)stage.inert=false;
 }
 
- 
+
 // B1: location is read-only display of the active session, never the selected
 // map node or its grade filter. The existing validated curriculum loader is
 // reused lazily; unavailable metadata must not delay or prevent learning.
