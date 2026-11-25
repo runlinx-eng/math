@@ -6,7 +6,7 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261125-cylinder-v54-preview10';
+const release='math-explorer-20261125-cylinder-v54-preview11';
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
@@ -39,6 +39,16 @@ const assertPointFocus=async(page,key)=>{
  },key);
  assert.equal(check.primary,1);assert.ok(check.gap>=5&&check.gap<=22,'annotation must stay beside the actual point: '+check.gap);
  assert.deepEqual(check.halo,check.position);assert.ok(check.labels.every(o=>o.background==='rgba(0, 0, 0, 0)'&&o.border==='0px'));
+};
+const assertOriginMarker=async(page)=>{
+ await page.waitForFunction(()=>window.mathSpace.cylinder().presentation.originMarker.visible);
+ const evidence=await page.evaluate(()=>{
+   const marker=document.querySelector('#cylinder-origin-marker'),r=marker.querySelector('.cylinder-origin-compass').getBoundingClientRect(),host=document.querySelector('#space-canvas').getBoundingClientRect(),origin=window.mathSpace.cylinder().presentation.originMarker;
+   return {x:r.x+r.width/2-host.x,y:r.y+r.height/2-host.y,projected:origin.projected,position:origin.position,key:marker.dataset.key||null,sourcePoint:window.mathSpace.snapshot().positions.some(o=>JSON.stringify(o.position)===JSON.stringify(origin.position))};
+ });
+ assert.equal(evidence.key,null);assert.equal(evidence.sourcePoint,false);
+ assert.ok(Math.hypot(evidence.x-evidence.projected.x,evidence.y-evidence.projected.y)<=2,'navigation marker is projected from its own fixed world anchor');
+ return evidence.position;
 };
 const assertInspector=async(page,selector,id,lockedCount=null)=>{
  const card=page.locator(selector);await card.waitFor({state:'visible'});
@@ -93,6 +103,7 @@ const ready=async(page,version,count)=>{
        await page.locator('.space-label.cylinder-milestone:visible').first().waitFor();
        const milestoneKeys=await page.locator('.space-label.cylinder-milestone:visible').evaluateAll(labels=>labels.map(el=>el.dataset.key.slice(5)));
        assert.ok(milestoneKeys.length<=10&&milestoneKeys.every(id=>metadata.milestones.includes(id)));
+       await assertOriginMarker(page);
        await page.screenshot({path:path.join(dir,width+'x'+height+'-overview.png')});
        {
          const camera=s=>({position:s.position,target:s.target,cameraZoom:s.cameraZoom});
@@ -211,6 +222,13 @@ const ready=async(page,version,count)=>{
          await page.locator('.tool-rail [data-action="front"]').click();
          await page.waitForFunction(()=>!window.mathSpace.snapshot().selected&&!window.mathSpace.motion().tween);
          const resetCamera=camera(await page.evaluate(()=>window.mathSpace.snapshot()));
+         const originPosition=await assertOriginMarker(page);
+         await page.locator('#cylinder-origin-marker').click();await page.locator('#cylinder-entry-nav').waitFor({state:'visible'});
+         await page.waitForFunction(()=>!window.mathSpace.motion().tween);
+         await page.locator('[data-action="cylinder-entry-close"]').click();
+         await page.locator('.tool-rail [data-action="front"]').click();
+         await page.waitForFunction(()=>!window.mathSpace.motion().tween&&!window.mathSpace.snapshot().selected);
+         assert.deepEqual(await assertOriginMarker(page),originPosition);
          await page.locator('[data-action="cylinder-origin"]').click();await page.locator('#cylinder-entry-nav').waitFor({state:'visible'});
          await page.waitForFunction(()=>!window.mathSpace.motion().tween);
          const rootKeys=metadata.spines.filter(s=>s.index===0).map(s=>'node:'+s.rootId).sort();
@@ -248,6 +266,7 @@ const ready=async(page,version,count)=>{
          await page.setViewportSize({width:1000,height:1200});await page.locator('.tool-rail [data-action="front"]').click();
          await page.waitForFunction(()=>!window.mathSpace.motion().tween&&!window.mathSpace.snapshot().selected);
          const narrowGuide=await page.locator('#network-guide').boundingBox();assert.ok(narrowGuide.width<=220&&narrowGuide.x<40,'tall desktop must leave the upper atlas open');
+         assert.deepEqual(await assertOriginMarker(page),originPosition);
          await page.screenshot({path:path.join(dir,'1000x1200-overview.png')});
          const narrowLabel=page.locator('.space-label.cylinder-milestone:visible').first(),narrowKey=await narrowLabel.getAttribute('data-key');
          await narrowLabel.hover();await assertPointFocus(page,narrowKey);await assertLabelContrast(page.locator('.space-label[data-key="'+narrowKey+'"]'));

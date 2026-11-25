@@ -1,3 +1,4 @@
+import {cylinderDomainRadiusBounds,cylinderSpineControls} from './spatial-cylinder.js';
 // v54 only: decorative guides are not mathematical edges or pick targets.
 // Reference labels have fixed pixel sizes. Clamp the near-edge annotation,
 // never the actual curriculum ring or any mathematical node.
@@ -33,11 +34,11 @@ export function createCylinderVisuals(THREE,space,nodeList){
  const layerRefs=['stage-1','stage-2','stage-3'].map((id,i)=>{
    const ys=layout.nodes.filter(n=>!n.thinking&&n.anchorStage===id).map(n=>n.y).sort((a,b)=>a-b);
    const y=(ys[Math.floor((ys.length-1)/2)]+ys[Math.floor(ys.length/2)])/2;
-   return {id,y,r:(205+.15*y)*scale+8,label:['1—2年级参考层','3—4年级参考层','5—6年级参考层'][i]};
+   return {id,y,r:cylinderDomainRadiusBounds(y)[1]*scale+8,label:['1—2年级参考层','3—4年级参考层','5—6年级参考层'][i]};
  });
  for(const s of layout.sectors){
    const color=space.themes.get(s.themeId).color;
-   const base=line(arc(205*scale,0,s.start,s.end),color,.12,true);base.userData.layer='rings';guides.add(base);
+   const base=line(arc(cylinderDomainRadiusBounds(0)[1]*scale,0,s.start,s.end),color,.12,true);base.userData.layer='rings';guides.add(base);
    for(const ref of layerRefs){
      const m=line(arc(ref.r,ref.y,s.start,s.end),0xa0b2d5,.14,true);
      m.userData.stage=ref.id;m.userData.layer='rings';guides.add(m);
@@ -64,18 +65,14 @@ export function createCylinderVisuals(THREE,space,nodeList){
  // Control Y coordinates are exactly 1/3 and 2/3 of each segment; no
  // extra connections or reversals are introduced. Curves meet source nodes.
  const pathCurves=new Map();
- const slope=(a,b)=>b.clone().sub(a).multiplyScalar(1/Math.max(b.y-a.y,.0001));
- const limitedDelta=(v,dy)=>{v.y=0;return v.multiplyScalar(dy/3).clampLength(0,20);};
+ // One tangent per real vertex gives a smooth continuation along a path.
+ // Shared real edges keep their first geometry, and can branch only at their true endpoints.
  for(const sp of layout.spines){
-   const points=sp.nodeIds.map(id=>V(space.nodes.get(id).position));
+   const points=sp.nodeIds.map(id=>space.nodes.get(id).position),controls=cylinderSpineControls(points);
    sp.edges.forEach((e,i)=>{
      const key=e.prerequisiteId+'>'+e.topicId;if(pathCurves.has(key))return;
-     const from=points[i],to=points[i+1],direct=slope(from,to),dy=to.y-from.y;
-     const first=i?slope(points[i-1],to):direct;
-     const last=i+2<points.length?slope(from,points[i+2]):direct;
-     const c1=from.clone().lerp(to,1/3).add(limitedDelta(first.clone().sub(direct),dy));
-     const c2=from.clone().lerp(to,2/3).add(limitedDelta(direct.clone().sub(last),dy));
-     pathCurves.set(key,new THREE.CubicBezierCurve3(from,c1,c2,to));
+     const {c1,c2}=controls[i];
+     pathCurves.set(key,new THREE.CubicBezierCurve3(V(points[i]),V(c1),V(c2),V(points[i+1])));
    });
  }
  function addEdge(e,bridge){
@@ -87,7 +84,7 @@ export function createCylinderVisuals(THREE,space,nodeList){
    const m=line(curve.getPoints(12),color,bridge?.21:.78,soft);m.name=bridge?'real-entry-bridge':'real-spine-edge';m.userData.edge={...e};accents.add(m);
    const pieces=[{mesh:m,opacity:bridge?.21:.78}];
    if(!soft){
-     for(const [radius,opacity] of [[1.85,bridge?.10:.58],[4.8,bridge?.035:.19]]){
+     for(const [radius,opacity] of [[1.35,bridge?.10:.58],[3.5,bridge?.035:.16]]){
        const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,12,radius,5,false),new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
        accents.add(tube);pieces.push({mesh:tube,opacity});
      }

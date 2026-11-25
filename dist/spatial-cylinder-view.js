@@ -8,6 +8,9 @@ export function buildCylinderSpace(atlas,grade){
  const space=buildRelationshipSpace(atlas),layout=buildCylinderLayout(atlas,grade);
  const offset=Math.max(...layout.nodes.map(n=>n.y))/2;
  space.cylinderLayout=layout;space.cylinderOffset=offset;
+ // A navigation-only world anchor below the true lowest node. It is not an atlas object,
+ // graph root, relation endpoint, pick target or learning record.
+ space.cylinderOriginPosition=[0,Math.min(...layout.nodes.map(n=>n.y))-offset-78,0];
  space.cylinderDomainCounts=Object.fromEntries(layout.sectors.map(s=>[s.themeId,layout.nodes.filter(n=>!n.thinking&&n.themeId===s.themeId).length]));
  space.cylinderThinkingCount=layout.nodes.filter(n=>n.thinking).length;
  space.cylinderById=new Map(layout.nodes.map(n=>[n.id,n]));

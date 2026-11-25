@@ -1524,3 +1524,19 @@ body[data-world="network"][data-network-version="54"] .label-tethers path.cylind
  body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide :is(#grade-map-filter,#cylinder-core-key,.cylinder-extra-tools){align-self:stretch}
 }
 
+/* v54 compass: a separate navigation affordance, never a source node/edge. */
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker{
+ position:absolute;left:0;top:0;width:148px;height:40px;padding:0;
+ display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;
+ color:#d9c38e;background:transparent;border:0;box-shadow:none;pointer-events:auto;
+ font-size:11px;line-height:14px;z-index:70;text-shadow:0 1px 4px #080d18;
+}
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker[hidden]{display:none!important}
+body[data-world="network"][data-network-version="54"] .cylinder-origin-compass{
+ display:grid;place-items:center;width:20px;height:20px;flex:0 0 20px;
+ border:1px solid #bca368;border-radius:50%;background:#181b23;color:#f6d58b;
+ box-shadow:0 0 10px #e8bb6150;font-size:13px;line-height:1;
+}
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker:hover,
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker:focus-visible{color:#ffdf9b}
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker:focus-visible{outline:1px solid #bca368;outline-offset:2px}

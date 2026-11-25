@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {buildCylinderLayout} from '../dist/spatial-cylinder.js';
+import {buildCylinderLayout,cylinderSpineControls,cylinderDomainRadiusBounds} from '../dist/spatial-cylinder.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const grade=JSON.parse(fs.readFileSync(new URL('../dist/data/grade-panorama-lite.json',import.meta.url)));
 
@@ -39,6 +39,17 @@ function verifyCylinderLayout(atlas,grade,build,assert){
     assert(s.edges.every((e,i)=>sourceEdges.has(edgeKey(e))&&e.prerequisiteId===s.nodeIds[i]&&e.topicId===s.nodeIds[i+1]),"real spine edges");
     assert(near(s.weightedScore,s.edges.reduce((v,e)=>v+(e.strength==="hard"?1:.35),0)),"fixed spine weights");
     assert(s.coverage===s.newCoverage+s.overlap,"coverage accounting");
+    const points=s.nodeIds.map(id=>ids.get(id).position),controls=cylinderSpineControls(points);
+    assert(controls.length===s.edges.length,"one curve per actual path edge");
+    for(let i=0;i<controls.length;i++){
+      const a=points[i],b=points[i+1],{c1,c2}=controls[i],dy=b[1]-a[1];
+      assert(c1.every(Number.isFinite)&&c2.every(Number.isFinite),"finite cubic controls");
+      assert(near(c1[1],a[1]+dy/3)&&near(c2[1],a[1]+2*dy/3),"strictly monotone Y throughout curve");
+      if(i){
+        const previous=controls[i-1].c2,prevDy=a[1]-points[i-1][1];
+        for(const k of [0,2])assert(near((a[k]-previous[k])/prevDy,(c1[k]-a[k])/dy),"continuous tangent at actual path vertex");
+      }
+    }
   }
   assert(out.bridges.length>=3&&out.bridges.length<=5&&new Set(out.bridges.map(e=>e.topicId)).size===out.bridges.length,"few distinct rootless entrances");
   for(const e of out.bridges){
@@ -51,7 +62,9 @@ function verifyCylinderLayout(atlas,grade,build,assert){
   const horizontal=out.spines.flatMap(s=>s.edges).reduce((sum,e)=>{const a=ids.get(e.prerequisiteId),b=ids.get(e.topicId);return sum+Math.hypot(a.position[0]-b.position[0],a.position[2]-b.position[2]);},0);
   assert(horizontal<1200,"real spines follow continuous narrow backbones");
   const domain=out.nodes.filter(n=>!n.thinking),percentileR=nodes=>{const radii=nodes.map(n=>n.r).sort((a,b)=>a-b);return radii[Math.floor(radii.length*.9)];};
-  assert(percentileR(domain.filter(n=>n.y>height*.66))>1.25*percentileR(domain.filter(n=>n.y<height*.33)),"upper crown expands above the base");
+  const lower=percentileR(domain.filter(n=>n.y<height*.33)),middle=percentileR(domain.filter(n=>n.y>=height*.33&&n.y<=height*.66)),upper=percentileR(domain.filter(n=>n.y>height*.66));
+  assert(lower<middle&&middle<upper&&upper>1.60*lower,"three bands progressively expand with visibly narrower base");
+  assert(cylinderDomainRadiusBounds(0)[1]<cylinderDomainRadiusBounds(height)[1],"reference ring envelope expands with actual domain");
   assert(out.diagnostics.collisions===0,"zero unresolved collisions");
   for(let i=0;i<out.nodes.length;i++)for(let j=i+1;j<out.nodes.length;j++){
     const a=out.nodes[i],b=out.nodes[j],distance=Math.hypot(...a.position.map((x,k)=>x-b.position[k]));

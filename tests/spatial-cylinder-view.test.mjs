@@ -16,6 +16,10 @@ test('v54 opt-in uses all real nodes and stable positions, preserving v53 and so
  assert.ok(world.cylinderMilestoneIds.size>=5&&world.cylinderMilestoneIds.size<=10);
  assert.ok([...world.cylinderMilestoneIds].every(id=>world.cylinderSpineIds.has(id)&&world.relationshipIds.has(id)));
  assert.equal(old.relationshipIds.size,537);assert.equal(world.relationshipIds.size,587);assert.equal(world.networkVersion,54);assert.equal(JSON.stringify(atlas),source);
+ assert.equal(world.cylinderOriginPosition[0],0);assert.equal(world.cylinderOriginPosition[2],0);
+ assert.ok(world.cylinderOriginPosition[1]<Math.min(...[...world.nodes.values()].map(n=>n.position[1])));
+ assert.ok(world.objects.every(o=>o.position!==world.cylinderOriginPosition));
+ assert.equal(world.relationshipPositions.size,world.objects.length);assert.equal(old.cylinderOriginPosition,undefined);
  assert.equal(JSON.stringify([...buildRelationshipSpace(atlas).relationshipPositions]),before);
  for(const e of atlas.edges)assert.ok(world.nodes.get(e.topicId).position[1]>world.nodes.get(e.prerequisiteId).position[1]);
  const position=[...world.nodes.values()].map(n=>n.position);

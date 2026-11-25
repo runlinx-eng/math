@@ -1,5 +1,26 @@
 // v54 cylindrical layout; standalone geometry, not the default runtime view.
 // See docs/spatial-exploration/V54-CYLINDER-SOURCE-AUDIT.md.
+// One radial envelope for both the real domain positions and reference rings.
+export function cylinderDomainRadiusBounds(y){return [80+.15*y,120+.26*y];}
+
+// Continuous tangents at real path vertices. Y is linear and strictly ascending
+// in every cubic segment; only the rendering path, never source topology, changes.
+export function cylinderSpineControls(points){
+  const tangent=(a,b)=>{
+    const dy=b[1]-a[1];if(!(dy>0))throw Error('v54 spine: nonascending source segment');
+    const dx=(b[0]-a[0])/dy,dz=(b[2]-a[2])/dy;
+    const factor=Math.min(1,1.35/Math.max(1e-9,Math.hypot(dx,dz)));
+    return [dx*factor,1,dz*factor];
+  };
+  if(points.length<2)return [];
+  const tangents=points.map((_,i)=>tangent(points[Math.max(0,i-1)],points[Math.min(points.length-1,i+1)]));
+  return points.slice(1).map((b,i)=>{
+    const a=points[i],dy=(b[1]-a[1])/3;
+    if(!(dy>0))throw Error('v54 spine: nonascending source segment');
+    return {c1:a.map((v,k)=>v+dy*tangents[i][k]),c2:b.map((v,k)=>v-dy*tangents[i+1][k])};
+  });
+}
+
 export function buildCylinderLayout(atlas, grade) {
   // v54 is a pure, opt-in geometry builder. Never mutate atlas or curriculum.
   const TAU=2*Math.PI, RAD=Math.PI/180, EPS=1e-7;
@@ -161,7 +182,7 @@ export function buildCylinderLayout(atlas, grade) {
   const degree=id=>incoming.get(id).length+outgoing.get(id).length;
   const maxDegree=Math.max(1,...ids.map(degree));
   const pos=new Map(),seedAngles=new Map();
-  const bounds=(p)=>p.thinking?[18,62]:[95+.10*p.y,205+.15*p.y];
+  const bounds=(p)=>p.thinking?[18,62]:cylinderDomainRadiusBounds(p.y);
   // Pack-local initial order is independent of input row ordering.
   for(const l of lanes){
     const members=domain.filter(id=>laneById.get(id).id===l.id);

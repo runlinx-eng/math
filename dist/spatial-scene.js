@@ -1,7 +1,7 @@
 import * as THREE from './vendor/three/three.module.min.js';
 import {OrbitControls} from './vendor/three/OrbitControls.js';
 import {relationsFor,cylinderObservation} from './spatial-model.js';
-import {placeLabel,placePointLabel} from './spatial-labels.js';
+import {placeLabel,placePointLabel,overlaps} from './spatial-labels.js';
 import {applyNetworkView} from './spatial-network.js';
 import {GLOBAL_VERSION,restoreNetworkCoordinates} from './spatial-global.js';
 import {overviewShellCandidates} from './spatial-relationship.js';
@@ -165,6 +165,12 @@ export class SpatialScene {
     }
     this.halo=new THREE.Mesh(new THREE.TorusGeometry(1,.075,8,64),new THREE.MeshBasicMaterial({color:this.cylinderMap?0xa6d9ff:0x234c45,transparent:true,opacity:.85,depthTest:false}));this.halo.visible=false;this.halo.renderOrder=4;this.scene.add(this.halo);
     this.labelLayer=document.createElement('div');this.labelLayer.className='space-labels';host.append(this.labelLayer);
+    if(this.cylinderMap){
+      const marker=document.createElement('button');marker.type='button';marker.id='cylinder-origin-marker';marker.dataset.action='cylinder-origin-marker';
+      marker.setAttribute('aria-label','起点，查看五大领域的真实入口');marker.title='导航标识，不是数学知识点';
+      marker.innerHTML='<span class="cylinder-origin-compass" aria-hidden="true">✦</span><span>起点 · 入口导航</span>';
+      marker.hidden=true;this.labelLayer.append(marker);this.cylinderOriginMarker=marker;
+    }
     this.structureLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
     this.structureLayer.classList.add('overview-structure-lines');this.structureLayer.setAttribute('aria-hidden','true');this.labelLayer.prepend(this.structureLayer);
     // Focused links are drawn in screen pixels; world positions and source relations stay unchanged.
@@ -515,7 +521,9 @@ export class SpatialScene {
     const overviewLeft=sidebar?Math.max(42,guide.right+16):42;
     const left=themeFocus?Math.min(overviewLeft+75,this.width*.38):this.selected?Math.min(overviewLeft+30,this.width*.36):overviewLeft;
     const top=sidebar?Math.max(108,guide.top+18):Math.max(108,(guide?.bottom||85)+18);
-    return {left,right:Math.max(this.width<1100?54:76,entryRight),top,bottom:Math.max(76,entryBottom,this.height-(footer?.top||this.height-70)+10)};
+    const tallRail=this.cylinderMap&&this.width/this.height<=.9?document.querySelector('.tool-rail')?.getBoundingClientRect():null;
+    const tallRailBottom=tallRail&&tallRail.width>tallRail.height*2&&tallRail.top>this.height*.5?this.height-tallRail.top+12:0;
+    return {left,right:Math.max(this.width<1100?54:76,entryRight),top,bottom:Math.max(76,entryBottom,tallRailBottom,this.height-(footer?.top||this.height-70)+10)};
   }
   globalScale(){return this.height*this.camera.zoom/(2*this.camera.position.distanceTo(this.controls.target)*Math.tan(Math.PI/9));}
   nodeScreenRadius(key){const i=this.nodeList.findIndex(n=>n.key===key);if(i<0||!this.global)return null;const matrix=new THREE.Matrix4();(this.cylinderMap&&this.space.cylinderById.get(this.nodeList[i].id)?.thinking?this.cylinderVisuals.thinkingMesh:this.nodeMesh).getMatrixAt(i,matrix);return new THREE.Vector3().setFromMatrixScale(matrix).x*this.globalScale();}
@@ -538,6 +546,7 @@ export class SpatialScene {
   }
   fitGlobalView(animated=true,objects=null){
     const points=(objects||this.nodeList).filter(o=>this.canLocate(o)).map(o=>V(o.position));if(!points.length)return;
+    if(this.cylinderMap&&!objects&&this.networkView!=='map')points.push(V(this.space.cylinderOriginPosition));
     const center=new THREE.Box3().setFromPoints(points).getCenter(new THREE.Vector3());
     const dir=V(this.networkView==='map'?[0,1,.0001]:this.networkView==='relations'?[0,0,1]:this.cylinderMap?[1,.45,-.27]:this.width/this.height<.9?[.45,.72,.9]:[.65,.5,1]).normalize();
     const right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),dir).normalize(),up=new THREE.Vector3().crossVectors(dir,right).normalize();
@@ -930,6 +939,17 @@ export class SpatialScene {
     for(const c of this.captionCandidates||[]){if(!c.el)continue;c.el.hidden=true;const p=this.project(c.position);if(!p.visible)continue;const r=placeLabel({x:p.x,y:p.y,w:102,h:28,viewport:{w:this.width,h:this.height},occupied:rects});if(!r)continue;rects.push(r);c.el.style.transform=`translate(${r.x}px,${r.y}px)`;c.el.hidden=false;}
     for(const b of this.bandLabels||[]){const p=this.project([0,b.y,0]);b.el.hidden=!p.visible;b.el.style.transform=`translate(${p.x}px,${p.y}px)`;}
     for(const a of this.globalAxisPoints||[]){const p=this.project(a.position);a.el.hidden=!this.global||this.relationshipMap||this.controls.getPolarAngle()<.02||!p.visible;a.el.style.transform=`translate(${p.x}px,${p.y}px)`;}
+    // A separately styled navigation button follows a fixed world anchor.
+    // Let knowledge labels and overlays win any collision; do not move the anchor.
+    if(this.cylinderOriginMarker){
+      const marker=this.cylinderOriginMarker;marker.hidden=true;
+      if(pointMode&&!this.selected&&this.networkView!=='map'){
+        const p=this.project(this.space.cylinderOriginPosition),rect={x:p.x-74,y:p.y-10,w:148,h:40};
+        if(p.visible&&rect.x>=12&&rect.y>=94&&rect.x+rect.w<=this.width-12&&rect.y+rect.h<=this.height-78&&!rects.some(r=>overlaps(rect,r,4))){
+          marker.style.transform=`translate(${rect.x}px,${rect.y}px)`;marker.hidden=false;
+        }
+      }
+    }
     this.labelTethers.innerHTML=tethers.join('');this.updateStructureLines();
   }
   frame(time){if(document.hidden)return;let moving=false;
