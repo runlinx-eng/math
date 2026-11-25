@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261122-issue341-formal-949-v1');
+registerClientRelease('math-explorer-20261125-learning-workbench-b-preview1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -33,7 +33,7 @@ import {thinkingFeedback,thinkingGuide} from './thinking-feedback.js';
 import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
-import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus,WORKBENCH_BEATS,workbenchBeat} from './workspace-flow.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
 const num=(key,label,value,attrs='')=>`<label class="field">${label}<input type="number" min="0" max="999" step="1" data-field="${key}" aria-label="${label}" value="${value??''}" ${attrs}></label>`;
@@ -116,6 +116,12 @@ function exportNumericBackup(){
  render();
 }
 function notify(type,extra={}){if(parent!==window)parent.postMessage({type,...extra},location.origin);}
+// Cross-frame user focus is a display-only signal, distinct from lesson-change.
+if(parent!==window){
+  const requestForeground=event=>{if(event.isTrusted&&id)notify('math-space:lesson-foreground',{sessionId:id});};
+  document.addEventListener('pointerdown',requestForeground,true);
+  document.addEventListener('focusin',requestForeground,true);
+}
 // Each activity has its own actual content height. The parent bounds it to the
 // available viewport instead of forcing every lesson into a fixed 820px iframe.
 if(parent!==window&&typeof ResizeObserver!=='undefined'){
@@ -230,6 +236,11 @@ function syncLearningRegions(){
  if(support&&support.dataset.session!==id){support.open=false;support.dataset.session=id;}
  const phase=learningActionPlan({stage}).step;
  $('#steps').innerHTML=LEARNING_STEPS.map(step=>'<li data-study-step="'+step.id+'"'+(step.id===phase?' aria-current="step"':'')+'>'+esc(step.label)+'</li>').join('');
+ const beat=workbenchBeat(stage),beats=$('#workbench-beats');
+ if(beats.dataset.current!==beat){
+  beats.dataset.current=beat;
+  beats.innerHTML=WORKBENCH_BEATS.map(item=>'<li data-beat="'+item.id+'"'+(item.id===beat?' aria-current="step"':'')+'>'+esc(item.label)+'</li>').join('');
+ }
  $('#interaction-title').textContent=stage==='reflect'?'我的发现（可选）':'动手探索';
  $('#learning-problem .learning-region-title').textContent=stage==='reflect'?'先想一想':'要解决的问题';
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':stage==='explore'?'其他探索（可选）':'发现与继续';

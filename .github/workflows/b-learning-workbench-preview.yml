@@ -1,0 +1,54 @@
+name: B learning workbench preview
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'dist/index.html'
+      - 'dist/space.js'
+      - 'dist/space.css'
+      - 'dist/learn.html'
+      - 'dist/learning/learn.js'
+      - 'dist/learning/learn.css'
+      - 'dist/learning/workspace-flow.js'
+      - 'scripts/verify_learning_workbench_b.cjs'
+      - 'tests/b-workbench-presentation.test.mjs'
+      - '.github/workflows/b-learning-workbench-preview.yml'
+permissions:
+  contents: read
+jobs:
+  learning-workbench:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Presentation contracts and release pins
+        run: |
+          node --test tests/b-workbench-presentation.test.mjs tests/p7-d6-learning-contract.test.mjs
+          node scripts/ci-release-sync.mjs check
+      - name: Install browser
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+      - name: Real lesson and live map foreground checks
+        run: |
+          python3 scripts/server.py > /tmp/b-workbench-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:43827/health >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/verify_learning_workbench_b.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: learning-workbench-b-${{ github.event.pull_request.head.sha }}
+          path: verification/learning-workbench-b
+          if-no-files-found: warn
