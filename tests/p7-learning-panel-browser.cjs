@@ -348,11 +348,17 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal.notes)).length===2,'embedded save retains both original and new notes');
    await shot('27-embedded-summary-saved',true);
    await embedded.locator('#actions [data-do="lesson"][data-id="quarters"]').click();
+   // Opening a real session is asynchronous (validated runtime and formal
+   // evidence imports). Wait for its exact rendered identity, not an old
+   // title still present while the requested lesson is loading.
+   await page.waitForFunction(()=>document.querySelector('#journey-frame')?.contentWindow?.mathLesson?.snapshot()?.id==='quarters');
+   await embedded.locator('#workbench-curriculum[data-state="mapped"][data-session-id="quarters"][data-topic-id="mt_DRlbMok2lT"][data-scope="native"]').waitFor();
    requireState((await embedded.locator('#title').innerText()).includes('半杯'),'embedded continuation opens the next real mathematical activity');
-   await embedded.locator('#workbench-curriculum[data-state="mapped"][data-topic-id="mt_DRlbMok2lT"][data-scope="native"]').waitFor();
+   requireState((await embedded.locator('#status').innerText()).startsWith('任务 1 /'),'embedded continuation starts the real first task');
+   requireState(!(await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters?.cases?.[0]?.attempts?.length)),'embedded continuation does not create a checked attempt');
    requireState(await embedded.locator('#status').getAttribute('data-task-ordinal')==='1'&&await embedded.locator('#status').getAttribute('data-task-total')==='2','real next native session refreshes its own curriculum and configured task count');
-   // The iframe renders synchronously, while its parent updates the selected
-   // knowledge asynchronously after the lesson-change postMessage.
+   // After the child finishes rendering, its parent separately updates the
+   // selected knowledge via the original lesson-change postMessage.
    await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_DRlbMok2lT');
    const endingPose=await page.evaluate(()=>mathSpace.snapshot());
    requireState(startingPose.selected==='node:mt_TqDq6jyOmL'&&endingPose.selected==='node:mt_DRlbMok2lT','next lesson updates the selected knowledge to the real linked activity, not an unrelated node');
@@ -514,9 +520,10 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await shot('28f-route-end-saved-and-continue',true);
    const bridgePose=await page.evaluate(()=>mathSpace.snapshot());
    await primaryLinked.click();
+   await page.waitForFunction(id=>document.querySelector('#journey-frame')?.contentWindow?.mathLesson?.snapshot()?.id===id,linkedId);
+   await embedded.locator('#workbench-curriculum[data-state="mapped"][data-session-id="link-decimal-quarters"][data-scope="bridge-target"]').waitFor();
    requireState((await embedded.locator('#title').innerText()).includes('百格里的量'),'the optional source-backed bridge opens directly in the same learning workspace');
    requireState((await embedded.locator('#status').innerText()).startsWith('任务 1 /'),'the bridge begins at its original first activity');
-   await embedded.locator('#workbench-curriculum[data-state="mapped"][data-session-id="link-decimal-quarters"][data-scope="bridge-target"]').waitFor();
    requireState(await embedded.locator('#workbench-curriculum').getAttribute('data-topic-id')==='mt_DRlbMok2lT'&&(await embedded.locator('#workbench-curriculum').innerText()).startsWith('关联任务目标知识学段：')&&await embedded.locator('#status').getAttribute('data-task-total')==='2','linked practice labels its real target curriculum, not a separate invented grade');
    const following=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
    requireState(following.lessons.quarters.notes.length===1,'the source lesson reflection survives the transition');
