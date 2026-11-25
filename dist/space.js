@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261125-learning-workbench-b-preview6';
+const RELEASE='math-explorer-20261125-learning-workbench-b-preview7';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -303,7 +303,8 @@ function ensureGradePanoramaData(){
  // write learning state, replace the child document or move the camera here.
 function nativeWorkbenchActive(){return worldLayout==='network'&&journeyOpen&&!journeySuspended&&!!activeSessionId;}
 function setWorkbenchForeground(target){
-  const active=nativeWorkbenchActive(),toggle=$('#workbench-focus-toggle'),body=document.body;
+  const active=nativeWorkbenchActive(),toggle=$('#workbench-focus-toggle'),later=$('#workbench-later'),body=document.body;
+  if(later)later.hidden=!active||target===null;
   if(!active||target===null){
     delete body.dataset.workbenchForeground;
     if(toggle)toggle.hidden=true;
@@ -318,6 +319,16 @@ function setWorkbenchForeground(target){
   }
 }
 function syncWorkbenchForeground(){setWorkbenchForeground(document.body.dataset.workbenchForeground||'learn');}
+// B3: pause the existing document and persist only the existing view identity.
+// Native inputs already use the original synchronous validated learner writes.
+function leaveWorkbenchForLater(){
+  if(!nativeWorkbenchActive())return;
+  const warning=$('#journey-frame').contentDocument?.getElementById('storage-warning');
+  if(!warning||!warning.hidden){toast('请先查看学习现场的加载或保存提示。');return;}
+  navigateTaskSurface('explore');
+  saveView();
+  $('[data-action="nav-learn"]')?.focus({preventScroll:true});
+}
 function workbenchUserFocus(event){
   if(!nativeWorkbenchActive()||!event.isTrusted||!(event.target instanceof Element))return;
   const el=event.target;
@@ -1037,9 +1048,12 @@ function showUtility(which){
   $('#utility-title').textContent=which==='trail'?'学习足迹 · 记录与备份':'地图与学习的依据';
   renderTrailNodeContext();
   const frame=$('#utility-frame');frame.dataset.embeddedSrc=`v2.html?embedded=1#${which}`;
+  const reused=frame.contentWindow.location.href===new URL(frame.dataset.embeddedSrc,location.href).href;
   // Replacing the iframe's current entry prevents its load from consuming the
   // parent's Back/Forward task-history step.
   replaceEmbeddedFrame(frame,frame.dataset.embeddedSrc);
+  // Revisit the same trail document without stale rendered evidence or a reload.
+  if(which==='trail'&&reused)frame.contentWindow.postMessage({type:'math-space:refresh-trail'},location.origin);
   updatePrimaryNavigation();
 }
 function download(value,name){const raw=typeof value==='string';const url=URL.createObjectURL(new Blob([raw?value:JSON.stringify(value,null,2)],{type:raw?'text/plain':'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
@@ -1054,6 +1068,7 @@ document.addEventListener('click',event=>{
   const tab=event.target.closest('[data-panel-tab]');if(tab){renderPanelSection(panels.get(tab.dataset.id),tab.dataset.panelTab);return;}
   const el=event.target.closest('[data-action]');if(!el||!scene)return;const {action,id,key}=el.dataset;
   if(action==='workbench-focus'){if(nativeWorkbenchActive())setWorkbenchForeground(document.body.dataset.workbenchForeground==='map'?'learn':'map');}
+  else if(action==='workbench-later')leaveWorkbenchForLater();
   else if(action==='nav-explore')navigateTaskSurface('explore');
    else if(action==='nav-learn')navigateTaskSurface('learn');
    else if(action==='nav-trail')navigateTaskSurface('trail');

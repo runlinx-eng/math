@@ -1364,3 +1364,13 @@ body[data-world="network"].has-journey[data-workbench-foreground] #journey-surfa
 @media(max-width:800px){
   body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface{height:50dvh}
 }
+
+/* B3: explicit pause beside the original return/close action. */
+body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface>header{
+  gap:5px;flex-wrap:wrap;
+}
+body[data-world="network"].has-journey #workbench-later{
+  white-space:nowrap;padding:6px 9px;min-height:36px;font-weight:600;
+}
+@media(pointer:coarse){body[data-world="network"].has-journey #workbench-later{min-height:44px}}
+@media(max-width:500px){body[data-world="network"].has-journey #workbench-later{font-size:11px;padding:5px 7px}}
