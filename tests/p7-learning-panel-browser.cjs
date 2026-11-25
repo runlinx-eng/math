@@ -383,6 +383,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    // without adding another navigation or an invented mastery result.
    await embedded.locator('#actions [data-do="next"]').click();
    requireState((await embedded.locator('#instruction').innerText()).includes('三个直筒杯'),'the next configured question is the three-cup model');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'the previous grid proof does not carry over to the unsubmitted cup task');
    for(const [i,level] of [50,75,25].entries()){
      await embedded.locator('#work [data-height="'+i+'"]').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},level);
    }
@@ -393,19 +394,31 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(await embedded.locator('#scene').getAttribute('data-stage')==='revise','wrong cup decimal does not receive checked thinking credit');
    requireState(await embedded.locator('#math-explanation').isHidden(),'unmatched cup names cannot display a false mathematical equivalence');
    requireState(await embedded.locator('#math-explanation [data-thinking-node-id]').count()===0,'no MP2 source link before valid check');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'incorrect cup work cannot receive the formally admitted P052C observation');
    await embedded.locator('#work [data-name="2"]').fill('0.25');
    requireState(await embedded.locator('#scene').getAttribute('data-stage')==='recheck','edited cup name requires another explicit check');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'corrected but unsubmitted cup work cannot receive P052C feedback');
    await embedded.locator('#actions [data-do="check"]').click();
    requireState(await embedded.locator('#scene').getAttribute('data-stage')==='passed','correct fractions, cup levels and decimals pass the existing grader');
    const mathExplanation=await embedded.locator('#math-explanation').innerText();
    requireState(mathExplanation.includes('1/2 = 50/100 = 0.5')&&mathExplanation.includes('3/4 = 75/100 = 0.75')&&mathExplanation.includes('1/4 = 25/100 = 0.25'),'all three checked cup relationships are explained from the submitted work');
    requireState(mathExplanation.includes('并不是三杯水都一样多'),'math feedback does not conflate equal representation and equal water volume');
    requireState(await embedded.locator('#math-explanation [data-thinking-node-id="mt_EBYGhd8X3x"]').count()===1,'one source-grounded MP2 thinking method appears in the existing feedback region');
-   requireState(await embedded.locator('#thinking-feedback').count()===0,'math and thinking feedback are not duplicated in the interactive workspace');
+   // The original zero-aside expectation predates the formal #342 P052C
+   // admission for quarters:1. Its source-locked observation has method:null;
+   // it is not a second MP2 attribution or another mathematical solution.
+   requireState(await embedded.locator('#thinking-feedback').count()===1&&await embedded.locator('#work #thinking-feedback').count()===1,'one formally admitted cup-work observation is present in the existing work area');
+   const cupObservation=await embedded.locator('#thinking-feedback').innerText();
+   requireState(cupObservation.includes('这次作品中的思考线索')&&cupObservation.includes('杯中水位与二分之一、四分之三、四分之一的小数名字怎样对应')&&cupObservation.includes('最近一次 Check 一致'),'P052C describes the source-specific current checked work');
+   requireState(cupObservation.includes('不评定自由解释、独立策略、理解或长期掌握'),'the additional evidence note makes no independent learning or mastery claim');
+   requireState(await embedded.locator('#thinking-feedback [data-thinking-node-id]').count()===0&&await embedded.locator('[data-thinking-node-id="mt_EBYGhd8X3x"]').count()===1,'P052C does not duplicate the original single MP2 attribution');
+   requireState(!cupObservation.includes('1/2 = 50/100 = 0.5')&&!cupObservation.includes('3/4 = 75/100 = 0.75')&&!cupObservation.includes('1/4 = 25/100 = 0.25'),'the original checked mathematical equations remain in the mathematical explanation, not a duplicate solution in the observation');
    requireState((await embedded.locator('#next-guidance').innerText()).includes('任选一杯'),'passed state prompts an explanation before reflection');
    requireState((await embedded.locator('#actions [data-do="next"]').innerText()).includes('整理这次发现'),'the same primary action advances to reflection');
    const checkedCupRecord=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters);
    requireState(checkedCupRecord.cases[1].attempts.length===2,'wrong and correct cup submissions remain in the original history');
+   const [wrongCups,correctCups]=checkedCupRecord.cases[1].attempts.map(attempt=>attempt.value);
+   requireState(JSON.stringify(wrongCups.heights)===JSON.stringify([50,75,25])&&JSON.stringify(correctCups.heights)===JSON.stringify([50,75,25])&&JSON.stringify(wrongCups.names)===JSON.stringify(['0.5','0.75','0.2'])&&JSON.stringify(correctCups.names)===JSON.stringify(['0.5','0.75','0.25']),'both complete cup snapshots record the exact original wrong and corrected names and heights');
    await shot('28c-three-cups-math-and-thinking-explanation',true);
    await embedded.locator('#actions [data-do="next"]').click();
    requireState(await embedded.locator('#note').isVisible(),'the existing reflection screen remains available');
