@@ -13,6 +13,8 @@ on:
       - 'dist/learning/workbench-presentation.js'
       - 'scripts/verify_learning_workbench_b.cjs'
       - 'tests/b-workbench-presentation.test.mjs'
+      - 'tests/learning-workspace-browser.cjs'
+      - 'tests/p7-d5-entry-browser.cjs'
       - '.github/workflows/b-learning-workbench-preview.yml'
 permissions:
   contents: read
@@ -47,9 +49,16 @@ jobs:
             sleep 1
           done
           node scripts/verify_learning_workbench_b.cjs
+          # Reuse the two existing legacy viewport scenes unchanged. These
+          # are compatibility regressions, not new nonstandard viewport tests.
+          node tests/p7-d5-entry-browser.cjs
+          node tests/learning-workspace-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: learning-workbench-b-${{ github.event.pull_request.head.sha }}
-          path: verification/learning-workbench-b
+          path: |
+            verification/learning-workbench-b
+            verification/p7-d5
+            verification/learning-workspace
           if-no-files-found: warn
