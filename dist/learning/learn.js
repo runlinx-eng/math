@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261125-learning-workbench-b-preview1');
+registerClientRelease('math-explorer-20261125-learning-workbench-b-preview2');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -33,7 +33,8 @@ import {thinkingFeedback,thinkingGuide} from './thinking-feedback.js';
 import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
-import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus,WORKBENCH_BEATS,workbenchBeat} from './workspace-flow.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
+import {WORKBENCH_BEATS,workbenchBeat} from './workbench-presentation.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
 const num=(key,label,value,attrs='')=>`<label class="field">${label}<input type="number" min="0" max="999" step="1" data-field="${key}" aria-label="${label}" value="${value??''}" ${attrs}></label>`;

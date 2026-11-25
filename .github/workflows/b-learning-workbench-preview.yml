@@ -10,6 +10,7 @@ on:
       - 'dist/learning/learn.js'
       - 'dist/learning/learn.css'
       - 'dist/learning/workspace-flow.js'
+      - 'dist/learning/workbench-presentation.js'
       - 'scripts/verify_learning_workbench_b.cjs'
       - 'tests/b-workbench-presentation.test.mjs'
       - '.github/workflows/b-learning-workbench-preview.yml'

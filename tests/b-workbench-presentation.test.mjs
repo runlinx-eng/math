@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {WORKBENCH_BEATS,workbenchBeat,learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
+import {learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
+import {WORKBENCH_BEATS,workbenchBeat} from '../dist/learning/workbench-presentation.js';
 const source=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('B: four visual beats map existing stages without making a new gate',()=>{
  assert.deepEqual(WORKBENCH_BEATS.map(x=>x.id),['read','try','check','record']);
@@ -19,4 +20,9 @@ test('B: one original workpiece, action bar, iframe and focus toggle',()=>{
  assert.match(focus,/dataset\.workbenchForeground/);
  assert.doesNotMatch(focus,/replaceEmbeddedFrame\(|\.src\s*=|writeStored\(|scene\.select\(|setHash\(|setTaskSurfaceUrl\(|scheduleSave\(/);
  assert.match(space,/e\.data\.sessionId===activeSessionId\)setWorkbenchForeground\('learn'\)/);
+});
+
+test('B: display module is loaded by the learning entry and cached for offline use',()=>{
+ assert.match(source('dist/learning/learn.js'),/from '\.\/workbench-presentation\.js'/);
+ assert.ok(source('dist/sw.js').includes('./learning/workbench-presentation.js'));
 });

@@ -39,15 +39,31 @@ const aKey='node:mt_Ep7TDFuYUa';
   await foreground('map');
   await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key,bKey);
   await same();
-  verify(await read()===before,'map exploration does not alter learner record');
+  // A real map visit may append the original visited/openedPacks entries.
+  // The remaining State-v2, including the live lesson, must stay identical.
+  assert.ok(bKey.startsWith('node:'));
+  const bId=bKey.slice(5),packId=await page.evaluate(async id=>{
+   const response=await fetch('./data/atlas.json');if(!response.ok)throw new Error('atlas unavailable');
+   const atlas=await response.json();return atlas.packs.find(p=>p.nodeIds.includes(id))?.id;
+  },bId);
+  assert.ok(packId,'selected node belongs to a real source pack');
+  const afterMap=await read(),actual=JSON.parse(afterMap),expected=JSON.parse(before);
+  assert.ok(actual.visited[bId],'original map visit persisted');
+  if(!Object.hasOwn(expected.visited,bId)){
+   expected.visited[bId]=actual.visited[bId];
+   assert.ok(actual.openedPacks[packId],'original map pack visit persisted');
+   expected.openedPacks[packId]??=actual.openedPacks[packId];
+  }
+  assert.deepEqual(actual,expected,'only original selected-node and pack visit additions allowed');
+  verify(true,'real map visit preserves all lesson and unrelated state');
   assert.deepEqual(await frame.evaluate(()=>window.mathLesson.snapshot()),snapshot);
   await shot('02-map-foreground');
   await frame.locator('#instruction').click();
-  await foreground('learn');await same();verify(await read()===before,'focus return without new learner events');
+  await foreground('learn');await same();verify(await read()===afterMap,'focus return without new learner events');
   verify(await frame.locator('#scene').getAttribute('data-stage')==='recheck','unsubmitted correction remains live');
   const toggle=page.locator('#workbench-focus-toggle');await toggle.press('Enter');await foreground('map');
   await toggle.press('Enter');await foreground('learn');await same();
-  verify(await read()===before,'keyboard foreground toggle is presentation only');
+  verify(await read()===afterMap,'keyboard foreground toggle is presentation only');
   await frame.locator('#actions [data-do="check"]').click();
   verify(await frame.locator('#scene').getAttribute('data-stage')==='passed','original grader accepts the corrected work');
   verify(JSON.parse(await read()).lessons.equivalent.cases[0].attempts.length===2,'original wrong and corrected submissions retained');
