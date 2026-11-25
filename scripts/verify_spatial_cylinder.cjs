@@ -81,7 +81,7 @@ const ready=async(page,version,count)=>{
  const browser=await chromium.launch({headless:true,...(process.env.MATH_BROWSER_EXECUTABLE?{executablePath:process.env.MATH_BROWSER_EXECUTABLE}:{}),args:['--use-gl=swiftshader','--enable-unsafe-swiftshader','--disable-crash-reporter']});
  try{
    // Same standard viewport for reference and product, following #239.
-   // One in-context resize checks the reported tall Mac issue; no additional context or full matrix.
+   // High-narrow visual checks are reserved for actual Mac acceptance under #239.
    if(process.env.MATH_V54_REFERENCE_HTML){
      const reference=path.resolve(process.env.MATH_V54_REFERENCE_HTML);
      const ctx=await newDesktopContext(browser,{reducedMotion:'reduce'});
@@ -96,6 +96,7 @@ const ready=async(page,version,count)=>{
    for(const {width,height} of [STANDARD_DESKTOP_VIEWPORT]){
      const ctx=await newDesktopContext(browser,{reducedMotion:'reduce'}),page=await ctx.newPage(),errors=[];
      page.on('pageerror',e=>errors.push(e.message));const row={width,height,errors};results.push(row);
+     assert.deepEqual(page.viewportSize(),STANDARD_DESKTOP_VIEWPORT);
      try{
        await page.goto(url(54));let first=await ready(page,54,587);
        const metadata=await page.evaluate(()=>window.mathSpace.cylinder());assert.equal(metadata.thinking.length,50);assert.equal(metadata.bridgeCount,5);assert.equal(metadata.sectors.length,5);assert.equal(metadata.thinkingCount,50);assert.deepEqual(metadata.domainCounts,{numbers:274,measure:88,data:65,space:76,patterns:34});
@@ -262,17 +263,8 @@ const ready=async(page,version,count)=>{
          await page.locator('[data-action="menu"]').click();
          await page.locator('[data-action="map-version"]').click();await ready(page,54,587);
          row.switch=true;row.ghosting=true;
-         // Same isolated desktop context: responsive screenshot at tall Mac proportions.
-         await page.setViewportSize({width:1000,height:1200});await page.locator('.tool-rail [data-action="front"]').click();
-         await page.waitForFunction(()=>!window.mathSpace.motion().tween&&!window.mathSpace.snapshot().selected);
-         const narrowGuide=await page.locator('#network-guide').boundingBox();assert.ok(narrowGuide.width<=220&&narrowGuide.x<40,'tall desktop must leave the upper atlas open');
-         assert.deepEqual(await assertOriginMarker(page),originPosition);
-         await page.screenshot({path:path.join(dir,'1000x1200-overview.png')});
-         const narrowLabel=page.locator('.space-label.cylinder-milestone:visible').first(),narrowKey=await narrowLabel.getAttribute('data-key');
-         await narrowLabel.hover();await assertPointFocus(page,narrowKey);await assertLabelContrast(page.locator('.space-label[data-key="'+narrowKey+'"]'));
-         await page.screenshot({path:path.join(dir,'1000x1200-hover.png')});
-         await page.locator('.space-label[data-key="'+narrowKey+'"]').click();await assertPointFocus(page,narrowKey);
-         await page.screenshot({path:path.join(dir,'1000x1200-focus.png')});row.tallPointLabels=true;
+         // Keep every automated interaction in the approved desktop content box.
+         assert.deepEqual(page.viewportSize(),STANDARD_DESKTOP_VIEWPORT);
        }
        assert.deepEqual(errors,[]);row.passed=true;
      }catch(e){row.failure=e.stack;await page.screenshot({path:path.join(dir,width+'x'+height+'-failure.png')}).catch(()=>{});throw e;}
