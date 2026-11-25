@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261125-cylinder-workbench-ab-preview4');
+registerClientRelease('math-explorer-20261125-cylinder-workbench-ab-preview5');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -69,15 +69,16 @@ const formalFeedback=(task,model,record,context)=>{
   ?(issue341FormalRouting?.feedback(task,model,record,context)??null):null;
 };
 function ensureIssue341FormalRouting(sessionId){
- if(issue341FormalRouting||issue341RoutingPromise||!hasIssue341FormalSession(sessionId))return;
+ if(issue341FormalRouting||!hasIssue341FormalSession(sessionId))return;
+ if(issue341RoutingPromise)return issue341RoutingPromise;
  issue341RoutingPromise=import('./issue341-formal-source-routing.js')
   .then(({createIssue341ManifestGatedRouting})=>{
    const routing=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
    if(routing.approvedPositions!==949||routing.approvedFamilies!==284)
     throw new Error('Issue341 manifest and frozen source mismatch');
    issue341FormalRouting=routing;
-   if(a?.view==='task'&&hasIssue341FormalSession(id)&&!blocked)render();
   }).catch(error=>{console.error('Issue341 formal feedback stays closed',error);});
+ return issue341RoutingPromise;
 }
 let lessonOpenSerial=0;
 let numericBackup=null,numericExportMessage='';
@@ -354,6 +355,10 @@ async function openLesson(next,{keepQuestion=false}={}){
     const stored=readStored(KEY);
     if(stored)await prepareStateForValidation(JSON.parse(stored));
     await prepareSessionRuntime(next,{view:true});
+    // Resolve the existing optional formal route before the first interactive
+    // render. Never replace live mathematical controls from a late import.
+    // The existing catch still fails closed on formal feedback only.
+    await ensureIssue341FormalRouting(next);
     // A session may switch to a 3D task through Next; load before any state write/render.
     if(sessionTasks(next).some(needsThreeView)||needsThreeView(PRACTICE[next])){
       ({CubeView,SolidView,SpaceLab,AreaSolidLab,FractionCubeView,PatternGrowthView,FrameView,PowerView}=await loadThreeViews());
@@ -371,7 +376,7 @@ async function openLesson(next,{keepQuestion=false}={}){
     if(cube){cube.destroy();cube=null;cubeKey='';}
     if(!keepQuestion)questionId=null;
     if(extraLab){extraLab.destroy();extraLab=null;extraKey='';}
-    id=next;ensureIssue341FormalRouting(next);feedback='';savedNoteFeedback='';numericBackup=null;numericExportMessage='';
+    id=next;feedback='';savedNoteFeedback='';numericBackup=null;numericExportMessage='';
     all=read();a=sessionRecord(all,id)||freshLesson(id);
     view=a.ui?.view||null;spread=a.ui?.spread||0;
     const savedUI=structuredClone(a.ui);

@@ -16,6 +16,47 @@ const aKey='node:mt_Ep7TDFuYUa';
  const read=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
  try{
   assert.deepEqual(page.viewportSize(),STANDARD_DESKTOP_VIEWPORT);
+  // A deliberately held real formal module request reproduces the late-render
+  // race without timing guesses, DOM edits, mocked proof or synthetic grading.
+  // Exercise both the original exact admitted source and the fail-closed path.
+  for(const unavailable of [false,true]){
+    const isolated=await newDesktopContext(browser,{serviceWorkers:'block',reducedMotion:'reduce'});
+    const probe=await isolated.newPage(),probeErrors=[];
+    probe.on('pageerror',error=>probeErrors.push(error.message));
+    let resumeImport;
+    const gate=new Promise(resolve=>{resumeImport=resolve;});
+    const moduleUrl='**/learning/issue341-formal-source-routing.js';
+    try{
+      await probe.route(moduleUrl,async route=>{
+        await gate;
+        if(unavailable)await route.abort('failed');else await route.continue();
+      });
+      const requested=probe.waitForRequest(moduleUrl,{timeout:60000});
+      await probe.goto(base+'/learn.html#substitute36',{waitUntil:'commit'});
+      await requested;
+      const choice=probe.locator('#extra-controls button[data-x="f36-case"][data-index="1"]');
+      assert.equal(await choice.count(),0);
+      assert.equal(await probe.evaluate(()=>localStorage.getItem('math-explorer-v2')),null);
+      resumeImport();
+      await probe.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='substitute36',{},{timeout:60000});
+      assert.equal(await probe.locator('#thinking-guide').count(),unavailable?0:1);
+      const readLesson=()=>probe.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.substitute36);
+      const original=await readLesson();
+      await choice.click();
+      const value=probe.locator('#work [data-xfield="value"]');
+      await value.fill('16');
+      const saved=await readLesson();
+      assert.equal(await choice.getAttribute('aria-pressed'),'true');
+      assert.equal(await value.inputValue(),'16');
+      assert.equal(saved.models[0].board.selected,1);
+      assert.equal(saved.models[0].value,'16');
+      assert.deepEqual(saved.cases,original.cases);
+      assert.equal(await probe.locator('#thinking-feedback').count(),0);
+      assert.deepEqual(probeErrors,[]);
+      verify(true,unavailable?'unavailable formal module leaves original lesson and unsubmitted work usable without fabricated evidence':'delayed formal route settles before live controls, which retain real unsubmitted operations');
+    }finally{resumeImport();await isolated.close();}
+  }
+
   await page.goto(base+'/index.html?surface=learn#space/node/mt_Ep7TDFuYUa');
   await page.waitForFunction(()=>window.mathSpace?.snapshot().journeyOpen&&document.querySelector('#journey-frame').contentWindow.mathLesson?.snapshot()?.id==='equivalent',{},{timeout:60000});
   const frame=page.frames().find(f=>f.url().includes('learn.html')&&f.url().endsWith('#equivalent'));
