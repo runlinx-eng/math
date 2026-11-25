@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261125-learning-workbench-b-preview2');
+registerClientRelease('math-explorer-20261125-learning-workbench-b-preview3');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -34,8 +34,9 @@ import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSessio
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
 import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat} from './workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell} from './workbench-presentation.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+if(parent!==window)mountWorkbenchShell(document);
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
 const num=(key,label,value,attrs='')=>`<label class="field">${label}<input type="number" min="0" max="999" step="1" data-field="${key}" aria-label="${label}" value="${value??''}" ${attrs}></label>`;
 const entry=(key,label,value)=>`<label class="field">${label}<input type="text" data-field="${key}" aria-label="${label}" autocomplete="off" maxlength="40" value="${esc(value)}"></label>`;
@@ -367,7 +368,7 @@ async function openLesson(next,{keepQuestion=false}={}){
     const routePanel=$('#route-collapsible');if(routePanel)routePanel.open=false;
     history.replaceState(null,'',location.pathname+(questionId?'?question='+encodeURIComponent(questionId):'')+'#'+id);
     $('#back').href='index.html#space/pack/'+sessionRoute(id).packIds[0];
-    render();window.scrollTo(0,0);
+    render();window.scrollTo(0,0);$('#workbench-stage')?.scrollTo(0,0);
   }catch(error){blocked=true;notice.hidden=false;notice.textContent='学习记录未通过完整验证，禁止覆盖：'+error.message;}
 }
 
@@ -380,8 +381,8 @@ $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');
   if(act==='p3-retry'){if(numericCompatibility(taskFor(id,a.index),a.models[a.index])){if(a.view!=='task'&&update(r=>r.view='task'))render();$('#numeric-compat-notice')?.scrollIntoView({block:'nearest'});return;}feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
   if(act==='p3-variant'){const index=Number(b.dataset.index);if(!Number.isInteger(index)||index<0||index>=sessionTasks(id).length)return;feedback='';spread=0;view=null;if(update(r=>{r.index=index;r.view='task';modelForLesson(r);}))render();return;}
   if(act==='relations'){notify('math-space:lesson-relations');return;}if(act==='lesson'){openLesson(b.dataset.id);return;}if(act==='back'){back();return;}if(act==='restart'){feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.index=Math.max(0,lessonSummary(r).cases.findIndex(x=>!x.complete));if(!numericCompatibility(taskFor(id,r.index),r.models[r.index]))r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
- if(act==='check'){let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();const target=result?.correct?$('#actions .primary'):$('#check-feedback');if(target&&!target.hidden)target.scrollIntoView({block:'nearest'});return;}
- if(act==='next'){if(!lessonSummary(a).cases[a.index].complete||currentSubmission(a).status!=='correct')return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);return;}
+ if(act==='check'){let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();const target=$('#workbench-stage')?$('#check-feedback'):result?.correct?$('#actions .primary'):$('#check-feedback');if(target&&!target.hidden)target.scrollIntoView({block:'nearest'});return;}
+ if(act==='next'){if(!lessonSummary(a).cases[a.index].complete||currentSubmission(a).status!=='correct')return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);$('#workbench-stage')?.scrollTo(0,0);return;}
  if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){const note=$('#note')?.value.trim();if(!note)return;if(update(r=>addLessonNote(r,note))){savedNoteFeedback=nextLearningLesson()?'已保存这次发现（文字解释待确认），可继续学习下一处。':nextLinkedPractice()?'已保存这次发现（文字解释待确认），可以继续关联探索。':'已保存这次发现（文字解释待确认），可以返回知识空间。';render();$('#note-save-status')?.scrollIntoView({block:'nearest'});}else showNoteSaveFailure();return;}
  if(act==='fill-next'){const next=voxels(task()).findIndex((_,i)=>!(model().filled||[]).includes(i));if(next>=0)placeCube(next);return;}
  if(act==='turn'){cube?.turn();update(()=>{});return;}if(act==='spread'){if(!spread&&a.view==='task')update(r=>supportLesson(r));spread=spread?0:1;update(()=>{});render();return;}

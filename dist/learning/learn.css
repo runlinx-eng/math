@@ -159,7 +159,7 @@ body.embedded-learning #lesson>header{justify-content:flex-end;gap:9px}
 
 /* P7-D1: the same learning shell surrounds each existing math widget.
    These are regions in one continuous workplace, not separate pages/modes. */
-#scene>.learning-region{margin-top:14px;min-width:0}
+#scene>.learning-region,#workbench-stage>.learning-region{margin-top:14px;min-width:0}
 .learning-region-title{font-size:12px;line-height:1.4;font-weight:700;color:#3a6b5c;margin:0 0 6px}
 #learning-problem{background:#f2f5ef;border-radius:10px;padding:12px 14px}
 #learning-problem #instruction,
@@ -593,3 +593,44 @@ body.p03-focus #scene .execution-command #actions{
 }
 #workbench-beats li[aria-current="step"]{background:#d9e9df;color:#244d3f;font-weight:700;box-shadow:inset 0 -2px #518471}
 @media(max-width:420px){#workbench-beats li{font-size:10px;padding:4px 1px}}
+
+/* B1 fixed embedded workbench: separate flex rows keep the whole manipulative
+   scrollable above the original action bar. Tiny frames use document scroll. */
+#workbench-stage{display:contents}
+@media(min-height:440px) and (min-width:340px){
+ html:has(body[data-workbench-shell="fixed"]),body[data-workbench-shell="fixed"]{height:100%;overflow:hidden}
+ body[data-workbench-shell="fixed"]{display:flex;flex-direction:column}
+ body[data-workbench-shell="fixed"] #storage-warning:not([hidden]){flex:0 1 auto;max-height:28vh;overflow:auto}
+ body[data-workbench-shell="fixed"] #lesson{
+  display:flex;flex-direction:column;flex:1 1 0;min-height:0;min-width:0;
+  width:100%;margin:0 auto;padding-top:4px;padding-bottom:6px;overflow:hidden;
+ }
+ body[data-workbench-shell="fixed"] #lesson>header{
+  position:static;flex:none;flex-wrap:wrap;justify-content:space-between;
+  gap:5px 8px;padding:4px 0 6px;backdrop-filter:none;
+ }
+ body[data-workbench-shell="fixed"] #lesson>header #route-title{
+  display:block;flex:1 1 90px;min-width:0;overflow-wrap:anywhere;color:#49695a;
+ }
+ body[data-workbench-shell="fixed"] #lesson>header button{font-size:12px;min-height:34px;padding:6px 9px}
+ body[data-workbench-shell="fixed"] #status{white-space:normal;max-width:100%;padding:3px 7px}
+ body[data-workbench-shell="fixed"] #scene{
+  display:flex;flex-direction:column;flex:1 1 0;min-height:0;min-width:0;gap:5px;
+ }
+ body[data-workbench-shell="fixed"] #scene .stage-top{
+  position:static;flex:none;top:auto;backdrop-filter:none;z-index:auto;
+ }
+ body[data-workbench-shell="fixed"] #workbench-stage{
+  display:block;flex:1 1 0;min-height:0;min-width:0;
+  overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;
+  padding:0 7px 12px;scroll-padding:8px 0;
+ }
+ body[data-workbench-shell="fixed"] #workbench-stage:focus-visible{outline:2px solid #458e80;outline-offset:-2px}
+ body[data-workbench-shell="fixed"] #scene #learning-interaction{scroll-margin-bottom:0}
+ body[data-workbench-shell="fixed"] #scene .execution-command{
+  position:static;flex:none;z-index:auto;bottom:auto;width:100%;max-width:none;
+  margin:0;padding:6px 9px;max-height:32vh;overflow:auto;backdrop-filter:none;
+ }
+ body[data-workbench-shell="fixed"] #scene .execution-command #actions{width:100%;min-width:0}
+ body[data-workbench-shell="fixed"] #record{margin-bottom:8px}
+}

@@ -26,3 +26,15 @@ test('B: display module is loaded by the learning entry and cached for offline u
  assert.match(source('dist/learning/learn.js'),/from '\.\/workbench-presentation\.js'/);
  assert.ok(source('dist/sw.js').includes('./learning/workbench-presentation.js'));
 });
+
+test('B: fixed shell moves original containers and keeps standalone layout',()=>{
+ const runtime=source('dist/learning/learn.js'),module=source('dist/learning/workbench-presentation.js'),style=source('dist/learning/learn.css');
+ assert.match(runtime,/if\(parent!==window\)mountWorkbenchShell\(document\)/);
+ assert.match(module,/stage\.append\(\.\.\.stageItems\)/);
+ assert.match(module,/scene\.insertBefore\(stage,command\)/);
+ assert.match(module,/doc\.querySelector\('#workbench-stage'\)/);
+ assert.doesNotMatch(module,/cloneNode|innerHTML|writeStored|localStorage/);
+ assert.match(style,/#workbench-stage\{[\s\S]*?overflow:auto/);
+ assert.match(style,/#scene \.execution-command\{[\s\S]*?position:static;flex:none/);
+ assert.match(runtime,/#workbench-stage'\)\?\.scrollTo\(0,0\)/);
+});
