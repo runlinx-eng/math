@@ -26,6 +26,18 @@ const aKey='node:mt_Ep7TDFuYUa';
   await foreground('learn');verify(await beat()==='try','fresh lesson can manipulate without a new reading gate');
   verify(await frame.locator('#workbench-beats li').count()===4,'four visual beats');
   await frame.waitForFunction(()=>document.body.dataset.workbenchShell==='fixed'&&matchMedia('(min-height:440px) and (min-width:340px)').matches&&getComputedStyle(document.querySelector('#workbench-stage')).display==='block');
+  const location=()=>frame.evaluate(()=>{
+    const grade=document.querySelector('#workbench-curriculum'),status=document.querySelector('#status');
+    return {session:grade.dataset.sessionId,node:grade.dataset.topicId,scope:grade.dataset.scope,
+      state:grade.dataset.state,stages:grade.dataset.stageIds,evidence:grade.dataset.evidence,label:grade.textContent,
+      ordinal:status.dataset.taskOrdinal,total:status.dataset.taskTotal,view:status.dataset.view,status:status.textContent};
+  });
+  const beforeLocation=await read();
+  await frame.waitForFunction(()=>document.querySelector('#workbench-curriculum')?.dataset.state==='mapped');
+  const initialLocation=await location();result.location={initial:initialLocation};
+  assert.deepEqual(initialLocation,{session:'equivalent',node:'mt_Ep7TDFuYUa',scope:'native',state:'mapped',stages:'stage-2 stage-3',evidence:'conceptual',label:'知识学段：3—4年级（延伸） / 5—6年级（主要）',ordinal:'1',total:'3',view:'task',status:'任务 1 / 3'});
+  verify(true,'active knowledge shows both exact source curriculum stages and the actual first of three tasks');
+  verify(await read()===beforeLocation,'reading course location does not create a learner event');
   await frame.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const shell=()=>frame.evaluate(()=>{
     const box=s=>{const r=document.querySelector(s).getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right};};
@@ -103,6 +115,8 @@ const aKey='node:mt_Ep7TDFuYUa';
   assert.deepEqual(actual,expected,'only original selected-node and pack visit additions allowed');
   verify(true,'real map visit preserves all lesson and unrelated state');
   assert.deepEqual(await frame.evaluate(()=>window.mathLesson.snapshot()),snapshot);
+  const mapLocation=await location();assert.deepEqual(mapLocation,initialLocation);result.location.mapForeground=mapLocation;
+  verify(true,'another real map node cannot replace the active course curriculum or task position');
   await shot('02-map-foreground');
   await frame.locator('#instruction').click();
   await foreground('learn');await same();verify(await read()===afterMap,'focus return without new learner events');
@@ -120,6 +134,9 @@ const aKey='node:mt_Ep7TDFuYUa';
   await stageInert(false);
   verify(!await frame.locator('#learning-support').evaluate(el=>el.open),'original Next closes the optional drawer and resumes mathematical work');
   verify((await frame.evaluate(()=>window.mathLesson.snapshot())).index===oldIndex+1,'original Next advances exactly one task after a correct check');
+  const nextLocation=await location();result.location.next=nextLocation;
+  assert.deepEqual(nextLocation,{...initialLocation,ordinal:'2',status:'任务 2 / 3'});
+  verify(true,'actual Next advances the displayed task position without relabeling the active knowledge');
   const advanced=await shell();result.geometry.advanced=advanced;
   verify(advanced.scrollTop===0&&advanced.outerScroll===0,'new real task starts at the top of the independent stage');
   await shot('04-next-original-task');

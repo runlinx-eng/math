@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer} from '../dist/learning/workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer,describeWorkbenchCurriculum,syncWorkbenchLocation} from '../dist/learning/workbench-presentation.js';
 const source=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('B: four visual beats map existing stages without making a new gate',()=>{
  assert.deepEqual(WORKBENCH_BEATS.map(x=>x.id),['read','try','check','record']);
@@ -71,4 +71,62 @@ test('B: the auxiliary drawer reuses real optional controls and closes on actual
  details[0].open=true;stage.inert=true;stage.scrollTop=42;
  syncWorkbenchScroll(doc,{sessionId:'equivalent',index:1,view:'task',stage:'explore'});
  assert.equal(details[0].open,false);assert.equal(stage.inert,false);assert.equal(stage.scrollTop,0);
+});
+
+test('B: stage location uses only the exact curriculum mapping, with explicit exceptions',()=>{
+ const data=JSON.parse(source('dist/data/grade-panorama-lite.json')),before=JSON.stringify(data);
+ const equivalent=describeWorkbenchCurriculum(data,'mt_Ep7TDFuYUa');
+ assert.deepEqual(equivalent.stageIds,['stage-2','stage-3']);
+ assert.equal(equivalent.text,'知识学段：3—4年级（延伸） / 5—6年级（主要）');
+ assert.equal(equivalent.evidence,'conceptual');
+ assert.equal(describeWorkbenchCurriculum(data,'mt_ndGqFPWyen').text,'知识学段：3—4年级（主要）');
+ assert.equal(describeWorkbenchCurriculum(data,'mt_DRlbMok2lT',{bridge:true}).text,'关联任务目标知识学段：3—4年级（延伸） / 5—6年级（主要）');
+ assert.equal(describeWorkbenchCurriculum(data,'mt_9QzSnn8m80').text,'知识学段：5—6年级（延伸） / 初中后续（主要）');
+ assert.equal(describeWorkbenchCurriculum(data,'mt_h02-C8PRrj').state,'unassigned');
+ assert.equal(describeWorkbenchCurriculum(data,'mt_b4lbTOJYwI').state,'unresolved');
+ assert.equal(describeWorkbenchCurriculum(data,'mt_lMz9nAs7VO').state,'thinking');
+ assert.equal(describeWorkbenchCurriculum(data,'nonexistent').state,'missing');
+ assert.equal(describeWorkbenchCurriculum(null,'mt_Ep7TDFuYUa').state,'unavailable');
+ for(const record of data.nodeMappings){
+  const label=describeWorkbenchCurriculum(data,record.nodeId);
+  if(record.nodeId===data.specialRisks.unresolvedNode.id){
+   assert.deepEqual(label.stageIds,[]);continue;
+  }
+  assert.deepEqual(label.stageIds,data.stages.filter(stage=>record.curriculum.primaryStages.includes(stage.id)).map(stage=>stage.id));
+ }
+ assert.equal(JSON.stringify(data),before,'source data must stay byte-for-byte unchanged');
+ const sw=source('dist/sw.js');
+ assert.ok(sw.includes('./grade-node-filter.js')&&sw.includes('./data/grade-panorama-lite.json'));
+});
+
+test('B: location follows the actual session and task, rejecting stale and unavailable metadata without gates',async()=>{
+ const data=JSON.parse(source('dist/data/grade-panorama-lite.json'));
+ const host={hidden:true,dataset:{},textContent:''},status={dataset:{},textContent:'任务 1 / 3'};
+ const doc={getElementById:id=>id==='workbench-curriculum'?host:id==='status'?status:null};
+ const native={sessionId:'equivalent',topicId:'mt_Ep7TDFuYUa',index:0,view:'task',total:3};
+ let finishOld;
+ const old=syncWorkbenchLocation(doc,native,()=>new Promise(resolve=>{finishOld=resolve;}));
+ assert.equal(host.dataset.state,'loading');
+ assert.equal(status.dataset.taskOrdinal,'1');
+ await Promise.resolve();
+ const bridge={sessionId:'link-decimal-quarters',topicId:'mt_DRlbMok2lT',bridge:true,index:0,view:'task',total:2};
+ await syncWorkbenchLocation(doc,bridge,()=>Promise.resolve(data));
+ assert.equal(host.dataset.scope,'bridge-target');
+ assert.equal(host.dataset.topicId,'mt_DRlbMok2lT');
+ assert.equal(status.textContent,'任务 1 / 2');
+ finishOld(data);await old;
+ assert.equal(host.dataset.sessionId,bridge.sessionId,'late data from prior session cannot relabel current work');
+ const existing=syncWorkbenchLocation(doc,{...bridge,index:1},()=>{throw Error('unneeded metadata reload');});
+ await existing;assert.equal(status.textContent,'任务 2 / 2');
+ status.textContent='操作检查已通过';
+ await syncWorkbenchLocation(doc,{...bridge,index:1,view:'summary'},()=>{throw Error('unneeded metadata reload');});
+ assert.equal(status.dataset.taskOrdinal,undefined);assert.equal(status.dataset.taskTotal,'2');
+ assert.equal(status.textContent,'操作检查已通过','reflection is not an invented next task');
+ await syncWorkbenchLocation(doc,native,()=>Promise.reject(Error('source unavailable')));
+ assert.equal(host.dataset.state,'unavailable');assert.equal(host.textContent,'知识学段：暂不可读');
+ assert.equal(status.textContent,'任务 1 / 3');
+ status.textContent='三项已完成';
+ await syncWorkbenchLocation(doc,{...native,index:2},()=>{throw Error('unneeded metadata reload');});
+ assert.equal(status.textContent,'任务 3 / 3 · 三项已完成');
+ assert.equal(syncWorkbenchLocation({getElementById:()=>null},native,()=>{throw Error('standalone should not load');}),undefined);
 });

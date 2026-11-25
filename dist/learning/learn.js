@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261125-learning-workbench-b-preview5');
+registerClientRelease('math-explorer-20261125-learning-workbench-b-preview6');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -34,7 +34,7 @@ import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSessio
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
 import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll} from './workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll,syncWorkbenchLocation} from './workbench-presentation.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // The fixed shell belongs to the native network learning frame only.
 if(parent!==window){
@@ -273,6 +273,7 @@ function syncLearningRegions(){
  $('#learning-check').hidden=stage==='reflect'||(!detail&&$('#check-feedback').hidden&&stage!=='recheck');
  box.innerHTML=detail?'<h3>'+esc(detail.title)+'</h3><p class="math-equation">'+esc(detail.equation)+'</p><p>'+esc(detail.explanation)+'</p><p class="math-question">'+esc(detail.question)+'</p>'+(detail.method?'<p class="math-method" data-thinking-node-id="'+esc(detail.method.nodeId)+'"><strong>相关数学思维 · '+esc(detail.method.label)+'</strong><small>对应来源 '+esc(detail.method.code)+'；只描述本次作品，不能据此判断你已掌握。</small></p>':'')+'<small>'+(detail.kind==='correct'?'这次检查验证了作品中的数学对应关系，你的自由解释仍待确认。':'请按提示修改并重新检查；旧结果不代表修改后的作品。')+'</small>':'';
  syncReflectionPrimary();
+ syncWorkbenchLocation(document,{sessionId:id,topicId:sessionMeta(id).topicId,bridge:!!BRIDGES[id],index:a.index,view:a.view,total:sessionTasks(id).length});
  syncWorkbenchScroll(document,{sessionId:id,index:a.index,view:a.view,stage});
 }
 // Preserve the same static region order for every mathematical activity.

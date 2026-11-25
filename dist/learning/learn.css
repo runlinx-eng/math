@@ -670,3 +670,11 @@ body.p03-focus #scene .execution-command #actions{
  body[data-workbench-shell="fixed"] #workbench-drawer #route{grid-template-columns:repeat(auto-fit,minmax(125px,1fr));margin:8px 0}
  body[data-workbench-shell="fixed"] #workbench-drawer #route-collapsible>summary{display:list-item}
 }
+
+/* B1: quiet source location beneath the active mathematical title.
+   Status still carries the original task position; no extra step controls. */
+#scene .stage-top #workbench-curriculum{
+  font-size:11px;line-height:1.4;color:#506b60;margin:3px 0 0;
+  overflow-wrap:anywhere;
+}
+#scene .stage-top #workbench-curriculum[hidden]{display:none}

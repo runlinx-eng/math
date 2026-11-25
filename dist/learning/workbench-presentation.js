@@ -28,6 +28,7 @@ export function mountWorkbenchShell(doc){
   stage.append(...stageItems);
   doc.body.dataset.workbenchShell='fixed';
   mountWorkbenchDrawer(doc,stage,command);
+  mountWorkbenchLocation(doc);
   return true;
 }
 
@@ -106,4 +107,76 @@ export function closeWorkbenchDrawer(doc){
   if(!dock)return;
   for(const el of dock.querySelectorAll(':scope > details[open]'))el.open=false;
   const stage=doc.getElementById('workbench-stage');if(stage)stage.inert=false;
+}
+
+ 
+// B1: location is read-only display of the active session, never the selected
+// map node or its grade filter. The existing validated curriculum loader is
+// reused lazily; unavailable metadata must not delay or prevent learning.
+const LOCATION_ROLES=Object.freeze({main:'主要',extension:'延伸',transition:'过渡'});
+const locationPrefix=bridge=>bridge?'关联任务目标知识学段':'知识学段';
+function mountWorkbenchLocation(doc){
+  const heading=doc.querySelector('#scene .lesson-heading');
+  if(!heading||doc.getElementById('workbench-curriculum'))return;
+  const host=doc.createElement('p');
+  host.id='workbench-curriculum';host.hidden=true;
+  host.setAttribute('aria-live','polite');
+  heading.append(host);
+}
+export function describeWorkbenchCurriculum(data,topicId,{bridge=false}={}){
+  const prefix=locationPrefix(bridge);
+  const result=(state,label,stageIds=[],evidence='',detail='')=>({state,text:prefix+'：'+label,stageIds,evidence,
+    title:(detail?detail+'。':'')+'仅为来源知识的课程映射参考，不规定学习顺序或评定掌握。'});
+  if(!data)return result('unavailable','暂不可读');
+  if(data.specialRisks?.thinkingNodes?.ids?.includes(topicId))return result('thinking','数学思维，不分小学学段');
+  const curriculum=data.nodeMappings?.find(row=>row.nodeId===topicId)?.curriculum;
+  if(data.specialRisks?.unresolvedNode?.id===topicId)
+    return result('unresolved','待核对',[],curriculum?.evidenceLevel||'',data.specialRisks.unresolvedNode.status);
+  if(!curriculum)return result('missing','暂无映射，不推断年级');
+  const stages=(data.stages||[]).filter(stage=>curriculum.primaryStages?.includes(stage.id));
+  const roleLabel=role=>LOCATION_ROLES[role]?'（'+LOCATION_ROLES[role]+'）':'';
+  const primary=stages.map(stage=>stage.label+roleLabel(curriculum.roles?.[stage.id]));
+  const parts=primary.length?primary:['未纳入小学学段'];
+  if(curriculum.beyondPrimary?.role)parts.push('初中后续'+roleLabel(curriculum.beyondPrimary.role));
+  return result(primary.length?'mapped':'unassigned',parts.join(' / '),stages.map(stage=>stage.id),curriculum.evidenceLevel||'',
+    curriculum.evidenceLevelLabel?'来源证据：'+curriculum.evidenceLevelLabel:'');
+}
+let workbenchCurriculumRequest;
+function loadWorkbenchCurriculum(){
+  return workbenchCurriculumRequest??=import('../grade-node-filter.js')
+    .then(({loadGradePanoramaData})=>loadGradePanoramaData()).catch(()=>null);
+}
+const workbenchLocationContexts=new WeakMap();
+export function syncWorkbenchLocation(doc,{sessionId,topicId,bridge=false,index,view,total},load=loadWorkbenchCurriculum){
+  const host=doc.getElementById('workbench-curriculum');
+  if(!host)return; // standalone and other embedded surfaces retain their UI.
+  const status=doc.getElementById('status');
+  if(status){
+    status.dataset.sessionId=sessionId;status.dataset.view=view;
+    if(Number.isSafeInteger(total)&&total>0)status.dataset.taskTotal=String(total);
+    else delete status.dataset.taskTotal;
+    if(view==='task'&&Number.isSafeInteger(index)&&index>=0&&index<total){
+      const ordinal=index+1;
+      status.dataset.taskOrdinal=String(ordinal);
+      const label='任务 '+ordinal+' / '+total;
+      // Preserve the original count-twenty completion wording if it is present.
+      const complete=status.textContent.includes('三项已完成');
+      status.textContent=label+(complete?' · 三项已完成':'');
+    }else delete status.dataset.taskOrdinal;
+  }
+  const previous=workbenchLocationContexts.get(host);
+  if(previous?.sessionId===sessionId&&previous.topicId===topicId&&previous.bridge===bridge)return previous.pending;
+  const current={sessionId,topicId,bridge};
+  workbenchLocationContexts.set(host,current);
+  host.hidden=false;host.dataset.sessionId=sessionId;host.dataset.topicId=topicId;
+  host.dataset.scope=bridge?'bridge-target':'native';host.dataset.state='loading';
+  host.dataset.stageIds='';host.dataset.evidence='';host.textContent=locationPrefix(bridge)+'：读取中';host.title='';
+  const paint=data=>{
+    if(workbenchLocationContexts.get(host)!==current)return; // older session response cannot relabel current work.
+    const label=describeWorkbenchCurriculum(data,topicId,{bridge});
+    host.textContent=label.text;host.title=label.title;host.dataset.state=label.state;
+    host.dataset.stageIds=label.stageIds.join(' ');host.dataset.evidence=label.evidence;
+  };
+  current.pending=Promise.resolve().then(load).then(paint,()=>paint(null));
+  return current.pending;
 }
