@@ -30,7 +30,9 @@ const aKey='node:mt_Ep7TDFuYUa';
   const shell=()=>frame.evaluate(()=>{
     const box=s=>{const r=document.querySelector(s).getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right};};
     const stage=document.querySelector('#workbench-stage');
-    return {header:box('#lesson > header'),title:box('#scene .stage-top'),stage:box('#workbench-stage'),footer:box('#scene .execution-command'),height:stage.clientHeight,scrollHeight:stage.scrollHeight,scrollTop:stage.scrollTop,outerScroll:window.scrollY,viewport:{width:innerWidth,height:innerHeight},overflowY:getComputedStyle(stage).overflowY,recordInside:stage.contains(document.querySelector('#record'))};
+    // Measured child geometry only; the desktop context is never resized.
+    const measuredChildViewport={width:innerWidth,height:innerHeight};
+    return {header:box('#lesson > header'),title:box('#scene .stage-top'),stage:box('#workbench-stage'),footer:box('#scene .execution-command'),height:stage.clientHeight,scrollHeight:stage.scrollHeight,scrollTop:stage.scrollTop,outerScroll:window.scrollY,viewport:measuredChildViewport,overflowY:getComputedStyle(stage).overflowY,recordInside:stage.contains(document.querySelector('#record'))};
   });
   const fixed=await shell();result.geometry={initial:fixed};
   verify(fixed.recordInside&&fixed.height>0&&fixed.overflowY==='auto'&&fixed.header.bottom<=fixed.title.top+1&&fixed.title.bottom<=fixed.stage.top+1&&fixed.stage.bottom<=fixed.footer.top+1&&fixed.footer.bottom<=fixed.viewport.height+1,'separate header, scroll stage and non-overlapping command bar');
