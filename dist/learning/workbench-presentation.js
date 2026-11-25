@@ -29,3 +29,20 @@ export function mountWorkbenchShell(doc){
   doc.body.dataset.workbenchShell='fixed';
   return true;
 }
+
+// The current work identity and validated stage drive only scroll presentation.
+// Keep the original shared Check/Next controller byte-for-byte unchanged.
+const workbenchScrollContext=new WeakMap();
+export function syncWorkbenchScroll(doc,{sessionId,index,view,stage}){
+  const surface=doc.getElementById('workbench-stage');
+  if(!surface)return;
+  const key=JSON.stringify([sessionId,index,view]),previous=workbenchScrollContext.get(surface);
+  workbenchScrollContext.set(surface,{key,stage});
+  if(!previous||previous.key!==key){surface.scrollTop=0;return;}
+  // Existing Check still scrolls to its original target. With an independent
+  // command row, a newly passed check also brings its real feedback into view.
+  if(stage==='passed'&&previous.stage!=='passed'&&surface.clientHeight>0){
+    const feedback=doc.getElementById('check-feedback');
+    if(feedback&&!feedback.hidden)feedback.scrollIntoView({block:'nearest'});
+  }
+}

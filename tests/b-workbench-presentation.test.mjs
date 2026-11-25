@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat} from '../dist/learning/workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll} from '../dist/learning/workbench-presentation.js';
 const source=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('B: four visual beats map existing stages without making a new gate',()=>{
  assert.deepEqual(WORKBENCH_BEATS.map(x=>x.id),['read','try','check','record']);
@@ -29,12 +29,28 @@ test('B: display module is loaded by the learning entry and cached for offline u
 
 test('B: fixed shell moves original containers and keeps standalone layout',()=>{
  const runtime=source('dist/learning/learn.js'),module=source('dist/learning/workbench-presentation.js'),style=source('dist/learning/learn.css');
- assert.match(runtime,/if\(parent!==window\)mountWorkbenchShell\(document\)/);
+ assert.match(runtime,/parent\.document\.body\?\.dataset\.world==='network'&&parent\.document\.querySelector\('#journey-frame'\)\?\.contentWindow===window\)mountWorkbenchShell\(document\)/);
  assert.match(module,/stage\.append\(\.\.\.stageItems\)/);
  assert.match(module,/scene\.insertBefore\(stage,command\)/);
  assert.match(module,/doc\.querySelector\('#workbench-stage'\)/);
  assert.doesNotMatch(module,/cloneNode|innerHTML|writeStored|localStorage/);
  assert.match(style,/#workbench-stage\{[\s\S]*?overflow:auto/);
  assert.match(style,/#scene \.execution-command\{[\s\S]*?position:static;flex:none/);
- assert.match(runtime,/#workbench-stage'\)\?\.scrollTo\(0,0\)/);
+ assert.match(runtime,/syncWorkbenchScroll\(document,\{sessionId:id,index:a\.index,view:a\.view,stage\}\)/);
+ assert.match(runtime,/document\.body\.dataset\.workbenchShell!=='fixed'&&typeof ResizeObserver/);
+ assert.match(source('dist/space.css'),/\[data-workbench-foreground\] #journey-surface\{\s*height:calc\(100dvh - 188px\)/);
+});
+
+test('B: scroll presentation follows actual task identity and first passed stage without changing controls',()=>{
+ const surface={scrollTop:92,clientHeight:300},calls=[];
+ const feedback={hidden:false,scrollIntoView:options=>calls.push(options)};
+ const doc={getElementById:id=>id==='workbench-stage'?surface:id==='check-feedback'?feedback:null};
+ const show=(index,stage,view='task',sessionId='equivalent')=>syncWorkbenchScroll(doc,{sessionId,index,view,stage});
+ show(0,'explore');assert.equal(surface.scrollTop,0);
+ surface.scrollTop=91;show(0,'revise');show(0,'recheck');assert.equal(surface.scrollTop,91);assert.equal(calls.length,0);
+ show(0,'passed');show(0,'passed');assert.deepEqual(calls,[{block:'nearest'}]);
+ show(1,'explore');assert.equal(surface.scrollTop,0);
+ surface.scrollTop=54;show(1,'reflect','summary');assert.equal(surface.scrollTop,0);
+ surface.scrollTop=61;show(1,'explore','task','quarters');assert.equal(surface.scrollTop,0);
+ assert.doesNotThrow(()=>syncWorkbenchScroll({getElementById:()=>null},{sessionId:'x',index:0,view:'task',stage:'explore'}));
 });

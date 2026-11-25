@@ -1352,3 +1352,15 @@ body[data-world="network"][data-workbench-foreground] :is(#space-canvas>canvas,#
 @media(max-width:500px){
   body[data-world="network"].has-journey #workbench-focus-toggle{font-size:11px;padding:5px 7px}
 }
+
+/* The native B workbench has an independently scrolling child. A stable
+   parent height must not be derived from that child's current viewport. */
+body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface{
+  height:calc(100dvh - 188px);
+}
+@media(max-width:1100px){
+  body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface{height:calc(100dvh - 186px)}
+}
+@media(max-width:800px){
+  body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface{height:50dvh}
+}

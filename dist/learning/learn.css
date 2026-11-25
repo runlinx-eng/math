@@ -603,7 +603,7 @@ body.p03-focus #scene .execution-command #actions{
  body[data-workbench-shell="fixed"] #storage-warning:not([hidden]){flex:0 1 auto;max-height:28vh;overflow:auto}
  body[data-workbench-shell="fixed"] #lesson{
   display:flex;flex-direction:column;flex:1 1 0;min-height:0;min-width:0;
-  width:100%;margin:0 auto;padding-top:4px;padding-bottom:6px;overflow:hidden;
+  width:100%;margin:0 auto;padding-top:4px;padding-bottom:6px;overflow:hidden;gap:4px;
  }
  body[data-workbench-shell="fixed"] #lesson>header{
   position:static;flex:none;flex-wrap:wrap;justify-content:space-between;
