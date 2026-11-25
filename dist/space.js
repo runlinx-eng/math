@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261125-cylinder-v54-preview11';
+const RELEASE='math-explorer-20261125-cylinder-workbench-ab-preview1';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -351,9 +351,49 @@ function ensureGradePanoramaData(){
   return gradePanoramaPromise;
 }
 
+// B1: focus is ephemeral presentation only. Never select a node, navigate,
+ // write learning state, replace the child document or move the camera here.
+function nativeWorkbenchActive(){return worldLayout==='network'&&journeyOpen&&!journeySuspended&&!!activeSessionId;}
+function setWorkbenchForeground(target){
+  const active=nativeWorkbenchActive(),toggle=$('#workbench-focus-toggle'),later=$('#workbench-later'),body=document.body;
+  if(later)later.hidden=!active||target===null;
+  if(!active||target===null){
+    delete body.dataset.workbenchForeground;
+    if(toggle)toggle.hidden=true;
+    return;
+  }
+  const next=target==='map'?'map':'learn';
+  if(body.dataset.workbenchForeground!==next)body.dataset.workbenchForeground=next;
+  if(toggle){
+    toggle.hidden=false;
+    const label=next==='learn'?'观察地图':'返回学习';
+    if(toggle.textContent!==label)toggle.textContent=label;
+  }
+}
+function syncWorkbenchForeground(){setWorkbenchForeground(document.body.dataset.workbenchForeground||'learn');}
+// B3: pause the existing document and persist only the existing view identity.
+// Native inputs already use the original synchronous validated learner writes.
+function leaveWorkbenchForLater(){
+  if(!nativeWorkbenchActive())return;
+  const warning=$('#journey-frame').contentDocument?.getElementById('storage-warning');
+  if(!warning||!warning.hidden){toast('请先查看学习现场的加载或保存提示。');return;}
+  navigateTaskSurface('explore');
+  saveView();
+  $('[data-action="nav-learn"]')?.focus({preventScroll:true});
+}
+function workbenchUserFocus(event){
+  if(!nativeWorkbenchActive()||!event.isTrusted||!(event.target instanceof Element))return;
+  const el=event.target;
+  if(el.closest('#workbench-focus-toggle'))return;
+  if(el.closest('#journey-surface'))setWorkbenchForeground('learn');
+  else if(el.closest('#space-canvas,#network-guide,#focus-card,.tool-rail'))setWorkbenchForeground('map');
+}
+document.addEventListener('pointerdown',workbenchUserFocus,true);
+document.addEventListener('focusin',workbenchUserFocus,true);
 function renderLearningMapContext(){
   const host=$('#learning-map-context'),toggle=$('#observation-task-toggle');
   if(!host||!scene)return;
+  syncWorkbenchForeground();
   // The docked relationship summary describes A, regardless of B exploration.
   const learningTopic=activeSessionId&&sessionMeta(activeSessionId)?.topicId;
   const current=space.byKey.get(learningTopic?'node:'+learningTopic:scene.selected);
@@ -806,6 +846,7 @@ function openJourney(step,{restore=false,preserveSurface=false}={}){
   for(const id of [...panels.keys()])closePanel(id);
   scene.setRelations('off');
   journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');
+  setWorkbenchForeground(null);
   $('#focus-card').hidden=true;$('#journey-surface header span').textContent='早期路线 A';const frame=$('#journey-frame');replaceEmbeddedFrame(frame,`journey.html#${step}`);
   // The task workspace is independent of the 3D camera: never fly a map behind a lesson.
   scene.tween=null;scene.viewTransition=null;
@@ -817,6 +858,7 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
  activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations(scene.relationshipMap?'source':'off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
  $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
+ setWorkbenchForeground('learn');
  $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';const frame=$('#journey-frame'),nextLessonUrl=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
  // Replacing an existing child-document entry avoids intercepting the parent's
  // Back/Forward mode-history after several direct 3D lesson changes.
@@ -829,7 +871,7 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
 }
 
 function suspendJourney(){if(!journeyOpen||journeySuspended)return;journeySuspended=true;document.body.classList.remove('has-journey');$('#journey-surface').hidden=true;scene.setRelations(activeSessionId&&scene.relationshipMap?'source':'off');renderFocus();renderLocation();updatePrimaryNavigation();scheduleSave();}
-function resumeJourney(){if(!journeyOpen||!journeySuspended)return;journeySuspended=false;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');scene.setRelations(activeSessionId&&scene.relationshipMap?'source':'off');renderFocus();renderLearningMapContext();updatePrimaryNavigation();scheduleSave();}
+function resumeJourney(){if(!journeyOpen||!journeySuspended)return;journeySuspended=false;$('#journey-surface').hidden=false;document.body.classList.add('has-journey');setWorkbenchForeground('learn');scene.setRelations(activeSessionId&&scene.relationshipMap?'source':'off');renderFocus();renderLearningMapContext();updatePrimaryNavigation();scheduleSave();}
 function closeJourney(returnToPack=false,{clearFrame=true}={}){journeySuspended=false;const route=activeLessonId?routeFor(activeLessonId):null,pack=route?.packIds[0]||'same-amount';activeLessonId=null;activeSessionId=null;activeQuestionId=null;journeyOpen=false;$('#journey-surface').hidden=true;$('#journey-surface').style.removeProperty('--learning-desired-height');// Replace the retired lesson document without adding a child-frame history
  // entry that would intercept the parent Back action after explicit close.
  if(clearFrame)replaceEmbeddedFrame($('#journey-frame'),'about:blank');document.body.classList.remove('has-journey');scene.setRelations('off');renderLearningMapContext();if(returnToPack){choose('pack:'+pack);activeRouteId=route?.id||null;scene.setLearningRoute(activeRouteId);renderFocus();}updatePrimaryNavigation();scheduleSave();}
@@ -1083,9 +1125,12 @@ function showUtility(which){
   $('#utility-title').textContent=which==='trail'?'学习足迹 · 记录与备份':'地图与学习的依据';
   renderTrailNodeContext();
   const frame=$('#utility-frame');frame.dataset.embeddedSrc=`v2.html?embedded=1#${which}`;
+  const reused=frame.contentWindow.location.href===new URL(frame.dataset.embeddedSrc,location.href).href;
   // Replacing the iframe's current entry prevents its load from consuming the
   // parent's Back/Forward task-history step.
   replaceEmbeddedFrame(frame,frame.dataset.embeddedSrc);
+  // Revisit the same trail document without stale rendered evidence or a reload.
+  if(which==='trail'&&reused)frame.contentWindow.postMessage({type:'math-space:refresh-trail'},location.origin);
   updatePrimaryNavigation();
 }
 function download(value,name){const raw=typeof value==='string';const url=URL.createObjectURL(new Blob([raw?value:JSON.stringify(value,null,2)],{type:raw?'text/plain':'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);}
@@ -1099,7 +1144,9 @@ function applyRoute({initial=false}={}){const bits=location.hash.slice(1).split(
 document.addEventListener('click',event=>{
   const tab=event.target.closest('[data-panel-tab]');if(tab){renderPanelSection(panels.get(tab.dataset.id),tab.dataset.panelTab);return;}
   const el=event.target.closest('[data-action]');if(!el||!scene)return;const {action,id,key}=el.dataset;
-  if(action==='nav-explore')navigateTaskSurface('explore');
+  if(action==='workbench-focus'){if(nativeWorkbenchActive())setWorkbenchForeground(document.body.dataset.workbenchForeground==='map'?'learn':'map');}
+  else if(action==='workbench-later')leaveWorkbenchForLater();
+  else if(action==='nav-explore')navigateTaskSurface('explore');
    else if(action==='nav-learn')navigateTaskSurface('learn');
    else if(action==='nav-trail')navigateTaskSurface('trail');
     else if(action==='trail-to-learn'){if(id&&sessionMeta(id))openLearningLesson(id);}
@@ -1238,6 +1285,10 @@ $('#import-file').addEventListener('change',async event=>{
 window.addEventListener('storage',e=>{if(e.key===KEY&&atlas){readLearning();if(guideVisible){const saved=learning.daily.guide;if(saved?.active&&guideSteps[saved.step]){if(scene.guideFocus?.step!==saved.step){guideWalkSeen=new Set();guideObserved=new Set();scene.setGuideFocus(guideSteps,saved.step,{animate:false});scene.setGuideTargets(guideTargets().map(t=>t.key),[...guideObserved]);setHash(guideSteps[saved.step].overview?null:'node:'+guideSteps[saved.step].anchor);}}else{guideVisible=false;scene.clearGuideFocus();}renderGuide();}refreshLearning();}});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)return;
   if(e.source===$('#journey-frame').contentWindow&&journeyOpen){
+    if(e.data.type==='math-space:lesson-foreground'){
+      if(nativeWorkbenchActive()&&e.data.sessionId===activeSessionId)setWorkbenchForeground('learn');
+      return;
+    }
     if(e.data.type==='math-space:lesson-height'){
       const height=Number(e.data.height);
       if(Number.isFinite(height)&&height>100&&height<60000){
@@ -1247,9 +1298,10 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
       return;
     }
     if(e.data.type==='math-space:lesson-change'&&LESSONS[e.data.id]){
-      const oldTopic=activeSessionId&&sessionMeta(activeSessionId)?.topicId;
+      const oldSession=activeSessionId,oldTopic=activeSessionId&&sessionMeta(activeSessionId)?.topicId;
       activeLessonId=e.data.id;activeSessionId=sessionMeta(e.data.sessionId)?e.data.sessionId:e.data.id;
       activeQuestionId=e.data.questionId||null;const n=LESSONS[e.data.id];
+      if(oldSession!==activeSessionId&&nativeWorkbenchActive())setWorkbenchForeground('learn');
       // A's ordinary progress/ready signal must not override map selection B.
       if(oldTopic!==n.topicId||scene.selected==='node:'+oldTopic){
         scene.select('node:'+n.topicId);setHash('node:'+n.topicId);

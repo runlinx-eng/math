@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261125-cylinder-v54-preview11');
+registerClientRelease('math-explorer-20261125-cylinder-workbench-ab-preview1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -34,7 +34,14 @@ import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSessio
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
 import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
+import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll,syncWorkbenchLocation} from './workbench-presentation.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// The fixed shell belongs to the native network learning frame only.
+if(parent!==window){
+ try{
+  if(parent.document.body?.dataset.world==='network'&&parent.document.querySelector('#journey-frame')?.contentWindow===window)mountWorkbenchShell(document);
+ }catch{/* A foreign embedding keeps the original standalone presentation. */}
+}
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
 const num=(key,label,value,attrs='')=>`<label class="field">${label}<input type="number" min="0" max="999" step="1" data-field="${key}" aria-label="${label}" value="${value??''}" ${attrs}></label>`;
 const entry=(key,label,value)=>`<label class="field">${label}<input type="text" data-field="${key}" aria-label="${label}" autocomplete="off" maxlength="40" value="${esc(value)}"></label>`;
@@ -116,9 +123,15 @@ function exportNumericBackup(){
  render();
 }
 function notify(type,extra={}){if(parent!==window)parent.postMessage({type,...extra},location.origin);}
+// Cross-frame user focus is a display-only signal, distinct from lesson-change.
+if(parent!==window){
+  const requestForeground=event=>{if(event.isTrusted&&id)notify('math-space:lesson-foreground',{sessionId:id});};
+  document.addEventListener('pointerdown',requestForeground,true);
+  document.addEventListener('focusin',requestForeground,true);
+}
 // Each activity has its own actual content height. The parent bounds it to the
 // available viewport instead of forcing every lesson into a fixed 820px iframe.
-if(parent!==window&&typeof ResizeObserver!=='undefined'){
+if(parent!==window&&document.body.dataset.workbenchShell!=='fixed'&&typeof ResizeObserver!=='undefined'){
   const lessonRoot=document.querySelector('#lesson');
   let lastHeight=-1;
   const reportHeight=()=>{
@@ -230,6 +243,11 @@ function syncLearningRegions(){
  if(support&&support.dataset.session!==id){support.open=false;support.dataset.session=id;}
  const phase=learningActionPlan({stage}).step;
  $('#steps').innerHTML=LEARNING_STEPS.map(step=>'<li data-study-step="'+step.id+'"'+(step.id===phase?' aria-current="step"':'')+'>'+esc(step.label)+'</li>').join('');
+ const beat=workbenchBeat(stage),beats=$('#workbench-beats');
+ if(beats.dataset.current!==beat){
+  beats.dataset.current=beat;
+  beats.innerHTML=WORKBENCH_BEATS.map(item=>'<li data-beat="'+item.id+'"'+(item.id===beat?' aria-current="step"':'')+'>'+esc(item.label)+'</li>').join('');
+ }
  $('#interaction-title').textContent=stage==='reflect'?'我的发现（可选）':'动手探索';
  $('#learning-problem .learning-region-title').textContent=stage==='reflect'?'先想一想':'要解决的问题';
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':stage==='explore'?'其他探索（可选）':'发现与继续';
@@ -255,6 +273,8 @@ function syncLearningRegions(){
  $('#learning-check').hidden=stage==='reflect'||(!detail&&$('#check-feedback').hidden&&stage!=='recheck');
  box.innerHTML=detail?'<h3>'+esc(detail.title)+'</h3><p class="math-equation">'+esc(detail.equation)+'</p><p>'+esc(detail.explanation)+'</p><p class="math-question">'+esc(detail.question)+'</p>'+(detail.method?'<p class="math-method" data-thinking-node-id="'+esc(detail.method.nodeId)+'"><strong>相关数学思维 · '+esc(detail.method.label)+'</strong><small>对应来源 '+esc(detail.method.code)+'；只描述本次作品，不能据此判断你已掌握。</small></p>':'')+'<small>'+(detail.kind==='correct'?'这次检查验证了作品中的数学对应关系，你的自由解释仍待确认。':'请按提示修改并重新检查；旧结果不代表修改后的作品。')+'</small>':'';
  syncReflectionPrimary();
+ syncWorkbenchLocation(document,{sessionId:id,topicId:sessionMeta(id).topicId,bridge:!!BRIDGES[id],index:a.index,view:a.view,total:sessionTasks(id).length});
+ syncWorkbenchScroll(document,{sessionId:id,index:a.index,view:a.view,stage});
 }
 // Preserve the same static region order for every mathematical activity.
 // Only the save-status message is moved next to the learner's own note.
@@ -287,7 +307,11 @@ function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();clea
  renderP3Flow($('#p3-learning-flow'),{atlas,id,record:a,embedded:parent!==window,primarySessionId:a.view==='summary'?(nextLearningLesson()||nextLinkedPractice()?.id):null});
  if(a.view==='summary'){
   const explanation=$('#system-explanation'),source=$('#source-goals-details');
-  if(explanation)$('#learning-support').before(explanation);
+  if(explanation){
+   // Reflection and real feedback stay in the original fourth learning region.
+   if($('#workbench-drawer'))$('#learning-next').append(explanation);
+   else $('#learning-support').before(explanation);
+  }
   if(source)$('#record-body').append(source);
  }
   syncLearningRegions();

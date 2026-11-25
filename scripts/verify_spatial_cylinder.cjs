@@ -6,7 +6,7 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261125-cylinder-v54-preview11';
+const release='math-explorer-20261125-cylinder-workbench-ab-preview1';
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
@@ -263,6 +263,132 @@ const ready=async(page,version,count)=>{
          await page.locator('[data-action="menu"]').click();
          await page.locator('[data-action="map-version"]').click();await ready(page,54,587);
          row.switch=true;row.ghosting=true;
+         // Joint A/B route. Keep all previous A checks and the independent B
+         // workbench suite. Use source-linked native work, not injected records.
+         const topic='mt_Ep7TDFuYUa',session='equivalent',activeKey='node:'+topic;
+         const learnerState=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+         const workbench=page.frameLocator('#journey-frame');
+         const waitLesson=async()=>{
+           await page.waitForFunction(id=>window.mathSpace?.snapshot().journeyOpen&&document.querySelector('#journey-frame').contentWindow.mathLesson?.snapshot()?.id===id,session,{timeout:60000});
+         };
+         const foreground=mode=>page.waitForFunction(mode=>document.body.dataset.workbenchForeground===mode,mode);
+         const lessonStage=stage=>workbench.locator('#scene').getAttribute('data-stage').then(value=>assert.equal(value,stage));
+         const waitStage=stage=>page.waitForFunction(stage=>document.querySelector('#journey-frame').contentDocument?.querySelector('#scene')?.dataset.stage===stage,stage);
+         const learner=async()=>JSON.parse(await learnerState()).lessons[session];
+         const check=workbench.locator('#actions [data-do="check"]'),next=workbench.locator('#actions [data-do="next"]');
+         const pause=page.locator('#workbench-later'),resume=page.locator('[data-action="nav-learn"]');
+         const paused=()=>page.waitForFunction(()=>window.mathSpace.snapshot().journeyOpen&&window.mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
+         const compareOpened=async(raw)=>{
+           const expected=JSON.parse(raw),actual=JSON.parse(await learnerState());
+           expected.lessons[session].updatedAt=actual.lessons[session].updatedAt;
+           expected.daily.continuation.at=actual.daily.continuation.at;
+           assert.deepEqual(actual,expected,'only original native reopen timestamps may change');
+         };
+         await page.goto(base+'/index.html?world=network&layout=54#space/node/'+topic);
+         await ready(page,54,587);
+         await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key&&window.mathSpace.snapshot().cylinderLocked,activeKey);
+         const learningEntry=page.locator('#focus-card [data-action="open"][data-id="'+topic+'"]:visible');
+         assert.equal(await learningEntry.count(),1);
+         const lockedBefore=await page.evaluate(()=>window.mathSpace.snapshot());
+         await learningEntry.click();await waitLesson();await foreground('learn');
+         assert.equal(await workbench.locator('body').getAttribute('data-workbench-shell'),'fixed');
+         assert.equal(await workbench.locator('#workbench-beats li').count(),4);
+         assert.equal(await workbench.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
+         assert.equal(await workbench.locator('#status').getAttribute('data-task-ordinal'),'1');
+         assert.equal(await workbench.locator('#actions').count(),1);
+         const opened=await page.evaluate(()=>window.mathSpace.snapshot());
+         assert.equal(opened.networkVersion,54);assert.deepEqual(opened.positions,lockedBefore.positions);
+         assert.deepEqual(camera(opened),camera(lockedBefore));
+         const token=await workbench.locator('body').evaluate(el=>el.ownerDocument.defaultView.__abDocumentToken='ab-live-'+Math.random());
+         const sameDocument=async()=>assert.equal(await workbench.locator('body').evaluate(el=>el.ownerDocument.defaultView.__abDocumentToken),token);
+         await check.click();await waitStage('revise');
+         const wrong=structuredClone((await learner()).cases[0].attempts[0]);
+         for(const [r,i] of [[0,1],[1,2],[2,3]])await workbench.locator('#work [data-do="row-part"][data-row="'+r+'"][data-index="'+i+'"]').click();
+         await waitStage('recheck');
+         const edited=await learnerState();
+         const beforeKey=await page.locator('#learning-map-context [data-direction="before"] [data-source-key]').getAttribute('data-source-key');
+         assert.ok(beforeKey&&beforeKey!==activeKey&&beforeKey.startsWith('node:'));
+         const beforeId=beforeKey.slice(5);
+         assert.ok(atlas.edges.some(e=>e.prerequisiteId===beforeId&&e.topicId===topic),'shown prerequisite has a real directed source edge');
+         const pack=atlas.packs.find(p=>p.nodeIds.includes(beforeId));
+         assert.ok(pack,'prerequisite belongs to a source pack');
+         await page.locator('#workbench-focus-toggle').click();await foreground('map');
+         // Choose the actual linked knowledge through the ordinary search UI.
+         // The fixed native document must not be reloaded or replaced.
+         await page.locator('[data-action="search"]:visible').first().click();
+         await page.locator('#search-input').fill(beforeId);
+         await page.locator('#search-results [data-key="'+beforeKey+'"]').click();
+         await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key,beforeKey);
+         await foreground('map');await sameDocument();
+         const explored=await learnerState(),expected=JSON.parse(edited),actual=JSON.parse(explored);
+         assert.ok(actual.visited[beforeId]);
+         if(!Object.hasOwn(expected.visited,beforeId)){expected.visited[beforeId]=actual.visited[beforeId];expected.openedPacks[pack.id]??=actual.openedPacks[pack.id];}
+         assert.deepEqual(actual,expected,'only original source visit entries may change');
+         assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),camera(opened));
+         assert.equal(await workbench.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
+         await page.screenshot({path:path.join(dir,'ab-v54-prerequisite.png')});
+         await workbench.locator('#instruction').click();await foreground('learn');await sameDocument();await lessonStage('recheck');
+         assert.equal(await learnerState(),explored);
+         await pause.press('Enter');await paused();
+         assert.equal(await learnerState(),explored);
+         const pausedView=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-network-cylinder-view-v1')));
+         assert.equal(pausedView.sessionId,session);assert.equal(pausedView.selected,beforeKey);assert.equal(pausedView.journeySuspended,true);
+         assert.equal(pausedView.networkVersion,54);
+         await resume.press('Enter');await foreground('learn');await sameDocument();
+         assert.equal(await learnerState(),explored);
+         await pause.click();await paused();
+         // Both the A cylinder and the B presentation must exist in the one
+         // current release cache. Reload the actual paused view offline.
+         await page.waitForFunction(async release=>{
+           const worker=navigator.serviceWorker.controller;if(!worker||worker.state!=='activated')return false;
+           const cache=await caches.open(release);
+           const modules=await Promise.all(['./spatial-cylinder-visuals.js','./learning/workbench-presentation.js'].map(p=>cache.match(new URL(p,location.href))));
+           return modules.every(Boolean);
+         },release,{timeout:90000});
+         await ctx.setOffline(true);
+         try{
+           await page.reload();await ready(page,54,587);await waitLesson();await paused();
+           await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key,beforeKey);
+           await compareOpened(explored);
+           await resume.click();await foreground('learn');await waitStage('recheck');
+           await check.click();await waitStage('passed');
+           const corrected=await learner();
+           assert.equal(corrected.cases[0].attempts.length,2);assert.deepEqual(corrected.cases[0].attempts[0],wrong);
+           await page.screenshot({path:path.join(dir,'ab-v54-offline-rechecked.png')});
+           await next.click();
+           await page.waitForFunction(()=>document.querySelector('#journey-frame').contentWindow.mathLesson.snapshot().index===1);
+           assert.equal(await workbench.locator('#status').getAttribute('data-task-ordinal'),'2');
+         }finally{await ctx.setOffline(false);}
+         const completedFirst=await learnerState();
+         await page.locator('#journey-surface [data-action="close-journey"]').click();
+         await page.waitForFunction(()=>!window.mathSpace.snapshot().journeyOpen&&document.querySelector('#journey-frame').contentWindow.location.href==='about:blank');
+         assert.equal(await learnerState(),completedFirst);
+         await page.locator('[data-action="nav-trail"]').click();
+         const trail=page.frameLocator('#utility-frame');
+         const article=trail.locator('[data-lesson-record="'+session+'"][data-trail-tier="evidence"]');
+         await article.filter({hasText:'2 次实际提交'}).waitFor({state:'visible'});
+         assert.ok((await article.innerText()).includes('1 / 3'));
+         await page.screenshot({path:path.join(dir,'ab-v54-trail.png')});
+         await page.locator('[data-action="nav-explore"]').click();
+         const beforeSwitch=await learnerState();
+         await page.locator('[data-action="menu"]').click();
+         await page.locator('[data-action="map-version"]').click();await ready(page,53,537);
+         assert.equal(await learnerState(),beforeSwitch);
+         await page.locator('[data-action="nav-trail"]').click();
+         await page.frameLocator('#utility-frame').locator('[data-lesson-record="'+session+'"] [data-do="resume-lesson"][data-id="'+session+'"]').click();
+         await waitLesson();await foreground('learn');
+         await compareOpened(beforeSwitch);
+         assert.equal(await workbench.locator('#status').getAttribute('data-task-ordinal'),'2');
+         assert.equal((await learner()).cases[0].attempts.length,2);
+         await page.screenshot({path:path.join(dir,'ab-v53-same-record.png')});
+         await page.locator('#journey-surface [data-action="close-journey"]').click();
+         await page.waitForFunction(()=>!window.mathSpace.snapshot().journeyOpen);
+         const backTo54=await learnerState();
+         await page.locator('[data-action="menu"]').click();
+         await page.locator('[data-action="map-version"]').click();await ready(page,54,587);
+         assert.equal(await learnerState(),backTo54);
+         assert.deepEqual((await page.evaluate(()=>window.mathSpace.snapshot())).positions,before.positions);
+         row.joint={session,sourcePrerequisite:beforeId,wrongAndCorrectAttempts:2,nextOrdinal:2,pauseRestored:true,offline:true,sameWorkInV53:true,sourcePositionsUnchanged:true};
          // Keep every automated interaction in the approved desktop content box.
          assert.deepEqual(page.viewportSize(),STANDARD_DESKTOP_VIEWPORT);
        }
