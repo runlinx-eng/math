@@ -143,5 +143,43 @@ module.exports={
       "taskHash": "08ae045d0d726879d652f82115094c8f91c36d90d56f95739bfdd338440e583f",
       "method": null
     }
+  ],
+  "ruler": [
+    {
+      "sessionId": "lengthstart",
+      "index": 0,
+      "type": "x-m28-units",
+      "nodeId": "mt_KaF0SQvaiu",
+      "adapter": "unitcover",
+      "taskHash": "b31208795cc4f548471711716cb77006d027902ca1a7ae7f657b80cebb5595d1",
+      "method": null
+    },
+    {
+      "sessionId": "communicate38",
+      "index": 0,
+      "type": "x-balance",
+      "nodeId": "mt_TMoHjMhRS2",
+      "adapter": "issue341-A214-equal-balance",
+      "taskHash": "23b489d4ffd0e44f95012b6e3868e234549400f9bc21a1cd441b3b6111e5edaa",
+      "method": null
+    },
+    {
+      "sessionId": "strategy39",
+      "index": 0,
+      "type": "x-s39-choose",
+      "nodeId": "mt_mQcWGh02no",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "a6d2783245da097ec131ef1aaa320dbe598b1c977c304f1c51597acddaedba87",
+      "method": null
+    },
+    {
+      "sessionId": "strategy39",
+      "index": 1,
+      "type": "x-s39-choose",
+      "nodeId": "mt_mQcWGh02no",
+      "adapter": "issue341-B218-p104m",
+      "taskHash": "a21a29e89f3a1fb2f593b1ca1ceea56b14b97e5725220d0651f2b6add84103ac",
+      "method": null
+    }
   ]
 };
