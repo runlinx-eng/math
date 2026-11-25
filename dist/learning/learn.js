@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261125-learning-workbench-b-preview4');
+registerClientRelease('math-explorer-20261125-learning-workbench-b-preview5');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -306,7 +306,11 @@ function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();clea
  renderP3Flow($('#p3-learning-flow'),{atlas,id,record:a,embedded:parent!==window,primarySessionId:a.view==='summary'?(nextLearningLesson()||nextLinkedPractice()?.id):null});
  if(a.view==='summary'){
   const explanation=$('#system-explanation'),source=$('#source-goals-details');
-  if(explanation)$('#learning-support').before(explanation);
+  if(explanation){
+   // Reflection and real feedback stay in the original fourth learning region.
+   if($('#workbench-drawer'))$('#learning-next').append(explanation);
+   else $('#learning-support').before(explanation);
+  }
   if(source)$('#record-body').append(source);
  }
   syncLearningRegions();

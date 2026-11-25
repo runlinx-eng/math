@@ -432,7 +432,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    // from a fresh top-of-panel position, not from the scrolled help content.
    await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
    requireState(await primaryLinked.isVisible()&&await primaryLinked.isEnabled(),'the real linked practice is immediately available as the route-end main action');
-   const summaryRegions=await embedded.locator('#scene > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
+   const summaryRegions=await embedded.locator('#scene > .learning-region, #workbench-stage > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
    requireState(summaryRegions.join(',')==='learning-problem,learning-interaction,learning-check,learning-next','completed route puts learner reflection before the one actual next destination');
    requireState(await embedded.locator('#system-explanation').evaluate(el=>el.closest('#learning-next')!==null),'system explanation remains below the main action');
    requireState(await embedded.locator('#source-goals-details').evaluate(el=>el.parentElement?.id==='record-body'),'original source goals remain accessible within records rather than the learner-facing work');

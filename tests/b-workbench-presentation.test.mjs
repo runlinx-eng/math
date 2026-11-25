@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll} from '../dist/learning/workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer} from '../dist/learning/workbench-presentation.js';
 const source=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('B: four visual beats map existing stages without making a new gate',()=>{
  assert.deepEqual(WORKBENCH_BEATS.map(x=>x.id),['read','try','check','record']);
@@ -53,4 +53,22 @@ test('B: scroll presentation follows actual task identity and first passed stage
  surface.scrollTop=54;show(1,'reflect','summary');assert.equal(surface.scrollTop,0);
  surface.scrollTop=61;show(1,'explore','task','quarters');assert.equal(surface.scrollTop,0);
  assert.doesNotThrow(()=>syncWorkbenchScroll({getElementById:()=>null},{sessionId:'x',index:0,view:'task',stage:'explore'}));
+});
+
+test('B: the auxiliary drawer reuses real optional controls and closes on actual task change',()=>{
+ const module=source('dist/learning/workbench-presentation.js'),runtime=source('dist/learning/learn.js'),style=source('dist/learning/learn.css');
+ assert.match(module,/mountWorkbenchDrawer\(doc,stage,command\)/);
+ assert.match(module,/panel\.append\(\.\.\.Array\.from\(el\.childNodes\)/);
+ assert.match(module,/el\.append\(panel\);el\.setAttribute\('name','workbench-auxiliary'\);dock\.append\(el\)/);
+ assert.match(module,/stage\.inert=fixed\.matches&&!!opened\(\)/);
+ assert.match(runtime,/if\(\$\('#workbench-drawer'\)\)\$\('#learning-next'\)\.append\(explanation\)/);
+ assert.match(style,/#workbench-drawer \.workbench-drawer-panel\{[\s\S]*?overflow:auto/);
+ const details=[{open:true},{open:true}],stage={inert:true,scrollTop:40,clientHeight:300};
+ const dock={querySelectorAll:()=>details.filter(el=>el.open)};
+ const doc={getElementById:id=>id==='workbench-drawer'?dock:id==='workbench-stage'?stage:null};
+ closeWorkbenchDrawer(doc);assert.ok(details.every(el=>!el.open));assert.equal(stage.inert,false);
+ syncWorkbenchScroll(doc,{sessionId:'equivalent',index:0,view:'task',stage:'explore'});
+ details[0].open=true;stage.inert=true;stage.scrollTop=42;
+ syncWorkbenchScroll(doc,{sessionId:'equivalent',index:1,view:'task',stage:'explore'});
+ assert.equal(details[0].open,false);assert.equal(stage.inert,false);assert.equal(stage.scrollTop,0);
 });

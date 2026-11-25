@@ -172,18 +172,18 @@ body.p03-focus #learning-problem #instruction{font-size:clamp(16px,1.65vw,20px);
 #learning-check #check-feedback:not([hidden]){margin:10px 0 8px;font-size:14px}
 #learning-next{border-top:1px solid var(--line);padding-top:12px}
 #next-guidance{color:#577267;font-size:12px;line-height:1.6;margin:6px 0 8px}
-#learning-next .p3-learning-flow{border:0;padding:0;margin:0;line-height:1.5}
-#learning-next .p3-evidence{background:#f5f7f1;padding:9px 11px}
-#learning-next .p3-before-check{background:transparent;border:0;padding:0;margin:4px 0;color:#75877b}
-#learning-next .p3-review{margin:5px 0}
-#learning-next .p3-review>summary,
-#learning-next .p3-more>summary,
-#learning-next .p3-application>summary{font-size:12px;font-weight:600;color:#4d6d5d;line-height:1.5;padding:5px 0}
-#learning-next .p3-review .p3-evidence{margin-top:7px}
-#learning-next .p3-retry{margin:9px 0}
-#learning-next .p3-retry button{font-size:12px;min-height:35px}
-#learning-next .p3-followups .p3-action-list{margin-top:8px}
-#learning-next .p3-application{padding-top:0;border:0;margin-top:8px}
+:is(#learning-next,#workbench-drawer) .p3-learning-flow{border:0;padding:0;margin:0;line-height:1.5}
+:is(#learning-next,#workbench-drawer) .p3-evidence{background:#f5f7f1;padding:9px 11px}
+:is(#learning-next,#workbench-drawer) .p3-before-check{background:transparent;border:0;padding:0;margin:4px 0;color:#75877b}
+:is(#learning-next,#workbench-drawer) .p3-review{margin:5px 0}
+:is(#learning-next,#workbench-drawer) .p3-review>summary,
+:is(#learning-next,#workbench-drawer) .p3-more>summary,
+:is(#learning-next,#workbench-drawer) .p3-application>summary{font-size:12px;font-weight:600;color:#4d6d5d;line-height:1.5;padding:5px 0}
+:is(#learning-next,#workbench-drawer) .p3-review .p3-evidence{margin-top:7px}
+:is(#learning-next,#workbench-drawer) .p3-retry{margin:9px 0}
+:is(#learning-next,#workbench-drawer) .p3-retry button{font-size:12px;min-height:35px}
+:is(#learning-next,#workbench-drawer) .p3-followups .p3-action-list{margin-top:8px}
+:is(#learning-next,#workbench-drawer) .p3-application{padding-top:0;border:0;margin-top:8px}
 #math-explanation:not([hidden]){background:#f1f7f2;border-left:3px solid #478873;border-radius:7px;padding:12px 15px;margin-top:10px;font-size:13px;line-height:1.65}
 #math-explanation h3{margin:0 0 6px;font-size:14px;color:#285f50}
 #math-explanation p{margin:6px 0}
@@ -410,8 +410,8 @@ body.p03-focus #scene .stage-top #actions{
 /* Mac P7-D4 screenshot: secondary route navigation follows the real task;
    never leave a redundant empty check/next step in the reading flow. */
 #learning-check[hidden]{display:none!important}
-#learning-next #route-collapsible{margin:10px 0 0;border-top:1px solid #e4e9e2;padding-top:7px}
-#learning-next #route-collapsible>summary{font-size:13px;font-weight:600;padding:7px 0}
+:is(#learning-next,#workbench-drawer) #route-collapsible{margin:10px 0 0;border-top:1px solid #e4e9e2;padding-top:7px}
+:is(#learning-next,#workbench-drawer) #route-collapsible>summary{font-size:13px;font-weight:600;padding:7px 0}
 @media(max-width:700px){
  #scene .stage-top #steps{display:none}
  #scene .stage-top h1{font-size:18px}
@@ -520,7 +520,7 @@ body.p03-focus #scene .execution-command #actions{
 #learning-next .learning-support>summary{cursor:pointer;font-weight:650;font-size:13px;color:#406f5c}
 #learning-next .learning-support[open]>summary{margin-bottom:10px}
 #learning-next .learning-support #route-collapsible{margin:9px 0 0}
-#scene[data-stage="explore"] #learning-next .p3-before-check{display:none}
+#scene[data-stage="explore"] :is(#learning-next,#workbench-drawer) .p3-before-check{display:none}
 #scene[data-stage="explore"] #learning-next #next-guidance{display:none}
 #scene[data-action-focus="widget"] #actions [data-do="check"]{opacity:.65}
 #learning-interaction #work .study-primary{background:#2d8067;color:#fff;border-color:#2d8067;box-shadow:0 0 0 3px #2d806726;font-weight:700}
@@ -633,4 +633,40 @@ body.p03-focus #scene .execution-command #actions{
  }
  body[data-workbench-shell="fixed"] #scene .execution-command #actions{width:100%;min-width:0}
  body[data-workbench-shell="fixed"] #record{margin-bottom:8px}
+}
+
+/* B1: an independent optional drawer inside the fixed content area.
+   In tiny frames the existing details remain inline and the document scrolls. */
+#workbench-content{display:contents}
+#workbench-drawer{min-width:0}
+@media(min-height:440px) and (min-width:340px){
+ body[data-workbench-shell="fixed"] #workbench-content{
+  --workbench-dock-height:38px;position:relative;display:flex;flex-direction:column;
+  flex:1 1 0;min-height:0;min-width:0;
+ }
+ body[data-workbench-shell="fixed"] #workbench-drawer{
+  display:flex;flex:none;align-items:center;gap:6px;
+  height:var(--workbench-dock-height);padding:3px 4px;border-top:1px solid #d6dfd7;
+ }
+ body[data-workbench-shell="fixed"] #workbench-drawer>details{
+  flex:0 1 auto;min-width:0;margin:0;padding:0;border:0;background:transparent;
+ }
+ body[data-workbench-shell="fixed"] #workbench-drawer>details[hidden]{display:none}
+ body[data-workbench-shell="fixed"] #scene #workbench-drawer #record{margin:0}
+ body[data-workbench-shell="fixed"] #workbench-drawer>details>summary{
+  display:block;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  padding:6px 9px;margin:0;border:1px solid #d6dfd7;border-radius:7px;
+  font-size:12px;line-height:18px;color:#406f5c;background:#fcfbf6;
+ }
+ body[data-workbench-shell="fixed"] #workbench-drawer>details>summary:focus-visible{outline:2px solid #458e80;outline-offset:1px}
+ body[data-workbench-shell="fixed"] #workbench-drawer>details[open]>summary{background:#d9e9df;border-color:#89b09d;color:#244d3f}
+ body[data-workbench-shell="fixed"] #workbench-drawer .workbench-drawer-panel{
+  position:absolute;top:0;right:0;bottom:var(--workbench-dock-height);width:min(100%,420px);
+  z-index:2;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;
+  padding:12px;border:1px solid #b6c9be;border-radius:10px;background:#fcfbf6;
+  box-shadow:-8px 0 22px #24443f18;overflow-wrap:anywhere;
+ }
+ body[data-workbench-shell="fixed"] #workbench-drawer .workbench-drawer-panel:focus-visible{outline:2px solid #458e80;outline-offset:-3px}
+ body[data-workbench-shell="fixed"] #workbench-drawer #route{grid-template-columns:repeat(auto-fit,minmax(125px,1fr));margin:8px 0}
+ body[data-workbench-shell="fixed"] #workbench-drawer #route-collapsible>summary{display:list-item}
 }
