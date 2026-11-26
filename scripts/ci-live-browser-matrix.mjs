@@ -47,6 +47,40 @@ function partitionExpansionCapacity(definitions){
   timeoutMinutes:35,maxParallel:10};
 }
 
+// Third full run 45759922537: FDP board and fraction case completed in
+// ~6m47s and ~22m44s; cube fraction was cancelled near the 35-minute cap.
+// The separate successful cube run took ~9m21s. Do not rely on a faster
+// runner or change a test: preserve each original call and evidence root
+// on its own mandatory runner. The source artifact ordering is historical.
+const fractionGroup='evidence-fractioncase';
+const fractionCaseTail='evidence-fractioncase-case';
+const fractionCubeTail='evidence-fractioncase-cube';
+const fractionEntries=['fdpboard','fractioncase','cubefraction'];
+function partitionFractionCapacity(definitions){
+ const original=BROWSER_GROUPS[fractionGroup];
+ const commands=fractionEntries.map(name=>({file:'tests/p9-'+name+'-adapter-browser.cjs',env:{}}));
+ const artifacts=fractionEntries.map(name=>'verification/p9-'+name+'-adapter/');
+ same(original.commands,commands);
+ same(original.artifacts,[artifacts[1],artifacts[0],artifacts[2]]);
+ const runners=[fractionGroup,fractionCaseTail,fractionCubeTail];
+ for(const id of runners.slice(1))assert.ok(!Object.hasOwn(definitions,id),'Capacity runner identity collision');
+ for(const [index,id] of runners.entries()){
+  const artifact=original.artifacts.find(dir=>dir===artifacts[index]);
+  assert.ok(artifact,'Original artifact owner must exist');
+  definitions[id]=Object.freeze({commands:Object.freeze([original.commands[index]]),
+   artifacts:Object.freeze([artifact])});
+ }
+ same(runners.flatMap(id=>definitions[id].commands),original.commands);
+ same(runners.flatMap(id=>definitions[id].artifacts).sort(),[...original.artifacts].sort());
+ const legacy=Object.values(definitions),old=Object.values(BROWSER_GROUPS);
+ same(legacy.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort(),
+  old.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort());
+ same(legacy.flatMap(g=>g.artifacts).sort(),old.flatMap(g=>g.artifacts).sort());
+ return {sourceGroup:fractionGroup,runners,commandCounts:[1,1,1],
+  observedRunId:'45759922537',cancelledJobId:'139708961494',
+  timeoutMinutes:35,maxParallel:10};
+}
+
 export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
  config=defaultConfig(),fileExists,verifyFrozen=false
 }={}){
@@ -69,7 +103,8 @@ export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
  }
  const definitions={...BROWSER_GROUPS};
  const capacitySplit=partitionExpansionCapacity(definitions);
- const legacyRunnerNames=[...GROUP_NAMES,expansionTail];
+ const fractionCapacitySplit=partitionFractionCapacity(definitions);
+ const legacyRunnerNames=[...GROUP_NAMES,expansionTail,fractionCaseTail,fractionCubeTail];
  same(Object.keys(definitions),legacyRunnerNames);
  const added=[];
  for(const job of plan.plannedNewJobs){
@@ -103,13 +138,14 @@ export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
   checkoutPolicy:'same-SHA static plan and runner/gate',
   sourcePlanDigest:plan.digest,liveMatrix:matrix,
   legacyGroups:13,legacyRunnerGroups:legacyRunnerNames.length,legacyCalls:86,legacyEvidenceDirs:83,
-  legacyCapacitySplit:capacitySplit,
+  legacyCapacitySplit:capacitySplit,legacyFractionCapacitySplit:fractionCapacitySplit,
   registeredNewFamilies:registry.newFamilies.length,addedGroups:added,
   restrictions:['GitHub max-parallel 10 queues overflow jobs without a workflow time cap',
   'No cross-group dependencies or resource locks','No CPU-heavy unprovisioned runners',
    'Every new module must supply mathematical result, errors=[], original PNG and provenance',
    'Static legacy group source remains the complete rollback baseline',
-  'The exact expansion-2 tail requires its own successful full-run receipt']};
+  'The exact expansion-2 tail requires its own successful full-run receipt',
+  'All three exact fraction capacity runners require independent successful full-run receipts']};
  proof.digest=digest(proof);
  return {definitions,matrix,proof};
 }

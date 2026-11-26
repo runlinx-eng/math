@@ -17,7 +17,8 @@ browser commands/83 evidence directories remain frozen and required.
    frozen legacy runner inventory, in the same order and with the same
    logical files and evidence ownership. The explicit capacity partition below
    keeps those original thirteen IDs as the ordered prefix and adds one
-   mandatory physical runner before the new-family jobs. Registered new modules are packed into
+   mandatory expansion runner plus two mandatory fraction runners before
+   the new-family jobs. Registered new modules are packed into
    additional actual runner groups using the reviewed 29-minute script budget.
 3. Each actual runner and the final fail-closed `required-checks` gate
    independently recompute the same plan from the checked-out source. The
@@ -97,3 +98,35 @@ passed full regression. New tests compare the exact old/new command
 multisets and artifact ownership, and reject missing, partial, stale,
 failed and cancelled tail receipts. Actual full workflow dispatch and
 original artifact verification are required before acceptance.
+
+## Third full run: fraction capacity migration candidate (2026-11-26)
+
+Full run [45759922537](https://github.com/runlinx-eng/math/actions/runs/45759922537)
+on 061aa8e generated 27 actual runners and finished 26 success / 1 cancelled /
+0 browser failures. Both expansion partitions completed all six original
+commands (including Unit Cover). The final Required gate correctly rejected
+the cancelled browser matrix.
+
+The remaining runner, job 139708961494, started at 05:16:03Z. FDP Board
+finished at 05:23:17Z (3305 checks, 6m47s), Fraction Case at 05:46:01Z
+(8310 checks, 22m44s). Cube Fraction started at 05:46:01Z and was
+cancelled at 05:51:16Z, with no complete group receipt. Independent
+successful targeted Cube Fraction on this PR took 560825ms (9m21s),
+and the previous PR head took 661783ms (11m02s). Thus even the faster
+successful cube duration plus these measured first two commands exceeds
+35 minutes. This is strong capacity evidence, not an official cancellation
+reason or a new mathematical failure.
+
+The live-only migration retains the original `evidence-fractioncase` ID
+for FDP Board, adds mandatory `evidence-fractioncase-case` for Fraction
+Case, and mandatory `evidence-fractioncase-cube` for Cube Fraction.
+Each owns exactly its original evidence directory and one unchanged command.
+The previous expansion partition and all other runner definitions remain
+unchanged; the frozen 13 logical groups still hold 86 calls/85 distinct
+scripts/83 evidence roots. The new physical plan has 16 legacy runners and
+13 registry runners (29 total, all 124 invocations). No test, environment,
+workflow timeout, max-parallel, release, math or State-v2 contract changes.
+All three separate receipts are mandatory; omission, wrong inventory,
+stale SHA, failure and cancellation continue to fail closed. The migration
+is a candidate until its new exact-HEAD checks and complete dispatched
+workflow succeed.
