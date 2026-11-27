@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261127-cylinder-workbench-ab-mac-state2';
+const RELEASE='math-explorer-20261127-cylinder-workbench-ab-mac-layout1';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -435,11 +435,22 @@ function renderLearningMapContext(){
   const active=worldLayout==='network'&&journeyOpen&&!journeySuspended&&!!activeSessionId&&current?.kind==='node'&&scene.canLocate(current);
   // Keep the original source links, but dock them with the learning task.
   // This frees the left map from an intercepting, absolutely positioned card.
-  const destination=active?$('#journey-surface'):$('#space-app');
-  if(host.parentElement!==destination)destination.insertBefore(host,active?$('#journey-frame'):$('#guide-panel'));
+  // V54: the optional real source relationships are a disclosure, not a
+  // fifth compulsory header row. V53 retains the existing inline context.
+  const compact=active&&scene.cylinderMap;
+  let disclosure=$('#workbench-context-menu');
+  if(compact&&!disclosure){
+    disclosure=document.createElement('details');disclosure.id='workbench-context-menu';
+    const summary=document.createElement('summary');summary.textContent='知识联系';summary.setAttribute('aria-controls','learning-map-context');disclosure.append(summary);
+    $('#journey-surface>header').insertBefore(disclosure,$('#workbench-later'));
+    disclosure.addEventListener('keydown',event=>{if(event.key==='Escape'&&disclosure.open){event.stopPropagation();disclosure.open=false;summary.focus();}});
+  }
+  if(disclosure){disclosure.hidden=!compact;if(!compact)disclosure.open=false;}
+  const destination=compact?disclosure:active?$('#journey-surface'):$('#space-app');
+  if(host.parentElement!==destination){if(compact)destination.append(host);else destination.insertBefore(host,active?$('#journey-frame'):$('#guide-panel'));}
   host.hidden=!active;
   document.body.classList.toggle('has-learning-map-context',!!active);
-  if(toggle)toggle.hidden=!active;
+  if(toggle){toggle.hidden=!active;if(compact){toggle.textContent='暂回探索';toggle.setAttribute('aria-expanded','false');}}
   if(!active){
     host.replaceChildren();
     document.body.classList.remove('observation-expanded');
@@ -899,9 +910,9 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
  if(!preserveSurface)setTaskSurfaceUrl('learn',{replace:taskSurfaceFromUrl()==='learn'});journeySuspended=false;hideLearningHub();closeUtility();closePopovers();for(const key of [...panels.keys()])closePanel(key);
  if(guideVisible){guideVisible=false;guideSuspended=true;scene.clearGuideFocus();renderGuide();}
  activeRouteId=sessionRoute(id).id;scene.setLearningRoute(activeRouteId);activeSessionId=id;activeQuestionId=questionId;activeLessonId=BRIDGES[id]?.to||id;journeyOpen=true;$('#journey-surface').style.removeProperty('--learning-desired-height');scene.select('node:'+sessionMeta(id).topicId);setHash('node:'+sessionMeta(id).topicId);scene.setRelations(scene.relationshipMap?'source':'off');$('#journey-surface').hidden=false;document.body.classList.add('has-journey');$('#focus-card').hidden=true;$('#continue-card').hidden=true;
- $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
+ $('#journey-surface [data-action="close-journey"]').textContent=scene.cylinderMap?'结束学习 ×':'返回知识空间 ×';
  setWorkbenchForeground('learn');
- $('#journey-surface header span').textContent='路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';const frame=$('#journey-frame'),nextLessonUrl=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
+ $('#journey-surface header span').textContent=scene.cylinderMap?'学习现场':'路线 '+sessionRoute(id).id;$('#journey-surface').setAttribute('aria-label',sessionRoute(id).title+' · 操作现场');$('#journey-frame').title=sessionMeta(id).title+' · 操作现场';const frame=$('#journey-frame'),nextLessonUrl=`learn.html${questionId?'?question='+encodeURIComponent(questionId):''}#${id}`;
  // Replacing an existing child-document entry avoids intercepting the parent's
  // Back/Forward mode-history after several direct 3D lesson changes.
  // Replacement navigation (including first load from about:blank) keeps
@@ -1192,6 +1203,7 @@ function applyRoute({initial=false}={}){const bits=location.hash.slice(1).split(
 document.addEventListener('click',event=>{
   const tab=event.target.closest('[data-panel-tab]');if(tab){renderPanelSection(panels.get(tab.dataset.id),tab.dataset.panelTab);return;}
   const el=event.target.closest('[data-action]');if(!el||!scene)return;const {action,id,key}=el.dataset;
+  if(scene.cylinderMap&&nativeWorkbenchActive()&&action==='toggle-observation'){leaveWorkbenchForLater();return;}
   if(scene.cylinderMap&&nativeWorkbenchActive()&&action!=='menu'&&el.closest('#network-guide,#focus-card,.tool-rail,.top-tools')&&!pauseCylinderForMap())return;
   if(action==='workbench-focus'){if(nativeWorkbenchActive())setWorkbenchForeground(document.body.dataset.workbenchForeground==='map'?'learn':'map');}
   else if(action==='workbench-later')leaveWorkbenchForLater();

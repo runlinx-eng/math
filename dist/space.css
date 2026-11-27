@@ -1611,3 +1611,82 @@ body[data-world="network"][data-network-version="54"][data-workbench-foreground]
 @media(prefers-reduced-motion:reduce){
   body[data-world="network"][data-network-version="54"][data-workbench-foreground] #focus-card{transition:none}
 }
+
+/* Mac A/B stage 02: native v54 Learn is a light working surface, not a
+   narrow floating card. The breakpoint is the parent viewport width, never
+   its aspect ratio. V53 and legacy workspaces retain their original layout. */
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"]{
+  --native-workbench-width:70vw;
+  --native-workbench-gap:12px;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{
+  inset:76px 12px 58px auto;transform:none;
+  width:var(--native-workbench-width);height:auto;max-height:none;
+  border-radius:12px;box-shadow:0 12px 38px #0003;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-app{
+  right:calc(var(--native-workbench-width) + var(--native-workbench-gap) * 2);
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{
+  flex:0 0 auto;min-height:38px;padding:3px 10px;gap:6px;
+  justify-content:flex-end;flex-wrap:nowrap;position:relative;z-index:2;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>span{
+  margin-right:auto;white-space:nowrap;color:#49695a;font-size:12px;font-weight:650;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button{
+  min-height:30px;padding:5px 8px;font-size:12px;white-space:nowrap;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu{
+  position:static;margin:0;min-width:0;
+}
+#workbench-context-menu[hidden]{display:none!important}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu>summary{
+  cursor:pointer;list-style:none;white-space:nowrap;min-height:30px;
+  display:flex;align-items:center;gap:4px;padding:5px 8px;border:1px solid #d0dfd3;
+  border-radius:7px;background:#fffef9;color:#315c4d;font-size:12px;font-weight:600;
+}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu>summary::-webkit-details-marker{display:none}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu>summary::after{content:"▾";font-size:11px}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu[open]>summary::after{content:"▴"}
+body[data-world="network"][data-network-version="54"].has-journey #journey-surface #workbench-context-menu:not([open]) #learning-map-context{display:none!important}
+body[data-world="network"][data-network-version="54"].has-journey #journey-surface #workbench-context-menu[open] #learning-map-context:not([hidden]){
+  display:block!important;position:absolute;inset:calc(100% + 4px) 8px auto auto;
+  width:min(420px,calc(100% - 16px));max-height:min(45dvh,290px);margin:0;padding:10px;
+  z-index:3;overflow:auto;border-radius:9px;box-shadow:0 8px 22px #173e3029;
+}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu[open] #learning-map-context .learning-map-footer{display:flex}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .topbar{
+  top:12px;left:12px;right:12px;flex-wrap:nowrap;gap:8px;align-items:center;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .top-tools>button:not([data-action="menu"]),
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .save-status [data-action="question"],
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .tool-rail{
+  display:none!important;
+}
+body[data-world="network"][data-network-version="54"].has-learning-map-context[data-workbench-foreground="learn"] #observation-task-toggle{
+  background:#182337;color:#e5edf9;border-color:#526888;
+}
+body[data-world="network"][data-network-version="54"].has-learning-map-context[data-workbench-foreground="learn"] #network-guide{
+  top:76px;left:12px;width:min(190px,calc(30vw - 36px));background:#101827;
+  border-color:#36435e;box-shadow:none;
+}
+@media(max-width:959px){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{
+    left:12px;right:12px;width:calc(100vw - 24px);
+  }
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-app{right:0}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #network-guide{display:none!important}
+}
+@media(max-width:620px){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .topbar .brand{display:none}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .topbar{justify-content:space-between}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .primary-nav{margin-left:0;order:0}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{top:64px;bottom:58px}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{padding-inline:5px;gap:4px}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>span{display:none}
+}
+@media(pointer:coarse){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button,
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu>summary{min-height:44px}
+}

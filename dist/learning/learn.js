@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261127-cylinder-workbench-ab-mac-state2');
+registerClientRelease('math-explorer-20261127-cylinder-workbench-ab-mac-layout1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -40,6 +40,11 @@ const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>
 if(parent!==window){
  try{
   if(parent.document.body?.dataset.world==='network'&&parent.document.querySelector('#journey-frame')?.contentWindow===window)mountWorkbenchShell(document);
+  if(document.body.dataset.workbenchShell==='fixed'&&parent.document.body?.dataset.networkVersion==='54'){
+    document.body.dataset.workbenchLayout='compact-v54';
+    const panel=$('#learning-support-drawer-panel'),goal=$('#learning-goal');
+    if(panel&&goal)panel.prepend(goal);
+  }
  }catch{/* A foreign embedding keeps the original standalone presentation. */}
 }
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
@@ -283,6 +288,19 @@ function alignLearningLayout(){
  const notice=$('#note-save-status'),actions=$('#actions');
  if(notice?.parentElement?.id==='work')actions.after(notice);
 }
+// The native v54 compact workbench keeps optional thinking questions in the
+// existing support drawer. Move the real details (no duplicate or new event)
+// after render, removing only the previous task's generated optional guide.
+function placeCompactThinkingGuide(){
+ if(document.body.dataset.workbenchLayout!=='compact-v54')return;
+ const panel=$('#learning-support-drawer-panel'),summary=$('#learning-support>summary');
+ if(!panel||!summary)return;
+ panel.querySelector('#thinking-guide')?.remove();
+ const guide=$('#work > #thinking-guide');
+ if(guide)panel.prepend(guide);
+ const label=guide?'思考与资料（可选）':'更多学习与资料（可选）';
+ summary.textContent=label;panel.setAttribute('aria-label',label);
+}
 function renderNumericCompatibility(){
  if(!numericReadOnly())return;
  // SVG controls are also guarded by edit() and the extra-action handlers.
@@ -315,6 +333,7 @@ function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();clea
   }
   if(source)$('#record-body').append(source);
  }
+  placeCompactThinkingGuide();
   syncLearningRegions();
   $('#record').hidden=!Object.values(a.cases).some(r=>r.support||r.attempts?.length)&&!a.notes.length&&!a.draft.trim();
   if(parent!==window)$('#record-body').insertAdjacentHTML('beforeend',btn('relations','看看空间里的联系'));

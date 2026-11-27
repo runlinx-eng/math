@@ -12,6 +12,7 @@ on:
       - 'dist/learning/workspace-flow.js'
       - 'dist/learning/workbench-presentation.js'
       - 'scripts/verify_learning_workbench_b.cjs'
+      - 'scripts/verify_v54_workbench_layout.cjs'
       - 'tests/b-workbench-presentation.test.mjs'
       - 'tests/learning-workspace-browser.cjs'
       - 'tests/p7-d5-entry-browser.cjs'
@@ -53,6 +54,8 @@ jobs:
           # are compatibility regressions, not new nonstandard viewport tests.
           node tests/p7-d5-entry-browser.cjs
           node tests/learning-workspace-browser.cjs
+          # Additional Mac 02 diagnostic contexts; do not alter #239 standard gates.
+          node scripts/verify_v54_workbench_layout.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -61,4 +64,5 @@ jobs:
             verification/learning-workbench-b
             verification/p7-d5
             verification/learning-workspace
+            verification/v54-workbench-layout
           if-no-files-found: warn
