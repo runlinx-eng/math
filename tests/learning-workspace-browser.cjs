@@ -391,8 +391,37 @@ async function verifyV54QuietExploration(browser){
    const row={viewport,errors,passed:false,stages:[]};result.rows.push(row);
    page.on('pageerror',e=>errors.push(e.message));
    const shot=name=>page.screenshot({path:path.join(dir,width+'x'+height+'-'+name+'.png')});
-   const ready=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.networkVersion===54&&window.mathSpace.snapshot().visibleNodes.length===587&&document.querySelector('#loading')?.hidden,{},{timeout:60000});
-   const pose=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return {position:s.position,target:s.target,zoom:s.cameraZoom,positions:s.positions};});
+   const ready=async()=>{
+     await page.waitForFunction(()=>window.mathSpace?.snapshot()?.networkVersion===54&&window.mathSpace.snapshot().visibleNodes.length===587&&document.querySelector('#loading')?.hidden&&!window.mathSpace.motion().tween,{},{timeout:60000});
+     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   };
+   const pose=()=>page.evaluate(()=>{
+     const s=mathSpace.snapshot();
+     return {position:s.position,target:s.target,zoom:s.cameraZoom,positions:s.positions,projections:s.visibleNodes.map(key=>{const p=mathSpace.project(key);return {key,x:p.x,y:p.y,visible:p.visible};})};
+   });
+   // OrbitControls recomputes its target using floating-point arithmetic
+   // on a dirty frame. visual1 tall viewport differed by only 2.84e-14
+   // world units. Keep exact source-position equality; admit roundoff
+   // only in camera components, and independently prove actual screen
+   // projections of all 587 source nodes have not perceptibly changed.
+   const assertSamePose=async(before,label)=>{
+     const after=await pose();
+     assert.deepEqual(after.positions,before.positions,label+': source coordinates exact');
+     const delta=(a,b)=>Math.max(...a.map((v,i)=>Math.abs(v-b[i])));
+     const positionDelta=delta(after.position,before.position),targetDelta=delta(after.target,before.target),zoomDelta=Math.abs(after.zoom-before.zoom);
+     assert.ok(positionDelta<=1e-9&&targetDelta<=1e-9&&zoomDelta<=1e-12,label+': camera roundoff only '+JSON.stringify({positionDelta,targetDelta,zoomDelta}));
+     assert.equal(after.projections.length,587);
+     let maxPixelDelta=0;
+     for(let i=0;i<after.projections.length;i++){
+       const a=after.projections[i],b=before.projections[i];
+       assert.equal(a.key,b.key);assert.equal(a.visible,b.visible);
+       const distance=Math.hypot(a.x-b.x,a.y-b.y);
+       assert.ok(Number.isFinite(distance),label+': finite projected source '+a.key);
+       maxPixelDelta=Math.max(maxPixelDelta,distance);
+     }
+     assert.ok(maxPixelDelta<=1e-6,label+': every source projection unchanged to one millionth CSS px');
+     return {label,positionDelta,targetDelta,zoomDelta,maxPixelDelta,sourceCoordinatesExact:true,projectedNodes:587};
+   };
    const measure=()=>page.evaluate(()=>{
      const rect=el=>{const r=el.getBoundingClientRect();return {x:r.left,y:r.top,w:r.width,h:r.height};};
      const visible=el=>!!el&&!el.hidden&&el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden';
@@ -420,25 +449,26 @@ async function verifyV54QuietExploration(browser){
    };
    try{
      await page.goto(base+'/index.html?world=network&layout=54#atlas');await ready();
-     const before=await pose(),initial=await check('all');row.initial=initial;await shot('default');
+     const initial=await check('all'),before=await pose();row.initial=initial;row.poseChecks=[];await shot('default');
      const summary=page.locator('.cylinder-extra-tools>summary');
      await summary.click();
      assert.ok(await page.locator('#network-view-description').isVisible());
      assert.ok(await page.locator('.cylinder-observation-switches [data-action="cylinder-option"]').count()===5);
      await summary.press('Escape');assert.equal(await page.locator('.cylinder-extra-tools').evaluate(el=>el.open),false);
-     assert.deepEqual(await pose(),before,'optional observation text and switches do not move the camera');
+     row.poseChecks.push(await assertSamePose(before,'optional observation text and switches do not move the camera'));
      for(const stage of ['stage-1','stage-2','stage-3']){
        await page.locator('#grade-map-filter [data-stage="'+stage+'"]').click();
        await page.mouse.move(width-8,height-8);
        await page.waitForFunction(stage=>mathSpace.snapshot().gradeStageFilter===stage,stage);
        const evidence=await check(stage);row.stages.push(evidence);
-       assert.deepEqual(await pose(),before,'reference label placement never moves actual source positions or camera');
+       row.poseChecks.push(await assertSamePose(before,'reference label placement never moves actual source positions or camera'));
        await shot(stage);
      }
      // Return to all without changing the camera; the original grade text is
      // still available from its control even when an unsafe caption is omitted.
      await page.locator('#grade-map-filter [data-stage="all"]').click();await page.mouse.move(width-8,height-8);
      await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all');await check('all');
+     row.poseChecks.push(await assertSamePose(before,'returning to all grades does not move the map'));
      await summary.click();
      await page.locator('.tool-rail [data-action="front"]').click();
      await page.waitForFunction(()=>!mathSpace.motion().tween);
