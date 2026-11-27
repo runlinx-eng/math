@@ -276,5 +276,5 @@ async function verifyV54CompactLayout(browser){
   }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
   assert.ok(result.passed,'V54 responsive workbench: '+result.rows.filter(row=>row.passed).length+'/'+result.rows.length+' viewports passed; inspect original results.json');
   console.log(JSON.stringify({v54ResponsiveLayout:result.rows.map(row=>({viewport:row.viewport,ratio:row.initial?.ratio,headingHeight:row.initial?.headingHeight,passed:row.passed,realSubmission:row.realSubmission??false}))}));
- 
+
 }
