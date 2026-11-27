@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261126-cylinder-workbench-ab-mac-state1';
+const RELEASE='math-explorer-20261127-cylinder-workbench-ab-mac-state2';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -87,10 +87,14 @@ function renderContinue(){const card=$('#continue-card');if(!scene)return;const 
 function questionList(){closePopovers();const el=$('#questions-popover');el.hidden=false;const list=learning.daily.questions,render=q=>`<article><p>${esc(q.text)}</p><div>${button('resume-question',q.scene?'回到当时':'回到这个位置',`data-id="${q.id}"`)}${!questionDone(q)?button('question-finish','想明白了',`data-id="${q.id}"`,'plain-button'):'<small>✓ 完成</small>'}</div></article>`;el.innerHTML=`<div class="popover-heading"><strong>留下的问题</strong>${button('close-popover','×','aria-label="关闭问题"','plain-button')}</div>${[...list].reverse().filter(q=>!questionDone(q)).map(render).join('')||'<p class="quiet">还没有待继续的问题。</p>'}${list.some(questionDone)?`<details><summary>已经想明白的</summary>${[...list].reverse().filter(questionDone).map(render).join('')}</details>`:''}`;}
 function resume(id){
   readLearning();
-  const pending=learning.daily.questions.find(q=>q.id===id),target=pending?.scene?.record.id||(pending?.nodeId?lessonForTopic(pending.nodeId):null),keepParked=parkedCylinderSession()&&!target;
-  if(parkedCylinderSession()&&target&&!mayReplaceParkedCylinderSession(target,id))return;
+  const pending=learning.daily.questions.find(q=>q.id===id),target=pending?.scene?.record.id||(pending?.world?.guideStep===undefined&&pending?.nodeId?lessonForTopic(pending.nodeId):null),keepParked=parkedCylinderSession()&&!target;
+  if(parkedCylinderSession()&&target&&!mayReplaceParkedCylinderSession(target,id,{restoreSavedScene:true}))return;
   let q;if(!mutateLearning(s=>{q=structuredClone(resumeQuestion(s,id));if(q.world?.guideStep!==undefined)s.daily.guide={id:GUIDE_ID,step:q.world.guideStep,active:true,updatedAt:now()};}))return;
-  closePopovers();if(journeyOpen&&!keepParked)closeJourney(false);
+  // Question restoration is an explicit saved-scene action, unlike ordinary
+  // resume. For a native v54 destination, keep the old document until the
+  // single final navigation; about:blank can race a same-URL replacement.
+  const refreshQuestionScene=!!(scene.cylinderMap&&target);
+  closePopovers();if(journeyOpen&&!keepParked)closeJourney(false,{clearFrame:!refreshQuestionScene});
   if(guideVisible||guideSuspended){if(q.world?.guideStep!==undefined){guideVisible=false;guideSuspended=false;scene.clearGuideFocus();renderGuide();}else leaveGuide();}
   // Only a current relationship-map pose can be restored as camera coordinates.
   // An older saved question keeps its text/learning record and opens its node here,
@@ -98,9 +102,9 @@ function resume(id){
   if(q.world?.layout==='network'&&q.world.networkVersion===RELATIONSHIP_VERSION&&scene.networkVersion===RELATIONSHIP_VERSION){scene.restore(q.world);setHash(q.world.selected);}
   else if(q.world?.selected&&space.byKey.has(q.world.selected)){scene.select(q.world.selected);setHash(q.world.selected);}
   else if(q.nodeId&&space.byKey.has('node:'+q.nodeId)){scene.select('node:'+q.nodeId);setHash('node:'+q.nodeId);}
-  if(q.scene){if(q.world?.guideStep!==undefined&&guideSteps[q.world.guideStep])guideSuspended=true;scene.select('node:'+q.nodeId);setHash('node:'+q.nodeId);openLearningLesson(q.scene.record.id,{restore:!!q.world,questionId:id});}
+  if(q.scene){if(q.world?.guideStep!==undefined&&guideSteps[q.world.guideStep])guideSuspended=true;scene.select('node:'+q.nodeId);setHash('node:'+q.nodeId);openLearningLesson(q.scene.record.id,{restore:!!q.world,questionId:id,refreshQuestionScene});}
   else if(q.world?.guideStep!==undefined&&guideSteps[q.world.guideStep]){activateGuide(q.world.guideStep,{record:false,animate:false,fit:false});}
-  else if(lessonForTopic(q.nodeId)){scene.select('node:'+q.nodeId);openLearningLesson(lessonForTopic(q.nodeId),{restore:!!q.world,questionId:id});}
+  else if(lessonForTopic(q.nodeId)){scene.select('node:'+q.nodeId);openLearningLesson(lessonForTopic(q.nodeId),{restore:!!q.world,questionId:id,refreshQuestionScene});}
   else{toast('问题和位置都还在。这里还没有对应活动，可以继续观察。');renderFocus();renderLocation();renderContinue();}scheduleSave();
 }
 function unfinishedContinuation(){const next=continuation(learning);if(next.kind!=='session')return null;const record=BRIDGES[next.sessionId]?learning.daily.bridges[next.sessionId]:learning.lessons[next.sessionId];return record&&!lessonSummary(record).completed?next:null;}
@@ -267,8 +271,9 @@ function pauseCylinderForMap(){
 // Existing native handlers save models and drafts synchronously. Do not
 // replace a loading or blocked child. Confirm distinct explicit starts
 // only after reading and validating the original saved session.
-function mayReplaceParkedCylinderSession(id,questionId=null){
- if(!parkedCylinderSession()||(id===activeSessionId&&questionId===activeQuestionId))return true;
+function mayReplaceParkedCylinderSession(id,questionId=null,{restoreSavedScene=false}={}){
+ const same=id===activeSessionId&&questionId===activeQuestionId;
+ if(!parkedCylinderSession()||(same&&!restoreSavedScene))return true;
  const doc=$('#journey-frame').contentDocument,notice=doc?.getElementById('storage-warning');
  if(!notice?.hidden){toast('请先恢复原学习，确认加载与保存状态。');return false;}
  let live;
@@ -277,7 +282,9 @@ function mayReplaceParkedCylinderSession(id,questionId=null){
  readLearning();
  const saved=BRIDGES[activeSessionId]?learning.daily.bridges[activeSessionId]:learning.lessons[activeSessionId];
  if(readBlocked||!saved||saved.index!==live.index||saved.view!==live.view){toast('原学习记录尚不能安全确认，请先恢复原学习。');return false;}
- return window.confirm('原学习的已保存作品、草稿和记录会保留。开始另一项学习吗？');
+ // Explicit restoration of the same question already expresses consent to
+ // restore its saved scene; resumeQuestion retains its displaced record.
+ return same||window.confirm('原学习的已保存作品、草稿和记录会保留。开始另一项学习吗？');
 }
 const CYLINDER_OPTION_LABELS={spines:'知识主副干',thinking:'数学思维轴核',crossEdges:'跨主题背景边',rings:'学段参考环',orbit:'缓慢公转'};
 function closeCylinderEntries(){const el=$('#cylinder-entry-nav');if(el)el.hidden=true;}
@@ -864,9 +871,10 @@ function renderFocus(){if(!scene)return;const card=$('#focus-card'),o=space.byKe
 // Replace their current entries, including their initial about:blank entry,
 // rather than assigning iframe.src and creating a Back/Forward detour.
 // Do not reload an already-open workpiece when its destination is unchanged.
-function replaceEmbeddedFrame(frame,target){
+function replaceEmbeddedFrame(frame,target,{reloadSame=false}={}){
   const url=new URL(target,location.href).href;
   if(frame.contentWindow.location.href!==url)frame.contentWindow.location.replace(url);
+  else if(reloadSame)frame.contentWindow.location.reload();
 }
 function openJourney(step,{restore=false,preserveSurface=false}={}){
   pendingNativeFrame=null;
@@ -882,7 +890,7 @@ function openJourney(step,{restore=false,preserveSurface=false}={}){
   $('#journey-surface [data-action="close-journey"]').textContent='返回知识空间 ×';
   updatePrimaryNavigation();scheduleSave();
 }
-function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=false}={}){
+function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=false,refreshQuestionScene=false}={}){
  if(!sessionMeta(id))return false;
  if(parkedCylinderSession()){
   if(id===activeSessionId&&questionId===activeQuestionId){navigateTaskSurface('learn');return true;}
@@ -898,8 +906,12 @@ function openLearningLesson(id,{restore=false,questionId=null,preserveSurface=fa
  // Back/Forward mode-history after several direct 3D lesson changes.
  // Replacement navigation (including first load from about:blank) keeps
  // child documents out of parent mode Back/Forward history.
- pendingNativeFrame=scene.cylinderMap&&frame.contentWindow.location.href!==new URL(nextLessonUrl,location.href).href?{id,questionId}:null;
- replaceEmbeddedFrame(frame,nextLessonUrl);
+ const fromURL=new URL(frame.contentWindow.location.href),toURL=new URL(nextLessonUrl,location.href);
+ const reloadSame=scene.cylinderMap&&refreshQuestionScene&&fromURL.href===toURL.href;
+ const navigates=fromURL.href!==toURL.href||reloadSame;
+ const newDocument=reloadSame||fromURL.origin!==toURL.origin||fromURL.pathname!==toURL.pathname||fromURL.search!==toURL.search;
+ pendingNativeFrame=scene.cylinderMap&&navigates?{id,questionId,retiredDocument:newDocument?frame.contentDocument:null}:null;
+ replaceEmbeddedFrame(frame,nextLessonUrl,{reloadSame});
  // Learning should open as a stable workspace, not move or zoom the hidden map.
  scene.tween=null;scene.viewTransition=null;
  renderLocation();updatePrimaryNavigation();scheduleSave();return true;
@@ -1345,6 +1357,7 @@ window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data)ret
         const childURL=new URL($('#journey-frame').contentWindow.location.href);
         if(childURL.hash.slice(1)!==incoming)return;
         if(pendingNativeFrame){
+          if(pendingNativeFrame.retiredDocument&&$('#journey-frame').contentDocument===pendingNativeFrame.retiredDocument)return;
           if(incoming!==pendingNativeFrame.id||(e.data.questionId||null)!==(pendingNativeFrame.questionId||null))return;
           pendingNativeFrame=null;
         }
