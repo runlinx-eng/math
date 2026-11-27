@@ -286,7 +286,7 @@ async function verifyV54CompactLayout(browser){
 // native workbench, independent of the fixed-desktop A/AB acceptance.
 async function verifyV54EntryLayout(browser){
  const assert=require('node:assert/strict'),atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
- const dir=path.resolve('verification/v54-entry-layout'),rootURL='http://127.0.0.1:43827';
+ const dir=path.resolve('verification/v54-entry-layout'),rootURL=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
  fs.mkdirSync(dir,{recursive:true});
  const result={passed:false,rows:[],testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()};
  try{
@@ -298,14 +298,19 @@ async function verifyV54EntryLayout(browser){
    try{
     await page.goto(rootURL+'/index.html?world=network&layout=54&surface=learn#space/node/mt_-c4Ca_nBzX');
     await page.waitForFunction(()=>{
-      const w=document.querySelector('#journey-frame').contentWindow;
-      return mathSpace?.snapshot()?.networkVersion===54&&w.mathLesson?.snapshot()?.id==='chancefraction'&&w.document.getElementById('storage-warning')?.hidden;
-    },{},{timeout:60000});
+      const w=document.querySelector('#journey-frame')?.contentWindow;
+      return window.mathSpace?.snapshot()?.networkVersion===54&&document.body.dataset.workbenchForeground==='learn'&&w?.mathLesson?.snapshot()?.id==='chancefraction'&&w.document.body.dataset.workbenchLayout==='compact-v54'&&w.document.querySelector('#workbench-curriculum')?.dataset.state!=='loading'&&w.document.getElementById('storage-warning')?.hidden;
+    },null,{timeout:60000});
     const lesson=page.frameLocator('#journey-frame'),key='#extra-controls [data-xfield="prob"]';
     const token=await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken='entry-live-'+Math.random());
     await lesson.locator(key).fill('1/7');
     const readRecord=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.chancefraction);
+    await page.waitForFunction(()=>{
+      const record=JSON.parse(localStorage.getItem('math-explorer-v2')||'null')?.lessons?.chancefraction;
+      return record?.models?.[record.index]?.prob==='1/7';
+    });
     const original=await readRecord(),positions=await page.evaluate(()=>mathSpace.snapshot().positions);
+    assert.equal(original.models[original.index].prob,'1/7','assert a real saved, unsubmitted probability draft before navigation');
     const preserved=async()=>{
       assert.equal(await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken),token);
       assert.deepEqual(await readRecord(),original);
@@ -337,11 +342,14 @@ async function verifyV54EntryLayout(browser){
         const rect=e=>{const r=e.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
         const nav=document.querySelector('#cylinder-entry-nav'),card=document.querySelector('#focus-card'),n=rect(nav),c=rect(card),p=mathSpace.project(key);
         const visible=(r,container)=>r.left>=container.left-1&&r.right<=container.right+1&&r.top>=container.top-1&&r.bottom<=container.bottom+1;
-        const hit=el=>{const r=rect(el),x=(r.left+r.right)/2,y=(r.top+r.bottom)/2;return el.contains(document.elementFromPoint(x,y));};
+        const hit=el=>{
+          const r=rect(el),points=[[(r.left+r.right)/2,(r.top+r.bottom)/2],[r.left+5,r.top+5],[r.right-5,r.top+5],[r.left+5,r.bottom-5],[r.right-5,r.bottom-5]];
+          return r.width>10&&r.height>10&&points.every(([x,y])=>el.contains(document.elementFromPoint(x,y)));
+        };
         const bounds={left:0,top:0,right:innerWidth,bottom:innerHeight};
-        return {nav:n,card:c,gap:c.top-n.bottom,within:visible(n,bounds)&&visible(c,bounds),switches:[...nav.querySelectorAll('[data-action="cylinder-entry"]')].map(el=>({key:el.dataset.key,visible:visible(rect(el),n),hit:hit(el)})),root:{x:p.x,y:p.y,visible:p.visible&&p.x>=0&&p.x<n.left&&p.y>=94&&p.y<=innerHeight-88}};
+        return {nav:n,card:c,gap:c.top-n.bottom,within:visible(n,bounds)&&visible(c,bounds),switches:[...nav.querySelectorAll('[data-action="cylinder-entry"]')].map(el=>({key:el.dataset.key,visible:visible(rect(el),n),hit:hit(el)})),homeHit:hit(nav.querySelector('[data-action="cylinder-entry-home"]')),closeHit:hit(nav.querySelector('[data-action="cylinder-entry-close"]')),overviewHit:hit(document.querySelector('.top-tools [data-action="overview"]')),floatingOverviewHidden:document.querySelector('#local-overview-exit').getClientRects().length===0,root:{x:p.x,y:p.y,visible:p.visible&&p.x>=0&&p.x<n.left&&p.y>=94&&p.y<=innerHeight-88}};
       },r.key);
-      assert.ok(geometry.within&&geometry.gap>=6&&geometry.switches.every(s=>s.visible&&s.hit)&&geometry.root.visible,'entry switcher, card, root are separately visible: '+JSON.stringify(geometry));
+      assert.ok(geometry.within&&geometry.gap>=6&&geometry.switches.every(s=>s.visible&&s.hit)&&geometry.homeHit&&geometry.closeHit&&geometry.overviewHit&&geometry.floatingOverviewHidden&&geometry.root.visible,'entry switcher, card, root are separately visible: '+JSON.stringify(geometry));
       assert.equal(await choices.count(),5);assert.equal(await choice.getAttribute('aria-pressed'),'true');
       assert.notDeepEqual(await camera(),before);assert.deepEqual(await page.evaluate(()=>mathSpace.snapshot().positions),positions);
       await preserved();

@@ -1750,3 +1750,11 @@ body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylind
  body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-choice,
  body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions button{min-height:44px}
 }
+
+/* A second fixed "return overview" button intersects the compact entry
+   switcher at ordinary desktop widths. Keep the original topbar Overview
+   action and the distinct entry-home action; restore the floating duplicate
+   automatically outside this specific comparison state. */
+body[data-world="network"][data-network-version="54"]:has(#cylinder-entry-nav:not([hidden])[data-compact="true"]) #local-overview-exit{
+  display:none!important;
+}

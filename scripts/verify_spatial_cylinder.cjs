@@ -272,11 +272,13 @@ const ready=async(page,version,count)=>{
            await choice(key).click();
            await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='true',key);
            const actual=await page.evaluate(key=>{
-             const nav=document.querySelector('#cylinder-entry-nav').getBoundingClientRect(),card=document.querySelector('#focus-card').getBoundingClientRect(),p=mathSpace.project(key);
-             return {snapshot:mathSpace.snapshot(),clear:nav.bottom+6<=card.top&&card.bottom<=innerHeight&&nav.right<=innerWidth,rootVisible:p.visible&&p.x>=0&&p.x<nav.left&&p.y>=94&&p.y<=innerHeight-88};
+             const navEl=document.querySelector('#cylinder-entry-nav'),nav=navEl.getBoundingClientRect(),card=document.querySelector('#focus-card').getBoundingClientRect(),p=mathSpace.project(key);
+             const hit=el=>{const r=el.getBoundingClientRect(),points=[[(r.left+r.right)/2,(r.top+r.bottom)/2],[r.left+5,r.top+5],[r.right-5,r.top+5],[r.left+5,r.bottom-5],[r.right-5,r.bottom-5]];return r.width>10&&r.height>10&&points.every(([x,y])=>el.contains(document.elementFromPoint(x,y)));};
+             const controls=[...navEl.querySelectorAll('button'),document.querySelector('.top-tools [data-action="overview"]')];
+             return {snapshot:mathSpace.snapshot(),clear:nav.bottom+6<=card.top&&card.bottom<=innerHeight&&nav.right<=innerWidth,rootVisible:p.visible&&p.x>=0&&p.x<nav.left&&p.y>=94&&p.y<=innerHeight-88,allControlsHit:controls.every(hit),floatingOverviewHidden:document.querySelector('#local-overview-exit').getClientRects().length===0};
            },key);
            assert.notDeepEqual(camera(actual.snapshot),oldPose,'explicit entry click re-composes the camera');
-           assert.ok(actual.clear&&actual.rootVisible,'entry and compact inspector share a clear slot, root is visible');
+           assert.ok(actual.clear&&actual.rootVisible&&actual.allControlsHit&&actual.floatingOverviewHidden,'entry and compact inspector share a clear slot; all entry controls and the topbar Overview are unobstructed: '+JSON.stringify({clear:actual.clear,rootVisible:actual.rootVisible,allControlsHit:actual.allControlsHit,floatingOverviewHidden:actual.floatingOverviewHidden}));
            assert.equal(await choice(key).getAttribute('aria-pressed'),'true');
            assert.equal(await choices.count(),5);assert.deepEqual(actual.snapshot.positions,before.positions);
            assert.equal(actual.snapshot.journeyOpen,false,'selecting an entry never starts a lesson');
@@ -289,13 +291,25 @@ const ready=async(page,version,count)=>{
          assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),root);
          const secondPose=await chooseEntry(second,firstPose);
          await page.screenshot({path:path.join(dir,'1920x1080-entry-switch.png')});
-         await chooseEntry(root,secondPose);
+         const thirdPose=await chooseEntry(root,secondPose);
+         // Closing the comparison restores the existing local return button.
+         // It must not unlock the knowledge or move the camera.
+         await page.locator('[data-action="cylinder-entry-close"]').click();
+         await page.locator('#cylinder-entry-nav').waitFor({state:'hidden'});
+         await page.locator('#local-overview-exit').waitFor({state:'visible'});
+         const closed=await page.evaluate(()=>mathSpace.snapshot());
+         assert.equal(closed.selected,root);assert.equal(closed.cylinderLocked,true);assert.deepEqual(camera(closed),thirdPose);
+         await page.locator('.tool-rail [data-action="cylinder-origin"]').click();
+         await page.locator('#cylinder-entry-nav').waitFor({state:'visible'});
+         await page.waitForFunction(()=>!mathSpace.motion().tween);
+         const reopened=await page.evaluate(()=>mathSpace.snapshot());
+         await chooseEntry(root,camera(reopened));
          await page.locator('[data-action="cylinder-entry-home"]').click();
          await page.waitForFunction(()=>!mathSpace.snapshot().selected&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='false');
          assert.equal(await choices.count(),5);
          await page.locator('.tool-rail [data-action="front"]').click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected&&!window.mathSpace.motion().tween);
          assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),resetCamera);
-         row.entryNavigation=true;row.entryComparison={classifications,hoverSourceOnly:true,lockedHoverRetained:true,explicitCamera:true,retainedSwitcher:true,returnedOrigin:true};
+         row.entryNavigation=true;row.entryComparison={classifications,hoverSourceOnly:true,lockedHoverRetained:true,explicitCamera:true,retainedSwitcher:true,returnedOrigin:true,unobstructedControls:true,restoredLocalOverviewOnClose:true};
          await page.emulateMedia({reducedMotion:'no-preference'});
          await page.locator('.cylinder-extra-tools summary').click();
          await page.waitForFunction(()=>!document.querySelector('[data-option="orbit"]').disabled);
