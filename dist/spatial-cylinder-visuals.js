@@ -101,13 +101,16 @@ export function createCylinderVisuals(THREE,space,nodeList){
  paths.forEach((p,i)=>new THREE.Color(p.color).toArray(fc,i*3));fg.setAttribute('position',new THREE.BufferAttribute(fp,3));fg.setAttribute('color',new THREE.BufferAttribute(fc,3));
  const flow=new THREE.Points(fg,new THREE.PointsMaterial({map:texture,vertexColors:true,size:12,sizeAttenuation:false,transparent:true,opacity:.85,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));flow.frustumCulled=false;flow.renderOrder=2;group.add(flow);
  function setEmphasis(scene){
-   const focus=!!(scene.selected||scene.hoverMapKey||scene.hoverThemeId||scene.cylinderThemeFilter||scene.guideFocus),filtered=scene.gradeStageId!=='all',task=scene.taskWorkspaceActive;
+   const entryPreview=scene.cylinderEntryPreview,focus=!!(entryPreview||scene.selected||scene.hoverMapKey||scene.hoverThemeId||scene.cylinderThemeFilter||scene.guideFocus),filtered=scene.gradeStageId!=='all',task=scene.taskWorkspaceActive;
    const options=scene.cylinderOptions;accents.visible=options.spines;milestoneMesh.visible=options.spines;
    const selected=space.byKey.get(scene.selected),theme=scene.hoverThemeId||(selected?.kind==='theme'?selected.id:!selected&&!scene.hoverMapKey?scene.cylinderThemeFilter:null);
    for(const rec of records){
      const e=rec.edge,hit=!filtered||scene.gradeStageIds.has(e.prerequisiteId)&&scene.gradeStageIds.has(e.topicId);
      const themeHit=!theme||space.nodes.get(e.prerequisiteId).themeId===theme&&space.nodes.get(e.topicId).themeId===theme;
-     const factor=(hit?1:.14)*(focus?(theme?(themeHit?1:.14):.24):1)*(task?.54:1);
+     // Hover only the real principal path; all original geometry and the
+     // user's independent spine visibility switch remain unchanged.
+     const entryHit=entryPreview?.edgeKeys.has(e.prerequisiteId+'>'+e.topicId);
+     const factor=(hit?1:.14)*(entryPreview?(entryHit?1:.09):focus?(theme?(themeHit?1:.14):.24):1)*(task?.54:1);
      for(const {mesh,opacity} of rec.pieces)mesh.material.opacity=opacity*factor;
    }
    const screenRight=scene.basis().right,right=screenRight.clone();right.y=0;right.normalize();

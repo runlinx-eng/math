@@ -233,7 +233,7 @@ export class SpatialScene {
   get relationshipMap(){return this.network&&this.networkVersion===this.space.relationshipVersion;}
   get cylinderMap(){return this.relationshipMap&&this.networkVersion===54&&!!this.space.cylinderLayout;}
   get cylinderPointMode(){return this.cylinderMap&&!!(this.callbacks.isCylinderPointPresentation?.()??this.callbacks.isCylinderExplorer?.());}
-  get cylinderPrimary(){if(!this.cylinderPointMode)return null;const selected=this.space.byKey.get(this.selected),hover=this.space.byKey.get(this.hoverMapKey);return selected?.kind==='node'?selected:hover?.kind==='node'?hover:null;}
+  get cylinderPrimary(){if(!this.cylinderPointMode)return null;const selected=this.space.byKey.get(this.selected),hover=this.space.byKey.get(this.cylinderEntryPreview?.key||this.hoverMapKey);return selected?.kind==='node'?selected:hover?.kind==='node'?hover:null;}
   get knowledgeFocus(){return this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='node'&&!this.guideFocus;}
   get localRelationshipFocus(){return this.knowledgeFocus&&!this.traceResult;}
   // v53 remains one navigable spatial map whether or not a knowledge point
@@ -339,6 +339,24 @@ export class SpatialScene {
   clearGuideFocus(){if(!this.guideFocus)return;this.guideFocus=null;for(const {el} of this.labels){el.removeAttribute('aria-disabled');el.classList.remove('guide-locked','guide-target','guide-current','guide-visited');}this.hovered=null;this.hoverMapKey=null;this.hoverThemeId=null;this.hoverRelatedKeys=new Set();this.hoverVisualLinks=[];this.explorationTrail=this.space.byKey.get(this.selected)?.kind==='node'?[this.selected]:[];this.rebuildRelations();this.dirty=true;}
   setCylinderOption(key,value){if(!this.cylinderMap||!Object.hasOwn(this.cylinderOptions,key)||typeof value!=='boolean')return;if(key==='orbit'&&matchMedia('(prefers-reduced-motion: reduce)').matches)value=false;this.cylinderOptions[key]=value;if(key==='thinking'||key==='crossEdges')this.refreshNetworkEdges();if(key==='orbit'&&!value){this.controls.autoRotate=false;}this.dirty=true;}
   focusCylinderEntries(){if(!this.cylinderMap)return;this.networkView='oblique';this.setCylinderOption('orbit',false);const ids=new Set(this.space.cylinderLayout.spines.filter(s=>s.index===0).map(s=>s.rootId));const height=this.space.cylinderOffset*2;const roots=this.nodeList.filter(n=>ids.has(n.id)||n.domainId!=='thinking'&&this.space.cylinderById.get(n.id).y<=height*.27);this.fitGlobalView(true,roots);}
+  // Explicit entry selection is the only domain navigation that re-composes
+  // the camera. Use the first real nodes on the existing principal path.
+  focusCylinderEntry(key){
+    const sp=this.cylinderMap&&this.space.cylinderLayout.spines.find(s=>s.index===0&&'node:'+s.rootId===key);
+    if(!sp)return;
+    this.networkView='oblique';this.setCylinderOption('orbit',false);
+    this.fitGlobalView(true,sp.nodeIds.slice(0,4).map(id=>this.space.nodes.get(id)));
+  }
+  // Navigation hover has its own transient source-backed emphasis. The
+  // locked selection, ordinary map-hover precedence and camera stay intact.
+  setCylinderEntryPreview(key){
+    if(!this.cylinderMap)return;
+    const sp=key&&this.space.cylinderLayout.spines.find(s=>s.index===0&&'node:'+s.rootId===key);
+    const next=sp?key:null;
+    if((this.cylinderEntryPreview?.key||null)===next)return;
+    this.cylinderEntryPreview=sp?{key,themeId:sp.themeId,nodeIds:new Set(sp.nodeIds),edgeKeys:new Set(sp.edges.map(e=>e.prerequisiteId+'>'+e.topicId))}:null;
+    this.dirty=true;
+  }
   setCylinderThemeFilter(id){if(!this.cylinderMap)return;const next=this.space.themes.has(id)?id:null;if(this.cylinderThemeFilter===next)return;this.cylinderThemeFilter=next;this.dirty=true;}
   setCylinderLock(on){if(!this.cylinderMap)return;this.cylinderLocked=!!on&&this.knowledgeFocus;this.setMapHover(null);this.rebuildRelations();this.dirty=true;}
   setThemeHover(id){
@@ -506,14 +524,14 @@ export class SpatialScene {
   globalInsets(){
     const guide=document.querySelector('#network-guide')?.getBoundingClientRect(),footer=document.querySelector('.bottom-bar')?.getBoundingClientRect();
     const themeFocus=this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='theme';
-    const entry=this.cylinderMap?document.querySelector('#cylinder-entry-nav')?.getBoundingClientRect():null,entryBottom=entry?.height&&this.width/this.height<=.9?this.height-entry.top+14:0,entryRight=entry?.height&&this.width/this.height>.9?this.width-entry.left+14:0;
+    const entryNav=this.cylinderMap?document.querySelector('#cylinder-entry-nav'):null,entry=entryNav?.getBoundingClientRect(),compactEntry=entryNav?.dataset.compact==='true',entryBottom=entry?.height&&!compactEntry&&this.width/this.height<=.9?this.height-entry.top+14:0,entryRight=entry?.height&&(compactEntry||this.width/this.height>.9)?this.width-entry.left+14:0;
     // Tall v54 windows use a compact observation strip above the atlas.
     // Reserve its measured height rather than a full-height left column.
     // The horizontal bottom rail also needs to stay outside the overview.
     if(this.cylinderMap&&this.width/this.height<=.9&&guide?.height>0&&guide.width>=this.width*.7){
       const rail=document.querySelector('.tool-rail')?.getBoundingClientRect();
       const railBottom=rail&&rail.width>rail.height*2&&rail.top>this.height*.5?this.height-rail.top+12:0;
-      return {left:42,right:42,top:Math.max(108,guide.bottom+18),bottom:Math.max(76,railBottom,entryBottom,this.height-(footer?.top||this.height-70)+10)};
+      return {left:42,right:Math.max(42,entryRight),top:Math.max(108,guide.bottom+18),bottom:Math.max(76,railBottom,entryBottom,this.height-(footer?.top||this.height-70)+10)};
     }
     // P1-B uses a vertical observation sidebar; its bottom edge is NOT a
     // top inset for the 3D panorama. Reserve horizontal space instead.
@@ -583,7 +601,7 @@ export class SpatialScene {
   }
   paintObjects(){
     const selected=this.space.byKey.get(this.selected),hoverObject=this.space.byKey.get(this.hoverMapKey),transform=new THREE.Object3D(),color=new THREE.Color(),paper=new THREE.Color(this.cylinderMap?0x101627:0xf5f4ef),structureActive=this.structuralOverview,
-      taskWorkspace=this.taskWorkspaceActive,
+      taskWorkspace=this.taskWorkspaceActive,entryPreview=this.cylinderEntryPreview,
       transition=this.viewTransition,progress=this.transitionProgress(),fadeIn=transition?.kind==='to-overview',fadeOut=transition?.kind==='to-focus';
     // Keep the real graph legible beside a task without stealing focus from selected or source-related knowledge.
     const emphasis=o=>{if(o.key===this.previewKey)return 1;if(this.guideFocus){
@@ -612,7 +630,7 @@ export class SpatialScene {
       // guide's real current/visited nodes are allowed to regain saturation.
       const focusedBackground=this.relationshipMap&&selected?.kind==='node'&&!this.guideFocus&&o.key!==this.selected&&!this.related?.has(o.key);
       // Hierarchy-specific, temporary node emphasis; no coordinate changes.
-      const hoverTint=hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
+      const hoverTint=entryPreview?(o.key===entryPreview.key?1:entryPreview.nodeIds.has(o.id)?.96:o.key===this.selected?.68:.10):hoverObject?.kind==='pack'?(o.packId===hoverObject.id?.98:.10):
         hoverObject?.kind==='node'?(o.key===hoverObject.key?1:this.hoverRelatedKeys.has(o.key)?.86:.10):
         this.hoverThemeId?(o.themeId===this.hoverThemeId&&(!this.cylinderMap||o.domainId!=='thinking')?.96:.10):null;
       color.set(o.color).lerp(paper,1-(hoverTint??(guideUnrelated?(this.guideFocus.step===0?.67:.40):focusedBackground?(taskWorkspace?.74:.80):structureActive?(structuralNode?.98:.55):this.relationshipMap&&!selected?.kind?.82:this.network?.87:s.tier===3?.92:.68)*focus)*(match?1:.16));
@@ -642,11 +660,11 @@ export class SpatialScene {
         // screen-space target. Never change the graph's real positions.
         depthCue=clamp(1+V(o.position).sub(this.controls.target).dot(this.camera.position.clone().sub(this.controls.target).normalize())/1900,.82,1.18),
           normal=(cp.thinking?2.8:Math.min(3.0,1.35+cp.nodeRadius*.36)+(spine?.42:0))*depthCue,
-          radius=this.cylinderPrimary?(o.key===this.cylinderPrimary.key?5.2:related?3.9:dim||themeDim?1.2:normal):inspection?5:related&&selected?3.9:dim||themeDim?1.2:this.space.cylinderRoots.has(o.id)?3.3:normal;
+          radius=entryPreview?(o.key===entryPreview.key?5.8:entryPreview.nodeIds.has(o.id)?4.1:o.key===this.selected?5.2:Math.min(normal,1.5)):this.cylinderPrimary?(o.key===this.cylinderPrimary.key?5.2:related?3.9:dim||themeDim?1.2:normal):inspection?5:related&&selected?3.9:dim||themeDim?1.2:this.space.cylinderRoots.has(o.id)?3.3:normal;
         size=radius/pixelsPerUnit;if(!dim&&(inspection||(!selected&&!this.hoverMapKey&&!this.hoverThemeId&&!this.guideFocus)))color.lerp(new THREE.Color(0xffffff),inspection?.36:.035);
       }
       transform.position.copy(V(o.position));transform.quaternion.copy(this.camera.quaternion);transform.scale.setScalar((this.relationshipMap?size:this.global?(o.key===this.selected||o.key===this.previewKey?size+3*cap:size):(this.related?.has(o.key)&&selected?.kind==='node'?size+1:size))*level);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);this.nodeMesh.setColorAt(i,color);
-      if(cp){const cv=this.cylinderVisuals;cv.thinkingMesh.setColorAt(i,color);if(cp.thinking){cv.thinkingMesh.setMatrixAt(i,transform.matrix);transform.scale.setScalar(0);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);}else{transform.scale.setScalar(0);transform.updateMatrix();cv.thinkingMesh.setMatrixAt(i,transform.matrix);}transform.scale.setScalar(size*level*3.05);transform.updateMatrix();cv.glowMesh.setMatrixAt(i,transform.matrix);cv.glowMesh.setColorAt(i,color);const spineVisible=this.cylinderOptions.spines&&this.space.cylinderSpineIds.has(o.id)&&(!selected||selected.kind==='theme'&&o.themeId===selected.id||selected.kind==='node'&&(o.key===this.selected||this.related?.has(o.key)))&&(!this.hoverThemeId||o.themeId===this.hoverThemeId)&&(!this.cylinderThemeFilter||!!selected||o.themeId===this.cylinderThemeFilter)&&(this.gradeStageId==='all'||this.gradeStageIds.has(o.id));transform.scale.setScalar(spineVisible?(size+2.35/pixelsPerUnit)*level:0);transform.updateMatrix();cv.milestoneMesh.setMatrixAt(i,transform.matrix);cv.milestoneMesh.setColorAt(i,color);}
+      if(cp){const cv=this.cylinderVisuals;cv.thinkingMesh.setColorAt(i,color);if(cp.thinking){cv.thinkingMesh.setMatrixAt(i,transform.matrix);transform.scale.setScalar(0);transform.updateMatrix();this.nodeMesh.setMatrixAt(i,transform.matrix);}else{transform.scale.setScalar(0);transform.updateMatrix();cv.thinkingMesh.setMatrixAt(i,transform.matrix);}transform.scale.setScalar(size*level*3.05);transform.updateMatrix();cv.glowMesh.setMatrixAt(i,transform.matrix);cv.glowMesh.setColorAt(i,color);const spineVisible=this.cylinderOptions.spines&&this.space.cylinderSpineIds.has(o.id)&&(entryPreview?entryPreview.nodeIds.has(o.id):!selected||selected.kind==='theme'&&o.themeId===selected.id||selected.kind==='node'&&(o.key===this.selected||this.related?.has(o.key)))&&(!this.hoverThemeId||o.themeId===this.hoverThemeId)&&(!this.cylinderThemeFilter||!!selected||o.themeId===this.cylinderThemeFilter)&&(this.gradeStageId==='all'||this.gradeStageIds.has(o.id));transform.scale.setScalar(spineVisible?(size+2.35/pixelsPerUnit)*level:0);transform.updateMatrix();cv.milestoneMesh.setMatrixAt(i,transform.matrix);cv.milestoneMesh.setColorAt(i,color);}
       transform.quaternion.copy(this.camera.quaternion);
       const tier=s.tier||1,ringSize=size+(this.relationshipMap?2.8/pixelsPerUnit:1.6*cap),lit=tier===3&&match&&visible,working=tier===2&&match&&visible;
       transform.scale.setScalar(lit?ringSize*level:0);transform.updateMatrix();this.progressMesh.setMatrixAt(i,transform.matrix);
@@ -668,7 +686,7 @@ export class SpatialScene {
     if(this.network){this.sceneMarkers.instanceMatrix.needsUpdate=true;this.questionMarkers.instanceMatrix.needsUpdate=true;}
     if(this.global)for(const shape of this.globalRegions.children)shape.material.opacity=this.selected?(shape.isMesh?.004:.025):(shape.isMesh?.012:.075);
     this.overviewShellGroup.visible=this.relationshipMap&&!this.selected&&this.overviewShellsEnabled;
-    if(this.cylinderMap){const cv=this.cylinderVisuals;for(const m of [cv.glowMesh,cv.thinkingMesh,cv.milestoneMesh]){m.instanceMatrix.needsUpdate=true;m.instanceColor.needsUpdate=true;}cv.setEmphasis(this);const filtered=this.gradeStageId!=='all',focus=!!(this.selected||this.hoverMapKey||this.hoverThemeId||this.cylinderThemeFilter||this.guideFocus);this.networkEdges.material.color.set(0x8294bb);this.networkSoftEdges.material.color.set(0x879ac4);this.networkEdges.material.opacity=focus?.020:filtered?.017:this.edgeDisplay==='outline'?.046:.19;this.networkSoftEdges.material.opacity=focus?.008:filtered?.008:.065;}
+    if(this.cylinderMap){const cv=this.cylinderVisuals;for(const m of [cv.glowMesh,cv.thinkingMesh,cv.milestoneMesh]){m.instanceMatrix.needsUpdate=true;m.instanceColor.needsUpdate=true;}cv.setEmphasis(this);const filtered=this.gradeStageId!=='all',focus=!!(this.cylinderEntryPreview||this.selected||this.hoverMapKey||this.hoverThemeId||this.cylinderThemeFilter||this.guideFocus);this.networkEdges.material.color.set(0x8294bb);this.networkSoftEdges.material.color.set(0x879ac4);this.networkEdges.material.opacity=focus?.020:filtered?.017:this.edgeDisplay==='outline'?.046:.19;this.networkSoftEdges.material.opacity=focus?.008:filtered?.008:.065;}
   }
   rebuildRelations(){this.focusVisualLinks=[];this.focusView=this.localRelationshipFocus?
     (this.cylinderMap&&this.cylinderLocked?buildCylinderLock(this.space.atlas,this.space.relationshipIds,this.selected.slice(5)):buildFocusFilter(this.space.atlas,this.space.relationshipIds,this.selected.slice(5),this.focusDirection,this.focusDepth)):null;
@@ -858,6 +876,7 @@ export class SpatialScene {
       if(!this.canLocate(o)||this.relationshipMap&&o.kind!=='node'&&selected?.kind==='node'&&!this.guideFocus)show=false;
        if(this.relationshipMap&&o.kind==='node'&&(this.localRelationshipFocus||this.traceResult||this.guideFocus)&&!this.nodeVisible(o))show=false;
       if(isSelected&&o.kind==='theme')show=false;
+      if(o.key===this.cylinderEntryPreview?.key){show=true;priority=Math.max(priority,120);}
       // Persistent selection stays above secondary hover labels. No change to
       // WebGL hit targets, learning state, source relations, or camera.
       if(o.kind==='node'){
@@ -943,7 +962,7 @@ export class SpatialScene {
     // Let knowledge labels and overlays win any collision; do not move the anchor.
     if(this.cylinderOriginMarker){
       const marker=this.cylinderOriginMarker;marker.hidden=true;
-      if(this.callbacks.isCylinderExplorer?.()&&!this.selected&&this.networkView!=='map'){
+      if(this.callbacks.isCylinderExplorer?.()&&(!this.selected||this.callbacks.isCylinderEntryNavigation?.())&&this.networkView!=='map'){
         const p=this.project(this.space.cylinderOriginPosition),rect={x:p.x-74,y:p.y-10,w:148,h:40};
         if(p.visible&&rect.x>=12&&rect.y>=94&&rect.x+rect.w<=this.width-12&&rect.y+rect.h<=this.height-78&&!rects.some(r=>overlaps(rect,r,4))){
           marker.style.transform=`translate(${rect.x}px,${rect.y}px)`;marker.hidden=false;
@@ -973,7 +992,7 @@ export class SpatialScene {
       }
       if(time>=t.start+t.duration){this.viewTransition=null;this.rebuildRelations();this.dirty=true;}
     }
-    if(this.cylinderMap)this.controls.autoRotate=this.cylinderOptions.orbit&&!this.down&&!this.tween&&!this.selected&&!this.cylinderThemeFilter&&!this.hoverThemeId&&!this.hoverMapKey&&this.gradeStageId==='all'&&!this.taskWorkspaceActive&&!this.guideFocus&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(this.cylinderMap)this.controls.autoRotate=this.cylinderOptions.orbit&&!this.down&&!this.tween&&!this.selected&&!this.cylinderThemeFilter&&!this.hoverThemeId&&!this.hoverMapKey&&!this.cylinderEntryPreview&&this.gradeStageId==='all'&&!this.taskWorkspaceActive&&!this.guideFocus&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
     const changed=this.controls.update();if(!this.dirty&&!changed&&!moving){if(this.cylinderMap&&this.cylinderVisuals.flow.visible&&time-(this.lastCylinderFlow||0)>50){this.lastCylinderFlow=time;this.cylinderVisuals.move(time);this.renderer.render(this.scene,this.camera);}return;}if(this.globalAxis)this.globalAxis.visible=this.global&&!this.relationshipMap&&this.controls.getPolarAngle()>=.02;
     const cap=this.relationshipMap?Math.min(1,7/(5*Math.max(.001,this.globalScale()))):1;for(const shape of this.edgesGroup.children)if(shape.userData.limitScreenScale)shape.scale.setScalar(cap);
     const primary=this.cylinderPrimary,o=primary||this.space.byKey.get(this.selected);this.halo.visible=this.canLocate(o)&&(!this.relationshipMap||o.kind==='node');if(this.halo.visible){this.halo.position.copy(V(o.position));this.halo.quaternion.copy(this.camera.quaternion);this.halo.scale.setScalar(this.relationshipMap?(primary?(o.key===this.selected?10.5:8.8):this.taskWorkspaceActive?14:9.8)/Math.max(.001,this.globalScale()):(o.kind==='theme'?18:o.kind==='pack'?10:this.global?11:6.5)*cap);}

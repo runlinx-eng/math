@@ -1690,3 +1690,63 @@ body[data-world="network"][data-network-version="54"].has-learning-map-context[d
   body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button,
   body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu>summary{min-height:44px}
 }
+
+/* Mac 03: entry comparison and the locked inspector share one measured
+   right-hand column. Ordinary map clicks and the V53 card are unchanged. */
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions{
+  display:flex;align-items:center;gap:4px;flex:none;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions button{
+  white-space:nowrap;font-size:11px;color:#d6e5ff;border:1px solid #415571;
+  border-radius:6px;background:#1a2940;min-height:28px;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions button:hover{background:#2a3d5a}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-text{
+  display:grid;gap:2px;min-width:0;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-domain{
+  font-size:11px;color:#b4c8e6;font-weight:650;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-name{
+  font-size:13px;color:#e5eeff;line-height:1.4;overflow-wrap:anywhere;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-kind{
+  font-size:11px;line-height:1.4;color:#b9c6db;
+}
+body[data-network-version="54"] #cylinder-entry-nav [data-entry-kind="root"] .cylinder-entry-kind{color:#a2e0ce}
+body[data-network-version="54"] #cylinder-entry-nav [data-entry-kind="growth"] .cylinder-entry-kind{color:#f3ca96}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-choice[aria-pressed="true"]{
+  background:#243a59;box-shadow:inset 0 0 0 1px #6e94cb;border-radius:7px;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-choice:focus-visible{
+  outline:2px solid #b8d9ff;outline-offset:-2px;background:#263a56;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"]{
+  right:auto;bottom:auto;padding:8px 10px;
+  overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] header{
+  gap:6px;margin:0 0 5px;font-size:12px;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-description{display:none}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-choices{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-choice{
+  min-height:36px;padding:4px 6px;gap:5px;border:1px solid #34435e;
+  border-radius:6px;align-items:center;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-name{
+  position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-domain{
+  color:#e0eaff;font-size:12px;line-height:1.35;white-space:normal;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-kind{
+  font-size:10px;line-height:1.25;white-space:normal;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-arrow{display:none}
+@media(pointer:coarse){
+ body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-choice,
+ body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions button{min-height:44px}
+}

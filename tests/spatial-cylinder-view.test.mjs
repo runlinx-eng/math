@@ -63,3 +63,24 @@ test("Mac stage 01: v53",()=>assert.deepEqual(Object.values(cylinderSessionPrese
 test("Mac stage 01: empty",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore"})),[false,false,false,true,true]));
 test("Mac stage 01: legacy no session",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore","journeyOpen":true,"journeySuspended":true})),[false,false,false,false,false]));
 test("Mac stage 01: guide in parked",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore","journeyOpen":true,"journeySuspended":true,"sessionId":"A","guideVisible":true})),[true,true,false,false,false]));
+
+test('Mac stage 03: five domain entry paths retain actual source roots and growth entrances',()=>{
+ const world=buildCylinderSpace(atlas,grade),primary=world.cylinderLayout.spines.filter(s=>s.index===0);
+ assert.equal(primary.length,5);
+ assert.equal(new Set(primary.map(s=>s.themeId)).size,5);
+ const source=new Map(atlas.edges.map(e=>[e.prerequisiteId+'>'+e.topicId,e.strength]));
+ for(const s of primary){
+  const incoming=atlas.edges.filter(e=>e.topicId===s.rootId);
+  assert.equal(s.isGlobalRoot,incoming.length===0);
+  assert.equal(world.cylinderRoots.has(s.rootId),s.isGlobalRoot);
+  assert.equal(s.nodeIds[0],s.rootId);
+  assert.equal(world.nodes.get(s.rootId).themeId,s.themeId);
+  assert.equal(s.edges.length,s.nodeIds.length-1);
+  s.edges.forEach((e,i)=>{
+   assert.equal(e.prerequisiteId,s.nodeIds[i]);
+   assert.equal(e.topicId,s.nodeIds[i+1]);
+   assert.equal(source.get(e.prerequisiteId+'>'+e.topicId),e.strength);
+  });
+ }
+ assert.ok(primary.some(s=>s.isGlobalRoot)&&primary.some(s=>!s.isGlobalRoot));
+});

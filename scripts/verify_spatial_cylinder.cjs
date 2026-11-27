@@ -6,7 +6,8 @@ const {pathToFileURL}=require('node:url');
 const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('../tests/helpers/standard-desktop-viewport.cjs');
 const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
 const dir=path.resolve(process.env.MATH_V54_EVIDENCE||'verification/spatial-cylinder-v54');
-const release='math-explorer-20261125-cylinder-workbench-ab-preview5';
+const release=fs.readFileSync(path.resolve(__dirname,'../dist/sw.js'),'utf8').match(/^const CACHE = '([^']+)';/m)?.[1];
+assert.ok(release,'read exact current offline release from service worker');
 const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
 const url=version=>base+'/index.html?world=network&layout='+version+'#atlas';
 const darkCard=async(page,selector)=>{
@@ -232,17 +233,69 @@ const ready=async(page,version,count)=>{
          assert.deepEqual(await assertOriginMarker(page),originPosition);
          await page.locator('[data-action="cylinder-origin"]').click();await page.locator('#cylinder-entry-nav').waitFor({state:'visible'});
          await page.waitForFunction(()=>!window.mathSpace.motion().tween);
-         const rootKeys=metadata.spines.filter(s=>s.index===0).map(s=>'node:'+s.rootId).sort();
-         assert.deepEqual((await page.locator('#cylinder-entry-nav [data-action="cylinder-entry"]').evaluateAll(els=>els.map(el=>el.dataset.key))).sort(),rootKeys);
+         const roots=metadata.spines.filter(s=>s.index===0),rootKeys=roots.map(s=>'node:'+s.rootId).sort();
+         const choices=page.locator('#cylinder-entry-nav [data-action="cylinder-entry"]');
+         const classifications=await choices.evaluateAll(els=>els.map(el=>({key:el.dataset.key,theme:el.dataset.theme,kind:el.dataset.entryKind,incoming:+el.dataset.incoming,text:el.textContent})));
+         assert.deepEqual(classifications.map(x=>x.key).sort(),rootKeys);
+         for(const r of classifications){
+           const incoming=atlas.edges.filter(e=>e.topicId===r.key.slice(5)).length,sp=roots.find(s=>'node:'+s.rootId===r.key);
+           assert.equal(r.incoming,incoming);assert.equal(r.theme,sp.themeId);
+           assert.equal(sp.isGlobalRoot,incoming===0);assert.equal(r.kind,incoming?'growth':'root');
+           assert.match(r.text,incoming?/生长入口/:/真正起点/);
+         }
+         assert.ok(classifications.some(x=>x.kind==='root')&&classifications.some(x=>x.kind==='growth'));
          const entrance=await page.evaluate(()=>window.mathSpace.snapshot());assert.deepEqual(entrance.positions,before.positions);assert.notDeepEqual(camera(entrance),resetCamera);
          await page.screenshot({path:path.join(dir,'1920x1080-entry.png')});
-         const root=await page.locator('#cylinder-entry-nav [data-action="cylinder-entry"]').first().getAttribute('data-key');
-         await page.locator('#cylinder-entry-nav [data-action="cylinder-entry"]').first().click();
-         await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key&&window.mathSpace.snapshot().cylinderLocked,root);
-         assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),camera(entrance));
+         const readEntryRecords=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+         const beforeHover=await readEntryRecords(),root=classifications[0].key,second=classifications[1].key;
+         const assertEntryHover=async(key,selected,locked,pose)=>{
+           const sp=roots.find(s=>'node:'+s.rootId===key),edgeKeys=sp.edges.map(e=>e.prerequisiteId+'>'+e.topicId);
+           await page.locator('#cylinder-entry-nav [data-action="cylinder-entry"][data-key="'+key+'"]').hover();
+           await page.waitForFunction(({key,edges})=>{
+             const data=mathSpace.cylinder().presentation,chosen=data.entryEdges.filter(e=>edges.includes(e.key)),other=data.entryEdges.filter(e=>!edges.includes(e.key));
+             return data.entryPreview?.key===key&&mathSpace.nodeRadius(key)>=5.5&&chosen.length===edges.length&&chosen.length>0&&Math.min(...chosen.map(e=>e.opacity))>Math.max(...other.map(e=>e.opacity));
+           },{key,edges:edgeKeys});
+           const actual=await page.evaluate(()=>({snapshot:mathSpace.snapshot(),presentation:mathSpace.cylinder().presentation}));
+           assert.equal(actual.snapshot.selected,selected);assert.equal(!!actual.snapshot.cylinderLocked,locked);assert.deepEqual(camera(actual.snapshot),pose);
+           assert.deepEqual(actual.snapshot.positions,before.positions);
+           assert.deepEqual(actual.presentation.entryPreview.nodeIds,sp.nodeIds);
+           assert.deepEqual(actual.presentation.entryPreview.edgeKeys,edgeKeys);
+           assert.ok(edgeKeys.every(key=>atlas.edges.some(e=>e.prerequisiteId+'>'+e.topicId===key)));
+         };
+         await assertEntryHover(root,null,false,camera(entrance));
+         assert.equal(await readEntryRecords(),beforeHover,'entry hover is not a learning visit');
+         await page.screenshot({path:path.join(dir,'1920x1080-entry-hover.png')});
+         await page.mouse.move(width-8,8);await page.waitForFunction(()=>!mathSpace.cylinder().presentation.entryPreview);
+         assert.deepEqual(camera(await page.evaluate(()=>mathSpace.snapshot())),camera(entrance));
+         const choice=key=>page.locator('#cylinder-entry-nav [data-action="cylinder-entry"][data-key="'+key+'"]');
+         const chooseEntry=async(key,oldPose)=>{
+           await choice(key).click();
+           await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='true',key);
+           const actual=await page.evaluate(key=>{
+             const nav=document.querySelector('#cylinder-entry-nav').getBoundingClientRect(),card=document.querySelector('#focus-card').getBoundingClientRect(),p=mathSpace.project(key);
+             return {snapshot:mathSpace.snapshot(),clear:nav.bottom+6<=card.top&&card.bottom<=innerHeight&&nav.right<=innerWidth,rootVisible:p.visible&&p.x>=0&&p.x<nav.left&&p.y>=94&&p.y<=innerHeight-88};
+           },key);
+           assert.notDeepEqual(camera(actual.snapshot),oldPose,'explicit entry click re-composes the camera');
+           assert.ok(actual.clear&&actual.rootVisible,'entry and compact inspector share a clear slot, root is visible');
+           assert.equal(await choice(key).getAttribute('aria-pressed'),'true');
+           assert.equal(await choices.count(),5);assert.deepEqual(actual.snapshot.positions,before.positions);
+           assert.equal(actual.snapshot.journeyOpen,false,'selecting an entry never starts a lesson');
+           return camera(actual.snapshot);
+         };
+         const firstPose=await chooseEntry(root,camera(entrance)),firstRecord=await readEntryRecords();
+         await assertEntryHover(second,root,true,firstPose);
+         assert.equal(await readEntryRecords(),firstRecord,'comparison hover keeps the locked visit');
+         await page.mouse.move(width-8,8);await page.waitForFunction(()=>!mathSpace.cylinder().presentation.entryPreview);
+         assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),root);
+         const secondPose=await chooseEntry(second,firstPose);
+         await page.screenshot({path:path.join(dir,'1920x1080-entry-switch.png')});
+         await chooseEntry(root,secondPose);
+         await page.locator('[data-action="cylinder-entry-home"]').click();
+         await page.waitForFunction(()=>!mathSpace.snapshot().selected&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='false');
+         assert.equal(await choices.count(),5);
          await page.locator('.tool-rail [data-action="front"]').click();await page.waitForFunction(()=>!window.mathSpace.snapshot().selected&&!window.mathSpace.motion().tween);
          assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),resetCamera);
-         row.entryNavigation=true;
+         row.entryNavigation=true;row.entryComparison={classifications,hoverSourceOnly:true,lockedHoverRetained:true,explicitCamera:true,retainedSwitcher:true,returnedOrigin:true};
          await page.emulateMedia({reducedMotion:'no-preference'});
          await page.locator('.cylinder-extra-tools summary').click();
          await page.waitForFunction(()=>!document.querySelector('[data-option="orbit"]').disabled);

@@ -171,7 +171,10 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
    try{
      // Opt in only from B preview. The historical required-matrix command
      // still runs its original V53 responsive checks and artifacts unchanged.
-     if(!process.exitCode&&process.env.MATH_V54_LAYOUT_DIAGNOSTICS==='1')await verifyV54CompactLayout(browser);
+     if(!process.exitCode&&process.env.MATH_V54_LAYOUT_DIAGNOSTICS==='1'){
+       await verifyV54CompactLayout(browser);
+       await verifyV54EntryLayout(browser);
+     }
    }finally{await browser.close();}
  }
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});
@@ -277,4 +280,92 @@ async function verifyV54CompactLayout(browser){
   assert.ok(result.passed,'V54 responsive workbench: '+result.rows.filter(row=>row.passed).length+'/'+result.rows.length+' viewports passed; inspect original results.json');
   console.log(JSON.stringify({v54ResponsiveLayout:result.rows.map(row=>({viewport:row.viewport,ratio:row.initial?.ratio,headingHeight:row.initial?.headingHeight,passed:row.passed,realSubmission:row.realSubmission??false}))}));
 
+}
+
+// Mac 03 uses the same historical responsive extension and real paused
+// native workbench, independent of the fixed-desktop A/AB acceptance.
+async function verifyV54EntryLayout(browser){
+ const assert=require('node:assert/strict'),atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
+ const dir=path.resolve('verification/v54-entry-layout'),rootURL='http://127.0.0.1:43827';
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,rows:[],testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()};
+ try{
+  for(const [width,height] of [[1280,720],[1000,1200]]){
+   const viewport={width,height},ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage(),errors=[];
+   const row={viewport,errors,passed:false,switches:[]};result.rows.push(row);
+   page.on('pageerror',e=>errors.push(e.message));
+   const shot=name=>page.screenshot({path:path.join(dir,width+'x'+height+'-'+name+'.png')});
+   try{
+    await page.goto(rootURL+'/index.html?world=network&layout=54&surface=learn#space/node/mt_-c4Ca_nBzX');
+    await page.waitForFunction(()=>{
+      const w=document.querySelector('#journey-frame').contentWindow;
+      return mathSpace?.snapshot()?.networkVersion===54&&w.mathLesson?.snapshot()?.id==='chancefraction'&&w.document.getElementById('storage-warning')?.hidden;
+    },{},{timeout:60000});
+    const lesson=page.frameLocator('#journey-frame'),key='#extra-controls [data-xfield="prob"]';
+    const token=await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken='entry-live-'+Math.random());
+    await lesson.locator(key).fill('1/7');
+    const readRecord=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.chancefraction);
+    const original=await readRecord(),positions=await page.evaluate(()=>mathSpace.snapshot().positions);
+    const preserved=async()=>{
+      assert.equal(await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken),token);
+      assert.deepEqual(await readRecord(),original);
+      const state=await page.evaluate(()=>({open:mathSpace.snapshot().journeyOpen,paused:mathSpace.snapshot().journeySuspended,pending:document.querySelector('[data-action="nav-learn"]').dataset.pending}));
+      assert.deepEqual(state,{open:true,paused:true,pending:'true'});
+    };
+    await page.locator('[data-action="nav-explore"]').click();
+    await page.waitForFunction(()=>mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
+    await preserved();
+    const nav=page.locator('#cylinder-entry-nav'),choices=nav.locator('[data-action="cylinder-entry"]');
+    await page.locator('.tool-rail [data-action="cylinder-origin"]').click();await nav.waitFor({state:'visible'});
+    await page.waitForFunction(()=>!mathSpace.motion().tween);
+    const roots=await choices.evaluateAll(els=>els.map(el=>({key:el.dataset.key,kind:el.dataset.entryKind,incoming:Number(el.dataset.incoming)})));
+    assert.equal(roots.length,5);
+    for(const r of roots){const incoming=atlas.edges.filter(e=>e.topicId===r.key.slice(5)).length;assert.equal(r.incoming,incoming);assert.equal(r.kind,incoming?'growth':'root');}
+    await shot('origin');
+    let selected=null;
+    const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return {position:s.position,target:s.target,zoom:s.cameraZoom};});
+    for(const r of roots){
+      const choice=nav.locator('[data-key="'+r.key+'"]'),before=await camera();
+      await choice.hover();
+      await page.waitForFunction(key=>mathSpace.cylinder().presentation.entryPreview?.key===key&&mathSpace.nodeRadius(key)>=5.5,r.key);
+      assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),selected);
+      assert.deepEqual(await camera(),before);
+      await preserved();
+      await choice.click();
+      await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='true',r.key);
+      const geometry=await page.evaluate(key=>{
+        const rect=e=>{const r=e.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+        const nav=document.querySelector('#cylinder-entry-nav'),card=document.querySelector('#focus-card'),n=rect(nav),c=rect(card),p=mathSpace.project(key);
+        const visible=(r,container)=>r.left>=container.left-1&&r.right<=container.right+1&&r.top>=container.top-1&&r.bottom<=container.bottom+1;
+        const hit=el=>{const r=rect(el),x=(r.left+r.right)/2,y=(r.top+r.bottom)/2;return el.contains(document.elementFromPoint(x,y));};
+        const bounds={left:0,top:0,right:innerWidth,bottom:innerHeight};
+        return {nav:n,card:c,gap:c.top-n.bottom,within:visible(n,bounds)&&visible(c,bounds),switches:[...nav.querySelectorAll('[data-action="cylinder-entry"]')].map(el=>({key:el.dataset.key,visible:visible(rect(el),n),hit:hit(el)})),root:{x:p.x,y:p.y,visible:p.visible&&p.x>=0&&p.x<n.left&&p.y>=94&&p.y<=innerHeight-88}};
+      },r.key);
+      assert.ok(geometry.within&&geometry.gap>=6&&geometry.switches.every(s=>s.visible&&s.hit)&&geometry.root.visible,'entry switcher, card, root are separately visible: '+JSON.stringify(geometry));
+      assert.equal(await choices.count(),5);assert.equal(await choice.getAttribute('aria-pressed'),'true');
+      assert.notDeepEqual(await camera(),before);assert.deepEqual(await page.evaluate(()=>mathSpace.snapshot().positions),positions);
+      await preserved();
+      // The actual compact card keeps its original primary action reachable.
+      const action=page.locator('#focus-card .cylinder-compact-inspection .primary-button');
+      await action.scrollIntoViewIfNeeded();
+      assert.ok(await action.evaluate(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint((r.left+r.right)/2,(r.top+r.bottom)/2));}));
+      row.switches.push({key:r.key,geometry});
+      selected=r.key;
+      if(row.switches.length===1||row.switches.length===5)await shot('locked-'+row.switches.length);
+    }
+    await nav.locator('[data-action="cylinder-entry-home"]').click();
+    await page.waitForFunction(()=>!mathSpace.snapshot().selected&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='false');
+    assert.equal(await choices.count(),5);await preserved();await shot('returned-origin');
+    await page.locator('[data-action="nav-learn"]').click();
+    await page.waitForFunction(()=>!mathSpace.snapshot().journeySuspended&&!document.querySelector('#journey-surface').hidden);
+    assert.equal(await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken),token);
+    assert.equal(await lesson.locator(key).inputValue(),'1/7');assert.deepEqual(await readRecord(),original);
+    assert.ok(await nav.isHidden());assert.deepEqual(errors,[]);
+    row.sameDocument=true;row.draftPreserved=true;row.passed=true;
+   }catch(e){row.failure=e.stack;await shot('failure').catch(()=>{});console.error(width+'x'+height+': '+e.message);}finally{await ctx.close();}
+  }
+  result.passed=result.rows.length===2&&result.rows.every(r=>r.passed);
+ }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
+ assert.ok(result.passed,'V54 entry layout: '+result.rows.filter(r=>r.passed).length+'/'+result.rows.length+' passed');
+ console.log(JSON.stringify({v54EntryLayout:result.rows.map(r=>({viewport:r.viewport,passed:r.passed,switches:r.switches.length,sameDocument:r.sameDocument,draftPreserved:r.draftPreserved}))}));
 }

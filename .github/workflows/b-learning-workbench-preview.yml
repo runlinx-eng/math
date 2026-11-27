@@ -64,4 +64,5 @@ jobs:
             verification/p7-d5
             verification/learning-workspace
             verification/v54-workbench-layout
+            verification/v54-entry-layout
           if-no-files-found: warn
