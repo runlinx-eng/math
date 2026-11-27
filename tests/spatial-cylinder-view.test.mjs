@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {buildCylinderSpace,CYLINDER_VERSION,CYLINDER_VIEW_KEY} from '../dist/spatial-cylinder-view.js';
 import {buildRelationshipSpace,RELATIONSHIP_VERSION} from '../dist/spatial-relationship.js';
 import {restoreNetworkCoordinates} from '../dist/spatial-global.js';
-import {parseView,LAYOUT_VERSION,cylinderObservation} from '../dist/spatial-model.js';
+import {parseView,LAYOUT_VERSION,cylinderObservation,cylinderSessionPresentation} from '../dist/spatial-model.js';
 import {cylinderReferenceLabelPlacement} from '../dist/spatial-cylinder-visuals.js';
 import {placePointLabel,overlaps} from '../dist/spatial-labels.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
@@ -54,3 +54,12 @@ test('v54 point annotations stay beside their anchor, avoid markers and suppress
  assert.ok(edge.x>=12&&edge.x+edge.w<=988);
  assert.equal(point.x,450);assert.equal(point.y,500);
 });
+
+test("Mac stage 01: learning",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"learn","journeyOpen":true,"sessionId":"A"})),[true,false,true,false,true]));
+test("Mac stage 01: parked",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore","journeyOpen":true,"journeySuspended":true,"sessionId":"A"})),[true,true,false,true,true]));
+test("Mac stage 01: parked guide",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore","journeyOpen":true,"journeySuspended":true,"sessionId":"A","guideSuspended":true})),[true,true,false,true,true]));
+test("Mac stage 01: trail",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"trail","journeyOpen":true,"journeySuspended":true,"sessionId":"A"})),[true,true,false,false,false]));
+test("Mac stage 01: v53",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":false,"surface":"explore","journeyOpen":true,"journeySuspended":true,"sessionId":"A"})),[false,false,false,false,false]));
+test("Mac stage 01: empty",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore"})),[false,false,false,true,true]));
+test("Mac stage 01: legacy no session",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore","journeyOpen":true,"journeySuspended":true})),[false,false,false,false,false]));
+test("Mac stage 01: guide in parked",()=>assert.deepEqual(Object.values(cylinderSessionPresentation({"cylinder":true,"surface":"explore","journeyOpen":true,"journeySuspended":true,"sessionId":"A","guideVisible":true})),[true,true,false,false,false]));

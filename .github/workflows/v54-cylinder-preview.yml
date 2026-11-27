@@ -9,6 +9,18 @@ on:
 permissions:
   contents: read
 jobs:
+  mac-state-preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Read-only repository preflight (unchanged command)
+        run: node scripts/ci-push-preflight.mjs
   cylinder-preview:
     runs-on: ubuntu-24.04
     timeout-minutes: 15

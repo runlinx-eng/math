@@ -232,7 +232,7 @@ export class SpatialScene {
   get global(){return this.network&&(this.networkVersion===GLOBAL_VERSION||this.networkVersion===this.space.relationshipVersion);}
   get relationshipMap(){return this.network&&this.networkVersion===this.space.relationshipVersion;}
   get cylinderMap(){return this.relationshipMap&&this.networkVersion===54&&!!this.space.cylinderLayout;}
-  get cylinderPointMode(){return this.cylinderMap&&!!this.callbacks.isCylinderExplorer?.();}
+  get cylinderPointMode(){return this.cylinderMap&&!!(this.callbacks.isCylinderPointPresentation?.()??this.callbacks.isCylinderExplorer?.());}
   get cylinderPrimary(){if(!this.cylinderPointMode)return null;const selected=this.space.byKey.get(this.selected),hover=this.space.byKey.get(this.hoverMapKey);return selected?.kind==='node'?selected:hover?.kind==='node'?hover:null;}
   get knowledgeFocus(){return this.relationshipMap&&this.space.byKey.get(this.selected)?.kind==='node'&&!this.guideFocus;}
   get localRelationshipFocus(){return this.knowledgeFocus&&!this.traceResult;}
@@ -943,7 +943,7 @@ export class SpatialScene {
     // Let knowledge labels and overlays win any collision; do not move the anchor.
     if(this.cylinderOriginMarker){
       const marker=this.cylinderOriginMarker;marker.hidden=true;
-      if(pointMode&&!this.selected&&this.networkView!=='map'){
+      if(this.callbacks.isCylinderExplorer?.()&&!this.selected&&this.networkView!=='map'){
         const p=this.project(this.space.cylinderOriginPosition),rect={x:p.x-74,y:p.y-10,w:148,h:40};
         if(p.visible&&rect.x>=12&&rect.y>=94&&rect.x+rect.w<=this.width-12&&rect.y+rect.h<=this.height-78&&!rects.some(r=>overlaps(rect,r,4))){
           marker.style.transform=`translate(${rect.x}px,${rect.y}px)`;marker.hidden=false;

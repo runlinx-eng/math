@@ -296,10 +296,15 @@ const ready=async(page,version,count)=>{
            return actual;
          };
          const assertMapForeground=async()=>{
-           const actual=await foregroundStyles();
-           assert.equal(actual.filter,'none');assert.equal(actual.labels,1);assert.equal(actual.card,1);assert.equal(actual.lesson,.82);
-           assert.equal(actual.contextBackground,'rgb(255, 254, 249)');
-           assert.ok(actual.contrasts.every(item=>item.ratio>=4.5));
+           const actual=await page.evaluate(()=>({
+             filter:getComputedStyle(document.querySelector('#space-canvas>canvas')).filter,
+             labels:Number(getComputedStyle(document.querySelector('#space-canvas .space-labels')).opacity),
+             lessonHidden:document.querySelector('#journey-surface').hidden,
+             pending:document.querySelector('[data-action="nav-learn"]').dataset.pending,
+             pointLabels:document.querySelectorAll('.space-label.node.cylinder-point-label:not([hidden])').length
+           }));
+           assert.equal(actual.filter,'none');assert.equal(actual.labels,1);
+           assert.equal(actual.lessonHidden,true);assert.equal(actual.pending,'true');assert.ok(actual.pointLabels>0);
            return actual;
          };
          const lessonStage=stage=>workbench.locator('#scene').getAttribute('data-stage').then(value=>assert.equal(value,stage));
@@ -344,14 +349,27 @@ const ready=async(page,version,count)=>{
          assert.ok(atlas.edges.some(e=>e.prerequisiteId===beforeId&&e.topicId===topic),'shown prerequisite has a real directed source edge');
          const pack=atlas.packs.find(p=>p.nodeIds.includes(beforeId));
          assert.ok(pack,'prerequisite belongs to a source pack');
-         await page.locator('#workbench-focus-toggle').click();await foreground('map');
+         assert.ok(await page.locator('#workbench-focus-toggle').isHidden(),'v54 has no third foreground state');
+         // Real hit-tested blank canvas click, away from points and overlays.
+         const pausePoint=await page.evaluate(()=>{
+           const canvas=document.querySelector('#space-canvas>canvas'),r=canvas.getBoundingClientRect(),nodes=window.mathSpace.snapshot().positions.filter(o=>o.key.startsWith('node:')).map(o=>({p:window.mathSpace.project(o.key),radius:window.mathSpace.nodeRadius(o.key)||0}));
+           for(let y=r.top+110;y<r.bottom-100;y+=27)for(let x=r.left+35;x<r.right-35;x+=29){
+             if(document.elementFromPoint(x,y)!==canvas)continue;
+             if(nodes.every(({p,radius})=>!p?.visible||Math.hypot(x-r.left-p.x,y-r.top-p.y)>radius+12))return {x,y};
+           }
+           return null;
+         });
+         assert.ok(pausePoint,'real exposed blank map hit target');
+         await page.mouse.click(pausePoint.x,pausePoint.y);await paused();
+         await sameDocument();assert.equal(await learnerState(),edited);
          // Choose the actual linked knowledge through the ordinary search UI.
          // The fixed native document must not be reloaded or replaced.
          await page.locator('[data-action="search"]:visible').first().click();
          await page.locator('#search-input').fill(beforeId);
          await page.locator('#search-results [data-key="'+beforeKey+'"]').click();
          await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key,beforeKey);
-         await foreground('map');await sameDocument();
+         await paused();await sameDocument();
+         await page.waitForFunction(()=>document.querySelector('.space-label.node.cylinder-point-label:not([hidden])'));
          const mapStyles=await assertMapForeground();
          const explored=await learnerState(),expected=JSON.parse(edited),actual=JSON.parse(explored);
          assert.ok(actual.visited[beforeId]);
@@ -360,7 +378,13 @@ const ready=async(page,version,count)=>{
          assert.deepEqual(camera(await page.evaluate(()=>window.mathSpace.snapshot())),camera(opened));
          assert.equal(await workbench.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
          await page.screenshot({path:path.join(dir,'ab-v54-prerequisite.png')});
-         await workbench.locator('#instruction').click();await foreground('learn');await sameDocument();await lessonStage('recheck');
+         await page.locator('.top-tools [data-action="overview"]').click();
+         await page.waitForFunction(()=>window.mathSpace.snapshot().selected===null);
+         await paused();await sameDocument();assert.equal(await learnerState(),explored);
+         await page.locator('[data-action="back"]').click();
+         await page.waitForFunction(key=>window.mathSpace.snapshot().selected===key,beforeKey);
+         await paused();await sameDocument();assert.equal(await learnerState(),explored);
+         await resume.click();await foreground('learn');await sameDocument();await lessonStage('recheck');
          const returnedStyles=await assertLearningForeground();
          await page.screenshot({path:path.join(dir,'ab-v54-learning-return.png')});
          assert.equal(await learnerState(),explored);
