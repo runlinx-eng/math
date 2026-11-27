@@ -66,4 +66,5 @@ jobs:
             verification/v54-workbench-layout
             verification/v54-entry-layout
             verification/v54-quiet-exploration
+            verification/v54-mac-joint
           if-no-files-found: warn

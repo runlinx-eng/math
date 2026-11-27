@@ -175,6 +175,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
        await verifyV54CompactLayout(browser);
        await verifyV54EntryLayout(browser);
        await verifyV54QuietExploration(browser);
+       await verifyV54MacJoint(browser);
      }
    }finally{await browser.close();}
  }
@@ -483,4 +484,214 @@ async function verifyV54QuietExploration(browser){
  }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
  assert.ok(result.passed,'V54 quiet exploration: '+result.rows.filter(r=>r.passed).length+'/'+result.rows.length+' passed');
  console.log(JSON.stringify({v54QuietExploration:result.rows.map(r=>({viewport:r.viewport,passed:r.passed,stages:r.stages.map(s=>({stage:s.stage,captions:s.captions.length,overlap:s.captionOverlap})),controls:r.initial?.buttons.length}))}));
+}
+
+// Mac 05: one real continuous acceptance journey, in addition to (not in
+// place of) all original isolated regressions. No storage injection; only
+// actual controls create learner state. The document token is diagnostic.
+async function verifyV54MacJoint(browser){
+ const assert=require('node:assert/strict'),base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
+ const release=fs.readFileSync(path.resolve(__dirname,'../dist/sw.js'),'utf8').match(/^const CACHE = '([^']+)';/m)?.[1];
+ const dir=path.resolve('verification/v54-mac-joint'),viewport={width:1280,height:720};
+ const topic='mt_-c4Ca_nBzX',session='chancefraction',other='mt_Ep7TDFuYUa',otherKey='node:'+other;
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,viewport,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),release,errors:[],steps:[]};
+ const ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage();
+ const frame=page.frameLocator('#journey-frame'),input=frame.locator('#extra-controls [data-xfield="prob"]'),learn=page.locator('[data-action="nav-learn"]'),pause=page.locator('#workbench-later');
+ const nav=page.locator('#cylinder-entry-nav'),choices=nav.locator('[data-action="cylinder-entry"]');
+ page.on('pageerror',e=>result.errors.push(e.message));
+ let currentStep=null,token,baseline,positions;
+ const shot=name=>page.screenshot({path:path.join(dir,name+'.png')});
+ const run=async(n,ids,title,fn)=>{
+   currentStep={number:n,issues:ids,title,passed:false};result.steps.push(currentStep);
+   currentStep.evidence=await fn();
+   assert.deepEqual(result.errors,[]);
+   await shot(String(n).padStart(2,'0')+'-'+ids.join('-'));
+   currentStep.passed=true;
+ };
+ const read=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+ const record=async()=>JSON.parse(await read()).lessons[session];
+ const mark=()=>frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__joint05Token='mac-joint-'+Math.random());
+ const sameDoc=async()=>assert.equal(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__joint05Token),token);
+ const sameRecord=async()=>assert.deepEqual(await record(),baseline,'original probability lesson remains byte-equivalent');
+ const ready=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.networkVersion===54&&window.mathSpace.snapshot().visibleNodes.length===587&&document.querySelector('#space-app')?.classList.contains('ready'),null,{timeout:60000});
+ const lessonReady=()=>page.waitForFunction(id=>{
+   const w=document.querySelector('#journey-frame')?.contentWindow;
+   return w?.mathLesson?.snapshot()?.id===id&&w.document.body.dataset.workbenchLayout==='compact-v54'&&w.document.querySelector('#workbench-curriculum')?.dataset.state!=='loading'&&w.document.getElementById('storage-warning')?.hidden;
+ },session,{timeout:60000});
+ const foreground=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen&&!mathSpace.snapshot().journeySuspended&&!document.querySelector('#journey-surface').hidden&&document.body.dataset.workbenchForeground==='learn');
+ const paused=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen&&mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden&&document.querySelector('[data-action="nav-learn"]').dataset.pending==='true');
+ const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return {position:s.position,target:s.target,zoom:s.cameraZoom};});
+ const cameraDelta=(a,b)=>Math.max(...a.position.map((x,i)=>Math.abs(x-b.position[i])),...a.target.map((x,i)=>Math.abs(x-b.target[i])),Math.abs(a.zoom-b.zoom));
+ const samePositions=async()=>assert.deepEqual(await page.evaluate(()=>mathSpace.snapshot().positions),positions);
+ const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ try{
+  await run(1,['I-01'],'V54 actual node entry and foreground',async()=>{
+    await page.goto(base+'/index.html?world=network&layout=54#space/node/'+topic);await ready();
+    await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked,'node:'+topic);
+    positions=await page.evaluate(()=>mathSpace.snapshot().positions);
+    await page.locator('#focus-card [data-action="open"][data-id="'+topic+'"]:visible').click();await lessonReady();await foreground();await settle();
+    const styles=await page.evaluate(()=>{
+      const get=s=>getComputedStyle(document.querySelector(s));
+      const labels=[...document.querySelectorAll('.space-label.node:not([hidden])')].map(el=>({key:el.dataset.key,point:el.classList.contains('cylinder-point-label'),background:getComputedStyle(el).backgroundColor,border:getComputedStyle(el).borderTopWidth}));
+      return {filter:get('#space-canvas>canvas').filter,labelsOpacity:Number(get('#space-canvas .space-labels').opacity),lessonOpacity:Number(get('#journey-surface').opacity),labels};
+    });
+    assert.match(styles.filter,/brightness\(0\.64\)/);assert.match(styles.filter,/blur\(0\.8px\)/);assert.equal(styles.labelsOpacity,.62);assert.equal(styles.lessonOpacity,1);
+    assert.ok(styles.labels.every(l=>l.point&&l.background==='rgba(0, 0, 0, 0)'&&l.border==='0px'),'no V53 white rectangular node labels during V54 learning');
+    assert.ok(await page.locator('#workbench-focus-toggle').isHidden());
+    assert.equal(await frame.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
+    token=await mark();await samePositions();return styles;
+  });
+  await run(2,['I-02'],'70 percent stage and real probability draft',async()=>{
+    const m=await page.evaluate(()=>{
+      const panel=document.querySelector('#journey-surface'),iframe=document.querySelector('#journey-frame'),doc=iframe.contentDocument,rect=el=>el.getBoundingClientRect();
+      const p=rect(panel),f=rect(iframe),s=rect(doc.querySelector('#workbench-stage')),work=rect(doc.querySelector('#work')),dock=rect(doc.querySelector('#workbench-drawer')),command=rect(doc.querySelector('.execution-command'));
+      const fields=['kind','prob','answers.0'].map(field=>{
+        const el=doc.querySelector('#extra-controls [data-xfield="'+field+'"]'),r=rect(el),label=rect(el.closest('label')),x=r.x+r.width/2,y=r.y+r.height/2;
+        return {field,label:el.closest('label').textContent.trim(),visible:label.left>=s.left-1&&label.right<=s.right+1&&label.top>=s.top-1&&label.bottom<=s.bottom+1&&r.bottom<=dock.top+1&&r.bottom<=command.top+1&&!el.disabled,hit:[[x,y],[r.left+3,r.top+3],[r.right-3,r.bottom-3]].every(([a,b])=>el.contains(doc.elementFromPoint(a,b)))&&document.elementFromPoint(f.left+x,f.top+y)===iframe};
+      });
+      return {ratio:p.width/innerWidth,heading:f.top-p.top+work.top,scroll:doc.querySelector('#workbench-stage').scrollTop,fields};
+    });
+    assert.ok(m.ratio>=.68&&m.ratio<=.72&&m.heading<=220);assert.equal(m.scroll,0);assert.ok(m.fields.every(f=>f.visible&&f.hit&&f.label));
+    assert.equal(await frame.locator('#extra-controls .b22-controls > .field :is(input,select)').count(),3);
+    await frame.locator('#extra-visual [data-x="p22-toggle"][data-index="5"]').click();
+    await frame.locator('#extra-controls [data-xfield="kind"]').selectOption('equal');
+    await input.fill('1/7');await frame.locator('#extra-controls [data-xfield="answers.0"]').fill('6');
+    await page.waitForFunction(()=>{const r=JSON.parse(localStorage.getItem('math-explorer-v2')||'null')?.lessons?.chancefraction;return r?.models?.[r.index]?.prob==='1/7';});
+    baseline=await record();assert.equal(Object.values(baseline.cases||{}).flatMap(x=>x.attempts||[]).length,0);
+    return {...m,draft:baseline.models[baseline.index].prob,attempts:0};
+  });
+  await run(3,['I-03'],'single question entry and optional real source context',async()=>{
+    const child=frame.locator('#lesson > header [data-do="question"]'),global=page.locator('.save-status [data-action="question"]');
+    assert.ok(await child.isVisible()&&await global.isHidden()&&await pause.isVisible());
+    const questionCount=JSON.parse(await read()).daily.questions.length;
+    const composer=page.locator('dialog.question-dialog');
+    await child.click();await composer.waitFor({state:'visible'});await composer.locator('[data-cancel]').click();await composer.waitFor({state:'hidden'});
+    assert.equal(JSON.parse(await read()).daily.questions.length,questionCount);
+    const details=page.locator('#workbench-context-menu'),summary=details.locator('summary');assert.equal(await details.evaluate(el=>el.open),false);
+    await summary.click();const links=await page.locator('#learning-map-context [data-source-key]').evaluateAll(els=>els.map(el=>el.dataset.sourceKey));
+    assert.ok(links.length&&links.every(k=>atlas.edges.some(e=>(e.topicId===topic&&e.prerequisiteId===k.slice(5))||(e.prerequisiteId===topic&&e.topicId===k.slice(5)))));
+    await summary.press('Escape');await page.waitForFunction(()=>!document.querySelector('#workbench-context-menu').open);await sameRecord();
+    return {singleQuestionEntry:true,cancelNoWrite:true,sourceKeys:links};
+  });
+  await run(4,['II-01'],'actual exposed map click pauses into V54',async()=>{
+    const point=await page.evaluate(()=>{
+      const canvas=document.querySelector('#space-canvas>canvas'),r=canvas.getBoundingClientRect(),nodes=mathSpace.snapshot().positions.filter(o=>o.key.startsWith('node:')).map(o=>({p:mathSpace.project(o.key),radius:mathSpace.nodeRadius(o.key)||0}));
+      for(let y=r.top+110;y<r.bottom-100;y+=27)for(let x=r.left+35;x<r.right-35;x+=29){
+        if(document.elementFromPoint(x,y)!==canvas)continue;
+        if(nodes.every(({p,radius})=>!p?.visible||Math.hypot(x-r.left-p.x,y-r.top-p.y)>radius+12))return {x,y};
+      }
+      return null;
+    });
+    assert.ok(point,'real exposed map hit target');await page.mouse.click(point.x,point.y);await paused();await sameDoc();await sameRecord();
+    const presentation=await page.evaluate(()=>({version:mathSpace.snapshot().networkVersion,filter:getComputedStyle(document.querySelector('#space-canvas>canvas')).filter,labels:Number(getComputedStyle(document.querySelector('#space-canvas .space-labels')).opacity),pending:document.querySelector('[data-action="nav-learn"]').dataset.pending,pointLabels:document.querySelectorAll('.space-label.node.cylinder-point-label:not([hidden])').length}));
+    assert.equal(presentation.version,54);assert.equal(presentation.filter,'none');assert.equal(presentation.labels,1);assert.equal(presentation.pending,'true');assert.ok(presentation.pointLabels>0);
+    return {...presentation,point,sameDocument:true};
+  });
+  await run(5,['II-02'],'real different node selection, explicit switch cancellation, resume A',async()=>{
+    await page.locator('[data-action="search"]:visible').first().click();await page.locator('#search-input').fill(other);
+    await page.locator('#search-results [data-key="'+otherKey+'"]').click();await page.waitForFunction(k=>mathSpace.snapshot().selected===k,otherKey);await paused();await sameDoc();await sameRecord();
+    const beforeCancel=await read(),start=page.locator('#focus-card [data-action="open"][data-id="'+other+'"]:visible');
+    const prompt=page.waitForEvent('dialog',{timeout:10000}).then(async d=>{assert.equal(d.type(),'confirm');assert.match(d.message(),/草稿/);await d.dismiss();});
+    await Promise.all([prompt,start.click()]);await paused();assert.equal(await read(),beforeCancel);await sameDoc();
+    await learn.click();await foreground();await lessonReady();await sameDoc();await sameRecord();assert.equal(await input.inputValue(),'1/7');
+    return {selectedOther:otherKey,resumed:session,cancelNoWrite:true,sameDocument:true};
+  });
+  await run(6,['II-03'],'real browser Back/Forward, cached offline reload and restoration',async()=>{
+    // Back and Forward are the browser history, not the app Back button.
+    await page.goBack({waitUntil:'commit'});await paused();await sameDoc();await sameRecord();
+    await page.goForward({waitUntil:'commit'});await foreground();await sameDoc();await sameRecord();assert.equal(await input.inputValue(),'1/7');
+    await pause.click();await paused();await sameDoc();await sameRecord();
+    await page.waitForFunction(async name=>{
+      const worker=navigator.serviceWorker.controller;if(!worker||worker.state!=='activated')return false;
+      const cache=await caches.open(name);
+      return (await Promise.all(['./spatial-cylinder-visuals.js','./learning/workbench-presentation.js','./learn.html'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);
+    },release,{timeout:90000});
+    await ctx.setOffline(true);
+    try{
+      await page.reload();await ready();await lessonReady();await paused();
+      const after=await record(),expected=structuredClone(baseline);expected.updatedAt=after.updatedAt;assert.deepEqual(after,expected,'only original native reopen timestamp may change');baseline=after;
+      assert.notEqual(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__joint05Token),token);
+      token=await mark();await learn.click();await foreground();await lessonReady();await sameDoc();
+      assert.equal(await input.inputValue(),'1/7');await sameRecord();
+      await pause.click();await paused();await sameDoc();await sameRecord();
+    }finally{await ctx.setOffline(false);}
+    await samePositions();
+    return {browserBack:true,browserForward:true,offlineReload:true,originalDraft:'1/7',reloadedDocument:true};
+  });
+  await run(7,['III-01'],'real entry hover and source spine emphasis',async()=>{
+    await page.locator('.tool-rail [data-action="cylinder-origin"]').click();await nav.waitFor({state:'visible'});await page.waitForFunction(()=>!mathSpace.motion().tween);
+    const key=await choices.first().getAttribute('data-key'),sp=(await page.evaluate(()=>mathSpace.cylinder().spines)).find(s=>s.index===0&&'node:'+s.rootId===key),pose=await camera(),raw=await read();
+    assert.ok(sp&&sp.edges.length);
+    const edgeKeys=sp.edges.map(e=>e.prerequisiteId+'>'+e.topicId);assert.ok(edgeKeys.every(k=>atlas.edges.some(e=>e.prerequisiteId+'>'+e.topicId===k)));
+    await choices.first().hover();await page.waitForFunction(({key,edgeKeys})=>{
+      const p=mathSpace.cylinder().presentation,chosen=p.entryEdges.filter(e=>edgeKeys.includes(e.key)),other=p.entryEdges.filter(e=>!edgeKeys.includes(e.key));
+      return p.entryPreview?.key===key&&mathSpace.nodeRadius(key)>=5.5&&chosen.length===edgeKeys.length&&Math.min(...chosen.map(e=>e.opacity))>Math.max(...other.map(e=>e.opacity));
+    },{key,edgeKeys});
+    assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),null);assert.ok(cameraDelta(await camera(),pose)<=1e-9);assert.equal(await read(),raw);await sameDoc();await sameRecord();await samePositions();
+    return {key,sourceEdgeKeys:edgeKeys,hoverOnly:true};
+  });
+  await run(8,['III-02'],'five explicit entry switches with separated locked card',async()=>{
+    const keys=await choices.evaluateAll(els=>els.map(el=>el.dataset.key)),switches=[];assert.equal(keys.length,5);
+    let selected=null;
+    for(const key of keys){
+      const choice=nav.locator('[data-key="'+key+'"]'),old=await camera();
+      await choice.hover();await page.waitForFunction(key=>mathSpace.cylinder().presentation.entryPreview?.key===key,key);
+      assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),selected);assert.ok(cameraDelta(await camera(),old)<=1e-9);
+      await choice.click();await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='true',key);
+      const geometry=await page.evaluate(key=>{
+        const nav=document.querySelector('#cylinder-entry-nav'),card=document.querySelector('#focus-card'),n=nav.getBoundingClientRect(),c=card.getBoundingClientRect(),p=mathSpace.project(key);
+        const hit=el=>{const r=el.getBoundingClientRect();return [[(r.left+r.right)/2,(r.top+r.bottom)/2],[r.left+5,r.top+5],[r.right-5,r.top+5],[r.left+5,r.bottom-5],[r.right-5,r.bottom-5]].every(([x,y])=>el.contains(document.elementFromPoint(x,y)));};
+        return {gap:c.top-n.bottom,within:n.left>=0&&n.top>=0&&n.right<=innerWidth&&c.bottom<=innerHeight,allHit:[...nav.querySelectorAll('button'),document.querySelector('.top-tools [data-action="overview"]')].every(hit),rootVisible:p.visible&&p.x>=0&&p.x<n.left&&p.y>=94&&p.y<=innerHeight-88};
+      },key);
+      assert.ok(geometry.gap>=6&&geometry.within&&geometry.allHit&&geometry.rootVisible);assert.equal(await choices.count(),5);
+      assert.ok(cameraDelta(await camera(),old)>1e-6);assert.equal(await choice.getAttribute('aria-pressed'),'true');
+      await paused();await sameDoc();await sameRecord();await samePositions();selected=key;switches.push({key,...geometry});
+    }
+    return {switches,sameDocument:true};
+  });
+  await run(9,['III-03'],'actual source indegree classification',async()=>{
+    const rows=await choices.evaluateAll(els=>els.map(el=>({key:el.dataset.key,kind:el.dataset.entryKind,incoming:Number(el.dataset.incoming),text:el.textContent})));
+    for(const r of rows){const incoming=atlas.edges.filter(e=>e.topicId===r.key.slice(5)).length;assert.equal(r.incoming,incoming);assert.equal(r.kind,incoming?'growth':'root');assert.match(r.text,incoming?/生长入口/:/真正起点/);}
+    assert.equal(rows.filter(r=>r.kind==='root').length,4);assert.equal(rows.filter(r=>r.kind==='growth').length,1);
+    await nav.locator('[data-action="cylinder-entry-home"]').click();await page.waitForFunction(()=>!mathSpace.snapshot().selected&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='false');assert.equal(await choices.count(),5);
+    await nav.locator('[data-action="cylinder-entry-close"]').click();await sameDoc();await sameRecord();return {rows,returnedOrigin:true};
+  });
+  await run(10,['IV-01'],'default closed observation options and explicit controls',async()=>{
+    const details=page.locator('.cylinder-extra-tools'),summary=details.locator('summary');
+    assert.equal(await details.evaluate(el=>el.open),false);assert.ok(await page.locator('#network-view-description').isHidden());
+    await summary.click();assert.ok(await page.locator('#network-view-description').isVisible());assert.equal(await page.locator('.cylinder-observation-switches [data-action="cylinder-option"]').count(),5);
+    await summary.press('Escape');assert.equal(await details.evaluate(el=>el.open),false);
+    await summary.click();await page.locator('.tool-rail [data-action="front"]').click();await page.waitForFunction(()=>!mathSpace.motion().tween);assert.equal(await details.evaluate(el=>el.open),false);
+    await samePositions();await sameDoc();await sameRecord();return {defaultClosed:true,explicitFiveSwitches:true,escapeClosed:true,resetClosed:true};
+  });
+  await run(11,['IV-02','IV-03'],'single-line toolbar, reference caption collision and final real Check',async()=>{
+    const measure=()=>page.evaluate(()=>{
+      const visible=el=>!!el&&!el.hidden&&el.getClientRects().length>0,rect=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};},overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+      const rail=[...document.querySelectorAll('.tool-rail button')].filter(visible).map(el=>{
+        const range=document.createRange();range.selectNodeContents(el);const r=el.getBoundingClientRect(),lines=[...range.getClientRects()].filter(x=>x.width&&x.height);
+        return {text:el.textContent.trim(),nowrap:getComputedStyle(el).whiteSpace==='nowrap',oneLine:lines.every(x=>Math.abs(x.top-lines[0].top)<1),fit:range.getBoundingClientRect().width<=r.width+1,hit:el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)),y:r.y};
+      });
+      const captions=[...document.querySelectorAll('.cylinder-reference-caption')].filter(visible).map(el=>({stage:el.dataset.stage,rect:rect(el)}));
+      const obstacles=[...document.querySelectorAll('.space-label:not([hidden]),#cylinder-origin-marker:not([hidden]),#network-guide,#focus-card,#cylinder-entry-nav,#cylinder-hover-inspector,.tool-rail,.topbar,.bottom-bar')].filter(visible).map(rect);
+      return {rail,captions,collision:captions.some(a=>obstacles.some(b=>overlap(a.rect,b))),lens:visible(document.querySelector('.lens-indicator'))};
+    });
+    const pose=await camera(),visuals=[];
+    for(const stage of ['all','stage-1','stage-2','stage-3']){
+      await page.locator('#grade-map-filter [data-stage="'+stage+'"]').click();await page.mouse.move(viewport.width-8,viewport.height-8);await page.waitForFunction(stage=>mathSpace.snapshot().gradeStageFilter===stage,stage);await settle();
+      const v=await measure();assert.equal(v.rail.length,10);assert.ok(v.rail.every(b=>b.nowrap&&b.oneLine&&b.fit&&b.hit&&Math.abs(b.y-v.rail[0].y)<1));assert.equal(v.lens,false);
+      assert.ok(v.captions.length<=(stage==='all'?0:1)&&v.captions.every(c=>c.stage===stage)&&!v.collision);assert.ok(cameraDelta(await camera(),pose)<=1e-9);await samePositions();visuals.push({stage,...v});await shot('11-'+stage);
+    }
+    assert.ok(visuals.some(v=>v.captions.length===1),'actual reference caption can be placed without collision');
+    await page.locator('#grade-map-filter [data-stage="all"]').click();await learn.click();await foreground();await lessonReady();await sameDoc();await sameRecord();
+    assert.equal(await input.inputValue(),'1/7');await input.fill('1/6');await frame.locator('#actions [data-do="check"]').click();
+    await page.waitForFunction(()=>document.querySelector('#journey-frame').contentDocument.querySelector('#scene').dataset.stage==='passed');
+    const checked=await record();assert.equal(checked.cases[0].attempts.length,1);assert.equal(checked.cases[0].attempts[0].supported,false);await samePositions();
+    return {visuals,realSubmission:true,attempts:1,independent:true};
+  });
+  assert.equal(result.steps.length,11);assert.ok(result.steps.every(s=>s.passed));result.passed=true;
+ }catch(e){result.failure=e.stack;if(currentStep)currentStep.failure=e.stack;await shot('failure').catch(()=>{});throw e;}
+ finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');await ctx.close();}
+ console.log(JSON.stringify({v54MacJoint:{testedCheckoutSha:result.testedCheckoutSha,passed:result.passed,steps:result.steps.map(s=>({number:s.number,issues:s.issues,passed:s.passed})),errors:result.errors}}));
 }
