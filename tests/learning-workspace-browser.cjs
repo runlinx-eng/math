@@ -565,15 +565,34 @@ async function verifyV54MacJoint(browser){
   await run(3,['I-03'],'single question entry and optional real source context',async()=>{
     const child=frame.locator('#lesson > header [data-do="question"]'),global=page.locator('.save-status [data-action="question"]');
     assert.ok(await child.isVisible()&&await global.isHidden()&&await pause.isVisible());
-    const questionCount=JSON.parse(await read()).daily.questions.length;
+    const beforeOpen=await read(),expected=JSON.parse(beforeOpen),questionCount=expected.daily.questions.length;
+    assert.deepEqual(expected.lessons[session],baseline);
     const composer=page.locator('dialog.question-dialog');
-    await child.click();await composer.waitFor({state:'visible'});await composer.locator('[data-cancel]').click();await composer.waitFor({state:'hidden'});
+    await child.click();await composer.waitFor({state:'visible'});
+    // The original questionContext() invokes update(() => {}) before
+    // emitting the question request. That validated save refreshes exactly
+    // the lesson timestamp and rememberSession().at, not its work.
+    const openedRaw=await read(),opened=JSON.parse(openedRaw);
+    const savedTimes={
+      lesson:{before:expected.lessons[session].updatedAt,after:opened.lessons[session].updatedAt},
+      continuation:{before:expected.daily.continuation.at,after:opened.daily.continuation.at}
+    };
+    for(const t of Object.values(savedTimes))assert.ok(Number.isFinite(Date.parse(t.before))&&Number.isFinite(Date.parse(t.after))&&Date.parse(t.after)>=Date.parse(t.before),'original scene capture only refreshes valid time metadata');
+    assert.equal(opened.daily.continuation.id,session);assert.equal(opened.daily.continuation.questionId,null);
+    expected.lessons[session].updatedAt=opened.lessons[session].updatedAt;
+    expected.daily.continuation.at=opened.daily.continuation.at;
+    assert.deepEqual(opened,expected,'question scene capture may refresh only the two existing timestamps in the entire State-v2');
+    baseline=structuredClone(opened.lessons[session]);
+    await composer.locator('[data-cancel]').click();await composer.waitFor({state:'hidden'});
+    assert.equal(await read(),openedRaw,'cancelling the original composer does not write any learner state');
     assert.equal(JSON.parse(await read()).daily.questions.length,questionCount);
     const details=page.locator('#workbench-context-menu'),summary=details.locator('summary');assert.equal(await details.evaluate(el=>el.open),false);
     await summary.click();const links=await page.locator('#learning-map-context [data-source-key]').evaluateAll(els=>els.map(el=>el.dataset.sourceKey));
     assert.ok(links.length&&links.every(k=>atlas.edges.some(e=>(e.topicId===topic&&e.prerequisiteId===k.slice(5))||(e.prerequisiteId===topic&&e.topicId===k.slice(5)))));
-    await summary.press('Escape');await page.waitForFunction(()=>!document.querySelector('#workbench-context-menu').open);await sameRecord();
-    return {singleQuestionEntry:true,cancelNoWrite:true,sourceKeys:links};
+    await summary.press('Escape');await page.waitForFunction(()=>!document.querySelector('#workbench-context-menu').open);
+    assert.equal(await read(),openedRaw,'optional knowledge context disclosure and Escape leave the entire State-v2 untouched');
+    await sameDoc();await sameRecord();
+    return {singleQuestionEntry:true,openingOnlyOriginalTimestamps:savedTimes,cancelNoWrite:true,contextNoWrite:true,sourceKeys:links};
   });
   await run(4,['II-01'],'actual exposed map click pauses into V54',async()=>{
     const point=await page.evaluate(()=>{
