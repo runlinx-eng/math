@@ -41,6 +41,30 @@ const assertPointFocus=async(page,key)=>{
  assert.equal(check.primary,1);assert.ok(check.gap>=5&&check.gap<=22,'annotation must stay beside the actual point: '+check.gap);
  assert.deepEqual(check.halo,check.position);assert.ok(check.labels.every(o=>o.background==='rgba(0, 0, 0, 0)'&&o.border==='0px'));
 };
+// Actual rendered DOM, not a screenshot heuristic or the placement model.
+const visualReduction=page=>page.evaluate(()=>{
+ const rect=el=>{const r=el.getBoundingClientRect();return {x:r.left,y:r.top,w:r.width,h:r.height};};
+ const visible=el=>!el.hidden&&el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden';
+ const rail=document.querySelector('.tool-rail'),details=document.querySelector('.cylinder-extra-tools');
+ const buttons=[...rail.querySelectorAll('button')].filter(visible).map(el=>{
+   const range=document.createRange();range.selectNodeContents(el);
+   const r=el.getBoundingClientRect(),text=range.getBoundingClientRect(),lines=[...range.getClientRects()].filter(r=>r.width&&r.height);
+   return {action:el.dataset.action,text:el.textContent.trim(),nowrap:getComputedStyle(el).whiteSpace==='nowrap',oneLine:lines.every(b=>Math.abs(b.top-lines[0].top)<1),fit:text.width<=r.width+1,hit:el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)),rect:rect(el)};
+ });
+ const captions=[...document.querySelectorAll('.cylinder-reference-caption')].filter(visible).map(el=>({stage:el.dataset.stage,text:el.textContent,rect:rect(el)}));
+ const obstacles=[...document.querySelectorAll('.space-label:not([hidden]),#cylinder-origin-marker:not([hidden]),#network-guide,#focus-card,#cylinder-entry-nav,#cylinder-hover-inspector,.tool-rail,.topbar,.bottom-bar')].filter(visible).map(rect);
+ const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+ return {detailsOpen:details.open,descriptionVisible:visible(document.querySelector('#network-view-description')),lensVisible:visible(document.querySelector('.lens-indicator')),rail:rect(rail),buttons,captions,captionOverlap:captions.some(a=>obstacles.some(b=>overlaps(a.rect,b))),stage:mathSpace.snapshot().gradeStageFilter,reference:mathSpace.cylinder().presentation.referenceCaption};
+});
+const assertQuietVisual=async(page,stage='all')=>{
+ const v=await visualReduction(page);
+ assert.equal(v.stage,stage);assert.equal(v.detailsOpen,false);assert.equal(v.descriptionVisible,false);assert.equal(v.lensVisible,false);
+ assert.ok(v.buttons.length>=10&&v.buttons.every(b=>b.nowrap&&b.oneLine&&b.fit&&b.hit),'camera controls stay single-line and reachable: '+JSON.stringify(v.buttons));
+ assert.ok(v.buttons.every(b=>Math.abs(b.rect.y-v.buttons[0].rect.y)<1),'one horizontal camera row');
+ assert.ok(v.captions.length<=(stage==='all'?0:1)&&v.captions.every(c=>c.stage===stage)&&!v.captionOverlap,'low priority caption, no text collisions');
+ if(v.captions.length)assert.equal(v.reference.stage,stage);
+ return v;
+};
 const assertOriginMarker=async(page)=>{
  await page.waitForFunction(()=>window.mathSpace.cylinder().presentation.originMarker.visible);
  const evidence=await page.evaluate(()=>{
@@ -110,10 +134,12 @@ const ready=async(page,version,count)=>{
        {
          const camera=s=>({position:s.position,target:s.target,cameraZoom:s.cameraZoom});
          const before=await page.evaluate(()=>window.mathSpace.snapshot());
+         row.quietDefault=await assertQuietVisual(page);
          assert.equal(await page.locator('#continue-card').isVisible(),false);
          assert.equal(await page.locator('#cylinder-core-key small').textContent(),'50');
          await page.locator('.cylinder-extra-tools summary').click();
          await page.locator('#network-edge-controls [data-edge-display="all"]').waitFor({state:'visible'});
+         assert.ok(await page.locator('#network-view-description').isVisible(),'full explanation available only in the explicit disclosure');
          const opt=key=>page.locator('[data-action="cylinder-option"][data-option="'+key+'"]');
          const presentation=()=>page.evaluate(()=>window.mathSpace.cylinder().presentation);
          const allOptions=await presentation();assert.equal(allOptions.spines,true);assert.ok(allOptions.rings>0&&allOptions.coreGuides>0);assert.equal(allOptions.crossBackgroundEdges,0);
@@ -180,6 +206,19 @@ const ready=async(page,version,count)=>{
          await page.waitForFunction(()=>window.mathSpace.snapshot().gradeStageFilter==='stage-1');
          const filtered=await page.evaluate(()=>window.mathSpace.snapshot());
          assert.equal(filtered.visibleNodes.length,587);assert.deepEqual(filtered.positions,before.positions);assert.deepEqual(camera(filtered),camera(before));
+         row.stageCaptions=[];
+         for(const stage of ['stage-1','stage-2','stage-3']){
+           await page.locator('#grade-map-filter [data-action="grade-map-stage"][data-stage="'+stage+'"]').click();
+           await page.mouse.move(width-8,height-8);
+           await page.waitForFunction(stage=>mathSpace.snapshot().gradeStageFilter===stage,stage);
+           await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+           const evidence=await assertQuietVisual(page,stage);row.stageCaptions.push(evidence);
+           await page.screenshot({path:path.join(dir,'1920x1080-'+stage+'-quiet.png')});
+         }
+         assert.ok(row.stageCaptions.some(v=>v.captions.length===1),'at least one real reference caption fits the standard desktop');
+         await page.locator('#grade-map-filter [data-action="grade-map-stage"][data-stage="stage-1"]').click();
+         await page.mouse.move(width-8,height-8);
+         await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='stage-1');
          await page.screenshot({path:path.join(dir,'1920x1080-stage1.png')});
          await page.locator('#grade-map-filter [data-action="grade-map-stage"][data-stage="all"]').click();
          await page.locator('[data-action="network-view"][data-view="top"]').click();
@@ -320,6 +359,8 @@ const ready=async(page,version,count)=>{
          await page.locator('.cylinder-extra-tools summary').click();
          await page.emulateMedia({reducedMotion:'reduce'});
          await page.locator('.tool-rail [data-action="front"]').click();
+         await page.waitForFunction(()=>!mathSpace.motion().tween);
+         row.resetQuiet=await assertQuietVisual(page);
          row.orbit=true;
          await page.waitForFunction(async release=>{const c=navigator.serviceWorker.controller;if(!c||c.state!=='activated')return false;const cache=await caches.open(release);return !!(await cache.match(new URL('./spatial-cylinder-visuals.js',location.href)));},release,{timeout:90000});
          await ctx.setOffline(true);await page.reload();await ready(page,54,587);

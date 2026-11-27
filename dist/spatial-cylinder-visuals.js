@@ -1,4 +1,5 @@
 import {cylinderDomainRadiusBounds,cylinderSpineControls} from './spatial-cylinder.js';
+import {overlaps} from './spatial-labels.js';
 // v54 only: decorative guides are not mathematical edges or pick targets.
 // Reference labels have fixed pixel sizes. Clamp the near-edge annotation,
 // never the actual curriculum ring or any mathematical node.
@@ -6,6 +7,20 @@ export function cylinderReferenceLabelPlacement(anchor,viewportWidth,viewportHei
  const width=Math.min(labelWidth,Math.max(1,viewportWidth-24));
  const x=Math.max(12,Math.min(viewportWidth-12-width,anchor.x));
  return {x,width,visible:anchor.visible&&anchor.x>=-32&&anchor.x<=viewportWidth+32&&anchor.y>=12&&anchor.y<=viewportHeight-12};
+}
+// A reference caption is deliberately lower priority than every knowledge
+// label and interactive overlay. Never shift the ring or invent a grade
+// boundary. Try only nearby positions; if there is no free slot, omit text.
+export function placeCylinderReferenceCaption(anchor,viewportWidth,viewportHeight,labelWidth,occupied=[]){
+ const base=cylinderReferenceLabelPlacement(anchor,viewportWidth,viewportHeight,labelWidth);
+ if(!base.visible||base.width<labelWidth)return null;
+ const h=20;
+ for(const dy of [0,-24,24,-42,42]){
+   const rect={x:base.x,y:anchor.y-h/2+dy,w:base.width,h};
+   if(rect.y<94||rect.y+h>viewportHeight-78||occupied.some(o=>overlaps(rect,o,5)))continue;
+   return rect;
+ }
+ return null;
 }
 export function createCylinderVisuals(THREE,space,nodeList){
  const layout=space.cylinderLayout,group=new THREE.Group(),offset=space.cylinderOffset,scale=layout.diagnostics.radialScale;
@@ -44,16 +59,8 @@ export function createCylinderVisuals(THREE,space,nodeList){
      m.userData.stage=ref.id;m.userData.layer='rings';guides.add(m);
    }
  }
- const labels=[];
- for(const ref of layerRefs){
-   const canvas=document.createElement('canvas');canvas.height=40;
-   const context=canvas.getContext('2d');context.font='22px sans-serif';
-   canvas.width=Math.ceil(context.measureText(ref.label).width)+8;
-   context.font='22px sans-serif';context.textBaseline='middle';context.fillStyle='#b8c7e0';context.fillText(ref.label,4,20);
-   const map=new THREE.CanvasTexture(canvas);map.colorSpace=THREE.SRGBColorSpace;
-   const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map,transparent:true,opacity:.56,depthWrite:false,depthTest:false,fog:false}));
-   sprite.center.set(0,.5);sprite.renderOrder=3;guides.add(sprite);labels.push({ref,sprite,width:canvas.width/2});
- }
+ // The decorative ring text now shares the scene's actual screen-space
+ // label pass instead of an independent WebGL sprite layer.
  const axis=line([new THREE.Vector3(0,coreBottom-offset,0),new THREE.Vector3(0,coreTop-offset,0)],0xc6b5ff,.36,true);axis.userData.layer='thinking';guides.add(axis);
  for(const y of [coreBottom,(coreBottom+coreTop)/2,coreTop]){const ring=line(arc(coreR,y,0,Math.PI*2),0xc6b5ff,.18,true);ring.userData.layer='thinking';guides.add(ring);}
  let seed=54017;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
@@ -113,23 +120,20 @@ export function createCylinderVisuals(THREE,space,nodeList){
      const factor=(hit?1:.14)*(entryPreview?(entryHit?1:.09):focus?(theme?(themeHit?1:.14):.24):1)*(task?.54:1);
      for(const {mesh,opacity} of rec.pieces)mesh.material.opacity=opacity*factor;
    }
-   const screenRight=scene.basis().right,right=screenRight.clone();right.y=0;right.normalize();
-   const px=Math.max(.001,scene.globalScale()),showRefs=options.rings&&scene.networkView!=='map'&&!scene.selected&&!scene.guideFocus&&!task;
    for(const obj of guides.children){if(obj.userData.layer)obj.visible=options[obj.userData.layer];if(obj.userData.stage)obj.material.opacity=filtered?(obj.userData.stage===scene.gradeStageId?.32:.06):.18;}
-   for(const {ref,sprite,width} of labels){
-     sprite.position.copy(right).multiplyScalar(ref.r+8);sprite.position.y=ref.y-offset;
-     const anchor=scene.project(sprite.position.toArray()),placed=cylinderReferenceLabelPlacement(anchor,scene.width,scene.height,width);
-     sprite.visible=showRefs&&placed.visible;
-     sprite.position.addScaledVector(screenRight,(placed.x-anchor.x)/px);
-     sprite.scale.set(placed.width/px,20/px,1);
-     sprite.material.opacity=filtered?(ref.id===scene.gradeStageId?.94:.30):.73;
-   }
    guides.visible=!scene.guideFocus;flow.visible=options.spines&&!focus&&!filtered&&!task&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+ }
+ function referenceCaption(scene){
+   const ref=layerRefs.find(r=>r.id===scene.gradeStageId);
+   if(!ref||!scene.cylinderOptions.rings||scene.networkView==='map'||scene.selected||scene.guideFocus||scene.taskWorkspaceActive||scene.cylinderEntryPreview||scene.hoverMapKey||scene.hoverThemeId)return null;
+   const right=scene.basis().right.clone();right.y=0;right.normalize();
+   const world=right.multiplyScalar(ref.r+8);world.y=ref.y-offset;
+   return {id:ref.id,label:ref.label,anchor:scene.project(world.toArray())};
  }
  function move(time){if(!flow.visible)return;for(let i=0;i<paths.length;i++){
    const p=paths[i];let at=((time*.000115+p.phase)%1)*p.total,e=p.segments[0];
    for(const seg of p.segments){e=seg;if(at<=seg.length)break;at-=seg.length;}
    e.curve.getPointAt(Math.max(0,Math.min(1,at/Math.max(e.length,1e-6)))).toArray(fp,i*3);
  }fg.attributes.position.needsUpdate=true;}
- return {group,glowMesh,thinkingMesh,milestoneMesh,flow,accents,guides,setEmphasis,move,edgeCount:records.length,bridgeCount:records.filter(r=>r.bridge).length};
+ return {group,glowMesh,thinkingMesh,milestoneMesh,flow,accents,guides,setEmphasis,referenceCaption,move,edgeCount:records.length,bridgeCount:records.filter(r=>r.bridge).length};
 }

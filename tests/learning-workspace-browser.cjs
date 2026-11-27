@@ -174,6 +174,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
      if(!process.exitCode&&process.env.MATH_V54_LAYOUT_DIAGNOSTICS==='1'){
        await verifyV54CompactLayout(browser);
        await verifyV54EntryLayout(browser);
+       await verifyV54QuietExploration(browser);
      }
    }finally{await browser.close();}
  }
@@ -376,4 +377,80 @@ async function verifyV54EntryLayout(browser){
  }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
  assert.ok(result.passed,'V54 entry layout: '+result.rows.filter(r=>r.passed).length+'/'+result.rows.length+' passed');
  console.log(JSON.stringify({v54EntryLayout:result.rows.map(r=>({viewport:r.viewport,passed:r.passed,switches:r.switches.length,sameDocument:r.sameDocument,draftPreserved:r.draftPreserved}))}));
+}
+
+// Mac 04: independent responsive evidence; all original legacy, 02 and
+// 03 cases still run unchanged. No new fixed-desktop entrypoint or policy.
+async function verifyV54QuietExploration(browser){
+ const assert=require('node:assert/strict'),dir=path.resolve('verification/v54-quiet-exploration'),base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,rows:[],testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()};
+ try{
+  for(const [width,height] of [[1280,720],[1000,1200]]){
+   const viewport={width,height},ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage(),errors=[];
+   const row={viewport,errors,passed:false,stages:[]};result.rows.push(row);
+   page.on('pageerror',e=>errors.push(e.message));
+   const shot=name=>page.screenshot({path:path.join(dir,width+'x'+height+'-'+name+'.png')});
+   const ready=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.networkVersion===54&&window.mathSpace.snapshot().visibleNodes.length===587&&document.querySelector('#loading')?.hidden,{},{timeout:60000});
+   const pose=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return {position:s.position,target:s.target,zoom:s.cameraZoom,positions:s.positions};});
+   const measure=()=>page.evaluate(()=>{
+     const rect=el=>{const r=el.getBoundingClientRect();return {x:r.left,y:r.top,w:r.width,h:r.height};};
+     const visible=el=>!!el&&!el.hidden&&el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden';
+     const rail=document.querySelector('.tool-rail'),details=document.querySelector('.cylinder-extra-tools');
+     const buttons=[...rail.querySelectorAll('button')].filter(visible).map(el=>{
+       const range=document.createRange();range.selectNodeContents(el);
+       const r=el.getBoundingClientRect(),text=range.getBoundingClientRect(),lines=[...range.getClientRects()].filter(r=>r.width&&r.height);
+       const points=[[(r.left+r.right)/2,(r.top+r.bottom)/2],[r.left+5,r.top+5],[r.right-5,r.bottom-5]];
+       return {action:el.dataset.action,text:el.textContent.trim(),nowrap:getComputedStyle(el).whiteSpace==='nowrap',oneLine:lines.every(b=>Math.abs(b.top-lines[0].top)<1),fit:text.width<=r.width+1,hit:points.every(([x,y])=>el.contains(document.elementFromPoint(x,y))),rect:rect(el)};
+     });
+     const captions=[...document.querySelectorAll('.cylinder-reference-caption')].filter(visible).map(el=>({stage:el.dataset.stage,text:el.textContent,rect:rect(el)}));
+     const obstacles=[...document.querySelectorAll('.space-label:not([hidden]),#cylinder-origin-marker:not([hidden]),#network-guide,#focus-card,#cylinder-entry-nav,#cylinder-hover-inspector,.tool-rail,.topbar,.bottom-bar')].filter(visible).map(rect);
+     const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+     return {detailsOpen:details.open,descriptionVisible:visible(document.querySelector('#network-view-description')),lensVisible:visible(document.querySelector('.lens-indicator')),rail:rect(rail),buttons,captions,captionOverlap:captions.some(a=>obstacles.some(b=>overlaps(a.rect,b))),stage:mathSpace.snapshot().gradeStageFilter,reference:mathSpace.cylinder().presentation.referenceCaption};
+   });
+   const check=async(stage)=>{
+     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+     const m=await measure();
+     assert.equal(m.stage,stage);assert.equal(m.detailsOpen,false);assert.equal(m.descriptionVisible,false);assert.equal(m.lensVisible,false);
+     assert.ok(m.buttons.length>=10&&m.buttons.every(b=>b.nowrap&&b.oneLine&&b.fit&&b.hit&&Math.abs(b.rect.y-m.buttons[0].rect.y)<1),'all camera controls are single-row and directly hit: '+JSON.stringify(m.buttons));
+     assert.ok(m.rail.x>=0&&m.rail.y>=0&&m.rail.x+m.rail.w<=width+1&&m.rail.y+m.rail.h<=height+1);
+     assert.ok(m.captions.length<=(stage==='all'?0:1)&&m.captions.every(c=>c.stage===stage)&&!m.captionOverlap);
+     if(m.captions.length)assert.equal(m.reference.stage,stage);
+     return m;
+   };
+   try{
+     await page.goto(base+'/index.html?world=network&layout=54#atlas');await ready();
+     const before=await pose(),initial=await check('all');row.initial=initial;await shot('default');
+     const summary=page.locator('.cylinder-extra-tools>summary');
+     await summary.click();
+     assert.ok(await page.locator('#network-view-description').isVisible());
+     assert.ok(await page.locator('.cylinder-observation-switches [data-action="cylinder-option"]').count()===5);
+     await summary.press('Escape');assert.equal(await page.locator('.cylinder-extra-tools').evaluate(el=>el.open),false);
+     assert.deepEqual(await pose(),before,'optional observation text and switches do not move the camera');
+     for(const stage of ['stage-1','stage-2','stage-3']){
+       await page.locator('#grade-map-filter [data-stage="'+stage+'"]').click();
+       await page.mouse.move(width-8,height-8);
+       await page.waitForFunction(stage=>mathSpace.snapshot().gradeStageFilter===stage,stage);
+       const evidence=await check(stage);row.stages.push(evidence);
+       assert.deepEqual(await pose(),before,'reference label placement never moves actual source positions or camera');
+       await shot(stage);
+     }
+     // Return to all without changing the camera; the original grade text is
+     // still available from its control even when an unsafe caption is omitted.
+     await page.locator('#grade-map-filter [data-stage="all"]').click();await page.mouse.move(width-8,height-8);
+     await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all');await check('all');
+     await summary.click();
+     await page.locator('.tool-rail [data-action="front"]').click();
+     await page.waitForFunction(()=>!mathSpace.motion().tween);
+     row.reset=await check('all');
+     await summary.click();
+     await page.reload();await ready();
+     row.reload=await check('all');
+     assert.deepEqual(errors,[]);row.passed=true;
+   }catch(e){row.failure=e.stack;await shot('failure').catch(()=>{});console.error(width+'x'+height+': '+e.message);}finally{await ctx.close();}
+  }
+  result.passed=result.rows.length===2&&result.rows.every(r=>r.passed);
+ }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
+ assert.ok(result.passed,'V54 quiet exploration: '+result.rows.filter(r=>r.passed).length+'/'+result.rows.length+' passed');
+ console.log(JSON.stringify({v54QuietExploration:result.rows.map(r=>({viewport:r.viewport,passed:r.passed,stages:r.stages.map(s=>({stage:s.stage,captions:s.captions.length,overlap:s.captionOverlap})),controls:r.initial?.buttons.length}))}));
 }

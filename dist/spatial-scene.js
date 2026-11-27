@@ -5,7 +5,7 @@ import {placeLabel,placePointLabel,overlaps} from './spatial-labels.js';
 import {applyNetworkView} from './spatial-network.js';
 import {GLOBAL_VERSION,restoreNetworkCoordinates} from './spatial-global.js';
 import {overviewShellCandidates} from './spatial-relationship.js';
-import {createCylinderVisuals} from './spatial-cylinder-visuals.js';
+import {createCylinderVisuals,placeCylinderReferenceCaption} from './spatial-cylinder-visuals.js';
 import {buildOverviewStructure,OVERVIEW_ROLES} from './spatial-overview-structure.js';
 import {buildFocusFilter,buildCylinderLock,FOCUS_DIRECTIONS,FOCUS_DEPTHS} from './spatial-focus-filter.js';
 import {activityForms,activityGlyph,ACTIVITY_FORMS} from './spatial-activities.js';
@@ -170,6 +170,7 @@ export class SpatialScene {
       marker.setAttribute('aria-label','起点，查看五大领域的真实入口');marker.title='导航标识，不是数学知识点';
       marker.innerHTML='<span class="cylinder-origin-compass" aria-hidden="true">✦</span><span>起点 · 入口导航</span>';
       marker.hidden=true;this.labelLayer.append(marker);this.cylinderOriginMarker=marker;
+      const caption=document.createElement('span');caption.className='cylinder-reference-caption';caption.hidden=true;caption.setAttribute('aria-hidden','true');this.labelLayer.append(caption);this.cylinderReferenceCaption=caption;
     }
     this.structureLayer=document.createElementNS('http://www.w3.org/2000/svg','svg');
     this.structureLayer.classList.add('overview-structure-lines');this.structureLayer.setAttribute('aria-hidden','true');this.labelLayer.prepend(this.structureLayer);
@@ -965,8 +966,27 @@ export class SpatialScene {
       if(this.callbacks.isCylinderExplorer?.()&&(!this.selected||this.callbacks.isCylinderEntryNavigation?.())&&this.networkView!=='map'){
         const p=this.project(this.space.cylinderOriginPosition),rect={x:p.x-74,y:p.y-10,w:148,h:40};
         if(p.visible&&rect.x>=12&&rect.y>=94&&rect.x+rect.w<=this.width-12&&rect.y+rect.h<=this.height-78&&!rects.some(r=>overlaps(rect,r,4))){
-          marker.style.transform=`translate(${rect.x}px,${rect.y}px)`;marker.hidden=false;
+          marker.style.transform=`translate(${rect.x}px,${rect.y}px)`;marker.hidden=false;rects.push(rect);
         }
+      }
+    }
+    if(this.cylinderReferenceCaption){
+      const el=this.cylinderReferenceCaption,caption=this.cylinderVisuals.referenceCaption(this);
+      el.hidden=true;delete el.dataset.stage;this.cylinderReferencePlacement=null;
+      if(caption){
+        // Measure the actual text and the already placed DOM knowledge
+        // labels, not estimated sprite widths. Every source label, origin
+        // and overlay wins over this optional reference annotation.
+        el.textContent=caption.label;el.dataset.stage=caption.id;el.hidden=false;
+        const w=Math.ceil(el.getBoundingClientRect().width),host=this.host.getBoundingClientRect();
+        const occupied=[...rects,...[...this.labelLayer.querySelectorAll('.space-label:not([hidden])')].map(n=>{const r=n.getBoundingClientRect();return {x:r.left-host.left,y:r.top-host.top,w:r.width,h:r.height};})];
+        for(const n of this.nodeList){
+          const p=this.project(n.position);
+          if(p.visible)occupied.push({x:p.x-5,y:p.y-5,w:10,h:10});
+        }
+        const placed=placeCylinderReferenceCaption(caption.anchor,this.width,this.height,w,occupied);
+        if(placed){el.style.transform=`translate(${placed.x}px,${placed.y}px)`;this.cylinderReferencePlacement={stage:caption.id,anchor:caption.anchor,rect:placed};}
+        else el.hidden=true;
       }
     }
     this.labelTethers.innerHTML=tethers.join('');this.updateStructureLines();

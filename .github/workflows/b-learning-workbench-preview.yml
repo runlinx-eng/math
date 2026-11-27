@@ -65,4 +65,5 @@ jobs:
             verification/learning-workspace
             verification/v54-workbench-layout
             verification/v54-entry-layout
+            verification/v54-quiet-exploration
           if-no-files-found: warn

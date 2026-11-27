@@ -5,7 +5,7 @@ import {buildCylinderSpace,CYLINDER_VERSION,CYLINDER_VIEW_KEY} from '../dist/spa
 import {buildRelationshipSpace,RELATIONSHIP_VERSION} from '../dist/spatial-relationship.js';
 import {restoreNetworkCoordinates} from '../dist/spatial-global.js';
 import {parseView,LAYOUT_VERSION,cylinderObservation,cylinderSessionPresentation} from '../dist/spatial-model.js';
-import {cylinderReferenceLabelPlacement} from '../dist/spatial-cylinder-visuals.js';
+import {cylinderReferenceLabelPlacement,placeCylinderReferenceCaption} from '../dist/spatial-cylinder-visuals.js';
 import {placePointLabel,overlaps} from '../dist/spatial-labels.js';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url)));
 const grade=JSON.parse(fs.readFileSync(new URL('../dist/data/grade-panorama-lite.json',import.meta.url)));
@@ -83,4 +83,19 @@ test('Mac stage 03: five domain entry paths retain actual source roots and growt
   });
  }
  assert.ok(primary.some(s=>s.isGlobalRoot)&&primary.some(s=>!s.isGlobalRoot));
+});
+
+test('Mac stage 04: optional stage caption yields to real labels and overlays',()=>{
+ const a={x:600,y:400,visible:true},w=104;
+ const placed=placeCylinderReferenceCaption(a,1280,720,w);
+ assert.deepEqual(placed,{x:600,y:390,w,h:20});
+ const blocker={x:590,y:383,w:130,h:35};
+ const next=placeCylinderReferenceCaption(a,1280,720,w,[blocker]);
+ assert.ok(next&&!overlaps(next,blocker,5));
+ assert.equal(placeCylinderReferenceCaption(a,1280,720,w,[{x:0,y:0,w:1280,h:720}]),null);
+ assert.equal(placeCylinderReferenceCaption({...a,visible:false},1280,720,w),null);
+ assert.equal(placeCylinderReferenceCaption({x:600,y:20,visible:true},1280,720,w),null);
+ const edge=placeCylinderReferenceCaption({x:990,y:500,visible:true},1000,1200,w);
+ assert.ok(edge.x>=12&&edge.x+edge.w<=988);
+ assert.deepEqual(a,{x:600,y:400,visible:true});
 });

@@ -1435,7 +1435,7 @@ body[data-world="network"][data-network-version="54"] #local-overview-exit:hover
    align-items:start;gap:7px 16px;max-height:min(230px,26dvh);padding:10px 12px;
    background:#0b111db8;
  }
- body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide :is(.observation-heading,#network-view-description){display:none}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .observation-heading{display:none}
  body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #network-view-title{grid-area:title;min-height:0;height:auto;font-size:12px}
  body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #grade-map-filter{grid-area:grade;min-width:0}
  body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend{grid-area:legend;grid-template-columns:repeat(2,minmax(0,1fr));align-self:center;gap:4px 10px}
@@ -1757,4 +1757,61 @@ body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylind
    automatically outside this specific comparison state. */
 body[data-world="network"][data-network-version="54"]:has(#cylinder-entry-nav:not([hidden])[data-compact="true"]) #local-overview-exit{
   display:none!important;
+}
+
+/* Mac 04: a quiet default observation surface. Real counts remain on
+   the five domain buttons and separate thinking key; full explanation
+   and independent switches stay in the native, closed disclosure. */
+body[data-world="network"][data-network-version="54"] #grade-map-filter[data-stage="all"] #grade-map-filter-status{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+body[data-world="network"][data-network-version="54"] #network-guide #grade-map-filter{position:relative}
+body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools #network-view-description{
+  height:auto;min-height:0;max-height:none;margin:4px 0 8px;overflow:visible;
+  font-size:11px;line-height:1.5;color:#acbbd2;
+}
+body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools>summary{
+  min-height:30px;line-height:1.5;padding:5px 3px;margin:0;
+}
+body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools:not([open])>*:not(summary){display:none!important}
+/* One horizontal camera toolbar. Width is intrinsic to complete labels;
+   at genuinely narrow widths it scrolls, never splits a word or icon. */
+body[data-world="network"][data-network-version="54"] .tool-rail,
+body[data-world="network"][data-network-version="54"].has-journey .tool-rail{
+  width:max-content;max-width:calc(100vw - 40px);flex-wrap:nowrap;
+  gap:3px;overflow-x:auto;overflow-y:hidden;
+}
+body[data-world="network"][data-network-version="54"] .tool-rail>button{
+  flex:0 0 auto;min-width:40px;width:auto;height:40px;
+  padding:0 9px;white-space:nowrap;line-height:1.25;font-size:12px;
+}
+body[data-world="network"][data-network-version="54"] .tool-rail>button[data-action="zoom"]{
+  min-width:38px;font-size:20px;
+}
+body[data-world="network"][data-network-version="54"] .tool-rail>button[data-action="cylinder-origin"]{
+  min-width:68px;white-space:nowrap;color:#ffe0a0;
+}
+body[data-world="network"][data-network-version="54"] .lens-indicator{display:none!important}
+body[data-world="network"][data-network-version="54"] .cylinder-reference-caption{
+  position:absolute;left:0;top:0;display:block;width:max-content;
+  height:20px;line-height:20px;padding:0 4px;white-space:nowrap;
+  color:#bdcce3;font-size:11px;font-weight:500;
+  background:transparent;text-shadow:0 1px 4px #080d18,0 0 4px #080d18;
+  z-index:1;pointer-events:none;user-select:none;
+}
+body[data-world="network"][data-network-version="54"] .cylinder-reference-caption[hidden]{display:none!important}
+@media(max-width:800px){
+ body[data-world="network"][data-network-version="54"] .tool-rail,
+ body[data-world="network"][data-network-version="54"].has-journey .tool-rail{
+   max-width:calc(100vw - 24px);height:auto;max-height:56px;
+ }
+ body[data-world="network"][data-network-version="54"] .tool-rail>button{
+   height:36px;min-width:36px;padding:0 6px;font-size:11px;
+ }
+ body[data-world="network"][data-network-version="54"] .tool-rail>button[data-action="cylinder-origin"]{min-width:58px}
+}
+@media(pointer:coarse){
+ body[data-world="network"][data-network-version="54"] .tool-rail>button{height:44px;min-width:44px}
+ body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools>summary{min-height:44px}
 }
