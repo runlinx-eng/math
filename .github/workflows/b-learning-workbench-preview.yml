@@ -12,7 +12,6 @@ on:
       - 'dist/learning/workspace-flow.js'
       - 'dist/learning/workbench-presentation.js'
       - 'scripts/verify_learning_workbench_b.cjs'
-      - 'scripts/verify_v54_workbench_layout.cjs'
       - 'tests/b-workbench-presentation.test.mjs'
       - 'tests/learning-workspace-browser.cjs'
       - 'tests/p7-d5-entry-browser.cjs'
@@ -50,12 +49,12 @@ jobs:
             sleep 1
           done
           node scripts/verify_learning_workbench_b.cjs
-          # Reuse the two existing legacy viewport scenes unchanged. These
-          # are compatibility regressions, not new nonstandard viewport tests.
+          # Preserve both legacy compatibility scenarios, with an explicit
+          # V54 responsive extension of the existing workspace suite only.
+          # The original 1920x1080 gates and the default matrix invocation
+          # are unchanged; no new nonstandard browser entrypoint.
           node tests/p7-d5-entry-browser.cjs
-          node tests/learning-workspace-browser.cjs
-          # Additional Mac 02 diagnostic contexts; do not alter #239 standard gates.
-          node scripts/verify_v54_workbench_layout.cjs
+          MATH_V54_LAYOUT_DIAGNOSTICS=1 node tests/learning-workspace-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -704,7 +704,7 @@ body[data-workbench-layout="compact-v54"] #status{font-size:12px;padding:3px 7px
 body[data-workbench-layout="compact-v54"] #scene{gap:4px}
 body[data-workbench-layout="compact-v54"] #scene .stage-top{
   grid-template-columns:minmax(0,1fr) minmax(210px,40%);gap:4px 12px;
-  padding:5px 9px;border-radius:8px;box-shadow:none;align-items:center;
+  padding:4px 9px;border-radius:8px;box-shadow:none;align-items:center;
 }
 body[data-workbench-layout="compact-v54"] #scene .stage-top h1{
   font-size:18px;line-height:1.3;font-weight:700;
@@ -722,7 +722,8 @@ body[data-workbench-layout="compact-v54"] #workbench-stage{
   padding:0 3px 8px;scroll-padding:5px 0;
 }
 body[data-workbench-layout="compact-v54"] #scene #learning-problem{
-  margin:3px 0 4px;padding:5px 3px 4px;
+  margin:3px 0 3px;padding:3px 3px;
+  position:relative;
 }
 body[data-workbench-layout="compact-v54"] #scene #learning-problem .learning-region-title{
   font-size:12px;line-height:1.3;margin:0 0 3px;
@@ -734,11 +735,21 @@ body[data-workbench-layout="compact-v54"] #scene #learning-problem #action-cue{
   font-size:12px;line-height:1.4;margin:3px 0 0;
 }
 body[data-workbench-layout="compact-v54"] #scene #learning-interaction{
-  margin:3px 0 0;padding:8px clamp(10px,1.4vw,18px) 10px;
-  border-radius:10px;box-shadow:none;
+  margin:3px 0 0;padding:7px clamp(10px,1.4vw,18px) 10px;
+  border-radius:10px;box-shadow:none;position:relative;
 }
 body[data-workbench-layout="compact-v54"] #scene #interaction-title{
   font-size:13px;line-height:1.4;margin:0 0 5px;
+}
+/* Mac 02 measured layout1: redundant region captions consumed ~42px
+   before the actual work. Keep the headings and labelled regions in the
+   accessibility tree, but not as two additional compulsory visual rows.
+   Reflection retains its distinct visual caption. Do not clip the actual
+   lesson title, curriculum, mathematical prompt, action cue or controls. */
+body[data-workbench-layout="compact-v54"] #scene:not([data-stage="reflect"]) #learning-problem>.learning-region-title,
+body[data-workbench-layout="compact-v54"] #scene:not([data-stage="reflect"]) #learning-interaction>#interaction-title{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
 }
 body[data-workbench-layout="compact-v54"] #workbench-content{--workbench-dock-height:32px}
 body[data-workbench-layout="compact-v54"] #workbench-drawer>details>summary{
