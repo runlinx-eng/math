@@ -1815,3 +1815,37 @@ body[data-world="network"][data-network-version="54"] .cylinder-reference-captio
  body[data-world="network"][data-network-version="54"] .tool-rail>button{height:44px;min-width:44px}
  body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools>summary{min-height:44px}
 }
+
+/* V54 learning-shell closeout 01: visual focus only. Existing map clicks,
+   native frame, task gates and saved-question actions retain their behavior. */
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-canvas>canvas{
+  filter:brightness(.42) saturate(.78) blur(1.1px);
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-canvas .space-labels{
+  opacity:.34;filter:blur(.45px);
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #network-guide,
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .save-status [data-action="questions"]{
+  display:none!important;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .save-status:has(#offline-status[hidden]){display:none!important}
+#workbench-saved-questions{display:none}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-saved-questions{display:block}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{
+  top:64px;border-color:#36435e;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{
+  background:#101827;border-bottom-color:#36435e;color:#c5d1e8;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>span{color:#b7c6df}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button,
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu>summary{
+  color:#e5edf9;background:#182337;border-color:#526888;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button:is(:hover,:focus-visible),
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu>summary:is(:hover,:focus-visible){
+  background:#263752;color:#f3f7ff;
+}
+@media(pointer:coarse){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{top:76px}
+}

@@ -537,7 +537,10 @@ async function verifyV54MacJoint(browser){
       const labels=[...document.querySelectorAll('.space-label.node:not([hidden])')].map(el=>({key:el.dataset.key,point:el.classList.contains('cylinder-point-label'),background:getComputedStyle(el).backgroundColor,border:getComputedStyle(el).borderTopWidth}));
       return {filter:get('#space-canvas>canvas').filter,labelsOpacity:Number(get('#space-canvas .space-labels').opacity),lessonOpacity:Number(get('#journey-surface').opacity),labels};
     });
-    assert.match(styles.filter,/brightness\(0\.64\)/);assert.match(styles.filter,/blur\(0\.8px\)/);assert.equal(styles.labelsOpacity,.62);assert.equal(styles.lessonOpacity,1);
+    assert.match(styles.filter,/brightness\(0\.42\)/);assert.match(styles.filter,/blur\(1\.1px\)/);assert.equal(styles.labelsOpacity,.34);assert.equal(styles.lessonOpacity,1);
+    assert.ok(await page.locator('#network-guide').isHidden());
+    assert.ok(await page.locator('.save-status [data-action="questions"]').isHidden());
+    assert.equal(await page.locator('#journey-surface>header').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(16, 24, 39)');
     assert.ok(styles.labels.every(l=>l.point&&l.background==='rgba(0, 0, 0, 0)'&&l.border==='0px'),'no V53 white rectangular node labels during V54 learning');
     assert.ok(await page.locator('#workbench-focus-toggle').isHidden());
     assert.equal(await frame.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
@@ -606,6 +609,8 @@ async function verifyV54MacJoint(browser){
     assert.ok(point,'real exposed map hit target');await page.mouse.click(point.x,point.y);await paused();await sameDoc();await sameRecord();
     const presentation=await page.evaluate(()=>({version:mathSpace.snapshot().networkVersion,filter:getComputedStyle(document.querySelector('#space-canvas>canvas')).filter,labels:Number(getComputedStyle(document.querySelector('#space-canvas .space-labels')).opacity),pending:document.querySelector('[data-action="nav-learn"]').dataset.pending,pointLabels:document.querySelectorAll('.space-label.node.cylinder-point-label:not([hidden])').length}));
     assert.equal(presentation.version,54);assert.equal(presentation.filter,'none');assert.equal(presentation.labels,1);assert.equal(presentation.pending,'true');assert.ok(presentation.pointLabels>0);
+    assert.ok(await page.locator('#network-guide').isVisible(),'map tools return when exploration resumes');
+    assert.ok(await page.locator('.save-status [data-action="questions"]').isVisible(),'original question list remains on the map');
     return {...presentation,point,sameDocument:true};
   });
   await run(5,['II-02'],'real different node selection, explicit switch cancellation, resume A',async()=>{

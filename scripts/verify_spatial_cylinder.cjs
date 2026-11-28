@@ -396,9 +396,11 @@ const ready=async(page,version,count)=>{
          });
          const assertLearningForeground=async()=>{
            const actual=await foregroundStyles();
-           assert.ok(actual.filter.split(' ').includes('brightness(0.64)'),actual.filter);
-           assert.ok(actual.filter.split(' ').includes('blur(0.8px)'),actual.filter);
-           assert.equal(actual.labels,.62);assert.equal(actual.card,.76);assert.equal(actual.lesson,1);
+           assert.ok(actual.filter.split(' ').includes('brightness(0.42)'),actual.filter);
+           assert.ok(actual.filter.split(' ').includes('blur(1.1px)'),actual.filter);
+           assert.equal(actual.labels,.34);assert.equal(actual.card,.76);assert.equal(actual.lesson,1);
+          assert.ok(await page.locator('#network-guide').isHidden(),'V54 learning does not show an empty map tool shell');
+          assert.ok(await page.locator('.save-status [data-action="questions"]').isHidden(),'saved questions move to More while learning');
            assert.equal(actual.contextBackground,'rgb(255, 254, 249)');
            assert.ok(actual.contrasts.length>=6&&actual.contrasts.every(item=>item.ratio>=4.5),'all context text must be readable: '+JSON.stringify(actual));
            return actual;

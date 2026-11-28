@@ -541,7 +541,11 @@ const aKey='node:mt_Ep7TDFuYUa';
   // Pending questions are not consumed or suppressed by same-day work recovery.
   const questionListButton=page.locator('.save-status [data-action="questions"]'),questionListPanel=page.locator('#questions-popover');
   const afterFormulaRestore=await read();
-  await questionListButton.click();await questionListPanel.waitFor({state:'visible'});
+  assert.ok(await questionListButton.isHidden(),'V54 learning hides the duplicate bottom-right question list');
+  await page.locator('.top-tools [data-action="menu"]').click();
+  const savedQuestionsInMore=page.locator('#workbench-saved-questions');
+  assert.ok(await savedQuestionsInMore.isVisible(),'saved questions remain reachable in More');
+  await savedQuestionsInMore.click();await questionListPanel.waitFor({state:'visible'});
   const resumeSavedQuestion=questionListPanel.locator('[data-action="resume-question"][data-id="'+savedQuestion.id+'"]');
   verify(await resumeSavedQuestion.isVisible()&&(await questionListPanel.innerText()).includes(questionText),'saved question remains separately reachable after paused session recovery');
   await questionListPanel.locator('[data-action="close-popover"]').click();
