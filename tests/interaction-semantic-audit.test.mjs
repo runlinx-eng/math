@@ -27,6 +27,8 @@ test('every native and bridge interaction is assigned exactly one technical prof
  assert.ok(Number.isInteger(overlap.exactPilotReplay)&&
   overlap.exactPilotReplay>=0&&overlap.exactPilotReplay<=overlap.totalNative);
  assert.equal(overlap.exactPilotReplay,overlap.staticAEvidence);
+ assert.equal(overlap.exactPilotReplay,current?813:1762);
+ assert.equal(types.reduce((n,r)=>n+r.currentExplicitGuideBindings.length,0),1762,'current guide bindings are independent of historical replay coverage');
  assert.equal(s.interactionTypes,323);
  assert.equal(s.nativeCoreTasks,1996);
  assert.equal(s.bridgeTasks,1552);

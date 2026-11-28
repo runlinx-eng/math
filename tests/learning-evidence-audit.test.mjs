@@ -200,8 +200,17 @@ test('same type never implies replay evidence or cross-course thinking attributi
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i)),
     ...(current?[]:issue341Formal)
  ].sort((x,y)=>x.localeCompare(y,'en'));
- const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
- assert.deepEqual(a.map(r=>r.id),exact,'only the original 813 plus 949 exact-source native approvals reach formal A');
+ // All reviewed native positions retain their live guide/feedback binding;
+ // only historical mode additionally proves the original 949 full replays.
+ const guided=[...exact,...(current?issue341Formal:[])].sort((x,y)=>x.localeCompare(y,'en'));
+ assert.equal(guided.length,1762);
+ assert.equal(new Set(guided).size,1762);
+ if(current){
+  assert.deepEqual(rows.filter(r=>r.currentFormalBinding).map(r=>r.id),[...issue341Formal].sort((x,y)=>x.localeCompare(y,'en')));
+  assert.ok(rows.filter(r=>r.currentFormalBinding).every(r=>!r.replayVerified&&r.evidenceLevel!=='A'),'a current binding is not a replay');
+  assert.equal(read('summary.json').currentFormalBindings,949);
+ }
+ assert.deepEqual(a.map(r=>r.id),exact,current?'only the 813 current replay fixtures reach this audit replay classification':'only the original 813 plus 949 exact-source native approvals reach formal A');
  const reviewedById=new Map(a.map(row=>[row.id,row]));
  for(const sessionId of ['proportion37','ratioLink37']){
   const sourceIds=[0,1,2].map(index=>reviewedById.get('native:'+sessionId+':'+index)?.nodeId);

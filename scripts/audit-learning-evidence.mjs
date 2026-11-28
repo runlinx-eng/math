@@ -41,14 +41,15 @@ const registeredExampleFor=(task,context,adapter)=>adapter.id==='signed-order'?s
 // below writes the production audit files. Explicitly injected registries are
 // simulations, never formal approval or evidence-review-manifest mutations.
 export async function auditLearningEvidence({adapters=EVIDENCE_ADAPTERS,
- guideFor=thinkingGuide,exampleFor=registeredExampleFor,recordFor=null}={}){
+ guideFor=thinkingGuide,exampleFor=registeredExampleFor,recordFor=null,currentFormalBindingFor=null}={}){
  if(typeof guideFor!=='function'||typeof exampleFor!=='function'||
-    (recordFor!==null&&typeof recordFor!=='function'))throw new TypeError('Invalid audit fixture providers');
+    (recordFor!==null&&typeof recordFor!=='function')||
+    (currentFormalBindingFor!==null&&typeof currentFormalBindingFor!=='function'))throw new TypeError('Invalid audit fixture providers');
  const registry=createEvidenceAdapterRegistry(adapters);
  if(registry.adapters.some(adapter=>'submitted' in adapter&&typeof adapter.submitted!=='function'))
   throw new TypeError('Invalid submitted contract');
  const explicit=adapters!==EVIDENCE_ADAPTERS||guideFor!==thinkingGuide||
-  exampleFor!==registeredExampleFor||recordFor!==null;
+  exampleFor!==registeredExampleFor||recordFor!==null||currentFormalBindingFor!==null;
 const atlas=json('dist/data/atlas.json');
 const source=json('dist/data/math.json');
 const thinking=json('docs/spatial-learning/thinking-source-map.json');
@@ -97,6 +98,9 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
  // Some original workpieces store counts/remaining at the top level. Only a
  // reviewed binding and successful independent replay establish A, not a board key.
  const context={sessionId,index};
+ // Current formal source binding is independent of successful original Check
+ // replay. It must never promote a task to A or claim a replay was executed.
+ const currentFormalBinding=kind==='native'&&currentFormalBindingFor!==null&&currentFormalBindingFor(task,context)===true;
  const selected=kind==='native'?registry.resolve(task,context).match?.adapter:null;
  let verifiedAdapter=null;
  if(selected){
@@ -131,7 +135,8 @@ function visit(kind,sessionId,index,task,nodeId,relatedNodeId=null){
   sourceMapped:sourceKnown&&sourceLink,sourceEvidence:kind==='native'?'LESSONS[sessionId].topicId':'BRIDGES[id].fromTopicId/topicId + sourceBridge(id,atlas)',
   sourceThinkingCode:mpByNode.get(nodeId)||null,
   optionalThinkingGuide:tagged,thinkingGuideBinding:tagged?sessionId+':'+index:null,
-  thinkingFeedbackBinding:kind==='native'&&(verifiedReplay||(sessionId==='structure34'&&index===3)),
+  thinkingFeedbackBinding:kind==='native'&&(verifiedReplay||currentFormalBinding||(sessionId==='structure34'&&index===3)),
+  ...(currentFormalBindingFor!==null?{currentFormalBinding}:{}),
   crossCourseReuseRisk:false,
   uncertainty:error||(!sourceLink?'Unverified source mapping':(!owner?'Missing validator ownership':(history&&!verifiedReplay?'History replay not established':null)))};
  rows.push(row);
@@ -238,7 +243,16 @@ return {summary,rows,byType,byFamily,unknown,risk,report};
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
 if(process.argv.length>2&&!currentCli)throw Error('Use --current for live regression or no argument for historical audit');
-const inputs=currentCli?undefined:(await import('./issue341-formal-audit-inputs.mjs')).loadIssue341FormalAuditInputs({
+// Current mode observes the actual formal guide and binding route, but keeps
+// only the legacy replay registry. No original candidate Check is fabricated.
+const currentRoute=currentCli?(await import('../dist/learning/issue341-formal-source-routing.js')).createIssue341ManifestGatedRouting(
+ (await import('../dist/learning/issue341-formal-admissions.js')).ISSUE341_FORMAL_MANIFEST):null;
+const currentFamilyIds=new Set(currentRoute?.adapters.map(a=>a.id)||[]);
+const inputs=currentCli?{guideFor:currentRoute.guide,
+ currentFormalBindingFor:(task,context)=>{
+  const match=currentRoute.registry.resolve(task,context).match;
+  return currentFamilyIds.has(match?.adapter.id)&&match.binding.strictAApproved===true;
+ }}:(await import('./issue341-formal-audit-inputs.mjs')).loadIssue341FormalAuditInputs({
  legacyExampleFor:registeredExampleFor,legacyRecordFor:()=>null
 });
 const {summary,rows,byType,byFamily,unknown,risk,report}=await auditLearningEvidence(inputs);
@@ -248,12 +262,20 @@ if(currentCli){
  const manifest=json('docs/spatial-learning/evidence-review-manifest.json');
  const key=r=>r.sessionId+':'+r.index;
  const legacy=manifest.tasks.filter(r=>!r.adapter.startsWith('issue341-')).map(key).sort(sort);
+ const formal=manifest.tasks.filter(r=>r.adapter.startsWith('issue341-')).map(key).sort(sort);
+ const guided=manifest.tasks.map(key).sort(sort);
  assert(legacy.length===813&&JSON.stringify(nativeA.map(key).sort(sort))===JSON.stringify(legacy),'Current legacy replay coverage changed');
+ assert(formal.length===949&&JSON.stringify(rows.filter(r=>r.currentFormalBinding).map(key).sort(sort))===JSON.stringify(formal),'Current exact formal bindings changed');
+ assert(JSON.stringify(rows.filter(r=>r.optionalThinkingGuide).map(key).sort(sort))===JSON.stringify(guided),'Current explicit guide positions changed');
+ assert(JSON.stringify(rows.filter(r=>r.thinkingFeedbackBinding).map(key).sort(sort))===JSON.stringify(guided),'Current explicit feedback bindings changed');
+ assert(rows.filter(r=>r.kind==='bridge').every(r=>!r.currentFormalBinding&&!r.optionalThinkingGuide&&!r.thinkingFeedbackBinding&&!r.replayVerified),'Associated tasks must not inherit native evidence');
  assert(rows.every(row=>row.defaultModelValid&&row.graderCallable&&row.sourceMapped),'Current task/validator/source inventory failed');
  summary.classificationScope='CURRENT_REGRESSION_LEGACY_REPLAY_ONLY';
+ delete summary.formalStrictAGranted;
+ summary.currentFormalBindings=formal.length;
  summary.historicalFormalAdmissions=949;
  summary.historicalOriginalChecksReplayed=0;
- summary.caution='Current regression: 813 legacy replay fixtures. The 949 historical formal admissions remain approved in the manifest; current exact source and submitted-evidence checks are reported separately. No historical Check ZIP was replayed.';
+ summary.caution='Current regression: 813 legacy replay fixtures, 949 additional exact formal source bindings, and 1762 explicit guide/feedback bindings. Binding is not replay or successful submitted feedback. Current submitted-evidence checks are reported separately. No historical Check ZIP was replayed.';
  report.splice(0,3,'# 当前题目与数学证据回归（813项现行回放）','',
   '本次不读取或复演历史949项原始Check。来源及当前提交保护另验；历史准入未撤销。不是全量历史证据复核。');
  report[3]='复现：node scripts/audit-learning-evidence.mjs --current；Node 22；先动态装载 B39。';
