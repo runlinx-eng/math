@@ -201,10 +201,13 @@ async function main(){
   ok(reset.attempts.length===before.attempts.length,'Retry retains graded attempts');
   ok(reset.model.history.length===0,'Retry clears current native shape history');
   // Native unchanged V2 download and import into an independent truly empty context.
-  label='native-v2-restore';await page.goto(origin.base+'v2.html#trail');
-  const source=await decoded(page);
-  const started=page.waitForEvent('download');await click('#main [data-do="export"]');
-  const download=await started,bytes=fs.readFileSync(await download.path()),backup=JSON.parse(bytes.toString('utf8'));
+  label='native-v2-restore';const beforeTrail=await decoded(page),response=await page.goto(origin.base+'v2.html#trail');
+  ok(response?.fromServiceWorker()===true,'actual backup page loads from the stopped-origin cache');
+  const exportControl=page.locator('#main [data-do="export"]');await exportControl.waitFor({state:'visible'});
+  assert.equal(await exportControl.count(),1);assert.equal(await exportControl.isEnabled(),true);
+  const source=await decoded(page);assert.deepEqual(source,beforeTrail,'opening the backup page preserves all original records');
+  const [download]=await Promise.all([page.waitForEvent('download'),click('#main [data-do="export"]')]);
+  const bytes=fs.readFileSync(await download.path()),backup=JSON.parse(bytes.toString('utf8'));
   ok(backup.app==='math-explorer'&&backup.version===2,'unchanged native V2 backup');
   ok(JSON.stringify(backup.state)===JSON.stringify(source),'export retains every native attempt');
   fs.writeFileSync(path.join(out,'actual-native-v2.json'),bytes);

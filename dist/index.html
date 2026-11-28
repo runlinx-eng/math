@@ -19,7 +19,7 @@
     <aside id="guide-panel" class="guide-panel" aria-label="发现数学知识之间的联系" hidden></aside>
     <div id="guide-cues" class="guide-cues" aria-label="地图上的下一处" hidden></div>
   </main>
-  <section id="journey-surface" class="journey-surface" aria-label="学习操作现场" hidden><header><span>学习现场</span><button type="button" data-action="close-journey">返回知识空间 ×</button></header><iframe id="journey-frame" title="分一份，换个名字 · 操作现场" src="about:blank"></iframe></section>
+  <section id="journey-surface" class="journey-surface" aria-label="学习操作现场" hidden><header><span>学习现场</span><button type="button" id="workbench-focus-toggle" data-action="workbench-focus" title="只切换观察焦点，保留当前学习现场" hidden>观察地图</button><button type="button" id="workbench-later" data-action="workbench-later" title="暂时收起学习现场，从「学习」接着操作" hidden>留到下次</button><button type="button" data-action="close-journey">返回知识空间 ×</button></header><iframe id="journey-frame" title="分一份，换个名字 · 操作现场" src="about:blank"></iframe></section>
   <header class="topbar">
     <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span><strong>数学探索</strong><small>在一个空间里，慢慢发现</small></span></div>
     <nav class="primary-nav" aria-label="主要功能">
@@ -91,7 +91,7 @@
   <div class="lens-indicator"><span>远</span><span class="meter"><i id="distance-meter"></i></span><span>近</span></div>
   <footer class="bottom-bar">
     <div class="overall-progress"><span>学习任务进度</span><progress id="overall-progress" max="12" value="0" aria-label="已开放任务，完成 0 / 73"></progress><b id="overall-count">0 / 73</b></div>
-    <span id="today-progress" class="today-progress" hidden></span><div class="save-status"><button type="button" data-action="questions">问题</button><button type="button" data-action="question">留到下次</button><span id="offline-status" hidden>本机保存</span></div>
+    <span id="today-progress" class="today-progress" hidden></span><div class="save-status"><button type="button" data-action="questions">问题</button><button type="button" data-action="question" title="写下想继续思考的问题">记下问题</button><span id="offline-status" hidden>本机保存</span></div>
   </footer>
   <section id="search-popover" class="popover search-popover" aria-label="查找知识" hidden>
     <div class="popover-heading"><strong id="search-label">想靠近哪个想法？</strong><button type="button" data-action="close-popover" class="plain-button" aria-label="关闭查找">×</button></div>
@@ -100,8 +100,8 @@
   </section>
   <section id="questions-popover" class="popover questions-popover" aria-label="留下的问题" hidden></section>
   <section id="menu-popover" class="popover menu-popover" aria-label="更多工具" hidden>
-    <button type="button" data-action="all-nodes" aria-pressed="false">展开所有知识点</button><button type="button" data-action="continue">开始学习</button>
-    <button type="button" data-action="export">导出学习备份</button><button type="button" data-action="import">导入学习备份</button><button type="button" data-action="about">地图与学习的依据</button>
+    <button type="button" data-action="map-version">体验圆柱星盘 v54</button><button type="button" data-action="all-nodes" aria-pressed="false">展开所有知识点</button><button type="button" data-action="continue">开始学习</button>
+    <button type="button" id="workbench-saved-questions" data-action="questions">留下的问题</button><button type="button" data-action="export">导出学习备份</button><button type="button" data-action="import">导入学习备份</button><button type="button" data-action="about">地图与学习的依据</button>
   </section>
   <section id="help-popover" class="popover help-popover" aria-label="空间操作方法" hidden>
     <div class="popover-heading"><strong>在空间里移动</strong><button type="button" data-action="close-popover" class="plain-button" aria-label="关闭操作说明">×</button></div>

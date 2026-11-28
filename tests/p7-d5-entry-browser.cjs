@@ -96,10 +96,17 @@ const base='http://127.0.0.1:43827/';
      await frame.locator('#actions button.primary').waitFor();
      const bounds=await page.evaluate(()=>{
        const frame=document.querySelector('#journey-frame'),d=frame.contentDocument,primary=d.querySelector('#actions button.primary'),r=primary?.getBoundingClientRect(),dock=d.querySelector('.execution-command')?.getBoundingClientRect();
-       return {bottom:r?.bottom||Infinity,viewport:frame.contentWindow.innerHeight,dockWidth:dock?.width||Infinity,viewportWidth:frame.contentWindow.innerWidth};
+       const stage=d.querySelector('#workbench-stage'),fixed=!!stage&&frame.contentWindow.getComputedStyle(stage).display==='block',stageRect=stage?.getBoundingClientRect();
+       const hit=r&&d.elementFromPoint((r.left+r.right)/2,(r.top+r.bottom)/2);
+       return {bottom:r?.bottom||Infinity,viewport:frame.contentWindow.innerHeight,dockWidth:dock?.width||Infinity,viewportWidth:frame.contentWindow.innerWidth,fixed,stageBottom:stageRect?.bottom,stageHeight:stage?.clientHeight,dockTop:dock?.top,dockBottom:dock?.bottom,primaryHit:!!hit&&primary.contains(hit)};
      });
      check(bounds.bottom<=bounds.viewport+2,'primary mathematics action visible in '+w+'x'+h+' frame: '+JSON.stringify(bounds));
-     check(bounds.dockWidth<bounds.viewportWidth*.85,'action dock stays compact and leaves manipulatives touchable '+w+'x'+h+': '+JSON.stringify(bounds));
+     // The fixed B command bar is a separate full-width row, not the old
+     // sticky overlay. For the tiny-frame fallback keep the compact width
+     // assertion. For a fixed shell demand physical non-overlap and hitability.
+     if(bounds.fixed){
+       check(bounds.stageHeight>0&&bounds.stageBottom<=bounds.dockTop+1&&bounds.dockBottom<=bounds.viewport+2&&bounds.primaryHit,'fixed command bar cannot cover the mathematical stage and is a real hit target '+w+'x'+h+': '+JSON.stringify(bounds));
+     }else check(bounds.dockWidth<bounds.viewportWidth*.85,'fallback action dock stays compact and leaves manipulatives touchable '+w+'x'+h+': '+JSON.stringify(bounds));
      await page.screenshot({path:path.join(out,'06-direct-'+w+'x'+h+'.png')});
      await page.locator('#journey-surface [data-action="close-journey"]').click();
    }

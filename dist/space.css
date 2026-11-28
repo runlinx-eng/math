@@ -1261,7 +1261,7 @@ body[data-world="network"].has-journey #journey-surface #learning-map-context .l
 #menu-popover [hidden]{display:none!important}
 
 /* P11 R3: preview remains quieter than the persistent operational marker. */
-body[data-world="network"] .space-label.node.hovered:not(.selected):not(.active-target){
+body[data-world="network"]:where(:not([data-network-version="54"])) .space-label.node.hovered:not(.selected):not(.active-target){
   border-color:#92ab9d!important;border-style:dashed;
   background:#f4f8f2!important;box-shadow:0 1px 7px #2d523d16;font-weight:700;
 }
@@ -1323,4 +1323,549 @@ body[data-world="network"][data-network-version="53"] .space-label.node.preview-
 body[data-world="network"][data-network-version="53"] .space-label.node.selected:not(.active-target):not(.preview-target){
   font-weight:700;color:#204c3c;background:#fffef9f7;border:1px solid #57816a;
   box-shadow:0 2px 10px #29453b18;
+}
+
+/* Opt-in v54 celestial atlas; v53 palette and learning iframe are unchanged. */
+body[data-world="network"][data-network-version="54"]{--ink:#e4eafb;--muted:#8b9ab4;--line:#35405b;--paper:#111827;--shadow:0 12px 38px #0005;color:#dce5f5;background:#07090f}
+body[data-network-version="54"] #space-canvas{background:radial-gradient(ellipse at 56% 48%,#161d32 0%,#0b101d 44%,#07090f 79%)}
+body[data-network-version="54"] .brand-mark{background:#19283e;color:#a8c7ff;box-shadow:0 0 24px #588dff26}
+body[data-network-version="54"] :is(.top-tools,.primary-nav,.tool-rail,.bottom-bar .overall-progress,.save-status,#network-guide,.continue-card,.popover,.focus-card,#overview-structure-controls,.learning-map-context,.guide-panel,.utility-drawer,.learning-hub,.workspace-chip,.work-panel){background:rgba(13,19,32,.93);border-color:#36435e;color:#dae4f6;box-shadow:0 12px 40px #0004}
+body[data-network-version="54"] :is(.top-tools,.primary-nav,.tool-rail,.popover,#network-guide) button{color:#c5d1e8;background:#ffffff07;border-color:#ffffff12}
+body[data-network-version="54"] :is(.top-tools,.primary-nav,.tool-rail,.popover,#network-guide) button:is(:hover,[aria-pressed="true"]){color:#eff6ff;background:#4f81dc30;border-color:#7eacff80}
+body[data-network-version="54"] .keycap{color:#9eadc5;border-color:#43526a}
+body[data-network-version="54"] :is(.place-indicator,.place-indicator b,.lens-indicator,.save-status button){color:#adbad2}
+body[data-network-version="54"] #network-guide{border:1px solid #ffffff18;border-radius:13px;padding:13px;scrollbar-color:#43526b transparent}
+body[data-network-version="54"] #network-guide :is(strong,.observation-heading strong,.observation-subheading,#network-view-title){color:#e5edfc}
+body[data-network-version="54"] #network-guide :is(p,span,small,summary){color:#a9b8d1}
+body[data-network-version="54"] #network-guide .network-legend{grid-template-columns:1fr;gap:4px}
+body[data-network-version="54"] #network-guide .network-legend button{text-align:left;min-height:30px;font-size:12px;letter-spacing:.02em}
+body[data-network-version="54"] #network-guide #network-view-title{min-height:0;max-height:none;height:auto}
+body[data-network-version="54"] #network-guide>p{min-height:0;max-height:none;height:auto;line-height:1.6}
+body[data-network-version="54"] #network-guide #grade-map-filter{background:#ffffff05;border-color:#ffffff16}
+body[data-network-version="54"] #network-guide #overview-structure-controls{position:static!important;inset:auto!important;max-width:none;max-height:none;flex-wrap:wrap;gap:4px;background:transparent;box-shadow:none;border:0;padding:7px 0}
+body[data-network-version="54"] #overview-structure-controls .structure-caption{min-width:100%;color:#a9b8d1}
+body[data-network-version="54"] #overview-structure-controls button{font-size:10px;padding:5px}
+body[data-world="network"][data-network-version="54"] .space-label{background:#0f182aeb;color:#dce6f7;border-color:#52648070;box-shadow:0 2px 16px #02040a80;text-shadow:none}
+body[data-world="network"][data-network-version="54"] .space-label.theme{color:var(--object-color);font-size:13px;font-weight:650;padding:7px 11px;background:#0d1425e0;border:1px solid color-mix(in srgb,var(--object-color) 40%,transparent);border-radius:7px}
+body[data-world="network"][data-network-version="54"] .space-label.theme small{color:#9cabc7;font-size:9px}
+body[data-world="network"][data-network-version="54"] .space-label.node{font-size:12px;color:#e0e9fc;background:#101827ed}
+body[data-world="network"][data-network-version="54"] .space-label:is(.hovered,.selected,.active-target,.preview-target){color:#fff;background:#192943;border-color:#91baf0;box-shadow:0 0 15px #6ba3ff45}
+body[data-network-version="54"] .spatial-focus-links{filter:drop-shadow(0 0 3px #85b6ff70)}
+body[data-network-version="54"] .focus-card :is(h2,h3,strong,.focus-heading){color:#e5edfc}
+body[data-network-version="54"] .focus-card :is(p,small,.quiet,.overline,.relation-caption){color:#a8b7d0!important}
+body[data-network-version="54"] .focus-card :is(.soft-button,.plain-button,.relation-preview,.relation-item,.next-idea,.grade-distribution){color:#cbdaf1;background:#ffffff09;border-color:#ffffff18}
+body[data-network-version="54"] .focus-card .primary-button{background:#dceaff;color:#101a30}
+body[data-network-version="54"] .search-popover input{background:#141e31;color:#e3edff;border-color:#445775}
+body[data-network-version="54"] :is(.search-result small,.search-footer,.help-popover p,.help-popover .quiet){color:#a6b5cf!important}
+body[data-network-version="54"] .tool-divider{background:#34415a}
+body[data-network-version="54"] .loading{background:#090d18;color:#dce6fa}
+body[data-network-version="54"] :is(.focus-card,.popover,.network-guide) a{color:#9bc5ff}
+@media(max-width:760px){body[data-network-version="54"] #network-guide{width:min(184px,42vw);padding:8px;max-height:min(39dvh,290px)}body[data-network-version="54"] #network-guide .network-legend button{font-size:10px;min-height:25px}body[data-world="network"][data-network-version="54"] .space-label.theme{font-size:10px;padding:5px 6px}}
+
+/* v54 composition 2: quiet observation sidebar and plain crown labels. */
+body[data-world="network"][data-network-version="54"] #network-guide{background:#080d18b8;border-color:transparent;box-shadow:none;gap:9px;max-height:calc(100dvh - 200px);scrollbar-width:thin}
+body[data-network-version="54"] #network-guide .observation-heading>span{display:none}
+body[data-network-version="54"] #network-guide .network-legend button{display:flex;align-items:center;gap:7px;border-color:transparent;background:transparent;padding:5px 4px;min-height:30px;white-space:normal;font-weight:500}
+body[data-network-version="54"] #network-guide .network-legend button i{box-shadow:0 0 7px var(--object-color)}
+body[data-network-version="54"] #network-guide .network-legend .cylinder-theme-count{margin-left:auto;flex:none;color:#91a0ba;font-variant-numeric:tabular-nums}
+body[data-network-version="54"] #network-guide .network-legend button:is(:hover,[aria-pressed="true"]){background:#4f81dc25;border-color:#7eacff55}
+body[data-network-version="54"] #network-guide .network-legend button[aria-pressed="true"]{color:#fff}
+body[data-world="network"][data-network-version="54"] #network-guide #network-view-description{font-size:11px;min-height:32px;max-height:48px}
+body[data-network-version="54"] #network-guide .observation-subheading,
+body[data-network-version="54"] #network-guide .network-marker-key{display:none}
+body[data-world="network"][data-network-version="54"] #network-guide>details.cylinder-extra-tools{display:block!important;padding:6px 0;border-top:1px solid #ffffff12;color:#a6b8d2}
+body[data-network-version="54"] #network-guide .cylinder-extra-tools summary{font-size:12px;cursor:pointer;margin-bottom:4px}
+body[data-network-version="54"] #network-guide .cylinder-extra-tools:not([open])>*:not(summary){display:none!important}
+body[data-world="network"][data-network-version="54"] .space-label.theme{background:transparent;border:0;box-shadow:none;border-radius:0;min-height:26px;padding:3px 5px;font-size:13px;text-align:center;text-shadow:0 1px 6px #06090e,0 0 12px #06090e}
+body[data-world="network"][data-network-version="54"] .space-label.theme small{display:none}
+body[data-world="network"][data-network-version="54"] .space-label.theme:is(:hover,.hovered,.preview-theme-target){background:#14203b9c;border-radius:6px}
+body[data-network-version="54"] .bottom-bar .overall-progress{background:transparent;border:0;box-shadow:none;padding:4px 6px;color:#94a5c1}
+body[data-network-version="54"] .bottom-bar .overall-progress progress{display:none}
+body[data-network-version="54"] .bottom-bar .overall-progress b{color:#9eb6d6}
+body[data-network-version="54"] #space-canvas{background:radial-gradient(ellipse at 56% 48%,#11192b 0%,#0b101c 48%,#07090f 84%)}
+@media(max-width:760px){body[data-world="network"][data-network-version="54"] #network-guide{max-height:min(41dvh,310px);gap:5px}body[data-network-version="54"] #network-guide .network-legend button{min-height:25px;font-size:10px}}
+
+/* v54 composition 3: keep the axial core separate from the five domain counts. */
+body[data-world="network"][data-network-version="54"] #cylinder-core-key{display:flex;align-items:center;gap:8px;padding:6px 4px;border-top:1px solid #ffffff0d;color:#c8c2e5;font-size:12px}
+body[data-network-version="54"] #cylinder-core-key i{width:6px;height:6px;flex:none;transform:rotate(45deg);background:#e4dcff;box-shadow:0 0 8px #ddcdff9c}
+body[data-network-version="54"] #cylinder-core-key small{margin-left:auto;font-variant-numeric:tabular-nums;color:#b0a6d1}
+body[data-network-version="54"] .cylinder-reference-note{margin:4px 0 0;line-height:1.5;font-size:10px;color:#a3b2ca}
+body[data-network-version="54"][data-map-focus="overview"] :is(.place-indicator,.space-intro){display:none}
+body[data-world="network"][data-network-version="54"] .tool-rail button[data-action="network-view"]{white-space:nowrap}
+@media(min-width:761px){body[data-world="network"][data-network-version="54"] #network-guide{top:112px}}
+
+/* v54 composition 4: actual atlas labels and contextual exploration cards.
+   Learning workspaces, v53 and mathematical activities retain their existing UI. */
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone{background:transparent;border:0;border-radius:0;box-shadow:none;min-height:21px;padding:2px 4px;gap:0;color:#aebed9;font-size:11px;line-height:17px;text-shadow:0 1px 4px #080d18,0 0 5px #080d18;font-weight:500;white-space:nowrap}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:17px}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone::before,body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-milestone .activity-glyph{display:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.active-target):is(.selected,.hovered,.preview-target){background:#182743;border:1px solid #7da8e9;color:#eef4ff;box-shadow:0 0 0 1px #7da8e94d,0 0 12px #6ba3ff35;text-shadow:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.active-target){text-shadow:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.selected):not(.active-target):not(.hovered):not(.preview-target) .activity-glyph{display:none}
+body[data-world="network"][data-network-version="54"] .space-label.node:not(.selected):not(.active-target):not(.hovered):not(.preview-target){gap:4px}
+body[data-world="network"][data-network-version="54"] .label-tethers path{stroke:#748aaf;opacity:.25}
+body[data-world="network"][data-network-version="54"] #focus-card{background:#0e1523f5;border-color:#36435e;color:#dce7f8;scrollbar-color:#40516c transparent}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.focus-sticky,.focus-section-nav){background:#0e1523;border-color:#2e3b52}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.theme-overview-counts,.theme-pack-choice,.grade-node-position,.focus-filter,.grade-distribution,.relation-preview,.next-idea){background:#151f31;border-color:#2d3c56;color:#ccd8ee;box-shadow:none}
+body[data-world="network"][data-network-version="54"] #focus-card .theme-pack-choice{border-left-color:var(--object-color)}
+body[data-world="network"][data-network-version="54"] #focus-card .theme-pack-choice:hover{background:#1c2b46;border-color:#6988bf;border-left-color:var(--object-color)}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.theme-pack-title,.theme-overview-counts strong){color:#e5efff}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.theme-pack-question,.theme-pack-meta,.theme-thinking-count,.theme-overview-counts,.grade-node-stage-tag){color:#a8b9d5}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.grade-node-stage-tag,.focus-section-nav button,.focus-filter-button,.grade-stage-choice,.relation-button){background:#1a263a;color:#bfcfe8;border-color:#3c4e6c}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.grade-node-stage-tag[data-role="main"],.grade-stage-choice[aria-pressed="true"],.focus-filter-button[aria-pressed="true"],.focus-section-nav button[aria-pressed="true"]){background:#253e65;color:#e5efff;border-color:#6d92d0}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.grade-node-stage-tag[data-role="extension"],.grade-node-stage-tag[data-role="transition"]){background:#263349;color:#e3d3aa}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.focus-section-nav button,.focus-filter-button,.grade-stage-choice,.relation-button):hover{background:#263c60;color:#f0f5ff;border-color:#7295d0}
+body[data-world="network"][data-network-version="54"] #focus-card .grade-node-unresolved{background:#332c23;color:#f0ce93!important}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.network-relation,.focus-context-section,.relationship-key,.theme-overview-guide,.theme-overview-footnote){border-color:#2e3b52}
+body[data-world="network"][data-network-version="54"] #focus-card .network-relation:has(.relation-button:hover){background:#18243a}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.before,.relation-caption.before){color:#f3bb84}
+body[data-world="network"][data-network-version="54"] #focus-card :is(.after,.relation-caption.after){color:#7ecdee}
+body[data-world="network"][data-network-version="54"] #focus-card :is(summary,.concept-explanation,.status-text,.relation-heading,.activity-glyph){color:#a9bfdf}
+body[data-world="network"][data-network-version="54"] #local-overview-exit{background:#17243a;border-color:#5c749e;color:#e4efff;box-shadow:0 4px 16px #0005}
+body[data-world="network"][data-network-version="54"] #local-overview-exit:hover{background:#243b5a}
+
+/* Tall desktop/tablet atlas: use the previously empty top area instead of
+   reserving a sidebar column across the whole height. This is v54 exploration
+   only; learning surfaces and the landscape/default v53 layout stay intact. */
+@media (min-width:621px) and (min-height:800px) and (max-aspect-ratio:9/10){
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide{
+   left:16px;right:16px;width:auto;display:grid;
+   grid-template-columns:minmax(150px,.85fr) minmax(0,1.65fr);
+   grid-template-areas:"title legend" "grade legend" "more core";
+   align-items:start;gap:7px 16px;max-height:min(230px,26dvh);padding:10px 12px;
+   background:#0b111db8;
+ }
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .observation-heading{display:none}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #network-view-title{grid-area:title;min-height:0;height:auto;font-size:12px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #grade-map-filter{grid-area:grade;min-width:0}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend{grid-area:legend;grid-template-columns:repeat(2,minmax(0,1fr));align-self:center;gap:4px 10px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend button{font-size:12px;line-height:1.4;min-height:30px;padding:4px;white-space:normal}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #cylinder-core-key{grid-area:core;align-self:start;min-width:0}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .cylinder-extra-tools{grid-area:more;min-width:0}
+}
+
+/* v54: one-click observation is separate from explicit knowledge-group browsing. */
+body[data-network-version="54"] #cylinder-theme-directory{display:block;padding:7px 8px;margin:6px 0;font-size:12px;text-align:left;border-radius:7px}
+body[data-network-version="54"] #cylinder-theme-directory[hidden]{display:none!important}
+body[data-network-version="54"] #network-legend:has([aria-pressed="true"]) button:not([aria-pressed="true"]):not(:hover){opacity:.48}
+
+/* v54 observation and compact inspection: the real map stays the main surface. */
+body[data-network-version="54"] .cylinder-observation-switches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin:6px 0 9px}
+body[data-network-version="54"] .cylinder-option{min-height:30px;padding:5px 6px;background:#141e30;border:1px solid #35445e;border-radius:6px;color:#9eafca;font-size:11px;text-align:left;line-height:1.35}
+body[data-network-version="54"] .cylinder-option[aria-pressed="true"]{background:#233754;border-color:#6b90c5;color:#e3eeff}
+body[data-network-version="54"] .cylinder-option:disabled{opacity:.42;cursor:default}
+body[data-network-version="54"] .tool-rail [data-action="cylinder-origin"]{width:auto;min-width:46px;padding:3px 6px;color:#ffe0a0;white-space:normal;line-height:1.2}
+body[data-network-version="54"] #cylinder-entry-nav,body[data-network-version="54"] #cylinder-hover-inspector{position:fixed;right:24px;bottom:106px;width:min(310px,calc(100vw - 32px));padding:12px 14px;background:#10192af2;border:1px solid #3c4c68;border-radius:12px;box-shadow:0 12px 30px #0005;color:#dce7f8;z-index:12;max-height:calc(100dvh - 220px);overflow:auto}
+body[data-network-version="54"] #cylinder-entry-nav header{display:flex;align-items:center;justify-content:space-between}
+body[data-network-version="54"] #cylinder-entry-nav header button{padding:4px 10px}
+body[data-network-version="54"] #cylinder-entry-nav p{font-size:11px;color:#a4b4d0;line-height:1.5;margin:3px 0 8px}
+body[data-network-version="54"] .cylinder-entry-choice{display:flex;align-items:center;gap:9px;width:100%;padding:8px 6px;min-height:44px;color:#e2ebff;background:transparent;border-top:1px solid #ffffff14;font-size:12px;text-align:left}
+body[data-network-version="54"] .cylinder-entry-choice:hover{background:#20314b}
+body[data-network-version="54"] .cylinder-entry-choice i{width:7px;height:7px;border-radius:50%;background:var(--object-color);box-shadow:0 0 7px var(--object-color);flex:none}
+body[data-network-version="54"] .cylinder-entry-choice span:nth-child(2){flex:1;line-height:1.4}
+body[data-network-version="54"] .cylinder-entry-choice small{display:block;color:#9fafd0;font-size:10px}
+body[data-network-version="54"] #cylinder-hover-inspector{pointer-events:none;width:clamp(285px,26.5vw,354px);max-width:calc(100vw - 32px);font-size:12px;bottom:94px}
+body[data-network-version="54"] #cylinder-hover-inspector strong{font-size:14px}
+body[data-network-version="54"] #cylinder-hover-inspector small{color:#9bacc6;display:block;margin-top:5px;font-size:10px}
+body[data-network-version="54"] .cylinder-inspection-stage{font-size:11px;margin:6px 0;color:#b7c8e0}
+body[data-network-version="54"] .cylinder-inspection-counts{display:grid;gap:5px;font-size:12px;font-variant-numeric:tabular-nums}
+body[data-network-version="54"] .cylinder-inspection-row{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px;align-items:baseline;padding:5px 7px;background:#ffffff09;border:1px solid #ffffff0d;border-radius:6px;line-height:1.45}
+body[data-network-version="54"] .cylinder-inspection-row b{font-weight:500;white-space:nowrap}
+body[data-network-version="54"] .cylinder-inspection-names{color:#dce7f8;overflow-wrap:anywhere}
+body[data-network-version="54"] .cylinder-upstream-count{color:#9cc2ff;font-size:11px;line-height:1.45}
+body[data-network-version="54"] .cylinder-inspection-note{color:#9bacc6;font-size:10px;line-height:1.4}
+body[data-network-version="54"] .cylinder-inspection-counts .before,body[data-world="network"][data-network-version="54"] #focus-card .network-focus-key .before{color:#7ce2ff}
+body[data-network-version="54"] .cylinder-inspection-counts .after,body[data-world="network"][data-network-version="54"] #focus-card .network-focus-key .after{color:#ffd085}
+body[data-network-version="54"] .cylinder-inspection-counts .thinking{color:#d5b4ff}
+body[data-network-version="54"] .cylinder-compact-inspection{display:grid;gap:6px}
+body[data-network-version="54"] .cylinder-compact-inspection>.primary-button{width:100%;min-height:44px;margin:6px 0 0}
+body[data-network-version="54"] #cylinder-node-details>summary{font-size:12px;padding:10px 0 4px;border-top:1px solid #35425a;margin-top:9px;cursor:pointer}
+body[data-network-version="54"] #cylinder-node-details .focus-actions{margin:6px 0}
+.spatial-focus-links .cylinder-link-flow{stroke-dasharray:5 95;stroke-dashoffset:0;animation:cylinder-direction-flow 2.6s linear infinite}
+@keyframes cylinder-direction-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-100}}
+@media(prefers-reduced-motion:reduce){.spatial-focus-links .cylinder-link-flow{display:none;animation:none}}
+@media(max-aspect-ratio:9/10){body[data-network-version="54"] #cylinder-entry-nav,body[data-network-version="54"] #cylinder-hover-inspector{right:16px;bottom:146px}}
+@media(max-width:620px){body[data-network-version="54"] #cylinder-entry-nav{right:12px;bottom:148px}body[data-network-version="54"] #cylinder-hover-inspector{right:12px;bottom:108px}body[data-network-version="54"] .tool-rail [data-action="cylinder-origin"]{min-width:38px;font-size:9px}}
+
+@media(max-width:800px){body[data-network-version="54"] #cylinder-hover-inspector{width:min(360px,calc(100vw - 24px),max(260px,45vw));right:12px}}
+
+/* v54 ordinary exploration: the real WebGL point is the location; text is an annotation.
+   Retain button targets and keyboard-only focus. Do not restyle learning/guide/v53. */
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label{
+  display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;max-width:none;
+  min-height:0;padding:3px 4px;gap:0;border:0!important;border-radius:0;background:transparent!important;
+  box-shadow:none!important;outline:none!important;color:#aebed9!important;font-size:12px;line-height:16px;font-weight:500!important;
+  text-align:left;text-shadow:none;
+}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label[hidden]{display:none!important}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label::before,
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label .activity-glyph{display:none!important}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label>span{
+  display:block;min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:16px;color:inherit;
+  -webkit-text-stroke:2px #080d18;paint-order:stroke fill;
+}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label.cylinder-point-primary{
+  color:#f4f8ff!important;font-weight:700!important;
+}
+body[data-world="network"][data-network-version="54"] .space-label.node.cylinder-point-label:focus-visible{
+  outline:2px solid #9cc7ff!important;outline-offset:1px;
+}
+body[data-world="network"][data-network-version="54"] .label-tethers path.cylinder-point-tether{stroke:#9aabc9;stroke-width:1;opacity:.55;stroke-dasharray:none}
+/* At Mac-sized tall desktop widths, the narrow sidebar leaves the upper
+   screen open for the atlas. Keep the existing compact strip on narrower screens. */
+@media(min-width:900px) and (min-height:800px) and (max-aspect-ratio:9/10){
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide{
+  display:flex;flex-direction:column;left:16px;right:auto;top:112px;width:min(188px,23vw);
+  max-height:calc(100dvh - 245px);gap:7px;padding:8px 9px;background:#080d1866;
+ }
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide #network-view-title{display:none}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend{display:grid;grid-template-columns:1fr;align-self:stretch;gap:2px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide .network-legend button{min-height:27px;padding:3px 4px;font-size:11px}
+ body[data-world="network"][data-network-version="54"]:not(.guide-mode):not(.has-journey):not(.has-task-surface):not(.has-learning-map-context) #network-guide :is(#grade-map-filter,#cylinder-core-key,.cylinder-extra-tools){align-self:stretch}
+}
+
+/* v54 compass: a separate navigation affordance, never a source node/edge. */
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker{
+ position:absolute;left:0;top:0;width:148px;height:40px;padding:0;
+ display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;
+ color:#d9c38e;background:transparent;border:0;box-shadow:none;pointer-events:auto;
+ font-size:11px;line-height:14px;z-index:70;text-shadow:0 1px 4px #080d18;
+}
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker[hidden]{display:none!important}
+body[data-world="network"][data-network-version="54"] .cylinder-origin-compass{
+ display:grid;place-items:center;width:20px;height:20px;flex:0 0 20px;
+ border:1px solid #bca368;border-radius:50%;background:#181b23;color:#f6d58b;
+ box-shadow:0 0 10px #e8bb6150;font-size:13px;line-height:1;
+}
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker:hover,
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker:focus-visible{color:#ffdf9b}
+body[data-world="network"][data-network-version="54"] #cylinder-origin-marker:focus-visible{outline:1px solid #bca368;outline-offset:2px}
+
+
+/* B1 foreground handoff. The live map and original lesson iframe remain
+   pointer-accessible; only emphasis changes. No new backdrop or layout shift. */
+body[data-world="network"].has-journey #workbench-focus-toggle{
+  padding:6px 9px;margin-left:auto;min-height:36px;white-space:nowrap;
+  border:1px solid #c8d9d0;border-radius:7px;background:#eff5f0;color:#315c4d;
+  font-size:12px;font-weight:650;
+}
+#workbench-focus-toggle[hidden]{display:none!important}
+body[data-world="network"][data-workbench-foreground="learn"] #space-canvas>canvas{
+  filter:brightness(.83) saturate(.82) blur(.45px);
+}
+body[data-world="network"][data-workbench-foreground="learn"] #space-canvas .space-labels{opacity:.84}
+body[data-world="network"][data-workbench-foreground="map"] #space-canvas>canvas{filter:none}
+body[data-world="network"][data-workbench-foreground="map"] #space-canvas .space-labels{opacity:1}
+body[data-world="network"][data-workbench-foreground="map"].has-journey #journey-surface{opacity:.82}
+body[data-world="network"][data-workbench-foreground] :is(#space-canvas>canvas,#space-canvas .space-labels,#journey-surface){
+  transition:filter .24s ease,opacity .24s ease;
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-world="network"][data-workbench-foreground] :is(#space-canvas>canvas,#space-canvas .space-labels,#journey-surface){transition:none}
+}
+@media(pointer:coarse){
+  body[data-world="network"].has-journey #workbench-focus-toggle{min-height:44px}
+}
+@media(max-width:500px){
+  body[data-world="network"].has-journey #workbench-focus-toggle{font-size:11px;padding:5px 7px}
+}
+
+/* The native B workbench has an independently scrolling child. A stable
+   parent height must not be derived from that child's current viewport. */
+body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface{
+  height:calc(100dvh - 188px);
+}
+@media(max-width:1100px){
+  body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface{height:calc(100dvh - 186px)}
+}
+@media(max-width:800px){
+  body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface{height:50dvh}
+}
+
+/* B3: explicit pause beside the original return/close action. */
+body[data-world="network"].has-journey[data-workbench-foreground] #journey-surface>header{
+  gap:5px;flex-wrap:wrap;
+}
+body[data-world="network"].has-journey #workbench-later{
+  white-space:nowrap;padding:6px 9px;min-height:36px;font-weight:600;
+}
+@media(pointer:coarse){body[data-world="network"].has-journey #workbench-later{min-height:44px}}
+@media(max-width:500px){body[data-world="network"].has-journey #workbench-later{font-size:11px;padding:5px 7px}}
+
+/* AB preview2: v54's dark atlas must not recolor the docked light lesson aid.
+   The two foregrounds change emphasis only, retaining hit targets and layout. */
+body[data-world="network"][data-network-version="54"].has-journey #journey-surface #learning-map-context{
+  background:#fffef9;color:#244c3f;box-shadow:none;
+  border-color:#d0dfd3;border-left-color:#4d866f;
+}
+body[data-world="network"][data-network-version="54"] #journey-surface #learning-map-context .learning-map-eyebrow{color:#456b57}
+body[data-world="network"][data-network-version="54"] #journey-surface #learning-map-context .learning-map-neighbor :is(span,small,em),
+body[data-world="network"][data-network-version="54"] #journey-surface #learning-map-context .learning-map-footer>span{color:#4c6557}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="learn"] #space-canvas>canvas{
+  filter:brightness(.64) saturate(.84) blur(.8px);
+}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="learn"] #space-canvas .space-labels{opacity:.62}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="learn"] #focus-card{opacity:.76}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground="map"] #focus-card{opacity:1}
+body[data-world="network"][data-network-version="54"][data-workbench-foreground] #focus-card{transition:opacity .24s ease}
+@media(prefers-reduced-motion:reduce){
+  body[data-world="network"][data-network-version="54"][data-workbench-foreground] #focus-card{transition:none}
+}
+
+/* Mac A/B stage 02: native v54 Learn is a light working surface, not a
+   narrow floating card. The breakpoint is the parent viewport width, never
+   its aspect ratio. V53 and legacy workspaces retain their original layout. */
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"]{
+  --native-workbench-width:70vw;
+  --native-workbench-gap:12px;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{
+  inset:76px 12px 58px auto;transform:none;
+  width:var(--native-workbench-width);height:auto;max-height:none;
+  border-radius:12px;box-shadow:0 12px 38px #0003;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-app{
+  right:calc(var(--native-workbench-width) + var(--native-workbench-gap) * 2);
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{
+  flex:0 0 auto;min-height:38px;padding:3px 10px;gap:6px;
+  justify-content:flex-end;flex-wrap:nowrap;position:relative;z-index:2;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>span{
+  margin-right:auto;white-space:nowrap;color:#49695a;font-size:12px;font-weight:650;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button{
+  min-height:30px;padding:5px 8px;font-size:12px;white-space:nowrap;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu{
+  position:static;margin:0;min-width:0;
+}
+#workbench-context-menu[hidden]{display:none!important}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu>summary{
+  cursor:pointer;list-style:none;white-space:nowrap;min-height:30px;
+  display:flex;align-items:center;gap:4px;padding:5px 8px;border:1px solid #d0dfd3;
+  border-radius:7px;background:#fffef9;color:#315c4d;font-size:12px;font-weight:600;
+}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu>summary::-webkit-details-marker{display:none}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu>summary::after{content:"▾";font-size:11px}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu[open]>summary::after{content:"▴"}
+body[data-world="network"][data-network-version="54"].has-journey #journey-surface #workbench-context-menu:not([open]) #learning-map-context{display:none!important}
+body[data-world="network"][data-network-version="54"].has-journey #journey-surface #workbench-context-menu[open] #learning-map-context:not([hidden]){
+  display:block!important;position:absolute;inset:calc(100% + 4px) 8px auto auto;
+  width:min(420px,calc(100% - 16px));max-height:min(45dvh,290px);margin:0;padding:10px;
+  z-index:3;overflow:auto;border-radius:9px;box-shadow:0 8px 22px #173e3029;
+}
+body[data-world="network"][data-network-version="54"].has-journey #workbench-context-menu[open] #learning-map-context .learning-map-footer{display:flex}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .topbar{
+  top:12px;left:12px;right:12px;flex-wrap:nowrap;gap:8px;align-items:center;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .top-tools>button:not([data-action="menu"]),
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .save-status [data-action="question"],
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .tool-rail{
+  display:none!important;
+}
+body[data-world="network"][data-network-version="54"].has-learning-map-context[data-workbench-foreground="learn"] #observation-task-toggle{
+  background:#182337;color:#e5edf9;border-color:#526888;
+}
+body[data-world="network"][data-network-version="54"].has-learning-map-context[data-workbench-foreground="learn"] #network-guide{
+  top:76px;left:12px;width:min(190px,calc(30vw - 36px));background:#101827;
+  border-color:#36435e;box-shadow:none;
+}
+@media(max-width:959px){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{
+    left:12px;right:12px;width:calc(100vw - 24px);
+  }
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-app{right:0}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #network-guide{display:none!important}
+}
+@media(max-width:620px){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .topbar .brand{display:none}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .topbar{justify-content:space-between}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .primary-nav{margin-left:0;order:0}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{top:64px;bottom:58px}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{padding-inline:5px;gap:4px}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>span{display:none}
+}
+@media(pointer:coarse){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button,
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu>summary{min-height:44px}
+}
+
+/* Mac 03: entry comparison and the locked inspector share one measured
+   right-hand column. Ordinary map clicks and the V53 card are unchanged. */
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions{
+  display:flex;align-items:center;gap:4px;flex:none;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions button{
+  white-space:nowrap;font-size:11px;color:#d6e5ff;border:1px solid #415571;
+  border-radius:6px;background:#1a2940;min-height:28px;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions button:hover{background:#2a3d5a}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-text{
+  display:grid;gap:2px;min-width:0;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-domain{
+  font-size:11px;color:#b4c8e6;font-weight:650;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-name{
+  font-size:13px;color:#e5eeff;line-height:1.4;overflow-wrap:anywhere;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-kind{
+  font-size:11px;line-height:1.4;color:#b9c6db;
+}
+body[data-network-version="54"] #cylinder-entry-nav [data-entry-kind="root"] .cylinder-entry-kind{color:#a2e0ce}
+body[data-network-version="54"] #cylinder-entry-nav [data-entry-kind="growth"] .cylinder-entry-kind{color:#f3ca96}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-choice[aria-pressed="true"]{
+  background:#243a59;box-shadow:inset 0 0 0 1px #6e94cb;border-radius:7px;
+}
+body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-choice:focus-visible{
+  outline:2px solid #b8d9ff;outline-offset:-2px;background:#263a56;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"]{
+  right:auto;bottom:auto;padding:8px 10px;
+  overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] header{
+  gap:6px;margin:0 0 5px;font-size:12px;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-description{display:none}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-choices{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-choice{
+  min-height:36px;padding:4px 6px;gap:5px;border:1px solid #34435e;
+  border-radius:6px;align-items:center;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-name{
+  position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-domain{
+  color:#e0eaff;font-size:12px;line-height:1.35;white-space:normal;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-kind{
+  font-size:10px;line-height:1.25;white-space:normal;
+}
+body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-arrow{display:none}
+@media(pointer:coarse){
+ body[data-network-version="54"] #cylinder-entry-nav[data-compact="true"] .cylinder-entry-choice,
+ body[data-network-version="54"] #cylinder-entry-nav .cylinder-entry-actions button{min-height:44px}
+}
+
+/* A second fixed "return overview" button intersects the compact entry
+   switcher at ordinary desktop widths. Keep the original topbar Overview
+   action and the distinct entry-home action; restore the floating duplicate
+   automatically outside this specific comparison state. */
+body[data-world="network"][data-network-version="54"]:has(#cylinder-entry-nav:not([hidden])[data-compact="true"]) #local-overview-exit{
+  display:none!important;
+}
+
+/* Mac 04: a quiet default observation surface. Real counts remain on
+   the five domain buttons and separate thinking key; full explanation
+   and independent switches stay in the native, closed disclosure. */
+body[data-world="network"][data-network-version="54"] #grade-map-filter[data-stage="all"] #grade-map-filter-status{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+body[data-world="network"][data-network-version="54"] #network-guide #grade-map-filter{position:relative}
+body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools #network-view-description{
+  height:auto;min-height:0;max-height:none;margin:4px 0 8px;overflow:visible;
+  font-size:11px;line-height:1.5;color:#acbbd2;
+}
+body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools>summary{
+  min-height:30px;line-height:1.5;padding:5px 3px;margin:0;
+}
+body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools:not([open])>*:not(summary){display:none!important}
+/* One horizontal camera toolbar. Width is intrinsic to complete labels;
+   at genuinely narrow widths it scrolls, never splits a word or icon. */
+body[data-world="network"][data-network-version="54"] .tool-rail,
+body[data-world="network"][data-network-version="54"].has-journey .tool-rail{
+  width:max-content;max-width:calc(100vw - 40px);flex-wrap:nowrap;
+  gap:3px;overflow-x:auto;overflow-y:hidden;
+}
+body[data-world="network"][data-network-version="54"] .tool-rail>button{
+  flex:0 0 auto;min-width:40px;width:auto;height:40px;
+  padding:0 9px;white-space:nowrap;line-height:1.25;font-size:12px;
+}
+body[data-world="network"][data-network-version="54"] .tool-rail>button[data-action="zoom"]{
+  min-width:38px;font-size:20px;
+}
+body[data-world="network"][data-network-version="54"] .tool-rail>button[data-action="cylinder-origin"]{
+  min-width:68px;white-space:nowrap;color:#ffe0a0;
+}
+body[data-world="network"][data-network-version="54"] .lens-indicator{display:none!important}
+body[data-world="network"][data-network-version="54"] .cylinder-reference-caption{
+  position:absolute;left:0;top:0;display:block;width:max-content;
+  height:20px;line-height:20px;padding:0 4px;white-space:nowrap;
+  color:#bdcce3;font-size:11px;font-weight:500;
+  background:transparent;text-shadow:0 1px 4px #080d18,0 0 4px #080d18;
+  z-index:1;pointer-events:none;user-select:none;
+}
+body[data-world="network"][data-network-version="54"] .cylinder-reference-caption[hidden]{display:none!important}
+@media(max-width:800px){
+ body[data-world="network"][data-network-version="54"] .tool-rail,
+ body[data-world="network"][data-network-version="54"].has-journey .tool-rail{
+   max-width:calc(100vw - 24px);height:auto;max-height:56px;
+ }
+ body[data-world="network"][data-network-version="54"] .tool-rail>button{
+   height:36px;min-width:36px;padding:0 6px;font-size:11px;
+ }
+ body[data-world="network"][data-network-version="54"] .tool-rail>button[data-action="cylinder-origin"]{min-width:58px}
+}
+@media(pointer:coarse){
+ body[data-world="network"][data-network-version="54"] .tool-rail>button{height:44px;min-width:44px}
+ body[data-world="network"][data-network-version="54"] #network-guide .cylinder-extra-tools>summary{min-height:44px}
+}
+
+/* V54 learning-shell closeout 01: visual focus only. Existing map clicks,
+   native frame, task gates and saved-question actions retain their behavior. */
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-canvas>canvas{
+  filter:brightness(.42) saturate(.78) blur(1.1px);
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-canvas .space-labels{
+  opacity:.34;filter:blur(.45px);
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #network-guide,
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .save-status [data-action="questions"]{
+  display:none!important;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] .save-status:has(#offline-status[hidden]){display:none!important}
+#workbench-saved-questions{display:none}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-saved-questions{display:block}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{
+  top:64px;border-color:#36435e;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{
+  background:#101827;border-bottom-color:#36435e;color:#c5d1e8;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>span{color:#b7c6df}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button,
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu>summary{
+  color:#e5edf9;background:#182337;border-color:#526888;
+}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header>button:is(:hover,:focus-visible),
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-context-menu>summary:is(:hover,:focus-visible){
+  background:#263752;color:#f3f7ff;
+}
+@media(pointer:coarse){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{top:76px}
+}
+
+/* V54 closeout 02: one parent top bar; map tools and progress return on pause. */
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] :is(.topbar,.bottom-bar){display:none!important}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{top:12px;bottom:12px}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{min-height:44px;padding:5px 10px;gap:6px}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-title{display:block;flex:1 1 auto;min-width:0;margin:0;color:#f0f4fc;font-size:14px;line-height:1.45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header [data-action="menu"]{flex:none;font-size:18px;min-width:34px;line-height:1}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #menu-popover{right:12px;top:62px;max-height:calc(100dvh - 76px);overflow:auto}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #menu-popover [data-action="continue"]{display:none}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #offline-status:not([hidden]){color:#d7e1f5;font-size:11px;white-space:normal;flex:0 1 auto;margin:0}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #learning-map-context .learning-context-route{margin:8px 0 0;font-size:12px;font-weight:600}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #learning-map-context .grade-node-position{margin:8px 0 0;padding:6px;color:#315c4d;background:transparent;border-color:#d0dfd3}
+@media(min-width:960px) and (hover:hover){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-app:hover::after{content:"点击暂回探索（保留当前进度）";position:absolute;bottom:20px;left:50%;transform:translateX(-50%);max-width:calc(100% - 20px);padding:6px 9px;border-radius:7px;background:#101827cc;color:#c5d1e8;font-size:11px;white-space:nowrap;pointer-events:none;z-index:4}
+}
+@media(max-width:620px){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{flex-wrap:wrap}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-title{flex-basis:100%;white-space:normal}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #menu-popover{top:108px;max-height:calc(100dvh - 120px)}
 }

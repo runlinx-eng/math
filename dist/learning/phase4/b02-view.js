@@ -1,4 +1,8 @@
 import{solid,foldedNet,floorCells,pondCells}from'./geometry.js';import{esc,button,number,range,select,input}from'./ui.js';
+// Face identity is shared by the editable paper and the existing 3D texture.
+// A–F remain the non-colour identifiers; no mathematical answer is encoded.
+export const NET_FACE_COLORS=Object.freeze([0x80baac,0xe4b86c,0xa7b9d8,0xdba28a,0xabbf89,0xc3a6c7]);
+const faceColor=i=>'#'+NET_FACE_COLORS[i%6].toString(16).padStart(6,'0');
 const names={faces:'平的面',edges:'两面相接的线',vertices:'线相遇的角'},attrs={height:'比高矮／长短',mass:'比轻重',capacity:'比能装多少'};
 const unit=(m,units=['cm²','m²','cm','m'])=>select('unit','单位',m.unit,units);
 const fractionCell=(t,i)=>{const x=i%t.w,y=Math.floor(i/t.w);return `polygon(${t.polygon.map(([a,b])=>`${(a-x)*100}% ${(b-y)*100}%`).join(',')})`;};
@@ -11,14 +15,39 @@ export function visual(t,m){switch(t.type){
  case'x-capacity':return `<div class="x-jugs">${jug(m.poured,t.capacity,t.targetFill?'容量 1 L 的壶':'待测容器',true,Math.max(t.capacity,t.reference||0),m.prediction!==null)}${t.reference?jug(1000,1000,'标准瓶 1 L',false,Math.max(t.capacity,1000)):''}</div>`;
  default:return '';}}
 function jug(amount,max,label,unknown=false,scale=max,reveal=true){const top=Math.ceil(scale/500)*500,marks=top<=500?100:500;return `<div class="x-jug"><svg viewBox="0 0 250 280" aria-label="${label}"><path d="M 60 ${250-max/top*220} V 250 H 190 V ${250-max/top*220}" stroke="#5b7e75" stroke-width="3" fill="#dbe8e320"/><rect x="63" y="${250-amount/top*220}" width="124" height="${amount/top*220}" fill="#84c4c4" opacity=".8"/>${(reveal?Array.from({length:top/marks+1},(_,i)=>{const y=250-i*marks/top*220;return `<path d="M 175 ${y} H 192" stroke="#597d73"/><text x="198" y="${y+4}" font-size="12">${i*marks}</text>`;}):[]).join('')}<text x="192" y="15" font-size="12">mL</text>${unknown?`<path d="M 61 ${250-max/top*220} H 190" stroke="#b58142" stroke-dasharray="4 4"/>`:''}</svg><p>${label}</p></div>`;}
+
+function netPaper(t,m){
+ const frozen=m.fold>0;
+ const heading=t.preset?'平面纸片':'在平面上画纸片';
+ const instruction=t.preset?'按字母认清每一面。':'点选六个相连的方格；再点一次可拿掉。';
+ return `<section class="x-net-paper" aria-label="平面纸片"><h3>${heading}</h3><p>${instruction}</p><div class="net-grid" aria-label="平面纸片方格">${Array.from({length:25},(_,i)=>{
+  const x=i%5,y=Math.floor(i/5),j=m.cells.findIndex(p=>p[0]===x&&p[1]===y);
+  const face=j<0?'':String.fromCharCode(65+j);
+  const attrs=j<0?'':`data-net-face="${face}" style="--net-face:${faceColor(j)}"`;
+  return button('net-cell',face,`data-col="${x}" data-row="${y}" ${t.preset||frozen?'disabled':''} class="${j>=0?'on':''}" aria-label="${face?'纸片 '+face+'，':''}位置 ${x},${y}" ${attrs}`);
+ }).join('')}</div><p class="x-net-count">已选 ${m.cells.length}/6 片</p></section>`;
+}
+function netQuestions(t,m){
+ const frozen=m.fold>0,validRun=m.runs.at(-1)&&JSON.stringify(m.runs.at(-1).cells)===JSON.stringify(m.cells);
+ const options=m.cells.map((_,i)=>[i,String.fromCharCode(65+i)]);
+ const pairFields=(select('pair.0','相对的一面',m.pair[0],options)+select('pair.1','另一面',m.pair[1],options)).replaceAll('<select ',frozen?'<select disabled ':'<select ');
+ // Follow the learner's prediction, never the computed validity. Keep both
+ // original fields reachable, even on the "cannot fold" branch.
+ const pairBody=`<div class="x-fields">${pairFields}</div>`;
+ const pair=m.guess===true?`<div data-net-pair-primary><p>你猜能合成：哪两面会相对？</p>${pairBody}</div>`:`<details class="x-net-pair-optional" data-net-pair-optional><summary>相对面预测（猜能合成时使用）</summary>${pairBody}</details>`;
+ return `<div class="x-net-questions"><p class="x-net-step">先判断，再试折</p><div class="choice-line">${button('guess','能合成',`data-value="true" aria-pressed="${m.guess===true}" ${frozen?'disabled':''}`)}${button('guess','不能合成',`data-value="false" aria-pressed="${m.guess===false}" ${frozen?'disabled':''}`)}</div>${pair}${input('why','先说说为什么（可选）',m.why)}<div class="choice-line">${button('fold','试着合起来',m.guess===null||m.cells.length!==6||frozen?'disabled':'')}${button('unfold','摊开重试')}${button('turn-extra','↻ 转一转')}</div>${range('fold','展开到合拢',m.fold,0,100,1,!validRun)}${m.runs.length&&m.fold===100?`<div class="x-fields">${foldedNet(m.cells).valid?Object.entries(names).map(([k,l])=>number('counts.'+k,l+'有几处',m.counts[k])).join(''):select('reason','哪里对不上',m.reason,[['overlap','有两面落到同一处'],['few','只有五张纸'],['six','只要六张就一定行']])}</div>`:''}</div>`;
+}
 export function controls(t,m){switch(t.type){
  case'x-floor':return `${t.draw?range('w','板有多宽',m.w,1,10)+range('h','板有多高',m.h,1,10):''}${t.partition?range('cols','每行分几格',m.cols,1,10)+range('rows','分成几行',m.rows,1,10):''}<div class="choice-line">${button('row','＋ 铺下一排')}${button('clear-tiles','拿走方片')}</div><div class="x-fields">${t.factors||t.partition?number('rowsWritten','共有几行',m.rowsWritten)+number('columnsWritten','每行几格',m.columnsWritten):''}${number('total','一共铺了多少',m.total)}${unit(m)}${t.compare?select('comparison','和 14 平方厘米相比',m.comparison,[['more','更大'],['less','更小'],['equal','一样大']]):''}</div>`;
  case'x-rectangle':return `${t.draw?`<div class="x-fields">${range('w','长',m.w,1,12,1,!!t.fixedW)}${range('h','宽',m.h,1,12)}</div>`:''}<div class="x-fields">${number('total','铺地面积',m.total)}${unit(m)}${t.perimeter?number('perimeter','围边长度',m.perimeter)+select('borderUnit','围边单位',m.borderUnit,['cm','m','cm²','m²']):''}</div>`;
  case'x-pond':return `<div class="x-fields">${number('total','估计面积',m.total)}${unit(m,['cm²','cm'])}</div>`;
  case'x-solid':return `<div class="choice-line">${Object.entries(names).map(([k,l])=>button('solid-mode',l,`data-value="${k}" aria-pressed="${m.mode===k}"`)).join('')}${button('turn-extra','↻ 转一转')}</div><p class="note-line">这一类已标记 ${m.marks[m.mode].length} 处</p><details class="x-access"><summary>用编号选择（辅助）</summary>${solid(t.shape)[m.mode].map((_,i)=>button('solid-mark',String(i+1),`data-index="${i}" aria-label="标记${names[m.mode]} ${i+1}" aria-pressed="${m.marks[m.mode].includes(i)}"`)).join('')}</details><div class="x-fields">${Object.entries(names).map(([k,l])=>number('counts.'+k,l+'有几处',m.counts[k])).join('')}</div>`;
- case'x-net':{const frozen=m.fold>0,validRun=m.runs.at(-1)&&JSON.stringify(m.runs.at(-1).cells)===JSON.stringify(m.cells);return `<div class="x-net-layout"><div class="net-grid" aria-label="画六个相连方格">${Array.from({length:25},(_,i)=>{const x=i%5,y=Math.floor(i/5),j=m.cells.findIndex(p=>p[0]===x&&p[1]===y);return button('net-cell',j<0?'':String.fromCharCode(65+j),`data-col="${x}" data-row="${y}" ${t.preset||frozen?'disabled':''} class="${j>=0?'on':''}" aria-label="纸片位置 ${x},${y}"`);}).join('')}</div><div><div class="choice-line">${button('guess','能合成',`data-value="true" aria-pressed="${m.guess===true}" ${frozen?'disabled':''}`)}${button('guess','不能合成',`data-value="false" aria-pressed="${m.guess===false}" ${frozen?'disabled':''}`)}</div><div class="x-fields">${select('pair.0','相对的一面',m.pair[0],m.cells.map((_,i)=>[i,String.fromCharCode(65+i)]))}${select('pair.1','另一面',m.pair[1],m.cells.map((_,i)=>[i,String.fromCharCode(65+i)]))}</div>${input('why','先说说为什么（可选）',m.why)}<div class="choice-line">${button('fold','试着合起来',m.guess===null||m.cells.length!==6||frozen?'disabled':'')}${button('unfold','摊开重试')}${button('turn-extra','↻ 转一转')}</div>${range('fold','展开到合拢',m.fold,0,100,1,!validRun)}${m.runs.length&&m.fold===100?`<div class="x-fields">${foldedNet(m.cells).valid?Object.entries(names).map(([k,l])=>number('counts.'+k,l+'有几处',m.counts[k])).join(''):select('reason','哪里对不上',m.reason,[['overlap','有两面落到同一处'],['few','只有五张纸'],['six','只要六张就一定行']])}</div>`:''}</div></div>`;}
+ case'x-net':return netPaper(t,m)+netQuestions(t,m);
  case'x-attributes':return `<div class="choice-line">${(t.keys||['height','mass','capacity']).map(k=>button('measure-mode',attrs[k],`data-value="${k}" aria-pressed="${m.mode===k}"`)).join('')}${button('measure-both','用工具比一比')}</div><div class="choice-line">${t.items.map((o,i)=>button('compare-choice',o.name+(m.mode==='height'?'更长／高':m.mode==='mass'?'更重':'装得更多'),`data-index="${i}" aria-pressed="${m.choices[m.mode]===i}"`)).join('')}</div><small>模型数据；真实物品要用真实工具核对。</small>`;
  case'x-measure':return `<div class="choice-line">${[['length','尺'],['mass','天平'],['capacity','量杯']].map(([k,l])=>button('tool',l,`data-value="${k}" aria-pressed="${m.tool===k}"`)).join('')}</div>${m.tool===t.attribute?t.attribute==='length'?range('zero','移动尺的零点',m.zero,0,10):t.attribute==='mass'?`<div class="choice-line">${[-100,-50,50,100].map(n=>button('weight',(n>0?'＋ ':'− ')+Math.abs(n)+' g',`data-delta="${n}"`)).join('')}</div>`:button('pour-measure','把杯里的水倒入量杯'):''}<div class="x-fields">${number('reading','我读到的量',m.reading)}${unit(m,['cm','m','g','kg','mL','L'])}</div>`;
  case'x-capacity':return `<div class="x-fields">${number('guess','先估计能装多少 mL',m.guess,m.prediction!==null?'disabled':'')}${button('estimate','留下估计',m.guess===null||m.prediction!==null?'disabled':'')}</div><div class="choice-line">${button('pour','＋ 倒入 '+t.step+' mL',`data-delta="1" ${m.prediction===null?'disabled':''}`)}${button('pour','− 倒出 '+t.step+' mL',`data-delta="-1" ${m.prediction===null?'disabled':''}`)}</div><div class="x-fields">${number('total','装满时的量 mL',m.total)}${number('contents','现在的水量 mL',m.contents)}</div><small>这里用模拟容器核对估计；不是对真实杯子的测量。</small>`;
  default:return '';}}
-export function render(t,m){return `${['x-solid','x-net'].includes(t.type)?'<div class="cube-world" id="extra-world"></div>':`<div id="extra-visual">${visual(t,m)}</div>`}<div id="extra-controls">${controls(t,m)}</div>`;}
+export function render(t,m){
+ if(t.type==='x-net')return `<div id="extra-controls" class="x-net-workbench"><div class="x-net-paired">${netPaper(t,m)}<section class="x-net-preview" aria-label="折合预览"><h3>折合预览 · 同一张纸</h3><p>用相同字母和颜色找同一面；可转动观察。</p><div class="cube-world" id="extra-world"></div></section></div>${netQuestions(t,m)}</div>`;
+ return `${t.type==='x-solid'?'<div class="cube-world" id="extra-world"></div>':`<div id="extra-visual">${visual(t,m)}</div>`}<div id="extra-controls">${controls(t,m)}</div>`;
+}

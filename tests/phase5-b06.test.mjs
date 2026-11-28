@@ -1,6 +1,7 @@
 import test from'node:test';import assert from'node:assert/strict';import fs from'node:fs';
 import{LESSONS,ROUTES,ROUTE_SECTIONS,topicIds}from'../dist/learning/catalog.js';import{TASKS,defaultModel,exampleModel,validModel,inspect}from'../dist/learning/tasks.js';
-import{BRIDGES,sourceBridge}from'../dist/learning/bridges.js';import{freshLesson,submitLesson,lessonSummary}from'../dist/learning/state.js';import{fresh,backup,parseBackup,completionSummary}from'../dist/exploration-core.js';import{addQuestion,captureSession,resumeQuestion}from'../dist/learning/daily.js';import*as b from'../dist/learning/phase5/b06-model.js';import{render as renderB06}from'../dist/learning/phase5/b06-view.js';
+import{BRIDGES,sourceBridge}from'../dist/learning/bridges.js';import{freshLesson,submitLesson,lessonSummary}from'../dist/learning/state.js';import{fresh,backup,parseBackup,completionSummary}from'../dist/exploration-core.js';import{addQuestion,captureSession,resumeQuestion}from'../dist/learning/daily.js';import*as b from'../dist/learning/phase5/b06-model.js';import{render as renderB06,b06PresentationPrompt}from'../dist/learning/phase5/b06-view.js';
+import{taskFingerprint}from'../scripts/audit-evidence-expansion.mjs';
 const atlas=JSON.parse(fs.readFileSync(new URL('../dist/data/atlas.json',import.meta.url))),plan=JSON.parse(fs.readFileSync(new URL('../docs/content-plan/catalog.json',import.meta.url))),ids=Object.keys(LESSONS).filter(id=>LESSONS[id].batch==='B06');
 test('dictation clips contain real PCM samples with speech-length duration and non-silent energy',()=>{for(const n of[14,17,40,100]){const buf=fs.readFileSync(new URL('../dist/learning/phase5/audio/n'+n+'.wav',import.meta.url));assert.equal(buf.toString('ascii',0,4),'RIFF');let fmt,data;for(let p=12;p+8<=buf.length;){const kind=buf.toString('ascii',p,p+4),size=buf.readUInt32LE(p+4);if(kind==='fmt ')fmt=buf.subarray(p+8,p+8+size);if(kind==='data')data=buf.subarray(p+8,p+8+size);p+=8+size+(size%2);}assert.equal(fmt.readUInt16LE(0),1);assert.equal(fmt.readUInt16LE(2),1);assert.equal(fmt.readUInt16LE(14),16);const seconds=data.length/fmt.readUInt32LE(4)/2;assert.ok(seconds>.3&&seconds<4,'n'+n+' duration');let power=0;for(let p=0;p<data.length;p+=2)power+=(data.readInt16LE(p)/32768)**2;assert.ok(Math.sqrt(power/(data.length/2))>.003,'n'+n+' non-silent samples');}});
 test('B06 adds exactly its 23 planned source nodes and 10 actual edges with at most three choices',()=>{assert.equal(ids.length,23);assert.deepEqual(ids.map(id=>LESSONS[id].topicId).sort(),[...plan.batches.find(b=>b.id==='B06').topicIds].sort());assert.equal(new Set(topicIds).size,topicIds.length);assert.equal(ids.flatMap(id=>TASKS[id]).length,76);const routes=ROUTES.filter(r=>r.ids.some(id=>LESSONS[id].batch==='B06'));assert.equal(routes.length,8);const sections=ROUTE_SECTIONS.filter(s=>routes.some(r=>r.section===s.id));assert.equal(sections.length,3);for(const s of sections)assert.ok(routes.filter(r=>r.section===s.id).length<=3);for(const r of routes)assert.ok(r.ids.length<=3);const links=Object.values(BRIDGES).filter(b=>b.batch==='B06');assert.equal(links.length,10);for(const l of links)assert.ok(sourceBridge(l.id,atlas));});
@@ -66,3 +67,35 @@ test('teen quantities survive unbundling, and the required re-bundling is record
 test('dictation requires completed playback or explicit text help, and 14 is not 40',()=>{const t=TASKS.write100[0],m=b.example(t);m.heard=0;assert.ok(!b.inspect(t,m).correct);m.textHelp=true;assert.ok(b.inspect(t,m).correct);m.numeral='14';assert.ok(!b.inspect(t,m).correct);assert.equal(b.cn(0),'零');assert.equal(b.cn(20),'二十');assert.equal(b.cn(100),'一百');});
 test('ink is bounded evidence, never a legibility score',()=>{const t=TASKS.write20[0],m=b.example(t);assert.ok(b.inspect(t,m).correct);m.ink=[[[0,0],[1,1]]];assert.ok(b.valid(t,m));m.ink[0][1][1]=Infinity;assert.ok(!b.valid(t,m));});
 test('unfinished walk, audio help and ink survive backup and question continuation',()=>{const s=fresh(),id='write100',a=freshLesson(id);a.view='task';a.index=0;a.models[0]=b.initial(TASKS[id][0]);a.models[0].tens=3;a.models[0].textHelp=true;a.models[0].ink=[[[.1,.1],[.4,.8]]];s.lessons[id]=a;const q=addQuestion(s,'四十为什么还要写一个零？',{nodeId:LESSONS[id].topicId,scene:captureSession(a)});const copy=parseBackup(JSON.stringify(backup(s)),atlas);resumeQuestion(copy,q.id);assert.deepEqual(copy.lessons[id].models,a.models);assert.deepEqual(completionSummary(copy),{done:0,total:topicIds.length});});
+
+test('B06 recount separates order from moving objects and keeps old grading',()=>{
+ const t=TASKS.lastcount[1],m=b.initial(t),initial=structuredClone(m);
+ const source=structuredClone(t),linked=BRIDGES['link-lastcount-manyfaces'].tasks[0];
+ assert.equal(taskFingerprint(t),'144c38908a2ae4a9f5c75e0a47c01530e6f864bb65429d2159eb8ea5dc7198ec','preserve the reviewed original task');
+ assert.equal(t.prompt,'先数一次。换个起点再数，把两次总数对起来。');
+ assert.match(b06PresentationPrompt(t),/换个起点或顺序/);
+ assert.deepEqual(linked,t);assert.equal(b06PresentationPrompt(linked),b06PresentationPrompt(t));
+ assert.deepEqual(t,source,'display must not modify source');
+ assert.match(renderB06(t,m),/b6-recount-beads/);
+ assert.doesNotMatch(renderB06(t,m),/把位置打散|换位置后有几个|data-xfield="after"/);
+ assert.deepEqual(m,initial);
+ for(const i of [0,1,2,3,4,5])b.act(t,m,'count-tap',{index:i});
+ m.total=6;
+ assert.match(renderB06(t,m),/开始第二次数数/);
+ assert.match(renderB06(t,m),/data-x="count-move" disabled/);
+ b.act(t,m,'count-move');assert.equal(m.moved,false);
+ m.prediction=5;b.act(t,m,'count-move');assert.equal(m.moved,true,'wrong guess still allows a real recount');
+ assert.match(renderB06(t,m),/第一次的顺序：A → B → C → D → E → F/);
+ assert.doesNotMatch(renderB06(t,m),/b6-beads scatter/);
+ assert.equal(m.after,null);assert.equal(m.why,'');
+ for(const i of [0,2,1,3,4,5])b.act(t,m,'count-tap',{index:i});
+ m.after=6;m.why='same';assert.equal(b.inspect(t,m).correct,false);
+ const old=b.example(t);old.again=[0,2,1,3,4,5];
+ assert.equal(b.valid(t,old),true);assert.equal(b.inspect(t,old).correct,true);
+ assert.match(renderB06(t,old),/第二次数数/);
+ old.again=[...old.taps];assert.equal(b.inspect(t,old).correct,false);
+ const rearrange=TASKS.lastcount[0],a=b.example(rearrange);
+ assert.equal(b06PresentationPrompt(rearrange),rearrange.prompt,'moving objects keeps the original instruction');
+ assert.match(renderB06(rearrange,a),/b6-beads scatter/);
+ assert.match(renderB06(rearrange,a),/把位置打散/);
+});

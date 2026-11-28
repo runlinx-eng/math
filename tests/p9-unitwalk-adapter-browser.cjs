@@ -16,7 +16,10 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  fs.mkdirSync(out,{recursive:true});
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {solveSteps,valid,inspect}=await import('../dist/learning/phase5/b16-model.js');
- const {replayUnitwalkEvidence}=await import('../dist/learning/unitwalk-evidence.js');
+ const {replayUnitwalkEvidence,unitwalkBinding}=await import('../dist/learning/unitwalk-evidence.js');
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const approvedOther=require('./fixtures/p9-regression-cross-family-boundaries.cjs').walk;
+ const auditOther=await createExcludedFeedbackAudit('walk',approvedOther.map(row=>({...row,id:row.sessionId})),spec=>sessionTasks(spec.id)[spec.index],approvedOther);
  let browser,server,activePage,activeLabel='setup';
  try{
   browser=await chromium.launch({headless:true,
@@ -255,10 +258,14 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    const sourceWork=JSON.stringify((await saved(source.id)).models[source.index]);
    const outside={id:'wholefractions',index:0};activeLabel=`${width}x${height}-unreviewed-integer`;
    await navigate(outside);
-   ok(await guide.count()===0&&await hint.count()===0,activeLabel+' switching courses never transfers an old guide or feedback');
+   const auditOutside=async()=>{const lesson=await saved(outside.id),task=sessionTasks(outside.id)[outside.index];
+    ok(unitwalkBinding(task,{sessionId:outside.id,index:outside.index})===null,activeLabel+' remains outside the original family binding');
+    return auditOther(page,outside,lesson.models[outside.index],lesson.cases[outside.index]??null);};
+   const emptyOutside=await auditOutside();ok(!emptyOutside.feedback,activeLabel+' switching courses never transfers old checked feedback');
    await solveOriginal(outside);await submit();
    ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' excluded integer task keeps original grading');
-   ok(await hint.count()===0,activeLabel+' same widget cannot inherit a reviewed source');await shot('checked');
+   const checkedOutside=await auditOutside();ok(checkedOutside.adapter==='issue341-P059',activeLabel+' same widget receives only its independently reviewed source');
+   await reload(outside);require('node:assert/strict').deepEqual(await auditOutside(),checkedOutside);await shot('checked');
    activeLabel=`${width}x${height}-cross-course-return`;await navigate(source);
    ok(JSON.stringify((await saved(source.id)).models[source.index])===sourceWork,activeLabel+' other-course learning preserves the original work');
    ok(await hint.locator('[data-thinking-node-id="mt_3VmBdlAeOZ"]').count()===1,activeLabel+' returning restores only the matching source evidence');

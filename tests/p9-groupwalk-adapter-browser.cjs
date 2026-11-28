@@ -12,7 +12,10 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
  fs.mkdirSync(out,{recursive:true});
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {solveSteps,valid,inspect}=await import('../dist/learning/phase5/b16-model.js');
- const {replayGroupwalkEvidence}=await import('../dist/learning/groupwalk-evidence.js');
+ const {replayGroupwalkEvidence,groupwalkBinding}=await import('../dist/learning/groupwalk-evidence.js');
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const approvedOther=require('./fixtures/p9-regression-cross-family-boundaries.cjs').walk;
+ const auditOther=await createExcludedFeedbackAudit('walk',approvedOther.map(row=>({...row,id:row.sessionId})),spec=>sessionTasks(spec.id)[spec.index],approvedOther);
  let browser,server,activePage,activeLabel='setup';
  try{
   browser=await chromium.launch({headless:true,
@@ -247,11 +250,16 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
    ok(JSON.stringify(await model(source))===sourceWork&&(await hint.innerText()).includes('整组前进'),activeLabel+' returning restores only the matching grouped evidence');
    for(const spec of [{id:'wholefractions',index:0},{id:'link-repeatfraction-sharewholes',index:0}]){
     activeLabel=`${width}x${height}-isolation-${spec.id}-${spec.index}`;await open(spec);
-    ok(await guide.count()===0&&await hint.count()===0,activeLabel+' unreviewed and associated tasks receive no group guide');
+    const separatelyAdmitted=spec.id==='wholefractions'&&spec.index===0;
+    const auditOutside=async()=>{const lesson=await saved(spec.id),task=sessionTasks(spec.id)[spec.index];
+     ok(groupwalkBinding(task,{sessionId:spec.id,index:spec.index})===null,activeLabel+' remains outside the original family binding');
+     return auditOther(page,spec,lesson.models[spec.index],lesson.cases[spec.index]??null);};
+    if(separatelyAdmitted){ok(!(await auditOutside()).feedback,activeLabel+' no prior grouped feedback is carried');}else ok(await guide.count()===0&&await hint.count()===0,activeLabel+' associated tasks receive no group guide');
     await solveOriginal(spec);await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' excluded original mathematics remains usable');
-    ok(await hint.count()===0,activeLabel+' passing does not grant borrowed grouped evidence');
-    await reload(spec);ok(await hint.count()===0,activeLabel+' source isolation persists offline');await shot('checked');
+    const checked=separatelyAdmitted?await auditOutside():null;
+    if(checked)ok(checked.adapter==='issue341-P059',activeLabel+' only separately reviewed feedback');else ok(await hint.count()===0,activeLabel+' passing does not grant borrowed grouped evidence');
+    await reload(spec);if(checked)require('node:assert/strict').deepEqual(await auditOutside(),checked);else ok(await hint.count()===0,activeLabel+' source isolation persists offline');await shot('checked');
    }
    await context.close();activePage=null;
   }

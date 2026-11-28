@@ -15,6 +15,72 @@ const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('h
 const defaultConfig=()=>JSON.parse(readFileSync(resolve(root,'ci/live-browser-matrix.json'),'utf8'));
 const defaultRegistry=()=>JSON.parse(readFileSync(resolve(root,'ci/math-families.json'),'utf8'));
 
+// Explicit capacity-only partition of the immutable logical legacy inventory.
+// The completed first five commands in run 45625745253 left insufficient time
+// for Unit Cover (job 139248173616 cancelled near its 35-minute ceiling).
+// Keep the first three commands together, and move the last three, with
+// their exact artifact ownership, to one additional mandatory runner.
+const expansionGroup='evidence-expansion-2';
+const expansionTail='evidence-expansion-2-tail';
+const expansionEntries=['groups','transform','angle','scalechain','fracshare','unitcover'];
+function partitionExpansionCapacity(definitions){
+ const original=BROWSER_GROUPS[expansionGroup];
+ same(original.commands,expansionEntries.map(name=>({file:'tests/p9-'+name+'-adapter-browser.cjs',env:{}})));
+ same(original.artifacts,expansionEntries.map(name=>'verification/p9-'+name+'-adapter/'));
+ assert.ok(!Object.hasOwn(definitions,expansionTail),'Capacity runner identity collision');
+ const part=(start,end)=>Object.freeze({
+  commands:Object.freeze(original.commands.slice(start,end)),
+  artifacts:Object.freeze(original.artifacts.slice(start,end))
+ });
+ definitions[expansionGroup]=part(0,3);
+ definitions[expansionTail]=part(3,6);
+ const runners=[expansionGroup,expansionTail];
+ same(runners.flatMap(id=>definitions[id].commands),original.commands);
+ same(runners.flatMap(id=>definitions[id].artifacts),original.artifacts);
+ const legacy=Object.values(definitions);
+ const old=Object.values(BROWSER_GROUPS);
+ same(legacy.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort(),
+  old.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort());
+ same(legacy.flatMap(g=>g.artifacts).sort(),old.flatMap(g=>g.artifacts).sort());
+ return {sourceGroup:expansionGroup,runners,commandCounts:[3,3],
+  observedRunId:'45625745253',cancelledJobId:'139248173616',
+  timeoutMinutes:35,maxParallel:10};
+}
+
+// Third full run 45759922537: FDP board and fraction case completed in
+// ~6m47s and ~22m44s; cube fraction was cancelled near the 35-minute cap.
+// The separate successful cube run took ~9m21s. Do not rely on a faster
+// runner or change a test: preserve each original call and evidence root
+// on its own mandatory runner. The source artifact ordering is historical.
+const fractionGroup='evidence-fractioncase';
+const fractionCaseTail='evidence-fractioncase-case';
+const fractionCubeTail='evidence-fractioncase-cube';
+const fractionEntries=['fdpboard','fractioncase','cubefraction'];
+function partitionFractionCapacity(definitions){
+ const original=BROWSER_GROUPS[fractionGroup];
+ const commands=fractionEntries.map(name=>({file:'tests/p9-'+name+'-adapter-browser.cjs',env:{}}));
+ const artifacts=fractionEntries.map(name=>'verification/p9-'+name+'-adapter/');
+ same(original.commands,commands);
+ same(original.artifacts,[artifacts[1],artifacts[0],artifacts[2]]);
+ const runners=[fractionGroup,fractionCaseTail,fractionCubeTail];
+ for(const id of runners.slice(1))assert.ok(!Object.hasOwn(definitions,id),'Capacity runner identity collision');
+ for(const [index,id] of runners.entries()){
+  const artifact=original.artifacts.find(dir=>dir===artifacts[index]);
+  assert.ok(artifact,'Original artifact owner must exist');
+  definitions[id]=Object.freeze({commands:Object.freeze([original.commands[index]]),
+   artifacts:Object.freeze([artifact])});
+ }
+ same(runners.flatMap(id=>definitions[id].commands),original.commands);
+ same(runners.flatMap(id=>definitions[id].artifacts).sort(),[...original.artifacts].sort());
+ const legacy=Object.values(definitions),old=Object.values(BROWSER_GROUPS);
+ same(legacy.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort(),
+  old.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort());
+ same(legacy.flatMap(g=>g.artifacts).sort(),old.flatMap(g=>g.artifacts).sort());
+ return {sourceGroup:fractionGroup,runners,commandCounts:[1,1,1],
+  observedRunId:'45759922537',cancelledJobId:'139708961494',
+  timeoutMinutes:35,maxParallel:10};
+}
+
 export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
  config=defaultConfig(),fileExists,verifyFrozen=false
 }={}){
@@ -36,6 +102,10 @@ export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
    module.familyId+': exclusive locks require an ordered executor; fail closed');
  }
  const definitions={...BROWSER_GROUPS};
+ const capacitySplit=partitionExpansionCapacity(definitions);
+ const fractionCapacitySplit=partitionFractionCapacity(definitions);
+ const legacyRunnerNames=[...GROUP_NAMES,expansionTail,fractionCaseTail,fractionCubeTail];
+ same(Object.keys(definitions),legacyRunnerNames);
  const added=[];
  for(const job of plan.plannedNewJobs){
   assert.ok(Number.isSafeInteger(job.wave)&&job.wave>=1,
@@ -59,19 +129,23 @@ export function buildLiveBrowserMatrix(registry=defaultRegistry(),{
  const groups=Object.keys(definitions);
  same(groups.slice(0,GROUP_NAMES.length),GROUP_NAMES);
  assert.equal(new Set(groups).size,groups.length);
- assert.equal(groups.length,13+added.length);
+ same(groups.slice(0,legacyRunnerNames.length),legacyRunnerNames);
+ assert.equal(groups.length,legacyRunnerNames.length+added.length);
  const fullCommands=Object.values(definitions).flatMap(group=>group.commands);
  assert.equal(fullCommands.length,86+registry.newFamilies.length);
  const matrix={group:groups};
  const proof={schema:'math-ci-live-browser-matrix-proof/1',activation:'enabled',
   checkoutPolicy:'same-SHA static plan and runner/gate',
   sourcePlanDigest:plan.digest,liveMatrix:matrix,
-  legacyGroups:13,legacyCalls:86,legacyEvidenceDirs:83,
+  legacyGroups:13,legacyRunnerGroups:legacyRunnerNames.length,legacyCalls:86,legacyEvidenceDirs:83,
+  legacyCapacitySplit:capacitySplit,legacyFractionCapacitySplit:fractionCapacitySplit,
   registeredNewFamilies:registry.newFamilies.length,addedGroups:added,
   restrictions:['GitHub max-parallel 10 queues overflow jobs without a workflow time cap',
   'No cross-group dependencies or resource locks','No CPU-heavy unprovisioned runners',
    'Every new module must supply mathematical result, errors=[], original PNG and provenance',
-   'Static legacy group source remains the complete rollback baseline']};
+   'Static legacy group source remains the complete rollback baseline',
+  'The exact expansion-2 tail requires its own successful full-run receipt',
+  'All three exact fraction capacity runners require independent successful full-run receipts']};
  proof.digest=digest(proof);
  return {definitions,matrix,proof};
 }

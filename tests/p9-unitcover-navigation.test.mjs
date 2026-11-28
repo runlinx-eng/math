@@ -29,7 +29,11 @@ const attrs=tag=>Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map
 const source=fs.readFileSync(new URL('dist/learning/learn.js',root),'utf8'),line=prefix=>source.split('\n').find(x=>x.startsWith(prefix));
 const update=line('function update('),edit=line('function edit('),extra=line("$('#lesson').addEventListener('click',e=>{const el=e.target.closest('[data-x]')"),input=line("$('#lesson').addEventListener('input',e=>{const el=e.target;if(!el.dataset.xfield");
 const sharedStart=source.indexOf("$('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]')"),shared=source.slice(sharedStart,source.indexOf("\n$('#lesson').addEventListener(",sharedStart+1));
-assert.ok([update,edit,extra,input,shared].every(Boolean));
+// Keep the actual V54 guard in the extracted controller. These legacy Node
+// routes model the standalone presentation; the real V54 locks are covered
+// separately in learning-workspace-browser.cjs.
+const workbenchFlag=line('const v54Workbench=');
+assert.ok([update,edit,extra,input,shared,workbenchFlag].every(Boolean));
 const controllerSourceHashes=Object.fromEntries(Object.entries({update,edit,extra,input,shared}).map(([k,s])=>[k,createHash('sha256').update(s).digest('hex')]));
 const factory=new Function('d',`
  const{localStorage,KEY,atlas,id,read,sessionRecord,assertNoConcurrentLessonOverwrite,mergeLesson,now,validateLesson,BRIDGES,rememberSession,sessionMeta,sessionRoute,validate,writeStored,notify,modelForLesson,freshLesson,enterUnifiedTask,taskFor,numericCompatibility,isExtra,actExtra,fieldExtra,setField,supportLesson,defaultModel,submitLesson,lessonSummary,currentSubmission,sessionTasks}=d;
@@ -38,6 +42,8 @@ const factory=new Function('d',`
  const dummy={hidden:false,textContent:'',value:'',remove(){},scrollIntoView(){}};
  const $=selector=>selector==='#lesson'?{addEventListener:(type,fn)=>listeners[type].push(fn)}:selector==='#storage-warning'?warning:dummy;
  const render=()=>{},sync=()=>{},window={scrollTo(){}},questionId=null;
+ const document={body:{dataset:{}}};
+ ${workbenchFlag}
  const task=()=>taskFor(id,a.index),model=()=>modelForLesson(a),numericReadOnly=()=>a?.view==='task'&&numericCompatibility(task(),model()),uiSnapshot=()=>structuredClone(a.ui);
  ${update}
  ${edit}

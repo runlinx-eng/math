@@ -128,6 +128,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='equivalent');
    const first=await shot('12-equivalent-first-screen');
    requireState(first.status==='任务 1 / 3','first screen is an active task, not free-play mode');
+   requireState(await page.locator('#workbench-curriculum').count()===0,'standalone runner retains its existing layout without a second curriculum request');
    requireState(await page.locator('#route-collapsible').evaluate(el=>el.closest('#learning-next')!==null),'optional route navigation follows the mathematical work');
    requireState(await page.locator('#learning-check').isHidden(),'no empty check panel before the first submission');
    requireState(first.instruction.includes('把三条纸带都涂到一半'),'current math task is visible');
@@ -338,6 +339,8 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await page.locator('#focus-card [data-action="open"]').first().click();
    const embedded=page.frameLocator('#journey-frame');
    await embedded.locator('#note').waitFor();
+   await embedded.locator('#workbench-curriculum[data-state="mapped"][data-session-id="decimal"]').waitFor();
+   requireState(await embedded.locator('#status').getAttribute('data-view')==='summary'&&await embedded.locator('#status').getAttribute('data-task-ordinal')===null&&await embedded.locator('#status').getAttribute('data-task-total')==='4','restored reflection has real task total but no fictional next ordinal');
    requireState((await embedded.locator('.saved-note-preview').innerText()).includes('一个是十分位，一个是百分位。'),'embedded summary restores the prior saved note');
    await embedded.locator('#note').fill('从同一张数学树继续研究分数和小数。');
    await embedded.locator('#actions [data-do="save-note"]').click();
@@ -345,9 +348,17 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState((await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.decimal.notes)).length===2,'embedded save retains both original and new notes');
    await shot('27-embedded-summary-saved',true);
    await embedded.locator('#actions [data-do="lesson"][data-id="quarters"]').click();
+   // Opening a real session is asynchronous (validated runtime and formal
+   // evidence imports). Wait for its exact rendered identity, not an old
+   // title still present while the requested lesson is loading.
+   await page.waitForFunction(()=>document.querySelector('#journey-frame')?.contentWindow?.mathLesson?.snapshot()?.id==='quarters');
+   await embedded.locator('#workbench-curriculum[data-state="mapped"][data-session-id="quarters"][data-topic-id="mt_DRlbMok2lT"][data-scope="native"]').waitFor();
    requireState((await embedded.locator('#title').innerText()).includes('半杯'),'embedded continuation opens the next real mathematical activity');
-   // The iframe renders synchronously, while its parent updates the selected
-   // knowledge asynchronously after the lesson-change postMessage.
+   requireState((await embedded.locator('#status').innerText()).startsWith('任务 1 /'),'embedded continuation starts the real first task');
+   requireState(!(await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters?.cases?.[0]?.attempts?.length)),'embedded continuation does not create a checked attempt');
+   requireState(await embedded.locator('#status').getAttribute('data-task-ordinal')==='1'&&await embedded.locator('#status').getAttribute('data-task-total')==='2','real next native session refreshes its own curriculum and configured task count');
+   // After the child finishes rendering, its parent separately updates the
+   // selected knowledge via the original lesson-change postMessage.
    await page.waitForFunction(()=>mathSpace.snapshot().selected==='node:mt_DRlbMok2lT');
    const endingPose=await page.evaluate(()=>mathSpace.snapshot());
    requireState(startingPose.selected==='node:mt_TqDq6jyOmL'&&endingPose.selected==='node:mt_DRlbMok2lT','next lesson updates the selected knowledge to the real linked activity, not an unrelated node');
@@ -383,6 +394,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    // without adding another navigation or an invented mastery result.
    await embedded.locator('#actions [data-do="next"]').click();
    requireState((await embedded.locator('#instruction').innerText()).includes('三个直筒杯'),'the next configured question is the three-cup model');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'the previous grid proof does not carry over to the unsubmitted cup task');
    for(const [i,level] of [50,75,25].entries()){
      await embedded.locator('#work [data-height="'+i+'"]').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},level);
    }
@@ -393,19 +405,31 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    requireState(await embedded.locator('#scene').getAttribute('data-stage')==='revise','wrong cup decimal does not receive checked thinking credit');
    requireState(await embedded.locator('#math-explanation').isHidden(),'unmatched cup names cannot display a false mathematical equivalence');
    requireState(await embedded.locator('#math-explanation [data-thinking-node-id]').count()===0,'no MP2 source link before valid check');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'incorrect cup work cannot receive the formally admitted P052C observation');
    await embedded.locator('#work [data-name="2"]').fill('0.25');
    requireState(await embedded.locator('#scene').getAttribute('data-stage')==='recheck','edited cup name requires another explicit check');
+   requireState(await embedded.locator('#thinking-feedback').count()===0,'corrected but unsubmitted cup work cannot receive P052C feedback');
    await embedded.locator('#actions [data-do="check"]').click();
    requireState(await embedded.locator('#scene').getAttribute('data-stage')==='passed','correct fractions, cup levels and decimals pass the existing grader');
    const mathExplanation=await embedded.locator('#math-explanation').innerText();
    requireState(mathExplanation.includes('1/2 = 50/100 = 0.5')&&mathExplanation.includes('3/4 = 75/100 = 0.75')&&mathExplanation.includes('1/4 = 25/100 = 0.25'),'all three checked cup relationships are explained from the submitted work');
    requireState(mathExplanation.includes('并不是三杯水都一样多'),'math feedback does not conflate equal representation and equal water volume');
    requireState(await embedded.locator('#math-explanation [data-thinking-node-id="mt_EBYGhd8X3x"]').count()===1,'one source-grounded MP2 thinking method appears in the existing feedback region');
-   requireState(await embedded.locator('#thinking-feedback').count()===0,'math and thinking feedback are not duplicated in the interactive workspace');
+   // The original zero-aside expectation predates the formal #342 P052C
+   // admission for quarters:1. Its source-locked observation has method:null;
+   // it is not a second MP2 attribution or another mathematical solution.
+   requireState(await embedded.locator('#thinking-feedback').count()===1&&await embedded.locator('#work #thinking-feedback').count()===1,'one formally admitted cup-work observation is present in the existing work area');
+   const cupObservation=await embedded.locator('#thinking-feedback').innerText();
+   requireState(cupObservation.includes('这次作品中的思考线索')&&cupObservation.includes('杯中水位与二分之一、四分之三、四分之一的小数名字怎样对应')&&cupObservation.includes('最近一次 Check 一致'),'P052C describes the source-specific current checked work');
+   requireState(cupObservation.includes('不评定自由解释、独立策略、理解或长期掌握'),'the additional evidence note makes no independent learning or mastery claim');
+   requireState(await embedded.locator('#thinking-feedback [data-thinking-node-id]').count()===0&&await embedded.locator('[data-thinking-node-id="mt_EBYGhd8X3x"]').count()===1,'P052C does not duplicate the original single MP2 attribution');
+   requireState(!cupObservation.includes('1/2 = 50/100 = 0.5')&&!cupObservation.includes('3/4 = 75/100 = 0.75')&&!cupObservation.includes('1/4 = 25/100 = 0.25'),'the original checked mathematical equations remain in the mathematical explanation, not a duplicate solution in the observation');
    requireState((await embedded.locator('#next-guidance').innerText()).includes('任选一杯'),'passed state prompts an explanation before reflection');
    requireState((await embedded.locator('#actions [data-do="next"]').innerText()).includes('整理这次发现'),'the same primary action advances to reflection');
    const checkedCupRecord=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.quarters);
    requireState(checkedCupRecord.cases[1].attempts.length===2,'wrong and correct cup submissions remain in the original history');
+   const [wrongCups,correctCups]=checkedCupRecord.cases[1].attempts.map(attempt=>attempt.value);
+   requireState(JSON.stringify(wrongCups.heights)===JSON.stringify([50,75,25])&&JSON.stringify(correctCups.heights)===JSON.stringify([50,75,25])&&JSON.stringify(wrongCups.names)===JSON.stringify(['0.5','0.75','0.2'])&&JSON.stringify(correctCups.names)===JSON.stringify(['0.5','0.75','0.25']),'both complete cup snapshots record the exact original wrong and corrected names and heights');
    await shot('28c-three-cups-math-and-thinking-explanation',true);
    await embedded.locator('#actions [data-do="next"]').click();
    requireState(await embedded.locator('#note').isVisible(),'the existing reflection screen remains available');
@@ -432,7 +456,7 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    // from a fresh top-of-panel position, not from the scrolled help content.
    await embedded.locator('#learning-problem').evaluate(el=>el.ownerDocument.defaultView.scrollTo(0,0));
    requireState(await primaryLinked.isVisible()&&await primaryLinked.isEnabled(),'the real linked practice is immediately available as the route-end main action');
-   const summaryRegions=await embedded.locator('#scene > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
+   const summaryRegions=await embedded.locator('#scene > .learning-region, #workbench-stage > .learning-region').evaluateAll(elements=>elements.map(el=>el.id));
    requireState(summaryRegions.join(',')==='learning-problem,learning-interaction,learning-check,learning-next','completed route puts learner reflection before the one actual next destination');
    requireState(await embedded.locator('#system-explanation').evaluate(el=>el.closest('#learning-next')!==null),'system explanation remains below the main action');
    requireState(await embedded.locator('#source-goals-details').evaluate(el=>el.parentElement?.id==='record-body'),'original source goals remain accessible within records rather than the learner-facing work');
@@ -496,8 +520,11 @@ const requireState=(yes,label)=>{if(!yes)throw Error(label);};
    await shot('28f-route-end-saved-and-continue',true);
    const bridgePose=await page.evaluate(()=>mathSpace.snapshot());
    await primaryLinked.click();
+   await page.waitForFunction(id=>document.querySelector('#journey-frame')?.contentWindow?.mathLesson?.snapshot()?.id===id,linkedId);
+   await embedded.locator('#workbench-curriculum[data-state="mapped"][data-session-id="link-decimal-quarters"][data-scope="bridge-target"]').waitFor();
    requireState((await embedded.locator('#title').innerText()).includes('百格里的量'),'the optional source-backed bridge opens directly in the same learning workspace');
    requireState((await embedded.locator('#status').innerText()).startsWith('任务 1 /'),'the bridge begins at its original first activity');
+   requireState(await embedded.locator('#workbench-curriculum').getAttribute('data-topic-id')==='mt_DRlbMok2lT'&&(await embedded.locator('#workbench-curriculum').innerText()).startsWith('关联任务目标知识学段：')&&await embedded.locator('#status').getAttribute('data-task-total')==='2','linked practice labels its real target curriculum, not a separate invented grade');
    const following=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')));
    requireState(following.lessons.quarters.notes.length===1,'the source lesson reflection survives the transition');
    requireState(!following.daily.bridges[linkedId]?.cases?.[0]?.attempts?.length,'opening a linked activity does not manufacture a correct attempt');

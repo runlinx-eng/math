@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261122-issue341-formal-949-v1');
+registerClientRelease('math-explorer-20261128-v54-integrated-math-fixes1');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -21,6 +21,7 @@ import {isExtra,actExtra,fieldExtra} from './phase4/engine.js';
 import {renderExtra,visualExtra,controlsExtra} from './phase4/view-engine.js';
 import {setField} from './phase4/ui.js';
 import {mountB06} from './phase5/b06-runtime.js';
+import {b06PresentationPrompt} from './phase5/b06-view.js';
 import {TYPES as B06_TYPES} from './phase5/b06-model.js';
 import {KEY,fresh,validate,nodeState,now,backup} from '../exploration-core.js';
 import {LESSONS,ROUTES,lessonIds,routeFor,REFLECTIONS} from './catalog.js';
@@ -33,8 +34,20 @@ import {thinkingFeedback,thinkingGuide} from './thinking-feedback.js';
 import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
-import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle} from './workspace-flow.js';
+import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll,syncWorkbenchLocation,studyActionFocusForWorkbench,workbenchProcessPresentation} from './workbench-presentation.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// The fixed shell belongs to the native network learning frame only.
+if(parent!==window){
+ try{
+  if(parent.document.body?.dataset.world==='network'&&parent.document.querySelector('#journey-frame')?.contentWindow===window)mountWorkbenchShell(document);
+  if(document.body.dataset.workbenchShell==='fixed'&&parent.document.body?.dataset.networkVersion==='54'){
+    document.body.dataset.workbenchLayout='compact-v54';
+    const panel=$('#learning-support-drawer-panel'),goal=$('#learning-goal');
+    if(panel&&goal)panel.prepend(goal);
+  }
+ }catch{/* A foreign embedding keeps the original standalone presentation. */}
+}
 const btn=(act,label,attrs='',primary=false)=>`<button type="button" data-do="${act}" ${attrs} class="${primary?'primary':''}">${label}</button>`;
 const num=(key,label,value,attrs='')=>`<label class="field">${label}<input type="number" min="0" max="999" step="1" data-field="${key}" aria-label="${label}" value="${value??''}" ${attrs}></label>`;
 const entry=(key,label,value)=>`<label class="field">${label}<input type="text" data-field="${key}" aria-label="${label}" autocomplete="off" maxlength="40" value="${esc(value)}"></label>`;
@@ -62,15 +75,16 @@ const formalFeedback=(task,model,record,context)=>{
   ?(issue341FormalRouting?.feedback(task,model,record,context)??null):null;
 };
 function ensureIssue341FormalRouting(sessionId){
- if(issue341FormalRouting||issue341RoutingPromise||!hasIssue341FormalSession(sessionId))return;
+ if(issue341FormalRouting||!hasIssue341FormalSession(sessionId))return;
+ if(issue341RoutingPromise)return issue341RoutingPromise;
  issue341RoutingPromise=import('./issue341-formal-source-routing.js')
   .then(({createIssue341ManifestGatedRouting})=>{
    const routing=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
    if(routing.approvedPositions!==949||routing.approvedFamilies!==284)
     throw new Error('Issue341 manifest and frozen source mismatch');
    issue341FormalRouting=routing;
-   if(a?.view==='task'&&hasIssue341FormalSession(id)&&!blocked)render();
   }).catch(error=>{console.error('Issue341 formal feedback stays closed',error);});
+ return issue341RoutingPromise;
 }
 let lessonOpenSerial=0;
 let numericBackup=null,numericExportMessage='';
@@ -116,9 +130,15 @@ function exportNumericBackup(){
  render();
 }
 function notify(type,extra={}){if(parent!==window)parent.postMessage({type,...extra},location.origin);}
+// Cross-frame user focus is a display-only signal, distinct from lesson-change.
+if(parent!==window){
+  const requestForeground=event=>{if(event.isTrusted&&id)notify('math-space:lesson-foreground',{sessionId:id});};
+  document.addEventListener('pointerdown',requestForeground,true);
+  document.addEventListener('focusin',requestForeground,true);
+}
 // Each activity has its own actual content height. The parent bounds it to the
 // available viewport instead of forcing every lesson into a fixed 820px iframe.
-if(parent!==window&&typeof ResizeObserver!=='undefined'){
+if(parent!==window&&document.body.dataset.workbenchShell!=='fixed'&&typeof ResizeObserver!=='undefined'){
   const lessonRoot=document.querySelector('#lesson');
   let lastHeight=-1;
   const reportHeight=()=>{
@@ -188,16 +208,20 @@ function continuationDestination(){
  if(bridge)return {action:'lesson',label:'继续探索：'+bridge.title+' →',attrs:'data-id="'+esc(bridge.id)+'"'};
  return {action:'back',label:'返回知识空间 →'};
 }
+const v54Workbench=()=>document.body.dataset.workbenchHeader==='parent';
 function renderTaskActions(checked=currentSubmission(a)){
  const stage=learningStage(a,checked),p03=isP03();
-  const focus=studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready});
+  const focus=studyActionFocusForWorkbench({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready,v54:v54Workbench()});
  const plan=learningActionPlan({
    stage,hasNextTask:a.index<sessionTasks(id).length-1,p03,
    readyToCheck:focus.readyToCheck
  });
  const buttonFor=(spec,primary=false)=>btn(spec.action,esc(spec.label),
-   (spec.disabled?'disabled ':'')+(spec.attrs||''),primary);
- $('#actions').innerHTML=buttonFor(plan.primary,focus.kind!=='widget')+plan.secondary.map(spec=>buttonFor(spec)).join('');
+   (spec.disabled?'disabled ':'')+(spec.disabled&&spec.action==='check'&&v54Workbench()?'aria-describedby="action-cue" ':'')+(spec.attrs||''),primary);
+ const primary=buttonFor(plan.primary,v54Workbench()||focus.kind!=='widget'),secondary=plan.secondary.map(spec=>buttonFor(spec)).join('');
+ // DOM order follows the visible order: the original primary is always
+ // at the right end of the V54 command group, including keyboard traversal.
+ $('#actions').innerHTML=v54Workbench()?secondary+primary:primary+secondary;
  $('#actions').dataset.actionStage=stage;
  return plan;
 }
@@ -215,10 +239,14 @@ function syncReflectionPrimary(){
  const save=$('#actions [data-do="save-note"]'),destination=$('#actions [data-primary-destination]');
  if(save){save.disabled=!hasText;save.hidden=!hasText;save.classList.toggle('primary',hasText);}
  if(destination)destination.classList.toggle('primary',!hasText);
- const cue=$('#action-cue');if(cue)cue.textContent=executionCue({stage:'reflect',hasDraft:hasText});
+ if(v54Workbench()){
+  const primary=hasText?save:destination,actions=$('#actions');
+  if(primary&&actions.lastElementChild!==primary)actions.append(primary);
+ }
+ const cue=$('#action-cue');if(cue){cue.textContent=executionCue({stage:'reflect',hasDraft:hasText});cue.hidden=v54Workbench();}
  if(notice){
   notice.hidden=!hasText&&!a.notes.length&&!savedNoteFeedback;
-  notice.textContent=hasText?'文字草稿已保留；点击「保存我的发现」才会加入学习记录。':
+  notice.textContent=hasText?(v54Workbench()?'草稿已保留，保存后才加入发现记录。':'文字草稿已保留；点击「保存我的发现」才会加入学习记录。'):
    savedNoteFeedback||(a.notes.length?`已保存 ${a.notes.length} 条发现（文字解释待确认）。`:'');
   notice.dataset.state=hasText?'draft':'saved';
  }
@@ -230,37 +258,70 @@ function syncLearningRegions(){
  if(support&&support.dataset.session!==id){support.open=false;support.dataset.session=id;}
  const phase=learningActionPlan({stage}).step;
  $('#steps').innerHTML=LEARNING_STEPS.map(step=>'<li data-study-step="'+step.id+'"'+(step.id===phase?' aria-current="step"':'')+'>'+esc(step.label)+'</li>').join('');
+ const beat=workbenchBeat(stage,{v54:v54Workbench(),task:stage==='reflect'?null:task(),model:stage==='reflect'?null:model(),initialModel:defaultModel}),beats=$('#workbench-beats');
+ if(beats.dataset.current!==beat){
+  beats.dataset.current=beat;
+  beats.innerHTML=WORKBENCH_BEATS.map(item=>'<li data-beat="'+item.id+'"'+(item.id===beat?' aria-current="step"':'')+'>'+esc(item.label)+'</li>').join('');
+ }
  $('#interaction-title').textContent=stage==='reflect'?'我的发现（可选）':'动手探索';
  $('#learning-problem .learning-region-title').textContent=stage==='reflect'?'先想一想':'要解决的问题';
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':stage==='explore'?'其他探索（可选）':'发现与继续';
  $('#check-title').textContent='检查与反馈';
  const activeTask=a.view==='summary'?null:task();
- const focus=studyActionFocus({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready});
+ const focus=studyActionFocusForWorkbench({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,v54:v54Workbench()});
  $('#work').querySelectorAll('[data-study-primary]').forEach(el=>{el.classList.remove('study-primary','primary');el.removeAttribute('data-study-primary');});
+ $('#work').querySelectorAll('[data-study-local]').forEach(el=>el.removeAttribute('data-study-local'));
  const widgetAction=focus.selector?$('#work').querySelector(focus.selector):null;
- if(widgetAction){widgetAction.classList.add('study-primary','primary');widgetAction.setAttribute('data-study-primary','true');}
+ if(widgetAction){
+  if(v54Workbench())widgetAction.setAttribute('data-study-local','true');
+  else{widgetAction.classList.add('study-primary','primary');widgetAction.setAttribute('data-study-primary','true');}
+ }
  $('#scene').dataset.actionFocus=widgetAction?'widget':focus.kind;
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
+ const presentation=workbenchProcessPresentation({v54:v54Workbench(),stage,focus,task:activeTask,hasFeedback:!!feedback});
  const cue=$('#action-cue');
- const currentHelp=focus.cue||executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair});
- cue.textContent=currentHelp;cue.hidden=!currentHelp;
+ const currentHelp=presentation.lockCue||focus.cue||executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair});
+ cue.textContent=presentation.hidePassedCue?'':currentHelp;cue.hidden=!cue.textContent;
  $('#work').dataset.taskType=activeTask?.type||'reflection';
  $('#interaction-title').textContent=activityTitle({stage,task:activeTask,bridge:!!BRIDGES[id]});
-  $('#next-guidance').hidden=stage==='reflect'||stage==='explore';
-  $('#next-guidance').textContent=repair?'先按上方具体指导修改，再检查；本题通过后进入下一题。':stage==='passed'&&task().type==='match'?'本题检查通过。任选一杯说明分数、小数与水位为什么对应，再点击「整理这次发现」。':stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson(),hasRelatedPractice:!!nextLinkedPractice()});
- const box=$('#math-explanation');
+  const nextRegion=$('#learning-next'),nextGuidance=$('#next-guidance');
+  nextGuidance.hidden=presentation.hideNext;
+  nextGuidance.textContent=repair?'先按上方具体指导修改，再检查；本题通过后进入下一题。':stage==='passed'&&task().type==='match'?(v54Workbench()?'任选一杯说明分数、小数与水位为什么对应。':'本题检查通过。任选一杯说明分数、小数与水位为什么对应，再点击「整理这次发现」。'):stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson(),hasRelatedPractice:!!nextLinkedPractice()});
+  if(v54Workbench()){
+   nextRegion.hidden=stage!=='reflect'&&presentation.hideNext;
+   const title=nextRegion.querySelector('.learning-region-title');
+   if(stage!=='reflect'){title.textContent='想一想（可选）';nextRegion.setAttribute('aria-label','想一想（可选）');}
+   else nextRegion.setAttribute('aria-label','整组发现');
+  }
+ const box=$('#math-explanation'),checkFeedback=$('#check-feedback');
  const last=a.cases?.[a.index]?.attempts?.at(-1)?.value;
- const detail=a.view==='summary'?null:checkedMathExplanation({id,task:task(),model:last,checked:status});
+ const detail=a.view==='summary'||presentation.hideHistoricalExplanation?null:checkedMathExplanation({id,task:task(),model:last,checked:status});
+ if(presentation.hideHistoricalFeedback)checkFeedback.hidden=true;
  box.hidden=!detail;
- $('#learning-check').hidden=stage==='reflect'||(!detail&&$('#check-feedback').hidden&&stage!=='recheck');
+ $('#learning-check').hidden=stage==='reflect'||presentation.hideHistoricalFeedback||(!detail&&checkFeedback.hidden&&stage!=='recheck');
  box.innerHTML=detail?'<h3>'+esc(detail.title)+'</h3><p class="math-equation">'+esc(detail.equation)+'</p><p>'+esc(detail.explanation)+'</p><p class="math-question">'+esc(detail.question)+'</p>'+(detail.method?'<p class="math-method" data-thinking-node-id="'+esc(detail.method.nodeId)+'"><strong>相关数学思维 · '+esc(detail.method.label)+'</strong><small>对应来源 '+esc(detail.method.code)+'；只描述本次作品，不能据此判断你已掌握。</small></p>':'')+'<small>'+(detail.kind==='correct'?'这次检查验证了作品中的数学对应关系，你的自由解释仍待确认。':'请按提示修改并重新检查；旧结果不代表修改后的作品。')+'</small>':'';
  syncReflectionPrimary();
+ syncWorkbenchLocation(document,{sessionId:id,topicId:sessionMeta(id).topicId,bridge:!!BRIDGES[id],index:a.index,view:a.view,total:sessionTasks(id).length});
+ syncWorkbenchScroll(document,{sessionId:id,index:a.index,view:a.view,stage});
 }
 // Preserve the same static region order for every mathematical activity.
 // Only the save-status message is moved next to the learner's own note.
 function alignLearningLayout(){
  const notice=$('#note-save-status'),actions=$('#actions');
  if(notice?.parentElement?.id==='work')actions.after(notice);
+}
+// The native v54 compact workbench keeps optional thinking questions in the
+// existing support drawer. Move the real details (no duplicate or new event)
+// after render, removing only the previous task's generated optional guide.
+function placeCompactThinkingGuide(){
+ if(document.body.dataset.workbenchLayout!=='compact-v54')return;
+ const panel=$('#learning-support-drawer-panel'),summary=$('#learning-support>summary');
+ if(!panel||!summary)return;
+ panel.querySelector('#thinking-guide')?.remove();
+ const guide=$('#work > #thinking-guide');
+ if(guide)panel.prepend(guide);
+ const label=v54Workbench()&&a.view==='summary'?'更多学习与资料':guide?'思考与资料（可选）':'更多学习与资料（可选）';
+ summary.textContent=label;panel.setAttribute('aria-label',label);
 }
 function renderNumericCompatibility(){
  if(!numericReadOnly())return;
@@ -275,9 +336,14 @@ function renderNumericCompatibility(){
  $('#math-explanation').hidden=true;
 }
 function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();cleanupB06=null;const writingOpen=$('.b6-writing')?.open;const accessOpen=$('.x-access')?.open;const edgeListOpen=$('.g23-edge-list')?.open;const lesson=sessionMeta(id),route=sessionRoute(id),summary=lessonSummary(a),p03=isP03(),checked=currentSubmission(a),readyToContinue=a.view==='task'&&summary.cases[a.index]?.complete&&checked.status==='correct';document.body.classList.toggle('p03-focus',p03);document.body.classList.toggle('embedded-learning',parent!==window);renderQuestion();$('#learning-next > #system-explanation')?.remove();alignLearningLayout();$('#route-title').textContent=route.title;$('#status').textContent=p03?(summary.completed?'三项已完成':`任务 ${a.index+1} / ${sessionTasks(id).length}`):a.view==='summary'?'操作检查已通过':`任务 ${a.index+1} / ${sessionTasks(id).length}`;$('#route').innerHTML=route.ids.map((lid,i)=>`<button data-do="lesson" data-id="${lid}" ${lid===(BRIDGES[id]?.to||id)?'aria-current="step"':''}><small>${route.id}–0${i+1} ${nodeState(all,LESSONS[lid].topicId).progress==='completed'?'✓':''}</small>${LESSONS[lid].title}</button>`).join('');$('#title').textContent=lesson.title;$('#learning-goal').textContent=lesson.formal;
- if(a.view==='summary'){$('#check-feedback').hidden=true;$('#instruction').textContent=p03?'怎样数才能不漏也不重复？':'你有什么发现？能说说为什么吗？';$('#work').innerHTML=`<div class="summary-art"><div class="seal">✓</div><div><h2>这组操作已通过检查</h2><p>${summary.done} / ${summary.total} 项检查通过。这是作品结果，不代表文字解释已经核验。</p></div></div><label class="field" for="note">${esc(REFLECTIONS[id]||'写下你刚才的发现。')}（可选）</label><p class="reflection-optional">可以用自己的话写一句，也可以不写，直接继续探索。</p><textarea id="note" maxlength="2000" placeholder="写下你的解释（可选，不必照抄问题）">${esc(a.draft)}</textarea>${a.notes.length?`<div class="saved-note-preview"><strong>已保存的发现（文字解释待确认）</strong><p>${esc(a.notes.at(-1).text)}</p></div>`:''}<details id="system-explanation" class="system-explanation"><summary>查看系统的数学说明（可选）</summary><div class="system-explanation-body"><p>${esc(lesson.summary)}</p>${id==='quarters'&&summary.completed?'<div class="summary-thinking" data-thinking-node-id="mt_EBYGhd8X3x"><strong>已检查作品中的思考方法：连接不同表示方式</strong><p>你用百格、杯子里的水位、分数与小数表示了对应的比例。哪一种表示最容易帮你核对？</p><small>这是作品线索，不是你已掌握该方法的结论。</small></div>':''}<small>以上是系统的数学说明，不等于你已经独立解释了原因。</small></div></details><details id="source-goals-details"><summary>课程来源资料（参考）</summary><ul id="source-goals">${atlas.nodes.find(n=>n.id===lesson.topicId).evidence.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></details>`;$('#note').after($('#note-save-status'));renderSummaryActions();if(cube){cube.destroy();cube=null;cubeKey='';}}
- else{const t=task(),m=model();$('#instruction').textContent=p03?P03_NAMES[a.index]:t.prompt;const checkFeedback=$('#check-feedback');if(checkFeedback){const message=checked.status==='correct'&&t.type==='match'?'三个杯子的水位、分数与小数都对应上了。':feedback||(checked.status==='modified'?'已修改，尚未重新检查。上次结果保留在历史记录中。':checked.result?.feedback||'');checkFeedback.hidden=!message;checkFeedback.textContent=message;const repair=correctionGuidance({task:t,model:m,checked});if(repair&&message){checkFeedback.insertAdjacentHTML('beforeend',`<div class="feedback-next" aria-label="下一步操作"><strong>${esc(repair.title)}</strong><p>${esc(repair.observation)}</p><p>${esc(repair.action)}</p><small>${esc(repair.method)}</small></div>`);}checkFeedback.dataset.state=feedback&&checked.status==='modified'?'guidance':checked.status==='correct'?'correct':checked.status==='revise'?'revise':'guidance';}const p03Info=p03?p03Stage(t,m):null;$('#work').innerHTML=p03?`<section class="p03-task" data-phase="${p03Info.phase}" aria-label="当前任务"><div class="p03-guidance"><span class="p03-step-label">现在做什么 · ${a.index+1} / 3</span><p id="p03-guidance" role="status">${esc(p03Info.instruction)}</p></div>${feedback?`<p class="p03-feedback" role="alert">${esc(feedback)}</p>`:''}${widgets(t,m)}</section>`:widgets(t,m);const guide=formalGuide(t,{sessionId:id,index:a.index});
+ if(a.view==='summary'){$('#check-feedback').hidden=true;$('#instruction').textContent=v54Workbench()?`本组 ${summary.done} / ${summary.total} 项操作检查通过。`:p03?'怎样数才能不漏也不重复？':'你有什么发现？能说说为什么吗？';$('#work').innerHTML=`${v54Workbench()?'':`<div class="summary-art"><div class="seal">✓</div><div><h2>这组操作已通过检查</h2><p>${summary.done} / ${summary.total} 项检查通过。这是作品结果，不代表文字解释已经核验。</p></div></div>`}<label class="field" for="note">${esc(REFLECTIONS[id]||(v54Workbench()&&p03?'怎样数才能不漏也不重复？':'写下你刚才的发现。'))}（可选）</label><p class="reflection-optional">${v54Workbench()?'可以不写，直接继续。文字解释仍待确认。':'可以用自己的话写一句，也可以不写，直接继续探索。'}</p><textarea id="note" maxlength="2000" placeholder="写下你的解释（可选，不必照抄问题）">${esc(a.draft)}</textarea>${a.notes.length?`<div class="saved-note-preview"><strong>已保存的发现（文字解释待确认）</strong><p>${esc(a.notes.at(-1).text)}</p></div>`:''}<details id="system-explanation" class="system-explanation"><summary>查看系统的数学说明（可选）</summary><div class="system-explanation-body"><p>${esc(lesson.summary)}</p>${id==='quarters'&&summary.completed?'<div class="summary-thinking" data-thinking-node-id="mt_EBYGhd8X3x"><strong>已检查作品中的思考方法：连接不同表示方式</strong><p>你用百格、杯子里的水位、分数与小数表示了对应的比例。哪一种表示最容易帮你核对？</p><small>这是作品线索，不是你已掌握该方法的结论。</small></div>':''}<small>以上是系统的数学说明，不等于你已经独立解释了原因。</small></div></details><details id="source-goals-details"><summary>课程来源资料（参考）</summary><ul id="source-goals">${atlas.nodes.find(n=>n.id===lesson.topicId).evidence.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></details>`;$('#note').after($('#note-save-status'));renderSummaryActions();if(cube){cube.destroy();cube=null;cubeKey='';}}
+ else{const t=task(),m=model();$('#instruction').textContent=p03?P03_NAMES[a.index]:b06PresentationPrompt(t);const checkFeedback=$('#check-feedback');if(checkFeedback){const message=checked.status==='correct'&&t.type==='match'?'三个杯子的水位、分数与小数都对应上了。':feedback||(checked.status==='modified'?'已修改，尚未重新检查。上次结果保留在历史记录中。':checked.result?.feedback||'');checkFeedback.hidden=!message;checkFeedback.textContent=message;const repair=correctionGuidance({task:t,model:m,checked});if(repair&&message){checkFeedback.insertAdjacentHTML('beforeend',`<div class="feedback-next" aria-label="下一步操作"><strong>${esc(repair.title)}</strong><p>${esc(repair.observation)}</p><p>${esc(repair.action)}</p><small>${esc(repair.method)}</small></div>`);}checkFeedback.dataset.state=feedback&&checked.status==='modified'?'guidance':checked.status==='correct'?'correct':checked.status==='revise'?'revise':'guidance';}const p03Info=p03?p03Stage(t,m):null;$('#work').innerHTML=p03?`<section class="p03-task" data-phase="${p03Info.phase}" aria-label="当前任务"><div class="p03-guidance"><span class="p03-step-label">现在做什么 · ${a.index+1} / 3</span><p id="p03-guidance" role="status">${esc(p03Info.instruction)}</p></div>${feedback?`<p class="p03-feedback" role="alert">${esc(feedback)}</p>`:''}${widgets(t,m)}</section>`:widgets(t,m);const guide=formalGuide(t,{sessionId:id,index:a.index});
   if(guide)$('#work').insertAdjacentHTML('afterbegin',`<details id="thinking-guide" class="thinking-guide"><summary>${esc(guide.summary)}</summary><p>${esc(guide.question)}</p><small>这只是可选的思考问题。你可以不打开，照常操作和检查；打开也不代表已经掌握。</small></details>`);
+  // Existing per-task prose stays in its original model and control. Only
+  // its optional label is distinguished from the whole-group discovery.
+  if(v54Workbench())for(const summary of $('#work').querySelectorAll('details>summary')){
+   if(summary.textContent.trim()==='用自己的话留下发现（可选）')summary.textContent='补充解释（可选）';
+  }
 
   const thought=a.view==='task'&&formalFeedback(t,m,a.cases[a.index],{sessionId:id,index:a.index});if(thought)$('#work').insertAdjacentHTML('beforeend',`<aside id="thinking-feedback" aria-label="刚才的办法"><strong>${esc(thought.title)}</strong><p>${esc(thought.observation)}</p><p>${esc(thought.connection)}</p>${thought.detail.length?`<small>${thought.detail.map(esc).join(' ')}</small>`:''}${thought.method?`<p class="source-thinking" data-thinking-node-id="${esc(thought.method.nodeId)}">相关数学思维 · ${esc(thought.method.label)}（${esc(thought.method.code)}）<small>与 50 个来源思维节点中的一个关联；仅记录本次作品线索，不代表已掌握。</small></p>`:''}</aside>`);renderTaskActions(checked);
  if(t.dims){const key=id+':'+(a.view==='play'?-1:a.index)+':'+t.dims.join(',');if(cube&&cubeKey!==key){cube.destroy();cube=null;}if(!cube){cube=new CubeView($('#cube-world'),t,placeCube);cubeKey=key;cube.restoreCamera(a.ui?.camera);cube.controls.addEventListener('end',()=>update(()=>{}));}else cube.attach($('#cube-world'));cube.update(m,{spread});}else if(cube){cube.destroy();cube=null;cubeKey='';}}
@@ -287,9 +353,14 @@ function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();clea
  renderP3Flow($('#p3-learning-flow'),{atlas,id,record:a,embedded:parent!==window,primarySessionId:a.view==='summary'?(nextLearningLesson()||nextLinkedPractice()?.id):null});
  if(a.view==='summary'){
   const explanation=$('#system-explanation'),source=$('#source-goals-details');
-  if(explanation)$('#learning-support').before(explanation);
+  if(explanation){
+   // Reflection and real feedback stay in the original fourth learning region.
+   if($('#workbench-drawer'))$('#learning-next').append(explanation);
+   else $('#learning-support').before(explanation);
+  }
   if(source)$('#record-body').append(source);
  }
+  placeCompactThinkingGuide();
   syncLearningRegions();
   $('#record').hidden=!Object.values(a.cases).some(r=>r.support||r.attempts?.length)&&!a.notes.length&&!a.draft.trim();
   if(parent!==window)$('#record-body').insertAdjacentHTML('beforeend',btn('relations','看看空间里的联系'));
@@ -306,7 +377,7 @@ function practiceMessage(t,m){
  if(t.type==='decompose')return '换一个切的方向，再把两部分拉开。颜色不同的两块合起来，仍是原来的台阶。';
  if(t.type==='survey')return m.seen?'现在看到了一个回答。把它记到对应的类别；记录总数应与观察过的人数一样。':t.prompt;
  if(t.counts)return '改变图里的数量，再对照左边的记录。换画法时，同一类的票数应保持。';
- return t.prompt;
+ return b06PresentationPrompt(t);
 }
 function syncSubmissionUI(){
  if(a.view!=='task')return;
@@ -319,7 +390,7 @@ function syncSubmissionUI(){
  syncLearningRegions();
 }
 
-function sync(){const t=task(),m=model();if(isExtra(t)){if($('.m28-success')&&!inspect(t,m).correct)$('.m28-success').remove();syncB13Controls(t,m,$('#work'));syncB20Controls(t,m,$('#work'));if($('#extra-visual')&&t.type!=='x-countboard')$('#extra-visual').innerHTML=visualExtra(t,m);if(t.type==='x-s23-frame'&&extraLab)extraLab.attach($('#extra-world'));extraLab?.update(m);document.querySelectorAll('[data-xvalue]').forEach(el=>el.textContent=el.dataset.xvalue.split('.').reduce((v,k)=>v?.[k],m));const estimate=$('[data-x="estimate"]');if(estimate)estimate.disabled=m.guess===null||m.prediction!==null;document.querySelectorAll('[data-xfield^="pair."]').forEach(el=>el.disabled=m.fold>0);if(task().type==='x-grow'&&task().towers){document.querySelectorAll('[data-xfield^="heights."]').forEach(el=>el.disabled=m.prediction===null);const prediction=$('[data-xfield="prediction"]');if(prediction)prediction.disabled=m.committed!==null;}$('#instruction').textContent=isP03()?P03_NAMES[a.index]:t.prompt;syncP03(t,m);syncSubmissionUI();return;}if(t.type==='equivalent')document.querySelectorAll('.eq-bar button').forEach(el=>el.setAttribute('aria-pressed',String(+el.dataset.index<m.rows[+el.dataset.row].n)));if($('#grid-count'))$('#grid-count').textContent=m.selected.length;document.querySelectorAll('.hundred button').forEach((el,i)=>{el.classList.toggle('on',m.selected.includes(i));el.setAttribute('aria-pressed',String(m.selected.includes(i)));});if(t.type==='partition'){const xs=[0,...m.cuts,100];document.querySelectorAll('.bar .part').forEach((el,i)=>el.style.width=(xs[i+1]-xs[i])+'%');document.querySelectorAll('[data-cut]').forEach((el,i)=>{el.style.left=m.cuts[i]+'%';el.setAttribute('aria-valuenow',m.cuts[i]);});}if(t.type==='line'){$('#line-point').setAttribute('cx',30+540*m.mark/t.den);$('#line-label').textContent=`${m.mark}/${t.den}`+(t.den===100?' = '+m.mark/100:'');}if(t.type==='match')document.querySelectorAll('[data-liquid]').forEach((el,i)=>el.style.height=m.heights[i]+'%');if(t.type==='decompose'&&$('#cut-label'))$('#cut-label').textContent=`第 ${m.cut} 层边界`;if($('#filled-count'))$('#filled-count').textContent=` 已放 ${m.filled?.length||0} 块`;if(t.build&&t.estimate&&$('[data-field="estimate"]'))$('[data-field="estimate"]').disabled=!!m.filled?.length;if(cube)cube.update(m,{spread});if($('#editable-chart')){$('#editable-chart').innerHTML=chartHTML(t,m,view||t.view);document.querySelectorAll('[data-count]').forEach(el=>el.textContent=m.counts[el.dataset.count]);}document.querySelectorAll('[data-survey-tally]').forEach(el=>el.innerHTML=tally(m.counts[el.dataset.surveyTally]));$('#instruction').textContent=t.prompt;syncSubmissionUI();}
+function sync(){const t=task(),m=model();if(isExtra(t)){if($('.m28-success')&&!inspect(t,m).correct)$('.m28-success').remove();syncB13Controls(t,m,$('#work'));syncB20Controls(t,m,$('#work'));if($('#extra-visual')&&t.type!=='x-countboard')$('#extra-visual').innerHTML=visualExtra(t,m);if(t.type==='x-s23-frame'&&extraLab)extraLab.attach($('#extra-world'));extraLab?.update(m);document.querySelectorAll('[data-xvalue]').forEach(el=>el.textContent=el.dataset.xvalue.split('.').reduce((v,k)=>v?.[k],m));const estimate=$('[data-x="estimate"]');if(estimate)estimate.disabled=m.guess===null||m.prediction!==null;document.querySelectorAll('[data-xfield^="pair."]').forEach(el=>el.disabled=m.fold>0);if(task().type==='x-grow'&&task().towers){document.querySelectorAll('[data-xfield^="heights."]').forEach(el=>el.disabled=m.prediction===null);const prediction=$('[data-xfield="prediction"]');if(prediction)prediction.disabled=m.committed!==null;}$('#instruction').textContent=isP03()?P03_NAMES[a.index]:b06PresentationPrompt(t);syncP03(t,m);syncSubmissionUI();return;}if(t.type==='equivalent')document.querySelectorAll('.eq-bar button').forEach(el=>el.setAttribute('aria-pressed',String(+el.dataset.index<m.rows[+el.dataset.row].n)));if($('#grid-count'))$('#grid-count').textContent=m.selected.length;document.querySelectorAll('.hundred button').forEach((el,i)=>{el.classList.toggle('on',m.selected.includes(i));el.setAttribute('aria-pressed',String(m.selected.includes(i)));});if(t.type==='partition'){const xs=[0,...m.cuts,100];document.querySelectorAll('.bar .part').forEach((el,i)=>el.style.width=(xs[i+1]-xs[i])+'%');document.querySelectorAll('[data-cut]').forEach((el,i)=>{el.style.left=m.cuts[i]+'%';el.setAttribute('aria-valuenow',m.cuts[i]);});}if(t.type==='line'){$('#line-point').setAttribute('cx',30+540*m.mark/t.den);$('#line-label').textContent=`${m.mark}/${t.den}`+(t.den===100?' = '+m.mark/100:'');}if(t.type==='match')document.querySelectorAll('[data-liquid]').forEach((el,i)=>el.style.height=m.heights[i]+'%');if(t.type==='decompose'&&$('#cut-label'))$('#cut-label').textContent=`第 ${m.cut} 层边界`;if($('#filled-count'))$('#filled-count').textContent=` 已放 ${m.filled?.length||0} 块`;if(t.build&&t.estimate&&$('[data-field="estimate"]'))$('[data-field="estimate"]').disabled=!!m.filled?.length;if(cube)cube.update(m,{spread});if($('#editable-chart')){$('#editable-chart').innerHTML=chartHTML(t,m,view||t.view);document.querySelectorAll('[data-count]').forEach(el=>el.textContent=m.counts[el.dataset.count]);}document.querySelectorAll('[data-survey-tally]').forEach(el=>el.innerHTML=tally(m.counts[el.dataset.surveyTally]));$('#instruction').textContent=b06PresentationPrompt(t);syncSubmissionUI();}
 function revealSupport(){if(a.view==='task')update(r=>supportLesson(r));const t=task();if(t.dims){spread=1;cube?.update(model(),{spread});feedback='看看每个完整的层或部分。包含挡住的积木，再回到自己的计划。';}else if(t.type==='partition'){edit(m=>m.cuts=Array.from({length:t.d-1},(_,i)=>(i+1)*100/t.d));feedback='现在每一份一样大了。再按需要的份数选择。';}else feedback=inspect(t,model()).feedback;if(inspect(t,model()).correct)feedback='试着用另一种画法或自己的话说明，为什么这个结果成立。';render();}
 function placeCube(i){if(task().estimate&&model().estimate===null){feedback='先留下你的估计，再开始填。估计不用猜得刚好。';render();return;}edit(m=>{m.filled??=[];if(!m.filled.includes(i))m.filled.push(i);});}
 async function openLesson(next,{keepQuestion=false}={}){
@@ -330,6 +401,10 @@ async function openLesson(next,{keepQuestion=false}={}){
     const stored=readStored(KEY);
     if(stored)await prepareStateForValidation(JSON.parse(stored));
     await prepareSessionRuntime(next,{view:true});
+    // Resolve the existing optional formal route before the first interactive
+    // render. Never replace live mathematical controls from a late import.
+    // The existing catch still fails closed on formal feedback only.
+    await ensureIssue341FormalRouting(next);
     // A session may switch to a 3D task through Next; load before any state write/render.
     if(sessionTasks(next).some(needsThreeView)||needsThreeView(PRACTICE[next])){
       ({CubeView,SolidView,SpaceLab,AreaSolidLab,FractionCubeView,PatternGrowthView,FrameView,PowerView}=await loadThreeViews());
@@ -347,7 +422,7 @@ async function openLesson(next,{keepQuestion=false}={}){
     if(cube){cube.destroy();cube=null;cubeKey='';}
     if(!keepQuestion)questionId=null;
     if(extraLab){extraLab.destroy();extraLab=null;extraKey='';}
-    id=next;ensureIssue341FormalRouting(next);feedback='';savedNoteFeedback='';numericBackup=null;numericExportMessage='';
+    id=next;feedback='';savedNoteFeedback='';numericBackup=null;numericExportMessage='';
     all=read();a=sessionRecord(all,id)||freshLesson(id);
     view=a.ui?.view||null;spread=a.ui?.spread||0;
     const savedUI=structuredClone(a.ui);
@@ -368,7 +443,7 @@ $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');
   if(act==='p3-retry'){if(numericCompatibility(taskFor(id,a.index),a.models[a.index])){if(a.view!=='task'&&update(r=>r.view='task'))render();$('#numeric-compat-notice')?.scrollIntoView({block:'nearest'});return;}feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
   if(act==='p3-variant'){const index=Number(b.dataset.index);if(!Number.isInteger(index)||index<0||index>=sessionTasks(id).length)return;feedback='';spread=0;view=null;if(update(r=>{r.index=index;r.view='task';modelForLesson(r);}))render();return;}
   if(act==='relations'){notify('math-space:lesson-relations');return;}if(act==='lesson'){openLesson(b.dataset.id);return;}if(act==='back'){back();return;}if(act==='restart'){feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.index=Math.max(0,lessonSummary(r).cases.findIndex(x=>!x.complete));if(!numericCompatibility(taskFor(id,r.index),r.models[r.index]))r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
- if(act==='check'){let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();const target=result?.correct?$('#actions .primary'):$('#check-feedback');if(target&&!target.hidden)target.scrollIntoView({block:'nearest'});return;}
+ if(act==='check'){if(v54Workbench()&&b.disabled)return;let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();const target=result?.correct?$('#actions .primary'):$('#check-feedback');if(target&&!target.hidden)target.scrollIntoView({block:'nearest'});return;}
  if(act==='next'){if(!lessonSummary(a).cases[a.index].complete||currentSubmission(a).status!=='correct')return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);return;}
  if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){const note=$('#note')?.value.trim();if(!note)return;if(update(r=>addLessonNote(r,note))){savedNoteFeedback=nextLearningLesson()?'已保存这次发现（文字解释待确认），可继续学习下一处。':nextLinkedPractice()?'已保存这次发现（文字解释待确认），可以继续关联探索。':'已保存这次发现（文字解释待确认），可以返回知识空间。';render();$('#note-save-status')?.scrollIntoView({block:'nearest'});}else showNoteSaveFailure();return;}
  if(act==='fill-next'){const next=voxels(task()).findIndex((_,i)=>!(model().filled||[]).includes(i));if(next>=0)placeCube(next);return;}

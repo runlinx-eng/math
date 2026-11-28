@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261122-issue341-formal-949-v1';
+const RELEASE='math-explorer-20261128-v54-integrated-math-fixes1';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';
@@ -28,6 +28,7 @@ const link=(url,text,css='btn secondary')=>`<a class="${css}" href="${url}">${te
 const date=v=>new Date(v).toLocaleDateString('zh-CN',{month:'long',day:'numeric'});
 const frac=(n,d)=>`<span class="fraction" aria-label="${d}分之${n}"><span>${n}</span><span>${d}</span></span>`;
 let atlas,state,nodeById,packById,knowledgeNames,readBlocked=false,toastTimer;
+let trailRenderedState=null,trailRefreshSerial=0;
 function toast(s){$('#toast').textContent=s;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4000);}
 function warn(s){$('#storage-warning').textContent=s;$('#storage-warning').hidden=false;}
 function persist(){if(readBlocked)return false;try{const stored=readStored(KEY);if(stored){let latest;try{latest=validate(JSON.parse(stored),atlas);}catch{readBlocked=true;warn('现有记录发生异常，已停止覆盖。请先导出当前记录。');return false;}const combined=mergeLiveActivity(state,latest,route()[0]==='activity'?route()[1]:null);state=combined;}writeStored(KEY,JSON.stringify(state));return true;}catch{warn('本次记录暂时无法写入浏览器。可以继续探索，请到“我的足迹”导出备份。');return false;}}
@@ -157,7 +158,7 @@ function pendingQuestionRecords(){
      ${q.nodeId?(embedded?btn('node','回到问题所在知识 →',`data-id="${q.nodeId}"`,'text-link'):link('index.html#space/node/'+q.nodeId,'回到问题所在知识 →','text-link')):'<p>问题已保存，可在主空间的「问题」入口继续。</p>'}
    </article>`).join('')}</section>`;
 }
-function renderTrail(){persist();
+function renderTrail({readOnly=false}={}){if(!readOnly)persist();trailRenderedState=JSON.stringify(state);
  const list=activityIds.filter(id=>activityRecordTier(state.activities[id])==='evidence');
   const draftActivities=activityIds.filter(id=>activityRecordTier(state.activities[id])==='draft');main.innerHTML=`<section class="subhero"><div class="eyebrow">我的学习记录</div><h1>记录走过的路，也记录想法。</h1><p>完成活动、独立操作和解释清楚，各自留下不同的证据。</p></section><div class="journal-grid"><div>${lessonRecords('evidence')}${journeyRecord('evidence')}<section class="panel" data-trail-tier="evidence"><h2>我的探索</h2>${list.length?list.map(id=>{const a=state.activities[id],e=evidenceSummary(a);return `<article class="record-section"><h3>${ACTIVITIES[id].title}</h3><div class="status-strip">${badge(e.completed?'活动已完成':'探索中',e.completed?'completed':'exploring')}${badge(e.demonstrated?'有操作与迁移证据':e.needsSupport?'有需要支持的地方':'正在收集证据',e.demonstrated?'evidence':e.needsSupport?'supported':'')}${badge(a.notes.length?'解释已记录 · 待确认':'解释待补充','pending')}</div><p class="summary">${a.observations.length} 份自由探索快照 · ${a.notes.length} 份解释${e.reviewAt?` · 建议 ${date(e.reviewAt)} 再来试试`:''}</p><div class="actions">${link(`#activity/${id}`,'回到这次探索 →','btn secondary')}</div><details class="disclosure"><summary>看看作品、提示和解释记录</summary>${Object.entries(a.evidence).map(([key,r])=>{const[k,v]=key.split(':'),t=task(id,k,Number(v));return `<div class="record-event"><strong>${STAGES[k]} · 案例 ${Number(v)+1}</strong><p>${t.title}</p>${r.attempts.map((event,i)=>`<p>第 ${i+1} 次 · ${date(event.at)} · ${inspect(t,event.value).correct?'作品成立':'需要再看'} · ${event.supported?'使用过提示':'未使用提示'} · ${event.exposed?'已看过本案例反馈':'首次提交'}<br>${esc(modelText(t,event.value))}</p>`).join('')||'<p>已看支持，尚未提交。</p>'}</div>`;}).join('')}${a.observations.map(o=>`<div class="record-event">${date(o.at)} · 自由探索快照（不计独立证据）<br>${esc(labText(id,o.value))}</div>`).join('')}${a.notes.map(n=>`<div class="record-event"><strong>${date(n.at)} · 我的解释，内容待确认</strong><p class="saved-note">${esc(n.text)}</p></div>`).join('')}</details></article>`;}).join(''):'<p>先去一个动手活动里试试。你做的作品、用过的提示和解释都会留在这里。</p>'}</section>${lessonRecords('draft')}${journeyRecord('draft')}${draftActivityRecords(draftActivities)}${pendingQuestionRecords()}${lessonRecords('available')}<section class="panel"><h2>我想探索</h2>${state.bookmarks.length?leaves(state.bookmarks.map(id=>nodeById.get(id)),1000):'<p>打开一个知识点，点“我想探索”就能收在这里。</p>'}</section>${legacyHTML()}</div><aside><section class="panel"><h2>把足迹装进口袋</h2><p>记录在当前浏览器中保存。导出备份后，可以在别的浏览器里接着用。</p><div class="actions">${btn('export','导出学习备份')}${btn('import','导入备份','','btn secondary')}</div><p class="source-note">兼容旧版备份。导入会合并可安全合并的记录，遇到草稿、同 ID 证据或现场冲突会停止导入，原记录不覆盖。导入前保存本机快照；请保留原备份文件。</p>${btn('pre-import','导出导入前的快照','','text-link')}</section><section class="panel"><h2>足迹怎样读</h2><p>新活动每个任务的作品成立后计完成。旧活动和早期路线的记录保持原来的含义。完成不等于独立掌握；提示、重试和自由文字分别保留，文字不自动判定。</p></section>${link('index.html#atlas','把足迹放回全景图 →','btn secondary')}</aside></div>`;
 }
@@ -253,6 +254,23 @@ async function boot(){try{if(redirectRetiredMap())return;const response=await fe
  }
  }catch(error){main.innerHTML=`<div class="empty"><h2>地图暂时没打开</h2><p>${esc(error.message)}。请通过“启动数学探索.command”打开应用。</p></div>`;}}
 if(embedded){
+ // Reopening the still-mounted Trail reads the latest validated record. The
+ // refresh does not persist, merge, invent evidence or replace the document.
+ window.addEventListener('message',async event=>{
+  if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='math-space:refresh-trail'||route()[0]!=='trail'||!atlas||readBlocked)return;
+  const serial=++trailRefreshSerial;
+  try{
+   const raw=readStored(KEY);if(!raw)return;
+   const parsed=JSON.parse(raw);await prepareStateForValidation(parsed);
+   if(serial!==trailRefreshSerial||route()[0]!=='trail'||readBlocked||readStored(KEY)!==raw)return;
+   const latest=validate(parsed,atlas),signature=JSON.stringify(latest);
+   state=latest;
+   if(signature===trailRenderedState)return;
+   const scroll=document.scrollingElement?.scrollTop||0;
+   renderTrail({readOnly:true});
+   if(document.scrollingElement)document.scrollingElement.scrollTop=scroll;
+  }catch{if(serial===trailRefreshSerial){readBlocked=true;warn('其他工作面的存储发生异常，已停止覆盖。');}}
+ });
  document.addEventListener('click',event=>{const a=event.target.closest('a[href^="#"]');if(!a)return;const [kind,id]=a.getAttribute('href').slice(1).split('/');if(['map','theme','pack','node','atlas','activity'].includes(kind)){event.preventDefault();event.stopImmediatePropagation();spaceNavigate(kind,id);}},true);
  // Storage events can be delivered after a newer local edit. Read the current
  // value instead of replacing a working copy with an older event payload.

@@ -108,6 +108,10 @@ async function main(){
  const {studyActionFocus}=await import('../dist/learning/workspace-flow.js');
  const originalState=value=>{assert.deepEqual(Core.validate(value,atlas),value);return value;};
  const taskFor=c=>sessionTasks(c.id)[c.index],targets=orderedOrderTargets();
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const otherRows=require('./fixtures/p9-money-order-convert-cross-family-boundaries.cjs').order;
+ const isOther=c=>otherRows.some(row=>row.sessionId===c.id&&row.index===c.index);
+ const auditOther=await createExcludedFeedbackAudit('order',[...navigationFixture.navigation,...targets.filter(c=>c.role==='excluded')],taskFor,otherRows);
  for(const c of targets){assert.deepEqual(taskFor(c),c.task);assert.equal(hash(taskFor(c)),c.taskHash);}
  for(const c of navigationFixture.navigation){assert.deepEqual(taskFor(c),c.task);assert.equal(hash(taskFor(c)),c.taskHash);}
  for(const[file,sha]of Object.entries(provenance.sourceHashes))assert.equal(digest(fs.readFileSync(path.join(root,file))),sha,file);
@@ -197,12 +201,13 @@ async function main(){
     assert.deepEqual(after.model,before.model);assert.deepEqual(attempt.value,before.model);ok(attempt.id&&attempt.at&&typeof attempt.supported==='boolean'&&typeof attempt.exposed==='boolean',label+' real attempt metadata retained');
     assert.equal(Tasks.validModel(task,after.model),true);assert.equal(Tasks.inspect(task,after.model).correct,correct);
     assert.equal(await page.locator('#check-feedback').getAttribute('data-state'),correct?'correct':'revise');
-    assert.equal(await hint.count(),strict?1:0);if(strict)assert.equal(await hint.isVisible(),true);
-    const source=orderBinding(task,{sessionId:c.id,index:c.index});
+    const otherFamily=(role==='prerequisite'||role==='excluded')&&isOther(c)?await auditOther(page,c,after.model,after.record):null;
+    assert.equal(await hint.count(),strict||otherFamily?.feedback?1:0);if(strict)assert.equal(await hint.isVisible(),true);
+    const source=orderBinding(task,{sessionId:c.id,index:c.index});if(otherFamily)assert.equal(source,null,'separate proof is not order coverage');
     assert.equal(!!proof,task.type==='x-orderlab'&&!task.writeOnly&&correct&&(strict||!source));
     if(proof){assert.equal(proof.history.length,after.model.history.length);assert.ok(proof.effectiveSteps.every(step=>step.exact));
      if(c.answer)assert.deepEqual(proof.built.value,c.answer==='0.5'?['1','2']:[c.answer,'1']);}
-    const item={width,height,id:c.id,index:c.index,label,phase,role,correct,strict,model:after.model,record:after.record,attempt,proof,storage:await snapshot(phase),observation:strict?await hint.innerText():null};
+    const item={width,height,id:c.id,index:c.index,label,phase,role,correct,strict,model:after.model,record:after.record,attempt,proof,storage:await snapshot(phase),observation:strict?await hint.innerText():null,otherFamily};
     checkedLedger.push(item);return item;
    };
    const sharedRetry=async(c,kind)=>{
@@ -225,6 +230,7 @@ async function main(){
      const previous={id:c.id,index:at},record=await saved(c.id);
      if(!record.cases[at]?.attempts?.some(attempt=>Tasks.inspect(taskFor(previous),attempt.value).correct)){
       const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===at);assert.ok(prep,'exact literal preceding task');
+      if(isOther(previous))await auditOther(page,previous,record.models[at],record.cases[at]??null);
       for(const step of prep.steps){if(step.field)await field(previous,step.field,step.value);else await action(previous,step.action,step.data);}
       assert.equal(orderBinding(taskFor(previous),{sessionId:previous.id,index:at}),null);
       const checked=await check(previous,true,false,'navigation-prerequisite-'+at,'prerequisite');preparations.push({width,height,...prep,checked,strictOrderCoverage:false});
@@ -323,8 +329,11 @@ async function main(){
    };
    for(const c of targets){
     if(c.role==='native')await runNative(c);
-    else{label=prefix+'-'+c.role+'-'+c.id+'-'+c.index;await open(c);assert.equal(await guide.count(),0);assert.equal(await hint.count(),0);await run(c);
-     const value=await check(c,true,false,'isolated-checked',c.role);await reload(c);assert.equal(await hint.count(),0);isolated.push({width,height,id:c.id,index:c.index,role:c.role,writeOnly:!!taskFor(c).writeOnly,snapshot:value});}
+    else{label=prefix+'-'+c.role+'-'+c.id+'-'+c.index;await open(c);
+     if(c.role==='excluded'&&isOther(c)){const empty=await current(c);await auditOther(page,c,empty.model,empty.record??null);}else{assert.equal(await guide.count(),0);assert.equal(await hint.count(),0);}
+     await run(c);const value=await check(c,true,false,'isolated-checked',c.role);await reload(c);
+     if(value.otherFamily){const restored=await current(c);assert.deepEqual(await auditOther(page,c,restored.model,restored.record),value.otherFamily);}else assert.equal(await hint.count(),0);
+     isolated.push({width,height,id:c.id,index:c.index,role:c.role,writeOnly:!!taskFor(c).writeOnly,snapshot:value});}
    }
    label=prefix+'-actual-v2-backup';const beforeExport=await state(),response=await page.goto(base+'v2.html#trail');
    assert.equal(response?.fromServiceWorker(),true);await page.locator('#import-file').waitFor({state:'attached'});await page.locator('#main [data-do="export"]').first().waitFor();keepRecords(beforeExport,await state());

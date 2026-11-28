@@ -42,7 +42,7 @@ test('current composition selects fresh native Check regression, not historical 
   'tests/current-formal-evidence-browser.cjs',
   'tests/p10-learning-continuity-browser.cjs','tests/p9-thinking-feedback-browser.cjs'
  ]);
- for(const file of ['dist/learning/evidence-adapters.js','dist/learning/issue341-candidate-descriptors.js',
+ for(const file of ['dist/learning/learn.js','dist/learning/evidence-adapters.js','dist/learning/issue341-candidate-descriptors.js',
   'dist/learning/issue341-candidate-feedback.js','dist/learning/issue341-isolated-integration.js',
   'dist/learning/issue341-inactive-shared-feedback.js','dist/learning/issue341-formal-source-routing.js',
   'dist/learning/issue341-formal-admissions.js','scripts/audit-learning-evidence.mjs',
@@ -68,6 +68,14 @@ test('legacy source evidence edits select only its owned math family',()=>{
  assert.deepEqual(p.scripts,['tests/p9-area-adapter-browser.cjs']);
  assert.equal(p.runSmoke,true);
  assert.deepEqual(gate(p).targetedScripts,p.scripts);
+});
+test('shared B02 presentation and its pinned fixtures require actual area, ruler and scale regressions',()=>{
+ const names=['area','ruler','scale'];
+ const scripts=names.map(n=>'tests/p9-'+n+'-adapter-browser.cjs');
+ const fixtures=['tests/fixtures/p9-area-navigation.cjs','tests/fixtures/p9-ruler-cases.cjs','tests/fixtures/p9-scale-cases.cjs'];
+ assert.deepEqual(plan('pull_request',['dist/learning/phase4/b02-view.js']).scripts,scripts);
+ for(const [i,file] of fixtures.entries())assert.deepEqual(plan('pull_request',[file]).scripts,[scripts[i]]);
+ assert.deepEqual(plan('pull_request',['dist/learning/phase4/b02-view.js',...fixtures]).scripts,scripts);
 });
 test('test entrypoint changes select the changed registered script, not its entire group',()=>{
  const p=plan('pull_request',['tests/p9-unitcover-adapter-browser.cjs']);

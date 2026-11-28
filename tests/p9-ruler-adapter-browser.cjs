@@ -158,7 +158,7 @@ async function main(){
  const hash=value=>digest(JSON.stringify(stable(value))),ok=(value,message,detail={})=>{assert.ok(value,message);checks.push({message,...detail});};
  const cache=fs.readFileSync(path.join(root,'dist/sw.js'),'utf8').match(/const CACHE = '([^']+)'/)[1];
  const checkoutSha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),event=process.env.GITHUB_EVENT_PATH?JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8')):{};
- const sourceFiles=['dist/learning/ruler-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-ruler-adapter-browser.cjs','tests/fixtures/p9-ruler-cases.cjs','tests/p9-ruler-evidence.test.mjs','tests/fixtures/p9-ruler-navigation.cjs','tests/p9-ruler-navigation.test.mjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
+ const sourceFiles=['dist/learning/ruler-evidence.js','dist/learning/thinking-feedback.js','dist/learning/evidence-adapters.js','dist/exploration-core.js','tests/p9-ruler-adapter-browser.cjs','tests/fixtures/p9-ruler-cases.cjs','tests/p9-ruler-evidence.test.mjs','tests/fixtures/p9-ruler-navigation.cjs','tests/p9-ruler-navigation.test.mjs','tests/helpers/p9-area-time-excluded-feedback.cjs','tests/fixtures/p9-regression-cross-family-boundaries.cjs',...Object.keys({...fixture.sourceHashes,...navigationFixture.sourceHashes})];
  const provenance={headSha:event.pull_request?.head?.sha||checkoutSha,testedCheckoutSha:checkoutSha,githubSha:process.env.GITHUB_SHA||null,runId:process.env.GITHUB_RUN_ID||null,runAttempt:process.env.GITHUB_RUN_ATTEMPT||null,
   workflow:process.env.GITHUB_WORKFLOW||null,workingTreeDirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),nodeVersion:process.version,cache,
   sourceFiles:Object.fromEntries(sourceFiles.map(file=>[file,digest(fs.readFileSync(path.join(root,file)))])),childTrial:false,independentTeachingReview:false,nativeSourceSeededCorrectWork:false,nativeSourceSeededLessonPositions:false,
@@ -171,6 +171,9 @@ async function main(){
  const {rulerBinding:binding,replayRulerEvidence:replay}=await import('../dist/learning/ruler-evidence.js'),atlas=JSON.parse(fs.readFileSync(path.join(root,'dist/data/atlas.json'),'utf8'));
  const taskFor=c=>sessionTaskFor(c.id,c.index),ctx=c=>({sessionId:c.id,index:c.index}),originalState=value=>{assert.deepEqual(Core.validate(value,atlas),value);return value;};
  const lessonFrom=(value,c)=>Object.hasOwn(BRIDGES,c.id)?value.daily.bridges[c.id]:value.lessons[c.id];
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const approvedOther=require('./fixtures/p9-regression-cross-family-boundaries.cjs').ruler;
+ const auditOther=await createExcludedFeedbackAudit('ruler',navigationFixture.navigation,taskFor,approvedOther);
  for(const c of[...cases,...associated,...practice])assert.equal(hash(taskFor(c)),c.taskHash);
  for(const c of navigationFixture.navigation){assert.deepEqual(taskFor(c),c.task);assert.equal(hash(taskFor(c)),c.taskHash);}
  for(const[file,sha]of Object.entries({...fixture.sourceHashes,...navigationFixture.sourceHashes}))assert.equal(digest(fs.readFileSync(path.join(root,file))),sha,file);
@@ -288,14 +291,17 @@ async function main(){
     const raw=await rawSnapshot(phase),lesson=lessonFrom(raw.decodedState,c),m=lesson.models[c.index],record=lesson.cases[c.index]||null,task=taskFor(c),proof=replay(task,m);
     assert.equal(Tasks.validModel(task,m),true);const expectedFeedback=thinkingFeedback(task,m,record,ctx(c)),native=!!binding(task,ctx(c));
     assert.equal(native&&!!expectedFeedback,strict);if(role!=='prerequisite')assert.equal(!!expectedFeedback,strict);
-    assert.equal(await hint.count(),expectedFeedback?1:0);if(expectedFeedback)assert.equal(await hint.isVisible(),true);const words=expectedFeedback?await hint.innerText():null;
+    const otherFamily=role==='prerequisite'?await auditOther(page,c,m,record):null;
+    if(otherFamily)assert.equal(native,false,'separate admitted feedback does not grant ruler coverage');
+    const hasFeedback=!!expectedFeedback||!!otherFamily?.feedback;
+    assert.equal(await hint.count(),hasFeedback?1:0);if(hasFeedback)assert.equal(await hint.isVisible(),true);const words=hasFeedback?await hint.innerText():null;
     if(strict){
      assert.ok(proof&&native);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(expectedFeedback.method,null);
      assert.ok(words.includes('物体长度、参照段和尺刻度由工具绘制')&&words.includes('零刻度已对齐'));assert.doesNotMatch(words,/MP\.\d/);assert.equal(await hint.locator('[data-thinking-node-id]').count(),0);
      assert.ok(words.includes(proof.construction.record.raw)&&words.includes(proof.construction.record.unit));
     }
     const value={width,height,contextRole,id:c.id,index:c.index,label,phase,role,checked,model:m,record,attempts:record?.attempts||[],storage:storageOnly(raw),correct:Tasks.inspect(task,m).correct,strict,proof,words,
-     existingOtherFeedback:!native&&!!expectedFeedback,constructedCompatibilityFixture:contextRole.startsWith('constructed-')};captures.push(value);return value;
+     existingOtherFeedback:!native&&hasFeedback,otherFamily,constructedCompatibilityFixture:contextRole.startsWith('constructed-')};captures.push(value);return value;
    };
    const check=async(c,correct,strict,phase,role)=>{
     const before=await current(c),control=page.locator('#actions [data-do="check"]');assert.equal(await control.count(),1);await reveal(control);assert.equal(await control.isEnabled(),true);await control.click();
@@ -318,6 +324,7 @@ async function main(){
      const previous={id:c.id,index:at},saved=await current(previous);
      if(!saved.record?.attempts?.some(a=>Tasks.inspect(taskFor(previous),a.value).correct)){
       const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===at);assert.ok(prep);assert.equal(binding(taskFor(previous),ctx(previous)),null);
+      await auditOther(page,previous,saved.model,saved.record);
       for(const step of prep.steps)step.field||step.coreField?await field(previous,step.field||step.coreField,step.value,!!step.coreField):await action(previous,step.action,step.data);
       const checked=await check(previous,true,false,'navigation-prerequisite-'+at,'prerequisite');preparations.push({width,height,...prep,checked,strictRulerCoverage:false});
      }

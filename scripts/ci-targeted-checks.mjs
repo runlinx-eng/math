@@ -70,7 +70,7 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
    // Current composition must exercise fresh native Check behavior. Archive
    // consumers remain in the separately requested historical audit.
    if(historicalBrowserSet.has(file))continue;
-   if(['dist/learning/evidence-adapters.js','dist/learning/thinking-feedback.js',
+   if(['dist/learning/learn.js','dist/learning/evidence-adapters.js','dist/learning/thinking-feedback.js',
        'dist/learning/issue341-candidate-descriptors.js','dist/learning/issue341-candidate-feedback.js',
        'dist/learning/issue341-isolated-integration.js','dist/learning/issue341-inactive-shared-feedback.js',
        'dist/learning/issue341-formal-source-routing.js','dist/learning/issue341-formal-admissions.js',
@@ -78,6 +78,17 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
        'tests/current-formal-evidence-regression.test.mjs'].includes(file)||
        /^dist\/learning\/issue34[123]-.*\.js$/.test(file))
     add('tests/current-formal-evidence-browser.cjs');
+   // The reviewed area, ruler and scale fixtures pin this shared B02 view.
+   // Changes to its net-only presentation still require actual family checks.
+   if(file==='dist/learning/phase4/b02-view.js'){
+    for(const name of ['area','ruler','scale'])add('tests/p9-'+name+'-adapter-browser.cjs');
+   }
+   const pinnedB02Fixture=new Map([
+    ['tests/fixtures/p9-area-navigation.cjs','area'],
+    ['tests/fixtures/p9-ruler-cases.cjs','ruler'],
+    ['tests/fixtures/p9-scale-cases.cjs','scale']
+   ]).get(file);
+   if(pinnedB02Fixture)add('tests/p9-'+pinnedB02Fixture+'-adapter-browser.cjs');
    if(registered.has(file)){add(file);continue;}
    if(safeScript.test(file)&&fileExists(file)){add(file);continue;}
    // #339: registered signed-order's source-bound replay and Node tests map to

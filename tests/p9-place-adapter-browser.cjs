@@ -23,7 +23,10 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
  const {sessionTasks}=await import('../dist/learning/bridges.js');
  const {solveSteps,valid,inspect,answer,fmt,rowOffset}=await import('../dist/learning/phase5/b11-model.js');
  const displayedAnswer=task=>fmt(answer(task),task.scale??1);
- const {replayPlaceEvidence}=await import('../dist/learning/place-evidence.js');
+ const {replayPlaceEvidence,placeBinding}=await import('../dist/learning/place-evidence.js');
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const approvedOther=require('./fixtures/p9-regression-cross-family-boundaries.cjs').place;
+ const auditOther=await createExcludedFeedbackAudit('place',approvedOther.map(row=>({...row,id:row.sessionId})),spec=>sessionTasks(spec.id)[spec.index],approvedOther);
  let browser,server,activePage,activeLabel='setup',diagnostics,failureDiagnostic=null;
  try{
   browser=await chromium.launch({headless:true,
@@ -255,9 +258,14 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    ok(await hint.isVisible(),activeLabel+' reviewed source initially has verified evidence');
    const sourceWork=JSON.stringify(await model(source));
    activeLabel=`${width}x${height}-cross-course-outside`;await navigate(outside);
-   ok(await guide.count()===0&&await hint.count()===0,activeLabel+' changing course removes the previous source guide and evidence');
+   const auditOutside=async spec=>{const lesson=await saved(spec.id),task=sessionTasks(spec.id)[spec.index];
+    ok(placeBinding(task,{sessionId:spec.id,index:spec.index})===null,activeLabel+' separate position remains outside the original exchange family');
+    return auditOther(page,spec,lesson.models[spec.index],lesson.cases[spec.index]??null);};
+   ok(!(await auditOutside(outside)).feedback,activeLabel+' changing course removes the previous checked evidence');
    await solve(outside);await submit();
-   ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct'&&await hint.count()===0,activeLabel+' another real native task passes without borrowing evidence');
+   ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' another real native task passes original grading');
+   const outsideProof=await auditOutside(outside);ok(outsideProof.adapter==='issue341-B126-p113p',activeLabel+' only separately admitted native feedback');
+   await reload(outside);require('node:assert/strict').deepEqual(await auditOutside(outside),outsideProof);
    activeLabel=`${width}x${height}-cross-course-return`;await navigate(source);
    ok(JSON.stringify(await model(source))===sourceWork&&await hint.isVisible(),activeLabel+' returning preserves and restores only the matching saved evidence');
 
@@ -266,12 +274,14 @@ const amount=counts=>counts.reduce((sum,n,i)=>sum+n*10**i,0);
    for(const spec of [{id:'tensmove',index:0},{id:'general34',index:1},
     {id:decimalScope?'link-columnlarge-decimalsum':'link-basicadd-onesbridge',index:1}]){
     activeLabel=`${width}x${height}-isolation-${spec.id}-${spec.index}`;await open(spec);
-    ok(await guide.count()===0&&await hint.count()===0,activeLabel+' outside tasks receive no native exchange guide');
+    const separatelyAdmitted=approvedOther.some(row=>row.sessionId===spec.id&&row.index===spec.index);
+    if(separatelyAdmitted)ok(!(await auditOutside(spec)).feedback,activeLabel+' excluded exchange source begins unsubmitted');else ok(await guide.count()===0&&await hint.count()===0,activeLabel+' associated task receives no native exchange guide');
     await solve(spec);await submit();
     ok(await page.locator('#check-feedback').getAttribute('data-state')==='correct',activeLabel+' excluded original task remains usable');
-    ok(await hint.count()===0,activeLabel+' same widget cannot inherit reviewed native evidence');
-    await reload(spec);ok(await hint.count()===0,activeLabel+' source isolation survives offline restoration');await shot('checked');
-    isolations.push({width,height,...spec,...await capture(page,out,activeLabel,spec,'checked'),strictFeedback:false});
+    const otherFamily=separatelyAdmitted?await auditOutside(spec):null;
+    if(!otherFamily)ok(await hint.count()===0,activeLabel+' associated widget cannot inherit reviewed native evidence');
+    await reload(spec);if(otherFamily)require('node:assert/strict').deepEqual(await auditOutside(spec),otherFamily);else ok(await hint.count()===0,activeLabel+' source isolation survives offline restoration');await shot('checked');
+    isolations.push({width,height,...spec,...await capture(page,out,activeLabel,spec,'checked'),strictFeedback:false,otherFamily});
    }
    await context.close();activePage=null;
   }

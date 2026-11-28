@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {buildLiveBrowserMatrix} from '../scripts/ci-live-browser-matrix.mjs';
-import {BROWSER_GROUPS,GROUP_NAMES} from '../scripts/required-browser-checks.mjs';
+import {BROWSER_GROUPS,GROUP_NAMES,runBrowserGroup,validateRequiredGate} from '../scripts/required-browser-checks.mjs';
 
 const registry=()=>JSON.parse(readFileSync(new URL('../ci/math-families.json',import.meta.url),'utf8'));
 const config=()=>JSON.parse(readFileSync(new URL('../ci/live-browser-matrix.json',import.meta.url),'utf8'));
@@ -12,17 +12,23 @@ const mock=id=>({familyId:id,version:1,required:true,
  artifacts:['verification/p9-'+id+'/'],proofContracts:['math','correction','persistence','negative','backup'],
  resources:{estimatedScriptMinutes:8,memoryMiB:2048,runnerType:'standard',exclusiveLocks:[]},dependsOn:[]});
 const plan=(r=registry(),options={})=>buildLiveBrowserMatrix(r,{fileExists:()=>true,...options});
+const tail='evidence-expansion-2-tail';
+const fractionGroup='evidence-fractioncase';
+const fractionRunners=[fractionGroup,'evidence-fractioncase-case','evidence-fractioncase-cube'];
+const legacyRunners=[...GROUP_NAMES,tail,...fractionRunners.slice(1)];
 
 test('#239 live matrix preserves the 13 legacy groups and schedules every reviewed new family once',()=>{
  const before=JSON.stringify(BROWSER_GROUPS),reviewed=registry().newFamilies;
- const x=buildLiveBrowserMatrix(),extra=x.matrix.group.slice(GROUP_NAMES.length);
+ const x=buildLiveBrowserMatrix(),extra=x.matrix.group.slice(legacyRunners.length);
  assert.equal(x.proof.activation,'enabled');
  assert.deepEqual(x.matrix.group.slice(0,13),GROUP_NAMES);
  assert.ok(extra.length>0,'at least one independent family group is scheduled');
  assert.ok(extra.every(id=>/^family-wave-[1-9][0-9]*-job-[0-9]+$/.test(id)));
  assert.deepEqual(x.matrix.group,Object.keys(x.definitions));
  assert.deepEqual(extra,x.proof.addedGroups.map(g=>g.id));
+ assert.deepEqual(x.matrix.group.slice(0,legacyRunners.length),legacyRunners);
  assert.equal(x.proof.legacyGroups,13);
+ assert.equal(x.proof.legacyRunnerGroups,16);
  assert.equal(x.proof.legacyCalls,86);
  assert.equal(x.proof.legacyEvidenceDirs,83);
  assert.equal(x.proof.registeredNewFamilies,reviewed.length);
@@ -52,7 +58,8 @@ test('#239 a genuinely new registered family automatically appears in LIVE GitHu
  const r=registry();r.newFamilies=[mock('matrixexample')];
  const x=plan(r);
  assert.deepEqual(x.matrix.group.slice(0,13),GROUP_NAMES);
- assert.deepEqual(x.matrix.group.slice(13),['family-wave-1-job-01']);
+ assert.deepEqual(x.matrix.group.slice(0,legacyRunners.length),legacyRunners);
+ assert.deepEqual(x.matrix.group.slice(legacyRunners.length),['family-wave-1-job-01']);
  assert.equal(x.proof.registeredNewFamilies,1);
  assert.equal(x.proof.addedGroups[0].commandCount,1);
  assert.equal(x.definitions['family-wave-1-job-01'].commands[0].file,
@@ -125,11 +132,103 @@ test('#315 full matrix queues over-capacity independent families without omittin
  const r=registry();r.newFamilies=Array.from({length:11},(_,i)=>{
   const f=mock('batch'+String(i+1));f.resources.estimatedScriptMinutes=29;return f;
  });
- const x=plan(r),extra=x.matrix.group.slice(13);
+ const x=plan(r),extra=x.matrix.group.slice(legacyRunners.length);
  assert.equal(extra.length,11);
  assert.ok(extra.some(id=>id.startsWith('family-wave-2-')));
  assert.deepEqual(extra.flatMap(id=>x.definitions[id].commands.map(c=>c.file)).sort(),
   r.newFamilies.map(f=>f.entry).sort());
  assert.ok(x.proof.addedGroups.every(g=>g.scriptMinutes<=29&&g.peakMemoryMiB<=6000));
  assert.equal(x.proof.addedGroups.reduce((n,g)=>n+g.scriptMinutes,0),319);
+});
+
+test('capacity partition keeps the frozen logical inventory, all commands and every exact artifact owner',()=>{
+ const x=buildLiveBrowserMatrix(),origin='evidence-expansion-2';
+ const names=['groups','transform','angle','scalechain','fracshare','unitcover'];
+ const commands=names.map(name=>({file:'tests/p9-'+name+'-adapter-browser.cjs',env:{}}));
+ const artifacts=names.map(name=>'verification/p9-'+name+'-adapter/');
+ assert.deepEqual(BROWSER_GROUPS[origin],{commands,artifacts});
+ assert.deepEqual(x.definitions[origin],{commands:commands.slice(0,3),artifacts:artifacts.slice(0,3)});
+ assert.deepEqual(x.definitions[tail],{commands:commands.slice(3),artifacts:artifacts.slice(3)});
+ for(const id of GROUP_NAMES.filter(id=>id!==origin&&id!==fractionGroup))assert.deepEqual(x.definitions[id],BROWSER_GROUPS[id]);
+ assert.deepEqual(x.proof.legacyCapacitySplit,{sourceGroup:origin,runners:[origin,tail],commandCounts:[3,3],
+  observedRunId:'45625745253',cancelledJobId:'139248173616',timeoutMinutes:35,maxParallel:10});
+ const actual=legacyRunners.flatMap(id=>x.definitions[id].commands.map(c=>JSON.stringify(c))).sort();
+ const expected=Object.values(BROWSER_GROUPS).flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort();
+ assert.equal(actual.length,86);assert.deepEqual(actual,expected);
+ const paths=legacyRunners.flatMap(id=>x.definitions[id].artifacts).sort();
+ assert.equal(paths.length,83);assert.equal(new Set(paths).size,83);
+ assert.deepEqual(paths,Object.values(BROWSER_GROUPS).flatMap(g=>g.artifacts).sort());
+});
+
+test('full live receipt gate rejects a missing, truncated, stale, failed or cancelled capacity tail',()=>{
+ const {definitions,matrix}=buildLiveBrowserMatrix();
+ const context={event:'workflow_dispatch',sha:'a'.repeat(40),runId:'45625745253',attempt:1};
+ const needs={'static-checks':{result:'success',outputs:{run_browser:'true',run_offline:'true',browser_matrix:JSON.stringify(matrix)}},
+  browser:{result:'success',outputs:{}},'smoke-checks':{result:'success',outputs:{}}};
+ const reports=matrix.group.map(group=>runBrowserGroup({group,scope:'true',context,definitions,execute:()=>({status:0,signal:null})}));
+ const gate=(r=reports,n=needs)=>validateRequiredGate({needs:n,reports:r,context,definitions});
+ assert.equal(gate().invocations,86+registry().newFamilies.length);
+ assert.throws(()=>gate(reports.filter(r=>r.group!==tail)),/Every declared browser group/);
+ const missing=structuredClone(reports);missing.find(r=>r.group===tail).commands.pop();
+ assert.throws(()=>gate(missing),/Missing or extra browser command result/);
+ const wrong=structuredClone(reports);wrong.find(r=>r.group===tail).commands[0].env={MATH_SKIP:'1'};
+ assert.throws(()=>gate(wrong),/inventory or environment changed/);
+ const stale=structuredClone(reports);stale.find(r=>r.group===tail).sha='b'.repeat(40);
+ assert.throws(()=>gate(stale),/different checkout/);
+ const failed=structuredClone(reports),failure=failed.find(r=>r.group===tail);
+ failure.commands[0].exitCode=1;failure.commands[0].outcome='failure';failure.status='failure';
+ assert.throws(()=>gate(failed),/did not complete/);
+ const cancelled=structuredClone(needs);cancelled.browser.result='cancelled';
+ assert.throws(()=>gate(reports,cancelled),/must finish with success/);
+ const matrixMissing=structuredClone(needs);
+ matrixMissing['static-checks'].outputs.browser_matrix=JSON.stringify({group:matrix.group.filter(id=>id!==tail)});
+ assert.throws(()=>gate(reports,matrixMissing),/exact registered and legacy/);
+});
+
+test('fraction capacity partition retains all original calls, exact per-command artifacts and both prior expansion runners',()=>{
+ const x=buildLiveBrowserMatrix();
+ const names=['fdpboard','fractioncase','cubefraction'];
+ const commands=names.map(name=>({file:'tests/p9-'+name+'-adapter-browser.cjs',env:{}}));
+ const artifacts=names.map(name=>'verification/p9-'+name+'-adapter/');
+ assert.deepEqual(BROWSER_GROUPS[fractionGroup],{commands,artifacts:[artifacts[1],artifacts[0],artifacts[2]]});
+ for(const [i,id] of fractionRunners.entries()){
+  assert.deepEqual(x.definitions[id],{commands:[commands[i]],artifacts:[artifacts[i]]});
+  assert.ok(Object.isFrozen(x.definitions[id].commands));
+ }
+ assert.deepEqual(x.proof.legacyFractionCapacitySplit,{sourceGroup:fractionGroup,runners:fractionRunners,commandCounts:[1,1,1],
+  observedRunId:'45759922537',cancelledJobId:'139708961494',timeoutMinutes:35,maxParallel:10});
+ assert.deepEqual(x.matrix.group.slice(0,16),legacyRunners);
+ assert.equal(x.matrix.group.length,16+x.proof.addedGroups.length);
+ const legacy=legacyRunners.map(id=>x.definitions[id]);
+ const old=Object.values(BROWSER_GROUPS);
+ assert.deepEqual(legacy.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort(),
+  old.flatMap(g=>g.commands.map(c=>JSON.stringify(c))).sort());
+ assert.deepEqual(legacy.flatMap(g=>g.artifacts).sort(),old.flatMap(g=>g.artifacts).sort());
+});
+
+test('full receipt gate refuses omission, stale SHA, wrong command, cancellation or failure for any fraction runner',()=>{
+ const {definitions,matrix}=buildLiveBrowserMatrix();
+ const context={event:'workflow_dispatch',sha:'a'.repeat(40),runId:'45759922537',attempt:1};
+ const needs={'static-checks':{result:'success',outputs:{run_browser:'true',run_offline:'true',browser_matrix:JSON.stringify(matrix)}},
+  browser:{result:'success',outputs:{}},'smoke-checks':{result:'success',outputs:{}}};
+ const reports=matrix.group.map(group=>runBrowserGroup({group,scope:'true',context,definitions,execute:()=>({status:0,signal:null})}));
+ const gate=(r=reports,n=needs)=>validateRequiredGate({needs:n,reports:r,context,definitions});
+ assert.equal(gate().invocations,86+registry().newFamilies.length);
+ for(const id of fractionRunners){
+  assert.throws(()=>gate(reports.filter(r=>r.group!==id)),/Every declared browser group/);
+  const missing=structuredClone(reports);missing.find(r=>r.group===id).commands.pop();
+  assert.throws(()=>gate(missing),/Missing or extra browser command result/);
+  const wrong=structuredClone(reports);wrong.find(r=>r.group===id).commands[0].file='tests/other.cjs';
+  assert.throws(()=>gate(wrong),/inventory or environment changed/);
+  const stale=structuredClone(reports);stale.find(r=>r.group===id).sha='b'.repeat(40);
+  assert.throws(()=>gate(stale),/different checkout/);
+  const failed=structuredClone(reports),failure=failed.find(r=>r.group===id);
+  failure.commands[0].exitCode=1;failure.commands[0].outcome='failure';failure.status='failure';
+  assert.throws(()=>gate(failed),/did not complete/);
+  const wrongMatrix=structuredClone(needs);
+  wrongMatrix['static-checks'].outputs.browser_matrix=JSON.stringify({group:matrix.group.filter(group=>group!==id)});
+  assert.throws(()=>gate(reports,wrongMatrix),/exact registered and legacy/);
+ }
+ const cancelled=structuredClone(needs);cancelled.browser.result='cancelled';
+ assert.throws(()=>gate(reports,cancelled),/must finish with success/);
 });

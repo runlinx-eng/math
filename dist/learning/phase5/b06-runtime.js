@@ -1,4 +1,5 @@
 // Transient input devices; only completed playback, bounded ink and flash state are persisted.
+import {recountReady} from './b06-view.js';
 export function mountB06(root,t,getModel,{mutate,saveInk,help}){
  let disposed=false,audio=null,timer=null,stroke=null,poly=null;
  const model=getModel();
@@ -51,8 +52,26 @@ export function mountB06(root,t,getModel,{mutate,saveInk,help}){
  };
  // The lesson-level input handler saves the reason after this local listener runs.
  // Refresh readiness in a microtask, without modifying shared learning/entry modules.
+ const syncRecount=()=>{
+  if(t.type!=='x-counttrail'||!t.recount)return;
+  const m=getModel(),ready=recountReady(t,m);
+  const panel=root.querySelector('[data-b6="recount-prediction"]'),button=root.querySelector('[data-x="count-move"]');
+  if(panel)panel.hidden=!m.moved&&!ready;
+  if(button)button.disabled=!ready||m.prediction===null;
+ };
  const reasonChange=e=>{if(e.target?.dataset?.xfield==='why')queueMicrotask(()=>{if(!disposed)updateCheck();});};
- updateCheck();
+ // The original #lesson input handler saves the value synchronously. A
+ // microtask queued at #work may run between bubbling listeners, before
+ // that save. Observe at the document boundary instead, after #lesson.
+ const recount=t.type==='x-counttrail'&&t.recount;
+ const recountChange=e=>{
+  if(!disposed&&root.contains(e.target)&&['total','prediction'].includes(e.target?.dataset?.xfield))syncRecount();
+ };
+ updateCheck();syncRecount();
+ if(recount){
+  root.ownerDocument.addEventListener('input',recountChange);
+  root.ownerDocument.addEventListener('change',recountChange);
+ }
  root.addEventListener('input',reasonChange);
  root.addEventListener('change',reasonChange);
  root.addEventListener('click',click);
@@ -63,5 +82,5 @@ export function mountB06(root,t,getModel,{mutate,saveInk,help}){
  const move=e=>{if(!stroke)return;e.preventDefault();if(stroke.length<512){stroke.push(point(e));redraw();}};
  const up=e=>{if(!stroke)return;move(e);const completed=stroke;stroke=null;poly=null;saveInk(completed);if(pad.hasPointerCapture(e.pointerId))pad.releasePointerCapture(e.pointerId);};
  pad?.addEventListener('pointerdown',down);pad?.addEventListener('pointermove',move);pad?.addEventListener('pointerup',up);pad?.addEventListener('pointercancel',up);
- return()=>{disposed=true;clearTimeout(timer);audio?.pause();root.removeEventListener('input',reasonChange);root.removeEventListener('change',reasonChange);root.removeEventListener('click',click);pad?.removeEventListener('pointerdown',down);pad?.removeEventListener('pointermove',move);pad?.removeEventListener('pointerup',up);pad?.removeEventListener('pointercancel',up);};
+ return()=>{disposed=true;clearTimeout(timer);audio?.pause();if(recount){root.ownerDocument.removeEventListener('input',recountChange);root.ownerDocument.removeEventListener('change',recountChange);}root.removeEventListener('input',reasonChange);root.removeEventListener('change',reasonChange);root.removeEventListener('click',click);pad?.removeEventListener('pointerdown',down);pad?.removeEventListener('pointermove',move);pad?.removeEventListener('pointerup',up);pad?.removeEventListener('pointercancel',up);};
 }

@@ -1,5 +1,5 @@
 import{esc,input,select,button}from'../phase4/ui.js';
-import{stats,population,round1,number,heights}from'./b21-model.js';
+import{stats,population,round1,number,heights,sampleFormula,issueForDisplay}from'./b21-model.js';
 const f=(k,l,v)=>input(k,l,v).replace('maxlength="2000"','maxlength="1500"'),sel=(k,l,v,o)=>select(k,l,v,o),btn=(a,l,x='')=>button('b21-'+a,l,x),fmt=n=>Number.isFinite(n)?String(Math.round(n*1e5)/1e5):'—';
 const note=s=>`<p class="b21-note">${s}</p>`,card=s=>`<div class="b21-card">${s}</div>`,grid=s=>`<div class="b21-fields">${s}</div>`;
 const table=(heads,rows)=>`<table class="b21-table"><thead><tr>${heads.map(s=>`<th>${esc(s)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(s=>`<td>${esc(s)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
@@ -25,8 +25,19 @@ const questions=(t,m)=>(t.questions||[]).map((q,i)=>q.options?sel('answers.'+i,q
 const raw=(values,unit)=>`<details class="b21-fold"><summary>查看原记录（${values.length}份）</summary><p>${values.map(fmt).join('，')} ${esc(unit||'')}</p></details>`;
 function sampleView(t,b){
  const ps=population(t),r=b.pending,last=b.runs.at(-1),unit=t.mode==='proportion'?'%':t.profile==='sleep'?'小时':'小时/周',nr=b.runs.length;
- let s=card(`<b>同一个模拟总体 · ${t.N}份记录</b><p>${t.profile==='exercise'?`运动社团 ${ps.filter(p=>p.club).length}人，其余 ${ps.filter(p=>!p.club).length}人。这里只是人为设定的总体。`:t.profile==='sleep'?'每个人的睡眠时间各有不同。':'甲、乙两组各一半；每个人还记录了“是否步行”。'}</p><div class="b21-population"><span>甲 ${ps.filter(p=>p.group==='A').length}</span><span>乙 ${ps.filter(p=>p.group==='B').length}</span></div><small>从完整名单抽：人人都有机会。同一次不重复抽同一编号；下一次先全部放回。</small>`);
- if(r){const sum=r.values.reduce((s,n)=>s+n,0),a=r.ids.filter(id=>ps[id-1].group==='A').length;s+=card(`<b>第${nr+1}次 · ${r.method==='club'?'只从社团名单':'完整名单随机'} · 抽了${r.n}份</b><p>甲组 ${a}份 · 乙组 ${r.n-a}份</p><p>${t.mode==='proportion'?`步行 ${sum}人 / ${r.n}人`:`记录总量 ${sum}${unit} / ${r.n}人`}</p><small>${t.mode==='proportion'?'先除，再乘100，得到百分比':'总量除以人数，得到每人的平均'}；按一位小数记下。</small>`)+`<details class="b21-fold"><summary>查看这次实际抽到的编号和记录</summary>${table(['编号','来自','记录'],r.ids.map((id,i)=>[id,t.profile==='exercise'?(ps[id-1].club?'社团':'其余'):(ps[id-1].group==='A'?'甲组':'乙组'),r.values[i]]))}</details>`;}
+ // Only the existing fair-sampling imbalance question needs A/B counts
+ // in its main view. Keep all identities and group data in the raw records.
+ const showGroups=t.mode==='proportion'&&t.questions?.some(q=>(Array.isArray(q.value)?q.value.includes('frame'):q.value==='frame'));
+ const showClub=t.profile==='exercise'&&t.methods.includes('club');
+ const groupA=ps.filter(p=>p.group==='A').length,club=ps.filter(p=>p.club).length;
+ const context=t.profile==='exercise'?('运动社团 '+club+'人，其余 '+(t.N-club)+'人。这里只是人为设定的总体。'):t.profile==='sleep'?'每个人的睡眠时间各有不同。':showGroups?'甲、乙两组各一半；每个人还记录了“是否步行”。':'每人记录是否步行。我们想观察抽样得到的步行比例。';
+ let s=card(`<b>同一个模拟总体 · ${t.N}份记录</b><p>${context}</p>${showGroups?`<div class="b21-population" data-b21-group-summary><span>甲 ${groupA}</span><span>乙 ${t.N-groupA}</span></div>`:''}<small>从完整名单抽：人人都有机会。同一次不重复抽同一编号；下一次先全部放回。</small>`);
+ if(r){
+  const sum=r.values.reduce((s,n)=>s+n,0),a=r.ids.filter(id=>ps[id-1].group==='A').length,c=r.ids.filter(id=>ps[id-1].club).length;
+  const groups=`甲组 ${a}份 · 乙组 ${r.n-a}份`;
+  s+=card(`<b>第${nr+1}次 · ${r.method==='club'?'只从社团名单':'完整名单随机'} · 抽了${r.n}份</b>${showGroups?`<p data-b21-group-summary>${groups}</p>`:showClub?`<p data-b21-club-summary>社团 ${c}人 · 其余 ${r.n-c}人</p>`:''}<p data-b21-sample-value>${t.mode==='proportion'?`步行 ${sum}人 / ${r.n}人`:`记录总量 ${sum}${unit} / ${r.n}人`}</p><small data-b21-sample-formula>${sampleFormula(t)}；保留一位小数。</small>`)+`<details class="b21-fold" data-b21-raw-sample><summary>查看这次实际抽到的编号和记录</summary>${showGroups?'':`<p>总体：甲 ${groupA}人 · 乙 ${t.N-groupA}人；本次：${groups}</p>`}${table(['编号','来自','记录'],r.ids.map((id,i)=>[id,t.profile==='exercise'?(ps[id-1].club?'社团':'其余'):(ps[id-1].group==='A'?'甲组':'乙组'),r.values[i]]))}</details>`;
+ }
+
  if(nr){const log=table(['第几次','抽法 / 份数','我的记录'+unit],b.runs.map((r,i)=>[i+1,(r.method==='club'?'社团':'全体')+' / '+r.n,fmt(r.estimate)]));s+=nr===t.runs?`<details class="b21-fold"><summary>查看这${nr}次的完整记录</summary>${log}</details>`:log;const runValues=b.runs.map(r=>r.estimate),domain=t.mode==='proportion'?[0,100]:t.profile==='sleep'?[6,11]:[0,8];s+=note('每个点是一整份样本得出的数，不是一个人的数。');if(t.compareSizes&&nr>5)s+=dots(runValues.slice(0,5),runValues.slice(5),unit,{domain,labels:['20份','60份']});else if(t.methods.includes('club')&&b.runs.some(r=>r.method==='all'))s+=dots(b.runs.filter(r=>r.method==='club').map(r=>r.estimate),b.runs.filter(r=>r.method==='all').map(r=>r.estimate),unit,{domain,labels:['社团','全体']});else s+=dots(runValues,null,unit,{domain,labels:['估计']});if(t.profile==='sleep')s+=note('再看个体记录：下面每个点才是一个人，两幅图使用相同的6到11小时刻度。')+dots((r||last).values,null,'小时',{domain:[6,11]});}
  return s;
 }
@@ -71,7 +82,7 @@ export function controls(t,m){const b=m.board;let s='',ready=true;
  if(t.type==='x-estimate')s+=(t.mode==='count'?btn('expand',`再铺一份${t.n}人`,b.parts===t.N/t.n?'disabled':''):'')+grid(sel('target','这次想估计谁',m.target,[['population','全体'],['sample','只说样本自己']])+f('population','全体人数',m.population)+f('n','样本人数',m.n)+(t.mode==='count'?f('rate','样本中的比例（可写18/60）',m.rate):'')+f('estimate',t.mode==='count'?'外推步行人数':'全体平均时间的估计',m.estimate)+sel('precision','这个数是什么',m.precision,[['approx','带不确定的估计'],['exact','准确清点结果']])+sel('scope','抽法支持怎样的结论',m.scope,[['random','完整名单随机抽，可作有不确定的估计'],['invalid','选人可能偏，不能放心推广']]))+btn('estimate','留下估计与限制');
  if(ready&&t.compareSizes)s+=grid(f('lowA','抽20份的五次估计：最小%',m.lowA)+f('highA','抽20份的五次估计：最大%',m.highA)+f('lowB','抽60份的五次估计：最小%',m.lowB)+f('highB','抽60份的五次估计：最大%',m.highB));
  if(ready)s+=questions(t,m);
- s+=m.issue?`<p role="status" class="b21-issue">${esc(m.issue)}</p>`:'';
+ const issue=issueForDisplay(t,m);s+=issue?`<p role="status" class="b21-issue">${esc(issue)}</p>`:'';
  return`<div class="b21-controls">${s}<details class="b21-fold"><summary>用自己的话留下发现（可选）</summary>${f('prose','我的解释或新问题',m.prose)}<small>原话会保存，暂不自动判断这段解释。</small></details></div>`;
 }
 export const render=(t,m)=>`<div id="extra-visual">${visual(t,m)}</div><div id="extra-controls">${controls(t,m)}</div>`;

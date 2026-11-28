@@ -119,6 +119,10 @@ async function main(){
  const {rulerBinding,replayRulerEvidence}=await import('../dist/learning/ruler-evidence.js');
  const taskFor=c=>sessionTaskFor(c.id,c.index),ctx=c=>({sessionId:c.id,index:c.index}),originalState=value=>{assert.deepEqual(Core.validate(value,atlas),value);return value;};
  const lessonFrom=(value,c)=>Object.hasOwn(BRIDGES,c.id)?value.daily.bridges[c.id]:value.lessons[c.id];
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const otherRows=require('./fixtures/p9-money-order-convert-cross-family-boundaries.cjs').money;
+ const isOther=c=>otherRows.some(row=>row.sessionId===c.id&&row.index===c.index);
+ const auditOther=await createExcludedFeedbackAudit('money',navigationFixture.navigation,taskFor,otherRows);
  for(const c of[...cases,...associated,...practice])assert.equal(hash(taskFor(c)),c.taskHash);
  for(const c of navigationFixture.navigation){assert.deepEqual(taskFor(c),c.task);assert.equal(hash(taskFor(c)),c.taskHash);}
  for(const[file,sha]of Object.entries({...fixture.sourceHashes,...navigationFixture.sourceHashes}))assert.equal(digest(fs.readFileSync(path.join(root,file))),sha,file);
@@ -213,7 +217,10 @@ async function main(){
    const solve=async c=>{for(const step of operationPlan(c,await model(c)))step.field?await field(c,step.field,step.value):await act(c,step.action,step.index);};
    const capture=async(c,phase,strict,{role,checked=false}={})=>{
     const raw=await rawSnapshot(phase),lesson=lessonFrom(raw.decodedState,c),m=lesson.models[c.index],record=lesson.cases[c.index]||null,task=taskFor(c),proof=replay(task,m);
-    const rulerPrerequisite=role==='prerequisite'&&c.id==='measuremoney'&&c.index===0,hasFeedback=strict||rulerPrerequisite;
+    const rulerPrerequisite=role==='prerequisite'&&c.id==='measuremoney'&&c.index===0;
+    const otherFamily=role==='prerequisite'&&isOther(c)?await auditOther(page,c,m,record):null;
+    if(otherFamily)assert.equal(binding(task,ctx(c)),null,'separate prerequisite proof is not money coverage');
+    const hasFeedback=strict||rulerPrerequisite||!!otherFamily?.feedback;
     assert.equal(Tasks.validModel(task,m),true);assert.equal(await hint.count(),hasFeedback?1:0);if(hasFeedback)assert.equal(await hint.isVisible(),true);
     const words=hasFeedback?await hint.innerText():null;
     if(rulerPrerequisite){assert.equal(binding(task,ctx(c)),null);assert.ok(rulerBinding(task,ctx(c))&&replayRulerEvidence(task,m));assert.deepEqual(record.attempts.at(-1).value,m);assert.ok(words.includes('模拟尺')&&words.includes('物体长度、参照段和尺刻度由工具绘制'));assert.doesNotMatch(words,/MP\.\d/);assert.equal(await hint.locator('[data-thinking-node-id]').count(),0);}
@@ -225,7 +232,7 @@ async function main(){
       assert.ok(words.includes(`本次提交的“${answer.label}”是“${option[1]}”`));assert.ok(!words.includes(`本次提交的“${answer.label}”是“${answer.raw}”`));
      }
     }
-    const value={width,height,contextRole,id:c.id,index:c.index,label,phase,role,checked,model:m,record,attempts:record?.attempts||[],storage:storageOnly(raw),correct:Tasks.inspect(task,m).correct,strict,proof,words,existingRulerPrerequisiteFeedback:rulerPrerequisite,
+    const value={width,height,contextRole,id:c.id,index:c.index,label,phase,role,checked,model:m,record,attempts:record?.attempts||[],storage:storageOnly(raw),correct:Tasks.inspect(task,m).correct,strict,proof,words,existingRulerPrerequisiteFeedback:rulerPrerequisite,otherFamily,
      constructedCompatibilityFixture:contextRole==='constructed-compatibility'};captures.push(value);return value;
    };
    const check=async(c,correct,strict,phase,role)=>{
@@ -249,6 +256,7 @@ async function main(){
      const previous={id:c.id,index:at},saved=await current(previous);
      if(!saved.record?.attempts?.some(a=>Tasks.inspect(taskFor(previous),a.value).correct)){
       const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===at);assert.ok(prep);assert.equal(binding(taskFor(previous),ctx(previous)),null);
+      if(isOther(previous))await auditOther(page,previous,saved.model,saved.record??null);
       for(const step of prep.steps)step.field?await field(previous,step.field,step.value):await action(previous,step.action,step.data);
       const checked=await check(previous,true,false,'navigation-prerequisite-'+at,'prerequisite');preparations.push({width,height,...prep,checked,strictMoneyCoverage:false});
      }
