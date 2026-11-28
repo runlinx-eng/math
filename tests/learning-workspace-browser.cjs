@@ -738,7 +738,7 @@ async function verifyV54ShellContracts(browser){
  const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
  const dir=path.resolve('verification/v54-shell-contracts');
  fs.mkdirSync(dir,{recursive:true});
- const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'three native contracts at two viewport sizes plus three actual source-linked bridge entries at 1280x720; no storage seeding or new grading gates',rows:[]};
+ const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'three native contracts at two viewport sizes plus three actual source-linked bridge entries at 1280x720; process-only V54 UI readiness; original grading on real work retained',rows:[]};
  const topics=[['foldprism','mt_REwgr0d_ss'],['splitfraction','mt_VgOePicFYK'],['nth35','mt_HRKzwEQJgO']];
  // First two bridges begin with the identical native task. The sequence
  // bridge begins with the actual B34 sequential exercise before B17.
@@ -800,8 +800,36 @@ async function verifyV54ShellContracts(browser){
      if(openPanel)assert.ok(geometry.inert&&panel.top>=surface.top-1&&panel.bottom<=footer.top+1,'drawer covers only the scrollable stage, not the footer');
      return geometry;
     };
+    const locked=async(label,{verifyOriginal=false}={})=>{
+     const before=await record(),button=action('check');
+     assert.ok(await button.isDisabled(),label+' must lock the actual Check control');
+     assert.equal(await button.getAttribute('aria-describedby'),'action-cue');
+     assert.ok((await frame.locator('#action-cue').innerText()).trim(),'visible missing-process cue');
+     assert.equal(await frame.locator('#actions button.primary').count(),1,'single footer workflow control');
+     assert.equal(await frame.locator('#work [data-study-primary]').count(),0,'local operation is not a workflow primary');
+     await button.evaluate(el=>{el.click();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));});
+     assert.deepEqual(await record(),before,'locked Check writes no attempt or state');
+     if(verifyOriginal){
+      // The historical UI allowed these incomplete works to be submitted.
+      // Check the unchanged original submission on an isolated copy of
+      // the ACTUAL work, never on a seeded or persisted learner record.
+      const original=await frame.locator('body').evaluate(async(el,record)=>{
+       const {submitLesson}=await import('./learning/state.js');
+       const copy=structuredClone(record),prior=copy.cases[copy.index]?.attempts||[];
+       const count=prior.length,result=submitLesson(copy),after=copy.cases[copy.index].attempts;
+       return {correct:result.correct,added:after.length-count,unchanged:JSON.stringify(after.slice(0,count))===JSON.stringify(record.cases[record.index]?.attempts||[]),value:after.at(-1).value};
+      },before);
+      assert.equal(original.correct,false,'original mathematical contract still rejects incomplete work');
+      assert.equal(original.added,1);assert.ok(original.unchanged);
+      assert.deepEqual(original.value,before.models[before.index]);
+      assert.deepEqual(await record(),before,'isolated original submission does not change learner storage');
+     }
+     row.checks.push({index:before.index,locked:label,originalRejects:verifyOriginal});
+    };
     const check=async(expected)=>{
-     const before=await attempts();assert.ok(await action('check').isEnabled(),'original Check gate must permit this submission');
+     const before=await attempts();assert.ok(await action('check').isEnabled(),'completed process must permit the original submission even if wrong');
+     assert.equal(await frame.locator('#actions button.primary').count(),1,'single workflow primary');
+     assert.equal(await frame.locator('#work [data-study-primary]').count(),0,'no competing workflow primary in the widget');
      await action('check').click();await stage(expected);
      await assertFooter();
      const after=await attempts();assert.equal(after.length,before.length+1,'one Check creates one attempt');
@@ -866,8 +894,9 @@ async function verifyV54ShellContracts(browser){
       // B02 preset: six cells in two rows, an invalid cube net.
       assert.equal((await model()).cells.length,6);
       assert.ok(await x('fold').isDisabled(),'fold requires a prediction');
+      await locked('尚未折合');
       await field('why').fill('先试一下六张纸');
-      await x('guess','[data-value="true"]').click();await x('fold').click();
+      await x('guess','[data-value="true"]').click();await locked('只有猜想');await x('fold').click();
       assert.equal((await model()).runs.at(-1).why,'先试一下六张纸','optional pre-fold text stays in run snapshot');
       assert.equal((await attempts()).length,0,'fold is not Check');
       await check('revise');await shot('wrong-prediction');
@@ -877,33 +906,52 @@ async function verifyV54ShellContracts(browser){
       await check('passed');await shot('cube-net-passed');await next(1);
       }
       // B27: connect the remaining four faces, predict, fold, then turn.
-      assert.ok(await action('check').isDisabled(),'existing prism construction gate');
+      await locked('原有接纸片门槛');
       for(let i=0;i<4;i++)await x('g27-piece','[data-index="'+i+'"]').click();
       assert.deepEqual((await model()).board.parts,[0,1,2,3]);
       await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();
       assert.equal((await model()).board.fold,100);assert.equal((await attempts()).length,0);
-      await check('revise');
+      await locked('错误猜想、尚未转动',{verifyOriginal:true});
       await x('g27-unfold').click();await x('g27-predict','[data-index="yes"]').click();await x('g27-fold').click();
       assert.equal((await model()).board.turned,false);
-      await check('revise');await x('turn-extra').click();
-      assert.equal((await model()).board.turned,true);
-      assert.equal((await model()).board.attempts.length,2,'both fold observations retained');
+      await locked('正确猜想、尚未转动',{verifyOriginal:true});
+      await x('g27-unfold').click();await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();
+      await x('turn-extra').click();assert.equal((await model()).board.turned,true);
+      await check('revise'); // Complete but mathematically wrong prediction.
+      await x('g27-unfold').click();await locked('已摊开，需重新折合');
+      await x('g27-predict','[data-index="yes"]').click();await x('g27-fold').click();
+      assert.equal((await model()).board.attempts.length,4,'all four fold observations retained');
       await check('passed');await shot('prism-passed');await next(bridge?1:2);
      }else if(family==='splitfraction'){
       const cut=i=>x('b18-cut','[data-index="'+i+'"]').click();
       const save=async equation=>{await field('equation').fill(equation);await x('b18-save').click();};
+      await locked('尚未保存分法');
       await cut(1);await cut(2);await save('3/8=1/8+1/8+1/8');
       assert.equal((await model()).board.saved.length,1);
       await save('3/8=1/8+1/8+1/8');assert.equal((await model()).board.saved.length,1,'duplicate group does not count');
       await save('3/8=1/8+1/8+2/8');assert.equal((await model()).board.saved.length,1,'invalid equality does not count');
-      assert.equal((await attempts()).length,0);await pauseRestore();await check('revise');await shot('one-group');
+      assert.equal((await attempts()).length,0);await pauseRestore();await locked('只保存了一种分法',{verifyOriginal:true});await shot('one-group');
       await x('b18-new-groups').click();assert.equal((await model()).board.saved.length,1,'new grouping preserves saved work');
       await cut(1);await save('3/8=1/8+2/8');
       assert.equal((await model()).board.saved.length,2);
       await x('b18-new-groups').click();await cut(2);await save('3/8=2/8+1/8');
       assert.equal((await model()).board.saved.length,2,'reversed groups are not a third decomposition');
-      assert.equal((await attempts()).length,1,'process actions are not further submissions');
+      assert.equal((await attempts()).length,0,'process actions are not shared submissions');
       await check('passed');await shot('two-groups-passed');await next(1);
+      if(!bridge){
+       // The third native task requires a particular decomposition. A
+       // valid but different grouping must unlock and receive real feedback.
+       await locked('第二题还没有分法');
+       await cut(1);await save('5/6=1/6+4/6');
+       await x('b18-new-groups').click();await cut(2);await save('5/6=2/6+3/6');
+       await check('passed');await next(2);
+       await locked('第三题还没有分法');
+       await cut(1);await save('17/8=1/8+16/8');
+       assert.equal((await model()).board.saved.length,1);
+       await check('revise');await shot('complete-wrong-group');
+       await x('b18-new-groups').click();await cut(8);await cut(16);await save('17/8=8/8+8/8+1/8');
+       await check('passed');await next(2);await stage('reflect');
+      }
      }else{
       if(bridge){
        assert.deepEqual((await model()).board.values,[1]);
@@ -918,7 +966,7 @@ async function verifyV54ShellContracts(browser){
       const inputs=[1,2,3,50,100];
       const rule=async offset=>{await field('multiplier').fill('4');await field('offset').fill(String(offset));await field('divisor').fill('1');await x('b17-rule').click();};
       const run=async(n,answer)=>{await field('n').selectOption(String(n));await field('answer').fill(String(answer));await x('b17-run').click();};
-      await rule(3);
+      await locked('还没有搭规则');await rule(3);await locked('还没有运行记录');
       for(const n of inputs)await run(n,4*n+3);
       assert.equal((await model()).board.records.length,5,'a wrong but executable rule can make records');
       assert.equal((await attempts()).length,0);await check('revise');await shot('wrong-rule');
@@ -928,7 +976,7 @@ async function verifyV54ShellContracts(browser){
       await run(50,199);await run(100,399);await run(50,199);
       assert.equal((await model()).board.records.length,2,'same input replaces its record');
       await run(1,4);assert.equal((await model()).board.records.length,2,'incorrect execution is not recorded');
-      await pauseRestore();await check('revise');await shot('only-distant-positions');
+      await pauseRestore();await locked('只记录两个远处位置',{verifyOriginal:true});await shot('only-distant-positions');
       for(const n of [1,2,3])await run(n,4*n-1);
       assert.deepEqual((await model()).board.records.map(r=>r.n).sort((a,b)=>a-b),inputs);
       assert.deepEqual((await model()).board.rule,[4,-1,1]);
@@ -936,6 +984,7 @@ async function verifyV54ShellContracts(browser){
       await check('passed');
       await field('offset').fill('3');await stage('recheck');
       assert.equal(await action('next').count(),0,'editing the passed work revokes Next');
+      assert.ok(await action('check').isEnabled(),'editing a completed rule is not an answer-based gate');
       await field('offset').fill('-1');await stage('passed');
       await shot('five-positions-passed');await next(1);
       if(bridge){await stage('reflect');assert.equal((await record()).view,'summary');}

@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261128-v54-learning-shell-footer3');
+registerClientRelease('math-explorer-20261128-v54-learning-shell-readiness4');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -207,16 +207,17 @@ function continuationDestination(){
  if(bridge)return {action:'lesson',label:'继续探索：'+bridge.title+' →',attrs:'data-id="'+esc(bridge.id)+'"'};
  return {action:'back',label:'返回知识空间 →'};
 }
+const v54Workbench=()=>document.body.dataset.workbenchHeader==='parent';
 function renderTaskActions(checked=currentSubmission(a)){
  const stage=learningStage(a,checked),p03=isP03();
-  const focus=studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready});
+  const focus=studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready,v54:v54Workbench()});
  const plan=learningActionPlan({
    stage,hasNextTask:a.index<sessionTasks(id).length-1,p03,
    readyToCheck:focus.readyToCheck
  });
  const buttonFor=(spec,primary=false)=>btn(spec.action,esc(spec.label),
-   (spec.disabled?'disabled ':'')+(spec.attrs||''),primary);
- $('#actions').innerHTML=buttonFor(plan.primary,focus.kind!=='widget')+plan.secondary.map(spec=>buttonFor(spec)).join('');
+   (spec.disabled?'disabled ':'')+(spec.disabled&&spec.action==='check'&&v54Workbench()?'aria-describedby="action-cue" ':'')+(spec.attrs||''),primary);
+ $('#actions').innerHTML=buttonFor(plan.primary,v54Workbench()||focus.kind!=='widget')+plan.secondary.map(spec=>buttonFor(spec)).join('');
  $('#actions').dataset.actionStage=stage;
  return plan;
 }
@@ -259,10 +260,14 @@ function syncLearningRegions(){
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':stage==='explore'?'其他探索（可选）':'发现与继续';
  $('#check-title').textContent='检查与反馈';
  const activeTask=a.view==='summary'?null:task();
- const focus=studyActionFocus({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready});
+ const focus=studyActionFocus({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,v54:v54Workbench()});
  $('#work').querySelectorAll('[data-study-primary]').forEach(el=>{el.classList.remove('study-primary','primary');el.removeAttribute('data-study-primary');});
+ $('#work').querySelectorAll('[data-study-local]').forEach(el=>el.removeAttribute('data-study-local'));
  const widgetAction=focus.selector?$('#work').querySelector(focus.selector):null;
- if(widgetAction){widgetAction.classList.add('study-primary','primary');widgetAction.setAttribute('data-study-primary','true');}
+ if(widgetAction){
+  if(v54Workbench())widgetAction.setAttribute('data-study-local','true');
+  else{widgetAction.classList.add('study-primary','primary');widgetAction.setAttribute('data-study-primary','true');}
+ }
  $('#scene').dataset.actionFocus=widgetAction?'widget':focus.kind;
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
  const cue=$('#action-cue');
@@ -416,7 +421,7 @@ $('#lesson').addEventListener('click',e=>{const b=e.target.closest('[data-do]');
   if(act==='p3-retry'){if(numericCompatibility(taskFor(id,a.index),a.models[a.index])){if(a.view!=='task'&&update(r=>r.view='task'))render();$('#numeric-compat-notice')?.scrollIntoView({block:'nearest'});return;}feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
   if(act==='p3-variant'){const index=Number(b.dataset.index);if(!Number.isInteger(index)||index<0||index>=sessionTasks(id).length)return;feedback='';spread=0;view=null;if(update(r=>{r.index=index;r.view='task';modelForLesson(r);}))render();return;}
   if(act==='relations'){notify('math-space:lesson-relations');return;}if(act==='lesson'){openLesson(b.dataset.id);return;}if(act==='back'){back();return;}if(act==='restart'){feedback='';spread=0;view=null;if(update(r=>{r.view='task';r.index=Math.max(0,lessonSummary(r).cases.findIndex(x=>!x.complete));if(!numericCompatibility(taskFor(id,r.index),r.models[r.index]))r.models[r.index]=defaultModel(taskFor(id,r.index));}))render();return;}
- if(act==='check'){let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();const target=result?.correct?$('#actions .primary'):$('#check-feedback');if(target&&!target.hidden)target.scrollIntoView({block:'nearest'});return;}
+ if(act==='check'){if(v54Workbench()&&b.disabled)return;let result;if(!update(r=>result=submitLesson(r)))return;feedback=result?.feedback||'';if(task().dims)spread=1;render();const target=result?.correct?$('#actions .primary'):$('#check-feedback');if(target&&!target.hidden)target.scrollIntoView({block:'nearest'});return;}
  if(act==='next'){if(!lessonSummary(a).cases[a.index].complete||currentSubmission(a).status!=='correct')return;feedback='';spread=0;view=null;update(r=>{if(r.index<sessionTasks(id).length-1){r.index++;if(['x-m31-cubes','x-m31-product','x-p34-growth'].includes(taskFor(id,r.index).type))r.ui.camera=null;}else if(lessonSummary(r).completed)r.view='summary';modelForLesson(r);});render();window.scrollTo(0,0);return;}
  if(act==='hint'||act==='equal'){revealSupport();return;}if(act==='save-note'){const note=$('#note')?.value.trim();if(!note)return;if(update(r=>addLessonNote(r,note))){savedNoteFeedback=nextLearningLesson()?'已保存这次发现（文字解释待确认），可继续学习下一处。':nextLinkedPractice()?'已保存这次发现（文字解释待确认），可以继续关联探索。':'已保存这次发现（文字解释待确认），可以返回知识空间。';render();$('#note-save-status')?.scrollIntoView({block:'nearest'});}else showNoteSaveFailure();return;}
  if(act==='fill-next'){const next=voxels(task()).findIndex((_,i)=>!(model().filled||[]).includes(i));if(next>=0)placeCube(next);return;}
