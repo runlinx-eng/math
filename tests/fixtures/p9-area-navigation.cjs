@@ -1199,7 +1199,7 @@ module.exports={
     "dist/learning/phase4/engine.js": "8164e3f66e9c1489ef4831a6477fe782591ea1a7bc0ed4da859fc3c575b9f9ee",
     "dist/learning/phase4/ui.js": "88a1fe937b6b4e9b2f1405e2f80d6e48a8750afa833b8ac2d76b046bd28678a8",
     "dist/learning/phase4/b02-model.js": "b0b17bdc7f7fa95c0ad53258f2804cd06404272b1946a4e5830af3b337e55927",
-    "dist/learning/phase4/b02-view.js": "209775e79fd018c63779c747b05da0d23913457b17c311df4977126da85f5e03",
+    "dist/learning/phase4/b02-view.js": "97b90a33f243c3d6c84908499f88edb3a2c129d484565cfd1ea032f9871d3c27",
     "dist/learning/phase5/b12-model.js": "121ffb6631ade31f38467d76d736cc77d57fabe8fbfd5589ca1980f1edd44d02",
     "dist/learning/phase5/b12-view.js": "d05a30460e3ed364dcccdd905ec6e5afc8c7fc75aedb75b601e832a3d60cf53c",
     "dist/learning/phase5/b13-model.js": "d5a146c466ac846dd555f833823453252f1268e6be4f4d1d845ad07c7c434cb3",

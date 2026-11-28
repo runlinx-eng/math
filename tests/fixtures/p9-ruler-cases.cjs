@@ -1042,7 +1042,7 @@ module.exports={
     "dist/learning/phase5/b39-model.js": "76d3a16b0db5e3c078eaacf66b87e9fc1aeedc7447c8cd8b1fc456736294ec0e",
     "dist/learning/phase5/b39-view.js": "27e205182fa04e8de3f3c11d841742cd09fd79d47a3e458f36a1c4cea73dc7f4",
     "dist/learning/phase4/b02-model.js": "b0b17bdc7f7fa95c0ad53258f2804cd06404272b1946a4e5830af3b337e55927",
-    "dist/learning/phase4/b02-view.js": "209775e79fd018c63779c747b05da0d23913457b17c311df4977126da85f5e03",
+    "dist/learning/phase4/b02-view.js": "97b90a33f243c3d6c84908499f88edb3a2c129d484565cfd1ea032f9871d3c27",
     "dist/learning/phase4/b05-model.js": "5209dfc172d08cec8dd8d1dfdadb1e290c01aa54e90f54593f405b1f1733af19",
     "dist/learning/phase4/b05-view.js": "b7ee7a5fb21bc7f3255ed39ae0306e880fa9c32a51ac9eca3b60104f756e998a",
     "dist/learning/phase4/engine.js": "8164e3f66e9c1489ef4831a6477fe782591ea1a7bc0ed4da859fc3c575b9f9ee",

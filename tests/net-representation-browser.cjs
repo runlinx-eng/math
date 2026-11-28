@@ -3,7 +3,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const {chromium}=require(process.env.MATH_PLAYWRIGHT_MODULE||'playwright');
-const {newDesktopContext}=require('./helpers/standard-desktop-viewport.cjs');
+const {newDesktopContext,STANDARD_DESKTOP_VIEWPORT}=require('./helpers/standard-desktop-viewport.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'verification/net-representation');
 const base='http://127.0.0.1:43827/',checks=[],errors=[],observations=[],remote=[],frameEvidence=[];
 const ok=(v,m)=>{assert.ok(v,m);checks.push(m);};
@@ -31,7 +31,7 @@ async function main(){
  const open=async id=>{
   await context?.close();context=await newDesktopContext(browser,{reducedMotion:'reduce'});
   context.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith(base))remote.push(r.url());});
-  page=await context.newPage();page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push({label,error:String(e)}));
+  page=await context.newPage();assert.deepEqual(page.viewportSize(),STANDARD_DESKTOP_VIEWPORT);page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push({label,error:String(e)}));
   const response=await page.goto(base+'learn.html?net-review='+encodeURIComponent(id)+'#'+id);ok(response?.ok()===true,id+' loaded');await wait(id,0);
   assert.equal((await record(id)).cases[0]?.attempts?.length||0,0);
  };
@@ -90,13 +90,8 @@ async function main(){
   return entry;
  };
  const sameDirection=(a,b)=>assert.ok(a.direction.reduce((sum,v,i)=>sum+v*b.direction[i],0)>.9999,'automatic fit must preserve the selected orbit direction');
- const resizeSettled=async(width,height)=>{
-  await page.setViewportSize({width,height});
-  await page.waitForFunction(()=>{
-   const c=document.querySelector('#extra-world canvas');if(!c)return false;const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio,1.6);
-   return Math.abs(c.width-r.width*d)<2&&Math.abs(c.height-r.height*d)<2;
-  });
- };
+ // The #239 desktop entrypoint never resizes its viewport. The original
+ // real narrow/wide check now runs in the opt-in existing responsive workspace suite.
  async function net(id,index){
   label=id+':'+index;const t=sessionTasks(id)[index];assert.equal(t.type,'x-net');
   if(t.draw){
@@ -137,15 +132,6 @@ async function main(){
   for(let k=0;k<4;k++)await field('fold').press('PageUp');
   const middle=(await model(id,index)).fold;assert.ok(middle>1&&middle<100);
   sameDirection(turned,await framing('middle-'+middle));
-  if(id==='nets'&&index===0){
-   const beforeResize=await record(id),direction=await orientation();
-   await resizeSettled(760,900);
-   const narrow=await framing('narrow-middle');sameDirection(direction,narrow);
-   await layout();
-   await resizeSettled(1920,1080);
-   sameDirection(direction,await framing('wide-restored'));
-   const afterResize=await record(id);for(const k of ['models','cases','notes','draft'])assert.deepEqual(afterResize[k],beforeResize[k],'viewport change is not a learner action');
-  }
   await field('fold').press('End');assert.equal((await model(id,index)).fold,100);
   sameDirection(turned,await framing('turned-folded'));
   // Test original incorrect response before correcting; never silently fill.
@@ -192,6 +178,7 @@ async function main(){
  await check('foldprism',1,true);await shot('prism-regression',{parts:prism.board.parts,fold:prism.board.fold,turned:prism.board.turned});
  await reload('foldprism',1);await next('foldprism',1);
  await open('link-nets-solidpictures');await net('link-nets-solidpictures',0);
+ assert.equal(frameEvidence.length,40,'all five desktop net scenarios keep their eight original non-resize pixel checks');
  ok(errors.length===0,'no page errors');ok(remote.length===0,'no remote requests');save();
  console.log('NET_REPRESENTATION_OK '+JSON.stringify({provenance,checks:checks.length,observations:observations.length,configuredPositions:inv.length,nativeNetPositions:4,bridgeNetPositions:1,prismRegression:1,frameChecks:frameEvidence.length,originalGradingPreserved:true}));
 }

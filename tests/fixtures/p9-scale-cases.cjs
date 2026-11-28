@@ -397,6 +397,6 @@ module.exports={
     "dist/learning/phase5/b31-model.js": "af26110a7f50a2e4e3d3399b1d621776203e9c56a199667b11f4f7fe0280dc57",
     "dist/learning/phase5/b31-view.js": "37760557311f03f4d8ca9cbaf86dfd995b2e57ccab594e3942a3908dc2d84604",
     "dist/learning/phase4/b02-model.js": "b0b17bdc7f7fa95c0ad53258f2804cd06404272b1946a4e5830af3b337e55927",
-    "dist/learning/phase4/b02-view.js": "209775e79fd018c63779c747b05da0d23913457b17c311df4977126da85f5e03"
+    "dist/learning/phase4/b02-view.js": "97b90a33f243c3d6c84908499f88edb3a2c129d484565cfd1ea032f9871d3c27"
   }
 };

@@ -177,6 +177,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
        await verifyV54QuietExploration(browser);
        await verifyV54MacJoint(browser);
        await verifyV54ShellContracts(browser);
+       await verifyNetResponsiveFraming(browser);
      }
    }finally{await browser.close();}
  }
@@ -1233,4 +1234,100 @@ async function verifyV54ShellContracts(browser){
   fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');
  }
  console.log(JSON.stringify({v54ShellContracts:{testedCheckoutSha:result.testedCheckoutSha,passed:result.passed,rows:result.rows.map(r=>({session:r.session,viewport:r.viewport,passed:r.passed}))}}));
+}
+
+// #239: the new net browser entrypoint remains at 1920x1080.
+// The original responsive narrow/restore probe belongs to this pre-existing,
+// explicitly opt-in layout suite. It is a separate live, unseeded lesson.
+async function verifyNetResponsiveFraming(browser){
+ const assert=require('node:assert/strict');
+ const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ const dir=path.resolve('verification/v54-net-responsive');
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'standalone real nets:0 middle-fold narrow/restore from the original #400 test; responsive layout only, not seeded work or a new grade',frames:[],errors:[],remote:[]};
+ const ctx=await browser.newContext({viewport:{width:1920,height:1080},reducedMotion:'reduce'});
+ const page=await ctx.newPage();page.setDefaultTimeout(20000);
+ page.on('pageerror',e=>result.errors.push(String(e)));
+ ctx.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith(base+'/'))result.remote.push(r.url());});
+ const x=(name,suffix='')=>page.locator('[data-x="'+name+'"]'+suffix);
+ const field=key=>page.locator('[data-xfield="'+key+'"]');
+ const record=()=>page.evaluate(async()=>{const {readStored}=await import('./storage.js');return JSON.parse(readStored('math-explorer-v2')).lessons.nets;});
+ const model=async()=>(await record()).models[0];
+ const orientation=async()=>{
+  const s=await page.evaluate(()=>mathLesson.snapshot().extra),offset=s.camera.map((v,i)=>v-s.target[i]),distance=Math.hypot(...offset);
+  return {distance,direction:offset.map(v=>v/distance)};
+ };
+ const sameDirection=(a,b)=>assert.ok(a.direction.reduce((sum,v,i)=>sum+v*b.direction[i],0)>.9999,'automatic fit preserves selected orbit direction');
+ try{
+  const {NETS,foldedNet}=await import('../dist/learning/phase4/geometry.js');
+  const {NET_FACE_COLORS}=await import('../dist/learning/phase4/b02-view.js');
+  const palette=NET_FACE_COLORS.map(c=>[(c>>16)&255,(c>>8)&255,c&255]);
+  const response=await page.goto(base+'/learn.html?net-responsive=1#nets');assert.ok(response?.ok());
+  await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='nets'&&window.mathLesson.snapshot().index===0&&window.mathLesson.snapshot().view==='task'&&document.querySelector('#storage-warning')?.hidden,null,{timeout:60000});
+  assert.equal((await model()).cells.length,0);assert.equal((await record()).cases[0]?.attempts?.length||0,0);
+  assert.ok(await x('fold').isDisabled());
+  for(const [c,r] of NETS.cross)await x('net-cell','[data-col="'+c+'"][data-row="'+r+'"]').click();
+  const first=await model(),folded=foldedNet(first.cells);assert.ok(folded.valid);
+  await x('guess','[data-value="true"]').click();
+  await field('pair.0').selectOption(String(folded.opposite[0][0]));
+  await field('pair.1').selectOption(String(folded.opposite[0][1]));
+  await field('why').fill('我的试折记录');
+  await x('fold').click();assert.equal((await model()).fold,100);
+  await field('fold').press('Home');await field('fold').press('ArrowRight');assert.equal((await model()).fold,1);
+  const camera=(await orientation()).direction;await x('turn-extra').click();assert.notDeepEqual((await orientation()).direction,camera);
+  for(let k=0;k<4;k++)await field('fold').press('PageUp');
+  const middle=(await model()).fold;assert.ok(middle>1&&middle<100);
+  const before=await record(),direction=await orientation();
+  const layout=async()=>{
+   const paper=page.locator('.x-net-paper'),preview=page.locator('.x-net-preview'),canvas=page.locator('#extra-world canvas');
+   assert.ok(await paper.isVisible()&&await preview.isVisible()&&await canvas.isVisible());
+   assert.equal(await canvas.count(),1);assert.equal(await page.locator('#extra-world').count(),1);
+   const p=await paper.boundingBox(),v=await preview.boundingBox(),c=await canvas.boundingBox();
+   assert.ok(c.width>=160&&c.height>=150,'visible WebGL area');
+   assert.ok(p.x+p.width<=v.x+1||p.y+p.height<=v.y+1,'representations do not overlap');
+   const faces=await page.locator('[data-net-face]').evaluateAll(els=>els.map(el=>({face:el.dataset.netFace,color:el.style.getPropertyValue('--net-face'),label:el.getAttribute('aria-label')})).sort((a,b)=>a.face.localeCompare(b.face)));
+   assert.deepEqual(faces.map(f=>f.face),['A','B','C','D','E','F']);
+   for(const f of faces){const i=f.face.charCodeAt(0)-65;assert.equal(f.color,'#'+NET_FACE_COLORS[i].toString(16).padStart(6,'0'));assert.match(f.label,new RegExp(f.face));}
+   return {paper:p,preview:v,canvas:c,faces};
+  };
+  const framing=async name=>{
+   const png=await page.locator('#extra-world canvas').screenshot({animations:'disabled',scale:'css'});
+   const metrics=await page.evaluate(async({encoded,palette})=>{
+    const bitmap=await createImageBitmap(new Blob([Uint8Array.from(atob(encoded),c=>c.charCodeAt(0))],{type:'image/png'}));
+    const c=document.createElement('canvas');c.width=bitmap.width;c.height=bitmap.height;
+    const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(bitmap,0,0);bitmap.close();
+    const {data}=ctx.getImageData(0,0,c.width,c.height);
+    let count=0,minX=c.width,minY=c.height,maxX=-1,maxY=-1;
+    for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++){
+     const p=(y*c.width+x)*4;if(palette.some(([r,g,b])=>Math.max(Math.abs(data[p]-r),Math.abs(data[p+1]-g),Math.abs(data[p+2]-b))<=12)){count++;minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}
+    }
+    return {width:c.width,height:c.height,count,bounds:[minX,minY,maxX,maxY],margin:Math.min(minX,minY,c.width-1-maxX,c.height-1-maxY)};
+   },{encoded:png.toString('base64'),palette});
+   const entry={name,viewport:page.viewportSize(),fold:middle,...metrics,...await orientation(),layout:await layout()};
+   result.frames.push(entry);fs.writeFileSync(path.join(dir,name+'-canvas.png'),png);
+   await page.screenshot({path:path.join(dir,name+'.png'),fullPage:true});
+   assert.ok(metrics.count>=100,name+' visible face pixels');
+   assert.ok(metrics.margin>=Math.max(5,Math.floor(Math.min(metrics.width,metrics.height)*.035)),name+' paper is not clipped: '+JSON.stringify(metrics));
+   return entry;
+  };
+  const resizeSettled=async(width,height)=>{
+   await page.setViewportSize({width,height});
+   await page.waitForFunction(({width,height})=>{
+    const c=document.querySelector('#extra-world canvas');if(!c||innerWidth!==width||innerHeight!==height)return false;
+    const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio,1.6);
+    return Math.abs(c.width-r.width*d)<2&&Math.abs(c.height-r.height*d)<2;
+   },{width,height});
+  };
+  sameDirection(direction,await framing('wide-middle'));
+  await resizeSettled(760,900);
+  sameDirection(direction,await framing('narrow-middle'));
+  await resizeSettled(1920,1080);
+  sameDirection(direction,await framing('wide-restored'));
+  const after=await record();
+  for(const k of ['models','cases','notes','draft'])assert.deepEqual(after[k],before[k],'viewport change is not a learner action');
+  assert.equal(result.frames.length,3);assert.deepEqual(result.errors,[]);assert.deepEqual(result.remote,[]);
+  result.passed=true;
+ }catch(error){result.failure=String(error.stack||error);await page.screenshot({path:path.join(dir,'failure.png'),fullPage:true}).catch(()=>{});throw error;}
+ finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');await ctx.close();}
+ console.log('NET_RESPONSIVE_OK '+JSON.stringify({testedCheckoutSha:result.testedCheckoutSha,passed:result.passed,frames:result.frames.map(({name,viewport,count,margin})=>({name,viewport,count,margin})),recordPreserved:true}));
 }

@@ -69,6 +69,14 @@ test('legacy source evidence edits select only its owned math family',()=>{
  assert.equal(p.runSmoke,true);
  assert.deepEqual(gate(p).targetedScripts,p.scripts);
 });
+test('shared B02 presentation and its pinned fixtures require actual area, ruler and scale regressions',()=>{
+ const names=['area','ruler','scale'];
+ const scripts=names.map(n=>'tests/p9-'+n+'-adapter-browser.cjs');
+ const fixtures=['tests/fixtures/p9-area-navigation.cjs','tests/fixtures/p9-ruler-cases.cjs','tests/fixtures/p9-scale-cases.cjs'];
+ assert.deepEqual(plan('pull_request',['dist/learning/phase4/b02-view.js']).scripts,scripts);
+ for(const [i,file] of fixtures.entries())assert.deepEqual(plan('pull_request',[file]).scripts,[scripts[i]]);
+ assert.deepEqual(plan('pull_request',['dist/learning/phase4/b02-view.js',...fixtures]).scripts,scripts);
+});
 test('test entrypoint changes select the changed registered script, not its entire group',()=>{
  const p=plan('pull_request',['tests/p9-unitcover-adapter-browser.cjs']);
  assert.deepEqual(p.scripts,['tests/p9-unitcover-adapter-browser.cjs']);
