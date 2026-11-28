@@ -671,6 +671,14 @@ jobs:
           path: verification/issue341-isolated-integration/
           if-no-files-found: error
           retention-days: 90
+      - name: Preserve B21 sample feedback and context review evidence
+        if: ${{ success() && matrix.script == 'tests/b21-sample-feedback-browser.cjs' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: b21-sample-feedback-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: verification/b21-sample-feedback/
+          if-no-files-found: error
+          retention-days: 30
       - name: Save full family evidence only for investigation on failure
         if: failure()
         uses: actions/upload-artifact@v4

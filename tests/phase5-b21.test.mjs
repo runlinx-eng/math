@@ -1,4 +1,4 @@
-import test from'node:test';import assert from'node:assert/strict';import{TASKS,LESSONS,BRIDGES,ROUTES}from'../dist/learning/phase5/b21.js';import*as M from'../dist/learning/phase5/b21-model.js';import*as V from'../dist/learning/phase5/b21-view.js';import{exampleExtra,initialExtra,inspectExtra,validExtra}from'../dist/learning/phase4/engine.js';
+import test from'node:test';import assert from'node:assert/strict';import{TASKS,LESSONS,BRIDGES,ROUTES,PRACTICE}from'../dist/learning/phase5/b21.js';import*as M from'../dist/learning/phase5/b21-model.js';import*as V from'../dist/learning/phase5/b21-view.js';import{exampleExtra,initialExtra,inspectExtra,validExtra}from'../dist/learning/phase4/engine.js';
 for(const[id,ts]of Object.entries(TASKS))test('B21 '+id+' bounded construction, empty rejection and replay',()=>{for(const t of ts){const m=exampleExtra(t);assert.ok(!inspectExtra(t,initialExtra(t)).correct);assert.ok(inspectExtra(t,m).correct);assert.ok(validExtra(t,JSON.parse(JSON.stringify(m))));if(M.TYPES.has(t.type)){assert.match(V.render(t,m),/extra-controls/);const corrupt=structuredClone(m);corrupt.board.cursor=999;assert.ok(!M.valid(t,corrupt));}}});
 test('B21 recalculates inconsistent upstream arithmetic rather than copying answers',()=>{const s=M.stats([2,0,1,3,2,2,8]);assert.equal(s.sum,18);assert.equal(s.mean,18/7);assert.equal(s.range,8);assert.deepEqual(M.stats([1,2,3]).modes,[]);assert.deepEqual(M.stats([1,1,2,2,3]).modes,[1,2]);});
 test('B21 mean equals conserved fair share and need not be an observed score',()=>{const t=TASKS.meanbalance[0],m=M.initial(t);m.from='0';m.to='1';m.amount='-2';M.act(t,m,'b21-transfer');assert.ok(m.issue);assert.equal(m.board.piles.reduce((a,b)=>a+b),410);m.amount='1000';M.act(t,m,'b21-transfer');assert.deepEqual(m.board.piles,t.values);const done=M.example(t);assert.deepEqual(done.board.piles,[82,82,82,82,82]);assert.ok(!t.values.includes(82));assert.equal(done.board.first['transfer-0'].amount,'3');});
@@ -22,3 +22,46 @@ test('B21 sample-range answers use actual draws, not a curated fixed interval',(
 test('B21 exact arithmetic is insufficient for a biased population estimate',()=>{const t=TASKS.estimatepeople[2],m=M.example(t);assert.equal(m.board.total,270);assert.ok(M.inspect(t,m).correct);m.scope='random';M.act(t,m,'b21-estimate');assert.ok(!M.inspect(t,m).correct);m.scope='invalid';m.precision='exact';M.act(t,m,'b21-estimate');assert.ok(!M.inspect(t,m).correct);assert.match(V.visual(t,m),/不能据此放心估计总体/);});
 test('B21 open explanations stay unassessed and safely escaped',()=>{const t=TASKS.datasummary[0],m=M.example(t);m.prose='<img src=x onerror=alert(1)>';M.act(t,m,'b21-report');assert.ok(M.inspect(t,m).correct);assert.equal(M.inspect(t,m).evidence.freeTextMeaningAssessed,false);assert.equal(M.inspect(t,m).evidence.realSurveyAssessed,false);assert.ok(!V.render(t,m).includes('<img src=x'));});
 test('B21 seven short routes and 40 separately performed source links',()=>{assert.equal(Object.keys(LESSONS).length,14);assert.equal(Object.values(TASKS).flat().length,43);assert.equal(ROUTES.length,7);assert.ok(ROUTES.every(r=>r.ids.length===2));assert.equal(BRIDGES.length,40);assert.ok(BRIDGES.every(b=>b.tasks.length===2));});
+
+test('B21 all configured sample activities use mode-specific hints and preserve wrong draws and legacy feedback',()=>{
+ const cases=[...Object.values(TASKS).flat(),...Object.values(PRACTICE),...BRIDGES.flatMap(b=>b.tasks)].filter(t=>t.type==='x-samplelab');
+ assert.ok(cases.some(t=>t.mode==='mean')&&cases.some(t=>t.mode==='proportion'));
+ const legacy='使用这一次抽到的记录：总量÷份数。比例再乘100%，按一位小数记录；不要沿用上一次的结果。';
+ for(const t of cases){
+  const m=M.initial(t);M.act(t,m,'b21-draw');const pending=structuredClone(m.board.pending),seed=m.board.seed;
+  const value=M.round1(M.sampleValue(t,pending));
+  m.estimate=String(value+1);M.act(t,m,'b21-record');
+  const formula=t.mode==='proportion'?/步行人数÷本次抽到的总人数×100/:/本次记录的总量÷本次抽到的人数/;
+  assert.match(m.issue,formula);
+  assert.doesNotMatch(m.issue,t.mode==='proportion'?/总量÷份数|平均值/:/×100|百分比/);
+  assert.match(V.visual(t,m),formula);
+  assert.match(V.controls(t,m),formula);
+  assert.deepEqual(m.board.pending,pending);assert.equal(m.board.seed,seed);assert.equal(m.board.runs.length,0);assert.ok(!M.inspect(t,m).correct);
+  const old=JSON.parse(JSON.stringify(m));old.issue=legacy;const before=structuredClone(old);
+  assert.ok(M.valid(t,old));assert.match(V.controls(t,old),formula);assert.deepEqual(old,before,'display does not rewrite old stored issue or history');
+  M.act(t,m,'b21-draw');assert.deepEqual(m.board.pending,pending);
+  const beforeCorrect=structuredClone(m.history);
+  m.estimate=String(value);M.act(t,m,'b21-record');
+  assert.deepEqual(m.history.slice(0,-1),beforeCorrect);assert.equal(m.issue,'');assert.equal(m.board.pending,null);assert.deepEqual(m.board.runs[0],{...pending,estimate:value});
+  assert.ok(M.valid(t,JSON.parse(JSON.stringify(m))));
+ }
+});
+test('B21 group totals stay primary only for actual imbalance activity, raw evidence stays available',()=>{
+ const cases=[...Object.values(TASKS).flat(),...Object.values(PRACTICE),...BRIDGES.flatMap(b=>b.tasks)].filter(t=>t.type==='x-samplelab');
+ for(const t of cases){
+  const show=t.questions?.some(q=>(Array.isArray(q.value)?q.value.includes('frame'):q.value==='frame'))&&t.mode==='proportion';
+  const m=M.initial(t);assert.equal(V.visual(t,m).includes('data-b21-group-summary'),!!show);
+  M.act(t,m,'b21-draw');const html=V.visual(t,m);
+  assert.equal(html.includes('data-b21-group-summary'),!!show);
+  assert.match(html,/data-b21-raw-sample/);
+  assert.match(html,/甲组 \d+份 · 乙组 \d+份/);
+  assert.equal(html.includes('data-b21-club-summary'),t.profile==='exercise'&&t.methods.includes('club'));
+ }
+});
+
+test('B21 fairness group evidence is explicitly retained for fairdraw task 3 but not repeat-proportion or sleep',()=>{
+ for(const [t,expected] of [[TASKS.fairdraw[2],true],[PRACTICE.fairdraw,true],[TASKS.samplevary[0],false],[TASKS.samplevary[3],false]]){
+  const m=M.initial(t);assert.equal(V.visual(t,m).includes('data-b21-group-summary'),expected);
+  M.act(t,m,'b21-draw');assert.equal(V.visual(t,m).includes('data-b21-group-summary'),expected);
+ }
+});
