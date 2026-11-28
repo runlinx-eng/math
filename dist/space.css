@@ -1849,3 +1849,23 @@ body[data-world="network"][data-network-version="54"].has-journey[data-workbench
 @media(pointer:coarse){
   body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{top:76px}
 }
+
+/* V54 closeout 02: one parent top bar; map tools and progress return on pause. */
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] :is(.topbar,.bottom-bar){display:none!important}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface{top:12px;bottom:12px}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{min-height:44px;padding:5px 10px;gap:6px}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-title{display:block;flex:1 1 auto;min-width:0;margin:0;color:#f0f4fc;font-size:14px;line-height:1.45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header [data-action="menu"]{flex:none;font-size:18px;min-width:34px;line-height:1}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #menu-popover{right:12px;top:62px;max-height:calc(100dvh - 76px);overflow:auto}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #menu-popover [data-action="continue"]{display:none}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #offline-status:not([hidden]){color:#d7e1f5;font-size:11px;white-space:normal;flex:0 1 auto;margin:0}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #learning-map-context .learning-context-route{margin:8px 0 0;font-size:12px;font-weight:600}
+body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #learning-map-context .grade-node-position{margin:8px 0 0;padding:6px;color:#315c4d;background:transparent;border-color:#d0dfd3}
+@media(min-width:960px) and (hover:hover){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #space-app:hover::after{content:"点击暂回探索（保留当前进度）";position:absolute;bottom:20px;left:50%;transform:translateX(-50%);max-width:calc(100% - 20px);padding:6px 9px;border-radius:7px;background:#101827cc;color:#c5d1e8;font-size:11px;white-space:nowrap;pointer-events:none;z-index:4}
+}
+@media(max-width:620px){
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #journey-surface>header{flex-wrap:wrap}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #workbench-title{flex-basis:100%;white-space:normal}
+  body[data-world="network"][data-network-version="54"].has-journey[data-workbench-foreground="learn"] #menu-popover{top:108px;max-height:calc(100dvh - 120px)}
+}

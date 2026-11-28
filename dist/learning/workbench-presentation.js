@@ -29,6 +29,16 @@ export function mountWorkbenchShell(doc){
   doc.body.dataset.workbenchShell='fixed';
   mountWorkbenchDrawer(doc,stage,command);
   mountWorkbenchLocation(doc);
+  // Only the native V54 embedding owns a parent header; keep the real question
+  // action and location nodes within the existing delegated child event root.
+  try{
+    if(doc.defaultView.parent.document.body.dataset.networkVersion==='54'){
+      const dock=doc.getElementById('workbench-drawer'),panel=doc.getElementById('learning-support-drawer-panel');
+      const question=doc.querySelector('#lesson>header [data-do="question"]');
+      const curriculum=doc.getElementById('workbench-curriculum'),route=doc.getElementById('route-title');
+      if(dock&&panel&&question&&curriculum&&route){dock.append(question);panel.prepend(route,curriculum);doc.body.dataset.workbenchHeader='parent';}
+    }
+  }catch{/* Non-native embeddings keep the original presentation. */}
   return true;
 }
 

@@ -810,3 +810,17 @@ body[data-workbench-layout="compact-v54"] #work[data-task-type="x-p22-pick"] .b2
  body[data-workbench-layout="compact-v54"] #workbench-drawer>details>summary{min-height:44px}
  body[data-workbench-layout="compact-v54"] #workbench-content{--workbench-dock-height:50px}
 }
+
+/* Native V54: use the parent title and location, and unboxed status labels. */
+body[data-workbench-header="parent"] #lesson>header{display:none}
+body[data-workbench-header="parent"] #scene .stage-top{display:block;position:static;padding:3px 0;gap:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+body[data-workbench-header="parent"] #scene .stage-top .lesson-heading{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+body[data-workbench-header="parent"] #scene .stage-top #workbench-beats{display:flex;justify-content:center;gap:6px;margin:0;padding:0}
+body[data-workbench-header="parent"] #workbench-beats li{background:transparent;box-shadow:none;border:0;border-radius:0;color:#64796d;padding:2px 0;font-size:11px}
+body[data-workbench-header="parent"] #workbench-beats li[aria-current="step"]{color:#254d40;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+body[data-workbench-header="parent"] #workbench-beats li:not(:last-child)::after{content:"·";margin-left:6px;color:#8b9e92}
+body[data-workbench-header="parent"] #workbench-drawer>[data-do="question"]{flex:none;min-height:26px;font-size:12px;padding:3px 7px;border-color:#d6dfd7}
+body[data-workbench-header="parent"] #learning-support-drawer-panel #workbench-curriculum,
+body[data-workbench-header="parent"] #learning-support-drawer-panel #route-title{display:block;margin:4px 0;font-size:12px;line-height:1.45;color:#49695a}
+
+@media(pointer:coarse){body[data-workbench-header="parent"] #workbench-drawer>[data-do="question"]{min-height:44px}}

@@ -219,14 +219,19 @@ async function verifyV54CompactLayout(browser){
        });
        const map=rect(document.querySelector('#space-app'));
        const headingParts={outer:rect(panel.querySelector(':scope>header')),inner:rect(doc.querySelector('#lesson>header')),title:rect(doc.querySelector('.stage-top')),problem:rect(doc.querySelector('#learning-problem')),interaction:rect(doc.querySelector('#learning-interaction'))};
-       const headingText=['#title','#workbench-curriculum','#instruction','#action-cue'].map(selector=>{
-         const el=doc.querySelector(selector);
+       const headingText=['#workbench-title','#instruction','#action-cue'].map(selector=>{
+         const el=selector==='#workbench-title'?document.querySelector(selector):doc.querySelector(selector);
          return {selector,rect:rect(el),text:el.textContent.trim(),unclipped:el.clientHeight>0&&el.clientWidth>0&&el.scrollHeight<=el.clientHeight+1&&el.scrollWidth<=el.clientWidth+1};
        });
-       return {panel:p,frame:f,stage:s,work,drawer,command,topbar,map,headingParts,headingText,ratio:p.width/innerWidth,headingHeight:f.y-p.y+work.y,childViewport:{width:frame.contentWindow.innerWidth,height:frame.contentWindow.innerHeight},scroll:doc.querySelector('#workbench-stage').scrollTop,fields:fieldRects,contextClosed:!document.querySelector('#workbench-context-menu').open,questionCopies:[...document.querySelectorAll('.save-status [data-action="question"]')].filter(e=>e.getClientRects().length).length,guideInWork:!!doc.querySelector('#work #thinking-guide'),guideInDrawer:!!doc.querySelector('#learning-support-drawer-panel #thinking-guide'),goalInDrawer:!!doc.querySelector('#learning-support-drawer-panel #learning-goal')};
+       return {panel:p,frame:f,stage:s,work,drawer,command,topbar,map,headingParts,headingText,outerFooterVisible:document.querySelector('.bottom-bar').getClientRects().length>0,childHeaderVisible:doc.querySelector('#lesson>header').getClientRects().length>0,ratio:p.width/innerWidth,headingHeight:f.y-p.y+work.y,childViewport:{width:frame.contentWindow.innerWidth,height:frame.contentWindow.innerHeight},scroll:doc.querySelector('#workbench-stage').scrollTop,fields:fieldRects,contextClosed:!document.querySelector('#workbench-context-menu').open,questionCopies:[...document.querySelectorAll('.save-status [data-action="question"]')].filter(e=>e.getClientRects().length).length,guideInWork:!!doc.querySelector('#work #thinking-guide'),guideInDrawer:!!doc.querySelector('#learning-support-drawer-panel #thinking-guide'),goalInDrawer:!!doc.querySelector('#learning-support-drawer-panel #learning-goal')};
      },requiredFields);
      const m=await measure();row.initial=m;
-     assert.ok(m.panel.x>=0&&m.panel.y>=m.topbar.bottom-1&&m.panel.right<=width+1&&m.panel.bottom<=height+1,'fixed panel fits below top navigation: '+JSON.stringify(m.panel));
+     assert.ok(m.panel.x>=0&&m.panel.y>=0&&m.panel.right<=width+1&&m.panel.bottom<=height+1,'fixed panel fits viewport: '+JSON.stringify(m.panel));
+     assert.equal(m.topbar.height,0,'old global navigation does not occupy a second bar');assert.equal(m.outerFooterVisible,false);assert.equal(m.childHeaderVisible,false);
+     const total=await frame.locator('#status').getAttribute('data-task-total');
+     assert.ok((await page.locator('#workbench-title').innerText()).endsWith('1/'+total),'parent displays actual first task ordinal');
+     assert.ok(await page.locator('#workbench-later').isVisible());assert.ok(await page.locator('[data-action="nav-explore"]').isHidden());
+     assert.ok(await frame.locator('#workbench-drawer [data-do="question"]').isVisible());
      if(width>=960){assert.ok(m.ratio>=.68&&m.ratio<=.72,'desktop 68–72% width, '+m.ratio);assert.ok(m.map.right<=m.panel.x+1,'actual map is separately reserved');}
      else assert.ok(m.ratio>=.94&&m.panel.x<=12.5,'narrow viewport full-width panel');
      assert.ok(m.contextClosed&&m.questionCopies===0&&m.goalInDrawer&&!m.guideInWork,'default optional details do not occupy the main stage');
@@ -234,7 +239,7 @@ async function verifyV54CompactLayout(browser){
      if(probability){
       assert.equal(m.scroll,0,'first screen must not rely on scrolling');
       assert.ok(m.headingHeight<=220,'whole heading budget from panel top to work <=220 CSS px: '+m.headingHeight);
-      assert.ok(m.headingText.every(h=>h.text&&h.unclipped),'title, curriculum, real problem and action cue must remain readable, not clipped: '+JSON.stringify(m.headingText));
+      assert.ok(m.headingText.every(h=>h.text&&h.unclipped),'parent title, real problem and action cue must remain readable, not clipped: '+JSON.stringify(m.headingText));
       assert.equal(await frame.locator('#extra-controls .b22-controls > .field :is(input,select)').count(),3,'exact original required fields');
       assert.ok(m.fields.every(f=>!f.missing&&f.enabled&&f.visible&&f.hit&&f.parentHit),'all original input/label rectangles and actual hit targets visible above drawer and command: '+JSON.stringify(m.fields));
       assert.ok(m.fields[2].labelText.includes('一共几个等可能的面'));
@@ -242,6 +247,8 @@ async function verifyV54CompactLayout(browser){
       const summary=page.locator('#workbench-context-menu>summary');
       await summary.click();assert.ok(await page.locator('#learning-map-context').isVisible());
       assert.ok(await page.locator('#learning-map-context [data-source-key]').count()>0,'real source links preserved');
+      assert.ok(await page.locator('#learning-map-context .learning-context-route').isVisible());
+      assert.ok(await page.locator('#learning-map-context .grade-node-position').isVisible(),'source curriculum reachable in the same disclosure');
       const open=await measure();assert.deepEqual(open.frame,m.frame,'context disclosure does not shrink iframe');
       await shot('source-context');
       await summary.press('Escape');
@@ -320,7 +327,7 @@ async function verifyV54EntryLayout(browser){
       const state=await page.evaluate(()=>({open:mathSpace.snapshot().journeyOpen,paused:mathSpace.snapshot().journeySuspended,pending:document.querySelector('[data-action="nav-learn"]').dataset.pending}));
       assert.deepEqual(state,{open:true,paused:true,pending:'true'});
     };
-    await page.locator('[data-action="nav-explore"]').click();
+    await page.locator('#workbench-later').click();
     await page.waitForFunction(()=>mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
     await preserved();
     const nav=page.locator('#cylinder-entry-nav'),choices=nav.locator('[data-action="cylinder-entry"]');
@@ -567,7 +574,7 @@ async function verifyV54MacJoint(browser){
     return {...m,draft:baseline.models[baseline.index].prob,attempts:0};
   });
   await run(3,['I-03'],'single question entry and optional real source context',async()=>{
-    const child=frame.locator('#lesson > header [data-do="question"]'),global=page.locator('.save-status [data-action="question"]');
+    const child=frame.locator('#workbench-drawer [data-do="question"]'),global=page.locator('.save-status [data-action="question"]');
     assert.ok(await child.isVisible()&&await global.isHidden()&&await pause.isVisible());
     const beforeOpen=await read(),expected=JSON.parse(beforeOpen),questionCount=expected.daily.questions.length;
     assert.deepEqual(expected.lessons[session],baseline);

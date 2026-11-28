@@ -531,7 +531,8 @@ const ready=async(page,version,count)=>{
            assert.equal(await workbench.locator('#status').getAttribute('data-task-ordinal'),'2');
          }finally{await ctx.setOffline(false);}
          const completedFirst=await learnerState();
-         await page.locator('#journey-surface [data-action="close-journey"]').click();
+         await page.locator('#journey-surface>header [data-action="menu"]').click();
+         await page.locator('#menu-popover [data-action="close-journey"]').click();
          await page.waitForFunction(()=>!window.mathSpace.snapshot().journeyOpen&&document.querySelector('#journey-frame').contentWindow.location.href==='about:blank');
          assert.equal(await learnerState(),completedFirst);
          await page.locator('[data-action="nav-trail"]').click();
