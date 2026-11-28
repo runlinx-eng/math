@@ -22,3 +22,10 @@
 @keyframes b6-puppet-count-tap{0%{transform:scale(.88)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
 .b6-countonce-beads .b6-puppet-bead.puppet-active{animation:b6-puppet-count-tap .42s ease-out}
 @media(prefers-reduced-motion:reduce){.b6-countonce-beads .b6-puppet-bead.puppet-active{animation:none}}
+
+/* Stable slots: adding count labels or starting another count never moves a bead. */
+.b6-beads.b6-recount-beads{display:grid;grid-template-columns:repeat(3,minmax(0,64px));grid-template-rows:repeat(3,64px);width:min(100%,216px);max-width:none;gap:12px;justify-content:center;align-items:center;margin:16px auto}
+.b6-recount-beads .b6-dot{display:flex;flex-direction:column;justify-content:center;align-items:center;width:100%;height:64px;min-width:0;min-height:0;box-sizing:border-box;padding:5px;line-height:1.1;overflow-wrap:anywhere}
+.b6-recount-beads .b6-dot:nth-child(1){grid-area:1/2}.b6-recount-beads .b6-dot:nth-child(2){grid-area:2/3}.b6-recount-beads .b6-dot:nth-child(3){grid-area:3/3}.b6-recount-beads .b6-dot:nth-child(4){grid-area:3/2}.b6-recount-beads .b6-dot:nth-child(5){grid-area:3/1}.b6-recount-beads .b6-dot:nth-child(6){grid-area:2/1}
+.b6-recount-name{font-size:14px;font-weight:650}.b6-recount-marks{font-size:13px;font-variant-numeric:tabular-nums;max-width:100%;max-height:30px;overflow:auto}
+.b6-lab [data-b6="recount-prediction"][hidden]{display:none}

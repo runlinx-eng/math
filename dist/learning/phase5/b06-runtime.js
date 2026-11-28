@@ -1,4 +1,5 @@
 // Transient input devices; only completed playback, bounded ink and flash state are persisted.
+import {recountReady} from './b06-view.js';
 export function mountB06(root,t,getModel,{mutate,saveInk,help}){
  let disposed=false,audio=null,timer=null,stroke=null,poly=null;
  const model=getModel();
@@ -51,8 +52,19 @@ export function mountB06(root,t,getModel,{mutate,saveInk,help}){
  };
  // The lesson-level input handler saves the reason after this local listener runs.
  // Refresh readiness in a microtask, without modifying shared learning/entry modules.
- const reasonChange=e=>{if(e.target?.dataset?.xfield==='why')queueMicrotask(()=>{if(!disposed)updateCheck();});};
- updateCheck();
+ const syncRecount=()=>{
+  if(t.type!=='x-counttrail'||!t.recount)return;
+  const m=getModel(),ready=recountReady(t,m);
+  const panel=root.querySelector('[data-b6="recount-prediction"]'),button=root.querySelector('[data-x="count-move"]');
+  if(panel)panel.hidden=!m.moved&&!ready;
+  if(button)button.disabled=!ready||m.prediction===null;
+ };
+ const reasonChange=e=>{
+  const key=e.target?.dataset?.xfield;
+  if(key==='why'||t.recount&&['total','prediction'].includes(key))
+   queueMicrotask(()=>{if(!disposed){updateCheck();syncRecount();}});
+ };
+ updateCheck();syncRecount();
  root.addEventListener('input',reasonChange);
  root.addEventListener('change',reasonChange);
  root.addEventListener('click',click);

@@ -66,3 +66,30 @@ test('teen quantities survive unbundling, and the required re-bundling is record
 test('dictation requires completed playback or explicit text help, and 14 is not 40',()=>{const t=TASKS.write100[0],m=b.example(t);m.heard=0;assert.ok(!b.inspect(t,m).correct);m.textHelp=true;assert.ok(b.inspect(t,m).correct);m.numeral='14';assert.ok(!b.inspect(t,m).correct);assert.equal(b.cn(0),'零');assert.equal(b.cn(20),'二十');assert.equal(b.cn(100),'一百');});
 test('ink is bounded evidence, never a legibility score',()=>{const t=TASKS.write20[0],m=b.example(t);assert.ok(b.inspect(t,m).correct);m.ink=[[[0,0],[1,1]]];assert.ok(b.valid(t,m));m.ink[0][1][1]=Infinity;assert.ok(!b.valid(t,m));});
 test('unfinished walk, audio help and ink survive backup and question continuation',()=>{const s=fresh(),id='write100',a=freshLesson(id);a.view='task';a.index=0;a.models[0]=b.initial(TASKS[id][0]);a.models[0].tens=3;a.models[0].textHelp=true;a.models[0].ink=[[[.1,.1],[.4,.8]]];s.lessons[id]=a;const q=addQuestion(s,'四十为什么还要写一个零？',{nodeId:LESSONS[id].topicId,scene:captureSession(a)});const copy=parseBackup(JSON.stringify(backup(s)),atlas);resumeQuestion(copy,q.id);assert.deepEqual(copy.lessons[id].models,a.models);assert.deepEqual(completionSummary(copy),{done:0,total:topicIds.length});});
+
+test('B06 recount separates order from moving objects and keeps old grading',()=>{
+ const t=TASKS.lastcount[1],m=b.initial(t),initial=structuredClone(m);
+ assert.match(t.prompt,/换个起点或顺序/);
+ assert.deepEqual(BRIDGES['link-lastcount-manyfaces'].tasks[0],t);
+ assert.match(renderB06(t,m),/b6-recount-beads/);
+ assert.doesNotMatch(renderB06(t,m),/把位置打散|换位置后有几个|data-xfield="after"/);
+ assert.deepEqual(m,initial);
+ for(const i of [0,1,2,3,4,5])b.act(t,m,'count-tap',{index:i});
+ m.total=6;
+ assert.match(renderB06(t,m),/开始第二次数数/);
+ assert.match(renderB06(t,m),/data-x="count-move" disabled/);
+ b.act(t,m,'count-move');assert.equal(m.moved,false);
+ m.prediction=5;b.act(t,m,'count-move');assert.equal(m.moved,true,'wrong guess still allows a real recount');
+ assert.match(renderB06(t,m),/第一次的顺序：A → B → C → D → E → F/);
+ assert.doesNotMatch(renderB06(t,m),/b6-beads scatter/);
+ assert.equal(m.after,null);assert.equal(m.why,'');
+ for(const i of [0,2,1,3,4,5])b.act(t,m,'count-tap',{index:i});
+ m.after=6;m.why='same';assert.equal(b.inspect(t,m).correct,false);
+ const old=b.example(t);old.again=[0,2,1,3,4,5];
+ assert.equal(b.valid(t,old),true);assert.equal(b.inspect(t,old).correct,true);
+ assert.match(renderB06(t,old),/第二次数数/);
+ old.again=[...old.taps];assert.equal(b.inspect(t,old).correct,false);
+ const rearrange=TASKS.lastcount[0],a=b.example(rearrange);
+ assert.match(renderB06(rearrange,a),/b6-beads scatter/);
+ assert.match(renderB06(rearrange,a),/把位置打散/);
+});
