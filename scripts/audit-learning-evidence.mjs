@@ -28,7 +28,8 @@ import {mixedTradeEvidenceExample} from './mixedtrade-evidence-fixture.mjs';
 import {scaleChainEvidenceExample} from './scalechain-evidence-fixture.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
-const out=resolve(root,'verification/learning-evidence-audit');
+const currentCli=process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href&&process.argv[2]==='--current';
+const out=resolve(root,currentCli?'verification/current-learning-evidence-audit':'verification/learning-evidence-audit');
 const json=p=>JSON.parse(readFileSync(resolve(root,p),'utf8'));
 const assert=(ok,reason)=>{if(!ok)throw Error(reason);};
 const sort=(a,b)=>String(a).localeCompare(String(b),'en');
@@ -236,23 +237,38 @@ return {summary,rows,byType,byFamily,unknown,risk,report};
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
-const {loadIssue341FormalAuditInputs}=await import('./issue341-formal-audit-inputs.mjs');
-const inputs=loadIssue341FormalAuditInputs({
+if(process.argv.length>2&&!currentCli)throw Error('Use --current for live regression or no argument for historical audit');
+const inputs=currentCli?undefined:(await import('./issue341-formal-audit-inputs.mjs')).loadIssue341FormalAuditInputs({
  legacyExampleFor:registeredExampleFor,legacyRecordFor:()=>null
 });
 const {summary,rows,byType,byFamily,unknown,risk,report}=await auditLearningEvidence(inputs);
 const nativeA=rows.filter(row=>row.kind==='native'&&row.evidenceLevel==='A');
 const added=nativeA.filter(row=>row.evidenceAdapter?.startsWith('issue341-'));
-if(nativeA.length!==1762||added.length!==949||
- new Set(added.map(row=>row.sessionId+':'+row.index)).size!==949)
- throw Error('Formal #341 A-E classification did not verify 949 exact original Checks');
-delete summary.classificationScope;
-delete summary.formalStrictAGranted;
-summary.caution=summary.caution.replace(
- /^Explicit injected-registry simulation only; no formal A grant\. /,
- 'Formal #341 sources use restored original Check/submitted contracts. ');
-report.splice(0,3,'# 正式数学证据分类：原813 + 新增839（仅原生）','',
- '复用原始完整 Check 记录与准确来源，不代表学生掌握或新增方法标签。');
+if(currentCli){
+ const manifest=json('docs/spatial-learning/evidence-review-manifest.json');
+ const key=r=>r.sessionId+':'+r.index;
+ const legacy=manifest.tasks.filter(r=>!r.adapter.startsWith('issue341-')).map(key).sort(sort);
+ assert(legacy.length===813&&JSON.stringify(nativeA.map(key).sort(sort))===JSON.stringify(legacy),'Current legacy replay coverage changed');
+ assert(rows.every(row=>row.defaultModelValid&&row.graderCallable&&row.sourceMapped),'Current task/validator/source inventory failed');
+ summary.classificationScope='CURRENT_REGRESSION_LEGACY_REPLAY_ONLY';
+ summary.historicalFormalAdmissions=949;
+ summary.historicalOriginalChecksReplayed=0;
+ summary.caution='Current regression: 813 legacy replay fixtures. The 949 historical formal admissions remain approved in the manifest; current exact source and submitted-evidence checks are reported separately. No historical Check ZIP was replayed.';
+ report.splice(0,3,'# 当前题目与数学证据回归（813项现行回放）','',
+  '本次不读取或复演历史949项原始Check。来源及当前提交保护另验；历史准入未撤销。不是全量历史证据复核。');
+ report[3]='复现：node scripts/audit-learning-evidence.mjs --current；Node 22；先动态装载 B39。';
+}else{
+ if(nativeA.length!==1762||added.length!==949||
+  new Set(added.map(row=>row.sessionId+':'+row.index)).size!==949)
+  throw Error('Formal #341 A-E classification did not verify 949 exact original Checks');
+ delete summary.classificationScope;
+ delete summary.formalStrictAGranted;
+ summary.caution=summary.caution.replace(
+  /^Explicit injected-registry simulation only; no formal A grant\. /,
+  'Formal #341 sources use restored original Check/submitted contracts. ');
+ report.splice(0,3,'# 正式数学证据分类：原813 + 新增839（仅原生）','',
+  '复用原始完整 Check 记录与准确来源，不代表学生掌握或新增方法标签。');
+}
 mkdirSync(out,{recursive:true});
 write('tasks.json',{schema:summary.schema,rows});
 write('types.json',{rows:byType});

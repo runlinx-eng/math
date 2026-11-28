@@ -45,9 +45,10 @@ const issue341Formal=JSON.parse(readFileSync(new URL('../docs/spatial-learning/e
  .tasks.filter(row=>row.adapter.startsWith('issue341-'))
  .map(row=>'native:'+row.sessionId+':'+row.index);
 assert.equal(issue341Formal.length,949);
-const path=name=>new URL('../verification/learning-evidence-audit/'+name,import.meta.url);
+const current=process.env.MATH_EVIDENCE_AUDIT_MODE==='current';
+const path=name=>new URL('../verification/'+(current?'current-learning-evidence-audit/':'learning-evidence-audit/')+name,import.meta.url);
 const read=name=>JSON.parse(readFileSync(path(name),'utf8'));
-const run=()=>execFileSync(process.execPath,['scripts/audit-learning-evidence.mjs'],{cwd:root,timeout:120000,encoding:'utf8'});
+const run=()=>execFileSync(process.execPath,['scripts/audit-learning-evidence.mjs',...(current?['--current']:[])],{cwd:root,timeout:120000,encoding:'utf8'});
 test('full native and bridge coverage, mutually exclusive stable task IDs',()=>{
  const output=run();
  assert.match(output,/LEARNING_EVIDENCE_AUDIT /);
@@ -197,7 +198,7 @@ test('same type never implies replay evidence or cross-course thinking attributi
     ...[13,14].map(i=>'native:fractionfour:'+i),
     ...Object.entries({onesbridge:[0,1],tensmove:[3],decadetake:[2],twodigitpair:[0,1],flexhundred:[0,1],oneslarge:[3],tenslarge:[2,3],showwhy:[0,2],fourparts:[2],buildthousand:[0,1,2],columnthree:[1,3],flexthousand:[2,4],columnfour:[1,3],columnlarge:[1,3,4]})
       .flatMap(([id,indices])=>indices.map(i=>'native:'+id+':'+i)),
-    ...issue341Formal
+    ...(current?[]:issue341Formal)
  ].sort((x,y)=>x.localeCompare(y,'en'));
  const guided=[...exact].sort((x,y)=>x.localeCompare(y,'en'));
  assert.deepEqual(a.map(r=>r.id),exact,'only the original 813 plus 949 exact-source native approvals reach formal A');
@@ -220,9 +221,10 @@ test('same type never implies replay evidence or cross-course thinking attributi
    [id,a.filter(r=>r.evidenceAdapter===id).length])),{compare:11,vessels:3,cupfill:4,timecompare:6,'clock-setting':3,ratiopair:13,ratioshare:6,ratioshape:5,ratiosteps:5,pctchange:3,fractionparts:3,rationotation:2,compoundunits:3,unitconversions:3,proportionalsteps:2,'unitrate-steps':2,'estimate-steps':2,proportionalgraph:2,plot:11,sequence:16,array:49,line:10,counterexample:2,fraction:13,unitwalk:18,place:35,'place-removal':2,groupwalk:6,route:15,'fraction-order':20,groups:29,transform:23,angle:23,joinstory:41,estimate:24,portiongroups:13,'fraction-operations':10,fractioncase:38,division:21,'samefraction':8,storyledger:8,fdpboard:15,scalechain:10,mixedaxis:8,decimalengine:6,fracshare:5,mixedtrade:3,fracdecompose:3,paperlab:12,wideshift:26,'wideshift-add':4,pvbench:11,'pv-saved':4,'positive-order':3,'signed-order':1,'time-unit-parts':7,'time-identity-cards':3,'week-day-cards':1,'time-order':5,'time-parts':5,'time-roman':1,'time-stopwatch':3,'time-steps':6,'area-edge':6,'directed-jump':8,'calendar-interval':2,'calendar-date-reading':2,'unit-tile-area':2,'area-partition':6,'area-design':1,'area-compare':4,'area-pieces':4,'area-stadium':1,'area-openbox':1,order:17,'money-coins':15,'money-cart':13,cubefraction:6,multable:10,unitcover:6,unitrefine:3,ruler:16,'balance-compare':4,'balance-weigh':2,'scale-analog':7,'scale-digital':1,'convert-exact':15,'convert-given-approximation':6});
  const levels=Object.fromEntries(Object.entries(read('summary.json').evidenceLevelsNative)
   .map(([level,s])=>[level,s.tasks]));
- assert.equal(levels.A,1762);
+ assert.equal(levels.A,current?813:1762);
+ if(current){assert.equal(read('summary.json').historicalOriginalChecksReplayed,0);assert.equal(read('summary.json').historicalFormalAdmissions,949);}
  assert.equal(Object.values(levels).reduce((n,v)=>n+v,0),1996);
- assert.equal(a.filter(row=>row.evidenceAdapter?.startsWith('issue341-')).length,949);
+ assert.equal(a.filter(row=>row.evidenceAdapter?.startsWith('issue341-')).length,current?0:949);
  assert.deepEqual(rows.filter(r=>r.replayVerified).map(r=>r.id),exact,
    'a shared type or mere history must not become strict process evidence');
  assert.deepEqual(rows.filter(r=>r.optionalThinkingGuide).map(r=>r.id),guided,
