@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer,describeWorkbenchCurriculum,syncWorkbenchLocation} from '../dist/learning/workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer,describeWorkbenchCurriculum,syncWorkbenchLocation,studyActionFocusForWorkbench} from '../dist/learning/workbench-presentation.js';
 const source=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('B: four visual beats map existing stages without making a new gate',()=>{
  assert.deepEqual(WORKBENCH_BEATS.map(x=>x.id),['read','try','check','record']);
@@ -129,4 +129,28 @@ test('B: location follows the actual session and task, rejecting stale and unava
  await syncWorkbenchLocation(doc,{...native,index:2},()=>{throw Error('unneeded metadata reload');});
  assert.equal(status.textContent,'任务 3 / 3 · 三项已完成');
  assert.equal(syncWorkbenchLocation({getElementById:()=>null},native,()=>{throw Error('standalone should not load');}),undefined);
+});
+
+test('V54 readiness overlays the original shared action controller, without answer checks',()=>{
+ const cases=[
+  [{type:'x-net'},{fold:0,runs:[]},{fold:100,runs:[{guess:true}]}],
+  [{type:'x-fracdecompose',required:[[8,8,1]]},{board:{saved:[]}},{board:{saved:[{parts:[1,16]}]}}],
+  [{type:'x-rulejump',inputs:[1,50],a:4,b:-1},{board:{rule:[4,3,1],records:[{n:50,result:'203'}]}},{board:{rule:[4,3,1],records:[{n:50,result:'203'},{n:1,result:'7'}]}}],
+  [{type:'x-g27-net',rotate:true},{board:{parts:[0,1,2,3],fold:100,prediction:'no',turned:false}},{board:{parts:[0,1,2,3],fold:100,prediction:'no',turned:true}}]
+ ];
+ for(const [task,incomplete,complete] of cases){
+  for(const model of [incomplete,complete]){
+   const context={task,model,stage:'explore'},before=structuredClone(context);
+   assert.deepEqual(studyActionFocusForWorkbench(context),studyActionFocus(context));
+   assert.deepEqual(studyActionFocusForWorkbench({...context,v54:false}),studyActionFocus(context));
+   assert.equal(studyActionFocusForWorkbench({...context,v54:true}).readyToCheck,model===complete);
+   assert.deepEqual(context,before);
+  }
+ }
+ const oldGate={task:{type:'x-g27-net',rotate:true},model:{board:{parts:[0],fold:0,prediction:null,turned:false}}};
+ assert.deepEqual(studyActionFocusForWorkbench({...oldGate,v54:true}),studyActionFocus(oldGate));
+ const unknown={task:{type:'equivalent'},model:{rows:[]}};
+ assert.deepEqual(studyActionFocusForWorkbench({...unknown,v54:true}),studyActionFocus(unknown));
+ for(const stage of ['passed','reflect'])
+  assert.deepEqual(studyActionFocusForWorkbench({stage,v54:true}),studyActionFocus({stage}));
 });

@@ -185,26 +185,10 @@ const waiting=(cue,selector=null)=>selector
  :{kind:'work',readyToCheck:false,cue};
 // Only the task's own model can establish that a prediction, experiment,
 // construction or argument was attempted. Empty text is never an accepted proof.
-export function studyActionFocus({stage='explore',task=null,model=null,p03Ready=true,v54=false}={}){
+export function studyActionFocus({stage='explore',task=null,model=null,p03Ready=true}={}){
  if(stage==='passed'||stage==='reflect')return {kind:'continue',readyToCheck:true,cue:null};
  if(!p03Ready)return {kind:'check',readyToCheck:false,cue:null};
  const type=task?.type,board=model?.board;
- // V54 only: readiness is the number/presence of original work events,
- // never the expected answer, correct groups, rule coefficients or result.
- // Unknown or correctness-entangled tasks keep their existing Check path.
- if(v54&&type==='x-net'&&Array.isArray(model?.runs)){
-  if(model.fold!==100||model.runs.length===0)
-   return waiting('先留下猜想，再把纸片合起来试一次。');
- }
- if(v54&&type==='x-fracdecompose'&&Array.isArray(board?.saved)){
-  const total=task.count||task.required?.length||1;
-  if(board.saved.length<total)return waiting('已留下 '+board.saved.length+'/'+total+' 种分法；再完成剩下的分法。','[data-x="b18-save"]');
- }
- if(v54&&type==='x-rulejump'&&Array.isArray(board?.records)&&Array.isArray(task.inputs)){
-  if(!board.rule)return waiting('先搭一条可以运行的规则。','[data-x="b17-rule"]');
-  const done=task.inputs.filter(n=>board.records.some(r=>r.n===n)).length;
-  if(done<task.inputs.length)return waiting('已记录 '+done+'/'+task.inputs.length+' 个位置；把其余位置也试一遍。','[data-x="b17-run"]');
- }
  if(type==='x-wideshift'){
   if(model?.committed===null)return waiting('先写下猜想，用教具内的按钮确认。','[data-x="wide-predict"]');
   const moves=task.mode==='add'?model?.moves:model?.trace;
@@ -231,7 +215,6 @@ export function studyActionFocus({stage='explore',task=null,model=null,p03Ready=
   if(board.parts.length<4)return waiting('先接上展开图需要的纸片。');
   if(board.prediction===null)return waiting('纸片已接好。选择是否能够折成盒子的猜想。');
   if(board.fold<100)return waiting('慢慢折合，或使用教具内的「直接折合」按钮。','[data-x="g27-fold"]');
-  if(v54&&task.rotate&&!board.turned)return waiting('再转一转，观察合起来的盒子。','[data-x="turn-extra"]');
  }
  if(['x-g27-sort','x-g27-face'].includes(type)&&Array.isArray(board?.choices)&&board.choices.every(v=>v===null))
   return waiting('先观察模型，选择它的性质；有需要时转动或点亮表面。');

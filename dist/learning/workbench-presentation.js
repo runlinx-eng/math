@@ -1,3 +1,5 @@
+import {studyActionFocus} from './workspace-flow.js';
+
 // B1: a visual rhythm derived solely from the validated existing stage.
  // Reading is always available; exploration can start immediately. No new
  // stage, model field, completion requirement or fabricated "read" event.
@@ -11,6 +13,36 @@ export function workbenchBeat(stage='explore'){
   if(stage==='reflect')return 'record';
   if(['revise','recheck','passed'].includes(stage))return 'check';
   return 'try';
+}
+
+// V54 readiness is an overlay on the frozen shared action controller.
+// Standalone/V53 and every existing shared gate keep their original behavior.
+const waiting=(cue,selector=null)=>selector
+ ?{kind:'widget',selector,readyToCheck:false,cue}
+ :{kind:'work',readyToCheck:false,cue};
+export function studyActionFocusForWorkbench({v54=false,...context}={}){
+ const focus=studyActionFocus(context);
+ if(!v54||!focus.readyToCheck||focus.kind==='continue')return focus;
+ const {task,model}=context,type=task?.type,board=model?.board;
+ // V54 only: readiness is the number/presence of original work events,
+ // never the expected answer, correct groups, rule coefficients or result.
+ // Unknown or correctness-entangled tasks keep their existing Check path.
+ if(type==='x-net'&&Array.isArray(model?.runs)){
+  if(model.fold!==100||model.runs.length===0)
+   return waiting('先留下猜想，再把纸片合起来试一次。');
+ }
+ if(type==='x-fracdecompose'&&Array.isArray(board?.saved)){
+  const total=task.count||task.required?.length||1;
+  if(board.saved.length<total)return waiting('已留下 '+board.saved.length+'/'+total+' 种分法；再完成剩下的分法。','[data-x="b18-save"]');
+ }
+ if(type==='x-rulejump'&&Array.isArray(board?.records)&&Array.isArray(task.inputs)){
+  if(!board.rule)return waiting('先搭一条可以运行的规则。','[data-x="b17-rule"]');
+  const done=task.inputs.filter(n=>board.records.some(r=>r.n===n)).length;
+  if(done<task.inputs.length)return waiting('已记录 '+done+'/'+task.inputs.length+' 个位置；把其余位置也试一遍。','[data-x="b17-run"]');
+ }
+ if(type==='x-g27-net'&&Array.isArray(board?.parts)&&task.rotate&&!board.turned)
+  return waiting('再转一转，观察合起来的盒子。','[data-x="turn-extra"]');
+ return focus;
 }
 
  // B1: mount once, before rendering. Move original containers, never clone a

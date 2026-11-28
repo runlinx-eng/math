@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261128-v54-learning-shell-readiness4');
+registerClientRelease('math-explorer-20261128-v54-learning-shell-readiness4-isolated');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -33,8 +33,8 @@ import {thinkingFeedback,thinkingGuide} from './thinking-feedback.js';
 import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSession}
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
-import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle,studyActionFocus} from './workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll,syncWorkbenchLocation} from './workbench-presentation.js';
+import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle} from './workspace-flow.js';
+import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll,syncWorkbenchLocation,studyActionFocusForWorkbench} from './workbench-presentation.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // The fixed shell belongs to the native network learning frame only.
 if(parent!==window){
@@ -210,7 +210,7 @@ function continuationDestination(){
 const v54Workbench=()=>document.body.dataset.workbenchHeader==='parent';
 function renderTaskActions(checked=currentSubmission(a)){
  const stage=learningStage(a,checked),p03=isP03();
-  const focus=studyActionFocus({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready,v54:v54Workbench()});
+  const focus=studyActionFocusForWorkbench({stage,task:task(),model:model(),p03Ready:!p03||p03Stage(task(),model()).ready,v54:v54Workbench()});
  const plan=learningActionPlan({
    stage,hasNextTask:a.index<sessionTasks(id).length-1,p03,
    readyToCheck:focus.readyToCheck
@@ -260,7 +260,7 @@ function syncLearningRegions(){
  $('#learning-next .learning-region-title').textContent=stage==='reflect'?'想再看看（可选）':stage==='explore'?'其他探索（可选）':'发现与继续';
  $('#check-title').textContent='检查与反馈';
  const activeTask=a.view==='summary'?null:task();
- const focus=studyActionFocus({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,v54:v54Workbench()});
+ const focus=studyActionFocusForWorkbench({stage,task:activeTask,model:stage==='reflect'?null:model(),p03Ready:stage==='reflect'||!isP03()||p03Stage(activeTask,model()).ready,v54:v54Workbench()});
  $('#work').querySelectorAll('[data-study-primary]').forEach(el=>{el.classList.remove('study-primary','primary');el.removeAttribute('data-study-primary');});
  $('#work').querySelectorAll('[data-study-local]').forEach(el=>el.removeAttribute('data-study-local'));
  const widgetAction=focus.selector?$('#work').querySelector(focus.selector):null;
