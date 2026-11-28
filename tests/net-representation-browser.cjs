@@ -101,13 +101,32 @@ async function main(){
  }
  await open('nets');for(let i=0;i<3;i++)await net('nets',i);
  await open('foldprism');await net('foldprism',0);
- // B27 triangular-prism interaction is unchanged; confirm it still supports
- // a missing-piece prediction, actual folding, correction and rotation.
+ // The original workspace-flow gate requires all four pieces before
+ // Check, even when an incomplete paper has been folded. Prove that lock
+ // rather than attempting an impossible user submission.
  label='foldprism:1';let t=sessionTasks('foldprism')[1];assert.equal(t.type,'x-g27-net');
  await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();
- assert.equal((await model('foldprism',1)).board.fold,100);
- await check('foldprism',1,false);
+ const incomplete=await model('foldprism',1);
+ assert.equal(incomplete.board.fold,100);assert.equal(incomplete.board.parts.length,0);
+ assert.ok(validModel(t,incomplete));assert.equal(inspect(t,incomplete).correct,false);
+ ok(await action('check').isDisabled(),'incomplete prism is locked by the original process gate');
+ const lockedRecord=await record('foldprism');
+ await action('check').evaluate(el=>el.click());
+ assert.deepEqual(await record('foldprism'),lockedRecord,'disabled native Check does not submit or change stored work');
+ await shot('prism-incomplete-locked',{parts:incomplete.board.parts,fold:incomplete.board.fold,locked:true,attempts:lockedRecord.cases[1]?.attempts?.length||0});
+ await reload('foldprism',1);
+ ok(await action('check').isDisabled(),'original lock survives reload');
  await x('g27-unfold').click();for(let i=0;i<4;i++)await x('g27-piece','[data-index="'+i+'"]').click();
+ // With a complete piece set, an incorrect prediction remains a genuine
+ // Check failure, not a new correctness gate.
+ await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();await x('turn-extra').click();
+ const wrong=await model('foldprism',1);
+ assert.equal(wrong.board.parts.length,4);assert.equal(wrong.board.prediction,'no');assert.equal(wrong.board.turned,true);assert.equal(wrong.board.fold,100);
+ ok(await action('check').isEnabled(),'complete construction with wrong prediction can reach Check');
+ await check('foldprism',1,false);
+ await shot('prism-wrong-prediction',{parts:wrong.board.parts,fold:wrong.board.fold,prediction:wrong.board.prediction,attempts:(await record('foldprism')).cases[1].attempts.length});
+ await reload('foldprism',1);
+ await x('g27-unfold').click();
  await x('g27-predict','[data-index="yes"]').click();await x('g27-fold').click();await x('turn-extra').click();
  const prism=await model('foldprism',1);assert.equal(prism.board.parts.length,4);assert.equal(prism.board.fold,100);assert.equal(prism.board.turned,true);
  await check('foldprism',1,true);await shot('prism-regression',{parts:prism.board.parts,fold:prism.board.fold,turned:prism.board.turned});
