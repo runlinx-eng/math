@@ -176,6 +176,7 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
        await verifyV54EntryLayout(browser);
        await verifyV54QuietExploration(browser);
        await verifyV54MacJoint(browser);
+       await verifyV54ShellContracts(browser);
      }
    }finally{await browser.close();}
  }
@@ -718,4 +719,140 @@ async function verifyV54MacJoint(browser){
  }catch(e){result.failure=e.stack;if(currentStep)currentStep.failure=e.stack;await shot('failure').catch(()=>{});throw e;}
  finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');await ctx.close();}
  console.log(JSON.stringify({v54MacJoint:{testedCheckoutSha:result.testedCheckoutSha,passed:result.passed,steps:result.steps.map(s=>({number:s.number,issues:s.issues,passed:s.passed})),errors:result.errors}}));
+}
+
+
+// #377: baseline learner-action contracts for the three user-observed topics.
+// Run on the original product first; never seed or rewrite learner state.
+// The same tests survive the shell changes (only actual navigation selectors
+// may follow a deliberate presentation change). Visual gates are separate.
+async function verifyV54ShellContracts(browser){
+ const assert=require('node:assert/strict');
+ const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ const dir=path.resolve('verification/v54-shell-contracts');
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'three native learner-action contracts; no storage seeding, no new grading or visual gates',rows:[]};
+ const topics=[['foldprism','mt_REwgr0d_ss'],['splitfraction','mt_VgOePicFYK'],['nth35','mt_HRKzwEQJgO']];
+ try{
+  for(const viewport of [{width:1280,height:720},{width:1440,height:900}]){
+   for(const [session,topic] of topics){
+    const row={session,viewport,passed:false,errors:[],checks:[]};
+    result.rows.push(row);
+    const ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage();
+    page.on('pageerror',e=>row.errors.push(e.message));
+    const frame=page.frameLocator('#journey-frame');
+    const x=(action,attrs='')=>frame.locator('[data-x="'+action+'"]'+attrs);
+    const field=key=>frame.locator('[data-xfield="'+key+'"]');
+    const action=name=>frame.locator('#actions [data-do="'+name+'"]');
+    const shot=name=>page.screenshot({path:path.join(dir,viewport.width+'x'+viewport.height+'-'+session+'-'+name+'.png')});
+    const record=()=>page.evaluate(id=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons[id],session);
+    const model=async()=>{const r=await record();return r.models[r.index];};
+    const attempts=async()=>{const r=await record();return r.cases?.[r.index]?.attempts||[];};
+    const stage=expected=>page.waitForFunction(s=>document.querySelector('#journey-frame')?.contentDocument?.querySelector('#scene')?.dataset.stage===s,expected,{timeout:15000});
+    const ready=(index=0)=>page.waitForFunction(({session,index})=>{
+     const w=document.querySelector('#journey-frame')?.contentWindow,s=w?.mathLesson?.snapshot();
+     return window.mathSpace?.snapshot()?.networkVersion===54&&document.body.dataset.workbenchForeground==='learn'&&s?.id===session&&s.index===index&&w.document.body.dataset.workbenchLayout==='compact-v54'&&w.document.getElementById('storage-warning')?.hidden;
+    },{session,index},{timeout:60000});
+    const check=async(expected)=>{
+     const before=await attempts();assert.ok(await action('check').isEnabled(),'original Check gate must permit this submission');
+     await action('check').click();await stage(expected);
+     const after=await attempts();assert.equal(after.length,before.length+1,'one Check creates one attempt');
+     assert.deepEqual(after.slice(0,-1),before,'previous attempts unchanged');
+     if(expected==='passed')assert.ok(await action('next').isEnabled());
+     else assert.equal(await action('next').count(),0,'failed check cannot advance');
+     row.checks.push({index:(await record()).index,stage:expected,attempts:after.length});
+    };
+    const pauseRestore=async()=>{
+     const before=await record();
+     await frame.locator('body').evaluate(el=>{el.ownerDocument.defaultView.__shellContractToken='same-lesson';});
+     await page.locator('#workbench-later').click();
+     await page.waitForFunction(()=>mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
+     await page.locator('[data-action="nav-learn"]').click();await ready(before.index);
+     assert.equal(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__shellContractToken),'same-lesson');
+     const after=await record();
+     assert.deepEqual(after.models,before.models,'pause restores the actual work');
+     assert.deepEqual(after.cases,before.cases,'pause does not fabricate attempts or support');
+     row.checks.push({index:after.index,pausedAndRestored:true});
+    };
+    const next=async(index)=>{
+     await action('next').click();await ready(index);assert.equal((await record()).index,index);
+    };
+    try{
+     await page.goto(base+'/index.html?world=network&layout=54&surface=learn#space/node/'+topic);
+     await ready();await stage('explore');assert.equal((await attempts()).length,0);await shot('initial');
+     if(session==='foldprism'){
+      // B02 preset: six cells in two rows, an invalid cube net.
+      assert.equal((await model()).cells.length,6);
+      assert.ok(await x('fold').isDisabled(),'fold requires a prediction');
+      await field('why').fill('先试一下六张纸');
+      await x('guess','[data-value="true"]').click();await x('fold').click();
+      assert.equal((await model()).runs.at(-1).why,'先试一下六张纸','optional pre-fold text stays in run snapshot');
+      assert.equal((await attempts()).length,0,'fold is not Check');
+      await check('revise');await shot('wrong-prediction');
+      await x('unfold').click();await x('guess','[data-value="false"]').click();await x('fold').click();
+      await field('reason').selectOption('overlap');
+      const m=await model();assert.equal(m.runs.length,2);assert.equal(m.runs[0].guess,true);assert.equal(m.runs[1].guess,false);
+      await check('passed');await shot('cube-net-passed');await next(1);
+      // B27: connect the remaining four faces, predict, fold, then turn.
+      assert.ok(await action('check').isDisabled(),'existing prism construction gate');
+      for(let i=0;i<4;i++)await x('g27-piece','[data-index="'+i+'"]').click();
+      assert.deepEqual((await model()).board.parts,[0,1,2,3]);
+      await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();
+      assert.equal((await model()).board.fold,100);assert.equal((await attempts()).length,0);
+      await check('revise');
+      await x('g27-unfold').click();await x('g27-predict','[data-index="yes"]').click();await x('g27-fold').click();
+      assert.equal((await model()).board.turned,false);
+      await check('revise');await x('turn-extra').click();
+      assert.equal((await model()).board.turned,true);
+      assert.equal((await model()).board.attempts.length,2,'both fold observations retained');
+      await check('passed');await shot('prism-passed');await next(2);
+     }else if(session==='splitfraction'){
+      const cut=i=>x('b18-cut','[data-index="'+i+'"]').click();
+      const save=async equation=>{await field('equation').fill(equation);await x('b18-save').click();};
+      await cut(1);await cut(2);await save('3/8=1/8+1/8+1/8');
+      assert.equal((await model()).board.saved.length,1);
+      await save('3/8=1/8+1/8+1/8');assert.equal((await model()).board.saved.length,1,'duplicate group does not count');
+      await save('3/8=1/8+1/8+2/8');assert.equal((await model()).board.saved.length,1,'invalid equality does not count');
+      assert.equal((await attempts()).length,0);await pauseRestore();await check('revise');await shot('one-group');
+      await x('b18-new-groups').click();assert.equal((await model()).board.saved.length,1,'new grouping preserves saved work');
+      await cut(1);await save('3/8=1/8+2/8');
+      assert.equal((await model()).board.saved.length,2);
+      await x('b18-new-groups').click();await cut(2);await save('3/8=2/8+1/8');
+      assert.equal((await model()).board.saved.length,2,'reversed groups are not a third decomposition');
+      assert.equal((await attempts()).length,1,'process actions are not further submissions');
+      await check('passed');await shot('two-groups-passed');await next(1);
+     }else{
+      const inputs=[1,2,3,50,100];
+      const rule=async offset=>{await field('multiplier').fill('4');await field('offset').fill(String(offset));await field('divisor').fill('1');await x('b17-rule').click();};
+      const run=async(n,answer)=>{await field('n').selectOption(String(n));await field('answer').fill(String(answer));await x('b17-run').click();};
+      await rule(3);
+      for(const n of inputs)await run(n,4*n+3);
+      assert.equal((await model()).board.records.length,5,'a wrong but executable rule can make records');
+      assert.equal((await attempts()).length,0);await check('revise');await shot('wrong-rule');
+      const history=(await model()).history;
+      await rule(-1);assert.equal((await model()).board.records.length,0);
+      assert.deepEqual((await model()).history.slice(0,history.length),history,'rebuilding a rule retains history');
+      await run(50,199);await run(100,399);await run(50,199);
+      assert.equal((await model()).board.records.length,2,'same input replaces its record');
+      await run(1,4);assert.equal((await model()).board.records.length,2,'incorrect execution is not recorded');
+      await pauseRestore();await check('revise');await shot('only-distant-positions');
+      for(const n of [1,2,3])await run(n,4*n-1);
+      assert.deepEqual((await model()).board.records.map(r=>r.n).sort((a,b)=>a-b),inputs);
+      assert.deepEqual((await model()).board.rule,[4,-1,1]);await check('passed');
+      await field('offset').fill('3');await stage('recheck');
+      assert.equal(await action('next').count(),0,'editing the passed work revokes Next');
+      await field('offset').fill('-1');await stage('passed');
+      await shot('five-positions-passed');await next(1);
+     }
+     assert.deepEqual(row.errors,[]);row.passed=true;
+    }catch(error){row.failure=error.stack;await shot('failure').catch(()=>{});}
+    finally{await ctx.close();}
+   }
+  }
+  result.passed=result.rows.length===6&&result.rows.every(r=>r.passed);
+  assert.ok(result.passed,'three native contracts at two viewport sizes: '+JSON.stringify(result.rows.filter(r=>!r.passed).map(r=>({session:r.session,viewport:r.viewport,failure:r.failure}))));
+ }finally{
+  fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');
+ }
+ console.log(JSON.stringify({v54ShellContracts:{testedCheckoutSha:result.testedCheckoutSha,passed:result.passed,rows:result.rows.map(r=>({session:r.session,viewport:r.viewport,passed:r.passed}))}}));
 }

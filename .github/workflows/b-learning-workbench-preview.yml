@@ -67,4 +67,5 @@ jobs:
             verification/v54-entry-layout
             verification/v54-quiet-exploration
             verification/v54-mac-joint
+            verification/v54-shell-contracts
           if-no-files-found: warn
