@@ -17,6 +17,13 @@ const manifest=JSON.parse(readFileSync(new URL('../docs/spatial-learning/evidenc
 const rows=ISSUE341_FORMAL_MANIFEST.tasks,route=createIssue341ManifestGatedRouting(ISSUE341_FORMAL_MANIFEST);
 const key=(id,index)=>id+':'+index;
 const rowByKey=new Map(rows.map(r=>[key(r.sessionId,r.index),r]));
+// Independently observed from the initial #401 actual CI run on the unchanged
+// formal main product, not regenerated from the implementation under test.
+const positiveBaseline=JSON.parse(readFileSync(new URL('./fixtures/current-formal-evidence-positive-baseline.json',import.meta.url)));
+assert.equal(positiveBaseline.schema,'math-current-example-positive-baseline/1');
+assert.equal(positiveBaseline.positions.length,841);
+assert.equal(new Set(positiveBaseline.positions).size,841);
+assert.ok(positiveBaseline.positions.every(id=>rowByKey.has(id)));
 test('all949 current native sources, fingerprints, graders and Check freshness remain exact',()=>{
  assert.equal(rows.length,949);assert.equal(route.approvedFamilies,284);
  assert.deepEqual(manifest.tasks.filter(r=>r.adapter.startsWith('issue341-')),rows);
@@ -57,7 +64,9 @@ test('all949 current native sources, fingerprints, graders and Check freshness r
  // The B06 count-trail examples are deliberately required positive proofs.
  // Some other contracts require particular wrong-to-correct actions beyond
  // exampleModel. Their original evidence must not be invented or claimed.
- for(const id of ['countonce:0','lastcount:0','lastcount:1','lastcount:2'])assert.ok(positives.includes(id),id+' current strict positive proof');
+ const positiveSet=new Set(positives);
+ for(const id of positiveBaseline.positions)assert.ok(positiveSet.has(id),id+' previously verified current strict positive proof disappeared');
+ for(const id of ['countonce:0','lastcount:0','lastcount:1','lastcount:2'])assert.ok(positiveSet.has(id),id+' current strict positive proof');
  assert.equal(examples.length,949);
  console.log('CURRENT_FORMAL_REGRESSION '+JSON.stringify({scope:'current model and actual in-memory Check',sources:rows.length,examples:examples.length,wrongChecks:wrong.length,currentPositiveProofs:positives.length,positivePositions:positives,historicalOriginalChecksReplayed:0}));
 });

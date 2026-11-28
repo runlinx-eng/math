@@ -14,7 +14,16 @@ let browser,context,page;
  page=await context.newPage();page.setDefaultTimeout(20000);
  page.on('pageerror',e=>errors.push(String(e)));context.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith(base))remote.push(r.url());});
  await page.goto(base+'learn.html#countonce');
- const wait=()=>page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='countonce'&&document.querySelector('#storage-warning')?.hidden===true,null,{timeout:60000});
+ // Opening the task is synchronous after the main runtime loads, but its
+ // exact-source feedback registry is loaded asynchronously. Wait for the
+ // native guide (not for the feedback under test) on every reload, so a
+ // negative feedback assertion cannot pass just because the route is absent.
+ const wait=async()=>{
+  await page.waitForFunction(()=>window.mathLesson?.snapshot()?.id==='countonce'&&document.querySelector('#storage-warning')?.hidden===true,null,{timeout:60000});
+  const guide=page.locator('#thinking-guide');
+  await guide.waitFor({state:'attached',timeout:60000});
+  assert.match(await guide.textContent(),/哪些记录能帮助你核对这次结果/);
+ };
  await wait();
  const x=(name,i)=>page.locator('[data-x="'+name+'"]'+(i===undefined?'':'[data-index="'+i+'"]'));
  const field=key=>page.locator('[data-xfield="'+key+'"]');
@@ -27,6 +36,12 @@ let browser,context,page;
  await field('total').fill('7');await submit();
  ok(await feedback.count()===0,'duplicate counting does not earn strict evidence');
  const wrong=await record();
+ const verdict=await page.evaluate(async value=>{
+  const {sessionTaskFor}=await import('./learning/bridges.js');
+  const {inspect}=await import('./learning/tasks.js');
+  return inspect(sessionTaskFor('countonce',0),value).correct;
+ },wrong.cases[0].attempts.at(-1).value);
+ assert.equal(verdict,false,'first native Check really was incorrect');
  await x('count-reset').click();for(const i of [0,1,2,3,4,5,6])await x('count-tap',i).click();
  await field('total').fill('7');await submit();
  ok(await feedback.isVisible(),'correct current source has strict submitted feedback');
@@ -34,9 +49,14 @@ let browser,context,page;
  const correct=await record();assert.deepEqual(correct.cases[0].attempts.slice(0,1),wrong.cases[0].attempts);
  assert.equal(correct.cases[0].attempts.length,2);
  await page.screenshot({path:path.join(out,'correct-current-source.png'),fullPage:true});
- await page.reload();await wait();ok(await feedback.isVisible(),'correct evidence survives real reload');
+ const reload=async before=>{
+  await page.reload();await wait();
+  const after=await record();
+  for(const k of ['models','cases','notes','draft'])assert.deepEqual(after[k],before[k],'reload preserves '+k);
+ };
+ await reload(correct);ok(await feedback.isVisible(),'correct evidence survives real reload');
  await field('total').fill('6');ok(await feedback.count()===0,'unsubmitted edit removes current feedback');
- await page.reload();await wait();ok(await feedback.count()===0,'reload cannot revive stale evidence');
+ await reload(await record());ok(await feedback.count()===0,'reload cannot revive stale evidence');
  await submit();ok(await feedback.count()===0,'wrong new Check remains unverified');
  await field('total').fill('7');await submit();ok(await feedback.isVisible(),'fresh corrected Check restores evidence');
  const after=await record();assert.deepEqual(after.cases[0].attempts.slice(0,2),correct.cases[0].attempts);
