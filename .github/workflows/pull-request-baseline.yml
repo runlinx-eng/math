@@ -671,6 +671,14 @@ jobs:
           path: verification/issue341-isolated-integration/
           if-no-files-found: error
           retention-days: 90
+      - name: Preserve B06 real counting UX baseline evidence
+        if: ${{ success() && matrix.script == 'tests/b06-counttrail-browser.cjs' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: b06-counttrail-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: verification/b06-counttrail/
+          if-no-files-found: error
+          retention-days: 30
       - name: Save full family evidence only for investigation on failure
         if: failure()
         uses: actions/upload-artifact@v4
