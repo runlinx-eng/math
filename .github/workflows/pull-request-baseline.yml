@@ -630,6 +630,30 @@ jobs:
           path: verification/current-formal-evidence/
           if-no-files-found: error
           retention-days: 30
+      - name: Preserve B06 recount interaction review evidence
+        if: ${{ success() && matrix.script == 'tests/b06-recount-order-browser.cjs' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: b06-recount-order-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: verification/b06-recount-order/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Preserve B21 sample feedback and context review evidence
+        if: ${{ success() && matrix.script == 'tests/b21-sample-feedback-browser.cjs' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: b21-sample-feedback-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: verification/b21-sample-feedback/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Preserve net representation and prediction review evidence
+        if: ${{ success() && matrix.script == 'tests/net-representation-browser.cjs' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: net-representation-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: verification/net-representation/
+          if-no-files-found: error
+          retention-days: 30
       - name: Save full family evidence only for investigation on failure
         if: failure()
         uses: actions/upload-artifact@v4

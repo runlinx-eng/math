@@ -14,7 +14,11 @@ test('the product exposes exactly one 3D relationship panorama with an inline st
   assert.doesNotMatch(html,/id="observation-mode-switch"|id="grade-observation-view"|data-mode="grade"/);
   assert.doesNotMatch(html,/data-action="switch-world"|data-action="switch-layout"|原有空间|切换到旧关系地图/);
   assert.doesNotMatch(space,/function switchWorld\(|function switchLayout\(|action==='switch-world'|action==='switch-layout'/);
-  assert.match(space,/worldLayout='network';const chosenNetworkVersion=RELATIONSHIP_VERSION/);
+  // One live map; the experimental geometry must be explicitly opted into.
+  assert.match(space,/worldLayout='network'/);
+  assert.match(space,/chosenNetworkVersion=canonical\.searchParams\.get\('layout'\)==='54'\?54:RELATIONSHIP_VERSION/);
+  assert.match(space,/if\(chosenNetworkVersion===54\).*buildCylinderSpace.*else space=buildRelationshipSpace\(atlas\)/);
+  assert.equal((html.match(/id="space-canvas"/g)||[]).length,1);
   assert.doesNotMatch(space,/setObservationMode|renderGradeObservation|renderGradePackDetail|revealGradeNode|action==='grade-select'|action==='grade-view-node'/);
   assert.doesNotMatch(css,/grade-observation-view|grade-matrix|observation-mode-switch|grade-pack-toggle/);
 });

@@ -27,6 +27,7 @@ test('theme, group and knowledge point remain distinct user-facing levels',()=>{
 
 test('thinking content is a category, not the learner progress state',()=>{
   assert.match(space,/另有 \$\{thinkingCount\} 个数学思维内容（不在地图上单独显示）/);
+  assert.match(space,/另有 \$\{thinkingCount\} 个数学思维内容（在中央思维轴核）/);
   assert.match(space,/地图知识点 \$\{mapped\} 个 · 数学思维 \$\{extra\} 个/);
   assert.doesNotMatch(space,/学习中 \$\{extra\} 个|个思维节点在学习中/);
 });

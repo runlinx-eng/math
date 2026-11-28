@@ -11,6 +11,12 @@ export function draw(t,seed,n,method){const ps=population(t).filter(p=>method!==
 const populationValue=(t,id)=>t.profile==='exercise'?(id-1<t.N/4?5+(id-1)%4:(id-1)%4):t.profile==='sleep'?6+(id-1)%6:((id-1)%10<3?1:0);
 export const round1=n=>Math.round((n+Number.EPSILON)*10)/10;
 export const sampleValue=(t,r)=>r.values.reduce((s,n)=>s+n,0)/r.n*(t.mode==='proportion'?100:1);
+// Presentation only: the numeric estimate, draw, history and Check contract
+// remain unchanged. The percentage field takes a number, not a fraction.
+export const sampleFormula=t=>t.mode==='proportion'?'步行人数÷本次抽到的总人数×100，得到百分比的数值':'本次记录的总量÷本次抽到的人数，得到每人的平均值';
+export const sampleRecordHint=t=>'使用这一次抽到的记录：'+sampleFormula(t)+'。保留一位小数，不要沿用上一次的结果。';
+const legacySampleIssue='使用这一次抽到的记录：总量÷份数。比例再乘100%，按一位小数记录；不要沿用上一次的结果。';
+export const issueForDisplay=(t,m)=>t.type==='x-samplelab'&&m.issue===legacySampleIssue?sampleRecordHint(t):m.issue;
 function board(t){const c={first:{},cursor:0};switch(t.type){
  case'x-statcentre':return{...c,values:cp(t.values),piles:cp(t.values),order:[],changed:false,started:false,total:null,moves:0};
  case'x-meandistance':return{...c,anchor:null,distances:t.values.map(()=>null)};
@@ -60,7 +66,7 @@ function apply(t,b,e){const{a,f,d}=e,n=k=>number(f[k]),i=number(d.index);let iss
  }
  if(t.type==='x-samplelab'){
   if(a==='draw'&&!b.pending&&b.runs.length<t.runs){const n=t.sizes?.[b.runs.length]||t.n,method=t.methods[Math.min(b.runs.length,t.methods.length-1)];const r=draw(t,b.seed,n,method);b.seed=r.seed;b.pending=r;}
-  if(a==='record'&&b.pending){const target=round1(sampleValue(t,b.pending));if(eq(n('estimate'),target)){b.runs.push({...cp(b.pending),estimate:n('estimate')});b.pending=null;}else fail('使用这一次抽到的记录：总量÷份数。比例再乘100%，按一位小数记录；不要沿用上一次的结果。');}
+  if(a==='record'&&b.pending){const target=round1(sampleValue(t,b.pending));if(eq(n('estimate'),target)){b.runs.push({...cp(b.pending),estimate:n('estimate')});b.pending=null;}else fail(sampleRecordHint(t));}
  }
  if(t.type==='x-estimate'){
   if(a==='expand'&&t.mode==='count'&&b.parts<t.N/t.n){b.parts++;b.total=b.parts*t.k;}

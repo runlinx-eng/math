@@ -42,7 +42,7 @@ test('current composition selects fresh native Check regression, not historical 
   'tests/current-formal-evidence-browser.cjs',
   'tests/p10-learning-continuity-browser.cjs','tests/p9-thinking-feedback-browser.cjs'
  ]);
- for(const file of ['dist/learning/evidence-adapters.js','dist/learning/issue341-candidate-descriptors.js',
+ for(const file of ['dist/learning/learn.js','dist/learning/evidence-adapters.js','dist/learning/issue341-candidate-descriptors.js',
   'dist/learning/issue341-candidate-feedback.js','dist/learning/issue341-isolated-integration.js',
   'dist/learning/issue341-inactive-shared-feedback.js','dist/learning/issue341-formal-source-routing.js',
   'dist/learning/issue341-formal-admissions.js','scripts/audit-learning-evidence.mjs',

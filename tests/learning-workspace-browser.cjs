@@ -13,24 +13,45 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
    const panel=document.querySelector('#journey-surface'),frame=document.querySelector('#journey-frame'),lesson=frame?.contentDocument?.querySelector('#lesson'),header=panel?.querySelector(':scope > header'),r=panel.getBoundingClientRect();
    const c=(el)=>getComputedStyle(document.querySelector(el)).display;
    const childContentHeight=lesson?Math.ceil(lesson.scrollHeight):null,panelHeaderHeight=header?header.getBoundingClientRect().height:null;
+   const child=frame?.contentDocument,stage=child?.querySelector('#workbench-stage');
+   const shell=child?.body?.dataset.workbenchShell==='fixed';
+   const fixed=!!stage&&frame.contentWindow.getComputedStyle(stage).display==='block';
+   const stageHeight=fixed?stage.clientHeight:null;
+   const expectedHeight=innerHeight-(innerWidth<=1100?186:188);
    return {x:r.x,y:r.y,w:r.width,h:r.height,right:r.right,bottom:r.bottom,viewportW:innerWidth,viewportH:innerHeight,
       frame:frame.getBoundingClientRect().height,topbar:c('.topbar'),rail:c('.tool-rail'),lessonVisible:!panel.hidden,
-      childContentHeight,panelHeaderHeight,expectedHeight:lesson&&header?Math.min(childContentHeight+panelHeaderHeight+2,innerHeight-(innerWidth<=800?(innerWidth<=620?252:210):innerWidth<=1100?186:188)):null};
+      childContentHeight,panelHeaderHeight,shell,fixed,stageHeight,expectedHeight};
  });
- // Wait for the parent panel to reflect the iframe's latest measured content,
- // not merely for the first (possibly stale) ResizeObserver message to arrive.
+ // B1 intentionally uses the available viewport rather than feedback from
+ // the child's own fixed height. Preserve the original desktop/tall/short
+ // scenes and the stable measured bounds check, without a circular equation.
  const waitForMeasuredPanel=()=>page.waitForFunction(()=>{
    const panel=document.querySelector('#journey-surface'),frame=document.querySelector('#journey-frame');
-   const lesson=frame?.contentDocument?.querySelector('#lesson'),header=panel?.querySelector(':scope > header');
-   if(!panel||!lesson||!header||panel.hidden)return false;
-   const sample={panelHeight:panel.getBoundingClientRect().height,contentHeight:Math.ceil(lesson.scrollHeight),headerHeight:header.getBoundingClientRect().height,viewportHeight:innerHeight};
+   const child=frame?.contentDocument,lesson=child?.querySelector('#lesson'),header=panel?.querySelector(':scope > header');
+   if(!panel||!lesson||!header||panel.hidden||child.body.dataset.workbenchShell!=='fixed'||!frame.contentWindow.mathLesson)return false;
+   const sample={panelHeight:panel.getBoundingClientRect().height,frameHeight:frame.getBoundingClientRect().height,headerHeight:header.getBoundingClientRect().height,viewportHeight:innerHeight};
    const key=JSON.stringify(sample);
    if(window.__learningPanelHeightSample===key)window.__learningPanelHeightStableFrames=(window.__learningPanelHeightStableFrames||0)+1;
    else{window.__learningPanelHeightSample=key;window.__learningPanelHeightStableFrames=0;}
-   const reserved=innerWidth<=800?(innerWidth<=620?252:210):innerWidth<=1100?186:188;
-   const expected=Math.min(sample.contentHeight+sample.headerHeight+2,sample.viewportHeight-reserved);
+   const reserved=innerWidth<=1100?186:188;
+   const expected=sample.viewportHeight-reserved;
    return window.__learningPanelHeightStableFrames>=2&&Math.abs(sample.panelHeight-expected)<=3;
  });
+ const fixedGeometry=()=>page.evaluate(()=>{
+   const frame=document.querySelector('#journey-frame'),d=frame.contentDocument,w=frame.contentWindow;
+   const rect=selector=>{const r=d.querySelector(selector).getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height};};
+   const stage=d.querySelector('#workbench-stage'),button=d.querySelector('#actions .primary'),r=button.getBoundingClientRect();
+   const hit=d.elementFromPoint((r.left+r.right)/2,(r.top+r.bottom)/2);
+   const outerReturn=document.querySelector('#journey-surface [data-action="close-journey"]'),o=outerReturn.getBoundingClientRect();
+   const returnHit=document.elementFromPoint((o.left+o.right)/2,(o.top+o.bottom)/2);
+   return {fixed:w.getComputedStyle(stage).display==='block',stage:rect('#workbench-stage'),header:rect('#scene .stage-top'),drawer:rect('#workbench-drawer'),command:rect('#scene .execution-command'),viewport:w.innerHeight,scrollHeight:stage.scrollHeight,clientHeight:stage.clientHeight,scrollTop:stage.scrollTop,outerScroll:w.scrollY,primaryHit:!!hit&&button.contains(hit),returnHit:!!returnHit&&outerReturn.contains(returnHit)};
+ });
+ const assertFixed=async label=>{
+   const g=await fixedGeometry();
+   check(g.fixed&&g.clientHeight>0&&g.header.bottom<=g.stage.top+1&&g.stage.bottom<=g.drawer.top+1&&g.drawer.bottom<=g.command.top+1&&g.command.bottom<=g.viewport+1,label+' fixed header, mathematical stage, drawer and command are separate, visible rows');
+   check(g.primaryHit&&g.returnHit,label+' original primary and outer return are real hit targets');
+   return g;
+ };
  try{
   await page.goto(base);
   await page.waitForFunction(()=>window.mathSpace&&mathSpace.snapshot().selected==='node:mt_6_O6THdEDK');
@@ -51,10 +72,11 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   check(near(opened.cameraZoom,before.cameraZoom),'the lesson does not change the map camera zoom');
   check(opened.position.every((v,i)=>near(v,before.position[i]))&&opened.target.every((v,i)=>near(v,before.target[i])),'opening lesson preserves map camera pose');
   check(surface.lessonVisible&&surface.x>=0&&surface.y>=0&&surface.right<=surface.viewportW&&surface.bottom<=surface.viewportH,'learning surface fully fits the desktop viewport');
-  check(surface.h<=surface.viewportH-188&&surface.h>=250&&surface.frame>100,'lesson height follows content without hiding the 3D navigation');
+  check(surface.shell&&surface.fixed&&surface.h<=surface.viewportH-188+1&&surface.h>=250&&surface.frame>100,'native workbench fits the safe viewport without hiding the 3D navigation');
   const expected=surface.expectedHeight;
-  check(Math.abs(surface.h-expected)<=3,`panel height matches measured real lesson content, capped by the viewport (actual ${surface.h}px; expected ${expected}px; lesson ${surface.childContentHeight}px; header ${surface.panelHeaderHeight}px; viewport ${surface.viewportH}px)`);
+  check(Math.abs(surface.h-expected)<=3,`panel height matches the available viewport for the fixed workbench (actual ${surface.h}px; expected ${expected}px; lesson ${surface.childContentHeight}px; header ${surface.panelHeaderHeight}px; viewport ${surface.viewportH}px)`);
   check(surface.topbar==='flex'&&surface.rail==='flex','global navigation and spatial camera controls remain available with learning open');
+  const initialFixed=await assertFixed('desktop');
   const original={x:surface.x,y:surface.y,w:surface.w,h:surface.h};
   await page.screenshot({path:path.join(out,'01-stable-learning.png')});
   // More room must expose additional content rather than leaving the panel 820px tall.
@@ -62,7 +84,9 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await waitForMeasuredPanel();
   const tall=await layout();
   check(Math.abs(tall.h-tall.expectedHeight)<=3,
-      `on a tall screen the panel expands to its actual content height, not a fixed 820px (actual ${tall.h}px; expected ${tall.expectedHeight}px)`);
+      `on a tall screen the panel expands to the available viewport, not a fixed 820px (actual ${tall.h}px; expected ${tall.expectedHeight}px)`);
+  const tallFixed=await assertFixed('tall');
+  check(tall.frame>surface.frame&&tallFixed.clientHeight>initialFixed.clientHeight,'more height enlarges the real mathematical stage rather than a blank or clipped outer shell');
   const lastControl=await frame.locator('#actions').evaluate(el=>({
     bottom:el.getBoundingClientRect().bottom,
     viewport:innerHeight,
@@ -109,20 +133,24 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await page.setViewportSize({width:1280,height:620});
   const small=await layout();
   check(small.y>=0&&small.bottom<=620&&small.w<=1280,'compact learning layout remains inside a shorter viewport');
-  // Overflow should scroll INSIDE the frame; the final button must remain reachable.
-  await frame.locator('#lesson').evaluate(()=>window.scrollTo(0,document.scrollingElement.scrollHeight));
+  // Keep the original short viewport case. A fixed stage scrolls inside its
+  // own region; when the child is too small the original document scrolls.
+  await frame.locator('#lesson').evaluate(()=>{const stage=document.querySelector('#workbench-stage');if(stage&&getComputedStyle(stage).display==='block')stage.scrollTop=stage.scrollHeight;else window.scrollTo(0,document.scrollingElement.scrollHeight);});
   const actions=await frame.locator('#actions').evaluate(el=>({
     bottom:el.getBoundingClientRect().bottom,
     view:innerHeight,at:scrollY
   }));
   check(actions.bottom<=actions.view+3,'short viewport can scroll to the complete bottom action area');
-  await frame.locator('#lesson').evaluate(()=>window.scrollTo(0,360));
+  await frame.locator('#lesson').evaluate(()=>{const stage=document.querySelector('#workbench-stage');if(stage&&getComputedStyle(stage).display==='block')stage.scrollTop=360;else window.scrollTo(0,360);});
   const scroll=await frame.locator('#lesson>header').evaluate(el=>({headerTop:el.getBoundingClientRect().top,scrollY:scrollY,viewport:innerHeight}));
-  check(scroll.headerTop>=-1&&scroll.headerTop<80,'lesson return and status header remains visible while content scrolls');
+  check(scroll.headerTop>=-1&&scroll.headerTop<80,'lesson status header remains visible while content scrolls');
+  const outerReturn=await page.locator('#journey-surface [data-action="close-journey"]').evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&el.contains(document.elementFromPoint((r.left+r.right)/2,(r.top+r.bottom)/2));});
+  check(outerReturn,'real outer return is reachable at the existing short viewport');
   await page.screenshot({path:path.join(out,'02-scrolled-learning.png')});
   await page.setViewportSize({width:1440,height:900});
   await waitForMeasuredPanel();
   const reset=await layout();
+  await assertFixed('restored desktop');
   check(near(original.x,reset.x,2)&&near(original.y,reset.y,2)&&near(original.w,reset.w,2)&&near(original.h,reset.h,2),'restoring viewport restores exactly the original activity panel geometry');
   await page.locator('[data-action="close-journey"]').click();
   await page.waitForFunction(()=>!document.body.classList.contains('has-journey'));
@@ -138,5 +166,1071 @@ const checks=[],errors=[],check=(value,label)=>{if(!value)throw Error(label);che
   await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,errors,failed:String(err),childTrial:false},null,2));
   console.error(err.stack);process.exitCode=1;
- }finally{await context.close();await browser.close();}
+ }finally{
+   await context.close();
+   try{
+     // Opt in only from B preview. The historical required-matrix command
+     // still runs its original V53 responsive checks and artifacts unchanged.
+     if(!process.exitCode&&process.env.MATH_V54_LAYOUT_DIAGNOSTICS==='1'){
+       await verifyV54CompactLayout(browser);
+       await verifyV54EntryLayout(browser);
+       await verifyV54QuietExploration(browser);
+       await verifyV54MacJoint(browser);
+       await verifyV54ShellContracts(browser);
+     }
+   }finally{await browser.close();}
+ }
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});
+
+// Mac 02: extend the existing grandfathered responsive workbench suite,
+// not the new fixed-desktop browser entrypoints. The old scenario is
+// unchanged; each opt-in case uses its own real native V54 browser context.
+// Never replace the original #239 1920x1080 checks or change their policy.
+async function verifyV54CompactLayout(browser){
+ const assert=require('node:assert/strict');
+ const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ const dir=path.resolve('verification/v54-workbench-layout');
+ const topic='mt_-c4Ca_nBzX',session='chancefraction';
+ const requiredFields=['kind','prob','answers.0'];
+ fs.mkdirSync(dir,{recursive:true});const result={passed:false,rows:[],testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'opt-in legacy responsive workbench extension; standard 1920x1080 gates unchanged'};
+  try{
+   for(const [width,height,probability] of [[1440,900,true],[1280,720,true],[959,900,false],[960,900,false],[1000,1200,false]]){
+    const viewport={width,height},ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage(),errors=[];
+    page.on('pageerror',e=>errors.push(e.message));
+    const row={viewport,probability,errors,passed:false};result.rows.push(row);
+    const shot=name=>page.screenshot({path:path.join(dir,width+'x'+height+'-'+name+'.png')});
+    try{
+     await page.goto(base+'/index.html?world=network&layout=54&surface=learn#space/node/'+topic);
+     await page.waitForFunction(id=>{
+       const child=document.querySelector('#journey-frame').contentWindow;
+       return window.mathSpace?.snapshot()?.networkVersion===54&&document.body.dataset.workbenchForeground==='learn'&&child.mathLesson?.snapshot()?.id===id&&child.document.body.dataset.workbenchLayout==='compact-v54'&&child.document.querySelector('#workbench-curriculum')?.dataset.state!=='loading'&&child.document.querySelector('#storage-warning')?.hidden;
+     },session,{timeout:60000});
+     const frame=page.frameLocator('#journey-frame');
+     const measure=()=>page.evaluate(fields=>{
+       const panel=document.querySelector('#journey-surface'),frame=document.querySelector('#journey-frame'),doc=frame.contentDocument;
+       const rect=el=>{const {x,y,width,height,right,bottom}=el.getBoundingClientRect();return {x,y,width,height,right,bottom};};
+       const p=rect(panel),f=rect(frame),s=rect(doc.querySelector('#workbench-stage')),work=rect(doc.querySelector('#work')),command=rect(doc.querySelector('.execution-command')),drawer=rect(doc.querySelector('#workbench-drawer')),topbar=rect(document.querySelector('.topbar'));
+       const fieldRects=fields.map(field=>{
+         const el=doc.querySelector('#extra-controls [data-xfield="'+field+'"]');
+         if(!el)return {field,missing:true};
+         const r=rect(el),label=rect(el.closest('label')),x=r.x+r.width/2,y=r.y+r.height/2;
+         const points=[[x,y],[r.x+3,r.y+3],[r.right-3,r.bottom-3]];
+         return {field,rect:r,label,labelText:el.closest('label').textContent.trim(),enabled:!el.disabled,hit:points.every(([cx,cy])=>el===doc.elementFromPoint(cx,cy)||el.contains(doc.elementFromPoint(cx,cy))),parentHit:document.elementFromPoint(f.x+x,f.y+y)===frame,visible:label.x>=s.x-1&&label.right<=s.right+1&&label.y>=s.y-1&&label.bottom<=s.bottom+1&&r.bottom<=drawer.y+1&&r.bottom<=command.y+1&&r.bottom<=frame.contentWindow.innerHeight};
+       });
+       const map=rect(document.querySelector('#space-app'));
+       const headingParts={outer:rect(panel.querySelector(':scope>header')),inner:rect(doc.querySelector('#lesson>header')),title:rect(doc.querySelector('.stage-top')),problem:rect(doc.querySelector('#learning-problem')),interaction:rect(doc.querySelector('#learning-interaction'))};
+       const headingText=['#workbench-title','#instruction','#action-cue'].map(selector=>{
+         const el=selector==='#workbench-title'?document.querySelector(selector):doc.querySelector(selector);
+         return {selector,rect:rect(el),text:el.textContent.trim(),unclipped:el.clientHeight>0&&el.clientWidth>0&&el.scrollHeight<=el.clientHeight+1&&el.scrollWidth<=el.clientWidth+1};
+       });
+       return {panel:p,frame:f,stage:s,work,drawer,command,topbar,map,headingParts,headingText,outerFooterVisible:document.querySelector('.bottom-bar').getClientRects().length>0,childHeaderVisible:doc.querySelector('#lesson>header').getClientRects().length>0,ratio:p.width/innerWidth,headingHeight:f.y-p.y+work.y,childViewport:{width:frame.contentWindow.innerWidth,height:frame.contentWindow.innerHeight},scroll:doc.querySelector('#workbench-stage').scrollTop,fields:fieldRects,contextClosed:!document.querySelector('#workbench-context-menu').open,questionCopies:[...document.querySelectorAll('.save-status [data-action="question"]')].filter(e=>e.getClientRects().length).length,guideInWork:!!doc.querySelector('#work #thinking-guide'),guideInDrawer:!!doc.querySelector('#learning-support-drawer-panel #thinking-guide'),goalInDrawer:!!doc.querySelector('#learning-support-drawer-panel #learning-goal')};
+     },requiredFields);
+     const m=await measure();row.initial=m;
+     assert.ok(m.panel.x>=0&&m.panel.y>=0&&m.panel.right<=width+1&&m.panel.bottom<=height+1,'fixed panel fits viewport: '+JSON.stringify(m.panel));
+     assert.equal(m.topbar.height,0,'old global navigation does not occupy a second bar');assert.equal(m.outerFooterVisible,false);assert.equal(m.childHeaderVisible,false);
+     const total=await frame.locator('#status').getAttribute('data-task-total');
+     assert.ok((await page.locator('#workbench-title').innerText()).endsWith('1/'+total),'parent displays actual first task ordinal');
+     assert.ok(await page.locator('#workbench-later').isVisible());assert.ok(await page.locator('[data-action="nav-explore"]').isHidden());
+     assert.ok(await frame.locator('#workbench-drawer [data-do="question"]').isVisible());
+     if(width>=960){assert.ok(m.ratio>=.68&&m.ratio<=.72,'desktop 68–72% width, '+m.ratio);assert.ok(m.map.right<=m.panel.x+1,'actual map is separately reserved');}
+     else assert.ok(m.ratio>=.94&&m.panel.x<=12.5,'narrow viewport full-width panel');
+     assert.ok(m.contextClosed&&m.questionCopies===0&&m.goalInDrawer&&!m.guideInWork,'default optional details do not occupy the main stage');
+     await shot('initial');
+     if(probability){
+      assert.equal(m.scroll,0,'first screen must not rely on scrolling');
+      assert.ok(m.headingHeight<=220,'whole heading budget from panel top to work <=220 CSS px: '+m.headingHeight);
+      assert.ok(m.headingText.every(h=>h.text&&h.unclipped),'parent title, real problem and action cue must remain readable, not clipped: '+JSON.stringify(m.headingText));
+      assert.equal(await frame.locator('#extra-controls .b22-controls > .field :is(input,select)').count(),3,'exact original required fields');
+      assert.ok(m.fields.every(f=>!f.missing&&f.enabled&&f.visible&&f.hit&&f.parentHit),'all original input/label rectangles and actual hit targets visible above drawer and command: '+JSON.stringify(m.fields));
+      assert.ok(m.fields[2].labelText.includes('一共几个等可能的面'));
+      assert.ok(m.guideInDrawer,'the original admitted optional thinking question is available in the existing drawer');
+      const summary=page.locator('#workbench-context-menu>summary');
+      await summary.click();assert.ok(await page.locator('#learning-map-context').isVisible());
+      assert.ok(await page.locator('#learning-map-context [data-source-key]').count()>0,'real source links preserved');
+      assert.ok(await page.locator('#learning-map-context .learning-context-route').isVisible());
+      assert.ok(await page.locator('#learning-map-context .grade-node-position').isVisible(),'source curriculum reachable in the same disclosure');
+      const open=await measure();assert.deepEqual(open.frame,m.frame,'context disclosure does not shrink iframe');
+      await shot('source-context');
+      await summary.press('Escape');
+      await page.waitForFunction(()=>!document.querySelector('#workbench-context-menu').open);
+      const readCase=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.chancefraction.cases[0]??null);
+      const beforeAux=await readCase();
+      await frame.locator('#learning-support>summary').click();
+      assert.ok(await frame.locator('#thinking-guide>summary').isVisible(),'optional question remains reachable');
+      assert.deepEqual(await readCase(),beforeAux,'opening the support drawer alone must not record support or an attempt');
+      // Check the original delegated support event in one context and keep
+      // the other context independent. Neither opening a drawer nor moving a
+      // DOM node generates a mathematical submission.
+      if(width===1440){
+        await frame.locator('#thinking-guide>summary').click();
+        await page.waitForFunction(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.chancefraction.cases[0]?.support===true);
+        assert.equal((await readCase()).attempts.length,0,'opening the actual thinking guide retains its original support event only');
+      }
+      await shot('auxiliary');
+      await frame.locator('#learning-support>summary').press('Escape');
+      await page.waitForFunction(()=>!document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
+      const after=await measure();assert.equal(after.scroll,0);assert.ok(after.fields.every(f=>f.visible&&f.hit&&f.parentHit),'closing drawers returns real initial inputs');
+      // The real original first task, not a mocked submission or seeded state.
+      await frame.locator('#extra-visual [data-x="p22-toggle"][data-index="5"]').click();
+      await frame.locator('#extra-controls [data-xfield="kind"]').selectOption('equal');
+      await frame.locator('#extra-controls [data-xfield="prob"]').fill('1/6');
+      await frame.locator('#extra-controls [data-xfield="answers.0"]').fill('6');
+      await frame.locator('#actions [data-do="check"]').click();
+      await page.waitForFunction(()=>document.querySelector('#journey-frame').contentDocument.querySelector('#scene').dataset.stage==='passed');
+      const evidence=await page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.chancefraction.cases[0]);
+      assert.equal(evidence.attempts.length,1);
+      assert.equal(evidence.attempts[0].supported,width===1440,'support event and independent attempt remain distinct');
+      row.realSubmission=true;row.supported=evidence.attempts[0].supported;await shot('checked');
+     }
+     assert.deepEqual(errors,[]);row.passed=true;
+    }catch(e){row.failure=e.stack;await shot('failure').catch(()=>{});console.error(width+'x'+height+': '+e.message);}finally{await ctx.close();}
+   }
+   result.passed=result.rows.length===5&&result.rows.every(row=>row.passed);
+  }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
+  assert.ok(result.passed,'V54 responsive workbench: '+result.rows.filter(row=>row.passed).length+'/'+result.rows.length+' viewports passed; inspect original results.json');
+  console.log(JSON.stringify({v54ResponsiveLayout:result.rows.map(row=>({viewport:row.viewport,ratio:row.initial?.ratio,headingHeight:row.initial?.headingHeight,passed:row.passed,realSubmission:row.realSubmission??false}))}));
+
+}
+
+// Mac 03 uses the same historical responsive extension and real paused
+// native workbench, independent of the fixed-desktop A/AB acceptance.
+async function verifyV54EntryLayout(browser){
+ const assert=require('node:assert/strict'),atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
+ const dir=path.resolve('verification/v54-entry-layout'),rootURL=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,rows:[],testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()};
+ try{
+  for(const [width,height] of [[1280,720],[1000,1200]]){
+   const viewport={width,height},ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage(),errors=[];
+   const row={viewport,errors,passed:false,switches:[]};result.rows.push(row);
+   page.on('pageerror',e=>errors.push(e.message));
+   const shot=name=>page.screenshot({path:path.join(dir,width+'x'+height+'-'+name+'.png')});
+   try{
+    await page.goto(rootURL+'/index.html?world=network&layout=54&surface=learn#space/node/mt_-c4Ca_nBzX');
+    await page.waitForFunction(()=>{
+      const w=document.querySelector('#journey-frame')?.contentWindow;
+      return window.mathSpace?.snapshot()?.networkVersion===54&&document.body.dataset.workbenchForeground==='learn'&&w?.mathLesson?.snapshot()?.id==='chancefraction'&&w.document.body.dataset.workbenchLayout==='compact-v54'&&w.document.querySelector('#workbench-curriculum')?.dataset.state!=='loading'&&w.document.getElementById('storage-warning')?.hidden;
+    },null,{timeout:60000});
+    const lesson=page.frameLocator('#journey-frame'),key='#extra-controls [data-xfield="prob"]';
+    const token=await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken='entry-live-'+Math.random());
+    await lesson.locator(key).fill('1/7');
+    const readRecord=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons.chancefraction);
+    await page.waitForFunction(()=>{
+      const record=JSON.parse(localStorage.getItem('math-explorer-v2')||'null')?.lessons?.chancefraction;
+      return record?.models?.[record.index]?.prob==='1/7';
+    });
+    const original=await readRecord(),positions=await page.evaluate(()=>mathSpace.snapshot().positions);
+    assert.equal(original.models[original.index].prob,'1/7','assert a real saved, unsubmitted probability draft before navigation');
+    const preserved=async()=>{
+      assert.equal(await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken),token);
+      assert.deepEqual(await readRecord(),original);
+      const state=await page.evaluate(()=>({open:mathSpace.snapshot().journeyOpen,paused:mathSpace.snapshot().journeySuspended,pending:document.querySelector('[data-action="nav-learn"]').dataset.pending}));
+      assert.deepEqual(state,{open:true,paused:true,pending:'true'});
+    };
+    await page.locator('#workbench-later').click();
+    await page.waitForFunction(()=>mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
+    await preserved();
+    const nav=page.locator('#cylinder-entry-nav'),choices=nav.locator('[data-action="cylinder-entry"]');
+    await page.locator('.tool-rail [data-action="cylinder-origin"]').click();await nav.waitFor({state:'visible'});
+    await page.waitForFunction(()=>!mathSpace.motion().tween);
+    const roots=await choices.evaluateAll(els=>els.map(el=>({key:el.dataset.key,kind:el.dataset.entryKind,incoming:Number(el.dataset.incoming)})));
+    assert.equal(roots.length,5);
+    for(const r of roots){const incoming=atlas.edges.filter(e=>e.topicId===r.key.slice(5)).length;assert.equal(r.incoming,incoming);assert.equal(r.kind,incoming?'growth':'root');}
+    await shot('origin');
+    let selected=null;
+    const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return {position:s.position,target:s.target,zoom:s.cameraZoom};});
+    for(const r of roots){
+      const choice=nav.locator('[data-key="'+r.key+'"]'),before=await camera();
+      await choice.hover();
+      await page.waitForFunction(key=>mathSpace.cylinder().presentation.entryPreview?.key===key&&mathSpace.nodeRadius(key)>=5.5,r.key);
+      assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),selected);
+      assert.deepEqual(await camera(),before);
+      await preserved();
+      await choice.click();
+      await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='true',r.key);
+      const geometry=await page.evaluate(key=>{
+        const rect=e=>{const r=e.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+        const nav=document.querySelector('#cylinder-entry-nav'),card=document.querySelector('#focus-card'),n=rect(nav),c=rect(card),p=mathSpace.project(key);
+        const visible=(r,container)=>r.left>=container.left-1&&r.right<=container.right+1&&r.top>=container.top-1&&r.bottom<=container.bottom+1;
+        const hit=el=>{
+          const r=rect(el),points=[[(r.left+r.right)/2,(r.top+r.bottom)/2],[r.left+5,r.top+5],[r.right-5,r.top+5],[r.left+5,r.bottom-5],[r.right-5,r.bottom-5]];
+          return r.width>10&&r.height>10&&points.every(([x,y])=>el.contains(document.elementFromPoint(x,y)));
+        };
+        const bounds={left:0,top:0,right:innerWidth,bottom:innerHeight};
+        return {nav:n,card:c,gap:c.top-n.bottom,within:visible(n,bounds)&&visible(c,bounds),switches:[...nav.querySelectorAll('[data-action="cylinder-entry"]')].map(el=>({key:el.dataset.key,visible:visible(rect(el),n),hit:hit(el)})),homeHit:hit(nav.querySelector('[data-action="cylinder-entry-home"]')),closeHit:hit(nav.querySelector('[data-action="cylinder-entry-close"]')),overviewHit:hit(document.querySelector('.top-tools [data-action="overview"]')),floatingOverviewHidden:document.querySelector('#local-overview-exit').getClientRects().length===0,root:{x:p.x,y:p.y,visible:p.visible&&p.x>=0&&p.x<n.left&&p.y>=94&&p.y<=innerHeight-88}};
+      },r.key);
+      assert.ok(geometry.within&&geometry.gap>=6&&geometry.switches.every(s=>s.visible&&s.hit)&&geometry.homeHit&&geometry.closeHit&&geometry.overviewHit&&geometry.floatingOverviewHidden&&geometry.root.visible,'entry switcher, card, root are separately visible: '+JSON.stringify(geometry));
+      assert.equal(await choices.count(),5);assert.equal(await choice.getAttribute('aria-pressed'),'true');
+      assert.notDeepEqual(await camera(),before);assert.deepEqual(await page.evaluate(()=>mathSpace.snapshot().positions),positions);
+      await preserved();
+      // The actual compact card keeps its original primary action reachable.
+      const action=page.locator('#focus-card .cylinder-compact-inspection .primary-button');
+      await action.scrollIntoViewIfNeeded();
+      assert.ok(await action.evaluate(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint((r.left+r.right)/2,(r.top+r.bottom)/2));}));
+      row.switches.push({key:r.key,geometry});
+      selected=r.key;
+      if(row.switches.length===1||row.switches.length===5)await shot('locked-'+row.switches.length);
+    }
+    await nav.locator('[data-action="cylinder-entry-home"]').click();
+    await page.waitForFunction(()=>!mathSpace.snapshot().selected&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='false');
+    assert.equal(await choices.count(),5);await preserved();await shot('returned-origin');
+    await page.locator('[data-action="nav-learn"]').click();
+    await page.waitForFunction(()=>!mathSpace.snapshot().journeySuspended&&!document.querySelector('#journey-surface').hidden);
+    assert.equal(await lesson.locator('body').evaluate(el=>el.ownerDocument.defaultView.__entryLayoutToken),token);
+    assert.equal(await lesson.locator(key).inputValue(),'1/7');assert.deepEqual(await readRecord(),original);
+    assert.ok(await nav.isHidden());assert.deepEqual(errors,[]);
+    row.sameDocument=true;row.draftPreserved=true;row.passed=true;
+   }catch(e){row.failure=e.stack;await shot('failure').catch(()=>{});console.error(width+'x'+height+': '+e.message);}finally{await ctx.close();}
+  }
+  result.passed=result.rows.length===2&&result.rows.every(r=>r.passed);
+ }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
+ assert.ok(result.passed,'V54 entry layout: '+result.rows.filter(r=>r.passed).length+'/'+result.rows.length+' passed');
+ console.log(JSON.stringify({v54EntryLayout:result.rows.map(r=>({viewport:r.viewport,passed:r.passed,switches:r.switches.length,sameDocument:r.sameDocument,draftPreserved:r.draftPreserved}))}));
+}
+
+// Mac 04: independent responsive evidence; all original legacy, 02 and
+// 03 cases still run unchanged. No new fixed-desktop entrypoint or policy.
+async function verifyV54QuietExploration(browser){
+ const assert=require('node:assert/strict'),dir=path.resolve('verification/v54-quiet-exploration'),base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,rows:[],testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()};
+ try{
+  for(const [width,height] of [[1280,720],[1000,1200]]){
+   const viewport={width,height},ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage(),errors=[];
+   const row={viewport,errors,passed:false,stages:[]};result.rows.push(row);
+   page.on('pageerror',e=>errors.push(e.message));
+   const shot=name=>page.screenshot({path:path.join(dir,width+'x'+height+'-'+name+'.png')});
+   const ready=async()=>{
+     await page.waitForFunction(()=>window.mathSpace?.snapshot()?.networkVersion===54&&window.mathSpace.snapshot().visibleNodes.length===587&&document.querySelector('#loading')?.hidden&&!window.mathSpace.motion().tween,{},{timeout:60000});
+     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   };
+   const pose=()=>page.evaluate(()=>{
+     const s=mathSpace.snapshot();
+     return {position:s.position,target:s.target,zoom:s.cameraZoom,positions:s.positions,projections:s.visibleNodes.map(key=>{const p=mathSpace.project(key);return {key,x:p.x,y:p.y,visible:p.visible};})};
+   });
+   // OrbitControls recomputes its target using floating-point arithmetic
+   // on a dirty frame. visual1 tall viewport differed by only 2.84e-14
+   // world units. Keep exact source-position equality; admit roundoff
+   // only in camera components, and independently prove actual screen
+   // projections of all 587 source nodes have not perceptibly changed.
+   const assertSamePose=async(before,label)=>{
+     const after=await pose();
+     assert.deepEqual(after.positions,before.positions,label+': source coordinates exact');
+     const delta=(a,b)=>Math.max(...a.map((v,i)=>Math.abs(v-b[i])));
+     const positionDelta=delta(after.position,before.position),targetDelta=delta(after.target,before.target),zoomDelta=Math.abs(after.zoom-before.zoom);
+     assert.ok(positionDelta<=1e-9&&targetDelta<=1e-9&&zoomDelta<=1e-12,label+': camera roundoff only '+JSON.stringify({positionDelta,targetDelta,zoomDelta}));
+     assert.equal(after.projections.length,587);
+     let maxPixelDelta=0;
+     for(let i=0;i<after.projections.length;i++){
+       const a=after.projections[i],b=before.projections[i];
+       assert.equal(a.key,b.key);assert.equal(a.visible,b.visible);
+       const distance=Math.hypot(a.x-b.x,a.y-b.y);
+       assert.ok(Number.isFinite(distance),label+': finite projected source '+a.key);
+       maxPixelDelta=Math.max(maxPixelDelta,distance);
+     }
+     assert.ok(maxPixelDelta<=1e-6,label+': every source projection unchanged to one millionth CSS px');
+     return {label,positionDelta,targetDelta,zoomDelta,maxPixelDelta,sourceCoordinatesExact:true,projectedNodes:587};
+   };
+   const measure=()=>page.evaluate(()=>{
+     const rect=el=>{const r=el.getBoundingClientRect();return {x:r.left,y:r.top,w:r.width,h:r.height};};
+     const visible=el=>!!el&&!el.hidden&&el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden';
+     const rail=document.querySelector('.tool-rail'),details=document.querySelector('.cylinder-extra-tools');
+     const buttons=[...rail.querySelectorAll('button')].filter(visible).map(el=>{
+       const range=document.createRange();range.selectNodeContents(el);
+       const r=el.getBoundingClientRect(),text=range.getBoundingClientRect(),lines=[...range.getClientRects()].filter(r=>r.width&&r.height);
+       const points=[[(r.left+r.right)/2,(r.top+r.bottom)/2],[r.left+5,r.top+5],[r.right-5,r.bottom-5]];
+       return {action:el.dataset.action,text:el.textContent.trim(),nowrap:getComputedStyle(el).whiteSpace==='nowrap',oneLine:lines.every(b=>Math.abs(b.top-lines[0].top)<1),fit:text.width<=r.width+1,hit:points.every(([x,y])=>el.contains(document.elementFromPoint(x,y))),rect:rect(el)};
+     });
+     const captions=[...document.querySelectorAll('.cylinder-reference-caption')].filter(visible).map(el=>({stage:el.dataset.stage,text:el.textContent,rect:rect(el)}));
+     const obstacles=[...document.querySelectorAll('.space-label:not([hidden]),#cylinder-origin-marker:not([hidden]),#network-guide,#focus-card,#cylinder-entry-nav,#cylinder-hover-inspector,.tool-rail,.topbar,.bottom-bar')].filter(visible).map(rect);
+     const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+     return {detailsOpen:details.open,descriptionVisible:visible(document.querySelector('#network-view-description')),lensVisible:visible(document.querySelector('.lens-indicator')),rail:rect(rail),buttons,captions,captionOverlap:captions.some(a=>obstacles.some(b=>overlaps(a.rect,b))),stage:mathSpace.snapshot().gradeStageFilter,reference:mathSpace.cylinder().presentation.referenceCaption};
+   });
+   const check=async(stage)=>{
+     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+     const m=await measure();
+     assert.equal(m.stage,stage);assert.equal(m.detailsOpen,false);assert.equal(m.descriptionVisible,false);assert.equal(m.lensVisible,false);
+     assert.ok(m.buttons.length>=10&&m.buttons.every(b=>b.nowrap&&b.oneLine&&b.fit&&b.hit&&Math.abs(b.rect.y-m.buttons[0].rect.y)<1),'all camera controls are single-row and directly hit: '+JSON.stringify(m.buttons));
+     assert.ok(m.rail.x>=0&&m.rail.y>=0&&m.rail.x+m.rail.w<=width+1&&m.rail.y+m.rail.h<=height+1);
+     assert.ok(m.captions.length<=(stage==='all'?0:1)&&m.captions.every(c=>c.stage===stage)&&!m.captionOverlap);
+     if(m.captions.length)assert.equal(m.reference.stage,stage);
+     return m;
+   };
+   try{
+     await page.goto(base+'/index.html?world=network&layout=54#atlas');await ready();
+     const initial=await check('all'),before=await pose();row.initial=initial;row.poseChecks=[];await shot('default');
+     const summary=page.locator('.cylinder-extra-tools>summary');
+     await summary.click();
+     assert.ok(await page.locator('#network-view-description').isVisible());
+     assert.ok(await page.locator('.cylinder-observation-switches [data-action="cylinder-option"]').count()===5);
+     await summary.press('Escape');assert.equal(await page.locator('.cylinder-extra-tools').evaluate(el=>el.open),false);
+     row.poseChecks.push(await assertSamePose(before,'optional observation text and switches do not move the camera'));
+     for(const stage of ['stage-1','stage-2','stage-3']){
+       await page.locator('#grade-map-filter [data-stage="'+stage+'"]').click();
+       await page.mouse.move(width-8,height-8);
+       await page.waitForFunction(stage=>mathSpace.snapshot().gradeStageFilter===stage,stage);
+       const evidence=await check(stage);row.stages.push(evidence);
+       row.poseChecks.push(await assertSamePose(before,'reference label placement never moves actual source positions or camera'));
+       await shot(stage);
+     }
+     // Return to all without changing the camera; the original grade text is
+     // still available from its control even when an unsafe caption is omitted.
+     await page.locator('#grade-map-filter [data-stage="all"]').click();await page.mouse.move(width-8,height-8);
+     await page.waitForFunction(()=>mathSpace.snapshot().gradeStageFilter==='all');await check('all');
+     row.poseChecks.push(await assertSamePose(before,'returning to all grades does not move the map'));
+     await summary.click();
+     await page.locator('.tool-rail [data-action="front"]').click();
+     await page.waitForFunction(()=>!mathSpace.motion().tween);
+     row.reset=await check('all');
+     await summary.click();
+     await page.reload();await ready();
+     row.reload=await check('all');
+     assert.deepEqual(errors,[]);row.passed=true;
+   }catch(e){row.failure=e.stack;await shot('failure').catch(()=>{});console.error(width+'x'+height+': '+e.message);}finally{await ctx.close();}
+  }
+  result.passed=result.rows.length===2&&result.rows.every(r=>r.passed);
+ }finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');}
+ assert.ok(result.passed,'V54 quiet exploration: '+result.rows.filter(r=>r.passed).length+'/'+result.rows.length+' passed');
+ console.log(JSON.stringify({v54QuietExploration:result.rows.map(r=>({viewport:r.viewport,passed:r.passed,stages:r.stages.map(s=>({stage:s.stage,captions:s.captions.length,overlap:s.captionOverlap})),controls:r.initial?.buttons.length}))}));
+}
+
+// Mac 05: one real continuous acceptance journey, in addition to (not in
+// place of) all original isolated regressions. No storage injection; only
+// actual controls create learner state. The document token is diagnostic.
+async function verifyV54MacJoint(browser){
+ const assert=require('node:assert/strict'),base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ const atlas=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/data/atlas.json'),'utf8'));
+ const release=fs.readFileSync(path.resolve(__dirname,'../dist/sw.js'),'utf8').match(/^const CACHE = '([^']+)';/m)?.[1];
+ const dir=path.resolve('verification/v54-mac-joint'),viewport={width:1280,height:720};
+ const topic='mt_-c4Ca_nBzX',session='chancefraction',other='mt_Ep7TDFuYUa',otherKey='node:'+other;
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,viewport,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),release,errors:[],steps:[]};
+ const ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage();
+ const frame=page.frameLocator('#journey-frame'),input=frame.locator('#extra-controls [data-xfield="prob"]'),learn=page.locator('[data-action="nav-learn"]'),pause=page.locator('#workbench-later');
+ const nav=page.locator('#cylinder-entry-nav'),choices=nav.locator('[data-action="cylinder-entry"]');
+ page.on('pageerror',e=>result.errors.push(e.message));
+ let currentStep=null,token,baseline,positions;
+ const shot=name=>page.screenshot({path:path.join(dir,name+'.png')});
+ const run=async(n,ids,title,fn)=>{
+   currentStep={number:n,issues:ids,title,passed:false};result.steps.push(currentStep);
+   currentStep.evidence=await fn();
+   assert.deepEqual(result.errors,[]);
+   await shot(String(n).padStart(2,'0')+'-'+ids.join('-'));
+   currentStep.passed=true;
+ };
+ const read=()=>page.evaluate(()=>localStorage.getItem('math-explorer-v2'));
+ const record=async()=>JSON.parse(await read()).lessons[session];
+ const mark=()=>frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__joint05Token='mac-joint-'+Math.random());
+ const sameDoc=async()=>assert.equal(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__joint05Token),token);
+ const sameRecord=async()=>assert.deepEqual(await record(),baseline,'original probability lesson remains byte-equivalent');
+ const ready=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.networkVersion===54&&window.mathSpace.snapshot().visibleNodes.length===587&&document.querySelector('#space-app')?.classList.contains('ready'),null,{timeout:60000});
+ const lessonReady=()=>page.waitForFunction(id=>{
+   const w=document.querySelector('#journey-frame')?.contentWindow;
+   return w?.mathLesson?.snapshot()?.id===id&&w.document.body.dataset.workbenchLayout==='compact-v54'&&w.document.querySelector('#workbench-curriculum')?.dataset.state!=='loading'&&w.document.getElementById('storage-warning')?.hidden;
+ },session,{timeout:60000});
+ const foreground=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen&&!mathSpace.snapshot().journeySuspended&&!document.querySelector('#journey-surface').hidden&&document.body.dataset.workbenchForeground==='learn');
+ const paused=()=>page.waitForFunction(()=>window.mathSpace?.snapshot()?.journeyOpen&&mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden&&document.querySelector('[data-action="nav-learn"]').dataset.pending==='true');
+ const camera=()=>page.evaluate(()=>{const s=mathSpace.snapshot();return {position:s.position,target:s.target,zoom:s.cameraZoom};});
+ const cameraDelta=(a,b)=>Math.max(...a.position.map((x,i)=>Math.abs(x-b.position[i])),...a.target.map((x,i)=>Math.abs(x-b.target[i])),Math.abs(a.zoom-b.zoom));
+ const samePositions=async()=>assert.deepEqual(await page.evaluate(()=>mathSpace.snapshot().positions),positions);
+ const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ try{
+  await run(1,['I-01'],'V54 actual node entry and foreground',async()=>{
+    await page.goto(base+'/index.html?world=network&layout=54#space/node/'+topic);await ready();
+    await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked,'node:'+topic);
+    positions=await page.evaluate(()=>mathSpace.snapshot().positions);
+    await page.locator('#focus-card [data-action="open"][data-id="'+topic+'"]:visible').click();await lessonReady();await foreground();await settle();
+    const styles=await page.evaluate(()=>{
+      const get=s=>getComputedStyle(document.querySelector(s));
+      const labels=[...document.querySelectorAll('.space-label.node:not([hidden])')].map(el=>({key:el.dataset.key,point:el.classList.contains('cylinder-point-label'),background:getComputedStyle(el).backgroundColor,border:getComputedStyle(el).borderTopWidth}));
+      return {filter:get('#space-canvas>canvas').filter,labelsOpacity:Number(get('#space-canvas .space-labels').opacity),lessonOpacity:Number(get('#journey-surface').opacity),labels};
+    });
+    assert.match(styles.filter,/brightness\(0\.42\)/);assert.match(styles.filter,/blur\(1\.1px\)/);assert.equal(styles.labelsOpacity,.34);assert.equal(styles.lessonOpacity,1);
+    assert.ok(await page.locator('#network-guide').isHidden());
+    assert.ok(await page.locator('.save-status [data-action="questions"]').isHidden());
+    assert.equal(await page.locator('#journey-surface>header').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(16, 24, 39)');
+    assert.ok(styles.labels.every(l=>l.point&&l.background==='rgba(0, 0, 0, 0)'&&l.border==='0px'),'no V53 white rectangular node labels during V54 learning');
+    assert.ok(await page.locator('#workbench-focus-toggle').isHidden());
+    assert.equal(await frame.locator('#workbench-curriculum').getAttribute('data-topic-id'),topic);
+    token=await mark();await samePositions();return styles;
+  });
+  await run(2,['I-02'],'70 percent stage and real probability draft',async()=>{
+    const m=await page.evaluate(()=>{
+      const panel=document.querySelector('#journey-surface'),iframe=document.querySelector('#journey-frame'),doc=iframe.contentDocument,rect=el=>el.getBoundingClientRect();
+      const p=rect(panel),f=rect(iframe),s=rect(doc.querySelector('#workbench-stage')),work=rect(doc.querySelector('#work')),dock=rect(doc.querySelector('#workbench-drawer')),command=rect(doc.querySelector('.execution-command'));
+      const fields=['kind','prob','answers.0'].map(field=>{
+        const el=doc.querySelector('#extra-controls [data-xfield="'+field+'"]'),r=rect(el),label=rect(el.closest('label')),x=r.x+r.width/2,y=r.y+r.height/2;
+        return {field,label:el.closest('label').textContent.trim(),visible:label.left>=s.left-1&&label.right<=s.right+1&&label.top>=s.top-1&&label.bottom<=s.bottom+1&&r.bottom<=dock.top+1&&r.bottom<=command.top+1&&!el.disabled,hit:[[x,y],[r.left+3,r.top+3],[r.right-3,r.bottom-3]].every(([a,b])=>el.contains(doc.elementFromPoint(a,b)))&&document.elementFromPoint(f.left+x,f.top+y)===iframe};
+      });
+      return {ratio:p.width/innerWidth,heading:f.top-p.top+work.top,scroll:doc.querySelector('#workbench-stage').scrollTop,fields};
+    });
+    assert.ok(m.ratio>=.68&&m.ratio<=.72&&m.heading<=220);assert.equal(m.scroll,0);assert.ok(m.fields.every(f=>f.visible&&f.hit&&f.label));
+    assert.equal(await frame.locator('#extra-controls .b22-controls > .field :is(input,select)').count(),3);
+    await frame.locator('#extra-visual [data-x="p22-toggle"][data-index="5"]').click();
+    await frame.locator('#extra-controls [data-xfield="kind"]').selectOption('equal');
+    await input.fill('1/7');await frame.locator('#extra-controls [data-xfield="answers.0"]').fill('6');
+    await page.waitForFunction(()=>{const r=JSON.parse(localStorage.getItem('math-explorer-v2')||'null')?.lessons?.chancefraction;return r?.models?.[r.index]?.prob==='1/7';});
+    baseline=await record();assert.equal(Object.values(baseline.cases||{}).flatMap(x=>x.attempts||[]).length,0);
+    return {...m,draft:baseline.models[baseline.index].prob,attempts:0};
+  });
+  await run(3,['I-03'],'single question entry and optional real source context',async()=>{
+    const child=frame.locator('#workbench-drawer [data-do="question"]'),global=page.locator('.save-status [data-action="question"]');
+    assert.ok(await child.isVisible()&&await global.isHidden()&&await pause.isVisible());
+    const beforeOpen=await read(),expected=JSON.parse(beforeOpen),questionCount=expected.daily.questions.length;
+    assert.deepEqual(expected.lessons[session],baseline);
+    const composer=page.locator('dialog.question-dialog');
+    await child.click();await composer.waitFor({state:'visible'});
+    // The original questionContext() invokes update(() => {}) before
+    // emitting the question request. That validated save refreshes exactly
+    // the lesson timestamp and rememberSession().at, not its work.
+    const openedRaw=await read(),opened=JSON.parse(openedRaw);
+    const savedTimes={
+      lesson:{before:expected.lessons[session].updatedAt,after:opened.lessons[session].updatedAt},
+      continuation:{before:expected.daily.continuation.at,after:opened.daily.continuation.at}
+    };
+    for(const t of Object.values(savedTimes))assert.ok(Number.isFinite(Date.parse(t.before))&&Number.isFinite(Date.parse(t.after))&&Date.parse(t.after)>=Date.parse(t.before),'original scene capture only refreshes valid time metadata');
+    assert.equal(opened.daily.continuation.id,session);assert.equal(opened.daily.continuation.questionId,null);
+    expected.lessons[session].updatedAt=opened.lessons[session].updatedAt;
+    expected.daily.continuation.at=opened.daily.continuation.at;
+    assert.deepEqual(opened,expected,'question scene capture may refresh only the two existing timestamps in the entire State-v2');
+    baseline=structuredClone(opened.lessons[session]);
+    await composer.locator('[data-cancel]').click();await composer.waitFor({state:'hidden'});
+    assert.equal(await read(),openedRaw,'cancelling the original composer does not write any learner state');
+    assert.equal(JSON.parse(await read()).daily.questions.length,questionCount);
+    const details=page.locator('#workbench-context-menu'),summary=details.locator('summary');assert.equal(await details.evaluate(el=>el.open),false);
+    await summary.click();const links=await page.locator('#learning-map-context [data-source-key]').evaluateAll(els=>els.map(el=>el.dataset.sourceKey));
+    assert.ok(links.length&&links.every(k=>atlas.edges.some(e=>(e.topicId===topic&&e.prerequisiteId===k.slice(5))||(e.prerequisiteId===topic&&e.topicId===k.slice(5)))));
+    await summary.press('Escape');await page.waitForFunction(()=>!document.querySelector('#workbench-context-menu').open);
+    assert.equal(await read(),openedRaw,'optional knowledge context disclosure and Escape leave the entire State-v2 untouched');
+    await sameDoc();await sameRecord();
+    return {singleQuestionEntry:true,openingOnlyOriginalTimestamps:savedTimes,cancelNoWrite:true,contextNoWrite:true,sourceKeys:links};
+  });
+  await run(4,['II-01'],'actual exposed map click pauses into V54',async()=>{
+    const point=await page.evaluate(()=>{
+      const canvas=document.querySelector('#space-canvas>canvas'),r=canvas.getBoundingClientRect(),nodes=mathSpace.snapshot().positions.filter(o=>o.key.startsWith('node:')).map(o=>({p:mathSpace.project(o.key),radius:mathSpace.nodeRadius(o.key)||0}));
+      for(let y=r.top+110;y<r.bottom-100;y+=27)for(let x=r.left+35;x<r.right-35;x+=29){
+        if(document.elementFromPoint(x,y)!==canvas)continue;
+        if(nodes.every(({p,radius})=>!p?.visible||Math.hypot(x-r.left-p.x,y-r.top-p.y)>radius+12))return {x,y};
+      }
+      return null;
+    });
+    assert.ok(point,'real exposed map hit target');await page.mouse.click(point.x,point.y);await paused();await sameDoc();await sameRecord();
+    const presentation=await page.evaluate(()=>({version:mathSpace.snapshot().networkVersion,filter:getComputedStyle(document.querySelector('#space-canvas>canvas')).filter,labels:Number(getComputedStyle(document.querySelector('#space-canvas .space-labels')).opacity),pending:document.querySelector('[data-action="nav-learn"]').dataset.pending,pointLabels:document.querySelectorAll('.space-label.node.cylinder-point-label:not([hidden])').length}));
+    assert.equal(presentation.version,54);assert.equal(presentation.filter,'none');assert.equal(presentation.labels,1);assert.equal(presentation.pending,'true');assert.ok(presentation.pointLabels>0);
+    assert.ok(await page.locator('#network-guide').isVisible(),'map tools return when exploration resumes');
+    assert.ok(await page.locator('.save-status [data-action="questions"]').isVisible(),'original question list remains on the map');
+    return {...presentation,point,sameDocument:true};
+  });
+  await run(5,['II-02'],'real different node selection, explicit switch cancellation, resume A',async()=>{
+    await page.locator('[data-action="search"]:visible').first().click();await page.locator('#search-input').fill(other);
+    await page.locator('#search-results [data-key="'+otherKey+'"]').click();await page.waitForFunction(k=>mathSpace.snapshot().selected===k,otherKey);await paused();await sameDoc();await sameRecord();
+    const beforeCancel=await read(),start=page.locator('#focus-card [data-action="open"][data-id="'+other+'"]:visible');
+    const prompt=page.waitForEvent('dialog',{timeout:10000}).then(async d=>{assert.equal(d.type(),'confirm');assert.match(d.message(),/草稿/);await d.dismiss();});
+    await Promise.all([prompt,start.click()]);await paused();assert.equal(await read(),beforeCancel);await sameDoc();
+    await learn.click();await foreground();await lessonReady();await sameDoc();await sameRecord();assert.equal(await input.inputValue(),'1/7');
+    return {selectedOther:otherKey,resumed:session,cancelNoWrite:true,sameDocument:true};
+  });
+  await run(6,['II-03'],'real browser Back/Forward, cached offline reload and restoration',async()=>{
+    // Back and Forward are the browser history, not the app Back button.
+    await page.goBack({waitUntil:'commit'});await paused();await sameDoc();await sameRecord();
+    await page.goForward({waitUntil:'commit'});await foreground();await sameDoc();await sameRecord();assert.equal(await input.inputValue(),'1/7');
+    await pause.click();await paused();await sameDoc();await sameRecord();
+    await page.waitForFunction(async name=>{
+      const worker=navigator.serviceWorker.controller;if(!worker||worker.state!=='activated')return false;
+      const cache=await caches.open(name);
+      return (await Promise.all(['./spatial-cylinder-visuals.js','./learning/workbench-presentation.js','./learn.html'].map(p=>cache.match(new URL(p,location.href))))).every(Boolean);
+    },release,{timeout:90000});
+    await ctx.setOffline(true);
+    try{
+      await page.reload();await ready();await lessonReady();await paused();
+      const after=await record(),expected=structuredClone(baseline);expected.updatedAt=after.updatedAt;assert.deepEqual(after,expected,'only original native reopen timestamp may change');baseline=after;
+      assert.notEqual(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__joint05Token),token);
+      token=await mark();await learn.click();await foreground();await lessonReady();await sameDoc();
+      assert.equal(await input.inputValue(),'1/7');await sameRecord();
+      await pause.click();await paused();await sameDoc();await sameRecord();
+    }finally{await ctx.setOffline(false);}
+    await samePositions();
+    return {browserBack:true,browserForward:true,offlineReload:true,originalDraft:'1/7',reloadedDocument:true};
+  });
+  await run(7,['III-01'],'real entry hover and source spine emphasis',async()=>{
+    await page.locator('.tool-rail [data-action="cylinder-origin"]').click();await nav.waitFor({state:'visible'});await page.waitForFunction(()=>!mathSpace.motion().tween);
+    const key=await choices.first().getAttribute('data-key'),sp=(await page.evaluate(()=>mathSpace.cylinder().spines)).find(s=>s.index===0&&'node:'+s.rootId===key),pose=await camera(),raw=await read();
+    assert.ok(sp&&sp.edges.length);
+    const edgeKeys=sp.edges.map(e=>e.prerequisiteId+'>'+e.topicId);assert.ok(edgeKeys.every(k=>atlas.edges.some(e=>e.prerequisiteId+'>'+e.topicId===k)));
+    await choices.first().hover();await page.waitForFunction(({key,edgeKeys})=>{
+      const p=mathSpace.cylinder().presentation,chosen=p.entryEdges.filter(e=>edgeKeys.includes(e.key)),other=p.entryEdges.filter(e=>!edgeKeys.includes(e.key));
+      return p.entryPreview?.key===key&&mathSpace.nodeRadius(key)>=5.5&&chosen.length===edgeKeys.length&&Math.min(...chosen.map(e=>e.opacity))>Math.max(...other.map(e=>e.opacity));
+    },{key,edgeKeys});
+    assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),null);assert.ok(cameraDelta(await camera(),pose)<=1e-9);assert.equal(await read(),raw);await sameDoc();await sameRecord();await samePositions();
+    return {key,sourceEdgeKeys:edgeKeys,hoverOnly:true};
+  });
+  await run(8,['III-02'],'five explicit entry switches with separated locked card',async()=>{
+    const keys=await choices.evaluateAll(els=>els.map(el=>el.dataset.key)),switches=[];assert.equal(keys.length,5);
+    let selected=null;
+    for(const key of keys){
+      const choice=nav.locator('[data-key="'+key+'"]'),old=await camera();
+      await choice.hover();await page.waitForFunction(key=>mathSpace.cylinder().presentation.entryPreview?.key===key,key);
+      assert.equal(await page.evaluate(()=>mathSpace.snapshot().selected),selected);assert.ok(cameraDelta(await camera(),old)<=1e-9);
+      await choice.click();await page.waitForFunction(key=>mathSpace.snapshot().selected===key&&mathSpace.snapshot().cylinderLocked&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='true',key);
+      const geometry=await page.evaluate(key=>{
+        const nav=document.querySelector('#cylinder-entry-nav'),card=document.querySelector('#focus-card'),n=nav.getBoundingClientRect(),c=card.getBoundingClientRect(),p=mathSpace.project(key);
+        const hit=el=>{const r=el.getBoundingClientRect();return [[(r.left+r.right)/2,(r.top+r.bottom)/2],[r.left+5,r.top+5],[r.right-5,r.top+5],[r.left+5,r.bottom-5],[r.right-5,r.bottom-5]].every(([x,y])=>el.contains(document.elementFromPoint(x,y)));};
+        return {gap:c.top-n.bottom,within:n.left>=0&&n.top>=0&&n.right<=innerWidth&&c.bottom<=innerHeight,allHit:[...nav.querySelectorAll('button'),document.querySelector('.top-tools [data-action="overview"]')].every(hit),rootVisible:p.visible&&p.x>=0&&p.x<n.left&&p.y>=94&&p.y<=innerHeight-88};
+      },key);
+      assert.ok(geometry.gap>=6&&geometry.within&&geometry.allHit&&geometry.rootVisible);assert.equal(await choices.count(),5);
+      assert.ok(cameraDelta(await camera(),old)>1e-6);assert.equal(await choice.getAttribute('aria-pressed'),'true');
+      await paused();await sameDoc();await sameRecord();await samePositions();selected=key;switches.push({key,...geometry});
+    }
+    return {switches,sameDocument:true};
+  });
+  await run(9,['III-03'],'actual source indegree classification',async()=>{
+    const rows=await choices.evaluateAll(els=>els.map(el=>({key:el.dataset.key,kind:el.dataset.entryKind,incoming:Number(el.dataset.incoming),text:el.textContent})));
+    for(const r of rows){const incoming=atlas.edges.filter(e=>e.topicId===r.key.slice(5)).length;assert.equal(r.incoming,incoming);assert.equal(r.kind,incoming?'growth':'root');assert.match(r.text,incoming?/生长入口/:/真正起点/);}
+    assert.equal(rows.filter(r=>r.kind==='root').length,4);assert.equal(rows.filter(r=>r.kind==='growth').length,1);
+    await nav.locator('[data-action="cylinder-entry-home"]').click();await page.waitForFunction(()=>!mathSpace.snapshot().selected&&!mathSpace.motion().tween&&document.querySelector('#cylinder-entry-nav').dataset.compact==='false');assert.equal(await choices.count(),5);
+    await nav.locator('[data-action="cylinder-entry-close"]').click();await sameDoc();await sameRecord();return {rows,returnedOrigin:true};
+  });
+  await run(10,['IV-01'],'default closed observation options and explicit controls',async()=>{
+    const details=page.locator('.cylinder-extra-tools'),summary=details.locator('summary');
+    assert.equal(await details.evaluate(el=>el.open),false);assert.ok(await page.locator('#network-view-description').isHidden());
+    await summary.click();assert.ok(await page.locator('#network-view-description').isVisible());assert.equal(await page.locator('.cylinder-observation-switches [data-action="cylinder-option"]').count(),5);
+    await summary.press('Escape');assert.equal(await details.evaluate(el=>el.open),false);
+    await summary.click();await page.locator('.tool-rail [data-action="front"]').click();await page.waitForFunction(()=>!mathSpace.motion().tween);assert.equal(await details.evaluate(el=>el.open),false);
+    await samePositions();await sameDoc();await sameRecord();return {defaultClosed:true,explicitFiveSwitches:true,escapeClosed:true,resetClosed:true};
+  });
+  await run(11,['IV-02','IV-03'],'single-line toolbar, reference caption collision and final real Check',async()=>{
+    const measure=()=>page.evaluate(()=>{
+      const visible=el=>!!el&&!el.hidden&&el.getClientRects().length>0,rect=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};},overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+      const rail=[...document.querySelectorAll('.tool-rail button')].filter(visible).map(el=>{
+        const range=document.createRange();range.selectNodeContents(el);const r=el.getBoundingClientRect(),lines=[...range.getClientRects()].filter(x=>x.width&&x.height);
+        return {text:el.textContent.trim(),nowrap:getComputedStyle(el).whiteSpace==='nowrap',oneLine:lines.every(x=>Math.abs(x.top-lines[0].top)<1),fit:range.getBoundingClientRect().width<=r.width+1,hit:el.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)),y:r.y};
+      });
+      const captions=[...document.querySelectorAll('.cylinder-reference-caption')].filter(visible).map(el=>({stage:el.dataset.stage,rect:rect(el)}));
+      const obstacles=[...document.querySelectorAll('.space-label:not([hidden]),#cylinder-origin-marker:not([hidden]),#network-guide,#focus-card,#cylinder-entry-nav,#cylinder-hover-inspector,.tool-rail,.topbar,.bottom-bar')].filter(visible).map(rect);
+      return {rail,captions,collision:captions.some(a=>obstacles.some(b=>overlap(a.rect,b))),lens:visible(document.querySelector('.lens-indicator'))};
+    });
+    const pose=await camera(),visuals=[];
+    for(const stage of ['all','stage-1','stage-2','stage-3']){
+      await page.locator('#grade-map-filter [data-stage="'+stage+'"]').click();await page.mouse.move(viewport.width-8,viewport.height-8);await page.waitForFunction(stage=>mathSpace.snapshot().gradeStageFilter===stage,stage);await settle();
+      const v=await measure();assert.equal(v.rail.length,10);assert.ok(v.rail.every(b=>b.nowrap&&b.oneLine&&b.fit&&b.hit&&Math.abs(b.y-v.rail[0].y)<1));assert.equal(v.lens,false);
+      assert.ok(v.captions.length<=(stage==='all'?0:1)&&v.captions.every(c=>c.stage===stage)&&!v.collision);assert.ok(cameraDelta(await camera(),pose)<=1e-9);await samePositions();visuals.push({stage,...v});await shot('11-'+stage);
+    }
+    assert.ok(visuals.some(v=>v.captions.length===1),'actual reference caption can be placed without collision');
+    await page.locator('#grade-map-filter [data-stage="all"]').click();await learn.click();await foreground();await lessonReady();await sameDoc();await sameRecord();
+    assert.equal(await input.inputValue(),'1/7');await input.fill('1/6');await frame.locator('#actions [data-do="check"]').click();
+    await page.waitForFunction(()=>document.querySelector('#journey-frame').contentDocument.querySelector('#scene').dataset.stage==='passed');
+    const checked=await record();assert.equal(checked.cases[0].attempts.length,1);assert.equal(checked.cases[0].attempts[0].supported,false);await samePositions();
+    return {visuals,realSubmission:true,attempts:1,independent:true};
+  });
+  assert.equal(result.steps.length,11);assert.ok(result.steps.every(s=>s.passed));result.passed=true;
+ }catch(e){result.failure=e.stack;if(currentStep)currentStep.failure=e.stack;await shot('failure').catch(()=>{});throw e;}
+ finally{fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');await ctx.close();}
+ console.log(JSON.stringify({v54MacJoint:{testedCheckoutSha:result.testedCheckoutSha,passed:result.passed,steps:result.steps.map(s=>({number:s.number,issues:s.issues,passed:s.passed})),errors:result.errors}}));
+}
+
+
+// #377: baseline learner-action contracts for the three user-observed topics.
+// Run on the original product first; never seed or rewrite learner state.
+// The same tests survive the shell changes (only actual navigation selectors
+// may follow a deliberate presentation change). Visual gates are separate.
+async function verifyV54ShellContracts(browser){
+ const assert=require('node:assert/strict');
+ const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
+ const dir=path.resolve('verification/v54-shell-contracts');
+ fs.mkdirSync(dir,{recursive:true});
+ const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'original nine native and bridge contracts plus six sampling contracts and one integrated B06 recount; process-only V54 UI readiness; original grading on real work retained',rows:[]};
+ const topics=[['foldprism','mt_REwgr0d_ss'],['splitfraction','mt_VgOePicFYK'],['nth35','mt_HRKzwEQJgO']];
+ const sampling=[['samplevary','mt_x7V1qrkiqH']];
+ const recount=[['lastcount','mt_dmNvjroCPT']];
+ const extraSampling=[['chance','mt_J4j7d3iAfg'],['simulation','mt_8DT3LXwwH-'],['trialestimate','mt_sHJqh6UUya'],['samplevary','mt_x7V1qrkiqH','link-samplevary-comparepeople',0,0]];
+ // First two bridges begin with the identical native task. The sequence
+ // bridge begins with the actual B34 sequential exercise before B17.
+ const links=[
+  ['foldprism','mt_REwgr0d_ss','link-foldprism-crossparts',1,0],
+  ['splitfraction','mt_VgOePicFYK','link-splitfraction-relatedparts',0,0],
+  ['nth35','mt_HRKzwEQJgO','link-rules34-nth35',0,1]
+ ];
+ try{
+  for(const viewport of [{width:1280,height:720},{width:1440,height:900}]){
+   for(const [family,topic,bridge=null,nativeIndex=0,bridgeIndex=0] of [...topics,...sampling,...(viewport.width===1280?[...links,...extraSampling,...recount]:[])]){
+    const session=bridge||family;
+    const row={session,family,kind:bridge?'bridge':'native',viewport,passed:false,errors:[],checks:[]};
+    result.rows.push(row);
+    const ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage();
+    page.on('pageerror',e=>row.errors.push(e.message));
+    const frame=page.frameLocator('#journey-frame');
+    const x=(action,attrs='')=>frame.locator('[data-x="'+action+'"]'+attrs);
+    const field=key=>frame.locator('[data-xfield="'+key+'"]');
+    const action=name=>frame.locator('#actions [data-do="'+name+'"]');
+    const shot=name=>page.screenshot({path:path.join(dir,viewport.width+'x'+viewport.height+'-'+session+'-'+name+'.png')});
+    const record=()=>page.evaluate(({session,bridge})=>{
+     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+     return bridge?state.daily.bridges[session]:state.lessons[session];
+    },{session,bridge});
+    const connection=()=>page.evaluate(async id=>{
+     const {bridgeEdgeKey,sourceBridge}=await import('./learning/bridges.js');
+     const {connectionTimes}=await import('./learning/daily.js');
+     const atlas=await fetch('./data/atlas.json').then(r=>r.json());
+     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+     const edge=bridgeEdgeKey(id);
+     return {edge,source:!!sourceBridge(id,atlas),completedAt:connectionTimes(state,atlas)[edge]||null,nativeIds:Object.keys(state.lessons)};
+    },session);
+    const model=async()=>{const r=await record();return r.models[r.index];};
+    const attempts=async()=>{const r=await record();return r.cases?.[r.index]?.attempts||[];};
+    const beat=async(expected)=>{
+     const indicator=frame.locator('#workbench-beats [aria-current="step"]');
+     await indicator.waitFor({state:'visible'});
+     const actual=await indicator.getAttribute('data-beat');
+     assert.equal(actual,expected,'visual beat matches actual work evidence');
+     return actual;
+    };
+    const stage=expected=>page.waitForFunction(s=>document.querySelector('#journey-frame')?.contentDocument?.querySelector('#scene')?.dataset.stage===s,expected,{timeout:15000});
+    const ready=(index=0)=>page.waitForFunction(({session,index})=>{
+     const w=document.querySelector('#journey-frame')?.contentWindow,s=w?.mathLesson?.snapshot();
+     return window.mathSpace?.snapshot()?.networkVersion===54&&document.body.dataset.workbenchForeground==='learn'&&s?.id===session&&s.index===index&&w.document.body.dataset.workbenchLayout==='compact-v54'&&w.document.getElementById('storage-warning')?.hidden;
+    },{session,index},{timeout:60000});
+    const assertFooter=async({wideRow=false,openPanel=false}={})=>{
+     const geometry=await page.evaluate(()=>{
+      const doc=document.querySelector('#journey-frame').contentDocument;
+      const f=doc.querySelector('#workbench-footer'),dock=doc.querySelector('#workbench-drawer'),command=doc.querySelector('.execution-command'),stage=doc.querySelector('#workbench-stage');
+      const box=el=>{const r=el.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height};};
+      const panel=doc.querySelector('#learning-support-drawer-panel');
+      return {footer:box(f),dock:box(dock),command:box(command),stage:box(stage),panel:box(panel),viewport:doc.defaultView.innerHeight,
+       ownsOriginals:dock.parentElement===f&&command.parentElement===f&&doc.querySelectorAll('#actions').length===1,
+       question:doc.querySelectorAll('#lesson [data-do="question"]').length,beatCount:doc.querySelectorAll('#workbench-beats li').length,
+       interactiveBeats:doc.querySelectorAll('#workbench-beats :is(button,a,[tabindex],[role="button"])').length,inert:stage.inert};
+     });
+     const {footer,dock,command,stage:surface,panel}=geometry;
+     assert.ok(geometry.ownsOriginals&&geometry.question===1,'one footer, one original command and question owner');
+     assert.equal(geometry.beatCount,4);assert.equal(geometry.interactiveBeats,0,'four beats are not navigation controls');
+     assert.ok(surface.height>0&&surface.bottom<=footer.top+1&&footer.bottom<=geometry.viewport+1,'footer cannot cover the mathematical stage or overflow the viewport');
+     assert.ok(dock.left>=footer.left-1&&dock.right<=footer.right+1&&command.left>=footer.left-1&&command.right<=footer.right+1,'both original groups stay inside the footer');
+     assert.ok(dock.right<=command.left+1||dock.bottom<=command.top+1,'auxiliary and primary groups do not overlap');
+     if(wideRow)assert.ok(dock.right<=command.left+1&&dock.top<command.bottom&&command.top<dock.bottom,'desktop initial footer is a single horizontal row');
+     if(openPanel)assert.ok(geometry.inert&&panel.top>=surface.top-1&&panel.bottom<=footer.top+1,'drawer covers only the scrollable stage, not the footer');
+     return geometry;
+    };
+    const fixedPrimary=async()=>{
+     const position=await frame.locator('#actions').evaluate(el=>{
+      const primary=el.querySelector('button.primary:not([hidden])'),footer=el.closest('#workbench-footer');
+      if(!primary||!footer)return null;
+      const r=primary.getBoundingClientRect(),f=footer.getBoundingClientRect();
+      return {rightGap:f.right-r.right,primaryLast:[...el.querySelectorAll('button:not([hidden])')].at(-1)===primary,action:primary.dataset.do};
+     });
+     assert.ok(position&&position.primaryLast&&position.rightGap>=0&&position.rightGap<=16,'the single primary keeps the right footer anchor: '+JSON.stringify(position));
+     return position;
+    };
+    const locked=async(label,{verifyOriginal=false}={})=>{
+     const before=await record(),button=action('check');
+     assert.ok(await button.isDisabled(),label+' must lock the actual Check control');
+     assert.equal(await button.getAttribute('aria-describedby'),'action-cue');
+     assert.ok((await frame.locator('#action-cue').innerText()).trim(),'visible missing-process cue');
+     await fixedPrimary();
+     assert.ok(await frame.locator('#next-guidance').isHidden(),'locked Check never competes with generic next guidance');
+     if(await frame.locator('#scene').getAttribute('data-stage')==='recheck'){
+      assert.ok(await frame.locator('#learning-check').isHidden(),'stale recheck instruction does not compete with unfinished process');
+     }
+     assert.equal(await frame.locator('#actions button.primary').count(),1,'single footer workflow control');
+     assert.equal(await frame.locator('#work [data-study-primary]').count(),0,'local operation is not a workflow primary');
+     await button.evaluate(el=>{el.click();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));});
+     assert.deepEqual(await record(),before,'locked Check writes no attempt or state');
+     if(verifyOriginal){
+      // The historical UI allowed these incomplete works to be submitted.
+      // Check the unchanged original submission on an isolated copy of
+      // the ACTUAL work, never on a seeded or persisted learner record.
+      const original=await frame.locator('body').evaluate(async(el,record)=>{
+       const {submitLesson}=await import('./learning/state.js');
+       const copy=structuredClone(record),prior=copy.cases[copy.index]?.attempts||[];
+       const count=prior.length,result=submitLesson(copy),after=copy.cases[copy.index].attempts;
+       return {correct:result.correct,added:after.length-count,unchanged:JSON.stringify(after.slice(0,count))===JSON.stringify(record.cases[record.index]?.attempts||[]),value:after.at(-1).value};
+      },before);
+      assert.equal(original.correct,false,'original mathematical contract still rejects incomplete work');
+      assert.equal(original.added,1);assert.ok(original.unchanged);
+      assert.deepEqual(original.value,before.models[before.index]);
+      assert.deepEqual(await record(),before,'isolated original submission does not change learner storage');
+     }
+     row.checks.push({index:before.index,locked:label,originalRejects:verifyOriginal});
+    };
+    const check=async(expected)=>{
+     const before=await attempts();assert.ok(await action('check').isEnabled(),'completed process must permit the original submission even if wrong');
+     assert.equal(await frame.locator('#actions button.primary').count(),1,'single workflow primary');
+     assert.equal(await frame.locator('#work [data-study-primary]').count(),0,'no competing workflow primary in the widget');
+     await action('check').click();await stage(expected);await beat('check');
+     await assertFooter();await fixedPrimary();
+     assert.ok(await frame.locator('#next-guidance').isHidden(),'no duplicate generic continuation');
+     if(expected==='passed')assert.ok(await frame.locator('#action-cue').isHidden(),'passed result and primary suffice');
+     const after=await attempts();assert.equal(after.length,before.length+1,'one Check creates one attempt');
+     assert.deepEqual(after.slice(0,-1),before,'previous attempts unchanged');
+     if(expected==='passed')assert.ok(await action('next').isEnabled());
+     else assert.equal(await action('next').count(),0,'failed check cannot advance');
+     row.checks.push({index:(await record()).index,stage:expected,attempts:after.length});
+    };
+    const pauseRestore=async()=>{
+     const before=await record(),beforeBeat=await frame.locator('#workbench-beats [aria-current="step"]').getAttribute('data-beat');
+     await frame.locator('body').evaluate(el=>{el.ownerDocument.defaultView.__shellContractToken='same-lesson';});
+     await page.locator('#workbench-later').click();
+     await page.waitForFunction(()=>mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
+     await page.locator('[data-action="nav-learn"]').click();await ready(before.index);await beat(beforeBeat);
+     await assertFooter();
+     assert.equal(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__shellContractToken),'same-lesson');
+     const after=await record();
+     assert.deepEqual(after.models,before.models,'pause restores the actual work');
+     assert.deepEqual(after.cases,before.cases,'pause does not fabricate attempts or support');
+     row.checks.push({index:after.index,pausedAndRestored:true});
+    };
+    const assertReflection=async()=>{
+     await stage('reflect');await beat('record');await assertFooter();await fixedPrimary();
+     const before=await record();
+     assert.equal(before.view,'summary');assert.equal(await frame.locator('#note').count(),1);
+     assert.equal(await frame.locator('.summary-art').count(),0,'no duplicate completion card in V54');
+     assert.match(await frame.locator('#instruction').innerText(),/本组 \d+ \/ \d+ 项操作检查通过/);
+     assert.match(await frame.locator('.reflection-optional').innerText(),/不写.*直接继续/);
+     assert.ok(await action('save-note').isDisabled());
+     const destination=frame.locator('#actions [data-primary-destination]');
+     assert.equal(await destination.count(),1);assert.ok(await destination.isEnabled());
+     assert.equal(await frame.locator('#actions button:visible').count(),1);
+     assert.equal(await frame.locator('#actions button.primary:visible').count(),1);
+     assert.ok(await destination.evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=el.ownerDocument.defaultView.innerHeight+1;}));
+     assert.ok(await frame.locator('#note').evaluate(el=>{const s=el.closest('#workbench-stage').getBoundingClientRect(),r=el.getBoundingClientRect();return r.top>=s.top-1&&r.bottom<=s.bottom+1;}),'note reachable without scrolling initial summary');
+     const explanation=frame.locator('#system-explanation');
+     assert.equal(await explanation.count(),1);assert.ok(!await explanation.evaluate(el=>el.open));
+     await explanation.locator(':scope>summary').click();
+     assert.ok(await explanation.evaluate(el=>el.open));await explanation.locator(':scope>summary').click();
+     assert.deepEqual(await record(),before,'reading math summary does not write an attempt or note');
+     await frame.locator('#learning-support>summary').click();
+     assert.equal(await frame.locator('#p3-learning-flow [data-do="restart"]').count(),1);
+     assert.equal(await frame.locator('#p3-learning-flow [data-do="p3-retry"]').count(),1);
+     assert.equal(await frame.locator('.p3-application').count(),1);
+     await frame.locator('#learning-support>summary').press('Escape');
+     await page.waitForFunction(()=>!document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
+     assert.equal(await frame.locator('#source-goals-details').count(),1);
+     assert.deepEqual(await record(),before);
+     await shot('whole-group-discovery');
+     return {before,destination};
+    };
+    const next=async(index)=>{
+     await action('next').click();await ready(index);const current=await record();assert.equal(current.index,index);
+     await beat(current.view==='summary'?'record':'read');
+    };
+    try{
+     await page.goto(base+'/index.html?world=network&layout=54&surface='+(bridge?'explore':'learn')+'#space/node/'+topic);
+     if(bridge){
+      await page.waitForFunction(topic=>window.mathSpace?.snapshot()?.networkVersion===54&&mathSpace.snapshot().selected==='node:'+topic&&!mathSpace.motion().tween&&!document.querySelector('#focus-card').hidden,topic,{timeout:60000});
+      // Inspect the actual frozen catalog read-only, then enter through the
+      // visible source relationship control, not a synthetic click or record.
+      const contract=await page.evaluate(async({session,family,nativeIndex,bridgeIndex})=>{
+       const {BRIDGES,sessionTasks,sourceBridge}=await import('./learning/bridges.js');
+       const atlas=await fetch('./data/atlas.json').then(r=>r.json());
+       const b=BRIDGES[session],t=sessionTasks(family)[nativeIndex],linked=b.tasks[bridgeIndex];
+       const hash=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(value))))).map(n=>n.toString(16).padStart(2,'0')).join('');
+       return {source:!!sourceBridge(session,atlas),sameTask:JSON.stringify(t)===JSON.stringify(linked),type:linked.type,taskHash:await hash(linked),total:b.tasks.length};
+      },{session,family,nativeIndex,bridgeIndex});
+      assert.ok(contract.source&&contract.sameTask,'bridge must contain the unchanged source-linked native task');row.contract=contract;
+      const card=page.locator('#focus-card'),details=card.locator('#cylinder-node-details');
+      if(await details.count()&&!(await details.evaluate(el=>el.open)))await details.locator(':scope>summary').click();
+      const relations=card.locator('[data-action="focus-section"][data-section="relations"]');
+      if(await relations.isVisible())await relations.click();
+      const list=card.locator('details.network-relations');
+      if(await list.count()&&!(await list.evaluate(el=>el.open)))await list.locator(':scope>summary').click();
+      await card.locator('[data-action="bridge"][data-id="'+session+'"]').click();
+     }
+     await ready();await stage('explore');await beat('read');assert.equal((await attempts()).length,0);
+     row.footer=await assertFooter({wideRow:true});
+     const beforeDrawer=await record();
+     await frame.locator('#learning-support>summary').click();
+     await page.waitForFunction(()=>document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
+     await frame.locator('#learning-support-drawer-panel').waitFor({state:'visible'});
+     await assertFooter({openPanel:true});
+     await frame.locator('#learning-support>summary').press('Escape');
+     await page.waitForFunction(()=>!document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
+     const afterDrawer=await record();await beat('read');
+     assert.deepEqual(afterDrawer.models,beforeDrawer.models);assert.deepEqual(afterDrawer.cases,beforeDrawer.cases,'opening auxiliary footer is presentation only');
+     await shot('initial');
+     if(bridge){const c=await connection();assert.ok(c.source);assert.equal(c.completedAt,null);assert.deepEqual(c.nativeIds,[]);}
+     if(family==='samplevary'){
+      assert.equal(await frame.locator('#work details>summary').filter({hasText:'补充解释（可选）'}).count(),1,'optional per-task explanation is not named discovery');
+      assert.equal(await field('prose').count(),1,'original prose field remains');
+      await locked('尚未抽样',{verifyOriginal:true});
+      for(let i=0;i<5;i++){
+       await x('b21-draw').click();const pending=(await model()).board.pending;
+       assert.equal(pending.n,20);assert.equal(new Set(pending.ids).size,20);
+       const expected=Math.round(pending.values.reduce((s,n)=>s+n,0)/pending.n*1000)/10;
+       await locked('已抽样但尚未记录');
+       assert.equal(await x('b21-record').getAttribute('data-study-local'),'true');
+       if(i===0){
+        await field('estimate').fill(expected===0?'1':'0');await x('b21-record').click();
+        assert.ok(await frame.locator('.b21-issue').isVisible(),'original per-sample error feedback remains reachable');
+        const sampleHint=await frame.locator('.b21-issue').innerText();
+        assert.match(sampleHint,/步行人数÷本次抽到的总人数×100/);
+        assert.doesNotMatch(sampleHint,/总量÷份数|平均值/);
+        assert.match(await frame.locator('[data-b21-sample-formula]').first().innerText(),/步行人数÷本次抽到的总人数×100/);
+        assert.ok(await frame.locator('[data-b21-raw-sample]>summary').first().isVisible(),'actual sample rows remain accessible in V54');
+        assert.deepEqual((await model()).board.pending,pending);assert.equal((await model()).board.runs.length,0);
+        await locked('本次记录未被原教具接受');await pauseRestore();
+        await shot('sample-local-error');
+       }
+       await field('estimate').fill(expected.toFixed(1));await x('b21-record').click();
+       const m=await model();assert.equal(m.board.pending,null);assert.equal(m.board.runs.length,i+1);
+       assert.deepEqual(m.board.runs.at(-1).ids,pending.ids);assert.equal(m.board.runs.at(-1).estimate,expected);
+       if(i<4)await locked('仅完成 '+(i+1)+'/5 次',{verifyOriginal:i===2});
+      }
+      assert.equal((await attempts()).length,0);await field('answers.0').selectOption('wrong');
+      await check('revise');await shot('sample-complete-wrong-conclusion');
+      await field('answers.0').selectOption('chance');await check('passed');await next(1);
+     }else if(family==='lastcount'){
+      // No seeded task index or answer. Complete the actual first task before recount.
+      const tap=async order=>{for(const i of order)await x('count-tap','[data-index="'+i+'"]').click();};
+      const guide=async()=>{const g=frame.locator('#thinking-guide');await g.waitFor({state:'attached',timeout:60000});assert.match(await g.textContent(),/哪些记录能帮助你核对这次结果/);};
+      const strict=()=>frame.locator('#thinking-feedback');
+      await guide();await tap([0,1,2,3,4,5,6]);await field('total').fill('7');await field('prediction').fill('7');
+      await x('count-move').click();await field('after').fill('7');await field('why').selectOption('same');await check('passed');
+      assert.ok(await strict().isVisible());await next(1);await guide();
+      const prompt=async()=>assert.match(await frame.locator('#instruction').innerText(),/换个起点或顺序/);
+      const positions=()=>frame.locator('.b6-recount-beads [data-x="count-tap"]').evaluateAll(els=>{const r=els[0].parentElement.getBoundingClientRect();return els.map(el=>{const b=el.getBoundingClientRect();return {index:el.dataset.index,x:Math.round(b.left-r.left),y:Math.round(b.top-r.top)};});});
+      await prompt();const original=await positions();assert.equal(original.length,6);
+      assert.equal(await field('after').count(),0);assert.ok(await field('prediction').isHidden());
+      const first=async prediction=>{await tap([0,1,2,3,4,5]);await field('total').fill('6');await prompt();await field('prediction').fill(String(prediction));await x('count-move').click();assert.deepEqual(await positions(),original);};
+      await first(5);await tap([3,4,5,0,1,2]);await field('after').fill('6');await field('why').selectOption('same');
+      await check('revise');assert.equal(await strict().count(),0);await shot('recount-wrong-prediction');
+      await x('count-reset').click();await first(6);await tap([0,2,1,3,4,5]);await field('after').fill('6');await field('why').selectOption('same');
+      await prompt();assert.deepEqual(await positions(),original);await check('passed');assert.ok(await strict().isVisible());
+      assert.match(await strict().innerText(),/这次作品中的思考线索/);await pauseRestore();assert.ok(await strict().isVisible());
+      await shot('recount-same-start-different-order');await next(2);
+     }else if(family==='chance'){
+      await locked('未开始抛硬币',{verifyOriginal:true});await field('guess').fill('10');
+      const tally=(index,delta)=>x('experiment-tally','[data-index="'+index+'"][data-delta="'+delta+'"]').click();
+      let last;
+      for(let i=0;i<20;i++){
+       await x('experiment-draw').click();const m=await model();assert.equal(m.draws.length,i+1);last=m.draws.at(-1);
+       await tally(i===19?1-last:last,1);
+       if(i===0||i===18)await locked('试验尚未完成');
+      }
+      const wrong=await model();assert.equal(wrong.counts.reduce((s,n)=>s+n,0),20);
+      const heads=wrong.draws.filter(v=>v===0).length;
+      assert.notEqual(wrong.counts[0],heads);
+      const compare=heads===10?'same':heads>10?'higher':'lower';
+      await field('comparison').selectOption(compare);await check('revise');
+      await tally(1-last,-1);await tally(last,1);await check('passed');await next(1);
+     }else if(family==='simulation'){
+      await locked('没有模拟轮次',{verifyOriginal:true});
+      for(const n of [10,100,1000]){
+       await field('sample').selectOption(String(n));
+       for(let i=0;i<5;i++)await x('simulate').click();
+       assert.equal((await model()).runs.filter(r=>r.n===n).length,5);
+       if(n!==1000)await locked('尚有未完成的规模');
+      }
+      await field('trend').selectOption('exact');await field('guarantee').selectOption('yes');
+      await check('revise');await field('trend').selectOption('usually');await field('guarantee').selectOption('no');
+      await check('passed');await next(0);await stage('reflect');
+     }else if(family==='trialestimate'){
+      await locked('还没保留猜想');await field('guess').selectOption('unknown');await x('p22-start').click();
+      await locked('还没完成试验');await x('p22-run').click();assert.deepEqual((await model()).board.checkpoints,[10]);
+      await locked('只完成第一次观察',{verifyOriginal:true});await x('p22-run').click();
+      const m=await model();assert.deepEqual(m.board.checkpoints,[10,100]);
+      await field('rate').fill('2');await field('answers.0').selectOption('exact');await check('revise');
+      await field('rate').fill(m.board.draws.filter(v=>v===0).length+'/100');await field('answers.0').selectOption('estimate');
+      await check('passed');await next(1);
+     }else if(family==='foldprism'){
+      if(!bridge){
+      // B02 preset: six cells in two rows, an invalid cube net.
+      assert.equal((await model()).cells.length,6);
+      const netFraming=async label=>{
+       const faces=await frame.locator('[data-net-face]').evaluateAll(els=>els.map(el=>({name:el.dataset.netFace,color:el.style.getPropertyValue('--net-face')})).sort((a,b)=>a.name.localeCompare(b.name)));
+       assert.deepEqual(faces.map(f=>f.name),['A','B','C','D','E','F']);
+       const palette=faces.map(f=>[1,3,5].map(i=>parseInt(f.color.slice(i,i+2),16)));
+       const canvas=frame.locator('#extra-world canvas');assert.equal(await canvas.count(),1);
+       const png=await canvas.screenshot({animations:'disabled',scale:'css'});
+       const metrics=await page.evaluate(async({encoded,palette})=>{
+        const bitmap=await createImageBitmap(new Blob([Uint8Array.from(atob(encoded),c=>c.charCodeAt(0))],{type:'image/png'}));
+        const c=document.createElement('canvas');c.width=bitmap.width;c.height=bitmap.height;const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(bitmap,0,0);bitmap.close();
+        const data=ctx.getImageData(0,0,c.width,c.height).data;let count=0,minX=c.width,minY=c.height,maxX=-1,maxY=-1;
+        for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++){const i=(y*c.width+x)*4;if(palette.some(([r,g,b])=>Math.max(Math.abs(data[i]-r),Math.abs(data[i+1]-g),Math.abs(data[i+2]-b))<=12)){count++;minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);}}
+        return {width:c.width,height:c.height,count,margin:Math.min(minX,minY,c.width-1-maxX,c.height-1-maxY)};
+       },{encoded:png.toString('base64'),palette});
+       assert.ok(metrics.count>=100&&metrics.margin>=Math.max(5,Math.floor(Math.min(metrics.width,metrics.height)*.035)),'V54 actual net face pixels must remain inside the canvas: '+JSON.stringify(metrics));
+       row.checks.push({netFraming:label,...metrics});fs.writeFileSync(path.join(dir,viewport.width+'x'+viewport.height+'-'+session+'-canvas-'+label+'.png'),png);
+      };
+      assert.ok(await frame.locator('.x-net-paper').isVisible()&&await frame.locator('.x-net-preview').isVisible());
+      assert.ok(!(await frame.locator('[data-net-pair-optional]').evaluate(el=>el.open)));
+      await netFraming('initial');
+      assert.ok(await x('fold').isDisabled(),'fold requires a prediction');
+      await locked('尚未折合');await beat('read');
+      assert.match(await frame.locator('#action-cue').innerText(),/先判断/);
+      await field('why').fill('先试一下六张纸');await beat('try');
+      await x('guess','[data-value="true"]').click();await locked('只有猜想');
+      assert.ok(await frame.locator('[data-net-pair-primary]').isVisible());
+      assert.match(await frame.locator('#action-cue').innerText(),/点击「试着合起来」/);
+      await x('fold').click();
+      assert.equal((await model()).runs.at(-1).why,'先试一下六张纸','optional pre-fold text stays in run snapshot');
+      assert.equal((await attempts()).length,0,'fold is not Check');
+      await check('revise');await shot('wrong-prediction');
+      // Reproduce the Mac screenshot's partly folded work after a Check.
+      // Use actual keyboard controls rather than seeding a learner record.
+      await field('fold').press('Home');await field('fold').press('ArrowRight');
+      assert.equal((await model()).fold,1);await stage('recheck');await locked('尚未重新合拢');
+      assert.match(await frame.locator('#action-cue').innerText(),/继续合拢/);
+      assert.ok(await frame.locator('#check-feedback').isHidden());
+      await netFraming('partial');await pauseRestore();await shot('partly-folded-locked-after-check');
+      await field('fold').press('End');assert.equal((await model()).fold,100);
+      assert.ok(await action('check').isEnabled());
+      await x('unfold').click();await x('guess','[data-value="false"]').click();
+      assert.ok(!(await frame.locator('[data-net-pair-optional]').evaluate(el=>el.open)));await x('fold').click();
+      await field('reason').selectOption('overlap');
+      const m=await model();assert.equal(m.runs.length,2);assert.equal(m.runs[0].guess,true);assert.equal(m.runs[1].guess,false);
+      await check('passed');await shot('cube-net-passed');await next(1);
+      }
+      // B27: connect the remaining four faces, predict, fold, then turn.
+      await locked('原有接纸片门槛');
+      for(let i=0;i<4;i++)await x('g27-piece','[data-index="'+i+'"]').click();
+      await beat('try');assert.deepEqual((await model()).board.parts,[0,1,2,3]);
+      await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();
+      assert.equal((await model()).board.fold,100);assert.equal((await attempts()).length,0);
+      await locked('错误猜想、尚未转动',{verifyOriginal:true});
+      await x('g27-unfold').click();await x('g27-predict','[data-index="yes"]').click();await x('g27-fold').click();
+      assert.equal((await model()).board.turned,false);
+      await locked('正确猜想、尚未转动',{verifyOriginal:true});
+      await x('g27-unfold').click();await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();
+      await x('turn-extra').click();assert.equal((await model()).board.turned,true);
+      await check('revise'); // Complete but mathematically wrong prediction.
+      await x('g27-unfold').click();await locked('已摊开，需重新折合');
+      await x('g27-predict','[data-index="yes"]').click();await x('g27-fold').click();
+      assert.equal((await model()).board.attempts.length,4,'all four fold observations retained');
+      await check('passed');await shot('prism-passed');await next(bridge?1:2);
+     }else if(family==='splitfraction'){
+      const cut=i=>x('b18-cut','[data-index="'+i+'"]').click();
+      const save=async equation=>{await field('equation').fill(equation);await x('b18-save').click();};
+      await locked('尚未保存分法');await beat('read');
+      await cut(1);await beat('try');await cut(2);await save('3/8=1/8+1/8+1/8');
+      assert.equal((await model()).board.saved.length,1);
+      await save('3/8=1/8+1/8+1/8');assert.equal((await model()).board.saved.length,1,'duplicate group does not count');
+      await save('3/8=1/8+1/8+2/8');assert.equal((await model()).board.saved.length,1,'invalid equality does not count');
+      assert.equal((await attempts()).length,0);await pauseRestore();await locked('只保存了一种分法',{verifyOriginal:true});await beat('try');await shot('one-group');
+      if(!bridge&&viewport.width===1280){
+       const draft=await record();await page.reload();await ready();await stage('explore');await beat('try');
+       const restored=await record();assert.deepEqual(restored.models,draft.models);assert.deepEqual(restored.cases,draft.cases);
+       row.checks.push({index:restored.index,reloadedDraftBeat:'try'});
+      }
+      await x('b18-new-groups').click();assert.equal((await model()).board.saved.length,1,'new grouping preserves saved work');
+      await cut(1);await save('3/8=1/8+2/8');
+      assert.equal((await model()).board.saved.length,2);
+      await x('b18-new-groups').click();await cut(2);await save('3/8=2/8+1/8');
+      assert.equal((await model()).board.saved.length,2,'reversed groups are not a third decomposition');
+      assert.equal((await attempts()).length,0,'process actions are not shared submissions');
+      await check('passed');await shot('two-groups-passed');await next(1);
+      if(!bridge){
+       // The third native task requires a particular decomposition. A
+       // valid but different grouping must unlock and receive real feedback.
+       await locked('第二题还没有分法');
+       await cut(1);await save('5/6=1/6+4/6');
+       await x('b18-new-groups').click();await cut(2);await save('5/6=2/6+3/6');
+       await check('passed');await next(2);
+       await locked('第三题还没有分法');
+       await cut(1);await save('17/8=1/8+16/8');
+       assert.equal((await model()).board.saved.length,1);
+       await check('revise');await shot('complete-wrong-group');
+       await x('b18-new-groups').click();await cut(8);await cut(16);await save('17/8=8/8+8/8+1/8');
+       await check('passed');await next(2);await stage('reflect');
+      }
+     }else{
+      if(bridge){
+       assert.deepEqual((await model()).board.values,[1]);
+       for(const n of [4,7,10,13]){await field('value').fill(String(n));await x('p34-next').click();}
+       await beat('try');
+       await field('answers.0').fill('13');
+       assert.deepEqual((await model()).board.values,[1,4,7,10,13]);
+       assert.equal((await attempts()).length,0);
+       await check('passed');
+       assert.equal((await connection()).completedAt,null,'first linked task alone must not light the connection');
+       await next(1);
+      }
+      const inputs=[1,2,3,50,100];
+      const rule=async offset=>{await field('multiplier').fill('4');await field('offset').fill(String(offset));await field('divisor').fill('1');await x('b17-rule').click();};
+      const run=async(n,answer)=>{await field('n').selectOption(String(n));await field('answer').fill(String(answer));await x('b17-run').click();};
+      await locked('还没有搭规则');await beat('read');await rule(3);await beat('try');await locked('还没有运行记录');
+      for(const n of inputs)await run(n,4*n+3);
+      assert.equal((await model()).board.records.length,5,'a wrong but executable rule can make records');
+      assert.equal((await attempts()).length,0);await check('revise');await shot('wrong-rule');
+      const history=(await model()).history;
+      await rule(-1);assert.equal((await model()).board.records.length,0);
+      assert.deepEqual((await model()).history.slice(0,history.length),history,'rebuilding a rule retains history');
+      await run(50,199);await run(100,399);await run(50,199);
+      assert.equal((await model()).board.records.length,2,'same input replaces its record');
+      await run(1,4);assert.equal((await model()).board.records.length,2,'incorrect execution is not recorded');
+      await pauseRestore();await locked('只记录两个远处位置',{verifyOriginal:true});await shot('only-distant-positions');
+      for(const n of [1,2,3])await run(n,4*n-1);
+      assert.deepEqual((await model()).board.records.map(r=>r.n).sort((a,b)=>a-b),inputs);
+      assert.deepEqual((await model()).board.rule,[4,-1,1]);
+      if(bridge)assert.equal((await connection()).completedAt,null,'unsubmitted construction is not a completed bridge');
+      await check('passed');
+      await field('offset').fill('3');await stage('recheck');await beat('check');
+      assert.equal(await action('next').count(),0,'editing the passed work revokes Next');
+      assert.ok(await action('check').isEnabled(),'editing a completed rule is not an answer-based gate');
+      await field('offset').fill('-1');await stage('passed');
+      await shot('five-positions-passed');await next(1);
+      if(bridge){await stage('reflect');assert.equal((await record()).view,'summary');}
+     }
+     if(bridge){
+      const c=await connection();
+      assert.ok(c.source);assert.deepEqual(c.nativeIds,[],'linked learning must not write a native lesson record');
+      if(family==='nth35')assert.ok(c.completedAt,'both real linked checks light exactly the configured source edge');
+      else assert.equal(c.completedAt,null,'one checked task must not complete a two-task bridge');
+      row.connection=c;
+     }
+     if((await record()).view==='summary'){
+      const {before,destination}=await assertReflection();
+      const actual={action:await destination.getAttribute('data-do'),id:await destination.getAttribute('data-id')};
+      const expected=await page.evaluate(async session=>{
+       const {sessionRoute,BRIDGES,nextRelatedPractice}=await import('./learning/bridges.js');
+       const {lessonSummary}=await import('./learning/state.js');
+       const {nextRouteLessonId}=await import('./learning/workspace-flow.js');
+       const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+       const atlas=await fetch('./data/atlas.json').then(r=>r.json());
+       const next=nextRouteLessonId(sessionRoute(session),BRIDGES[session]?.to||session,lid=>lessonSummary(state.lessons[lid]).completed);
+       const linked=next?null:nextRelatedPractice(session,atlas,bid=>lessonSummary(state.daily.bridges[bid]).completed);
+       return {action:next||linked?'lesson':'back',id:next||linked?.id||null};
+      },session);
+      assert.deepEqual(actual,expected,'same original configured continuation');
+      const note='我试过不同的办法，发现要核对同一个量。';
+      if(!bridge&&viewport.width===1280){
+       await frame.locator('#note').fill(note);
+       assert.equal((await record()).draft,note);
+       assert.equal(await frame.locator('#actions button.primary:visible').count(),1);
+       assert.ok(await action('save-note').evaluate(el=>el.classList.contains('primary')));await fixedPrimary();
+       assert.ok(await destination.isEnabled(),'writing does not block original continuation');
+       await pauseRestore();assert.equal(await frame.locator('#note').inputValue(),note);
+       await action('save-note').click();
+       const saved=await record();assert.equal(saved.notes.length,before.notes.length+1);
+       assert.equal(saved.notes.at(-1).text,note);assert.equal(saved.draft,'');
+       assert.deepEqual(saved.cases,before.cases);assert.deepEqual(saved.models,before.models);
+       assert.ok(await action('save-note').isDisabled());assert.ok(await destination.evaluate(el=>el.classList.contains('primary')));await fixedPrimary();
+       await shot('whole-group-saved');
+      }else if(!bridge){
+       await frame.locator('#note').fill(note);
+       assert.equal((await record()).draft,note);assert.equal((await record()).notes.length,before.notes.length);
+       assert.ok(await destination.isEnabled(),'unsaved optional text cannot gate next');
+       await shot('whole-group-draft');
+      }
+      const finished=await record();
+      await destination.click();
+      if(actual.action==='lesson'){
+       await page.waitForFunction(target=>document.querySelector('#journey-frame')?.contentWindow?.mathLesson?.snapshot()?.id===target,actual.id,{timeout:60000});
+      }else{
+       await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen&&document.querySelector('#journey-surface').hidden,null,{timeout:30000});
+      }
+      const preserved=await record();
+      for(const key of ['cases','models','notes','draft'])assert.deepEqual(preserved[key],finished[key],'continuation keeps original '+key);
+      row.reflection={destination:actual,notes:preserved.notes.length,draftPreserved:preserved.draft===finished.draft};
+     }else assert.equal(await frame.locator('#note').count(),0,'no per-task discovery field');
+     assert.deepEqual(row.errors,[]);row.passed=true;
+    }catch(error){row.failure=error.stack;await shot('failure').catch(()=>{});}
+    finally{await ctx.close();}
+   }
+  }
+  const previous=result.rows.filter(r=>['foldprism','splitfraction','nth35'].includes(r.family)),counting=result.rows.filter(r=>r.family==='lastcount'),added=result.rows.filter(r=>!previous.includes(r)&&!counting.includes(r));
+  result.passed=previous.length===9&&added.length===6&&counting.length===1&&result.rows.every(r=>r.passed);
+  assert.ok(result.passed,'original nine plus six sampling and one integrated recount scenario: '+JSON.stringify(result.rows.filter(r=>!r.passed).map(r=>({session:r.session,viewport:r.viewport,failure:r.failure}))));
+ }finally{
+  fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');
+ }
+ console.log(JSON.stringify({v54ShellContracts:{testedCheckoutSha:result.testedCheckoutSha,passed:result.passed,rows:result.rows.map(r=>({session:r.session,viewport:r.viewport,passed:r.passed}))}}));
+}

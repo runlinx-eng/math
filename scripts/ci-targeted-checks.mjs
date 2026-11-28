@@ -70,7 +70,7 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
    // Current composition must exercise fresh native Check behavior. Archive
    // consumers remain in the separately requested historical audit.
    if(historicalBrowserSet.has(file))continue;
-   if(['dist/learning/evidence-adapters.js','dist/learning/thinking-feedback.js',
+   if(['dist/learning/learn.js','dist/learning/evidence-adapters.js','dist/learning/thinking-feedback.js',
        'dist/learning/issue341-candidate-descriptors.js','dist/learning/issue341-candidate-feedback.js',
        'dist/learning/issue341-isolated-integration.js','dist/learning/issue341-inactive-shared-feedback.js',
        'dist/learning/issue341-formal-source-routing.js','dist/learning/issue341-formal-admissions.js',

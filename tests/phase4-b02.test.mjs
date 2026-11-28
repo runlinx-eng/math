@@ -9,3 +9,21 @@ test('fold model distinguishes known nets and finds all eleven free cube nets',(
 test('net checks use committed predictions and opposite faces, not an answer edited after reveal',()=>{const t=TASKS.nets[0],m=example(t);m.runs[0].guess=false;m.guess=true;assert.ok(!inspect(t,m).correct);const n=example(t);n.runs[0].pair=[0,1];assert.ok(!inspect(t,n).correct);const b=example(TASKS.nets[2]);b.reason='six';assert.ok(!inspect(TASKS.nets[2],b).correct);});
 test('measurements require the correct instrument, unit and actual model operation',()=>{for(const t of TASKS.measure){const m=example(t);m.tool='';assert.ok(!inspect(t,m).correct);}const t=TASKS.measure[0],m=example(t);m.zero=0;assert.ok(!inspect(t,m).correct);m.zero=t.start;m.unit='g';assert.ok(!inspect(t,m).correct);});
 test('capacity separates estimate, full capacity and contents; no forced perfect estimate',()=>{const t=TASKS.capacity[0],m=example(t);m.prediction=200;assert.ok(inspect(t,m).correct);const h=TASKS.capacity[2],a=example(h);assert.equal(a.total,1000);assert.equal(a.contents,500);a.total=500;assert.ok(!inspect(h,a).correct);const start=initial(t);act(t,start,'pour',{delta:1});assert.equal(start.poured,0);start.guess=300;act(t,start,'estimate',{});act(t,start,'pour',{delta:1});assert.equal(start.poured,50);});
+
+test('net views share stable face identity and follow prediction, not the known answer',async()=>{
+ const {render,NET_FACE_COLORS}=await import('../dist/learning/phase4/b02-view.js');
+ const t=TASKS.nets[2],m=initial(t),before=structuredClone(m);
+ const a=render(t,m);assert.match(a,/平面纸片/);assert.match(a,/折合预览 · 同一张纸/);assert.equal((a.match(/id="extra-world"/g)||[]).length,1);
+ for(let i=0;i<6;i++)assert.ok(a.includes('data-net-face="'+String.fromCharCode(65+i)+'" style="--net-face:#'+NET_FACE_COLORS[i].toString(16).padStart(6,'0')+'"'));
+ assert.deepEqual(m,before);
+ // A false-positive guess on an invalid net must still show the same pair form.
+ act(t,m,'guess',{value:'true'});assert.match(render(t,m),/data-net-pair-primary/);
+ m.pair=[0,2];act(t,m,'guess',{value:'false'});assert.match(render(t,m),/<details class="x-net-pair-optional" data-net-pair-optional>/);assert.deepEqual(m.pair,[0,2]);
+ act(t,m,'fold',{});m.reason='overlap';assert.ok(inspect(t,m).correct);
+ assert.match(render(t,m),/<select disabled data-xfield="pair\.0"/);assert.deepEqual(m.runs[0].pair,[0,2]);
+ const good=TASKS.nets[1],n=initial(good);
+ act(good,n,'guess',{value:'false'});assert.match(render(good,n),/data-net-pair-optional/);
+ act(good,n,'guess',{value:'true'});assert.match(render(good,n),/data-net-pair-primary/);
+ n.pair=foldedNet(n.cells).opposite[0];act(good,n,'fold',{});n.counts={faces:6,edges:12,vertices:8};
+ assert.ok(inspect(good,n).correct);assert.ok(valid(good,JSON.parse(JSON.stringify(n))));
+});

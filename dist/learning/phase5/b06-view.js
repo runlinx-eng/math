@@ -1,6 +1,20 @@
 import{esc,button as b,input,range,select}from'../phase4/ui.js';
 import{cn,amount}from'./b06-model.js';
 const n=(key,label,value,attrs='')=>`<label class="field">${label}<input type="number" min="-1000000" max="1000000" step="1" data-xfield="${key}" aria-label="${label}" value="${value??''}" ${attrs}></label>`;
+// The original moved flag separates the two recorded counting rounds.
+// In recount, it does not change the positions of the objects.
+// Presentation only: never change the source task or its reviewed fingerprint.
+export const b06PresentationPrompt=t=>t.type==='x-counttrail'&&t.recount?'先数一次。换个起点或顺序再数，比较两次总数。':t.prompt;
+export const recountReady=(t,m)=>!m.moved&&m.taps.length===t.n&&new Set(m.taps).size===t.n&&m.taps.every(i=>Number.isInteger(i)&&i>=0&&i<t.n)&&m.total!==null;
+const beadName=i=>String.fromCharCode(65+i);
+const recountBeads=(t,m,taps)=>{
+ const beads=Array.from({length:t.n},(_,i)=>{
+  const marks=taps.flatMap((v,j)=>v===i?[j+1]:[]);
+  const label='珠 '+beadName(i)+(marks.length?'，数到 '+marks.join('、'):'，尚未数');
+  return b('count-tap','<span class="b6-recount-name">'+beadName(i)+'</span><span class="b6-recount-marks" aria-hidden="true">'+marks.join('·')+'</span>',`data-index="${i}" class="b6-dot ${marks.length?'selected':''}" aria-label="${esc(label)}" aria-pressed="${marks.length>0}"`);
+ }).join('');
+ return `<p class="b6-task-step">${m.moved?'第二次数数：换个起点或顺序，从一开始。':'第一次数数：任选一颗开始，从一数起。'}</p><div class="b6-beads b6-recount-beads" role="group" aria-label="同一组珠子">${beads}</div><p class="quiet" aria-live="polite">已点 ${taps.length} 次${m.moved?' · 第一次的顺序：'+m.taps.map(beadName).join(' → '):''}</p>`;
+};
 const group=s=>`<div class="x-fields">${s}</div>`;
 const dot=(i,act,selected=false,label='',attrs='')=>b(act,label||'●',`data-index="${i}" class="b6-dot ${selected?'selected':''}" aria-label="${esc(label||`第 ${i+1} 颗`)}" aria-pressed="${selected}" ${attrs}`);
 const dots=n=>`<span class="b6-static-dots">${Array.from({length:n},()=>'<i></i>').join('')}</span>`;
@@ -17,6 +31,7 @@ case'x-counttrail':{
    :dot(i,'count-tap',taps.includes(i),`${letter(i)}${taps.includes(i)?' · '+(taps.indexOf(i)+1):''}`,taps.includes(i)?'disabled':'')).join('');
   return`<div class="b6-countonce-step"><p class="b6-task-step"${choosing?' data-b6="puppet-title"':''}>${choosing?'① 看小木偶数数':'③ 自己重新数一次'}</p>${choosing?'<p class="b6-puppet-status" role="status" aria-live="polite" data-b6="puppet-status">点击开始数，观察每次指向的珠子。</p>':`<p class="quiet">你选了珠 ${letter(t.error[m.badStep-1])}，现在每颗只数一次。</p>`}<div class="b6-beads ${t.layout} b6-countonce-beads" role="group" aria-label="${choosing?'小木偶数珠子':'自己重新数珠子'}">${beads}</div>${choosing?'':`<p class="quiet">已数 ${taps.length} 颗</p>`}</div>`;
  }
+ if(t.recount)return recountBeads(t,m,taps);
  const beads=Array.from({length:t.n},(_,i)=>dot(i,'count-tap',taps.includes(i),taps.includes(i)?'● · '+taps.map((x,j)=>x===i?j+1:null).filter(Boolean).join(','):'●',m.moved&&!t.recount?'disabled':'')).join('');
  return`${t.crooked?'<p>小木偶的序号：3 → 4 → 5 → 6 → 7</p>':''}<div class="b6-beads ${m.moved?'scatter':t.layout}">${beads}</div><p class="quiet">${taps.length} 次标记${m.moved?' · 位置已换过':''}${m.before!==null?' · 第一次记录 '+m.before:''}</p>`;
 }
@@ -37,6 +52,10 @@ default:return'';}}
 export function controls(t,m){switch(t.type){
 case'x-counttrail':{
  if(t.error)return m.badStep===null?'<div class="choice-line"><button type="button" data-b6="puppet-start">开始数</button></div>':`<div class="choice-line">${b('count-error-back','换一颗')}${b('count-reset','重新数')}</div>${m.taps.length===t.n?why(m,'twice'):''}`;
+ if(t.recount){
+  const ready=recountReady(t,m);
+  return `<div class="choice-line">${b('count-undo','撤回一次')}${b('count-reset','从头再数')}</div>${n('total','第一次数出几个',m.total,m.moved?'disabled':'')}<div data-b6="recount-prediction" ${!m.moved&&!ready?'hidden':''}>${n('prediction','换个顺序数，你猜一共几个？',m.prediction,m.moved?'disabled':'')}${m.moved?'':b('count-move','开始第二次数数',ready&&m.prediction!==null?'':'disabled')}</div>${m.moved?`${n('after','第二次数出几个',m.after)}${select('why','为什么两次结果会这样？',m.why,[['same','珠子没有增减，只是数的顺序变了'],['long','换了数的顺序，总数就变了']])}`:''}`;
+ }
  return`<div class="choice-line">${b('count-undo','撤回一次')}${b('count-reset','重新数')}</div>${n('total','第一次的总数',m.total,m.moved?'disabled':'')}${t.rearrange?`${n('prediction','挪动后会有几个',m.prediction,m.moved?'disabled':'')}${b('count-move','把位置打散',m.moved?'disabled':'')}${n('after','换位置后有几个',m.after)}`:''}${t.crooked||t.rearrange?why(m,t.crooked?'start':'same'):''}`;
 }
 case'x-paircounts':return`${b('pair-undo','撤回一对')}${group(n('a','第一组有几个',m.a)+n('b','第二组有几个',m.b)+select('relation','第一组比第二组',m.relation,[['more','多'],['fewer','少'],['equal','一样多']]))}${t.c?group(select('most','最多的一组',m.most,[['0','①'],['1','②'],['2','③']])+select('least','最少的一组',m.least,[['0','①'],['1','②'],['2','③']])):''}`;

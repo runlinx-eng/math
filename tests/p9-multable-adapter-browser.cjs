@@ -150,6 +150,10 @@ async function main(){
  const {multableBinding:binding,replayMultableEvidence:replay}=await import('../dist/learning/multable-evidence.js'),atlas=JSON.parse(fs.readFileSync(path.join(root,'dist/data/atlas.json'),'utf8'));
  const taskFor=c=>sessionTaskFor(c.id,c.index),ctx=c=>({sessionId:c.id,index:c.index}),originalState=value=>{assert.deepEqual(Core.validate(value,atlas),value);return value;};
  const lessonFrom=(value,c)=>Object.hasOwn(BRIDGES,c.id)?value.daily.bridges[c.id]:value.lessons[c.id];
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const approvedOther=require('./fixtures/p9-regression-cross-family-boundaries.cjs').multable;
+ const isOther=c=>approvedOther.some(row=>row.sessionId===c.id&&row.index===c.index);
+ const auditOther=await createExcludedFeedbackAudit('multable',[...excluded,...navigationFixture.navigation],taskFor,approvedOther);
  for(const c of[...cases,...associated,...practice,...excluded])assert.equal(hash(taskFor(c)),c.taskHash);
  for(const c of navigationFixture.navigation){assert.deepEqual(taskFor(c),c.task);assert.equal(hash(taskFor(c)),c.taskHash);}
  for(const[file,sha]of Object.entries({...fixture.sourceHashes,...navigationFixture.sourceHashes}))assert.equal(digest(fs.readFileSync(path.join(root,file))),sha,file);
@@ -283,14 +287,17 @@ async function main(){
     const raw=await rawSnapshot(phase),lesson=lessonFrom(raw.decodedState,c),m=lesson.models[c.index],record=lesson.cases[c.index]||null,task=taskFor(c),proof=replay(task,m);
     assert.equal(Tasks.validModel(task,m),true);const expectedFeedback=thinkingFeedback(task,m,record,ctx(c)),native=!!binding(task,ctx(c));
     assert.equal(native&&!!expectedFeedback,strict);if(role!=='prerequisite')assert.equal(!!expectedFeedback,strict);
-    assert.equal(await hint.count(),expectedFeedback?1:0);if(expectedFeedback)assert.equal(await hint.isVisible(),true);const words=expectedFeedback?await hint.innerText():null;
+    const otherFamily=(role==='prerequisite'||role==='excluded')&&isOther(c)?await auditOther(page,c,m,record):null;
+    if(otherFamily)assert.equal(native,false,'separate native proof is not original family coverage');
+    const hasFeedback=!!expectedFeedback||!!otherFamily?.feedback;
+    assert.equal(await hint.count(),hasFeedback?1:0);if(hasFeedback)assert.equal(await hint.isVisible(),true);const words=hasFeedback?await hint.innerText():null;
     if(strict){
      assert.ok(proof&&native);assert.deepEqual(record.attempts.at(-1).value,m);assert.equal(expectedFeedback.method,null);
      assert.ok(words.includes('列位、计数片和写法由工具给定')&&words.includes('没有把它算作另一个独立的加法过程'));assert.doesNotMatch(words,/MP\.\d/);assert.equal(await hint.locator('[data-thinking-node-id]').count(),0);
      assert.ok(words.includes(`当前重建的作品里有 ${proof.construction.trades.length} 次十换一`));
     }
     const value={width,height,contextRole,id:c.id,index:c.index,label,phase,role,checked,model:m,record,attempts:record?.attempts||[],storage:storageOnly(raw),correct:Tasks.inspect(task,m).correct,strict,proof,words,
-     existingOtherFeedback:!native&&!!expectedFeedback,constructedCompatibilityFixture:contextRole.startsWith('constructed-')};captures.push(value);return value;
+     existingOtherFeedback:!native&&!!expectedFeedback,otherFamily,constructedCompatibilityFixture:contextRole.startsWith('constructed-')};captures.push(value);return value;
    };
    const check=async(c,correct,strict,phase,role)=>{
     const before=await current(c),control=page.locator('#actions [data-do="check"]');assert.equal(await control.count(),1);await reveal(control);assert.equal(await control.isEnabled(),true);await control.click();
@@ -313,6 +320,7 @@ async function main(){
      const previous={id:c.id,index:at},saved=await current(previous);
      if(!saved.record?.attempts?.some(a=>Tasks.inspect(taskFor(previous),a.value).correct)){
       const prep=navigationFixture.navigation.find(x=>x.id===c.id&&x.index===at);assert.ok(prep);assert.equal(binding(taskFor(previous),ctx(previous)),null);
+      if(isOther(previous))await auditOther(page,previous,saved.model,saved.record??null);
       for(const step of prep.steps)step.field||step.coreField?await field(previous,step.field||step.coreField,step.value,!!step.coreField):await action(previous,step.action,step.data);
       const checked=await check(previous,true,false,'navigation-prerequisite-'+at,'prerequisite');preparations.push({width,height,...prep,checked,strictMultableCoverage:false});
      }
@@ -380,8 +388,10 @@ async function main(){
    };
    for(const c of targets){
     if(c.role==='native')await runNative(c);
-    else{label=prefix+'-'+c.role+'-'+c.id+'-'+c.index;await open(c);assert.equal(await guide.count(),0);assert.equal(await hint.count(),0);await solve(c);
-     const snapshot=await check(c,true,false,c.role+'-checked',c.role);assert.equal(!!snapshot.proof,c.math.trades>0);assert.equal(binding(taskFor(c),ctx(c)),null);await reload(c);assert.equal(await hint.count(),0);assert.deepEqual(await model(c),snapshot.model);
+    else{label=prefix+'-'+c.role+'-'+c.id+'-'+c.index;await open(c);
+     if(c.role==='excluded'&&isOther(c)){const initial=await current(c);await auditOther(page,c,initial.model,initial.record??null);}else{assert.equal(await guide.count(),0);assert.equal(await hint.count(),0);}
+     await solve(c);const snapshot=await check(c,true,false,c.role+'-checked',c.role);assert.equal(!!snapshot.proof,c.math.trades>0);assert.equal(binding(taskFor(c),ctx(c)),null);await reload(c);
+     if(snapshot.otherFamily){const restored=await current(c);assert.deepEqual(await auditOther(page,c,restored.model,restored.record),snapshot.otherFamily);}else assert.equal(await hint.count(),0);assert.deepEqual(await model(c),snapshot.model);
      const rendered=await visual(c,'checked');isolated.push({width,height,kind:c.role,id:c.id,index:c.index,taskHash:c.taskHash,snapshot,rendered});}
    }
    const mapCaptures=(rows,finalState)=>rows.map(value=>{

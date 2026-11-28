@@ -172,6 +172,10 @@ async function main(){
  };
  const taskFor=row=>sessionTaskFor(row.id,row.index);
  const context=row=>({sessionId:row.id,index:row.index});
+ const {createExcludedFeedbackAudit}=require('./helpers/p9-area-time-excluded-feedback.cjs');
+ const otherRows=require('./fixtures/p9-money-order-convert-cross-family-boundaries.cjs').convert;
+ const isOther=c=>otherRows.some(row=>row.sessionId===c.id&&row.index===c.index);
+ const auditOther=await createExcludedFeedbackAudit('convert',fixture.routes.flat().filter(row=>row.role==='prerequisite'),taskFor,otherRows);
  const lessonFrom=(state,row)=>Object.hasOwn(BRIDGES,row.id)?state.daily.bridges[row.id]:state.lessons[row.id];
  const current=async(page,row)=>lessonFrom(stateOf(await read(page)),row);
  const modelFor=async(page,row)=>(await current(page,row)).models[row.index];
@@ -186,11 +190,13 @@ async function main(){
   assert.deepEqual(model,before.models[row.index]);
   assert.equal(Tasks.inspect(task,model).correct,correct);
   const originalFeedback=thinkingFeedback(task,model,record,context(row));
-  assert.equal(await feedback(page).count(),originalFeedback?1:0);
+  const otherFamily=row.role==='prerequisite'&&isOther(row)?await auditOther(page,row,model,record):null;
+  if(otherFamily)assert.equal(convertBinding(task,context(row)),null,'separate prerequisite proof is not conversion coverage');
+  assert.equal(await feedback(page).count(),originalFeedback||otherFamily?.feedback?1:0);
   assert.equal(!!(convertBinding(task,context(row))&&originalFeedback),strict);
   const proof=strict?replayConvertEvidence(task,model):null;
   if(strict)assert.ok(proof&&originalFeedback?.method===null);
-  const item={id:row.id,index:row.index,role:row.role,phase,correct,strict,model,attempt,proof,
+  const item={id:row.id,index:row.index,role:row.role,phase,correct,strict,model,attempt,proof,otherFamily,
    storage:stateFiles((row.profile||'source')+'-'+key(row)+'-'+phase,snapshot)};
   report.checkedLedger.push(item);
   report.checks.push({id:row.id,index:row.index,phase,correct,strict});
@@ -226,6 +232,7 @@ async function main(){
   const task=taskFor(row),guide=page.locator('#thinking-guide');
   assert.deepEqual((await current(page,row)).cases[row.index]?.attempts||[],[]);
   if(row.role==='prerequisite'){
+   if(isOther(row)){const initial=await current(page,row);await auditOther(page,row,initial.models[row.index],initial.cases[row.index]??null);}
    for(const step of row.steps)await applyStep(page,step);
    await check(page,row,'prerequisite',true,false);
    return;
