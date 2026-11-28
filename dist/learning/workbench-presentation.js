@@ -36,7 +36,24 @@ export function mountWorkbenchShell(doc){
       const dock=doc.getElementById('workbench-drawer'),panel=doc.getElementById('learning-support-drawer-panel');
       const question=doc.querySelector('#lesson>header [data-do="question"]');
       const curriculum=doc.getElementById('workbench-curriculum'),route=doc.getElementById('route-title');
-      if(dock&&panel&&question&&curriculum&&route){dock.append(question);panel.prepend(route,curriculum);doc.body.dataset.workbenchHeader='parent';}
+      if(dock&&panel&&question&&curriculum&&route){
+        dock.append(question);panel.prepend(route,curriculum);doc.body.dataset.workbenchHeader='parent';
+        // One footer, with the original auxiliary dock on the left and the
+        // original execution command on the right. No new action owner.
+        const content=doc.getElementById('workbench-content');
+        if(content&&dock.parentElement===content){
+          const footer=doc.createElement('div');footer.id='workbench-footer';
+          footer.setAttribute('role','group');footer.setAttribute('aria-label','学习底栏');
+          dock.before(footer);footer.append(dock,command);
+          // When the original buttons wrap or an action changes, keep the
+          // overlay confined to the scroll stage, above the whole footer.
+          const measure=()=>content.style.setProperty('--workbench-footer-height',footer.getBoundingClientRect().height+'px');
+          measure();
+          if(doc.defaultView.ResizeObserver){
+            const observer=new doc.defaultView.ResizeObserver(measure);observer.observe(footer);
+          }
+        }
+      }
     }
   }catch{/* Non-native embeddings keep the original presentation. */}
   return true;

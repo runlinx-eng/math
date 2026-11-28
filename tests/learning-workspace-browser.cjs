@@ -779,9 +779,31 @@ async function verifyV54ShellContracts(browser){
      const w=document.querySelector('#journey-frame')?.contentWindow,s=w?.mathLesson?.snapshot();
      return window.mathSpace?.snapshot()?.networkVersion===54&&document.body.dataset.workbenchForeground==='learn'&&s?.id===session&&s.index===index&&w.document.body.dataset.workbenchLayout==='compact-v54'&&w.document.getElementById('storage-warning')?.hidden;
     },{session,index},{timeout:60000});
+    const assertFooter=async({wideRow=false,openPanel=false}={})=>{
+     const geometry=await page.evaluate(()=>{
+      const doc=document.querySelector('#journey-frame').contentDocument;
+      const f=doc.querySelector('#workbench-footer'),dock=doc.querySelector('#workbench-drawer'),command=doc.querySelector('.execution-command'),stage=doc.querySelector('#workbench-stage');
+      const box=el=>{const r=el.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height};};
+      const panel=doc.querySelector('#learning-support-drawer-panel');
+      return {footer:box(f),dock:box(dock),command:box(command),stage:box(stage),panel:box(panel),viewport:doc.defaultView.innerHeight,
+       ownsOriginals:dock.parentElement===f&&command.parentElement===f&&doc.querySelectorAll('#actions').length===1,
+       question:doc.querySelectorAll('#lesson [data-do="question"]').length,beatCount:doc.querySelectorAll('#workbench-beats li').length,
+       interactiveBeats:doc.querySelectorAll('#workbench-beats :is(button,a,[tabindex],[role="button"])').length,inert:stage.inert};
+     });
+     const {footer,dock,command,stage:surface,panel}=geometry;
+     assert.ok(geometry.ownsOriginals&&geometry.question===1,'one footer, one original command and question owner');
+     assert.equal(geometry.beatCount,4);assert.equal(geometry.interactiveBeats,0,'four beats are not navigation controls');
+     assert.ok(surface.height>0&&surface.bottom<=footer.top+1&&footer.bottom<=geometry.viewport+1,'footer cannot cover the mathematical stage or overflow the viewport');
+     assert.ok(dock.left>=footer.left-1&&dock.right<=footer.right+1&&command.left>=footer.left-1&&command.right<=footer.right+1,'both original groups stay inside the footer');
+     assert.ok(dock.right<=command.left+1||dock.bottom<=command.top+1,'auxiliary and primary groups do not overlap');
+     if(wideRow)assert.ok(dock.right<=command.left+1&&dock.top<command.bottom&&command.top<dock.bottom,'desktop initial footer is a single horizontal row');
+     if(openPanel)assert.ok(geometry.inert&&panel.top>=surface.top-1&&panel.bottom<=footer.top+1,'drawer covers only the scrollable stage, not the footer');
+     return geometry;
+    };
     const check=async(expected)=>{
      const before=await attempts();assert.ok(await action('check').isEnabled(),'original Check gate must permit this submission');
      await action('check').click();await stage(expected);
+     await assertFooter();
      const after=await attempts();assert.equal(after.length,before.length+1,'one Check creates one attempt');
      assert.deepEqual(after.slice(0,-1),before,'previous attempts unchanged');
      if(expected==='passed')assert.ok(await action('next').isEnabled());
@@ -794,6 +816,7 @@ async function verifyV54ShellContracts(browser){
      await page.locator('#workbench-later').click();
      await page.waitForFunction(()=>mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
      await page.locator('[data-action="nav-learn"]').click();await ready(before.index);
+     await assertFooter();
      assert.equal(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__shellContractToken),'same-lesson');
      const after=await record();
      assert.deepEqual(after.models,before.models,'pause restores the actual work');
@@ -825,7 +848,18 @@ async function verifyV54ShellContracts(browser){
       if(await list.count()&&!(await list.evaluate(el=>el.open)))await list.locator(':scope>summary').click();
       await card.locator('[data-action="bridge"][data-id="'+session+'"]').click();
      }
-     await ready();await stage('explore');assert.equal((await attempts()).length,0);await shot('initial');
+     await ready();await stage('explore');assert.equal((await attempts()).length,0);
+     row.footer=await assertFooter({wideRow:true});
+     const beforeDrawer=await record();
+     await frame.locator('#learning-support>summary').click();
+     await page.waitForFunction(()=>document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
+     await frame.locator('#learning-support-drawer-panel').waitFor({state:'visible'});
+     await assertFooter({openPanel:true});
+     await frame.locator('#learning-support>summary').press('Escape');
+     await page.waitForFunction(()=>!document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
+     const afterDrawer=await record();
+     assert.deepEqual(afterDrawer.models,beforeDrawer.models);assert.deepEqual(afterDrawer.cases,beforeDrawer.cases,'opening auxiliary footer is presentation only');
+     await shot('initial');
      if(bridge){const c=await connection();assert.ok(c.source);assert.equal(c.completedAt,null);assert.deepEqual(c.nativeIds,[]);}
      if(family==='foldprism'){
       if(!bridge){
