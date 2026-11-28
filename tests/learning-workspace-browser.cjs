@@ -858,6 +858,36 @@ async function verifyV54ShellContracts(browser){
      assert.deepEqual(after.cases,before.cases,'pause does not fabricate attempts or support');
      row.checks.push({index:after.index,pausedAndRestored:true});
     };
+    const assertReflection=async()=>{
+     await stage('reflect');await beat('record');await assertFooter();
+     const before=await record();
+     assert.equal(before.view,'summary');assert.equal(await frame.locator('#note').count(),1);
+     assert.equal(await frame.locator('.summary-art').count(),0,'no duplicate completion card in V54');
+     assert.match(await frame.locator('#instruction').innerText(),/本组 \d+ \/ \d+ 项操作检查通过/);
+     assert.match(await frame.locator('.reflection-optional').innerText(),/不写.*直接继续/);
+     assert.ok(await action('save-note').isDisabled());
+     const destination=frame.locator('#actions [data-primary-destination]');
+     assert.equal(await destination.count(),1);assert.ok(await destination.isEnabled());
+     assert.equal(await frame.locator('#actions button:visible').count(),1);
+     assert.equal(await frame.locator('#actions button.primary:visible').count(),1);
+     assert.ok(await destination.evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=el.ownerDocument.defaultView.innerHeight+1;}));
+     assert.ok(await frame.locator('#note').evaluate(el=>{const s=el.closest('#workbench-stage').getBoundingClientRect(),r=el.getBoundingClientRect();return r.top>=s.top-1&&r.bottom<=s.bottom+1;}),'note reachable without scrolling initial summary');
+     const explanation=frame.locator('#system-explanation');
+     assert.equal(await explanation.count(),1);assert.ok(!await explanation.evaluate(el=>el.open));
+     await explanation.locator(':scope>summary').click();
+     assert.ok(await explanation.evaluate(el=>el.open));await explanation.locator(':scope>summary').click();
+     assert.deepEqual(await record(),before,'reading math summary does not write an attempt or note');
+     await frame.locator('#learning-support>summary').click();
+     assert.equal(await frame.locator('#p3-learning-flow [data-do="restart"]').count(),1);
+     assert.equal(await frame.locator('#p3-learning-flow [data-do="p3-retry"]').count(),1);
+     assert.equal(await frame.locator('.p3-application').count(),1);
+     await frame.locator('#learning-support>summary').press('Escape');
+     await page.waitForFunction(()=>!document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
+     assert.equal(await frame.locator('#source-goals-details').count(),1);
+     assert.deepEqual(await record(),before);
+     await shot('whole-group-discovery');
+     return {before,destination};
+    };
     const next=async(index)=>{
      await action('next').click();await ready(index);const current=await record();assert.equal(current.index,index);
      await beat(current.view==='summary'?'record':'read');
@@ -1010,6 +1040,51 @@ async function verifyV54ShellContracts(browser){
       else assert.equal(c.completedAt,null,'one checked task must not complete a two-task bridge');
       row.connection=c;
      }
+     if((await record()).view==='summary'){
+      const {before,destination}=await assertReflection();
+      const actual={action:await destination.getAttribute('data-do'),id:await destination.getAttribute('data-id')};
+      const expected=await page.evaluate(async session=>{
+       const {sessionRoute,BRIDGES,nextRelatedPractice}=await import('./learning/bridges.js');
+       const {lessonSummary}=await import('./learning/state.js');
+       const {nextRouteLessonId}=await import('./learning/workspace-flow.js');
+       const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+       const atlas=await fetch('./data/atlas.json').then(r=>r.json());
+       const next=nextRouteLessonId(sessionRoute(session),BRIDGES[session]?.to||session,lid=>lessonSummary(state.lessons[lid]).completed);
+       const linked=next?null:nextRelatedPractice(session,atlas,bid=>lessonSummary(state.daily.bridges[bid]).completed);
+       return {action:next||linked?'lesson':'back',id:next||linked?.id||null};
+      },session);
+      assert.deepEqual(actual,expected,'same original configured continuation');
+      const note='我试过不同的办法，发现要核对同一个量。';
+      if(!bridge&&viewport.width===1280){
+       await frame.locator('#note').fill(note);
+       assert.equal((await record()).draft,note);
+       assert.equal(await frame.locator('#actions button.primary:visible').count(),1);
+       assert.ok(await action('save-note').evaluate(el=>el.classList.contains('primary')));
+       assert.ok(await destination.isEnabled(),'writing does not block original continuation');
+       await pauseRestore();assert.equal(await frame.locator('#note').inputValue(),note);
+       await action('save-note').click();
+       const saved=await record();assert.equal(saved.notes.length,before.notes.length+1);
+       assert.equal(saved.notes.at(-1).text,note);assert.equal(saved.draft,'');
+       assert.deepEqual(saved.cases,before.cases);assert.deepEqual(saved.models,before.models);
+       assert.ok(await action('save-note').isDisabled());assert.ok(await destination.evaluate(el=>el.classList.contains('primary')));
+       await shot('whole-group-saved');
+      }else if(!bridge){
+       await frame.locator('#note').fill(note);
+       assert.equal((await record()).draft,note);assert.equal((await record()).notes.length,before.notes.length);
+       assert.ok(await destination.isEnabled(),'unsaved optional text cannot gate next');
+       await shot('whole-group-draft');
+      }
+      const finished=await record();
+      await destination.click();
+      if(actual.action==='lesson'){
+       await page.waitForFunction(target=>document.querySelector('#journey-frame')?.contentWindow?.mathLesson?.snapshot()?.id===target,actual.id,{timeout:60000});
+      }else{
+       await page.waitForFunction(()=>!mathSpace.snapshot().journeyOpen&&document.querySelector('#journey-surface').hidden,null,{timeout:30000});
+      }
+      const preserved=await record();
+      for(const key of ['cases','models','notes','draft'])assert.deepEqual(preserved[key],finished[key],'continuation keeps original '+key);
+      row.reflection={destination:actual,notes:preserved.notes.length,draftPreserved:preserved.draft===finished.draft};
+     }else assert.equal(await frame.locator('#note').count(),0,'no per-task discovery field');
      assert.deepEqual(row.errors,[]);row.passed=true;
     }catch(error){row.failure=error.stack;await shot('failure').catch(()=>{});}
     finally{await ctx.close();}
