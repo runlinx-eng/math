@@ -1,0 +1,68 @@
+name: Historical original Check audit (manual only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  historical-original-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Restore only exact historical inputs; missing archives fail explicitly
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/issue341-prepare-archived-inputs.py
+          python3 scripts/issue341-prepare-followup-126-inputs.py
+          python3 scripts/issue342-prepare-p006-inputs.py
+          python3 scripts/issue342-prepare-p001-p005-inputs.py
+          python3 scripts/issue342-prepare-a258-first33-inputs.py
+          python3 scripts/issue342-prepare-a258-next11-inputs.py
+          python3 scripts/issue343-prepare-a214-b39-inputs.py
+          python3 scripts/issue343-prepare-a214-next95-inputs.py
+          if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
+            python3 scripts/issue341-prepare-followup-218-inputs.py
+          fi
+      - name: Recheck preserved original historical evidence without inventing records
+        run: |
+          node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-isolated-integration.test.mjs tests/issue341-audit-fixture-integration.test.mjs tests/issue341-learning-audit-injection.test.mjs tests/issue341-followup-126-original-inputs.test.mjs tests/issue341-followup-218-staged-routing.test.mjs tests/issue341-followup-218-original-inputs.test.mjs tests/issue342-a355-p001-p005-source-candidates.test.mjs
+          node --test tests/learning-evidence-audit.test.mjs tests/evidence-expansion-audit.test.mjs tests/interaction-semantic-audit.test.mjs
+          node scripts/audit-learning-evidence.mjs
+          node scripts/audit-evidence-expansion.mjs
+          node scripts/audit-interaction-semantics.mjs
+      - name: Install browser for explicitly requested historical consumer audit
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if ! fc-list :lang=zh-cn family | grep -q .; then
+            bash .github/ci-probes/install-cjk-font.sh
+            fc-cache -f
+          fi
+      - name: Exercise original Check consumers and historical import cases
+        run: |
+          python3 -m http.server 43827 --directory dist > /tmp/historical-evidence-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:43827/ >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:43827/ >/dev/null
+          node tests/issue341-isolated-integration-browser.cjs
+          node tests/issue343-a214-b39-backup-import-browser.cjs
+          node tests/issue343-a214-next95-backup-import-browser.cjs
+      - name: Archive audit reports without uploading original input directory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-evidence-audit-${{ github.run_attempt }}
+          path: verification/learning-evidence-audit/
+          if-no-files-found: warn

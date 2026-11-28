@@ -186,21 +186,24 @@ export function auditEvidenceExpansion({adapters=EVIDENCE_ADAPTERS,
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const {loadIssue341FormalAuditInputs}=await import('./issue341-formal-audit-inputs.mjs');
- const inputs=loadIssue341FormalAuditInputs({
-  legacyExampleFor:fixtureFor,legacyRecordFor:oneCheckFor
- });
- const result=auditEvidenceExpansion(inputs),out=resolve(root,'verification/learning-evidence-audit');
- if(result.summary.reviewedTasks!==1762||result.summary.boundTasks!==1762||
-    result.summary.families!==EVIDENCE_ADAPTERS.length+284||
+ const current=process.argv[2]==='--current';
+ if(process.argv.length>2&&!current)throw Error('Use --current for live regression or no argument for historical audit');
+ const manifest=read('docs/spatial-learning/evidence-review-manifest.json');
+ const inputs=current?{manifest:{...manifest,tasks:manifest.tasks.filter(r=>!r.adapter.startsWith('issue341-'))}}:
+  (await import('./issue341-formal-audit-inputs.mjs')).loadIssue341FormalAuditInputs({legacyExampleFor:fixtureFor,legacyRecordFor:oneCheckFor});
+ const result=auditEvidenceExpansion(inputs),out=resolve(root,current?'verification/current-learning-evidence-audit':'verification/learning-evidence-audit');
+ const expected=current?813:1762;
+ if(result.summary.reviewedTasks!==expected||result.summary.boundTasks!==expected||
+    result.summary.families!==EVIDENCE_ADAPTERS.length+(current?0:284)||
     result.defects.length||result.summary.bridgeBindings)
-  throw Error('Formal source/Check expansion failed: '+JSON.stringify({
+  throw Error('Source/Check expansion failed: '+JSON.stringify({
    summary:result.summary,firstDefects:result.defects.slice(0,10)
   }));
+ if(current)Object.assign(result.summary,{scope:'CURRENT_LEGACY_REPLAY_REGRESSION',historicalFormalAdmissions:949,historicalOriginalChecksReplayed:0});
  mkdirSync(out,{recursive:true});
  writeFileSync(resolve(out,'expansion-candidates.json'),JSON.stringify(result,null,2)+'\n');
  const lines=['# 数学证据扩展与来源核对','',
-  '本批949道只使用冻结来源和原始完整 Check/submitted 证据，不推断儿童掌握或新增方法标签。','',
+  current?'本次仅核验813项当前可复现回放及其原始来源；历史949项独立核验来源和当前提交保护，不重放历史Check。':'本批949道只使用冻结来源和原始完整 Check/submitted 证据，不推断儿童掌握或新增方法标签。','',
   '| 家族 | 同类型原生题 | 已绑定 | 未绑定 | 未绑定但样例可回放 | 未验证/不同契约 |',
   '| --- | ---: | ---: | ---: | ---: | ---: |',
   ...result.families.map(f=>`| ${f.id} | ${f.nativeTasks} | ${f.boundTasks} | ${f.unboundTasks} | ${f.exampleReplayableUnbound} | ${f.unverifiedUnbound} |`),'',

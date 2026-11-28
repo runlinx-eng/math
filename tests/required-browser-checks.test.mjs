@@ -413,8 +413,10 @@ test('workflow retains the stable final check, isolated dynamic groups, complete
  assert.match(workflow,/push:\n    branches: \[main\]/);assert.match(workflow,/workflow_dispatch:/);
  assert.doesNotMatch(workflow,/^  schedule:/m);assert.match(workflow,/^  smoke-checks:$/m);
  assert.match(workflow,/node tests\/p10-backup-safety-browser\.cjs/);
- for(const path of ['verification/learning-evidence-audit/','verification/learning-node-audit/',
+ for(const path of ['verification/current-learning-evidence-audit/','verification/learning-node-audit/',
   'verification/p7-d3/','verification/p7-d7/coverage.json'])assert.ok(workflow.includes(path),path);
+ const historical=readFileSync(new URL('../.github/workflows/historical-evidence-audit.yml',import.meta.url),'utf8');
+ assert.ok(historical.includes('verification/learning-evidence-audit/'),'original audit archive path is preserved separately');
 });
 
 test('CI Chromium runner times steps and uses pinned, fail-closed WQY cache',()=>{

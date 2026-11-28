@@ -36,22 +36,23 @@ test('documentation-only changes launch no Chromium or empty family runner',()=>
  assert.throws(()=>gate(p,failed,[]),/Smoke job result/);
 });
 
-test('all365 isolated composition remains selected on later shared-source or archived-record changes',()=>{
+test('current composition selects fresh native Check regression, not historical ZIP consumers',()=>{
  const shared=plan('pull_request',['dist/learning/thinking-feedback.js']);
  assert.deepEqual(shared.scripts,[
-  'tests/issue341-isolated-integration-browser.cjs',
+  'tests/current-formal-evidence-browser.cjs',
   'tests/p10-learning-continuity-browser.cjs','tests/p9-thinking-feedback-browser.cjs'
  ]);
- for(const file of ['dist/learning/evidence-adapters.js',
-  'dist/learning/issue341-candidate-descriptors.js','dist/learning/issue341-candidate-feedback.js','dist/learning/issue341-isolated-integration.js',
-  'dist/learning/issue341-inactive-shared-feedback.js',
-  'tests/fixtures/issue341-archived-input-references.json','scripts/issue341-prepare-archived-inputs.py',
-  'tests/issue341-isolated-integration.test.mjs',
-  'tests/issue341-audit-fixture-integration.test.mjs',
-       'tests/issue341-learning-audit-injection.test.mjs',
-       'tests/issue341-archived-input-transport.test.mjs',
-       'scripts/audit-learning-evidence.mjs','scripts/audit-evidence-expansion.mjs']){
-  assert.ok(plan('pull_request',[file]).scripts.includes('tests/issue341-isolated-integration-browser.cjs'),file);
+ for(const file of ['dist/learning/evidence-adapters.js','dist/learning/issue341-candidate-descriptors.js',
+  'dist/learning/issue341-candidate-feedback.js','dist/learning/issue341-isolated-integration.js',
+  'dist/learning/issue341-inactive-shared-feedback.js','dist/learning/issue341-formal-source-routing.js',
+  'dist/learning/issue341-formal-admissions.js','scripts/audit-learning-evidence.mjs',
+  'scripts/audit-evidence-expansion.mjs','tests/current-formal-evidence-regression.test.mjs']){
+   assert.ok(plan('pull_request',[file]).scripts.includes('tests/current-formal-evidence-browser.cjs'),file);
+ }
+ for(const file of ['tests/issue341-isolated-integration-browser.cjs','tests/issue343-a214-b39-backup-import-browser.cjs',
+   'tests/issue343-a214-next95-backup-import-browser.cjs','tests/fixtures/issue341-archived-input-references.json',
+   'scripts/issue341-prepare-archived-inputs.py']){
+  const p=plan('pull_request',[file]);assert.ok(!p.scripts.some(s=>/issue341-isolated-integration-browser|issue343-a214-.*backup-import-browser/.test(s)),file);
  }
 });
 test('CI-only edits run smoke without launching the 17 legacy empty jobs',()=>{

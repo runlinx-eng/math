@@ -61,43 +61,11 @@ jobs:
         id: scope
         run: node scripts/required-browser-checks.mjs scope
 
-      - name: Select the new isolated shared-integration Node contract
-        id: issue341_scope
+      # Historical acceptance is closed; original ZIPs are audited only on
+      # explicit request. Current exact source and Check contracts stay required.
+      - name: Verify current source and submitted-evidence contracts
         run: |
-          node --input-type=module - <<'NODE'
-          import {appendFileSync} from 'node:fs';
-          import {currentPlan} from './scripts/ci-targeted-checks.mjs';
-          // The formal A-E CLI always consumes original Check records once #341 is in main.
-          // The targeted Chromium matrix alone is not sufficient on main push.
-          const {existsSync}=await import('node:fs');
-          const selected=currentPlan().scripts.includes('tests/issue341-isolated-integration-browser.cjs') ||
-            existsSync('dist/learning/issue341-formal-admissions.js');
-          appendFileSync(process.env.GITHUB_OUTPUT,'selected='+selected+'\n');
-          NODE
-      - name: Read original archived Checks for the new integration only
-        if: steps.issue341_scope.outputs.selected == 'true'
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          python3 scripts/issue341-prepare-archived-inputs.py
-          python3 scripts/issue341-prepare-followup-126-inputs.py
-          python3 scripts/issue342-prepare-p006-inputs.py
-          python3 scripts/issue342-prepare-p001-p005-inputs.py
-          python3 scripts/issue342-prepare-a258-first33-inputs.py
-          python3 scripts/issue342-prepare-a258-next11-inputs.py
-          python3 scripts/issue343-prepare-a214-b39-inputs.py
-          python3 scripts/issue343-prepare-a214-next95-inputs.py
-          if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
-            python3 scripts/issue341-prepare-followup-218-inputs.py
-          fi
-      - name: Verify shared routing and proposed audit with preserved original Checks
-        if: steps.issue341_scope.outputs.selected == 'true'
-        run: |
-          node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-isolated-integration.test.mjs tests/issue341-audit-fixture-integration.test.mjs tests/issue341-learning-audit-injection.test.mjs
-          if [[ -f dist/learning/issue341-followup-218-candidates.js ]]; then
-            node --test tests/issue341-followup-218-staged-routing.test.mjs tests/issue341-followup-218-original-inputs.test.mjs
-          fi
-          node --test tests/issue342-a355-p001-p005-source-candidates.test.mjs
+          node --test tests/issue341-archived-input-transport.test.mjs tests/issue341-formal-source-routing.test.mjs tests/issue341-followup-126-staged-routing.test.mjs tests/issue341-followup-218-staged-routing.test.mjs tests/issue342-a355-p001-p005-source-candidates.test.mjs tests/issue343-a214-b39-source-candidates.test.mjs tests/issue343-a214-next95-source-candidates.test.mjs tests/current-formal-evidence-regression.test.mjs
 
       - name: Plan safe Node test scope from actual changed files
         id: node_scope
@@ -324,6 +292,7 @@ jobs:
             tests/ci-matrix-bridge.test.mjs
             tests/ci-live-matrix.test.mjs
             tests/ci-targeted-checks.test.mjs
+            tests/ci-evidence-lifecycle.test.mjs
             tests/ci-node-scope.test.mjs
             tests/ci-push-preflight.test.mjs
             tests/ci-cancel-superseded.test.mjs
@@ -341,7 +310,6 @@ jobs:
             tests/issue341-inactive-shared-feedback.test.mjs
             tests/issue341-formal-source-routing.test.mjs
             tests/issue341-followup-126-staged-routing.test.mjs
-            tests/issue341-followup-126-original-inputs.test.mjs
             tests/p9-sequence-evidence-adapter.test.mjs
             tests/p9-counterexample-evidence-adapter.test.mjs
             tests/p9-fraction-evidence-adapter.test.mjs
@@ -480,17 +448,19 @@ jobs:
 
       - name: Audit native interaction types and mathematics evidence (read-only)
         if: steps.node_scope.outputs.mode != 'ci-only'
+        env:
+          MATH_EVIDENCE_AUDIT_MODE: current
         run: |
           node --check scripts/audit-learning-evidence.mjs
           node --test tests/learning-evidence-audit.test.mjs
-          node scripts/audit-learning-evidence.mjs
+          node scripts/audit-learning-evidence.mjs --current
           node --check scripts/audit-evidence-expansion.mjs
           node --check tests/evidence-expansion-audit.test.mjs
           node --test tests/evidence-expansion-audit.test.mjs
-          node scripts/audit-evidence-expansion.mjs
+          node scripts/audit-evidence-expansion.mjs --current
           node --check scripts/audit-interaction-semantics.mjs
           node --test tests/interaction-semantic-audit.test.mjs
-          node scripts/audit-interaction-semantics.mjs
+          node scripts/audit-interaction-semantics.mjs --current
 
       # Shadow mode ONLY: write a plan without controlling matrix/Required gate.
       - name: Validate declarative math-family registry and preserve shadow plan
@@ -516,7 +486,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: learning-evidence-audit-${{ github.run_attempt }}
-          path: verification/learning-evidence-audit/
+          path: verification/current-learning-evidence-audit/
           if-no-files-found: warn
 
       - name: Check deployment script syntax
@@ -607,17 +577,6 @@ jobs:
             fc-cache -f
           fi
           fc-list :lang=zh-cn family | grep -q .
-      - name: Read original Check inputs for isolated shared integration
-        if: matrix.script == 'tests/issue341-isolated-integration-browser.cjs'
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: python3 scripts/issue341-prepare-archived-inputs.py
-      - name: Read source-locked B39 original exports for real file-chooser import
-        if: matrix.script == 'tests/issue343-a214-b39-backup-import-browser.cjs'
-        run: python3 scripts/issue343-prepare-a214-b39-inputs.py
-      - name: Read remaining 95 frozen native exports for real chooser regression
-        if: matrix.script == 'tests/issue343-a214-next95-backup-import-browser.cjs'
-        run: python3 scripts/issue343-prepare-a214-next95-inputs.py
       - name: Run impacted math family in Chromium
         shell: bash
         run: |
@@ -663,14 +622,14 @@ jobs:
             verification/p9-signed-order-preaudit/*-corrected-1920x1080.png
           if-no-files-found: error
           retention-days: 7
-      - name: Preserve new all365 shared-integration evidence and original-input provenance
-        if: ${{ success() && matrix.script == 'tests/issue341-isolated-integration-browser.cjs' }}
+      - name: Preserve current formal source regression evidence
+        if: ${{ success() && matrix.script == 'tests/current-formal-evidence-browser.cjs' }}
         uses: actions/upload-artifact@v4
         with:
-          name: issue341-isolated-integration-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
-          path: verification/issue341-isolated-integration/
+          name: current-formal-evidence-${{ github.event.pull_request.head.sha }}-attempt-${{ github.run_attempt }}
+          path: verification/current-formal-evidence/
           if-no-files-found: error
-          retention-days: 90
+          retention-days: 30
       - name: Save full family evidence only for investigation on failure
         if: failure()
         uses: actions/upload-artifact@v4

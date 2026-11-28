@@ -10,8 +10,10 @@ import {defaultModel,exampleModel,validModel,inspect} from '../dist/learning/tas
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
-const dir=resolve(root,'verification/learning-evidence-audit');
-execFileSync(process.execPath,['scripts/audit-learning-evidence.mjs'],{cwd:root,encoding:'utf8',timeout:120000});
+const current=process.argv[2]==='--current';
+if(process.argv.length>2&&!current)throw Error('Use --current for live regression or no argument for historical audit');
+const dir=resolve(root,current?'verification/current-learning-evidence-audit':'verification/learning-evidence-audit');
+execFileSync(process.execPath,['scripts/audit-learning-evidence.mjs',...(current?['--current']:[])],{cwd:root,encoding:'utf8',timeout:120000});
 await ensureB39Ready();
 const load=n=>JSON.parse(readFileSync(resolve(dir,n),'utf8'));
 const rows=load('tasks.json').rows;
@@ -129,6 +131,7 @@ assert(semantic.length===base.uniqueInteractionTypes,'Missing type semantic row'
 assert(coverage.reduce((a,p)=>a+p.nativeCoreTasks,0)===base.nativeCoreTasks,'Native profile coverage mismatch');
 assert(coverage.reduce((a,p)=>a+p.bridgeTasks,0)===base.bridgeTasks,'Bridge profile coverage mismatch');
 const summary={schema:'math-learning-interaction-semantic/1',basis:'Live original models and one example per task.type, read-only',
+ ...(current?{scope:'CURRENT_REGRESSION_LEGACY_REPLAY_ONLY',historicalOriginalChecksReplayed:0}:{}),
  interactionTypes:semantic.length,technicalContractProfiles:coverage.length,
  nativeCoreTasks:base.nativeCoreTasks,bridgeTasks:base.bridgeTasks,
  representativeExamplesValid:semantic.filter(x=>x.probe.exampleValid).length,

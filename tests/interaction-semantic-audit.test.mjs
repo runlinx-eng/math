@@ -4,9 +4,10 @@ import {execFileSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('../',import.meta.url));
-const file=n=>new URL('../verification/learning-evidence-audit/'+n,import.meta.url);
+const current=process.env.MATH_EVIDENCE_AUDIT_MODE==='current';
+const file=n=>new URL('../verification/'+(current?'current-learning-evidence-audit/':'learning-evidence-audit/')+n,import.meta.url);
 const read=n=>JSON.parse(readFileSync(file(n),'utf8'));
-const run=()=>execFileSync(process.execPath,['scripts/audit-interaction-semantics.mjs'],{cwd:root,encoding:'utf8',timeout:180000});
+const run=()=>execFileSync(process.execPath,['scripts/audit-interaction-semantics.mjs',...(current?['--current']:[])],{cwd:root,encoding:'utf8',timeout:180000});
 const initial=run();
 test('every native and bridge interaction is assigned exactly one technical profile',()=>{
  assert.match(initial,/SEMANTIC_AUDIT /);
@@ -26,6 +27,8 @@ test('every native and bridge interaction is assigned exactly one technical prof
  assert.ok(Number.isInteger(overlap.exactPilotReplay)&&
   overlap.exactPilotReplay>=0&&overlap.exactPilotReplay<=overlap.totalNative);
  assert.equal(overlap.exactPilotReplay,overlap.staticAEvidence);
+ assert.equal(overlap.exactPilotReplay,current?813:1762);
+ assert.equal(types.reduce((n,r)=>n+r.currentExplicitGuideBindings.length,0),1762,'current guide bindings are independent of historical replay coverage');
  assert.equal(s.interactionTypes,323);
  assert.equal(s.nativeCoreTasks,1996);
  assert.equal(s.bridgeTasks,1552);

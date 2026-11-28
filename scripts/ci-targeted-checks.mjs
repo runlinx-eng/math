@@ -12,6 +12,12 @@ const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const hash=value=>createHash('sha256').update(typeof value==='string'?value:JSON.stringify(value)).digest('hex');
 const check=(value,message)=>assert.ok(value,message);
 const same=(a,b)=>assert.deepEqual(a,b);
+export const historicalBrowserScripts=Object.freeze([
+ 'tests/issue341-isolated-integration-browser.cjs',
+ 'tests/issue343-a214-b39-backup-import-browser.cjs',
+ 'tests/issue343-a214-next95-backup-import-browser.cjs'
+]);
+const historicalBrowserSet=new Set(historicalBrowserScripts);
 const safeScript=/^tests\/[a-zA-Z0-9][a-zA-Z0-9/_-]*-browser\.cjs$/;
 const stable=(files)=>[...new Set(files)].sort();
 const identity=()=>{
@@ -40,6 +46,7 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
  const modules=registry.newFamilies;
  const selected=new Set();
  const add=(file)=>{
+  check(!historicalBrowserSet.has(file),'Historical archive case cannot be a current receipt: '+file);
   if(registered.has(file)||safeScript.test(file)&&fileExists(file))selected.add(file);
   else throw Error('No reviewed browser test exists for '+file);
  };
@@ -60,21 +67,17 @@ export function planTargetedChecks({event,changedFiles,definitions,registry,prev
  const smoke=full||changed.some(file=>!(/^(docs\/|README\.md$|AGENTS\.md$|LICENSE$|\.gitignore$)/).test(file));
  if(event==='pull_request'){
   for(const file of changed){
-   // #341: changes to the real composition layer must keep exercising the
-   // isolated all365 consumer. Preserve the normal shared P9/P10 selection too.
+   // Current composition must exercise fresh native Check behavior. Archive
+   // consumers remain in the separately requested historical audit.
+   if(historicalBrowserSet.has(file))continue;
    if(['dist/learning/evidence-adapters.js','dist/learning/thinking-feedback.js',
-       'dist/learning/issue341-candidate-descriptors.js',
-       'dist/learning/issue341-candidate-feedback.js',
-       'dist/learning/issue341-isolated-integration.js',
-       'dist/learning/issue341-inactive-shared-feedback.js',
-       'tests/fixtures/issue341-archived-input-references.json',
-       'scripts/issue341-prepare-archived-inputs.py',
-       'tests/issue341-isolated-integration.test.mjs',
-       'tests/issue341-audit-fixture-integration.test.mjs',
-       'tests/issue341-learning-audit-injection.test.mjs',
-       'tests/issue341-archived-input-transport.test.mjs',
-       'scripts/audit-learning-evidence.mjs','scripts/audit-evidence-expansion.mjs'].includes(file))
-    add('tests/issue341-isolated-integration-browser.cjs');
+       'dist/learning/issue341-candidate-descriptors.js','dist/learning/issue341-candidate-feedback.js',
+       'dist/learning/issue341-isolated-integration.js','dist/learning/issue341-inactive-shared-feedback.js',
+       'dist/learning/issue341-formal-source-routing.js','dist/learning/issue341-formal-admissions.js',
+       'scripts/audit-learning-evidence.mjs','scripts/audit-evidence-expansion.mjs',
+       'tests/current-formal-evidence-regression.test.mjs'].includes(file)||
+       /^dist\/learning\/issue34[123]-.*\.js$/.test(file))
+    add('tests/current-formal-evidence-browser.cjs');
    if(registered.has(file)){add(file);continue;}
    if(safeScript.test(file)&&fileExists(file)){add(file);continue;}
    // #339: registered signed-order's source-bound replay and Node tests map to
