@@ -1,5 +1,5 @@
 import {registerClientRelease,releaseWorkerURL,isReleaseWorker,isCurrentReleaseReady} from './sw-client.js';
-const RELEASE='math-explorer-20261128-v54-learning-shell-reflection6';
+const RELEASE='math-explorer-20261128-v54-learning-shell-sampling7';
 registerClientRelease(RELEASE);
 import {readStored,writeStored,unpackText,MAX_BACKUP_BYTES} from './storage.js';
 import {assertNoImportConflicts} from './import-conflicts.js';

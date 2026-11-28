@@ -193,3 +193,47 @@ test('V54 four beats distinguish existing pristine and edited work without makin
  for(const stage of ['revise','recheck','passed','reflect'])assert.equal(beat(frac,fracModel,stage),stage==='reflect'?'record':'check');
  assert.equal(beat({type:'future-unknown'},{seed:10}),'try','unknown seeded model does not guess');
 });
+
+test('V54 sampling readiness counts original completed operations, never final answers',()=>{
+ const cases=[
+  [{type:'x-samplelab',runs:5,mode:'proportion'},{board:{runs:[{}],pending:{}}},{board:{runs:Array(5).fill({estimate:99}),pending:null},answers:['wrong']}],
+  [{type:'x-samplelab',runs:1,mode:'mean'},{board:{runs:[],pending:null}},{board:{runs:[{estimate:99}],pending:null},answers:['wrong']}],
+  [{type:'x-experiment',count:20},{draws:[0]},{draws:Array(20).fill(0),counts:[0,20],comparison:'lower'}],
+  [{type:'x-simulation'},{runs:Array.from({length:14},(_,i)=>({n:[10,100,1000][Math.floor(i/5)]}))},{runs:[10,100,1000].flatMap(n=>Array.from({length:5},()=>({n,hits:0}))),trend:'exact',guarantee:'yes'}],
+  [{type:'x-p22-experiment',targets:[10,100]},{board:{started:true,checkpoints:[10]}},{board:{started:true,checkpoints:[10,100]},rate:'2',answers:['wrong']}]
+ ];
+ for(const [task,incomplete,complete] of cases){
+  for(const model of [incomplete,complete]){
+   const context={task,model,stage:'explore'},before=structuredClone(context);
+   assert.deepEqual(studyActionFocusForWorkbench(context),studyActionFocus(context));
+   assert.equal(studyActionFocusForWorkbench({...context,v54:true}).readyToCheck,model===complete);
+   assert.deepEqual(context,before);
+  }
+ }
+ // Mapping itself has a correctness-dependent execution gate in the original
+ // widget; never add a blanket gate here. An unreviewed type keeps its contract.
+ const mapping={stage:'explore',task:{type:'x-p22-mapping',targetRuns:50},model:{board:{selected:[9],runs:[],pending:[]}}};
+ assert.deepEqual(studyActionFocusForWorkbench({...mapping,v54:true}),studyActionFocus(mapping));
+});
+test('V54 initial readiness inventory: classify every configured task position; unreviewed types retain their original path',async()=>{
+ await ensureB39Ready();
+ const reviewed=new Set(['x-net','x-g27-net','x-fracdecompose','x-rulejump','x-samplelab','x-experiment','x-simulation','x-p22-experiment']);
+ const inventory={};
+ const all=[
+  ...Object.entries(TASKS).flatMap(([id,tasks])=>tasks.map((task,i)=>({task,kind:'native',id,index:i}))),
+  ...Object.entries(PRACTICE).map(([id,task])=>({task,kind:'practice',id,index:-1})),
+  ...Object.entries(BRIDGES).flatMap(([id,bridge])=>bridge.tasks.map((task,i)=>({task,kind:'bridge',id,index:i})))
+ ];
+ for(const {task,kind,id,index} of all){
+  const model=defaultModel(task),context={stage:'explore',task,model};
+  const original=studyActionFocus(context),v54=studyActionFocusForWorkbench({...context,v54:true});
+  const row=inventory[task.type]??={native:0,practice:0,bridge:0,originallyLocked:0,additionalInitialLocks:0,reviewedOverlay:reviewed.has(task.type)};
+  row[kind]++;
+  if(!original.readyToCheck)row.originallyLocked++;
+  if(original.readyToCheck&&!v54.readyToCheck)row.additionalInitialLocks++;
+  if(!reviewed.has(task.type)||!original.readyToCheck)assert.deepEqual(v54,original,id+':'+index+' shared readiness must stay unchanged');
+ }
+ const types=Object.keys(inventory).sort(),pending=types.filter(t=>!inventory[t].reviewedOverlay&&!inventory[t].originallyLocked);
+ const counts=kind=>all.filter(x=>x.kind===kind).length;
+ console.log(JSON.stringify({v54ReadinessInventory:{native:counts('native'),practice:counts('practice'),bridge:counts('bridge'),types:types.length,overlayTypes:types.filter(t=>inventory[t].reviewedOverlay).map(t=>({type:t,...inventory[t]})),existingInitialGateTypes:types.filter(t=>inventory[t].originallyLocked),unreviewedTypes:pending,scope:'initial UI gate inventory only; not a source or interaction verdict; P03 contextual gate not counted'}}));
+});

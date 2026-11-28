@@ -78,6 +78,30 @@ export function studyActionFocusForWorkbench({v54=false,...context}={}){
  }
  if(type==='x-g27-net'&&Array.isArray(board?.parts)&&task.rotate&&!board.turned)
   return waiting('再转一转，观察合起来的盒子。','[data-x="turn-extra"]');
+ // B21: sample completion is the existing number of committed draw/return
+ // cycles. Do not compare estimates, the sample composition or conclusions.
+ // The original widget itself accepts or rejects each individual record.
+ if(type==='x-samplelab'&&Array.isArray(board?.runs)&&Number.isInteger(task.runs)&&task.runs>0){
+  const done=board.runs.length;
+  if(done<task.runs||board.pending)return board.pending
+   ?waiting('已记录 '+done+'/'+task.runs+' 次。先记下这次结果，再全部放回。','[data-x="b21-record"]')
+   :waiting('已记录 '+done+'/'+task.runs+' 次。再抽一次，完成剩余记录。','[data-x="b21-draw"]');
+ }
+ // B04: count actual trials, not correctness of the final tally or prediction.
+ if(type==='x-experiment'&&Array.isArray(model?.draws)&&Number.isInteger(task.count)&&task.count>0&&model.draws.length<task.count)
+  return waiting('已试 '+model.draws.length+'/'+task.count+' 次。按教具的原顺序逐次试验、记录。','[data-x="experiment-draw"]');
+ if(type==='x-simulation'&&Array.isArray(model?.runs)){
+  const sizes=[10,100,1000],counts=sizes.map(n=>model.runs.filter(r=>r.n===n).length);
+  if(counts.some(n=>n<5))return waiting('各规模已完成 '+sizes.map((n,i)=>n+'次：'+counts[i]+'/5').join('；')+'。每种再做到五轮。','[data-x="simulate"]');
+ }
+ // B22: each configured observation checkpoint is an actual run, independent
+ // of the rate, theoretical expectation, or subsequent answer.
+ if(type==='x-p22-experiment'&&Array.isArray(board?.checkpoints)&&Array.isArray(task.targets)&&task.targets.length){
+  const done=task.targets.filter(n=>board.checkpoints.includes(n)).length;
+  if(done<task.targets.length)return board.started
+   ?waiting('已留下 '+done+'/'+task.targets.length+' 组试验记录。继续试到题目要求的次数。','[data-x="p22-run"]')
+   :waiting('先留下猜想，再开始试验。','[data-x="p22-start"]');
+ }
  return focus;
 }
 

@@ -738,8 +738,10 @@ async function verifyV54ShellContracts(browser){
  const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
  const dir=path.resolve('verification/v54-shell-contracts');
  fs.mkdirSync(dir,{recursive:true});
- const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'three native contracts at two viewport sizes plus three actual source-linked bridge entries at 1280x720; process-only V54 UI readiness; original grading on real work retained',rows:[]};
+ const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'original nine native and bridge contracts plus six sampling contracts; process-only V54 UI readiness; original grading on real work retained',rows:[]};
  const topics=[['foldprism','mt_REwgr0d_ss'],['splitfraction','mt_VgOePicFYK'],['nth35','mt_HRKzwEQJgO']];
+ const sampling=[['samplevary','mt_x7V1qrkiqH']];
+ const extraSampling=[['chance','mt_J4j7d3iAfg'],['simulation','mt_8DT3LXwwH-'],['trialestimate','mt_sHJqh6UUya'],['samplevary','mt_x7V1qrkiqH','link-samplevary-comparepeople',0,0]];
  // First two bridges begin with the identical native task. The sequence
  // bridge begins with the actual B34 sequential exercise before B17.
  const links=[
@@ -749,7 +751,7 @@ async function verifyV54ShellContracts(browser){
  ];
  try{
   for(const viewport of [{width:1280,height:720},{width:1440,height:900}]){
-   for(const [family,topic,bridge=null,nativeIndex=0,bridgeIndex=0] of [...topics,...(viewport.width===1280?links:[])]){
+   for(const [family,topic,bridge=null,nativeIndex=0,bridgeIndex=0] of [...topics,...sampling,...(viewport.width===1280?[...links,...extraSampling]:[])]){
     const session=bridge||family;
     const row={session,family,kind:bridge?'bridge':'native',viewport,passed:false,errors:[],checks:[]};
     result.rows.push(row);
@@ -927,7 +929,64 @@ async function verifyV54ShellContracts(browser){
      assert.deepEqual(afterDrawer.models,beforeDrawer.models);assert.deepEqual(afterDrawer.cases,beforeDrawer.cases,'opening auxiliary footer is presentation only');
      await shot('initial');
      if(bridge){const c=await connection();assert.ok(c.source);assert.equal(c.completedAt,null);assert.deepEqual(c.nativeIds,[]);}
-     if(family==='foldprism'){
+     if(family==='samplevary'){
+      await locked('尚未抽样',{verifyOriginal:true});
+      for(let i=0;i<5;i++){
+       await x('b21-draw').click();const pending=(await model()).board.pending;
+       assert.equal(pending.n,20);assert.equal(new Set(pending.ids).size,20);
+       const expected=Math.round(pending.values.reduce((s,n)=>s+n,0)/pending.n*1000)/10;
+       await locked('已抽样但尚未记录');
+       assert.equal(await x('b21-record').getAttribute('data-study-local'),'true');
+       if(i===0){
+        await field('estimate').fill(expected===0?'1':'0');await x('b21-record').click();
+        assert.ok(await frame.locator('.b21-issue').isVisible(),'original per-sample error feedback remains reachable');
+        assert.deepEqual((await model()).board.pending,pending);assert.equal((await model()).board.runs.length,0);
+        await locked('本次记录未被原教具接受');await pauseRestore();
+        await shot('sample-local-error');
+       }
+       await field('estimate').fill(expected.toFixed(1));await x('b21-record').click();
+       const m=await model();assert.equal(m.board.pending,null);assert.equal(m.board.runs.length,i+1);
+       assert.deepEqual(m.board.runs.at(-1).ids,pending.ids);assert.equal(m.board.runs.at(-1).estimate,expected);
+       if(i<4)await locked('仅完成 '+(i+1)+'/5 次',{verifyOriginal:i===2});
+      }
+      assert.equal((await attempts()).length,0);await field('answers.0').selectOption('wrong');
+      await check('revise');await shot('sample-complete-wrong-conclusion');
+      await field('answers.0').selectOption('chance');await check('passed');await next(1);
+     }else if(family==='chance'){
+      await locked('未开始抛硬币',{verifyOriginal:true});await field('guess').fill('10');
+      const tally=(index,delta)=>x('experiment-tally','[data-index="'+index+'"][data-delta="'+delta+'"]').click();
+      let last;
+      for(let i=0;i<20;i++){
+       await x('experiment-draw').click();const m=await model();assert.equal(m.draws.length,i+1);last=m.draws.at(-1);
+       await tally(i===19?1-last:last,1);
+       if(i===0||i===18)await locked('试验尚未完成');
+      }
+      const wrong=await model();assert.equal(wrong.counts.reduce((s,n)=>s+n,0),20);
+      const heads=wrong.draws.filter(v=>v===0).length;
+      assert.notEqual(wrong.counts[0],heads);
+      const compare=heads===10?'same':heads>10?'higher':'lower';
+      await field('comparison').selectOption(compare);await check('revise');
+      await tally(1-last,-1);await tally(last,1);await check('passed');await next(1);
+     }else if(family==='simulation'){
+      await locked('没有模拟轮次',{verifyOriginal:true});
+      for(const n of [10,100,1000]){
+       await field('sample').selectOption(String(n));
+       for(let i=0;i<5;i++)await x('simulate').click();
+       assert.equal((await model()).runs.filter(r=>r.n===n).length,5);
+       if(n!==1000)await locked('尚有未完成的规模');
+      }
+      await field('trend').selectOption('exact');await field('guarantee').selectOption('yes');
+      await check('revise');await field('trend').selectOption('usually');await field('guarantee').selectOption('no');
+      await check('passed');await next(0);await stage('reflect');
+     }else if(family==='trialestimate'){
+      await locked('还没保留猜想');await field('guess').selectOption('unknown');await x('p22-start').click();
+      await locked('还没完成试验');await x('p22-run').click();assert.deepEqual((await model()).board.checkpoints,[10]);
+      await locked('只完成第一次观察',{verifyOriginal:true});await x('p22-run').click();
+      const m=await model();assert.deepEqual(m.board.checkpoints,[10,100]);
+      await field('rate').fill('2');await field('answers.0').selectOption('exact');await check('revise');
+      await field('rate').fill(m.board.draws.filter(v=>v===0).length+'/100');await field('answers.0').selectOption('estimate');
+      await check('passed');await next(1);
+     }else if(family==='foldprism'){
       if(!bridge){
       // B02 preset: six cells in two rows, an invalid cube net.
       assert.equal((await model()).cells.length,6);
@@ -1090,8 +1149,9 @@ async function verifyV54ShellContracts(browser){
     finally{await ctx.close();}
    }
   }
-  result.passed=result.rows.length===9&&result.rows.every(r=>r.passed);
-  assert.ok(result.passed,'six native and three real source-linked contract scenarios: '+JSON.stringify(result.rows.filter(r=>!r.passed).map(r=>({session:r.session,viewport:r.viewport,failure:r.failure}))));
+  const previous=result.rows.filter(r=>['foldprism','splitfraction','nth35'].includes(r.family)),added=result.rows.filter(r=>!previous.includes(r));
+  result.passed=previous.length===9&&added.length===6&&result.rows.every(r=>r.passed);
+  assert.ok(result.passed,'original nine plus six real sampling contract scenarios: '+JSON.stringify(result.rows.filter(r=>!r.passed).map(r=>({session:r.session,viewport:r.viewport,failure:r.failure}))));
  }finally{
   fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');
  }
