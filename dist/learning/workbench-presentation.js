@@ -1,4 +1,11 @@
 import {studyActionFocus} from './workspace-flow.js';
+import * as B22 from './phase5/b22-model.js';
+import * as B23 from './phase5/b23-model.js';
+import * as B24 from './phase5/b24-model.js';
+import * as B25 from './phase5/b25-model.js';
+import * as B26 from './phase5/b26-model.js';
+import * as B27 from './phase5/b27-model.js';
+import * as B28 from './phase5/b28-model.js';
 
 // B1: a visual rhythm derived solely from the validated existing stage.
  // Reading is always available; exploration can start immediately. No new
@@ -9,9 +16,38 @@ export const WORKBENCH_BEATS=Object.freeze([
   {id:'check',label:'检查验证'},
   {id:'record',label:'记下发现'}
 ]);
-export function workbenchBeat(stage='explore'){
+// Compare only existing work evidence, not correctness or readiness. A seed
+// belongs to the saved exercise; status must not generate a new random draw.
+const seededModels=[B22,B23,B24,B25,B26,B27,B28];
+const sameWork=(a,b)=>{
+ if(Object.is(a,b))return true;
+ if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;
+ const keys=Object.keys(a);
+ return keys.length===Object.keys(b).length&&keys.every(k=>Object.hasOwn(b,k)&&sameWork(a[k],b[k]));
+};
+function blankWorkbenchModel(task,model,initialModel){
+ if(Object.hasOwn(model,'seed')){
+  const seed=model.seed,adapter=seededModels.find(m=>m.TYPES.has(task.type));
+  if(adapter)return adapter.initial(task,seed);
+  // B04 creates its random seed inside initial(). Reuse the exact original
+  // empty-work shape for its three stochastic types without calling RNG.
+  if(task.type==='x-experiment')return {seed,guess:null,prediction:null,draws:[],counts:task.labels.map(()=>0),comparison:''};
+  if(task.type==='x-spinner')return {seed,color:0,sectors:Array(task.sectors).fill(-1),prediction:'',runs:[],why:''};
+  if(task.type==='x-simulation')return {seed,sample:'10',runs:[],trend:'',guarantee:'',why:''};
+  return null; // unknown seed-bearing models stay on the old visual rhythm
+ }
+ return initialModel?.(task);
+}
+export function workbenchBeat(stage='explore',{v54=false,task=null,model=null,initialModel=null}={}){
   if(stage==='reflect')return 'record';
   if(['revise','recheck','passed'].includes(stage))return 'check';
+  if(v54&&stage==='explore'&&task&&model){
+   if(Array.isArray(model.history)&&model.history.length)return 'try';
+   try{
+    const blank=blankWorkbenchModel(task,model,initialModel);
+    if(blank&&sameWork(model,blank))return 'read';
+   }catch{/* Unrecognized legacy work keeps its previous display. */}
+  }
   return 'try';
 }
 

@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261128-v54-learning-shell-readiness4-isolated');
+registerClientRelease('math-explorer-20261128-v54-learning-shell-beats5');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -250,7 +250,7 @@ function syncLearningRegions(){
  if(support&&support.dataset.session!==id){support.open=false;support.dataset.session=id;}
  const phase=learningActionPlan({stage}).step;
  $('#steps').innerHTML=LEARNING_STEPS.map(step=>'<li data-study-step="'+step.id+'"'+(step.id===phase?' aria-current="step"':'')+'>'+esc(step.label)+'</li>').join('');
- const beat=workbenchBeat(stage),beats=$('#workbench-beats');
+ const beat=workbenchBeat(stage,{v54:v54Workbench(),task:stage==='reflect'?null:task(),model:stage==='reflect'?null:model(),initialModel:defaultModel}),beats=$('#workbench-beats');
  if(beats.dataset.current!==beat){
   beats.dataset.current=beat;
   beats.innerHTML=WORKBENCH_BEATS.map(item=>'<li data-beat="'+item.id+'"'+(item.id===beat?' aria-current="step"':'')+'>'+esc(item.label)+'</li>').join('');

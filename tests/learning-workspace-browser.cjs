@@ -774,6 +774,13 @@ async function verifyV54ShellContracts(browser){
     },session);
     const model=async()=>{const r=await record();return r.models[r.index];};
     const attempts=async()=>{const r=await record();return r.cases?.[r.index]?.attempts||[];};
+    const beat=async(expected)=>{
+     const indicator=frame.locator('#workbench-beats [aria-current="step"]');
+     await indicator.waitFor({state:'visible'});
+     const actual=await indicator.getAttribute('data-beat');
+     assert.equal(actual,expected,'visual beat matches actual work evidence');
+     return actual;
+    };
     const stage=expected=>page.waitForFunction(s=>document.querySelector('#journey-frame')?.contentDocument?.querySelector('#scene')?.dataset.stage===s,expected,{timeout:15000});
     const ready=(index=0)=>page.waitForFunction(({session,index})=>{
      const w=document.querySelector('#journey-frame')?.contentWindow,s=w?.mathLesson?.snapshot();
@@ -830,7 +837,7 @@ async function verifyV54ShellContracts(browser){
      const before=await attempts();assert.ok(await action('check').isEnabled(),'completed process must permit the original submission even if wrong');
      assert.equal(await frame.locator('#actions button.primary').count(),1,'single workflow primary');
      assert.equal(await frame.locator('#work [data-study-primary]').count(),0,'no competing workflow primary in the widget');
-     await action('check').click();await stage(expected);
+     await action('check').click();await stage(expected);await beat('check');
      await assertFooter();
      const after=await attempts();assert.equal(after.length,before.length+1,'one Check creates one attempt');
      assert.deepEqual(after.slice(0,-1),before,'previous attempts unchanged');
@@ -839,11 +846,11 @@ async function verifyV54ShellContracts(browser){
      row.checks.push({index:(await record()).index,stage:expected,attempts:after.length});
     };
     const pauseRestore=async()=>{
-     const before=await record();
+     const before=await record(),beforeBeat=await frame.locator('#workbench-beats [aria-current="step"]').getAttribute('data-beat');
      await frame.locator('body').evaluate(el=>{el.ownerDocument.defaultView.__shellContractToken='same-lesson';});
      await page.locator('#workbench-later').click();
      await page.waitForFunction(()=>mathSpace.snapshot().journeySuspended&&document.querySelector('#journey-surface').hidden);
-     await page.locator('[data-action="nav-learn"]').click();await ready(before.index);
+     await page.locator('[data-action="nav-learn"]').click();await ready(before.index);await beat(beforeBeat);
      await assertFooter();
      assert.equal(await frame.locator('body').evaluate(el=>el.ownerDocument.defaultView.__shellContractToken),'same-lesson');
      const after=await record();
@@ -852,7 +859,8 @@ async function verifyV54ShellContracts(browser){
      row.checks.push({index:after.index,pausedAndRestored:true});
     };
     const next=async(index)=>{
-     await action('next').click();await ready(index);assert.equal((await record()).index,index);
+     await action('next').click();await ready(index);const current=await record();assert.equal(current.index,index);
+     await beat(current.view==='summary'?'record':'read');
     };
     try{
      await page.goto(base+'/index.html?world=network&layout=54&surface='+(bridge?'explore':'learn')+'#space/node/'+topic);
@@ -876,7 +884,7 @@ async function verifyV54ShellContracts(browser){
       if(await list.count()&&!(await list.evaluate(el=>el.open)))await list.locator(':scope>summary').click();
       await card.locator('[data-action="bridge"][data-id="'+session+'"]').click();
      }
-     await ready();await stage('explore');assert.equal((await attempts()).length,0);
+     await ready();await stage('explore');await beat('read');assert.equal((await attempts()).length,0);
      row.footer=await assertFooter({wideRow:true});
      const beforeDrawer=await record();
      await frame.locator('#learning-support>summary').click();
@@ -885,7 +893,7 @@ async function verifyV54ShellContracts(browser){
      await assertFooter({openPanel:true});
      await frame.locator('#learning-support>summary').press('Escape');
      await page.waitForFunction(()=>!document.querySelector('#journey-frame').contentDocument.querySelector('#workbench-stage').inert);
-     const afterDrawer=await record();
+     const afterDrawer=await record();await beat('read');
      assert.deepEqual(afterDrawer.models,beforeDrawer.models);assert.deepEqual(afterDrawer.cases,beforeDrawer.cases,'opening auxiliary footer is presentation only');
      await shot('initial');
      if(bridge){const c=await connection();assert.ok(c.source);assert.equal(c.completedAt,null);assert.deepEqual(c.nativeIds,[]);}
@@ -894,8 +902,8 @@ async function verifyV54ShellContracts(browser){
       // B02 preset: six cells in two rows, an invalid cube net.
       assert.equal((await model()).cells.length,6);
       assert.ok(await x('fold').isDisabled(),'fold requires a prediction');
-      await locked('尚未折合');
-      await field('why').fill('先试一下六张纸');
+      await locked('尚未折合');await beat('read');
+      await field('why').fill('先试一下六张纸');await beat('try');
       await x('guess','[data-value="true"]').click();await locked('只有猜想');await x('fold').click();
       assert.equal((await model()).runs.at(-1).why,'先试一下六张纸','optional pre-fold text stays in run snapshot');
       assert.equal((await attempts()).length,0,'fold is not Check');
@@ -908,7 +916,7 @@ async function verifyV54ShellContracts(browser){
       // B27: connect the remaining four faces, predict, fold, then turn.
       await locked('原有接纸片门槛');
       for(let i=0;i<4;i++)await x('g27-piece','[data-index="'+i+'"]').click();
-      assert.deepEqual((await model()).board.parts,[0,1,2,3]);
+      await beat('try');assert.deepEqual((await model()).board.parts,[0,1,2,3]);
       await x('g27-predict','[data-index="no"]').click();await x('g27-fold').click();
       assert.equal((await model()).board.fold,100);assert.equal((await attempts()).length,0);
       await locked('错误猜想、尚未转动',{verifyOriginal:true});
@@ -925,12 +933,17 @@ async function verifyV54ShellContracts(browser){
      }else if(family==='splitfraction'){
       const cut=i=>x('b18-cut','[data-index="'+i+'"]').click();
       const save=async equation=>{await field('equation').fill(equation);await x('b18-save').click();};
-      await locked('尚未保存分法');
-      await cut(1);await cut(2);await save('3/8=1/8+1/8+1/8');
+      await locked('尚未保存分法');await beat('read');
+      await cut(1);await beat('try');await cut(2);await save('3/8=1/8+1/8+1/8');
       assert.equal((await model()).board.saved.length,1);
       await save('3/8=1/8+1/8+1/8');assert.equal((await model()).board.saved.length,1,'duplicate group does not count');
       await save('3/8=1/8+1/8+2/8');assert.equal((await model()).board.saved.length,1,'invalid equality does not count');
-      assert.equal((await attempts()).length,0);await pauseRestore();await locked('只保存了一种分法',{verifyOriginal:true});await shot('one-group');
+      assert.equal((await attempts()).length,0);await pauseRestore();await locked('只保存了一种分法',{verifyOriginal:true});await beat('try');await shot('one-group');
+      if(!bridge&&viewport.width===1280){
+       const draft=await record();await page.reload();await ready();await stage('explore');await beat('try');
+       const restored=await record();assert.deepEqual(restored.models,draft.models);assert.deepEqual(restored.cases,draft.cases);
+       row.checks.push({index:restored.index,reloadedDraftBeat:'try'});
+      }
       await x('b18-new-groups').click();assert.equal((await model()).board.saved.length,1,'new grouping preserves saved work');
       await cut(1);await save('3/8=1/8+2/8');
       assert.equal((await model()).board.saved.length,2);
@@ -956,6 +969,7 @@ async function verifyV54ShellContracts(browser){
       if(bridge){
        assert.deepEqual((await model()).board.values,[1]);
        for(const n of [4,7,10,13]){await field('value').fill(String(n));await x('p34-next').click();}
+       await beat('try');
        await field('answers.0').fill('13');
        assert.deepEqual((await model()).board.values,[1,4,7,10,13]);
        assert.equal((await attempts()).length,0);
@@ -966,7 +980,7 @@ async function verifyV54ShellContracts(browser){
       const inputs=[1,2,3,50,100];
       const rule=async offset=>{await field('multiplier').fill('4');await field('offset').fill(String(offset));await field('divisor').fill('1');await x('b17-rule').click();};
       const run=async(n,answer)=>{await field('n').selectOption(String(n));await field('answer').fill(String(answer));await x('b17-run').click();};
-      await locked('还没有搭规则');await rule(3);await locked('还没有运行记录');
+      await locked('还没有搭规则');await beat('read');await rule(3);await beat('try');await locked('还没有运行记录');
       for(const n of inputs)await run(n,4*n+3);
       assert.equal((await model()).board.records.length,5,'a wrong but executable rule can make records');
       assert.equal((await attempts()).length,0);await check('revise');await shot('wrong-rule');
@@ -982,7 +996,7 @@ async function verifyV54ShellContracts(browser){
       assert.deepEqual((await model()).board.rule,[4,-1,1]);
       if(bridge)assert.equal((await connection()).completedAt,null,'unsubmitted construction is not a completed bridge');
       await check('passed');
-      await field('offset').fill('3');await stage('recheck');
+      await field('offset').fill('3');await stage('recheck');await beat('check');
       assert.equal(await action('next').count(),0,'editing the passed work revokes Next');
       assert.ok(await action('check').isEnabled(),'editing a completed rule is not an answer-based gate');
       await field('offset').fill('-1');await stage('passed');

@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {TASKS,PRACTICE,defaultModel} from '../dist/learning/tasks.js';
+import {BRIDGES} from '../dist/learning/bridges.js';
+import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
 import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer,describeWorkbenchCurriculum,syncWorkbenchLocation,studyActionFocusForWorkbench} from '../dist/learning/workbench-presentation.js';
 const source=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
@@ -153,4 +156,40 @@ test('V54 readiness overlays the original shared action controller, without answ
  assert.deepEqual(studyActionFocusForWorkbench({...unknown,v54:true}),studyActionFocus(unknown));
  for(const stage of ['passed','reflect'])
   assert.deepEqual(studyActionFocusForWorkbench({stage,v54:true}),studyActionFocus({stage}));
+});
+
+test('V54 four beats distinguish existing pristine and edited work without making a gate',async()=>{
+ await ensureB39Ready();
+ const entries=[
+  ...Object.entries(TASKS).flatMap(([id,tasks])=>tasks.map((task,i)=>[id+':'+i,task])),
+  ...Object.entries(PRACTICE),
+  ...Object.entries(BRIDGES).flatMap(([id,bridge])=>bridge.tasks.map((task,i)=>[id+':'+i,task]))
+ ];
+ const beat=(task,model,stage='explore')=>workbenchBeat(stage,{v54:true,task,model,initialModel:defaultModel});
+ for(const [id,task] of entries){
+  const initial=defaultModel(task),before=structuredClone(initial);
+  assert.ok(initial,id+' actual initial model');
+  assert.equal(beat(task,initial),'read',id+' initial model shows read: '+task.type);
+  assert.deepEqual(initial,before,id+' status is read-only');
+ }
+ assert.ok(entries.length>500,'cover configured native, practice and linked work, not mock types');
+ console.log(JSON.stringify({v54ReadBeatInitialModels:entries.length}));
+ const line=TASKS.equivalent[1],lineModel=defaultModel(line);
+ lineModel.mark=3;
+ assert.equal(beat(line,JSON.parse(JSON.stringify(lineModel))),'try','restored wrong draft is still work');
+ assert.equal(workbenchBeat('explore',{task:line,model:lineModel,initialModel:defaultModel}),'try','old layout unchanged');
+ const frac=TASKS.splitfraction[0],fracModel=defaultModel(frac);
+ fracModel.equation='3/8=1/8+2/8';
+ assert.equal(beat(frac,fracModel),'try','typed work before saving');
+ const net=TASKS.foldprism[1],netModel=defaultModel(net);
+ const forbidden=()=>{throw Error('random initializer must not be called');};
+ assert.equal(workbenchBeat('explore',{v54:true,task:net,model:netModel,initialModel:forbidden}),'read');
+ const stochastic=entries.filter(([,t])=>['x-experiment','x-spinner','x-simulation','x-p22-mapping'].includes(t.type));
+ assert.ok(stochastic.length>=4);
+ for(const [id,t] of stochastic){
+  const m=defaultModel(t);
+  assert.equal(workbenchBeat('explore',{v54:true,task:t,model:m,initialModel:forbidden}),'read',id);
+ }
+ for(const stage of ['revise','recheck','passed','reflect'])assert.equal(beat(frac,fracModel,stage),stage==='reflect'?'record':'check');
+ assert.equal(beat({type:'future-unknown'},{seed:10}),'try','unknown seeded model does not guess');
 });
