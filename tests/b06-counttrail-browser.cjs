@@ -57,7 +57,22 @@ async function main(){
   else await el.fill(String(value));
  };
  const snapshot=()=>page.evaluate(()=>window.mathLesson.snapshot());
- const wait=async(id,index,view='task')=>page.waitForFunction(({id,index,view})=>{const s=window.mathLesson?.snapshot();return s?.id===id&&s.index===index&&s.view===view&&!document.querySelector('#storage-warning')?.textContent.includes('正在加载');},{id,index,view},{timeout:60000});
+ // openLesson hides the loading notice without clearing its text. Only a
+ // visible notice can block readiness. On failure capture the real page state.
+ const wait=async(id,index,view='task')=>{
+  try{
+   await page.waitForFunction(({id,index,view})=>{
+    const s=window.mathLesson?.snapshot(),notice=document.querySelector('#storage-warning');
+    return s?.id===id&&s.index===index&&s.view===view&&notice?.hidden===true;
+   },{id,index,view},{timeout:60000});
+  }catch(error){
+   const actual=await page.evaluate(()=>{
+    const notice=document.querySelector('#storage-warning');
+    return {url:location.href,snapshot:window.mathLesson?.snapshot()||null,notice:notice?{hidden:notice.hidden,text:notice.textContent}:null,title:document.querySelector('#title')?.textContent,instruction:document.querySelector('#instruction')?.textContent};
+   }).catch(e=>({readError:String(e)}));
+   throw Error('B06 readiness '+JSON.stringify({expected:{id,index,view},actual}),{cause:error});
+  }
+ };
  const record=id=>page.evaluate(async id=>{const {readStored}=await import('./storage.js');const state=JSON.parse(readStored('math-explorer-v2'));return state.lessons[id]||state.daily.bridges[id];},id);
  const model=async id=>{const r=await record(id);return r.models[r.index];};
  const shot=async name=>page.screenshot({path:path.join(out,name+'.png'),fullPage:true});
@@ -65,7 +80,8 @@ async function main(){
   await context?.close();context=await newDesktopContext(browser,{reducedMotion:'reduce'});
   context.on('request',req=>{if(/^https?:/.test(req.url())&&!req.url().startsWith(base))remote.push(req.url());});
   page=await context.newPage();page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push({where,error:String(e)}));
-  await page.goto(base+'learn.html#'+id);await wait(id,0);
+  const response=await page.goto(base+'learn.html?b06-baseline='+encodeURIComponent(id)+'#'+id);
+  ok(response?.ok()===true,id+' lesson document loaded');await wait(id,0);
   assert.equal((await record(id)).cases[0]?.attempts?.length||0,0);
   ok(await page.locator('#storage-warning').isHidden(),id+' starts in a fresh valid record');
  };
