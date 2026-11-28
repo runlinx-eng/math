@@ -918,3 +918,26 @@ body[data-workbench-header="parent"] #scene[data-stage="reflect"] #workbench-foo
 body[data-workbench-header="parent"] #scene[data-stage="reflect"] #actions [data-primary-destination]{
   overflow-wrap:anywhere;
 }
+
+/* Mac closeout: stable right-hand workflow anchor, independent of which
+   secondary actions are visible. DOM order matches the visual/tab order. */
+body[data-workbench-header="parent"] #scene #workbench-footer .execution-command{
+  margin-left:auto;
+}
+body[data-workbench-header="parent"] #scene #workbench-footer #actions button.primary{
+  flex:0 1 auto;min-width:min(148px,100%);
+}
+body[data-workbench-header="parent"] #scene #learning-next[hidden],
+body[data-workbench-header="parent"] #scene #learning-check[hidden]{
+  display:none;
+}
+/* Mathematical evidence and its limitations remain readable, but do not
+   compete with the single official Check result or the footer command. */
+body[data-workbench-header="parent"] #work #thinking-feedback{
+  margin:12px 0 4px;padding:10px 12px;background:#f5f7f2;
+  border-left:2px solid #a4b9a7;box-shadow:none;
+}
+body[data-workbench-header="parent"] #work #thinking-feedback>small,
+body[data-workbench-header="parent"] #work #thinking-feedback .source-thinking small{
+  display:block;margin-top:5px;font-size:11px;line-height:1.55;color:#5d7165;
+}

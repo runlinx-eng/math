@@ -64,8 +64,13 @@ export function studyActionFocusForWorkbench({v54=false,...context}={}){
  // never the expected answer, correct groups, rule coefficients or result.
  // Unknown or correctness-entangled tasks keep their existing Check path.
  if(type==='x-net'&&Array.isArray(model?.runs)){
-  if(model.fold!==100||model.runs.length===0)
-   return waiting('先留下猜想，再把纸片合起来试一次。');
+  // Same gate as before; the cue only describes the unfinished part.
+  if(model.fold!==100||model.runs.length===0){
+   if(Array.isArray(model.cells)&&model.cells.length<6)return waiting('先画出六个相连的方格。');
+   if(model.guess==null)return waiting('先判断这张纸能否合成盒子。');
+   if(model.runs.length===0)return waiting('点击「试着合起来」，观察纸片。','[data-x="fold"]');
+   return waiting('继续合拢，观察纸片是否重叠。','[data-xfield="fold"]');
+  }
  }
  if(type==='x-fracdecompose'&&Array.isArray(board?.saved)){
   const total=task.count||task.required?.length||1;
@@ -103,6 +108,20 @@ export function studyActionFocusForWorkbench({v54=false,...context}={}){
    :waiting('先留下猜想，再开始试验。','[data-x="p22-start"]');
  }
  return focus;
+}
+
+// V54: the active process owns the cue. A historical submission does not
+// ask the learner to Check while that action is locked. Preserve the special
+// existing cup-explanation question, not the generic duplicate navigation.
+export function workbenchProcessPresentation({v54=false,stage='explore',focus={},task=null,hasFeedback=false}={}){
+ const active=v54&&stage!=='reflect',locked=active&&focus.readyToCheck===false;
+ return {
+  hideHistoricalFeedback:locked&&stage==='recheck'&&!hasFeedback,
+  hideHistoricalExplanation:locked&&stage==='recheck',
+  hideNext:stage==='explore'||stage==='reflect'||(active&&!(stage==='passed'&&task?.type==='match')),
+  hidePassedCue:active&&stage==='passed',
+  lockCue:locked?(focus.cue||'先完成题目需要的操作，再检查。'):null
+ };
 }
 
  // B1: mount once, before rendering. Move original containers, never clone a

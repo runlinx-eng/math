@@ -1,6 +1,6 @@
 import {registerClientRelease} from '../sw-client.js';
 import {needsThreeView,loadThreeViews} from './three-view-runtime.js';
-registerClientRelease('math-explorer-20261128-v54-learning-shell-sampling7');
+registerClientRelease('math-explorer-20261128-v54-mac-shell-polish8');
 // Embedded learning is a fixed reading workspace. A Mac trackpad pinch appears
 // in Chromium as Ctrl+wheel and otherwise magnifies the entire web page.
 // Consume only accidental pinch gestures inside an embedded lesson; normal
@@ -34,7 +34,7 @@ import {ISSUE341_FORMAL_MANIFEST,hasIssue341FormalSource,hasIssue341FormalSessio
  from './issue341-formal-admissions.js';
 import {renderP3Flow} from './p3-view.js';
 import {LEARNING_STEPS,learningStage,learningActionPlan,stageGuidance,checkedMathExplanation,nextRouteLessonId,correctionGuidance,executionCue,activityTitle} from './workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll,syncWorkbenchLocation,studyActionFocusForWorkbench} from './workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,mountWorkbenchShell,syncWorkbenchScroll,syncWorkbenchLocation,studyActionFocusForWorkbench,workbenchProcessPresentation} from './workbench-presentation.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // The fixed shell belongs to the native network learning frame only.
 if(parent!==window){
@@ -217,7 +217,10 @@ function renderTaskActions(checked=currentSubmission(a)){
  });
  const buttonFor=(spec,primary=false)=>btn(spec.action,esc(spec.label),
    (spec.disabled?'disabled ':'')+(spec.disabled&&spec.action==='check'&&v54Workbench()?'aria-describedby="action-cue" ':'')+(spec.attrs||''),primary);
- $('#actions').innerHTML=buttonFor(plan.primary,v54Workbench()||focus.kind!=='widget')+plan.secondary.map(spec=>buttonFor(spec)).join('');
+ const primary=buttonFor(plan.primary,v54Workbench()||focus.kind!=='widget'),secondary=plan.secondary.map(spec=>buttonFor(spec)).join('');
+ // DOM order follows the visible order: the original primary is always
+ // at the right end of the V54 command group, including keyboard traversal.
+ $('#actions').innerHTML=v54Workbench()?secondary+primary:primary+secondary;
  $('#actions').dataset.actionStage=stage;
  return plan;
 }
@@ -235,6 +238,10 @@ function syncReflectionPrimary(){
  const save=$('#actions [data-do="save-note"]'),destination=$('#actions [data-primary-destination]');
  if(save){save.disabled=!hasText;save.hidden=!hasText;save.classList.toggle('primary',hasText);}
  if(destination)destination.classList.toggle('primary',!hasText);
+ if(v54Workbench()){
+  const primary=hasText?save:destination,actions=$('#actions');
+  if(primary&&actions.lastElementChild!==primary)actions.append(primary);
+ }
  const cue=$('#action-cue');if(cue){cue.textContent=executionCue({stage:'reflect',hasDraft:hasText});cue.hidden=v54Workbench();}
  if(notice){
   notice.hidden=!hasText&&!a.notes.length&&!savedNoteFeedback;
@@ -270,18 +277,27 @@ function syncLearningRegions(){
  }
  $('#scene').dataset.actionFocus=widgetAction?'widget':focus.kind;
  const repair=a.view==='task'?correctionGuidance({task:activeTask,model:model(),checked:status}):null;
+ const presentation=workbenchProcessPresentation({v54:v54Workbench(),stage,focus,task:activeTask,hasFeedback:!!feedback});
  const cue=$('#action-cue');
- const currentHelp=focus.cue||executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair});
- cue.textContent=currentHelp;cue.hidden=!currentHelp;
+ const currentHelp=presentation.lockCue||focus.cue||executionCue({stage,task:activeTask,bridge:!!BRIDGES[id],hasDraft:!!a.draft?.trim(),readyToCheck:focus.readyToCheck,repair});
+ cue.textContent=presentation.hidePassedCue?'':currentHelp;cue.hidden=!cue.textContent;
  $('#work').dataset.taskType=activeTask?.type||'reflection';
  $('#interaction-title').textContent=activityTitle({stage,task:activeTask,bridge:!!BRIDGES[id]});
-  $('#next-guidance').hidden=stage==='reflect'||stage==='explore';
-  $('#next-guidance').textContent=repair?'先按上方具体指导修改，再检查；本题通过后进入下一题。':stage==='passed'&&task().type==='match'?'本题检查通过。任选一杯说明分数、小数与水位为什么对应，再点击「整理这次发现」。':stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson(),hasRelatedPractice:!!nextLinkedPractice()});
- const box=$('#math-explanation');
+  const nextRegion=$('#learning-next'),nextGuidance=$('#next-guidance');
+  nextGuidance.hidden=presentation.hideNext;
+  nextGuidance.textContent=repair?'先按上方具体指导修改，再检查；本题通过后进入下一题。':stage==='passed'&&task().type==='match'?(v54Workbench()?'任选一杯说明分数、小数与水位为什么对应。':'本题检查通过。任选一杯说明分数、小数与水位为什么对应，再点击「整理这次发现」。'):stageGuidance(stage,{hasNext:a.index<sessionTasks(id).length-1,hasFollowingLesson:!!nextLearningLesson(),hasRelatedPractice:!!nextLinkedPractice()});
+  if(v54Workbench()){
+   nextRegion.hidden=stage!=='reflect'&&presentation.hideNext;
+   const title=nextRegion.querySelector('.learning-region-title');
+   if(stage!=='reflect'){title.textContent='想一想（可选）';nextRegion.setAttribute('aria-label','想一想（可选）');}
+   else nextRegion.setAttribute('aria-label','整组发现');
+  }
+ const box=$('#math-explanation'),checkFeedback=$('#check-feedback');
  const last=a.cases?.[a.index]?.attempts?.at(-1)?.value;
- const detail=a.view==='summary'?null:checkedMathExplanation({id,task:task(),model:last,checked:status});
+ const detail=a.view==='summary'||presentation.hideHistoricalExplanation?null:checkedMathExplanation({id,task:task(),model:last,checked:status});
+ if(presentation.hideHistoricalFeedback)checkFeedback.hidden=true;
  box.hidden=!detail;
- $('#learning-check').hidden=stage==='reflect'||(!detail&&$('#check-feedback').hidden&&stage!=='recheck');
+ $('#learning-check').hidden=stage==='reflect'||presentation.hideHistoricalFeedback||(!detail&&checkFeedback.hidden&&stage!=='recheck');
  box.innerHTML=detail?'<h3>'+esc(detail.title)+'</h3><p class="math-equation">'+esc(detail.equation)+'</p><p>'+esc(detail.explanation)+'</p><p class="math-question">'+esc(detail.question)+'</p>'+(detail.method?'<p class="math-method" data-thinking-node-id="'+esc(detail.method.nodeId)+'"><strong>相关数学思维 · '+esc(detail.method.label)+'</strong><small>对应来源 '+esc(detail.method.code)+'；只描述本次作品，不能据此判断你已掌握。</small></p>':'')+'<small>'+(detail.kind==='correct'?'这次检查验证了作品中的数学对应关系，你的自由解释仍待确认。':'请按提示修改并重新检查；旧结果不代表修改后的作品。')+'</small>':'';
  syncReflectionPrimary();
  syncWorkbenchLocation(document,{sessionId:id,topicId:sessionMeta(id).topicId,bridge:!!BRIDGES[id],index:a.index,view:a.view,total:sessionTasks(id).length});
@@ -322,6 +338,11 @@ function render(){$('[data-do="question"]').disabled=blocked;cleanupB06?.();clea
  if(a.view==='summary'){$('#check-feedback').hidden=true;$('#instruction').textContent=v54Workbench()?`本组 ${summary.done} / ${summary.total} 项操作检查通过。`:p03?'怎样数才能不漏也不重复？':'你有什么发现？能说说为什么吗？';$('#work').innerHTML=`${v54Workbench()?'':`<div class="summary-art"><div class="seal">✓</div><div><h2>这组操作已通过检查</h2><p>${summary.done} / ${summary.total} 项检查通过。这是作品结果，不代表文字解释已经核验。</p></div></div>`}<label class="field" for="note">${esc(REFLECTIONS[id]||(v54Workbench()&&p03?'怎样数才能不漏也不重复？':'写下你刚才的发现。'))}（可选）</label><p class="reflection-optional">${v54Workbench()?'可以不写，直接继续。文字解释仍待确认。':'可以用自己的话写一句，也可以不写，直接继续探索。'}</p><textarea id="note" maxlength="2000" placeholder="写下你的解释（可选，不必照抄问题）">${esc(a.draft)}</textarea>${a.notes.length?`<div class="saved-note-preview"><strong>已保存的发现（文字解释待确认）</strong><p>${esc(a.notes.at(-1).text)}</p></div>`:''}<details id="system-explanation" class="system-explanation"><summary>查看系统的数学说明（可选）</summary><div class="system-explanation-body"><p>${esc(lesson.summary)}</p>${id==='quarters'&&summary.completed?'<div class="summary-thinking" data-thinking-node-id="mt_EBYGhd8X3x"><strong>已检查作品中的思考方法：连接不同表示方式</strong><p>你用百格、杯子里的水位、分数与小数表示了对应的比例。哪一种表示最容易帮你核对？</p><small>这是作品线索，不是你已掌握该方法的结论。</small></div>':''}<small>以上是系统的数学说明，不等于你已经独立解释了原因。</small></div></details><details id="source-goals-details"><summary>课程来源资料（参考）</summary><ul id="source-goals">${atlas.nodes.find(n=>n.id===lesson.topicId).evidence.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></details>`;$('#note').after($('#note-save-status'));renderSummaryActions();if(cube){cube.destroy();cube=null;cubeKey='';}}
  else{const t=task(),m=model();$('#instruction').textContent=p03?P03_NAMES[a.index]:t.prompt;const checkFeedback=$('#check-feedback');if(checkFeedback){const message=checked.status==='correct'&&t.type==='match'?'三个杯子的水位、分数与小数都对应上了。':feedback||(checked.status==='modified'?'已修改，尚未重新检查。上次结果保留在历史记录中。':checked.result?.feedback||'');checkFeedback.hidden=!message;checkFeedback.textContent=message;const repair=correctionGuidance({task:t,model:m,checked});if(repair&&message){checkFeedback.insertAdjacentHTML('beforeend',`<div class="feedback-next" aria-label="下一步操作"><strong>${esc(repair.title)}</strong><p>${esc(repair.observation)}</p><p>${esc(repair.action)}</p><small>${esc(repair.method)}</small></div>`);}checkFeedback.dataset.state=feedback&&checked.status==='modified'?'guidance':checked.status==='correct'?'correct':checked.status==='revise'?'revise':'guidance';}const p03Info=p03?p03Stage(t,m):null;$('#work').innerHTML=p03?`<section class="p03-task" data-phase="${p03Info.phase}" aria-label="当前任务"><div class="p03-guidance"><span class="p03-step-label">现在做什么 · ${a.index+1} / 3</span><p id="p03-guidance" role="status">${esc(p03Info.instruction)}</p></div>${feedback?`<p class="p03-feedback" role="alert">${esc(feedback)}</p>`:''}${widgets(t,m)}</section>`:widgets(t,m);const guide=formalGuide(t,{sessionId:id,index:a.index});
   if(guide)$('#work').insertAdjacentHTML('afterbegin',`<details id="thinking-guide" class="thinking-guide"><summary>${esc(guide.summary)}</summary><p>${esc(guide.question)}</p><small>这只是可选的思考问题。你可以不打开，照常操作和检查；打开也不代表已经掌握。</small></details>`);
+  // Existing per-task prose stays in its original model and control. Only
+  // its optional label is distinguished from the whole-group discovery.
+  if(v54Workbench())for(const summary of $('#work').querySelectorAll('details>summary')){
+   if(summary.textContent.trim()==='用自己的话留下发现（可选）')summary.textContent='补充解释（可选）';
+  }
 
   const thought=a.view==='task'&&formalFeedback(t,m,a.cases[a.index],{sessionId:id,index:a.index});if(thought)$('#work').insertAdjacentHTML('beforeend',`<aside id="thinking-feedback" aria-label="刚才的办法"><strong>${esc(thought.title)}</strong><p>${esc(thought.observation)}</p><p>${esc(thought.connection)}</p>${thought.detail.length?`<small>${thought.detail.map(esc).join(' ')}</small>`:''}${thought.method?`<p class="source-thinking" data-thinking-node-id="${esc(thought.method.nodeId)}">相关数学思维 · ${esc(thought.method.label)}（${esc(thought.method.code)}）<small>与 50 个来源思维节点中的一个关联；仅记录本次作品线索，不代表已掌握。</small></p>`:''}</aside>`);renderTaskActions(checked);
  if(t.dims){const key=id+':'+(a.view==='play'?-1:a.index)+':'+t.dims.join(',');if(cube&&cubeKey!==key){cube.destroy();cube=null;}if(!cube){cube=new CubeView($('#cube-world'),t,placeCube);cubeKey=key;cube.restoreCamera(a.ui?.camera);cube.controls.addEventListener('end',()=>update(()=>{}));}else cube.attach($('#cube-world'));cube.update(m,{spread});}else if(cube){cube.destroy();cube=null;cubeKey='';}}

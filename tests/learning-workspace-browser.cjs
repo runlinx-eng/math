@@ -809,11 +809,26 @@ async function verifyV54ShellContracts(browser){
      if(openPanel)assert.ok(geometry.inert&&panel.top>=surface.top-1&&panel.bottom<=footer.top+1,'drawer covers only the scrollable stage, not the footer');
      return geometry;
     };
+    const fixedPrimary=async()=>{
+     const position=await frame.locator('#actions').evaluate(el=>{
+      const primary=el.querySelector('button.primary:not([hidden])'),footer=el.closest('#workbench-footer');
+      if(!primary||!footer)return null;
+      const r=primary.getBoundingClientRect(),f=footer.getBoundingClientRect();
+      return {rightGap:f.right-r.right,primaryLast:[...el.querySelectorAll('button:not([hidden])')].at(-1)===primary,action:primary.dataset.do};
+     });
+     assert.ok(position&&position.primaryLast&&position.rightGap>=0&&position.rightGap<=16,'the single primary keeps the right footer anchor: '+JSON.stringify(position));
+     return position;
+    };
     const locked=async(label,{verifyOriginal=false}={})=>{
      const before=await record(),button=action('check');
      assert.ok(await button.isDisabled(),label+' must lock the actual Check control');
      assert.equal(await button.getAttribute('aria-describedby'),'action-cue');
      assert.ok((await frame.locator('#action-cue').innerText()).trim(),'visible missing-process cue');
+     await fixedPrimary();
+     assert.ok(await frame.locator('#next-guidance').isHidden(),'locked Check never competes with generic next guidance');
+     if(await frame.locator('#scene').getAttribute('data-stage')==='recheck'){
+      assert.ok(await frame.locator('#learning-check').isHidden(),'stale recheck instruction does not compete with unfinished process');
+     }
      assert.equal(await frame.locator('#actions button.primary').count(),1,'single footer workflow control');
      assert.equal(await frame.locator('#work [data-study-primary]').count(),0,'local operation is not a workflow primary');
      await button.evaluate(el=>{el.click();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));});
@@ -840,7 +855,9 @@ async function verifyV54ShellContracts(browser){
      assert.equal(await frame.locator('#actions button.primary').count(),1,'single workflow primary');
      assert.equal(await frame.locator('#work [data-study-primary]').count(),0,'no competing workflow primary in the widget');
      await action('check').click();await stage(expected);await beat('check');
-     await assertFooter();
+     await assertFooter();await fixedPrimary();
+     assert.ok(await frame.locator('#next-guidance').isHidden(),'no duplicate generic continuation');
+     if(expected==='passed')assert.ok(await frame.locator('#action-cue').isHidden(),'passed result and primary suffice');
      const after=await attempts();assert.equal(after.length,before.length+1,'one Check creates one attempt');
      assert.deepEqual(after.slice(0,-1),before,'previous attempts unchanged');
      if(expected==='passed')assert.ok(await action('next').isEnabled());
@@ -861,7 +878,7 @@ async function verifyV54ShellContracts(browser){
      row.checks.push({index:after.index,pausedAndRestored:true});
     };
     const assertReflection=async()=>{
-     await stage('reflect');await beat('record');await assertFooter();
+     await stage('reflect');await beat('record');await assertFooter();await fixedPrimary();
      const before=await record();
      assert.equal(before.view,'summary');assert.equal(await frame.locator('#note').count(),1);
      assert.equal(await frame.locator('.summary-art').count(),0,'no duplicate completion card in V54');
@@ -930,6 +947,8 @@ async function verifyV54ShellContracts(browser){
      await shot('initial');
      if(bridge){const c=await connection();assert.ok(c.source);assert.equal(c.completedAt,null);assert.deepEqual(c.nativeIds,[]);}
      if(family==='samplevary'){
+      assert.equal(await frame.locator('#work details>summary').filter({hasText:'补充解释（可选）'}).count(),1,'optional per-task explanation is not named discovery');
+      assert.equal(await field('prose').count(),1,'original prose field remains');
       await locked('尚未抽样',{verifyOriginal:true});
       for(let i=0;i<5;i++){
        await x('b21-draw').click();const pending=(await model()).board.pending;
@@ -992,11 +1011,23 @@ async function verifyV54ShellContracts(browser){
       assert.equal((await model()).cells.length,6);
       assert.ok(await x('fold').isDisabled(),'fold requires a prediction');
       await locked('尚未折合');await beat('read');
+      assert.match(await frame.locator('#action-cue').innerText(),/先判断/);
       await field('why').fill('先试一下六张纸');await beat('try');
-      await x('guess','[data-value="true"]').click();await locked('只有猜想');await x('fold').click();
+      await x('guess','[data-value="true"]').click();await locked('只有猜想');
+      assert.match(await frame.locator('#action-cue').innerText(),/点击「试着合起来」/);
+      await x('fold').click();
       assert.equal((await model()).runs.at(-1).why,'先试一下六张纸','optional pre-fold text stays in run snapshot');
       assert.equal((await attempts()).length,0,'fold is not Check');
       await check('revise');await shot('wrong-prediction');
+      // Reproduce the Mac screenshot's partly folded work after a Check.
+      // Use actual keyboard controls rather than seeding a learner record.
+      await field('fold').press('Home');await field('fold').press('ArrowRight');
+      assert.equal((await model()).fold,1);await stage('recheck');await locked('尚未重新合拢');
+      assert.match(await frame.locator('#action-cue').innerText(),/继续合拢/);
+      assert.ok(await frame.locator('#check-feedback').isHidden());
+      await pauseRestore();await shot('partly-folded-locked-after-check');
+      await field('fold').press('End');assert.equal((await model()).fold,100);
+      assert.ok(await action('check').isEnabled());
       await x('unfold').click();await x('guess','[data-value="false"]').click();await x('fold').click();
       await field('reason').selectOption('overlap');
       const m=await model();assert.equal(m.runs.length,2);assert.equal(m.runs[0].guess,true);assert.equal(m.runs[1].guess,false);
@@ -1118,14 +1149,14 @@ async function verifyV54ShellContracts(browser){
        await frame.locator('#note').fill(note);
        assert.equal((await record()).draft,note);
        assert.equal(await frame.locator('#actions button.primary:visible').count(),1);
-       assert.ok(await action('save-note').evaluate(el=>el.classList.contains('primary')));
+       assert.ok(await action('save-note').evaluate(el=>el.classList.contains('primary')));await fixedPrimary();
        assert.ok(await destination.isEnabled(),'writing does not block original continuation');
        await pauseRestore();assert.equal(await frame.locator('#note').inputValue(),note);
        await action('save-note').click();
        const saved=await record();assert.equal(saved.notes.length,before.notes.length+1);
        assert.equal(saved.notes.at(-1).text,note);assert.equal(saved.draft,'');
        assert.deepEqual(saved.cases,before.cases);assert.deepEqual(saved.models,before.models);
-       assert.ok(await action('save-note').isDisabled());assert.ok(await destination.evaluate(el=>el.classList.contains('primary')));
+       assert.ok(await action('save-note').isDisabled());assert.ok(await destination.evaluate(el=>el.classList.contains('primary')));await fixedPrimary();
        await shot('whole-group-saved');
       }else if(!bridge){
        await frame.locator('#note').fill(note);

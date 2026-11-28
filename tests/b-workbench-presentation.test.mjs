@@ -5,7 +5,7 @@ import {TASKS,PRACTICE,defaultModel} from '../dist/learning/tasks.js';
 import {BRIDGES} from '../dist/learning/bridges.js';
 import {ensureB39Ready} from '../dist/learning/phase4/async-batches.js';
 import {learningActionPlan,studyActionFocus} from '../dist/learning/workspace-flow.js';
-import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer,describeWorkbenchCurriculum,syncWorkbenchLocation,studyActionFocusForWorkbench} from '../dist/learning/workbench-presentation.js';
+import {WORKBENCH_BEATS,workbenchBeat,syncWorkbenchScroll,closeWorkbenchDrawer,describeWorkbenchCurriculum,syncWorkbenchLocation,studyActionFocusForWorkbench,workbenchProcessPresentation} from '../dist/learning/workbench-presentation.js';
 const source=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('B: four visual beats map existing stages without making a new gate',()=>{
  assert.deepEqual(WORKBENCH_BEATS.map(x=>x.id),['read','try','check','record']);
@@ -236,4 +236,30 @@ test('V54 initial readiness inventory: classify every configured task position; 
  const types=Object.keys(inventory).sort(),pending=types.filter(t=>!inventory[t].reviewedOverlay&&!inventory[t].originallyLocked);
  const counts=kind=>all.filter(x=>x.kind===kind).length;
  console.log(JSON.stringify({v54ReadinessInventory:{native:counts('native'),practice:counts('practice'),bridge:counts('bridge'),types:types.length,overlayTypes:types.filter(t=>inventory[t].reviewedOverlay).map(t=>({type:t,...inventory[t]})),existingInitialGateTypes:types.filter(t=>inventory[t].originallyLocked),unreviewedTypes:pending,scope:'initial UI gate inventory only; not a source or interaction verdict; P03 contextual gate not counted'}}));
+});
+
+test('V54 active process owns guidance without changing a saved Check or old path',()=>{
+ const task={type:'x-net'},cells=[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1]];
+ const cases=[
+  [{cells:[],guess:null,fold:0,runs:[]},'先画出六个相连的方格。'],
+  [{cells,guess:null,fold:0,runs:[]},'先判断这张纸能否合成盒子。'],
+  [{cells,guess:false,fold:0,runs:[]},'点击「试着合起来」，观察纸片。'],
+  [{cells,guess:false,fold:27,runs:[{}]},'继续合拢，观察纸片是否重叠。']
+ ];
+ for(const [model,cue] of cases){
+  const context={stage:'recheck',task,model},before=structuredClone(context);
+  const focus=studyActionFocusForWorkbench({...context,v54:true});
+  assert.equal(focus.readyToCheck,false);assert.equal(focus.cue,cue);
+  const p=workbenchProcessPresentation({...context,v54:true,focus});
+  assert.deepEqual(p,{hideHistoricalFeedback:true,hideHistoricalExplanation:true,hideNext:true,hidePassedCue:false,lockCue:cue});
+  assert.equal(workbenchProcessPresentation({...context,v54:true,focus,hasFeedback:true}).hideHistoricalFeedback,false,'explicit help remains available');
+  assert.deepEqual(context,before);
+  assert.deepEqual(studyActionFocusForWorkbench(context),studyActionFocus(context));
+ }
+ const focus=studyActionFocusForWorkbench({v54:true,stage:'recheck',task,model:{cells,guess:false,fold:100,runs:[{}]}});
+ assert.equal(focus.readyToCheck,true);
+ assert.equal(workbenchProcessPresentation({v54:true,stage:'recheck',task,focus}).hideHistoricalFeedback,false);
+ assert.equal(workbenchProcessPresentation({stage:'recheck',task,focus:{readyToCheck:false}}).hideNext,false);
+ assert.equal(workbenchProcessPresentation({v54:true,stage:'passed',task}).hidePassedCue,true);
+ assert.equal(workbenchProcessPresentation({v54:true,stage:'passed',task:{type:'match'}}).hideNext,false);
 });
