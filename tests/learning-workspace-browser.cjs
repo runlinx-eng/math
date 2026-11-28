@@ -731,12 +731,20 @@ async function verifyV54ShellContracts(browser){
  const base=process.env.MATH_BASE_URL||'http://127.0.0.1:43827';
  const dir=path.resolve('verification/v54-shell-contracts');
  fs.mkdirSync(dir,{recursive:true});
- const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'three native learner-action contracts; no storage seeding, no new grading or visual gates',rows:[]};
+ const result={passed:false,testedCheckoutSha:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scope:'three native contracts at two viewport sizes plus three actual source-linked bridge entries at 1280x720; no storage seeding or new grading gates',rows:[]};
  const topics=[['foldprism','mt_REwgr0d_ss'],['splitfraction','mt_VgOePicFYK'],['nth35','mt_HRKzwEQJgO']];
+ // First two bridges begin with the identical native task. The sequence
+ // bridge begins with the actual B34 sequential exercise before B17.
+ const links=[
+  ['foldprism','mt_REwgr0d_ss','link-foldprism-crossparts',1,0],
+  ['splitfraction','mt_VgOePicFYK','link-splitfraction-relatedparts',0,0],
+  ['nth35','mt_HRKzwEQJgO','link-rules34-nth35',0,1]
+ ];
  try{
   for(const viewport of [{width:1280,height:720},{width:1440,height:900}]){
-   for(const [session,topic] of topics){
-    const row={session,viewport,passed:false,errors:[],checks:[]};
+   for(const [family,topic,bridge=null,nativeIndex=0,bridgeIndex=0] of [...topics,...(viewport.width===1280?links:[])]){
+    const session=bridge||family;
+    const row={session,family,kind:bridge?'bridge':'native',viewport,passed:false,errors:[],checks:[]};
     result.rows.push(row);
     const ctx=await browser.newContext({viewport,reducedMotion:'reduce'}),page=await ctx.newPage();
     page.on('pageerror',e=>row.errors.push(e.message));
@@ -745,7 +753,18 @@ async function verifyV54ShellContracts(browser){
     const field=key=>frame.locator('[data-xfield="'+key+'"]');
     const action=name=>frame.locator('#actions [data-do="'+name+'"]');
     const shot=name=>page.screenshot({path:path.join(dir,viewport.width+'x'+viewport.height+'-'+session+'-'+name+'.png')});
-    const record=()=>page.evaluate(id=>JSON.parse(localStorage.getItem('math-explorer-v2')).lessons[id],session);
+    const record=()=>page.evaluate(({session,bridge})=>{
+     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+     return bridge?state.daily.bridges[session]:state.lessons[session];
+    },{session,bridge});
+    const connection=()=>page.evaluate(async id=>{
+     const {bridgeEdgeKey,sourceBridge}=await import('./learning/bridges.js');
+     const {connectionTimes}=await import('./learning/daily.js');
+     const atlas=await fetch('./data/atlas.json').then(r=>r.json());
+     const state=JSON.parse(localStorage.getItem('math-explorer-v2'));
+     const edge=bridgeEdgeKey(id);
+     return {edge,source:!!sourceBridge(id,atlas),completedAt:connectionTimes(state,atlas)[edge]||null,nativeIds:Object.keys(state.lessons)};
+    },session);
     const model=async()=>{const r=await record();return r.models[r.index];};
     const attempts=async()=>{const r=await record();return r.cases?.[r.index]?.attempts||[];};
     const stage=expected=>page.waitForFunction(s=>document.querySelector('#journey-frame')?.contentDocument?.querySelector('#scene')?.dataset.stage===s,expected,{timeout:15000});
@@ -778,9 +797,31 @@ async function verifyV54ShellContracts(browser){
      await action('next').click();await ready(index);assert.equal((await record()).index,index);
     };
     try{
-     await page.goto(base+'/index.html?world=network&layout=54&surface=learn#space/node/'+topic);
+     await page.goto(base+'/index.html?world=network&layout=54&surface='+(bridge?'explore':'learn')+'#space/node/'+topic);
+     if(bridge){
+      await page.waitForFunction(topic=>window.mathSpace?.snapshot()?.networkVersion===54&&mathSpace.snapshot().selected==='node:'+topic&&!mathSpace.motion().tween&&!document.querySelector('#focus-card').hidden,topic,{timeout:60000});
+      // Inspect the actual frozen catalog read-only, then enter through the
+      // visible source relationship control, not a synthetic click or record.
+      const contract=await page.evaluate(async({session,family,nativeIndex,bridgeIndex})=>{
+       const {BRIDGES,sessionTasks,sourceBridge}=await import('./learning/bridges.js');
+       const atlas=await fetch('./data/atlas.json').then(r=>r.json());
+       const b=BRIDGES[session],t=sessionTasks(family)[nativeIndex],linked=b.tasks[bridgeIndex];
+       const hash=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(value))))).map(n=>n.toString(16).padStart(2,'0')).join('');
+       return {source:!!sourceBridge(session,atlas),sameTask:JSON.stringify(t)===JSON.stringify(linked),type:linked.type,taskHash:await hash(linked),total:b.tasks.length};
+      },{session,family,nativeIndex,bridgeIndex});
+      assert.ok(contract.source&&contract.sameTask,'bridge must contain the unchanged source-linked native task');row.contract=contract;
+      const card=page.locator('#focus-card'),details=card.locator('#cylinder-node-details');
+      if(await details.count()&&!(await details.evaluate(el=>el.open)))await details.locator(':scope>summary').click();
+      const relations=card.locator('[data-action="focus-section"][data-section="relations"]');
+      if(await relations.isVisible())await relations.click();
+      const list=card.locator('details.network-relations');
+      if(await list.count()&&!(await list.evaluate(el=>el.open)))await list.locator(':scope>summary').click();
+      await card.locator('[data-action="bridge"][data-id="'+session+'"]').click();
+     }
      await ready();await stage('explore');assert.equal((await attempts()).length,0);await shot('initial');
-     if(session==='foldprism'){
+     if(bridge){const c=await connection();assert.ok(c.source);assert.equal(c.completedAt,null);assert.deepEqual(c.nativeIds,[]);}
+     if(family==='foldprism'){
+      if(!bridge){
       // B02 preset: six cells in two rows, an invalid cube net.
       assert.equal((await model()).cells.length,6);
       assert.ok(await x('fold').isDisabled(),'fold requires a prediction');
@@ -793,6 +834,7 @@ async function verifyV54ShellContracts(browser){
       await field('reason').selectOption('overlap');
       const m=await model();assert.equal(m.runs.length,2);assert.equal(m.runs[0].guess,true);assert.equal(m.runs[1].guess,false);
       await check('passed');await shot('cube-net-passed');await next(1);
+      }
       // B27: connect the remaining four faces, predict, fold, then turn.
       assert.ok(await action('check').isDisabled(),'existing prism construction gate');
       for(let i=0;i<4;i++)await x('g27-piece','[data-index="'+i+'"]').click();
@@ -805,8 +847,8 @@ async function verifyV54ShellContracts(browser){
       await check('revise');await x('turn-extra').click();
       assert.equal((await model()).board.turned,true);
       assert.equal((await model()).board.attempts.length,2,'both fold observations retained');
-      await check('passed');await shot('prism-passed');await next(2);
-     }else if(session==='splitfraction'){
+      await check('passed');await shot('prism-passed');await next(bridge?1:2);
+     }else if(family==='splitfraction'){
       const cut=i=>x('b18-cut','[data-index="'+i+'"]').click();
       const save=async equation=>{await field('equation').fill(equation);await x('b18-save').click();};
       await cut(1);await cut(2);await save('3/8=1/8+1/8+1/8');
@@ -822,6 +864,16 @@ async function verifyV54ShellContracts(browser){
       assert.equal((await attempts()).length,1,'process actions are not further submissions');
       await check('passed');await shot('two-groups-passed');await next(1);
      }else{
+      if(bridge){
+       assert.deepEqual((await model()).board.values,[1]);
+       for(const n of [4,7,10,13]){await field('value').fill(String(n));await x('p34-next').click();}
+       await field('answers.0').fill('13');
+       assert.deepEqual((await model()).board.values,[1,4,7,10,13]);
+       assert.equal((await attempts()).length,0);
+       await check('passed');
+       assert.equal((await connection()).completedAt,null,'first linked task alone must not light the connection');
+       await next(1);
+      }
       const inputs=[1,2,3,50,100];
       const rule=async offset=>{await field('multiplier').fill('4');await field('offset').fill(String(offset));await field('divisor').fill('1');await x('b17-rule').click();};
       const run=async(n,answer)=>{await field('n').selectOption(String(n));await field('answer').fill(String(answer));await x('b17-run').click();};
@@ -838,19 +890,29 @@ async function verifyV54ShellContracts(browser){
       await pauseRestore();await check('revise');await shot('only-distant-positions');
       for(const n of [1,2,3])await run(n,4*n-1);
       assert.deepEqual((await model()).board.records.map(r=>r.n).sort((a,b)=>a-b),inputs);
-      assert.deepEqual((await model()).board.rule,[4,-1,1]);await check('passed');
+      assert.deepEqual((await model()).board.rule,[4,-1,1]);
+      if(bridge)assert.equal((await connection()).completedAt,null,'unsubmitted construction is not a completed bridge');
+      await check('passed');
       await field('offset').fill('3');await stage('recheck');
       assert.equal(await action('next').count(),0,'editing the passed work revokes Next');
       await field('offset').fill('-1');await stage('passed');
       await shot('five-positions-passed');await next(1);
+      if(bridge){await stage('reflect');assert.equal((await record()).view,'summary');}
+     }
+     if(bridge){
+      const c=await connection();
+      assert.ok(c.source);assert.deepEqual(c.nativeIds,[],'linked learning must not write a native lesson record');
+      if(family==='nth35')assert.ok(c.completedAt,'both real linked checks light exactly the configured source edge');
+      else assert.equal(c.completedAt,null,'one checked task must not complete a two-task bridge');
+      row.connection=c;
      }
      assert.deepEqual(row.errors,[]);row.passed=true;
     }catch(error){row.failure=error.stack;await shot('failure').catch(()=>{});}
     finally{await ctx.close();}
    }
   }
-  result.passed=result.rows.length===6&&result.rows.every(r=>r.passed);
-  assert.ok(result.passed,'three native contracts at two viewport sizes: '+JSON.stringify(result.rows.filter(r=>!r.passed).map(r=>({session:r.session,viewport:r.viewport,failure:r.failure}))));
+  result.passed=result.rows.length===9&&result.rows.every(r=>r.passed);
+  assert.ok(result.passed,'six native and three real source-linked contract scenarios: '+JSON.stringify(result.rows.filter(r=>!r.passed).map(r=>({session:r.session,viewport:r.viewport,failure:r.failure}))));
  }finally{
   fs.writeFileSync(path.join(dir,'results.json'),JSON.stringify(result,null,2)+'\n');
  }
